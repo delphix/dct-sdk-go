@@ -10,10 +10,17 @@ import (
 	openapi "github.com/delphix/dct-sdk-go"
 )
 
-var KEY = "1.GCAE1EOOIa3JUQZcKE2umJa81xOo6MLL210m3NdbMfIEG8VTOz02Xt0wbXlsxS8J"
-var HOST = "dct-apigw.dlpxdc.co"
-
 func main() {
+
+	var KEY string
+	var HOST string
+
+	fmt.Println("Enter Your KEY (excluding 'apk'): ")
+	fmt.Scanln(&KEY)
+
+	fmt.Println("Enter Your HOST ('hostname.domain'): ")
+	fmt.Scanln(&HOST)
+
 	apiKeyMap := make(map[string]openapi.APIKey)
 	apiKeyMap["ApiKeyAuth"] = openapi.APIKey{
 		Key:    KEY,

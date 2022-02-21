@@ -1,6 +1,6 @@
 # DCT Go Client SDK
 
-This is a Go Client SDK leveraging the DCT Orbital APIGW.
+This is a Go Client SDK leveraging the DCT APIGW.
 
 For SDK usage, please refer to [OPENAPI-README.md](OPENAPI-README.md) file
 
@@ -21,13 +21,6 @@ Refer to the official docs of the respective languages for guidance.
 
 Also the script requires an API Spec file for the DCT-APIGW. A sample file is present in the directory. For the latest spec, please download it from https://raw.githubusercontent.com/delphix/orbital-api-gateway/main/app/src/main/resources/api.yaml
 
-Modify the test.go file by replacing the HOST and KEY global variable with the ones applicable.
-
-```
-var KEY = "API TOKEN"
-var HOST = "DCT-APIGW HOST"
-```
-
 ### Running the Script
 
 As mentioned above the script requires a spec file.
@@ -43,12 +36,13 @@ On successful run, following tasks will result:
 ```
 1. Generation of client SDK
 2. Initialize the SDK module
-3. Run the Test Go file and display list of Engines added to the APIGW
+3. Run the Test Go file, input the API key and hostname of the Delphix Engine and display list of Engines added to the APIGW
 ```
 
 ## Running the tests
 
-The test.go file executes a get all engines operation on the configured DCT-APIGW
+The test.go file executes a get all engines operation on the configured DCT-APIGW. 
+To run the test on your delphix engine, provide the API key and Hostname of the engine when prompted.
 
 ### Break down into end to end tests
 
