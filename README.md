@@ -1,87 +1,73 @@
-# Project Title
+# DCT Go Client SDK
 
-One Paragraph of project description goes here
+This is a Go Client SDK leveraging the DCT APIGW.
+
+For SDK usage, please refer to [OPENAPI-README.md](OPENAPI-README.md) file
+
+# DCT Go Client SDK Generator Script
+
+This is a guide on generation of the client SDK in Go Lang for the DCT Orbital APIGW.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+The reources for code generation are present in the 'generation-scripts' directory.
+The script codegen.sh generates a GO Client SDK using the openapi-generator-cli tool. It generates the SDK, initializes the SDK and runs a test go function.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Java needs to be installed to run the jar file. And Golang >= 1.17 needs to be installed in the machine where the script is run.
+
+Refer to the official docs of the respective languages for guidance.
+
+Also the script requires an API Spec file for the DCT-APIGW. A sample file is present in the directory. For the latest spec, please download it from https://raw.githubusercontent.com/delphix/orbital-api-gateway/main/app/src/main/resources/api.yaml
+
+### Running the Script
+
+As mentioned above the script requires a spec file.
+
+Run the script as follows
 
 ```
-Give examples
+sh codegen.sh api.yaml
 ```
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+On successful run, following tasks will result:
 
 ```
-Give the example
+1. Generation of client SDK
+2. Initialize the SDK module
+3. Run the Test Go file, input the API key and hostname of the Delphix Engine and display list of Engines added to the APIGW
 ```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+The test.go file executes a get all engines operation on the configured DCT-APIGW. 
+To run the test on your delphix engine, provide the API key and Hostname of the engine when prompted.
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+The test essentially tests if the client SDK is functional and should be run before raising a PR.
+The result of the test will be available at the end of the script as follows.
 
 ```
-Give an example
+List of engines are:
+my-host.domain.co
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+If in any case, the test fails, we will be getting a 'test failed' message in the end.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+Once successful generation of client SDK and the test succeeds, we are ready to raise a PR.
 
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/delphix/.github/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
-* **Joe Smith** - *Initial work* - [Company](https://github.com/Company)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+- **Uddipaan Hazarika** - _Initial work_ - [Company](https://github.com/delphix/)
 
 ## License
 
 This project is licensed under the XX License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
