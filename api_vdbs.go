@@ -531,8 +531,20 @@ func (a *VDBsApiService) GetVdbByIdExecute(r ApiGetVdbByIdRequest) (*VDB, *http.
 type ApiGetVdbsRequest struct {
 	ctx context.Context
 	ApiService *VDBsApiService
+	limit *int32
+	cursor *string
 }
 
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetVdbsRequest) Limit(limit int32) ApiGetVdbsRequest {
+	r.limit = &limit
+	return r
+}
+// Cursor to fetch the next or previous page of results.
+func (r ApiGetVdbsRequest) Cursor(cursor string) ApiGetVdbsRequest {
+	r.cursor = &cursor
+	return r
+}
 
 func (r ApiGetVdbsRequest) Execute() (*ListVDBsResponse, *http.Response, error) {
 	return r.ApiService.GetVdbsExecute(r)
@@ -572,6 +584,12 @@ func (a *VDBsApiService) GetVdbsExecute(r ApiGetVdbsRequest) (*ListVDBsResponse,
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+	}
+	if r.cursor != nil {
+		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

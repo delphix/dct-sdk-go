@@ -1,0 +1,16 @@
+# -*- mode: gitignore; -*-
+#
+# Copyright (c) 2017, 2022 by Delphix. All rights reserved.
+#
+
+# User-specific files:
+.idea/*
+*.iml
+*.eml
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
