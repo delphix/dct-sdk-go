@@ -18,6 +18,16 @@ The script codegen.sh generates a GO Client SDK using the openapi-generator-cli 
 Java needs to be installed to run the jar file. And Golang >= 1.17 needs to be installed in the machine where the script is run.
 
 Refer to the official docs of the respective languages for guidance.
+=======
+# Delphix Control Tower SDK for Go
+
+This repository houses the Go Client SDK for Delphix Control Tower APIs ( Multi Cloud Version).
+
+## Getting Started
+
+To be added.
+
+### Prerequisites
 
 Also the script requires an API Spec file for the DCT-APIGW. A sample file is present in the directory. For the latest spec, please download it from https://raw.githubusercontent.com/delphix/orbital-api-gateway/main/app/src/main/resources/api.yaml
 
@@ -66,8 +76,13 @@ Please read [CONTRIBUTING.md](https://github.com/delphix/.github/blob/master/CON
 
 ## Authors
 
-- **Uddipaan Hazarika** - _Initial work_ - [Company](https://github.com/delphix/)
+- Dephix Engineering - [Company](https://github.com/delphix/)
 
 ## License
 
-This project is licensed under the XX License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License 2.0. Full license is available [here](./LICENSE).
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
