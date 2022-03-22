@@ -15,34 +15,34 @@ import (
 	"encoding/json"
 )
 
-// ListEnginesResponse struct for ListEnginesResponse
-type ListEnginesResponse struct {
-	Items []Engine `json:"items,omitempty"`
+// ListVDBGroupsResponse struct for ListVDBGroupsResponse
+type ListVDBGroupsResponse struct {
+	Items []VDBGroup `json:"items,omitempty"`
 	// Sadly, sometimes requests to the API are not successful. Failures can occur for a wide range of reasons. The Errors object contains information about full or partial failures which might have occurred during the request.
 	Errors []Error `json:"errors,omitempty"`
 }
 
-// NewListEnginesResponse instantiates a new ListEnginesResponse object
+// NewListVDBGroupsResponse instantiates a new ListVDBGroupsResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewListEnginesResponse() *ListEnginesResponse {
-	this := ListEnginesResponse{}
+func NewListVDBGroupsResponse() *ListVDBGroupsResponse {
+	this := ListVDBGroupsResponse{}
 	return &this
 }
 
-// NewListEnginesResponseWithDefaults instantiates a new ListEnginesResponse object
+// NewListVDBGroupsResponseWithDefaults instantiates a new ListVDBGroupsResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewListEnginesResponseWithDefaults() *ListEnginesResponse {
-	this := ListEnginesResponse{}
+func NewListVDBGroupsResponseWithDefaults() *ListVDBGroupsResponse {
+	this := ListVDBGroupsResponse{}
 	return &this
 }
 
 // GetItems returns the Items field value if set, zero value otherwise.
-func (o *ListEnginesResponse) GetItems() []Engine {
+func (o *ListVDBGroupsResponse) GetItems() []VDBGroup {
 	if o == nil || o.Items == nil {
-		var ret []Engine
+		var ret []VDBGroup
 		return ret
 	}
 	return o.Items
@@ -50,7 +50,7 @@ func (o *ListEnginesResponse) GetItems() []Engine {
 
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListEnginesResponse) GetItemsOk() ([]Engine, bool) {
+func (o *ListVDBGroupsResponse) GetItemsOk() ([]VDBGroup, bool) {
 	if o == nil || o.Items == nil {
 		return nil, false
 	}
@@ -58,7 +58,7 @@ func (o *ListEnginesResponse) GetItemsOk() ([]Engine, bool) {
 }
 
 // HasItems returns a boolean if a field has been set.
-func (o *ListEnginesResponse) HasItems() bool {
+func (o *ListVDBGroupsResponse) HasItems() bool {
 	if o != nil && o.Items != nil {
 		return true
 	}
@@ -66,13 +66,13 @@ func (o *ListEnginesResponse) HasItems() bool {
 	return false
 }
 
-// SetItems gets a reference to the given []Engine and assigns it to the Items field.
-func (o *ListEnginesResponse) SetItems(v []Engine) {
+// SetItems gets a reference to the given []VDBGroup and assigns it to the Items field.
+func (o *ListVDBGroupsResponse) SetItems(v []VDBGroup) {
 	o.Items = v
 }
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *ListEnginesResponse) GetErrors() []Error {
+func (o *ListVDBGroupsResponse) GetErrors() []Error {
 	if o == nil || o.Errors == nil {
 		var ret []Error
 		return ret
@@ -82,7 +82,7 @@ func (o *ListEnginesResponse) GetErrors() []Error {
 
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListEnginesResponse) GetErrorsOk() ([]Error, bool) {
+func (o *ListVDBGroupsResponse) GetErrorsOk() ([]Error, bool) {
 	if o == nil || o.Errors == nil {
 		return nil, false
 	}
@@ -90,7 +90,7 @@ func (o *ListEnginesResponse) GetErrorsOk() ([]Error, bool) {
 }
 
 // HasErrors returns a boolean if a field has been set.
-func (o *ListEnginesResponse) HasErrors() bool {
+func (o *ListVDBGroupsResponse) HasErrors() bool {
 	if o != nil && o.Errors != nil {
 		return true
 	}
@@ -99,11 +99,11 @@ func (o *ListEnginesResponse) HasErrors() bool {
 }
 
 // SetErrors gets a reference to the given []Error and assigns it to the Errors field.
-func (o *ListEnginesResponse) SetErrors(v []Error) {
+func (o *ListVDBGroupsResponse) SetErrors(v []Error) {
 	o.Errors = v
 }
 
-func (o ListEnginesResponse) MarshalJSON() ([]byte, error) {
+func (o ListVDBGroupsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Items != nil {
 		toSerialize["items"] = o.Items
@@ -114,38 +114,38 @@ func (o ListEnginesResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableListEnginesResponse struct {
-	value *ListEnginesResponse
+type NullableListVDBGroupsResponse struct {
+	value *ListVDBGroupsResponse
 	isSet bool
 }
 
-func (v NullableListEnginesResponse) Get() *ListEnginesResponse {
+func (v NullableListVDBGroupsResponse) Get() *ListVDBGroupsResponse {
 	return v.value
 }
 
-func (v *NullableListEnginesResponse) Set(val *ListEnginesResponse) {
+func (v *NullableListVDBGroupsResponse) Set(val *ListVDBGroupsResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableListEnginesResponse) IsSet() bool {
+func (v NullableListVDBGroupsResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableListEnginesResponse) Unset() {
+func (v *NullableListVDBGroupsResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableListEnginesResponse(val *ListEnginesResponse) *NullableListEnginesResponse {
-	return &NullableListEnginesResponse{value: val, isSet: true}
+func NewNullableListVDBGroupsResponse(val *ListVDBGroupsResponse) *NullableListVDBGroupsResponse {
+	return &NullableListVDBGroupsResponse{value: val, isSet: true}
 }
 
-func (v NullableListEnginesResponse) MarshalJSON() ([]byte, error) {
+func (v NullableListVDBGroupsResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableListEnginesResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableListVDBGroupsResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
