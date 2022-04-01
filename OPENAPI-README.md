@@ -114,11 +114,6 @@ Class | Method | HTTP request | Description
 *SnapshotsApi* | [**GetSnapshots**](docs/SnapshotsApi.md#getsnapshots) | **Get** /snapshots | List Snapshots for a dSource or VDB.
 *SourcesApi* | [**GetSourceById**](docs/SourcesApi.md#getsourcebyid) | **Get** /sources/{sourceId} | Get a source by ID.
 *SourcesApi* | [**GetSources**](docs/SourcesApi.md#getsources) | **Get** /sources | List all sources.
-*VDBGroupsApi* | [**CreateVdbGroup**](docs/VDBGroupsApi.md#createvdbgroup) | **Post** /vdb-groups | Create a new VDBGroup.
-*VDBGroupsApi* | [**DeleteVdbGroup**](docs/VDBGroupsApi.md#deletevdbgroup) | **Delete** /vdb-groups/{vdbGroupId} | Delete a VDBGoup.
-*VDBGroupsApi* | [**GetBookmarksByVdbGroup**](docs/VDBGroupsApi.md#getbookmarksbyvdbgroup) | **Get** /vdb-groups/{vdbGroupId}/bookmarks | List bookmarks compatible with this VDB Group.
-*VDBGroupsApi* | [**GetVdbGroup**](docs/VDBGroupsApi.md#getvdbgroup) | **Get** /vdb-groups/{vdbGroupId} | Get a VDBGroup by name.
-*VDBGroupsApi* | [**GetVdbGroups**](docs/VDBGroupsApi.md#getvdbgroups) | **Get** /vdb-groups | List all VDBGroups.
 *VDBsApi* | [**CreateVdbTags**](docs/VDBsApi.md#createvdbtags) | **Post** /vdbs/{vdbId}/tags | Create tags for a VDB.
 *VDBsApi* | [**DeleteVdb**](docs/VDBsApi.md#deletevdb) | **Post** /vdbs/{vdbId}/delete | Delete a VDB.
 *VDBsApi* | [**DeleteVdbTags**](docs/VDBsApi.md#deletevdbtags) | **Post** /vdbs/{vdbId}/tags/delete | Delete tags for a VDB.
@@ -147,8 +142,6 @@ Class | Method | HTTP request | Description
  - [Bookmark](docs/Bookmark.md)
  - [CreateBookmarkResponse](docs/CreateBookmarkResponse.md)
  - [CreateEnvironmentResponse](docs/CreateEnvironmentResponse.md)
- - [CreateVDBGroupRequest](docs/CreateVDBGroupRequest.md)
- - [CreateVDBGroupResponse](docs/CreateVDBGroupResponse.md)
  - [DSource](docs/DSource.md)
  - [DataPointBySnapshotParameters](docs/DataPointBySnapshotParameters.md)
  - [DataPointByTimestampParameters](docs/DataPointByTimestampParameters.md)
@@ -173,14 +166,12 @@ Class | Method | HTTP request | Description
  - [Hook](docs/Hook.md)
  - [Host](docs/Host.md)
  - [Job](docs/Job.md)
- - [ListBookmarksByVDBGroupsResponse](docs/ListBookmarksByVDBGroupsResponse.md)
  - [ListBookmarksResponse](docs/ListBookmarksResponse.md)
  - [ListDSourcesResponse](docs/ListDSourcesResponse.md)
  - [ListEnvironmentsResponse](docs/ListEnvironmentsResponse.md)
  - [ListSnaphotsResponse](docs/ListSnaphotsResponse.md)
  - [ListSourcesResponse](docs/ListSourcesResponse.md)
  - [ListVDBGroupsByBookmarkResponse](docs/ListVDBGroupsByBookmarkResponse.md)
- - [ListVDBGroupsResponse](docs/ListVDBGroupsResponse.md)
  - [ListVDBsResponse](docs/ListVDBsResponse.md)
  - [PaginatedResponseMetadata](docs/PaginatedResponseMetadata.md)
  - [ProvisionVDBBySnapshotParameters](docs/ProvisionVDBBySnapshotParameters.md)
