@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **EngineId** | Pointer to **string** | A reference to the Engine that this dSource belongs to. | [optional] 
 **SourceId** | Pointer to **NullableString** | A reference to the Source associated with this dSource. | [optional] 
 **Status** | Pointer to **NullableString** | The runtime status of the dSource. &#39;Unknown&#39; if all attempts to connect to the source failed. | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -472,6 +473,31 @@ HasStatus returns a boolean if a field has been set.
 `func (o *DSource) UnsetStatus()`
 
 UnsetStatus ensures that no value is present for Status, not even an explicit nil
+### GetTags
+
+`func (o *DSource) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *DSource) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *DSource) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *DSource) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

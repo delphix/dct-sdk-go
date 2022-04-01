@@ -64,9 +64,13 @@ type APIClient struct {
 
 	ManagementApi *ManagementApiService
 
+	ReportingApi *ReportingApiService
+
 	SnapshotsApi *SnapshotsApiService
 
 	SourcesApi *SourcesApiService
+
+	VDBGroupsApi *VDBGroupsApiService
 
 	VDBsApi *VDBsApiService
 }
@@ -94,8 +98,10 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.EnvironmentsApi = (*EnvironmentsApiService)(&c.common)
 	c.JobsApi = (*JobsApiService)(&c.common)
 	c.ManagementApi = (*ManagementApiService)(&c.common)
+	c.ReportingApi = (*ReportingApiService)(&c.common)
 	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)
 	c.SourcesApi = (*SourcesApiService)(&c.common)
+	c.VDBGroupsApi = (*VDBGroupsApiService)(&c.common)
 	c.VDBsApi = (*VDBsApiService)(&c.common)
 
 	return c

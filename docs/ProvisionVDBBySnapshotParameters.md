@@ -47,6 +47,7 @@ Name | Type | Description | Notes
 **ListenerIds** | Pointer to **[]string** | The listener IDs for this provision operation (Oracle Only). | [optional] 
 **CustomEnvVars** | Pointer to **map[string]string** | Environment variable to be set when the engine creates a VDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution. | [optional] 
 **CustomEnvFiles** | Pointer to **[]string** | Environment files to be sourced when the Engine creates a VDB. This path can be followed by parameters. Paths and parameters are separated by spaces. | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for VDB. | [optional] 
 **SnapshotId** | Pointer to **string** | The ID of the snapshot from which to execute the operation. If the snapshot_id is not, selects the latest snapshot. | [optional] 
 
 ## Methods
@@ -1142,6 +1143,31 @@ SetCustomEnvFiles sets CustomEnvFiles field to given value.
 `func (o *ProvisionVDBBySnapshotParameters) HasCustomEnvFiles() bool`
 
 HasCustomEnvFiles returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *ProvisionVDBBySnapshotParameters) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *ProvisionVDBBySnapshotParameters) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *ProvisionVDBBySnapshotParameters) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *ProvisionVDBBySnapshotParameters) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
 
 ### GetSnapshotId
 
