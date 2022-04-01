@@ -28,7 +28,7 @@ fi
 [[ ! -d "/tmp" ]] && mktemp
 
 java -jar openapi-generator-cli.jar generate \
-    -i $1 -g go -o tmp/ || die "failed to generate code"
+    -i $1 -g go -o tmp/ --package-name delphix_dct_api|| die "failed to generate code"
 
 script_base_dir=$(dirname $0)
 
