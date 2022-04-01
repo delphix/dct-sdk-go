@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**DeleteBookmark**](BookmarksApi.md#DeleteBookmark) | **Delete** /bookmarks/{bookmarkId} | Delete a bookmark.
 [**GetBookmarkById**](BookmarksApi.md#GetBookmarkById) | **Get** /bookmarks/{bookmarkId} | Get a bookmark by ID.
 [**GetBookmarks**](BookmarksApi.md#GetBookmarks) | **Get** /bookmarks | List all bookmarks.
-[**RestoreBookmark**](BookmarksApi.md#RestoreBookmark) | **Post** /bookmarks/{bookmarkId}/restore | Restore VDBs to the bookmark creation time.
+[**GetVdbGroupsByBookmark**](BookmarksApi.md#GetVdbGroupsByBookmark) | **Get** /bookmarks/{bookmarkId}/vdb-groups | List VDB Groups compatible with this bookmark.
 
 
 
@@ -269,11 +269,11 @@ Other parameters are passed through a pointer to a apiGetBookmarksRequest struct
 [[Back to README]](../README.md)
 
 
-## RestoreBookmark
+## GetVdbGroupsByBookmark
 
-> RestoreBookmarkResponse RestoreBookmark(ctx, bookmarkId).Execute()
+> ListVDBGroupsByBookmarkResponse GetVdbGroupsByBookmark(ctx, bookmarkId).Execute()
 
-Restore VDBs to the bookmark creation time.
+List VDB Groups compatible with this bookmark.
 
 ### Example
 
@@ -292,13 +292,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.BookmarksApi.RestoreBookmark(context.Background(), bookmarkId).Execute()
+    resp, r, err := apiClient.BookmarksApi.GetVdbGroupsByBookmark(context.Background(), bookmarkId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `BookmarksApi.RestoreBookmark``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `BookmarksApi.GetVdbGroupsByBookmark``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `RestoreBookmark`: RestoreBookmarkResponse
-    fmt.Fprintf(os.Stdout, "Response from `BookmarksApi.RestoreBookmark`: %v\n", resp)
+    // response from `GetVdbGroupsByBookmark`: ListVDBGroupsByBookmarkResponse
+    fmt.Fprintf(os.Stdout, "Response from `BookmarksApi.GetVdbGroupsByBookmark`: %v\n", resp)
 }
 ```
 
@@ -312,7 +312,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiRestoreBookmarkRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetVdbGroupsByBookmarkRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -321,7 +321,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**RestoreBookmarkResponse**](RestoreBookmarkResponse.md)
+[**ListVDBGroupsByBookmarkResponse**](ListVDBGroupsByBookmarkResponse.md)
 
 ### Authorization
 

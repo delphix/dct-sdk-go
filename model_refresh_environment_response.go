@@ -15,31 +15,31 @@ import (
 	"encoding/json"
 )
 
-// RestoreBookmarkResponse struct for RestoreBookmarkResponse
-type RestoreBookmarkResponse struct {
+// RefreshEnvironmentResponse struct for RefreshEnvironmentResponse
+type RefreshEnvironmentResponse struct {
 	// The initiated job id.
 	JobId *string `json:"job_id,omitempty"`
 }
 
-// NewRestoreBookmarkResponse instantiates a new RestoreBookmarkResponse object
+// NewRefreshEnvironmentResponse instantiates a new RefreshEnvironmentResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRestoreBookmarkResponse() *RestoreBookmarkResponse {
-	this := RestoreBookmarkResponse{}
+func NewRefreshEnvironmentResponse() *RefreshEnvironmentResponse {
+	this := RefreshEnvironmentResponse{}
 	return &this
 }
 
-// NewRestoreBookmarkResponseWithDefaults instantiates a new RestoreBookmarkResponse object
+// NewRefreshEnvironmentResponseWithDefaults instantiates a new RefreshEnvironmentResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewRestoreBookmarkResponseWithDefaults() *RestoreBookmarkResponse {
-	this := RestoreBookmarkResponse{}
+func NewRefreshEnvironmentResponseWithDefaults() *RefreshEnvironmentResponse {
+	this := RefreshEnvironmentResponse{}
 	return &this
 }
 
 // GetJobId returns the JobId field value if set, zero value otherwise.
-func (o *RestoreBookmarkResponse) GetJobId() string {
+func (o *RefreshEnvironmentResponse) GetJobId() string {
 	if o == nil || o.JobId == nil {
 		var ret string
 		return ret
@@ -49,7 +49,7 @@ func (o *RestoreBookmarkResponse) GetJobId() string {
 
 // GetJobIdOk returns a tuple with the JobId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RestoreBookmarkResponse) GetJobIdOk() (*string, bool) {
+func (o *RefreshEnvironmentResponse) GetJobIdOk() (*string, bool) {
 	if o == nil || o.JobId == nil {
 		return nil, false
 	}
@@ -57,7 +57,7 @@ func (o *RestoreBookmarkResponse) GetJobIdOk() (*string, bool) {
 }
 
 // HasJobId returns a boolean if a field has been set.
-func (o *RestoreBookmarkResponse) HasJobId() bool {
+func (o *RefreshEnvironmentResponse) HasJobId() bool {
 	if o != nil && o.JobId != nil {
 		return true
 	}
@@ -66,11 +66,11 @@ func (o *RestoreBookmarkResponse) HasJobId() bool {
 }
 
 // SetJobId gets a reference to the given string and assigns it to the JobId field.
-func (o *RestoreBookmarkResponse) SetJobId(v string) {
+func (o *RefreshEnvironmentResponse) SetJobId(v string) {
 	o.JobId = &v
 }
 
-func (o RestoreBookmarkResponse) MarshalJSON() ([]byte, error) {
+func (o RefreshEnvironmentResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.JobId != nil {
 		toSerialize["job_id"] = o.JobId
@@ -78,38 +78,38 @@ func (o RestoreBookmarkResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableRestoreBookmarkResponse struct {
-	value *RestoreBookmarkResponse
+type NullableRefreshEnvironmentResponse struct {
+	value *RefreshEnvironmentResponse
 	isSet bool
 }
 
-func (v NullableRestoreBookmarkResponse) Get() *RestoreBookmarkResponse {
+func (v NullableRefreshEnvironmentResponse) Get() *RefreshEnvironmentResponse {
 	return v.value
 }
 
-func (v *NullableRestoreBookmarkResponse) Set(val *RestoreBookmarkResponse) {
+func (v *NullableRefreshEnvironmentResponse) Set(val *RefreshEnvironmentResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableRestoreBookmarkResponse) IsSet() bool {
+func (v NullableRefreshEnvironmentResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableRestoreBookmarkResponse) Unset() {
+func (v *NullableRefreshEnvironmentResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableRestoreBookmarkResponse(val *RestoreBookmarkResponse) *NullableRestoreBookmarkResponse {
-	return &NullableRestoreBookmarkResponse{value: val, isSet: true}
+func NewNullableRefreshEnvironmentResponse(val *RefreshEnvironmentResponse) *NullableRefreshEnvironmentResponse {
+	return &NullableRefreshEnvironmentResponse{value: val, isSet: true}
 }
 
-func (v NullableRestoreBookmarkResponse) MarshalJSON() ([]byte, error) {
+func (v NullableRefreshEnvironmentResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableRestoreBookmarkResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableRefreshEnvironmentResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

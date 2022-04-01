@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Timestamp** | Pointer to **time.Time** | The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point. | [optional] 
 **TimestampInDatabaseTimezone** | Pointer to **string** | The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp. | [optional] 
+**DatasetId** | Pointer to **string** | ID of the dataset to refresh to | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetTimestampInDatabaseTimezone sets TimestampInDatabaseTimezone field to given v
 `func (o *RefreshVDBByTimestampParameters) HasTimestampInDatabaseTimezone() bool`
 
 HasTimestampInDatabaseTimezone returns a boolean if a field has been set.
+
+### GetDatasetId
+
+`func (o *RefreshVDBByTimestampParameters) GetDatasetId() string`
+
+GetDatasetId returns the DatasetId field if non-nil, zero value otherwise.
+
+### GetDatasetIdOk
+
+`func (o *RefreshVDBByTimestampParameters) GetDatasetIdOk() (*string, bool)`
+
+GetDatasetIdOk returns a tuple with the DatasetId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatasetId
+
+`func (o *RefreshVDBByTimestampParameters) SetDatasetId(v string)`
+
+SetDatasetId sets DatasetId field to given value.
+
+### HasDatasetId
+
+`func (o *RefreshVDBByTimestampParameters) HasDatasetId() bool`
+
+HasDatasetId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

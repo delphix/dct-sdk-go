@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **Fqdn** | Pointer to **NullableString** | The FQDN of the VDB&#39;s host. | [optional] 
 **ParentId** | Pointer to **NullableString** | A reference to the parent dataset of this VDB. | [optional] 
 **GroupName** | Pointer to **NullableString** | The name of the group containing this VDB. | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 **CreationDate** | Pointer to **NullableTime** | The date this VDB was created. | [optional] 
 
 ## Methods
@@ -437,6 +438,31 @@ HasGroupName returns a boolean if a field has been set.
 `func (o *VDB) UnsetGroupName()`
 
 UnsetGroupName ensures that no value is present for GroupName, not even an explicit nil
+### GetTags
+
+`func (o *VDB) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *VDB) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *VDB) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *VDB) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
 ### GetCreationDate
 
 `func (o *VDB) GetCreationDate() time.Time`

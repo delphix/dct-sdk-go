@@ -4,9 +4,81 @@ All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateTagsDsource**](DSourcesApi.md#CreateTagsDsource) | **Post** /dsources/{dsourceId}/tags | Create tags for a dSource.
 [**GetDsourceById**](DSourcesApi.md#GetDsourceById) | **Get** /dsources/{dsourceId} | Get a dSource by ID.
 [**GetDsources**](DSourcesApi.md#GetDsources) | **Get** /dsources | List all dSources.
+[**GetTagsDsource**](DSourcesApi.md#GetTagsDsource) | **Get** /dsources/{dsourceId}/tags | Get tags for a dSource.
 
+
+
+## CreateTagsDsource
+
+> TagsResponse CreateTagsDsource(ctx, dsourceId).TagsRequest(tagsRequest).Execute()
+
+Create tags for a dSource.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    dsourceId := "dsourceId_example" // string | The ID of the dSource.
+    tagsRequest := *openapiclient.NewTagsRequest() // TagsRequest | Tags information for DSource.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DSourcesApi.CreateTagsDsource(context.Background(), dsourceId).TagsRequest(tagsRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.CreateTagsDsource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateTagsDsource`: TagsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.CreateTagsDsource`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**dsourceId** | **string** | The ID of the dSource. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateTagsDsourceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **tagsRequest** | [**TagsRequest**](TagsRequest.md) | Tags information for DSource. | 
+
+### Return type
+
+[**TagsResponse**](TagsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetDsourceById
@@ -79,7 +151,7 @@ Name | Type | Description  | Notes
 
 ## GetDsources
 
-> ListDSourcesResponse GetDsources(ctx).Execute()
+> ListDSourcesResponse GetDsources(ctx).Limit(limit).Cursor(cursor).Execute()
 
 List all dSources.
 
@@ -96,10 +168,12 @@ import (
 )
 
 func main() {
+    limit := int32(50) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. (optional) (default to 100)
+    cursor := "RXlhbCBpcyBncmVhdAo=" // string | Cursor to fetch the next or previous page of results. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DSourcesApi.GetDsources(context.Background()).Execute()
+    resp, r, err := apiClient.DSourcesApi.GetDsources(context.Background()).Limit(limit).Cursor(cursor).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.GetDsources``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -111,16 +185,89 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDsourcesRequest struct via the builder pattern
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. | [default to 100]
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. | 
+
 ### Return type
 
 [**ListDSourcesResponse**](ListDSourcesResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetTagsDsource
+
+> TagsResponse GetTagsDsource(ctx, dsourceId).Execute()
+
+Get tags for a dSource.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    dsourceId := "dsourceId_example" // string | The ID of the dSource.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DSourcesApi.GetTagsDsource(context.Background(), dsourceId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.GetTagsDsource``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetTagsDsource`: TagsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.GetTagsDsource`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**dsourceId** | **string** | The ID of the dSource. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTagsDsourceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**TagsResponse**](TagsResponse.md)
 
 ### Authorization
 
