@@ -5,6 +5,7 @@ go 1.17
 retract (
 	v1.1.0 // Published for testing
 	v1.0.0-b1 // Published for testing
+	v1.1.1 // Contains retractions only.
 )
 
 require golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a
