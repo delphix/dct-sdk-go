@@ -3,9 +3,9 @@
 #
 openapi: 3.0.0
 info:
-  title: Delphix API Gateway
+  title: Delphix DCT API
   version: '1.0'
-  description: Delphix API Gateway API
+  description: Delphix DCT API
   contact:
     name: Delphix Support
     url: https://support.delphix.com

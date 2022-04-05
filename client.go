@@ -1,7 +1,7 @@
 /*
-Delphix API Gateway
+Delphix DCT API
 
-Delphix API Gateway API
+Delphix DCT API
 
 API version: 1.0
 Contact: support@delphix.com
@@ -42,7 +42,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the Delphix API Gateway API v1.0
+// APIClient manages communication with the Delphix DCT API API v1.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
