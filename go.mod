@@ -13,8 +13,9 @@ require (
 
 retract (
 	v1.1.1 // Contains retractions only.
+	v1.1.1-beta3 // Published for testing
 	v1.1.0 // Published for testing
-	v1.0.0-beta2	// Published for testing
-	v1.0.0-beta	// Published for testing
+	v1.0.0-beta2 // Published for testing
+	v1.0.0-beta // Published for testing
 	v1.0.0-b1 // Published for testing
 )
