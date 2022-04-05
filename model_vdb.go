@@ -1,7 +1,7 @@
 /*
-Delphix API Gateway
+Delphix DCT API
 
-Delphix API Gateway API
+Delphix DCT API
 
 API version: 1.0
 Contact: support@delphix.com
