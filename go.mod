@@ -18,4 +18,6 @@ retract (
 	v1.0.0-beta2 // Published for testing
 	v1.0.0-beta // Published for testing
 	v1.0.0-b1 // Published for testing
+	v0.22.321	// Published for testing 
+	v1.1.2	 // Contains retractions only.
 )
