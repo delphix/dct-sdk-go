@@ -35,6 +35,8 @@ type EngineRegistrationParameter struct {
 	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
 	// Password to read the truststore. 
 	TruststorePassword NullableString `json:"truststore_password,omitempty"`
+	// The tags to be created for this engine.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewEngineRegistrationParameter instantiates a new EngineRegistrationParameter object
@@ -452,6 +454,38 @@ func (o *EngineRegistrationParameter) UnsetTruststorePassword() {
 	o.TruststorePassword.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *EngineRegistrationParameter) GetTags() []Tag {
+	if o == nil || o.Tags == nil {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EngineRegistrationParameter) GetTagsOk() ([]Tag, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *EngineRegistrationParameter) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *EngineRegistrationParameter) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o EngineRegistrationParameter) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -486,6 +520,9 @@ func (o EngineRegistrationParameter) MarshalJSON() ([]byte, error) {
 	}
 	if o.TruststorePassword.IsSet() {
 		toSerialize["truststore_password"] = o.TruststorePassword.Get()
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return json.Marshal(toSerialize)
 }

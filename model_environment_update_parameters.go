@@ -25,12 +25,36 @@ type EnvironmentUpdateParameters struct {
 	StagingEnvironment *string `json:"staging_environment,omitempty"`
 	// Specify port on which Delphix connector will run.
 	ConnectorPort *int32 `json:"connector_port,omitempty"`
+	// Address of the cluster. This property can be modified for Windows cluster only.
+	ClusterAddress *string `json:"cluster_address,omitempty"`
+	// Absolute path to cluster home drectory. This parameter is for UNIX cluster environments.
+	ClusterHome *string `json:"cluster_home,omitempty"`
+	// Address/hostname of one of the host in this environment for which parameteres are being modified. This property is used in case of cluster environments only.
+	ClusterNodeAddress *string `json:"cluster_node_address,omitempty"`
 	// array of ip addresses or hostnames
 	NfsAddresses []string `json:"nfs_addresses,omitempty"`
 	// ssh port of the host.
 	SshPort *int64 `json:"ssh_port,omitempty"`
 	// The path for the toolkit that resides on the host.
 	ToolkitPath *string `json:"toolkit_path,omitempty"`
+	// username of the SAP ASE database.
+	AseDbUsername *string `json:"ase_db_username,omitempty"`
+	// password of the SAP ASE database.
+	AseDbPassword *string `json:"ase_db_password,omitempty"`
+	// The name or reference of the vault from which to read the ASE database credentials.
+	AseDbVault *string `json:"ase_db_vault,omitempty"`
+	// Vault engine name where the credential is stored.
+	AseDbHashicorpVaultEngine *string `json:"ase_db_hashicorp_vault_engine,omitempty"`
+	// Path in the vault engine where the credential is stored.
+	AseDbHashicorpVaultSecretPath *string `json:"ase_db_hashicorp_vault_secret_path,omitempty"`
+	// Key for the username in the key-value store.
+	AseDbHashicorpVaultUsernameKey *string `json:"ase_db_hashicorp_vault_username_key,omitempty"`
+	// Key for the password in the key-value store.
+	AseDbHashicorpVaultSecretKey *string `json:"ase_db_hashicorp_vault_secret_key,omitempty"`
+	// Query to find a credential in the CyberArk vault.
+	AseDbCyberarkVaultQueryString *string `json:"ase_db_cyberark_vault_query_string,omitempty"`
+	// Whether to use kerberos authentication for ASE DB discovery.
+	AseDbUseKerberosAuthentication *bool `json:"ase_db_use_kerberos_authentication,omitempty"`
 	// The path to the user managed Java Development Kit (JDK). If not specified, then the OpenJDK will be used.
 	JavaHome *string `json:"java_home,omitempty"`
 	// DSP keystore path.
@@ -192,6 +216,102 @@ func (o *EnvironmentUpdateParameters) SetConnectorPort(v int32) {
 	o.ConnectorPort = &v
 }
 
+// GetClusterAddress returns the ClusterAddress field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetClusterAddress() string {
+	if o == nil || o.ClusterAddress == nil {
+		var ret string
+		return ret
+	}
+	return *o.ClusterAddress
+}
+
+// GetClusterAddressOk returns a tuple with the ClusterAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetClusterAddressOk() (*string, bool) {
+	if o == nil || o.ClusterAddress == nil {
+		return nil, false
+	}
+	return o.ClusterAddress, true
+}
+
+// HasClusterAddress returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasClusterAddress() bool {
+	if o != nil && o.ClusterAddress != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterAddress gets a reference to the given string and assigns it to the ClusterAddress field.
+func (o *EnvironmentUpdateParameters) SetClusterAddress(v string) {
+	o.ClusterAddress = &v
+}
+
+// GetClusterHome returns the ClusterHome field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetClusterHome() string {
+	if o == nil || o.ClusterHome == nil {
+		var ret string
+		return ret
+	}
+	return *o.ClusterHome
+}
+
+// GetClusterHomeOk returns a tuple with the ClusterHome field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetClusterHomeOk() (*string, bool) {
+	if o == nil || o.ClusterHome == nil {
+		return nil, false
+	}
+	return o.ClusterHome, true
+}
+
+// HasClusterHome returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasClusterHome() bool {
+	if o != nil && o.ClusterHome != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterHome gets a reference to the given string and assigns it to the ClusterHome field.
+func (o *EnvironmentUpdateParameters) SetClusterHome(v string) {
+	o.ClusterHome = &v
+}
+
+// GetClusterNodeAddress returns the ClusterNodeAddress field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetClusterNodeAddress() string {
+	if o == nil || o.ClusterNodeAddress == nil {
+		var ret string
+		return ret
+	}
+	return *o.ClusterNodeAddress
+}
+
+// GetClusterNodeAddressOk returns a tuple with the ClusterNodeAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetClusterNodeAddressOk() (*string, bool) {
+	if o == nil || o.ClusterNodeAddress == nil {
+		return nil, false
+	}
+	return o.ClusterNodeAddress, true
+}
+
+// HasClusterNodeAddress returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasClusterNodeAddress() bool {
+	if o != nil && o.ClusterNodeAddress != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterNodeAddress gets a reference to the given string and assigns it to the ClusterNodeAddress field.
+func (o *EnvironmentUpdateParameters) SetClusterNodeAddress(v string) {
+	o.ClusterNodeAddress = &v
+}
+
 // GetNfsAddresses returns the NfsAddresses field value if set, zero value otherwise.
 func (o *EnvironmentUpdateParameters) GetNfsAddresses() []string {
 	if o == nil || o.NfsAddresses == nil {
@@ -286,6 +406,294 @@ func (o *EnvironmentUpdateParameters) HasToolkitPath() bool {
 // SetToolkitPath gets a reference to the given string and assigns it to the ToolkitPath field.
 func (o *EnvironmentUpdateParameters) SetToolkitPath(v string) {
 	o.ToolkitPath = &v
+}
+
+// GetAseDbUsername returns the AseDbUsername field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbUsername() string {
+	if o == nil || o.AseDbUsername == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbUsername
+}
+
+// GetAseDbUsernameOk returns a tuple with the AseDbUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbUsernameOk() (*string, bool) {
+	if o == nil || o.AseDbUsername == nil {
+		return nil, false
+	}
+	return o.AseDbUsername, true
+}
+
+// HasAseDbUsername returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbUsername() bool {
+	if o != nil && o.AseDbUsername != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbUsername gets a reference to the given string and assigns it to the AseDbUsername field.
+func (o *EnvironmentUpdateParameters) SetAseDbUsername(v string) {
+	o.AseDbUsername = &v
+}
+
+// GetAseDbPassword returns the AseDbPassword field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbPassword() string {
+	if o == nil || o.AseDbPassword == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbPassword
+}
+
+// GetAseDbPasswordOk returns a tuple with the AseDbPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbPasswordOk() (*string, bool) {
+	if o == nil || o.AseDbPassword == nil {
+		return nil, false
+	}
+	return o.AseDbPassword, true
+}
+
+// HasAseDbPassword returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbPassword() bool {
+	if o != nil && o.AseDbPassword != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbPassword gets a reference to the given string and assigns it to the AseDbPassword field.
+func (o *EnvironmentUpdateParameters) SetAseDbPassword(v string) {
+	o.AseDbPassword = &v
+}
+
+// GetAseDbVault returns the AseDbVault field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbVault() string {
+	if o == nil || o.AseDbVault == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbVault
+}
+
+// GetAseDbVaultOk returns a tuple with the AseDbVault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbVaultOk() (*string, bool) {
+	if o == nil || o.AseDbVault == nil {
+		return nil, false
+	}
+	return o.AseDbVault, true
+}
+
+// HasAseDbVault returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbVault() bool {
+	if o != nil && o.AseDbVault != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbVault gets a reference to the given string and assigns it to the AseDbVault field.
+func (o *EnvironmentUpdateParameters) SetAseDbVault(v string) {
+	o.AseDbVault = &v
+}
+
+// GetAseDbHashicorpVaultEngine returns the AseDbHashicorpVaultEngine field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultEngine() string {
+	if o == nil || o.AseDbHashicorpVaultEngine == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultEngine
+}
+
+// GetAseDbHashicorpVaultEngineOk returns a tuple with the AseDbHashicorpVaultEngine field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultEngineOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultEngine == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultEngine, true
+}
+
+// HasAseDbHashicorpVaultEngine returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultEngine() bool {
+	if o != nil && o.AseDbHashicorpVaultEngine != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultEngine gets a reference to the given string and assigns it to the AseDbHashicorpVaultEngine field.
+func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultEngine(v string) {
+	o.AseDbHashicorpVaultEngine = &v
+}
+
+// GetAseDbHashicorpVaultSecretPath returns the AseDbHashicorpVaultSecretPath field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretPath() string {
+	if o == nil || o.AseDbHashicorpVaultSecretPath == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultSecretPath
+}
+
+// GetAseDbHashicorpVaultSecretPathOk returns a tuple with the AseDbHashicorpVaultSecretPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretPathOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultSecretPath == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultSecretPath, true
+}
+
+// HasAseDbHashicorpVaultSecretPath returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultSecretPath() bool {
+	if o != nil && o.AseDbHashicorpVaultSecretPath != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultSecretPath gets a reference to the given string and assigns it to the AseDbHashicorpVaultSecretPath field.
+func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultSecretPath(v string) {
+	o.AseDbHashicorpVaultSecretPath = &v
+}
+
+// GetAseDbHashicorpVaultUsernameKey returns the AseDbHashicorpVaultUsernameKey field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultUsernameKey() string {
+	if o == nil || o.AseDbHashicorpVaultUsernameKey == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultUsernameKey
+}
+
+// GetAseDbHashicorpVaultUsernameKeyOk returns a tuple with the AseDbHashicorpVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultUsernameKey == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultUsernameKey, true
+}
+
+// HasAseDbHashicorpVaultUsernameKey returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultUsernameKey() bool {
+	if o != nil && o.AseDbHashicorpVaultUsernameKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultUsernameKey gets a reference to the given string and assigns it to the AseDbHashicorpVaultUsernameKey field.
+func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultUsernameKey(v string) {
+	o.AseDbHashicorpVaultUsernameKey = &v
+}
+
+// GetAseDbHashicorpVaultSecretKey returns the AseDbHashicorpVaultSecretKey field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretKey() string {
+	if o == nil || o.AseDbHashicorpVaultSecretKey == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultSecretKey
+}
+
+// GetAseDbHashicorpVaultSecretKeyOk returns a tuple with the AseDbHashicorpVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretKeyOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultSecretKey == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultSecretKey, true
+}
+
+// HasAseDbHashicorpVaultSecretKey returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultSecretKey() bool {
+	if o != nil && o.AseDbHashicorpVaultSecretKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultSecretKey gets a reference to the given string and assigns it to the AseDbHashicorpVaultSecretKey field.
+func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultSecretKey(v string) {
+	o.AseDbHashicorpVaultSecretKey = &v
+}
+
+// GetAseDbCyberarkVaultQueryString returns the AseDbCyberarkVaultQueryString field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbCyberarkVaultQueryString() string {
+	if o == nil || o.AseDbCyberarkVaultQueryString == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbCyberarkVaultQueryString
+}
+
+// GetAseDbCyberarkVaultQueryStringOk returns a tuple with the AseDbCyberarkVaultQueryString field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbCyberarkVaultQueryStringOk() (*string, bool) {
+	if o == nil || o.AseDbCyberarkVaultQueryString == nil {
+		return nil, false
+	}
+	return o.AseDbCyberarkVaultQueryString, true
+}
+
+// HasAseDbCyberarkVaultQueryString returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbCyberarkVaultQueryString() bool {
+	if o != nil && o.AseDbCyberarkVaultQueryString != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbCyberarkVaultQueryString gets a reference to the given string and assigns it to the AseDbCyberarkVaultQueryString field.
+func (o *EnvironmentUpdateParameters) SetAseDbCyberarkVaultQueryString(v string) {
+	o.AseDbCyberarkVaultQueryString = &v
+}
+
+// GetAseDbUseKerberosAuthentication returns the AseDbUseKerberosAuthentication field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbUseKerberosAuthentication() bool {
+	if o == nil || o.AseDbUseKerberosAuthentication == nil {
+		var ret bool
+		return ret
+	}
+	return *o.AseDbUseKerberosAuthentication
+}
+
+// GetAseDbUseKerberosAuthenticationOk returns a tuple with the AseDbUseKerberosAuthentication field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbUseKerberosAuthenticationOk() (*bool, bool) {
+	if o == nil || o.AseDbUseKerberosAuthentication == nil {
+		return nil, false
+	}
+	return o.AseDbUseKerberosAuthentication, true
+}
+
+// HasAseDbUseKerberosAuthentication returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbUseKerberosAuthentication() bool {
+	if o != nil && o.AseDbUseKerberosAuthentication != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbUseKerberosAuthentication gets a reference to the given bool and assigns it to the AseDbUseKerberosAuthentication field.
+func (o *EnvironmentUpdateParameters) SetAseDbUseKerberosAuthentication(v bool) {
+	o.AseDbUseKerberosAuthentication = &v
 }
 
 // GetJavaHome returns the JavaHome field value if set, zero value otherwise.
@@ -526,6 +934,15 @@ func (o EnvironmentUpdateParameters) MarshalJSON() ([]byte, error) {
 	if o.ConnectorPort != nil {
 		toSerialize["connector_port"] = o.ConnectorPort
 	}
+	if o.ClusterAddress != nil {
+		toSerialize["cluster_address"] = o.ClusterAddress
+	}
+	if o.ClusterHome != nil {
+		toSerialize["cluster_home"] = o.ClusterHome
+	}
+	if o.ClusterNodeAddress != nil {
+		toSerialize["cluster_node_address"] = o.ClusterNodeAddress
+	}
 	if o.NfsAddresses != nil {
 		toSerialize["nfs_addresses"] = o.NfsAddresses
 	}
@@ -534,6 +951,33 @@ func (o EnvironmentUpdateParameters) MarshalJSON() ([]byte, error) {
 	}
 	if o.ToolkitPath != nil {
 		toSerialize["toolkit_path"] = o.ToolkitPath
+	}
+	if o.AseDbUsername != nil {
+		toSerialize["ase_db_username"] = o.AseDbUsername
+	}
+	if o.AseDbPassword != nil {
+		toSerialize["ase_db_password"] = o.AseDbPassword
+	}
+	if o.AseDbVault != nil {
+		toSerialize["ase_db_vault"] = o.AseDbVault
+	}
+	if o.AseDbHashicorpVaultEngine != nil {
+		toSerialize["ase_db_hashicorp_vault_engine"] = o.AseDbHashicorpVaultEngine
+	}
+	if o.AseDbHashicorpVaultSecretPath != nil {
+		toSerialize["ase_db_hashicorp_vault_secret_path"] = o.AseDbHashicorpVaultSecretPath
+	}
+	if o.AseDbHashicorpVaultUsernameKey != nil {
+		toSerialize["ase_db_hashicorp_vault_username_key"] = o.AseDbHashicorpVaultUsernameKey
+	}
+	if o.AseDbHashicorpVaultSecretKey != nil {
+		toSerialize["ase_db_hashicorp_vault_secret_key"] = o.AseDbHashicorpVaultSecretKey
+	}
+	if o.AseDbCyberarkVaultQueryString != nil {
+		toSerialize["ase_db_cyberark_vault_query_string"] = o.AseDbCyberarkVaultQueryString
+	}
+	if o.AseDbUseKerberosAuthentication != nil {
+		toSerialize["ase_db_use_kerberos_authentication"] = o.AseDbUseKerberosAuthentication
 	}
 	if o.JavaHome != nil {
 		toSerialize["java_home"] = o.JavaHome
