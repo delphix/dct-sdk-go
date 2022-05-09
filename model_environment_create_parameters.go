@@ -55,6 +55,10 @@ type EnvironmentCreateParameters struct {
 	HashicorpVaultSecretKey *string `json:"hashicorp_vault_secret_key,omitempty"`
 	// Query to find a credential in the CyberArk vault.
 	CyberarkVaultQueryString *string `json:"cyberark_vault_query_string,omitempty"`
+	// Whether to use kerberos authentication.
+	UseKerberosAuthentication *bool `json:"use_kerberos_authentication,omitempty"`
+	// Whether to use public key authentication.
+	UseEnginePublicKey *bool `json:"use_engine_public_key,omitempty"`
 	// array of ip address or hostnames
 	NfsAddresses []string `json:"nfs_addresses,omitempty"`
 	// username of the SAP ASE database.
@@ -73,6 +77,8 @@ type EnvironmentCreateParameters struct {
 	AseDbHashicorpVaultSecretKey *string `json:"ase_db_hashicorp_vault_secret_key,omitempty"`
 	// Query to find a credential in the CyberArk vault.
 	AseDbCyberarkVaultQueryString *string `json:"ase_db_cyberark_vault_query_string,omitempty"`
+	// Whether to use kerberos authentication for ASE DB discovery.
+	AseDbUseKerberosAuthentication *bool `json:"ase_db_use_kerberos_authentication,omitempty"`
 	// The path to the user managed Java Development Kit (JDK). If not specified, then the OpenJDK will be used.
 	JavaHome *string `json:"java_home,omitempty"`
 	// DSP keystore path.
@@ -87,6 +93,8 @@ type EnvironmentCreateParameters struct {
 	DspTruststorePassword *string `json:"dsp_truststore_password,omitempty"`
 	// The environment description.
 	Description *string `json:"description,omitempty"`
+	// The tags to be created for this environment.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewEnvironmentCreateParameters instantiates a new EnvironmentCreateParameters object
@@ -701,6 +709,70 @@ func (o *EnvironmentCreateParameters) SetCyberarkVaultQueryString(v string) {
 	o.CyberarkVaultQueryString = &v
 }
 
+// GetUseKerberosAuthentication returns the UseKerberosAuthentication field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetUseKerberosAuthentication() bool {
+	if o == nil || o.UseKerberosAuthentication == nil {
+		var ret bool
+		return ret
+	}
+	return *o.UseKerberosAuthentication
+}
+
+// GetUseKerberosAuthenticationOk returns a tuple with the UseKerberosAuthentication field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetUseKerberosAuthenticationOk() (*bool, bool) {
+	if o == nil || o.UseKerberosAuthentication == nil {
+		return nil, false
+	}
+	return o.UseKerberosAuthentication, true
+}
+
+// HasUseKerberosAuthentication returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasUseKerberosAuthentication() bool {
+	if o != nil && o.UseKerberosAuthentication != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUseKerberosAuthentication gets a reference to the given bool and assigns it to the UseKerberosAuthentication field.
+func (o *EnvironmentCreateParameters) SetUseKerberosAuthentication(v bool) {
+	o.UseKerberosAuthentication = &v
+}
+
+// GetUseEnginePublicKey returns the UseEnginePublicKey field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetUseEnginePublicKey() bool {
+	if o == nil || o.UseEnginePublicKey == nil {
+		var ret bool
+		return ret
+	}
+	return *o.UseEnginePublicKey
+}
+
+// GetUseEnginePublicKeyOk returns a tuple with the UseEnginePublicKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetUseEnginePublicKeyOk() (*bool, bool) {
+	if o == nil || o.UseEnginePublicKey == nil {
+		return nil, false
+	}
+	return o.UseEnginePublicKey, true
+}
+
+// HasUseEnginePublicKey returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasUseEnginePublicKey() bool {
+	if o != nil && o.UseEnginePublicKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUseEnginePublicKey gets a reference to the given bool and assigns it to the UseEnginePublicKey field.
+func (o *EnvironmentCreateParameters) SetUseEnginePublicKey(v bool) {
+	o.UseEnginePublicKey = &v
+}
+
 // GetNfsAddresses returns the NfsAddresses field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetNfsAddresses() []string {
 	if o == nil || o.NfsAddresses == nil {
@@ -989,6 +1061,38 @@ func (o *EnvironmentCreateParameters) SetAseDbCyberarkVaultQueryString(v string)
 	o.AseDbCyberarkVaultQueryString = &v
 }
 
+// GetAseDbUseKerberosAuthentication returns the AseDbUseKerberosAuthentication field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthentication() bool {
+	if o == nil || o.AseDbUseKerberosAuthentication == nil {
+		var ret bool
+		return ret
+	}
+	return *o.AseDbUseKerberosAuthentication
+}
+
+// GetAseDbUseKerberosAuthenticationOk returns a tuple with the AseDbUseKerberosAuthentication field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthenticationOk() (*bool, bool) {
+	if o == nil || o.AseDbUseKerberosAuthentication == nil {
+		return nil, false
+	}
+	return o.AseDbUseKerberosAuthentication, true
+}
+
+// HasAseDbUseKerberosAuthentication returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbUseKerberosAuthentication() bool {
+	if o != nil && o.AseDbUseKerberosAuthentication != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbUseKerberosAuthentication gets a reference to the given bool and assigns it to the AseDbUseKerberosAuthentication field.
+func (o *EnvironmentCreateParameters) SetAseDbUseKerberosAuthentication(v bool) {
+	o.AseDbUseKerberosAuthentication = &v
+}
+
 // GetJavaHome returns the JavaHome field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetJavaHome() string {
 	if o == nil || o.JavaHome == nil {
@@ -1213,6 +1317,38 @@ func (o *EnvironmentCreateParameters) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetTags() []Tag {
+	if o == nil || o.Tags == nil {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetTagsOk() ([]Tag, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *EnvironmentCreateParameters) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o EnvironmentCreateParameters) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
@@ -1272,6 +1408,12 @@ func (o EnvironmentCreateParameters) MarshalJSON() ([]byte, error) {
 	if o.CyberarkVaultQueryString != nil {
 		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
 	}
+	if o.UseKerberosAuthentication != nil {
+		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
+	}
+	if o.UseEnginePublicKey != nil {
+		toSerialize["use_engine_public_key"] = o.UseEnginePublicKey
+	}
 	if o.NfsAddresses != nil {
 		toSerialize["nfs_addresses"] = o.NfsAddresses
 	}
@@ -1299,6 +1441,9 @@ func (o EnvironmentCreateParameters) MarshalJSON() ([]byte, error) {
 	if o.AseDbCyberarkVaultQueryString != nil {
 		toSerialize["ase_db_cyberark_vault_query_string"] = o.AseDbCyberarkVaultQueryString
 	}
+	if o.AseDbUseKerberosAuthentication != nil {
+		toSerialize["ase_db_use_kerberos_authentication"] = o.AseDbUseKerberosAuthentication
+	}
 	if o.JavaHome != nil {
 		toSerialize["java_home"] = o.JavaHome
 	}
@@ -1319,6 +1464,9 @@ func (o EnvironmentCreateParameters) MarshalJSON() ([]byte, error) {
 	}
 	if o.Description != nil {
 		toSerialize["description"] = o.Description
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return json.Marshal(toSerialize)
 }

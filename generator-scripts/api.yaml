@@ -167,6 +167,47 @@ paths:
                     $ref: '#/components/schemas/Errors'
                   response_metadata:
                     $ref: "#/components/schemas/PaginatedResponseMetadata"
+  /sources/search:
+    x-internal: true
+    post:
+      summary: Search for Sources.
+      operationId: search_sources
+      tags:
+        - Sources
+      x-filterable:
+        description: Source fields which can be used in filter expressions.
+        fields:
+          - id
+          - database_type
+          - name
+          - database_version
+          - environment_id
+          - data_uuid
+          - ip_address
+          - fqdn
+          - size
+          - jdbc_connection_string
+          - plugin_version
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
+      requestBody:
+        $ref: "#/components/requestBodies/SearchBody"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchSourcesResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Source'
+                  response_metadata:
+                    $ref: "#/components/schemas/PaginatedResponseMetadata"
   /sources/{sourceId}:
     parameters:
       - in: path
@@ -214,6 +255,49 @@ paths:
                     $ref: '#/components/schemas/Errors'
                   response_metadata:
                     $ref: "#/components/schemas/PaginatedResponseMetadata"
+  /dsources/search:
+    x-internal: true
+    post:
+      summary: Search for DSources.
+      operationId: search_dsources
+      tags:
+        - DSources
+      x-filterable:
+        description: DSource fields which can be used in filter expressions.
+        fields:
+          - id
+          - data_uuid
+          - database_type
+          - name
+          - database_version
+          - storage_size
+          - plugin_version
+          - creation_date
+          - group_name
+          - enabled
+          - engine_id
+          - source_id
+          - status
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
+      requestBody:
+        $ref: "#/components/requestBodies/SearchBody"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchDSourcesResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DSource'
+                  response_metadata:
+                    $ref: "#/components/schemas/PaginatedResponseMetadata"
   /dsources/{dsourceId}:
     parameters:
       - $ref: "#/components/parameters/dsourceIdParam"
@@ -230,7 +314,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/DSource'
   /dsources/{dsourceId}/tags:
-    x-internal: true
     parameters:
       - $ref: "#/components/parameters/dsourceIdParam"
     post:
@@ -267,6 +350,20 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/TagsResponse"
+  /dsources/{dsourceId}/tags/delete:
+    parameters:
+      - $ref: '#/components/parameters/dsourceIdParam'
+    post:
+      tags:
+        - DSources
+      summary: Delete tags for a dSource.
+      operationId: delete_tags_dsource
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteTags'
+        required: false
+      responses:
+        '200':
+          description: OK
   /vdbs:
     get:
       summary: List all vdbs.
@@ -303,6 +400,7 @@ paths:
       x-filterable:
         description: VDB fields which can be used in filter expressions.
         fields:
+          - id
           - database_type
           - name
           - database_version
@@ -315,6 +413,7 @@ paths:
           - parent_id
           - group_name
           - creation_date
+          - tags
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/cursor'
@@ -365,6 +464,16 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: UpdateVDBResponse
+                properties:
+                  job_id:
+                    type: string
+                    description: The initiated job id.
+                    example: job-123
 
   /vdbs/{vdbId}/tags:
     parameters:
@@ -953,7 +1062,6 @@ paths:
                     description: The id of environment created.
                     example: host-environment-1
   /environments/{environmentId}/tags:
-    x-internal: true
     parameters:
       - $ref: '#/components/parameters/environmentIdParam'
     post:
@@ -990,6 +1098,20 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/TagsResponse"
+  /environments/{environmentId}/tags/delete:
+    parameters:
+      - $ref: '#/components/parameters/environmentIdParam'
+    post:
+      tags:
+        - Environments
+      summary: Delete tags for an Environment.
+      operationId: delete_environment_tags
+      requestBody:
+        $ref: "#/components/requestBodies/DeleteTags"
+        required: false
+      responses:
+        '200':
+          description: Ok
   /environments/{environmentId}:
     parameters:
       - $ref: '#/components/parameters/environmentIdParam'
@@ -1043,6 +1165,41 @@ paths:
                     type: string
                     description: The initiated job id.
                     example: 1-JOB-123
+  /environments/search:
+    x-internal: true
+    post:
+      summary: Search for environments.
+      operationId: search_environments
+      tags:
+        - Environments
+      x-filterable:
+        description: environments fields which can be used in filter expressions.
+        fields:
+          - name
+          - namespace
+          - is_cluster
+          - enabled
+          - hosts
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
+      requestBody:
+        $ref: "#/components/requestBodies/SearchBody"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchEnvironmentsResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Environment'
+                  response_metadata:
+                    $ref: "#/components/schemas/PaginatedResponseMetadata"
   /environments/{environmentId}/enable:
     parameters:
       - $ref: '#/components/parameters/environmentIdParam'
@@ -1107,15 +1264,28 @@ paths:
                     description: The initiated job id.
                     example: engineId-job-123
   /environments/{environmentId}/users:
-    x-internal: true
     parameters:
-      - in: path
-        name: environmentId
-        schema:
-          type: string
-          minLength: 1
-        required: true
-        description: List environment users.
+      - $ref: '#/components/parameters/environmentIdParam'
+    post:
+      tags:
+        - Environments
+      summary: Create environment user.
+      operationId: create_environment_user
+      requestBody:
+        $ref: '#/components/requestBodies/CreateEnvironmentUserBody'
+      responses:
+        '201':
+          description: Environment user created
+          content:
+            application/json:
+              schema:
+                type: object
+                title: CreateEnvironmentUserResponse
+                properties:
+                  user_ref:
+                    type: string
+                    description: The reference of the created environment user
+                    example: user-reference-1
     get:
       tags:
         - Environments
@@ -1129,7 +1299,28 @@ paths:
               schema:
                 type: object
                 $ref: '#/components/schemas/ListEnvironmentUsers'
-
+  /environments/{environmentId}/users/{userRef}:
+    parameters:
+      - $ref: '#/components/parameters/environmentIdParam'
+      - $ref: '#/components/parameters/userRefParam'
+    put:
+      tags:
+        - Environments
+      summary: Update environment user.
+      operationId: update_environment_user
+      requestBody:
+        $ref: '#/components/requestBodies/CreateEnvironmentUserBody'
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Environments
+      summary: Delete environment user.
+      operationId: delete_environment_user
+      responses:
+        '200':
+          description: OK
   /management/engines:
     post:
       tags:
@@ -1263,6 +1454,43 @@ paths:
                     type: string
                     description: The initiated job id.
                     example: job-123
+  /management/engines/{engineId}/tags:
+    parameters:
+      - $ref: '#/components/parameters/engineIdParam'
+    post:
+      tags:
+        - Management
+      summary: Create tags for a engine.
+      operationId: create_engine_tags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: engine_tags
+              $ref: "#/components/schemas/TagsRequest"
+        description: Tags information for Engine.
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/TagsResponse"
+    get:
+      tags:
+        - Management
+      summary: Get tags for a Engine.
+      operationId: get_engine_tags
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/TagsResponse"
   /management/vaults/hashicorp:
     get:
       tags:
@@ -1415,7 +1643,58 @@ paths:
       responses:
         '200':
           description: OK
-
+  /management/smtp:
+    get:
+      tags:
+        - Management
+      summary: Returns the SMTP configuration
+      operationId: get_smtp_config
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/SMTPConfigParams'
+    put:
+      tags:
+        - Management
+      summary: Update SMTP Config.
+      operationId: update_smtp_config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: smtp_config
+              $ref: "#/components/schemas/SMTPConfigParams"
+        description: The parameters to update the SMTP config.
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/SMTPConfigParams'
+  /management/smtp/validate:
+    post:
+      tags:
+        - Management
+      summary: Validate SMTP Config.
+      operationId: validate_smtp_config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: validate_smtp_config
+              $ref: "#/components/schemas/SMTPConfigValidate"
+        description: The parameters to validate the SMTP config.
+        required: true
+      responses:
+        '200':
+          description: OK
   /reporting/virtualization-storage-summary-report:
     get:
       summary: Gets the storage summary report for virtualization engines.
@@ -1443,6 +1722,92 @@ paths:
                 example: |
                   engine_id,engine_name,engine_hostname,total_capacity,free_storage,used_storage,used_percentage,dsource_count,vdb_count,total_object_count
                   1,my-engine,"eng01.dev.delphix.com",23404216320,20896169984,2508046336,10.71,5,25,30
+  /reporting/vdb-inventory-report:
+    get:
+      summary: Gets the inventory report for virtualization engine VDBs.
+      tags:
+        - Reporting
+      parameters:
+        - $ref: '#/components/parameters/limitExtendedParam'
+        - $ref: '#/components/parameters/cursor'
+      operationId: get_vdb_inventory_report
+      responses:
+        "200":
+          description: Returns a list of inventory data of VDBs.
+          content:
+            application/json:
+              schema:
+                type: object
+                title: VDBInventoryReportResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/VDBInventoryData"
+                  response_metadata:
+                    $ref: "#/components/schemas/PaginatedResponseMetadata"
+            text/csv:
+              schema:
+                type: string
+                example: |
+                  engine_name,name,type,version,parent_name,parent_id,creation_date,parent_timeflow_location,parent_timeflow_timestamp,parent_timeflow_timezone,enabled,status
+                  engine1,VDB-1,Oracle,10.2.0.5,dSource 1,1-Container-1,2022-01-07T12:06:59.157Z,54321,2022-02-07T12:03:15.821Z,"America/New_York",EDT-0400,true,Running
+
+  /reporting/dsource-usage-report:
+    get:
+      summary: Gets the usage report for virtualization engine dSources.
+      tags:
+        - Reporting
+      parameters:
+        - $ref: '#/components/parameters/limitExtendedParam'
+        - $ref: '#/components/parameters/cursor'
+      operationId: get_dsource_usage_report
+      responses:
+        "200":
+          description: Returns a list of dSource usage data.
+          content:
+            application/json:
+              schema:
+                type: object
+                title: DSourceUsageReportResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DSourceUsageData"
+                  response_metadata:
+                    $ref: "#/components/schemas/PaginatedResponseMetadata"
+            text/csv:
+              schema:
+                type: string
+                example: |
+                  engine_name,name,unvirtualized_space,actual_space,dependant_vdbs
+                  engine1,prod01,1849457664,607240704,0
+                  engine2,test03,1696232960,1290392576,2
+  /reporting/schedule:
+    x-internal: true
+    post:
+      tags:
+        - Reporting
+      summary: Create a new report schedule.
+      operationId: create_reporting_schedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: create_reporting_schedule_param
+              $ref: "#/components/schemas/ReportingSchedule"
+        required: true
+      responses:
+        "200":
+          description: Returns the newly created schedule for a report.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ReportingSchedule"
+
+
 
 components:
   parameters:
@@ -1458,6 +1823,18 @@ components:
         minimum: 1
         maximum: 1000
         default: 100
+    limitExtendedParam:
+      name: limit
+      in: query
+      description: >-
+        Maximum number of objects to return per query. The value must be between 1
+        and 1000. Default is 10000.
+      example: 100
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 10000
     cursor:
       name: cursor
       in: query
@@ -1510,6 +1887,14 @@ components:
         minLength: 1
       required: true
       description: The ID of the environment.
+    userRefParam:
+      in: path
+      name: userRef
+      schema:
+        type: string
+        minLength: 1
+      required: true
+      description: Environment user reference.
   schemas:
     Source:
       description: The Delphix representation of the source database (not typically managed by Delphix).
@@ -1718,6 +2103,7 @@ components:
         fqdn: "virtual-dbs.myhost.com"
         parent_id: "vdb-122"
         group_name: "VDBs"
+        tags: [{"key" : "key1", "value" : "value1"}, {"key" : "key2", "value" : "value2"}]
         creation_date: "2021-05-01T08:51:34.148000+00:00"
     VDBGroup:
       description: A collection of virtual databases and datesets.
@@ -1859,6 +2245,10 @@ components:
           type: integer
           format: int64
           nullable: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
       example:
         id: "engine-123"
         uuid: "54290b71-58cd-463d-bd62-7219d4c4d2d5"
@@ -1910,6 +2300,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Host'
+        tags:
+          description: The tags to be created for this environment.
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
     EnvironmentCreateParameters:
       type: object
       required:
@@ -2029,6 +2424,14 @@ components:
           minLength: 1
           maxLength: 256
           example: Safe=Test;Folder=Test;Object=Test
+        use_kerberos_authentication:
+          type: boolean
+          description: Whether to use kerberos authentication.
+          example: true
+        use_engine_public_key:
+          type: boolean
+          description: Whether to use public key authentication.
+          example: true
         nfs_addresses:
           type: array
           items:
@@ -2085,6 +2488,10 @@ components:
           minLength: 1
           maxLength: 256
           example: Safe=Test;Folder=Test;Object=Test
+        ase_db_use_kerberos_authentication:
+          type: boolean
+          description: Whether to use kerberos authentication for ASE DB discovery.
+          example: true
         java_home:
           type: string
           description: The path to the user managed Java Development Kit (JDK). If not specified, then the OpenJDK will be used.
@@ -2127,6 +2534,13 @@ components:
           minLength: 1
           maxLength: 1024
           example: Unix Orcale source host
+        tags:
+          type: array
+          maxItems: 1000
+          description: The tags to be created for this environment.
+          items:
+            $ref: '#/components/schemas/Tag'
+          minItems: 1
     EnvironmentUpdateParameters:
       type: object
       properties:
@@ -2155,6 +2569,24 @@ components:
           minimum: 1
           maximum: 65535
           example: 9100
+        cluster_address:
+          type: string
+          description: Address of the cluster. This property can be modified for Windows cluster only.
+          minLength: 1
+          maxLength: 256
+          example: db.host.com
+        cluster_home:
+          type: string
+          description: Absolute path to cluster home drectory. This parameter is for UNIX cluster environments.
+          minLength: 1
+          maxLength: 256
+          example: /u01/app/19.0.0.0/grid
+        cluster_node_address:
+          type: string
+          description: Address/hostname of one of the host in this environment for which parameteres are being modified. This property is used in case of cluster environments only.
+          minLength: 1
+          maxLength: 256
+          example: db1.host.com
         nfs_addresses:
           type: array
           items:
@@ -2176,6 +2608,58 @@ components:
           minLength: 1
           maxLength: 256
           example: /work
+        ase_db_username:
+          type: string
+          description: username of the SAP ASE database.
+          minLength: 1
+          maxLength: 256
+          example: user-123
+        ase_db_password:
+          type: string
+          description: password of the SAP ASE database.
+          minLength: 1
+          maxLength: 256
+          example: test
+        ase_db_vault:
+          type: string
+          description: The name or reference of the vault from which to read the ASE database credentials.
+          minLength: 1
+          maxLength: 256
+          example: my-vault
+        ase_db_hashicorp_vault_engine:
+          type: string
+          description: Vault engine name where the credential is stored.
+          minLength: 1
+          maxLength: 256
+          example: kv
+        ase_db_hashicorp_vault_secret_path:
+          type: string
+          description: Path in the vault engine where the credential is stored.
+          minLength: 1
+          maxLength: 256
+          example: oracle-env
+        ase_db_hashicorp_vault_username_key:
+          type: string
+          description: Key for the username in the key-value store.
+          minLength: 1
+          maxLength: 256
+          example: username
+        ase_db_hashicorp_vault_secret_key:
+          type: string
+          description: Key for the password in the key-value store.
+          minLength: 1
+          maxLength: 256
+          example: secret
+        ase_db_cyberark_vault_query_string:
+          type: string
+          description: Query to find a credential in the CyberArk vault.
+          minLength: 1
+          maxLength: 256
+          example: Safe=Test;Folder=Test;Object=Test
+        ase_db_use_kerberos_authentication:
+          type: boolean
+          description: Whether to use kerberos authentication for ASE DB discovery.
+          example: true
         java_home:
           type: string
           description: The path to the user managed Java Development Kit (JDK). If not specified, then the OpenJDK will be used.
@@ -2265,7 +2749,7 @@ components:
           minLength: 1
           maxLength: 256
           example: group-123
-        vdb_name:
+        name:
           type: string
           description: The unique name of the provisioned VDB within a group.
             If unset, a name is randomly generated.
@@ -2274,7 +2758,7 @@ components:
           example: my-test-vdb
         database_name:
           type: string
-          description: The name of the database on the target environment. Defaults to vdb_name.
+          description: The name of the database on the target environment. Defaults to the value of the name property.
           minLength: 1
           maxLength: 256
           example: my-test-database
@@ -2282,13 +2766,13 @@ components:
           type: boolean
           description: Whether to truncate log on checkpoint (ASE only).
           example: true
-        username:
+        os_username:
           type: string
           description: The name of the privileged user to run the provision operation (Oracle Only).
           minLength: 1
           maxLength: 256
           example: os-user-x
-        password:
+        os_password:
           type: string
           description: The password of the privileged user to run the provision operation (Oracle Only).
           minLength: 1
@@ -2606,39 +3090,52 @@ components:
       properties:
         name:
           type: string
-          description: Name to set the VDB to.
+          description: The unique name of the VDB within a group.
           minLength: 1
           maxLength: 256
-        user:
+          example: my-vdb
+        db_username:
           type: string
-          description: Source config username.
+          description: The username of the database user (Oracle, ASE Only).
           minLength: 1
           maxLength: 256
-        password:
+          example: db-username
+        db_password:
           type: string
-          description: Source config password
+          description: The password of the database user (Oracle, ASE Only).
           minLength: 1
           maxLength: 256
+          example: db-password
+        validate_db_credentials:
+          type: boolean
+          default: true
+          description: Whether db_username and db_password must be validated, if present, againt the VDB.
+            This must be set to false when credentials validation is not possible, for instance if the
+            VDB is known to be disabled.
+          example: true
         auto_restart:
           type: boolean
           description: Whether to enable VDB restart.
-        environment_user:
+        environment_user_id:
           type: string
-          description: Environment to set the VDB to.
+          description: The environment user ID to use to connect to the target environment.
           minLength: 1
           maxLength: 256
-        config_template:
+          example: environment-user-123
+        template_id:
           type: string
-          description: VDB template reference.
+          description: The ID of the target VDB Template (Oracle Only).
           minLength: 1
           maxLength: 256
-        listeners:
-          description: List of Oracle listener references.
+          example: template-123
+        listener_ids:
+          description: The listener IDs for this provision operation (Oracle Only).
           type: array
           items:
-              type: string
-              minLength: 1
-              maxLength: 256
+            type: string
+            minLength: 1
+            maxLength: 256
+          example: [ "listener-123", "listener-456" ]
         new_dbid:
           type: boolean
           description: Whether to enable new DBID for Oracle
@@ -2987,6 +3484,11 @@ components:
             type: integer
             format: int64
             nullable: true
+          tags:
+            description: The tags to be created for this engine.
+            type: array
+            items:
+              $ref: '#/components/schemas/Tag'
         example:
           id: "engine-123"
           uuid: "54290b71-58cd-463d-bd62-7219d4c4d2d5"
@@ -2998,6 +3500,77 @@ components:
           memory_size: 16000000000
           data_storage_capacity: 100000000000
           data_storage_used: 85000000000
+          tags: [{"key" : "key1", "value" : "value1"}, {"key" : "key2", "value" : "value2"}]
+    SMTPConfigParams:
+      title: SMTPConfigParameters
+      type: object
+      description: Parameters to read or update SMTP Config
+      properties:
+        enabled:
+          description: True if outbound email is enabled.
+          type: boolean
+          example: false
+        server:
+          description: IP address or hostname of SMTP relay server.
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 1000
+          example: smtp.host.com
+        port:
+          description: Port number to use. A value of -1 indicates the default (25 or 587 for TLS).
+          type: integer
+          minimum: 1
+          maximum: 65535
+          nullable: true
+          example: 25
+        authentication_enabled:
+          description: True if username/password authentication should be used.
+          type: boolean
+          example: false
+        tls_enabled:
+          description: True if TLS (transport layer security) should be used.
+          type: boolean
+          example: false
+        username:
+          description: If authentication is enabled, username to use when authenticating to the server.
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 256
+          example: username
+        password:
+          description: If authentication is enabled, password to use when authenticating to the server.
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 4096
+          example: password
+        from_address:
+          description: From address to use when sending mail. If unspecified, 'noreply@delphix.com' is used.
+          type: string
+          nullable: true
+          format: email
+          minLength: 1
+          maxLength: 256
+          example: sender@example.com
+        send_timeout:
+          description: Maximum timeout to wait, in seconds, when sending mail.
+          type: integer
+          minimum: 0
+          maximum: 300
+          nullable: true
+    SMTPConfigValidate:
+      title: SMTPValidationParams
+      type: object
+      description: Parameters to validate SMTP Config
+      required:
+        - to_address
+      properties:
+        to_address:
+          type: string
+          minLength: 1
+          maxLength: 256
     EngineRegistrationParameter:
       title: EngineRegistrationParameter
       type: object
@@ -3093,6 +3666,11 @@ components:
           nullable: true
           minLength: 1
           maxLength: 1024
+        tags:
+          description: The tags to be created for this engine.
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
     ProvisionVDBResponse:
       properties:
         job_id:
@@ -3167,6 +3745,8 @@ components:
           type: string
     TagsRequest:
       type: object
+      required:
+        - tags
       properties:
         tags:
           description: Array of tags with key value pairs
@@ -3219,6 +3799,56 @@ components:
           minLength: 1
           maxLength: 4000
           example: 'value-1'
+    EnvironmentUserParams:
+      properties:
+        username:
+          type: string
+          description: Username of the OS.
+          minLength: 1
+          maxLength: 256
+          example: oracle
+        password:
+          type: string
+          description: Password of the OS.
+          minLength: 1
+          maxLength: 256
+          example: oracle
+        vault:
+          type: string
+          description: The name or reference of the vault from which to read the host credentials.
+          minLength: 1
+          maxLength: 256
+          example: my-vault
+        hashicorp_vault_engine:
+          type: string
+          description: Vault engine name where the credential is stored.
+          minLength: 1
+          maxLength: 256
+          example: kv
+        hashicorp_vault_secret_path:
+          type: string
+          description: Path in the vault engine where the credential is stored.
+          minLength: 1
+          maxLength: 256
+          example: oracle-env
+        hashicorp_vault_username_key:
+          type: string
+          description: Key for the username in the key-value store.
+          minLength: 1
+          maxLength: 256
+          example: username
+        hashicorp_vault_secret_key:
+          type: string
+          description: Key for the password in the key-value store.
+          minLength: 1
+          maxLength: 256
+          example: secret
+        cyberark_vault_query_string:
+          type: string
+          description: Query to find a credential in the CyberArk vault.
+          minLength: 1
+          maxLength: 256
+          example: Safe=Test;Folder=Test;Object=Test
     VirtualizationStorageSummaryData:
       required:
         - engine_id
@@ -3274,6 +3904,58 @@ components:
           type: integer
           format: int64
           example: 400
+    VDBInventoryData:
+      properties:
+        engine_name:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        version:
+          type: string
+        parent_name:
+          type: string
+        parent_id:
+          type: string
+        creation_date:
+          type: string
+          format: date-time
+        parent_timeflow_location:
+          type: string
+        parent_timeflow_timestamp:
+          type: string
+          format: date-time
+        parent_timeflow_timezone:
+          type: string
+        enabled:
+          type: boolean
+        status:
+          type: string
+    DSourceUsageData:
+      properties:
+        engine_name:
+          description: The name of the engine the dSource belongs to.
+          type: string
+          example: My favorite engine
+        name:
+          description: The name of the dSource
+          type: string
+          example: prod01-main
+        unvirtualized_space:
+          description: The the disk space that would be required if not using Delphix virtualizion, in bytes.
+          type: integer
+          format: int64
+          example: 109242677
+        actual_space:
+          description: The actual space used by this dSource, in bytes. This includes the disk space used by the current copy of the data as well as the snaphots and log files retained to enable provisioning from historical versions.
+          type: integer
+          format: int64
+          example: 339292672
+        dependant_vdbs:
+          description: The number of VDBs that are dependant on this dSource. This includes all VDB descendants that have this dSource as an ancestor.
+          type: integer
+          example: 25
     SearchBody:
       description: Search body.
       type: object
@@ -3310,6 +3992,78 @@ components:
           description: This indicates if this user is primary or not
           type: boolean
           example: false
+    ReportingSchedule:
+      x-internal: true
+      required:
+        - report_type
+        - cron_expression
+        - messages
+        - file_format
+        - enabled
+        - recipients
+      properties:
+        report_id:
+          type: integer
+          readOnly: true
+          example: 123
+        report_type:
+          type: string
+          enum:
+            - VIRTUALIZATION_STORAGE_SUMMARY
+            - VDB_INVENTORY_DATA
+            - DSOURCE_USAGE_DATA
+          example: VIRTUALIZATION_STORAGE_SUMMARY
+        cron_expression:
+          type: string
+          example: "0 0 2 ? * Mon-Fri"
+          description: Standard cron expressions are supported e.g. 0 15 10 L * ?  - Schedule at 10:15 AM on the last day of every month, 0 0 2 ? * Mon-Fri - Schedule at 2:00 AM every Monday, Tuesday, Wednesday, Thursday and Friday. For more details kindly refer- "http://www.quartz-scheduler.org/documentation/"
+        time_zone:
+          type: string
+          example: "America/Los_Angeles"
+          description: Timezones are specified according to the Olson tzinfo database - "https://en.wikipedia.org/wiki/List_of_tz_database_time_zones".
+        message:
+          type: string
+          example: sample message
+        file_format:
+          type: string
+          enum:
+            - csv
+          example: csv
+        enabled:
+          type: boolean
+          default: true
+          example: true
+        recipients:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            format: email
+            example: user@example.com
+        sort_column:
+          type: string
+          enum:
+            - engine_name
+            - engine_hostname
+            - total_capacity
+            - free_storage
+            - used_storage
+            - used_percentage
+            - dsource_count
+            - vdb_count
+            - total_object_count
+          example: engine_name
+        sort_direction:
+          type: string
+          enum:
+            - ascending
+            - descending
+          example: ascending
+        row_count:
+          type: integer
+          minimum: 1
+          example: 1
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -3344,10 +4098,10 @@ components:
                 source_data_id: dsource-name
                 engine_id: 1
                 target_group_id: group-Name
-                vdb_name: vdb_to_be_created
+                name: vdb_to_be_created
                 database_name: dbname_to_be_created
-                username: oracle
-                password: oracle
+                os_username: os-user-x
+                os_password: os-password-x
                 environment_id: oracle-env-name
                 environment_user_id: environment_user_name
                 auto_select_repository: true
@@ -3429,7 +4183,7 @@ components:
                 source_data_id: dsource-name
                 engine_id: 1
                 target_group_id: group-Name
-                vdb_name: vdb_to_be_created
+                name: vdb_to_be_created
                 database_name: dbname_to_be_created
                 environment_id: mssql-env-name
                 environment_user_id: environment-user-123
@@ -3500,7 +4254,7 @@ components:
                 source_data_id: dsource-name
                 engine_id: 1
                 target_group_id: group-Name
-                vdb_name: vdb_to_be_created
+                name: vdb_to_be_created
                 database_name: dbname_to_be_created
                 truncate_log_on_checkpoint: true
                 environment_id: ase_env_name
@@ -3584,6 +4338,35 @@ components:
               value:
                 key: key-1
                 value: value-1
+    CreateEnvironmentUserBody:
+      description: The parameters to create an environment user.
+      content:
+        application/json:
+          schema:
+            x-body-name: environment
+            $ref: '#/components/schemas/EnvironmentUserParams'
+          examples:
+            using_username_password:
+              description: This example can be used for creating a user with username and password.
+              summary: Using Username and Password
+              value:
+                username: username-1
+                password: password-1
+            using_hashicorp_vault:
+              description: This example can be used for creating a user with HashiCorp vault.
+              summary: Using HashiCorp Vault
+              value:
+                vault: "my-vault"
+                hashicorp_vault_engine: "kv"
+                hashicorp_vault_secret_path: "oracle-env"
+                hashicorp_vault_username_key: "username"
+                hashicorp_vault_secret_key: "password"
+            using_cyberark:
+              description: This example can be used for creating a user with CyberArk vault.
+              summary: Using CyberArk Vault
+              value:
+                vault: "my-vault"
+                cyberark_vault_query_string: "Safe=Test;Folder=Test;Object=Test"
     CreateEnvironments:
       description: The parameters to create an environment.
       content:
@@ -3611,6 +4394,8 @@ components:
                 hashicorp_vault_username_key: username
                 hashicorp_vault_secret_key: password
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
+                use_kerberos_authentication: true
+                use_engine_public_key: true
                 nfs_addresses: [ "192.168.10.2" ]
                 ase_db_username: user-123
                 ase_db_password: test
@@ -3620,6 +4405,7 @@ components:
                 ase_db_hashicorp_vault_username_key: username
                 ase_db_hashicorp_vault_secret_key: password
                 ase_db_cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
+                ase_db_use_kerberos_authentication: true
                 java_home: /Library/Java/JavaVirtualMachines/jdk/Contents/Home
                 dsp_keystore_path: /tmp/keystore.keystore
                 dsp_keystore_password: temp123
@@ -3627,6 +4413,11 @@ components:
                 dsp_truststore_path: /tmp/truststore.keystore
                 dsp_truststore_password: truststore123
                 description: Unix Oracle source host
+                tags:
+                  - key: key-1
+                    value: value-1
+                  - key: key-2
+                    value: value-2
             windows_standalone_target:
               description: |
                 The request example is intended for creating Windows standalone target environments.
@@ -3652,6 +4443,11 @@ components:
                 dsp_truststore_path: /tmp/truststore.keystore
                 dsp_truststore_password: truststore123
                 description: Windows MSSQL target host
+                tags:
+                  - key: key-1
+                    value: value-1
+                  - key: key-2
+                    value: value-2
             windows_standalone_source:
               description: |
                 The request example is intended for creating Windows standalone source environments.
@@ -3671,6 +4467,11 @@ components:
                 hashicorp_vault_secret_key: password
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
                 description: Windows MSSQL source host
+                tags:
+                  - key: key-1
+                    value: value-1
+                  - key: key-2
+                    value: value-2
             unix_cluster:
               description: |
                 The request example is intended for creating Unix cluster environments.
@@ -3692,6 +4493,8 @@ components:
                 hashicorp_vault_username_key: username
                 hashicorp_vault_secret_key: password
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
+                use_kerberos_authentication: true
+                use_engine_public_key: true
                 nfs_addresses: [ "192.168.10.2" ]
                 java_home: /Library/Java/JavaVirtualMachines/jdk/Contents/Home
                 dsp_keystore_path: /tmp/keystore.keystore
@@ -3700,6 +4503,11 @@ components:
                 dsp_truststore_path: /tmp/truststore.keystore
                 dsp_truststore_password: truststore123
                 description: Unix Oracle cluster host
+                tags:
+                  - key: key-1
+                    value: value-1
+                  - key: key-2
+                    value: value-2
             windows_cluster_source:
               description: |
                 The request example is intended for creating Windows source cluster environments.
@@ -3721,6 +4529,11 @@ components:
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
                 is_target: false
                 description: Windows MSSQL source cluster environment
+                tags:
+                  - key: key-1
+                    value: value-1
+                  - key: key-2
+                    value: value-2
             windows_cluster_target:
               description: |
                 The request example is intended for creating Windows target cluster environments.
@@ -3742,6 +4555,11 @@ components:
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
                 is_target: true
                 description: Windows MSSQL target cluster environment
+                tags:
+                  - key: key-1
+                    value: value-1
+                  - key: key-2
+                    value: value-2
       required: true
     SearchBody:
       x-skip-codegen-next-attr: true
@@ -3878,6 +4696,15 @@ components:
                 ssh_port: 22
                 toolkit_path: /work
                 nfs_addresses: [ "192.168.10.2" ]
+                ase_db_username: user-123
+                ase_db_password: test
+                ase_db_vault: my-vault
+                ase_db_hashicorp_vault_engine: kv
+                ase_db_hashicorp_vault_secret_path: ase-env
+                ase_db_hashicorp_vault_username_key: username
+                ase_db_hashicorp_vault_secret_key: password
+                ase_db_cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
+                ase_db_use_kerberos_authentication: true
                 java_home: /Library/Java/JavaVirtualMachines/jdk/Contents/Home
                 dsp_keystore_path: /tmp/keystore.keystore
                 dsp_keystore_password: temp123
@@ -3909,7 +4736,42 @@ components:
                 hostname: db.host.com
                 staging_environment: 1-WINDOWS_HOST-1
                 description: Windows MSSQL source host
-
+            unix_cluster:
+              description: |
+                The request example is intended for updating Unix cluster environments.
+              summary: Unix - Cluster Environments
+              value:
+                name: rac-environment
+                hostname: db.host.com
+                ssh_port: 22
+                toolkit_path: /work
+                cluster_home: /u01/app/19.0.0.0/grid
+                cluster_node_address: db1.host.com
+                nfs_addresses: [ "192.168.10.2" ]
+                java_home: /Library/Java/JavaVirtualMachines/jdk/Contents/Home
+                dsp_keystore_path: /tmp/keystore.keystore
+                dsp_keystore_password: temp123
+                dsp_keystore_alias: oracle-env
+                dsp_truststore_path: /tmp/truststore.keystore
+                dsp_truststore_password: truststore123
+                description: Unix rac host
+            windows_cluster:
+              description: |
+                The request example is intended for updating Windows cluster environments.
+              summary: Windows - Cluster Environments
+              value:
+                name: mssql-cluster
+                cluster_address: db-cluster.host.com
+                cluster_node_address: db1.host.com
+                hostname: db.host.com
+                staging_environment: 1-WINDOWS_HOST-1
+                java_home: c:\program files\java
+                dsp_keystore_path: c:\tmp\keystore.keystore
+                dsp_keystore_password: temp123
+                dsp_keystore_alias: mssql-env
+                dsp_truststore_path: c:\tmp\truststore.keystore
+                dsp_truststore_password: truststore123
+                description: Windows mssql host
 security:
   - ApiKeyAuth: []
 
