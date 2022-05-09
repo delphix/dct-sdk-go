@@ -2166,7 +2166,7 @@ func (r ApiUpdateVdbByIdRequest) UpdateVDBParameters(updateVDBParameters UpdateV
 	return r
 }
 
-func (r ApiUpdateVdbByIdRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateVdbByIdRequest) Execute() (*UpdateVDBResponse, *http.Response, error) {
 	return r.ApiService.UpdateVdbByIdExecute(r)
 }
 
@@ -2186,16 +2186,18 @@ func (a *VDBsApiService) UpdateVdbById(ctx context.Context, vdbId string) ApiUpd
 }
 
 // Execute executes the request
-func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*http.Response, error) {
+//  @return UpdateVDBResponse
+func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*UpdateVDBResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UpdateVDBResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.UpdateVdbById")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}"
@@ -2205,7 +2207,7 @@ func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*http.
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	if strlen(r.vdbId) < 1 {
-		return nil, reportError("vdbId must have at least 1 elements")
+		return localVarReturnValue, nil, reportError("vdbId must have at least 1 elements")
 	}
 
 	// to determine the Content-Type header
@@ -2218,7 +2220,7 @@ func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*http.
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2243,19 +2245,19 @@ func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*http.
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2263,8 +2265,17 @@ func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*http.
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

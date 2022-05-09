@@ -55,6 +55,8 @@ type RegisteredEngine struct {
 	HashicorpVaultPasswordCommandArgs []string `json:"hashicorp_vault_password_command_args,omitempty"`
 	// Reference to the Hashicorp vault to use to retrieve engine credentials.
 	HashicorpVaultId NullableInt64 `json:"hashicorp_vault_id,omitempty"`
+	// The tags to be created for this engine.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewRegisteredEngine instantiates a new RegisteredEngine object
@@ -840,6 +842,38 @@ func (o *RegisteredEngine) UnsetHashicorpVaultId() {
 	o.HashicorpVaultId.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *RegisteredEngine) GetTags() []Tag {
+	if o == nil || o.Tags == nil {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RegisteredEngine) GetTagsOk() ([]Tag, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *RegisteredEngine) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -901,6 +935,9 @@ func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	}
 	if o.HashicorpVaultId.IsSet() {
 		toSerialize["hashicorp_vault_id"] = o.HashicorpVaultId.Get()
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return json.Marshal(toSerialize)
 }

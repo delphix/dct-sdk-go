@@ -24,15 +24,15 @@ type BaseProvisionVDBParameters struct {
 	// The ID of the group into which the VDB will be provisioned. If unset, a group is selected randomly on the Engine.
 	TargetGroupId *string `json:"target_group_id,omitempty"`
 	// The unique name of the provisioned VDB within a group. If unset, a name is randomly generated.
-	VdbName *string `json:"vdb_name,omitempty"`
-	// The name of the database on the target environment. Defaults to vdb_name.
+	Name *string `json:"name,omitempty"`
+	// The name of the database on the target environment. Defaults to the value of the name property.
 	DatabaseName *string `json:"database_name,omitempty"`
 	// Whether to truncate log on checkpoint (ASE only).
 	TruncateLogOnCheckpoint *bool `json:"truncate_log_on_checkpoint,omitempty"`
 	// The name of the privileged user to run the provision operation (Oracle Only).
-	Username *string `json:"username,omitempty"`
+	OsUsername *string `json:"os_username,omitempty"`
 	// The password of the privileged user to run the provision operation (Oracle Only).
-	Password *string `json:"password,omitempty"`
+	OsPassword *string `json:"os_password,omitempty"`
 	// The ID of the target environment where to provision the VDB. If repository_id unambigously identifies a repository, this is unnecessary and ignored. Otherwise, a compatible repository is randomly selected on the environment.
 	EnvironmentId *string `json:"environment_id,omitempty"`
 	// The environment user ID to use to connect to the target environment.
@@ -220,36 +220,36 @@ func (o *BaseProvisionVDBParameters) SetTargetGroupId(v string) {
 	o.TargetGroupId = &v
 }
 
-// GetVdbName returns the VdbName field value if set, zero value otherwise.
-func (o *BaseProvisionVDBParameters) GetVdbName() string {
-	if o == nil || o.VdbName == nil {
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParameters) GetName() string {
+	if o == nil || o.Name == nil {
 		var ret string
 		return ret
 	}
-	return *o.VdbName
+	return *o.Name
 }
 
-// GetVdbNameOk returns a tuple with the VdbName field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BaseProvisionVDBParameters) GetVdbNameOk() (*string, bool) {
-	if o == nil || o.VdbName == nil {
+func (o *BaseProvisionVDBParameters) GetNameOk() (*string, bool) {
+	if o == nil || o.Name == nil {
 		return nil, false
 	}
-	return o.VdbName, true
+	return o.Name, true
 }
 
-// HasVdbName returns a boolean if a field has been set.
-func (o *BaseProvisionVDBParameters) HasVdbName() bool {
-	if o != nil && o.VdbName != nil {
+// HasName returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParameters) HasName() bool {
+	if o != nil && o.Name != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetVdbName gets a reference to the given string and assigns it to the VdbName field.
-func (o *BaseProvisionVDBParameters) SetVdbName(v string) {
-	o.VdbName = &v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *BaseProvisionVDBParameters) SetName(v string) {
+	o.Name = &v
 }
 
 // GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
@@ -316,68 +316,68 @@ func (o *BaseProvisionVDBParameters) SetTruncateLogOnCheckpoint(v bool) {
 	o.TruncateLogOnCheckpoint = &v
 }
 
-// GetUsername returns the Username field value if set, zero value otherwise.
-func (o *BaseProvisionVDBParameters) GetUsername() string {
-	if o == nil || o.Username == nil {
+// GetOsUsername returns the OsUsername field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParameters) GetOsUsername() string {
+	if o == nil || o.OsUsername == nil {
 		var ret string
 		return ret
 	}
-	return *o.Username
+	return *o.OsUsername
 }
 
-// GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
+// GetOsUsernameOk returns a tuple with the OsUsername field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BaseProvisionVDBParameters) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+func (o *BaseProvisionVDBParameters) GetOsUsernameOk() (*string, bool) {
+	if o == nil || o.OsUsername == nil {
 		return nil, false
 	}
-	return o.Username, true
+	return o.OsUsername, true
 }
 
-// HasUsername returns a boolean if a field has been set.
-func (o *BaseProvisionVDBParameters) HasUsername() bool {
-	if o != nil && o.Username != nil {
+// HasOsUsername returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParameters) HasOsUsername() bool {
+	if o != nil && o.OsUsername != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetUsername gets a reference to the given string and assigns it to the Username field.
-func (o *BaseProvisionVDBParameters) SetUsername(v string) {
-	o.Username = &v
+// SetOsUsername gets a reference to the given string and assigns it to the OsUsername field.
+func (o *BaseProvisionVDBParameters) SetOsUsername(v string) {
+	o.OsUsername = &v
 }
 
-// GetPassword returns the Password field value if set, zero value otherwise.
-func (o *BaseProvisionVDBParameters) GetPassword() string {
-	if o == nil || o.Password == nil {
+// GetOsPassword returns the OsPassword field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParameters) GetOsPassword() string {
+	if o == nil || o.OsPassword == nil {
 		var ret string
 		return ret
 	}
-	return *o.Password
+	return *o.OsPassword
 }
 
-// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
+// GetOsPasswordOk returns a tuple with the OsPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BaseProvisionVDBParameters) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+func (o *BaseProvisionVDBParameters) GetOsPasswordOk() (*string, bool) {
+	if o == nil || o.OsPassword == nil {
 		return nil, false
 	}
-	return o.Password, true
+	return o.OsPassword, true
 }
 
-// HasPassword returns a boolean if a field has been set.
-func (o *BaseProvisionVDBParameters) HasPassword() bool {
-	if o != nil && o.Password != nil {
+// HasOsPassword returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParameters) HasOsPassword() bool {
+	if o != nil && o.OsPassword != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetPassword gets a reference to the given string and assigns it to the Password field.
-func (o *BaseProvisionVDBParameters) SetPassword(v string) {
-	o.Password = &v
+// SetOsPassword gets a reference to the given string and assigns it to the OsPassword field.
+func (o *BaseProvisionVDBParameters) SetOsPassword(v string) {
+	o.OsPassword = &v
 }
 
 // GetEnvironmentId returns the EnvironmentId field value if set, zero value otherwise.
@@ -1543,8 +1543,8 @@ func (o BaseProvisionVDBParameters) MarshalJSON() ([]byte, error) {
 	if o.TargetGroupId != nil {
 		toSerialize["target_group_id"] = o.TargetGroupId
 	}
-	if o.VdbName != nil {
-		toSerialize["vdb_name"] = o.VdbName
+	if o.Name != nil {
+		toSerialize["name"] = o.Name
 	}
 	if o.DatabaseName != nil {
 		toSerialize["database_name"] = o.DatabaseName
@@ -1552,11 +1552,11 @@ func (o BaseProvisionVDBParameters) MarshalJSON() ([]byte, error) {
 	if o.TruncateLogOnCheckpoint != nil {
 		toSerialize["truncate_log_on_checkpoint"] = o.TruncateLogOnCheckpoint
 	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
+	if o.OsUsername != nil {
+		toSerialize["os_username"] = o.OsUsername
 	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	if o.OsPassword != nil {
+		toSerialize["os_password"] = o.OsPassword
 	}
 	if o.EnvironmentId != nil {
 		toSerialize["environment_id"] = o.EnvironmentId

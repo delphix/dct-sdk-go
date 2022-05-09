@@ -48,6 +48,7 @@ type Engine struct {
 	DataStorageCapacity NullableInt64 `json:"data_storage_capacity,omitempty"`
 	// The amount of storage used by engine objects and system metadata, in bytes.
 	DataStorageUsed NullableInt64 `json:"data_storage_used,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewEngine instantiates a new Engine object
@@ -667,6 +668,38 @@ func (o *Engine) UnsetDataStorageUsed() {
 	o.DataStorageUsed.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *Engine) GetTags() []Tag {
+	if o == nil || o.Tags == nil {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Engine) GetTagsOk() ([]Tag, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Engine) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Engine) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o Engine) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -713,6 +746,9 @@ func (o Engine) MarshalJSON() ([]byte, error) {
 	}
 	if o.DataStorageUsed.IsSet() {
 		toSerialize["data_storage_used"] = o.DataStorageUsed.Get()
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return json.Marshal(toSerialize)
 }

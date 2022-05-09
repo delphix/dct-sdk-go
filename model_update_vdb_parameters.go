@@ -17,20 +17,22 @@ import (
 
 // UpdateVDBParameters Parameters to update a VDB.
 type UpdateVDBParameters struct {
-	// Name to set the VDB to.
+	// The unique name of the VDB within a group.
 	Name *string `json:"name,omitempty"`
-	// Source config username.
-	User *string `json:"user,omitempty"`
-	// Source config password
-	Password *string `json:"password,omitempty"`
+	// The username of the database user (Oracle, ASE Only).
+	DbUsername *string `json:"db_username,omitempty"`
+	// The password of the database user (Oracle, ASE Only).
+	DbPassword *string `json:"db_password,omitempty"`
+	// Whether db_username and db_password must be validated, if present, againt the VDB. This must be set to false when credentials validation is not possible, for instance if the VDB is known to be disabled.
+	ValidateDbCredentials *bool `json:"validate_db_credentials,omitempty"`
 	// Whether to enable VDB restart.
 	AutoRestart *bool `json:"auto_restart,omitempty"`
-	// Environment to set the VDB to.
-	EnvironmentUser *string `json:"environment_user,omitempty"`
-	// VDB template reference.
-	ConfigTemplate *string `json:"config_template,omitempty"`
-	// List of Oracle listener references.
-	Listeners []string `json:"listeners,omitempty"`
+	// The environment user ID to use to connect to the target environment.
+	EnvironmentUserId *string `json:"environment_user_id,omitempty"`
+	// The ID of the target VDB Template (Oracle Only).
+	TemplateId *string `json:"template_id,omitempty"`
+	// The listener IDs for this provision operation (Oracle Only).
+	ListenerIds []string `json:"listener_ids,omitempty"`
 	// Whether to enable new DBID for Oracle
 	NewDbid *bool `json:"new_dbid,omitempty"`
 	// Whether to enable CDC on provision for MSSQL
@@ -47,6 +49,8 @@ type UpdateVDBParameters struct {
 // will change when the set of required properties is changed
 func NewUpdateVDBParameters() *UpdateVDBParameters {
 	this := UpdateVDBParameters{}
+	var validateDbCredentials bool = true
+	this.ValidateDbCredentials = &validateDbCredentials
 	return &this
 }
 
@@ -55,6 +59,8 @@ func NewUpdateVDBParameters() *UpdateVDBParameters {
 // but it doesn't guarantee that properties required by API are set
 func NewUpdateVDBParametersWithDefaults() *UpdateVDBParameters {
 	this := UpdateVDBParameters{}
+	var validateDbCredentials bool = true
+	this.ValidateDbCredentials = &validateDbCredentials
 	return &this
 }
 
@@ -90,68 +96,100 @@ func (o *UpdateVDBParameters) SetName(v string) {
 	o.Name = &v
 }
 
-// GetUser returns the User field value if set, zero value otherwise.
-func (o *UpdateVDBParameters) GetUser() string {
-	if o == nil || o.User == nil {
+// GetDbUsername returns the DbUsername field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetDbUsername() string {
+	if o == nil || o.DbUsername == nil {
 		var ret string
 		return ret
 	}
-	return *o.User
+	return *o.DbUsername
 }
 
-// GetUserOk returns a tuple with the User field value if set, nil otherwise
+// GetDbUsernameOk returns a tuple with the DbUsername field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateVDBParameters) GetUserOk() (*string, bool) {
-	if o == nil || o.User == nil {
+func (o *UpdateVDBParameters) GetDbUsernameOk() (*string, bool) {
+	if o == nil || o.DbUsername == nil {
 		return nil, false
 	}
-	return o.User, true
+	return o.DbUsername, true
 }
 
-// HasUser returns a boolean if a field has been set.
-func (o *UpdateVDBParameters) HasUser() bool {
-	if o != nil && o.User != nil {
+// HasDbUsername returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasDbUsername() bool {
+	if o != nil && o.DbUsername != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetUser gets a reference to the given string and assigns it to the User field.
-func (o *UpdateVDBParameters) SetUser(v string) {
-	o.User = &v
+// SetDbUsername gets a reference to the given string and assigns it to the DbUsername field.
+func (o *UpdateVDBParameters) SetDbUsername(v string) {
+	o.DbUsername = &v
 }
 
-// GetPassword returns the Password field value if set, zero value otherwise.
-func (o *UpdateVDBParameters) GetPassword() string {
-	if o == nil || o.Password == nil {
+// GetDbPassword returns the DbPassword field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetDbPassword() string {
+	if o == nil || o.DbPassword == nil {
 		var ret string
 		return ret
 	}
-	return *o.Password
+	return *o.DbPassword
 }
 
-// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
+// GetDbPasswordOk returns a tuple with the DbPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateVDBParameters) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+func (o *UpdateVDBParameters) GetDbPasswordOk() (*string, bool) {
+	if o == nil || o.DbPassword == nil {
 		return nil, false
 	}
-	return o.Password, true
+	return o.DbPassword, true
 }
 
-// HasPassword returns a boolean if a field has been set.
-func (o *UpdateVDBParameters) HasPassword() bool {
-	if o != nil && o.Password != nil {
+// HasDbPassword returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasDbPassword() bool {
+	if o != nil && o.DbPassword != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetPassword gets a reference to the given string and assigns it to the Password field.
-func (o *UpdateVDBParameters) SetPassword(v string) {
-	o.Password = &v
+// SetDbPassword gets a reference to the given string and assigns it to the DbPassword field.
+func (o *UpdateVDBParameters) SetDbPassword(v string) {
+	o.DbPassword = &v
+}
+
+// GetValidateDbCredentials returns the ValidateDbCredentials field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetValidateDbCredentials() bool {
+	if o == nil || o.ValidateDbCredentials == nil {
+		var ret bool
+		return ret
+	}
+	return *o.ValidateDbCredentials
+}
+
+// GetValidateDbCredentialsOk returns a tuple with the ValidateDbCredentials field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetValidateDbCredentialsOk() (*bool, bool) {
+	if o == nil || o.ValidateDbCredentials == nil {
+		return nil, false
+	}
+	return o.ValidateDbCredentials, true
+}
+
+// HasValidateDbCredentials returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasValidateDbCredentials() bool {
+	if o != nil && o.ValidateDbCredentials != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetValidateDbCredentials gets a reference to the given bool and assigns it to the ValidateDbCredentials field.
+func (o *UpdateVDBParameters) SetValidateDbCredentials(v bool) {
+	o.ValidateDbCredentials = &v
 }
 
 // GetAutoRestart returns the AutoRestart field value if set, zero value otherwise.
@@ -186,100 +224,100 @@ func (o *UpdateVDBParameters) SetAutoRestart(v bool) {
 	o.AutoRestart = &v
 }
 
-// GetEnvironmentUser returns the EnvironmentUser field value if set, zero value otherwise.
-func (o *UpdateVDBParameters) GetEnvironmentUser() string {
-	if o == nil || o.EnvironmentUser == nil {
+// GetEnvironmentUserId returns the EnvironmentUserId field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetEnvironmentUserId() string {
+	if o == nil || o.EnvironmentUserId == nil {
 		var ret string
 		return ret
 	}
-	return *o.EnvironmentUser
+	return *o.EnvironmentUserId
 }
 
-// GetEnvironmentUserOk returns a tuple with the EnvironmentUser field value if set, nil otherwise
+// GetEnvironmentUserIdOk returns a tuple with the EnvironmentUserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateVDBParameters) GetEnvironmentUserOk() (*string, bool) {
-	if o == nil || o.EnvironmentUser == nil {
+func (o *UpdateVDBParameters) GetEnvironmentUserIdOk() (*string, bool) {
+	if o == nil || o.EnvironmentUserId == nil {
 		return nil, false
 	}
-	return o.EnvironmentUser, true
+	return o.EnvironmentUserId, true
 }
 
-// HasEnvironmentUser returns a boolean if a field has been set.
-func (o *UpdateVDBParameters) HasEnvironmentUser() bool {
-	if o != nil && o.EnvironmentUser != nil {
+// HasEnvironmentUserId returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasEnvironmentUserId() bool {
+	if o != nil && o.EnvironmentUserId != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetEnvironmentUser gets a reference to the given string and assigns it to the EnvironmentUser field.
-func (o *UpdateVDBParameters) SetEnvironmentUser(v string) {
-	o.EnvironmentUser = &v
+// SetEnvironmentUserId gets a reference to the given string and assigns it to the EnvironmentUserId field.
+func (o *UpdateVDBParameters) SetEnvironmentUserId(v string) {
+	o.EnvironmentUserId = &v
 }
 
-// GetConfigTemplate returns the ConfigTemplate field value if set, zero value otherwise.
-func (o *UpdateVDBParameters) GetConfigTemplate() string {
-	if o == nil || o.ConfigTemplate == nil {
+// GetTemplateId returns the TemplateId field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetTemplateId() string {
+	if o == nil || o.TemplateId == nil {
 		var ret string
 		return ret
 	}
-	return *o.ConfigTemplate
+	return *o.TemplateId
 }
 
-// GetConfigTemplateOk returns a tuple with the ConfigTemplate field value if set, nil otherwise
+// GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateVDBParameters) GetConfigTemplateOk() (*string, bool) {
-	if o == nil || o.ConfigTemplate == nil {
+func (o *UpdateVDBParameters) GetTemplateIdOk() (*string, bool) {
+	if o == nil || o.TemplateId == nil {
 		return nil, false
 	}
-	return o.ConfigTemplate, true
+	return o.TemplateId, true
 }
 
-// HasConfigTemplate returns a boolean if a field has been set.
-func (o *UpdateVDBParameters) HasConfigTemplate() bool {
-	if o != nil && o.ConfigTemplate != nil {
+// HasTemplateId returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasTemplateId() bool {
+	if o != nil && o.TemplateId != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetConfigTemplate gets a reference to the given string and assigns it to the ConfigTemplate field.
-func (o *UpdateVDBParameters) SetConfigTemplate(v string) {
-	o.ConfigTemplate = &v
+// SetTemplateId gets a reference to the given string and assigns it to the TemplateId field.
+func (o *UpdateVDBParameters) SetTemplateId(v string) {
+	o.TemplateId = &v
 }
 
-// GetListeners returns the Listeners field value if set, zero value otherwise.
-func (o *UpdateVDBParameters) GetListeners() []string {
-	if o == nil || o.Listeners == nil {
+// GetListenerIds returns the ListenerIds field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetListenerIds() []string {
+	if o == nil || o.ListenerIds == nil {
 		var ret []string
 		return ret
 	}
-	return o.Listeners
+	return o.ListenerIds
 }
 
-// GetListenersOk returns a tuple with the Listeners field value if set, nil otherwise
+// GetListenerIdsOk returns a tuple with the ListenerIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateVDBParameters) GetListenersOk() ([]string, bool) {
-	if o == nil || o.Listeners == nil {
+func (o *UpdateVDBParameters) GetListenerIdsOk() ([]string, bool) {
+	if o == nil || o.ListenerIds == nil {
 		return nil, false
 	}
-	return o.Listeners, true
+	return o.ListenerIds, true
 }
 
-// HasListeners returns a boolean if a field has been set.
-func (o *UpdateVDBParameters) HasListeners() bool {
-	if o != nil && o.Listeners != nil {
+// HasListenerIds returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasListenerIds() bool {
+	if o != nil && o.ListenerIds != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetListeners gets a reference to the given []string and assigns it to the Listeners field.
-func (o *UpdateVDBParameters) SetListeners(v []string) {
-	o.Listeners = v
+// SetListenerIds gets a reference to the given []string and assigns it to the ListenerIds field.
+func (o *UpdateVDBParameters) SetListenerIds(v []string) {
+	o.ListenerIds = v
 }
 
 // GetNewDbid returns the NewDbid field value if set, zero value otherwise.
@@ -415,23 +453,26 @@ func (o UpdateVDBParameters) MarshalJSON() ([]byte, error) {
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
 	}
-	if o.User != nil {
-		toSerialize["user"] = o.User
+	if o.DbUsername != nil {
+		toSerialize["db_username"] = o.DbUsername
 	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	if o.DbPassword != nil {
+		toSerialize["db_password"] = o.DbPassword
+	}
+	if o.ValidateDbCredentials != nil {
+		toSerialize["validate_db_credentials"] = o.ValidateDbCredentials
 	}
 	if o.AutoRestart != nil {
 		toSerialize["auto_restart"] = o.AutoRestart
 	}
-	if o.EnvironmentUser != nil {
-		toSerialize["environment_user"] = o.EnvironmentUser
+	if o.EnvironmentUserId != nil {
+		toSerialize["environment_user_id"] = o.EnvironmentUserId
 	}
-	if o.ConfigTemplate != nil {
-		toSerialize["config_template"] = o.ConfigTemplate
+	if o.TemplateId != nil {
+		toSerialize["template_id"] = o.TemplateId
 	}
-	if o.Listeners != nil {
-		toSerialize["listeners"] = o.Listeners
+	if o.ListenerIds != nil {
+		toSerialize["listener_ids"] = o.ListenerIds
 	}
 	if o.NewDbid != nil {
 		toSerialize["new_dbid"] = o.NewDbid

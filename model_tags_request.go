@@ -18,15 +18,16 @@ import (
 // TagsRequest struct for TagsRequest
 type TagsRequest struct {
 	// Array of tags with key value pairs
-	Tags []Tag `json:"tags,omitempty"`
+	Tags []Tag `json:"tags"`
 }
 
 // NewTagsRequest instantiates a new TagsRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTagsRequest() *TagsRequest {
+func NewTagsRequest(tags []Tag) *TagsRequest {
 	this := TagsRequest{}
+	this.Tags = tags
 	return &this
 }
 
@@ -38,41 +39,33 @@ func NewTagsRequestWithDefaults() *TagsRequest {
 	return &this
 }
 
-// GetTags returns the Tags field value if set, zero value otherwise.
+// GetTags returns the Tags field value
 func (o *TagsRequest) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil {
 		var ret []Tag
 		return ret
 	}
+
 	return o.Tags
 }
 
-// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// GetTagsOk returns a tuple with the Tags field value
 // and a boolean to check if the value has been set.
 func (o *TagsRequest) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil  {
 		return nil, false
 	}
 	return o.Tags, true
 }
 
-// HasTags returns a boolean if a field has been set.
-func (o *TagsRequest) HasTags() bool {
-	if o != nil && o.Tags != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+// SetTags sets field value
 func (o *TagsRequest) SetTags(v []Tag) {
 	o.Tags = v
 }
 
 func (o TagsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Tags != nil {
+	if true {
 		toSerialize["tags"] = o.Tags
 	}
 	return json.Marshal(toSerialize)

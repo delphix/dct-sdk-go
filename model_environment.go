@@ -31,6 +31,8 @@ type Environment struct {
 	IsCluster *bool `json:"is_cluster,omitempty"`
 	// The hosts that are part of this environment.
 	Hosts []Host `json:"hosts,omitempty"`
+	// The tags to be created for this environment.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewEnvironment instantiates a new Environment object
@@ -284,6 +286,38 @@ func (o *Environment) SetHosts(v []Host) {
 	o.Hosts = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *Environment) GetTags() []Tag {
+	if o == nil || o.Tags == nil {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetTagsOk() ([]Tag, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Environment) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Environment) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o Environment) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -306,6 +340,9 @@ func (o Environment) MarshalJSON() ([]byte, error) {
 	}
 	if o.Hosts != nil {
 		toSerialize["hosts"] = o.Hosts
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return json.Marshal(toSerialize)
 }
