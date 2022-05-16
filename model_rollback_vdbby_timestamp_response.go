@@ -17,8 +17,7 @@ import (
 
 // RollbackVDBByTimestampResponse struct for RollbackVDBByTimestampResponse
 type RollbackVDBByTimestampResponse struct {
-	// The initiated job id.
-	JobId *string `json:"job_id,omitempty"`
+	Job *Job `json:"job,omitempty"`
 }
 
 // NewRollbackVDBByTimestampResponse instantiates a new RollbackVDBByTimestampResponse object
@@ -38,42 +37,42 @@ func NewRollbackVDBByTimestampResponseWithDefaults() *RollbackVDBByTimestampResp
 	return &this
 }
 
-// GetJobId returns the JobId field value if set, zero value otherwise.
-func (o *RollbackVDBByTimestampResponse) GetJobId() string {
-	if o == nil || o.JobId == nil {
-		var ret string
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *RollbackVDBByTimestampResponse) GetJob() Job {
+	if o == nil || o.Job == nil {
+		var ret Job
 		return ret
 	}
-	return *o.JobId
+	return *o.Job
 }
 
-// GetJobIdOk returns a tuple with the JobId field value if set, nil otherwise
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RollbackVDBByTimestampResponse) GetJobIdOk() (*string, bool) {
-	if o == nil || o.JobId == nil {
+func (o *RollbackVDBByTimestampResponse) GetJobOk() (*Job, bool) {
+	if o == nil || o.Job == nil {
 		return nil, false
 	}
-	return o.JobId, true
+	return o.Job, true
 }
 
-// HasJobId returns a boolean if a field has been set.
-func (o *RollbackVDBByTimestampResponse) HasJobId() bool {
-	if o != nil && o.JobId != nil {
+// HasJob returns a boolean if a field has been set.
+func (o *RollbackVDBByTimestampResponse) HasJob() bool {
+	if o != nil && o.Job != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetJobId gets a reference to the given string and assigns it to the JobId field.
-func (o *RollbackVDBByTimestampResponse) SetJobId(v string) {
-	o.JobId = &v
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *RollbackVDBByTimestampResponse) SetJob(v Job) {
+	o.Job = &v
 }
 
 func (o RollbackVDBByTimestampResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.JobId != nil {
-		toSerialize["job_id"] = o.JobId
+	if o.Job != nil {
+		toSerialize["job"] = o.Job
 	}
 	return json.Marshal(toSerialize)
 }

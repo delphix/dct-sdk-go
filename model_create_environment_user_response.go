@@ -19,6 +19,7 @@ import (
 type CreateEnvironmentUserResponse struct {
 	// The reference of the created environment user
 	UserRef *string `json:"user_ref,omitempty"`
+	Job *Job `json:"job,omitempty"`
 }
 
 // NewCreateEnvironmentUserResponse instantiates a new CreateEnvironmentUserResponse object
@@ -70,10 +71,45 @@ func (o *CreateEnvironmentUserResponse) SetUserRef(v string) {
 	o.UserRef = &v
 }
 
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *CreateEnvironmentUserResponse) GetJob() Job {
+	if o == nil || o.Job == nil {
+		var ret Job
+		return ret
+	}
+	return *o.Job
+}
+
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateEnvironmentUserResponse) GetJobOk() (*Job, bool) {
+	if o == nil || o.Job == nil {
+		return nil, false
+	}
+	return o.Job, true
+}
+
+// HasJob returns a boolean if a field has been set.
+func (o *CreateEnvironmentUserResponse) HasJob() bool {
+	if o != nil && o.Job != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *CreateEnvironmentUserResponse) SetJob(v Job) {
+	o.Job = &v
+}
+
 func (o CreateEnvironmentUserResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.UserRef != nil {
 		toSerialize["user_ref"] = o.UserRef
+	}
+	if o.Job != nil {
+		toSerialize["job"] = o.Job
 	}
 	return json.Marshal(toSerialize)
 }

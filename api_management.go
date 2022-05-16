@@ -280,6 +280,122 @@ func (a *ManagementApiService) CreateHashicorpVaultExecute(r ApiCreateHashicorpV
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiDeleteEngineTagsRequest struct {
+	ctx context.Context
+	ApiService *ManagementApiService
+	engineId int64
+	deleteTag *DeleteTag
+}
+
+// The parameters to delete tags
+func (r ApiDeleteEngineTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteEngineTagsRequest {
+	r.deleteTag = &deleteTag
+	return r
+}
+
+func (r ApiDeleteEngineTagsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteEngineTagsExecute(r)
+}
+
+/*
+DeleteEngineTags Delete tags for an Engine.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param engineId Numeric ID of the registered engine.
+ @return ApiDeleteEngineTagsRequest
+*/
+func (a *ManagementApiService) DeleteEngineTags(ctx context.Context, engineId int64) ApiDeleteEngineTagsRequest {
+	return ApiDeleteEngineTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		engineId: engineId,
+	}
+}
+
+// Execute executes the request
+func (a *ManagementApiService) DeleteEngineTagsExecute(r ApiDeleteEngineTagsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.DeleteEngineTags")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/management/engines/{engineId}/tags/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterToString(r.engineId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.engineId < 1 {
+		return nil, reportError("engineId must be greater than 1")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.deleteTag
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiDeleteHashicorpVaultRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService

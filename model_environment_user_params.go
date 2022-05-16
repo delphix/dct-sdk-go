@@ -23,6 +23,8 @@ type EnvironmentUserParams struct {
 	Password *string `json:"password,omitempty"`
 	// The name or reference of the vault from which to read the host credentials.
 	Vault *string `json:"vault,omitempty"`
+	// Delphix display name for the vault user
+	VaultUsername *string `json:"vault_username,omitempty"`
 	// Vault engine name where the credential is stored.
 	HashicorpVaultEngine *string `json:"hashicorp_vault_engine,omitempty"`
 	// Path in the vault engine where the credential is stored.
@@ -33,6 +35,10 @@ type EnvironmentUserParams struct {
 	HashicorpVaultSecretKey *string `json:"hashicorp_vault_secret_key,omitempty"`
 	// Query to find a credential in the CyberArk vault.
 	CyberarkVaultQueryString *string `json:"cyberark_vault_query_string,omitempty"`
+	// Whether to use kerberos authentication.
+	UseKerberosAuthentication *bool `json:"use_kerberos_authentication,omitempty"`
+	// Whether to use public key authentication.
+	UseEnginePublicKey *bool `json:"use_engine_public_key,omitempty"`
 }
 
 // NewEnvironmentUserParams instantiates a new EnvironmentUserParams object
@@ -146,6 +152,38 @@ func (o *EnvironmentUserParams) HasVault() bool {
 // SetVault gets a reference to the given string and assigns it to the Vault field.
 func (o *EnvironmentUserParams) SetVault(v string) {
 	o.Vault = &v
+}
+
+// GetVaultUsername returns the VaultUsername field value if set, zero value otherwise.
+func (o *EnvironmentUserParams) GetVaultUsername() string {
+	if o == nil || o.VaultUsername == nil {
+		var ret string
+		return ret
+	}
+	return *o.VaultUsername
+}
+
+// GetVaultUsernameOk returns a tuple with the VaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUserParams) GetVaultUsernameOk() (*string, bool) {
+	if o == nil || o.VaultUsername == nil {
+		return nil, false
+	}
+	return o.VaultUsername, true
+}
+
+// HasVaultUsername returns a boolean if a field has been set.
+func (o *EnvironmentUserParams) HasVaultUsername() bool {
+	if o != nil && o.VaultUsername != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetVaultUsername gets a reference to the given string and assigns it to the VaultUsername field.
+func (o *EnvironmentUserParams) SetVaultUsername(v string) {
+	o.VaultUsername = &v
 }
 
 // GetHashicorpVaultEngine returns the HashicorpVaultEngine field value if set, zero value otherwise.
@@ -308,6 +346,70 @@ func (o *EnvironmentUserParams) SetCyberarkVaultQueryString(v string) {
 	o.CyberarkVaultQueryString = &v
 }
 
+// GetUseKerberosAuthentication returns the UseKerberosAuthentication field value if set, zero value otherwise.
+func (o *EnvironmentUserParams) GetUseKerberosAuthentication() bool {
+	if o == nil || o.UseKerberosAuthentication == nil {
+		var ret bool
+		return ret
+	}
+	return *o.UseKerberosAuthentication
+}
+
+// GetUseKerberosAuthenticationOk returns a tuple with the UseKerberosAuthentication field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUserParams) GetUseKerberosAuthenticationOk() (*bool, bool) {
+	if o == nil || o.UseKerberosAuthentication == nil {
+		return nil, false
+	}
+	return o.UseKerberosAuthentication, true
+}
+
+// HasUseKerberosAuthentication returns a boolean if a field has been set.
+func (o *EnvironmentUserParams) HasUseKerberosAuthentication() bool {
+	if o != nil && o.UseKerberosAuthentication != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUseKerberosAuthentication gets a reference to the given bool and assigns it to the UseKerberosAuthentication field.
+func (o *EnvironmentUserParams) SetUseKerberosAuthentication(v bool) {
+	o.UseKerberosAuthentication = &v
+}
+
+// GetUseEnginePublicKey returns the UseEnginePublicKey field value if set, zero value otherwise.
+func (o *EnvironmentUserParams) GetUseEnginePublicKey() bool {
+	if o == nil || o.UseEnginePublicKey == nil {
+		var ret bool
+		return ret
+	}
+	return *o.UseEnginePublicKey
+}
+
+// GetUseEnginePublicKeyOk returns a tuple with the UseEnginePublicKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUserParams) GetUseEnginePublicKeyOk() (*bool, bool) {
+	if o == nil || o.UseEnginePublicKey == nil {
+		return nil, false
+	}
+	return o.UseEnginePublicKey, true
+}
+
+// HasUseEnginePublicKey returns a boolean if a field has been set.
+func (o *EnvironmentUserParams) HasUseEnginePublicKey() bool {
+	if o != nil && o.UseEnginePublicKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUseEnginePublicKey gets a reference to the given bool and assigns it to the UseEnginePublicKey field.
+func (o *EnvironmentUserParams) SetUseEnginePublicKey(v bool) {
+	o.UseEnginePublicKey = &v
+}
+
 func (o EnvironmentUserParams) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Username != nil {
@@ -318,6 +420,9 @@ func (o EnvironmentUserParams) MarshalJSON() ([]byte, error) {
 	}
 	if o.Vault != nil {
 		toSerialize["vault"] = o.Vault
+	}
+	if o.VaultUsername != nil {
+		toSerialize["vault_username"] = o.VaultUsername
 	}
 	if o.HashicorpVaultEngine != nil {
 		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
@@ -333,6 +438,12 @@ func (o EnvironmentUserParams) MarshalJSON() ([]byte, error) {
 	}
 	if o.CyberarkVaultQueryString != nil {
 		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
+	}
+	if o.UseKerberosAuthentication != nil {
+		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
+	}
+	if o.UseEnginePublicKey != nil {
+		toSerialize["use_engine_public_key"] = o.UseEnginePublicKey
 	}
 	return json.Marshal(toSerialize)
 }

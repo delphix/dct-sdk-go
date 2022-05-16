@@ -17,8 +17,7 @@ import (
 
 // StopVDBResponse struct for StopVDBResponse
 type StopVDBResponse struct {
-	// The initiated job id.
-	JobId *string `json:"job_id,omitempty"`
+	Job *Job `json:"job,omitempty"`
 }
 
 // NewStopVDBResponse instantiates a new StopVDBResponse object
@@ -38,42 +37,42 @@ func NewStopVDBResponseWithDefaults() *StopVDBResponse {
 	return &this
 }
 
-// GetJobId returns the JobId field value if set, zero value otherwise.
-func (o *StopVDBResponse) GetJobId() string {
-	if o == nil || o.JobId == nil {
-		var ret string
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *StopVDBResponse) GetJob() Job {
+	if o == nil || o.Job == nil {
+		var ret Job
 		return ret
 	}
-	return *o.JobId
+	return *o.Job
 }
 
-// GetJobIdOk returns a tuple with the JobId field value if set, nil otherwise
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StopVDBResponse) GetJobIdOk() (*string, bool) {
-	if o == nil || o.JobId == nil {
+func (o *StopVDBResponse) GetJobOk() (*Job, bool) {
+	if o == nil || o.Job == nil {
 		return nil, false
 	}
-	return o.JobId, true
+	return o.Job, true
 }
 
-// HasJobId returns a boolean if a field has been set.
-func (o *StopVDBResponse) HasJobId() bool {
-	if o != nil && o.JobId != nil {
+// HasJob returns a boolean if a field has been set.
+func (o *StopVDBResponse) HasJob() bool {
+	if o != nil && o.Job != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetJobId gets a reference to the given string and assigns it to the JobId field.
-func (o *StopVDBResponse) SetJobId(v string) {
-	o.JobId = &v
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *StopVDBResponse) SetJob(v Job) {
+	o.Job = &v
 }
 
 func (o StopVDBResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.JobId != nil {
-		toSerialize["job_id"] = o.JobId
+	if o.Job != nil {
+		toSerialize["job"] = o.Job
 	}
 	return json.Marshal(toSerialize)
 }
