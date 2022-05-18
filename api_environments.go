@@ -651,7 +651,7 @@ type ApiDeleteEnvironmentUserRequest struct {
 }
 
 
-func (r ApiDeleteEnvironmentUserRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteEnvironmentUserRequest) Execute() (*DeleteEnvironmentUserResponse, *http.Response, error) {
 	return r.ApiService.DeleteEnvironmentUserExecute(r)
 }
 
@@ -673,16 +673,18 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUser(ctx context.Context, envi
 }
 
 // Execute executes the request
-func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnvironmentUserRequest) (*http.Response, error) {
+//  @return DeleteEnvironmentUserResponse
+func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnvironmentUserRequest) (*DeleteEnvironmentUserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *DeleteEnvironmentUserResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.DeleteEnvironmentUser")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/environments/{environmentId}/users/{userRef}"
@@ -693,10 +695,10 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnviron
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	if strlen(r.environmentId) < 1 {
-		return nil, reportError("environmentId must have at least 1 elements")
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
 	}
 	if strlen(r.userRef) < 1 {
-		return nil, reportError("userRef must have at least 1 elements")
+		return localVarReturnValue, nil, reportError("userRef must have at least 1 elements")
 	}
 
 	// to determine the Content-Type header
@@ -709,7 +711,7 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnviron
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -732,19 +734,19 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnviron
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -752,10 +754,19 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnviron
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiDisableEnvironmentRequest struct {
@@ -1881,7 +1892,7 @@ func (r ApiUpdateEnvironmentUserRequest) EnvironmentUserParams(environmentUserPa
 	return r
 }
 
-func (r ApiUpdateEnvironmentUserRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateEnvironmentUserRequest) Execute() (*UpdateEnvironmentUserResponse, *http.Response, error) {
 	return r.ApiService.UpdateEnvironmentUserExecute(r)
 }
 
@@ -1903,16 +1914,18 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUser(ctx context.Context, envi
 }
 
 // Execute executes the request
-func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnvironmentUserRequest) (*http.Response, error) {
+//  @return UpdateEnvironmentUserResponse
+func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnvironmentUserRequest) (*UpdateEnvironmentUserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UpdateEnvironmentUserResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.UpdateEnvironmentUser")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/environments/{environmentId}/users/{userRef}"
@@ -1923,10 +1936,10 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnviron
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	if strlen(r.environmentId) < 1 {
-		return nil, reportError("environmentId must have at least 1 elements")
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
 	}
 	if strlen(r.userRef) < 1 {
-		return nil, reportError("userRef must have at least 1 elements")
+		return localVarReturnValue, nil, reportError("userRef must have at least 1 elements")
 	}
 
 	// to determine the Content-Type header
@@ -1939,7 +1952,7 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnviron
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1964,19 +1977,19 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnviron
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1984,8 +1997,17 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnviron
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

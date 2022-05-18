@@ -17,8 +17,7 @@ import (
 
 // ProvisionVDBResponse struct for ProvisionVDBResponse
 type ProvisionVDBResponse struct {
-	// The ID of the provisioning job.
-	JobId *string `json:"job_id,omitempty"`
+	Job *Job `json:"job,omitempty"`
 	Vdb *VDB `json:"vdb,omitempty"`
 }
 
@@ -39,36 +38,36 @@ func NewProvisionVDBResponseWithDefaults() *ProvisionVDBResponse {
 	return &this
 }
 
-// GetJobId returns the JobId field value if set, zero value otherwise.
-func (o *ProvisionVDBResponse) GetJobId() string {
-	if o == nil || o.JobId == nil {
-		var ret string
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *ProvisionVDBResponse) GetJob() Job {
+	if o == nil || o.Job == nil {
+		var ret Job
 		return ret
 	}
-	return *o.JobId
+	return *o.Job
 }
 
-// GetJobIdOk returns a tuple with the JobId field value if set, nil otherwise
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProvisionVDBResponse) GetJobIdOk() (*string, bool) {
-	if o == nil || o.JobId == nil {
+func (o *ProvisionVDBResponse) GetJobOk() (*Job, bool) {
+	if o == nil || o.Job == nil {
 		return nil, false
 	}
-	return o.JobId, true
+	return o.Job, true
 }
 
-// HasJobId returns a boolean if a field has been set.
-func (o *ProvisionVDBResponse) HasJobId() bool {
-	if o != nil && o.JobId != nil {
+// HasJob returns a boolean if a field has been set.
+func (o *ProvisionVDBResponse) HasJob() bool {
+	if o != nil && o.Job != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetJobId gets a reference to the given string and assigns it to the JobId field.
-func (o *ProvisionVDBResponse) SetJobId(v string) {
-	o.JobId = &v
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *ProvisionVDBResponse) SetJob(v Job) {
+	o.Job = &v
 }
 
 // GetVdb returns the Vdb field value if set, zero value otherwise.
@@ -105,8 +104,8 @@ func (o *ProvisionVDBResponse) SetVdb(v VDB) {
 
 func (o ProvisionVDBResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.JobId != nil {
-		toSerialize["job_id"] = o.JobId
+	if o.Job != nil {
+		toSerialize["job"] = o.Job
 	}
 	if o.Vdb != nil {
 		toSerialize["vdb"] = o.Vdb

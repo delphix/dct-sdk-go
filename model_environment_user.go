@@ -23,6 +23,8 @@ type EnvironmentUser struct {
 	Username *string `json:"username,omitempty"`
 	// This indicates if this user is primary or not
 	PrimaryUser *bool `json:"primary_user,omitempty"`
+	// Authentication type of this user. PasswordCredential indicates username and password are used, SystemKeyCredential indicates Public SSH keys are used, KerberosCredential indicates Kerberos authentication, CyberArkVaultCredential indicates CyberArk Vault is used and HashiCorpVaultCredential indicates that Hashicorp vault is used for authentication
+	AuthType *string `json:"auth_type,omitempty"`
 }
 
 // NewEnvironmentUser instantiates a new EnvironmentUser object
@@ -138,6 +140,38 @@ func (o *EnvironmentUser) SetPrimaryUser(v bool) {
 	o.PrimaryUser = &v
 }
 
+// GetAuthType returns the AuthType field value if set, zero value otherwise.
+func (o *EnvironmentUser) GetAuthType() string {
+	if o == nil || o.AuthType == nil {
+		var ret string
+		return ret
+	}
+	return *o.AuthType
+}
+
+// GetAuthTypeOk returns a tuple with the AuthType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUser) GetAuthTypeOk() (*string, bool) {
+	if o == nil || o.AuthType == nil {
+		return nil, false
+	}
+	return o.AuthType, true
+}
+
+// HasAuthType returns a boolean if a field has been set.
+func (o *EnvironmentUser) HasAuthType() bool {
+	if o != nil && o.AuthType != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthType gets a reference to the given string and assigns it to the AuthType field.
+func (o *EnvironmentUser) SetAuthType(v string) {
+	o.AuthType = &v
+}
+
 func (o EnvironmentUser) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.UserRef != nil {
@@ -148,6 +182,9 @@ func (o EnvironmentUser) MarshalJSON() ([]byte, error) {
 	}
 	if o.PrimaryUser != nil {
 		toSerialize["primary_user"] = o.PrimaryUser
+	}
+	if o.AuthType != nil {
+		toSerialize["auth_type"] = o.AuthType
 	}
 	return json.Marshal(toSerialize)
 }

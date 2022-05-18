@@ -35,11 +35,11 @@ type UpdateVDBParameters struct {
 	ListenerIds []string `json:"listener_ids,omitempty"`
 	// Whether to enable new DBID for Oracle
 	NewDbid *bool `json:"new_dbid,omitempty"`
-	// Whether to enable CDC on provision for MSSQL
+	// Whether to enable CDC on provision for MSSql
 	CdcOnProvision *bool `json:"cdc_on_provision,omitempty"`
-	// Pre script for MSSQL.
+	// Pre script for MSSql.
 	PreScript *string `json:"pre_script,omitempty"`
-	// Post script for MSSQL.
+	// Post script for MSSql.
 	PostScript *string `json:"post_script,omitempty"`
 }
 

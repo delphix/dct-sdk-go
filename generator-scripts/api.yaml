@@ -81,10 +81,39 @@ paths:
                 properties:
                   bookmark:
                     $ref: '#/components/schemas/Bookmark'
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
+  /bookmarks/search:
+    x-internal: true
+    post:
+      summary: Search for bookmarks.
+      operationId: search_bookmarks
+      tags:
+        - Bookmarks
+      x-filterable:
+        description: Bookmark fields which can be used in filter expressions.
+        fields:
+          - id
+          - name
+          - creation_date
+          - vdb_ids
+          - retention
+      requestBody:
+        $ref: "#/components/requestBodies/SearchBody"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchBookmarksResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bookmark'
   /bookmarks/{bookmarkId}:
     parameters:
       - in: path
@@ -313,6 +342,78 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DSource'
+  /dsources/{dsourceId}/snapshots:
+    parameters:
+      - $ref: "#/components/parameters/dsourceIdParam"
+    get:
+      summary: List Snapshots for a dSource.
+      operationId: get_dsource_snapshots
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
+      tags:
+        - DSources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ListSnapshotsResponse"
+    post:
+      summary: Snapshot a DSource.
+      operationId: snapshot_dsource
+      tags:
+        - DSources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: dsource_tags
+              $ref: "#/components/schemas/DSourceSnapshotParameters"
+            examples:
+              default_values:
+                description: |
+                  This request example does not set any property and will thus use the default behavior.
+                summary: Using default Values
+                value: {}
+              oracle_custom:
+                description: |
+                  This request examples customizes the snapshot process for an Oracle dSource.
+                summary: Oracle customized
+                value:
+                  skip_space_check: true
+                  force_full_backup: dsource-name
+                  double_sync: true
+              mssql_specific_backup:
+                description: |
+                  This request examples demonstrates how to specify a custom backup set UUID for an MSSql dSource.
+                summary: MSSql specific backup
+                value:
+                  mssql_backup_uuid: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+                  sync_strategy: "specific_backup"
+              ase_specific_backup:
+                description: |
+                  This request examples demonstrates how to specify a custom backup for an ASE dSource.
+                summary: ASE specific backup
+                value:
+                  ase_backup_files: ["backup_file_stripe_1", "backup_file_stripe_2"]
+                  sync_strategy: "specific_backup"
+        description: Optional parameters to snapshot a DSource.
+        required: false
+      responses:
+        '200':
+          description: DSource snapshot initiated.
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SnapshotDSourceResponse
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /dsources/{dsourceId}/tags:
     parameters:
       - $ref: "#/components/parameters/dsourceIdParam"
@@ -470,11 +571,45 @@ paths:
                 type: object
                 title: UpdateVDBResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
-
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
+  /vdbs/{vdbId}/snapshots:
+    parameters:
+      - $ref: '#/components/parameters/vdbIdParam'
+    get:
+      summary: List Snapshots for a dSource.
+      operationId: get_vdb_snapshots
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/cursor'
+      tags:
+        - VDBs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ListSnapshotsResponse"
+    post:
+      summary: Snapshot a VDB.
+      operationId: snapshot_vdb
+      tags:
+        - VDBs
+      responses:
+        '200':
+          description: VDB snapshot initiated.
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SnapshotVDBResponse
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/tags:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -543,10 +678,9 @@ paths:
                 type: object
                 title: StartVDBResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/stop:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -564,10 +698,9 @@ paths:
                 type: object
                 title: StopVDBResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/enable:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -592,10 +725,9 @@ paths:
                 type: object
                 title: EnableVDBResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/disable:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -620,10 +752,9 @@ paths:
                 type: object
                 title: DisableVDBResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/delete:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -648,10 +779,9 @@ paths:
                 type: object
                 title: DeleteVDBResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/rollback_by_timestamp:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -676,10 +806,9 @@ paths:
                 type: object
                 title: RollbackVDBByTimestampResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/rollback_by_snapshot:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -704,10 +833,9 @@ paths:
                 type: object
                 title: RollbackVDBBySnapshotResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/refresh_by_timestamp:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -732,10 +860,9 @@ paths:
                 type: object
                 title: RefreshVDBByTimestampResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/{vdbId}/refresh_by_snapshot:
     parameters:
       - $ref: '#/components/parameters/vdbIdParam'
@@ -760,10 +887,9 @@ paths:
                 type: object
                 title: RefreshVDBBySnapshotResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdbs/provision_by_timestamp:
     post:
       summary: Provision a new VDB by timestamp.
@@ -793,6 +919,27 @@ paths:
       operationId: provision_vdb_by_snapshot
       requestBody:
         $ref: '#/components/requestBodies/ProvisionBySnapshot'
+      responses:
+        "200":
+          description: VDB provisioning initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisionVDBResponse'
+  /vdbs/provision_from_bookmark:
+    post:
+      summary: Provision a new VDB from a bookmark with a single VDB.
+      tags:
+        - VDBs
+      operationId: provision_vdb_from_bookmark
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: provision_vdb_parameter
+              $ref: "#/components/schemas/ProvisionVDBFromBookmarkParameters"
+        description: The parameters to provision a VDB.
+        required: true
       responses:
         "200":
           description: VDB provisioning initiated.
@@ -860,6 +1007,34 @@ paths:
                 properties:
                   vdb_group:
                     $ref: "#/components/schemas/VDBGroup"
+  /vdb-groups/search:
+    x-internal: true
+    post:
+      summary: Search for VDB Groups.
+      operationId: search_vdb_groups
+      tags:
+        - VDBGroups
+      x-filterable:
+        description: VDB Group fields which can be used in filter expressions.
+        fields:
+          - id
+          - name
+          - vdb_ids
+      requestBody:
+        $ref: "#/components/requestBodies/SearchBody"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchVDBGroupResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VDBGroup'
   /vdb-groups/{vdbGroupId}:
     parameters:
       - $ref: '#/components/parameters/vdbGroupIdParam'
@@ -868,6 +1043,25 @@ paths:
       operationId: get_vdb_group
       tags:
         - VDBGroups
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VDBGroup'
+    patch:
+      tags:
+        - VDBGroups
+      summary: Update values of a VDB group.
+      operationId: update_vdb_group_by_id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: update_vdb_group_parameter
+              $ref: '#/components/schemas/UpdateVDBGroupParameters'
+        description: The new data to update a VDB group.
       responses:
         '200':
           description: OK
@@ -907,10 +1101,9 @@ paths:
                 type: object
                 title: RefreshVDBGroupResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdb-groups/{vdbGroupId}/rollback:
     parameters:
       - $ref: '#/components/parameters/vdbGroupIdParam'
@@ -935,10 +1128,9 @@ paths:
                 type: object
                 title: RollbackVDBGroupResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /vdb-groups/{vdbGroupId}/bookmarks:
     parameters:
       - $ref: '#/components/parameters/vdbGroupIdParam'
@@ -960,36 +1152,6 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Bookmark'
-  /snapshots:
-    get:
-      summary: List Snapshots for a dSource or VDB.
-      operationId: get_snapshots
-      parameters:
-        - in: query
-          name: dataset_id
-          schema:
-            type: string
-            minLength: 1
-          description: The ID of the dSource or VDB for which to fetch Snapshots.
-        - $ref: '#/components/parameters/limit'
-        - $ref: '#/components/parameters/cursor'
-      tags:
-        - Snapshots
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                title: ListSnaphotsResponse
-                properties:
-                  items:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Snapshot'
-                  response_metadata:
-                    $ref: '#/components/schemas/PaginatedResponseMetadata'
   /snapshots/{snapshotId}:
     parameters:
       - in: path
@@ -1053,10 +1215,9 @@ paths:
                 type: object
                 title: CreateEnvironmentResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
                   environment_id:
                     type: string
                     description: The id of environment created.
@@ -1141,10 +1302,9 @@ paths:
                 type: object
                 title: DeleteEnvironmentResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: 1-JOB-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
     put:
       summary: Update an environment by ID.
       operationId: update_environment
@@ -1161,10 +1321,9 @@ paths:
                 type: object
                 title: UpdateEnvironmentResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: 1-JOB-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /environments/search:
     x-internal: true
     post:
@@ -1217,10 +1376,9 @@ paths:
                 type: object
                 title: EnableEnvironmentResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: engineId-job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /environments/{environmentId}/disable:
     parameters:
       - $ref: '#/components/parameters/environmentIdParam'
@@ -1238,10 +1396,9 @@ paths:
                 type: object
                 title: DisableEnvironmentResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id, in most cases it will be null
-                    example: engineId-job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /environments/{environmentId}/refresh:
     parameters:
       - $ref: '#/components/parameters/environmentIdParam'
@@ -1259,10 +1416,9 @@ paths:
                 type: object
                 title: RefreshEnvironmentResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: engineId-job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /environments/{environmentId}/users:
     parameters:
       - $ref: '#/components/parameters/environmentIdParam'
@@ -1286,6 +1442,9 @@ paths:
                     type: string
                     description: The reference of the created environment user
                     example: user-reference-1
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
     get:
       tags:
         - Environments
@@ -1313,6 +1472,15 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: UpdateEnvironmentUserResponse
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
     delete:
       tags:
         - Environments
@@ -1321,6 +1489,15 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: DeleteEnvironmentUserResponse
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /management/engines:
     post:
       tags:
@@ -1450,10 +1627,9 @@ paths:
                 type: object
                 title: DeleteEngineResponse
                 properties:
-                  job_id:
-                    type: string
-                    description: The initiated job id.
-                    example: job-123
+                  job:
+                    $ref: '#/components/schemas/Job'
+                    description: The initiated job.
   /management/engines/{engineId}/tags:
     parameters:
       - $ref: '#/components/parameters/engineIdParam'
@@ -1491,6 +1667,20 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/TagsResponse"
+  /management/engines/{engineId}/tags/delete:
+    parameters:
+      - $ref: '#/components/parameters/engineIdParam'
+    post:
+      tags:
+        - Management
+      summary: Delete tags for an Engine.
+      operationId: delete_engine_tags
+      requestBody:
+        $ref: "#/components/requestBodies/DeleteTags"
+        required: false
+      responses:
+        '200':
+          description: Ok
   /management/vaults/hashicorp:
     get:
       tags:
@@ -1785,7 +1975,6 @@ paths:
                   engine1,prod01,1849457664,607240704,0
                   engine2,test03,1696232960,1290392576,2
   /reporting/schedule:
-    x-internal: true
     post:
       tags:
         - Reporting
@@ -1806,6 +1995,65 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ReportingSchedule"
+    get:
+      tags:
+        - Reporting
+      summary: List all report schedules.
+      operationId: get_reporting_schedules
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: ListReportingScheduleResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReportingSchedule'
+  /reporting/schedule/{reportId}:
+    parameters:
+      - $ref: '#/components/parameters/reportIdParam'
+    get:
+      summary: Returns a report schedule by ID.
+      operationId: get_reporting_schedule_by_id
+      tags:
+        - Reporting
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingSchedule'
+    delete:
+      summary: Delete report schedule by ID.
+      operationId: delete_reporting_schedule
+      tags:
+        - Reporting
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update a reporting schedule by ID.
+      operationId: update_reporting_schedule
+      tags:
+        - Reporting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: update_reporting_schedule_param
+              $ref: '#/components/schemas/ReportingSchedule'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingSchedule'
 
 
 
@@ -1895,6 +2143,13 @@ components:
         minLength: 1
       required: true
       description: Environment user reference.
+    reportIdParam:
+      in: path
+      name: reportId
+      schema:
+        type: integer
+      required: true
+      description: The ID of the report schedule.
   schemas:
     Source:
       description: The Delphix representation of the source database (not typically managed by Delphix).
@@ -3024,6 +3279,10 @@ components:
         allOf:
           - $ref: '#/components/schemas/BaseProvisionVDBParameters'
           - $ref: '#/components/schemas/DataPointBySnapshotParameters'
+    ProvisionVDBFromBookmarkParameters:
+      allOf:
+        - $ref: '#/components/schemas/BaseProvisionVDBParameters'
+        - $ref: '#/components/schemas/DataPointFromBookmarkParameters'
     DataPointByTimestampParameters:
       type: object
       properties:
@@ -3048,6 +3307,17 @@ components:
           type: string
           description: The ID of the snapshot from which to execute the operation.
             If the snapshot_id is not, selects the latest snapshot.
+          minLength: 1
+          maxLength: 256
+    DataPointFromBookmarkParameters:
+      type: object
+      required:
+        - bookmark_id
+      properties:
+        bookmark_id:
+          type: string
+          description: The ID of the bookmark from which to execute the operation.
+           The boomkark must contain only one VDB.
           minLength: 1
           maxLength: 256
     RollbackVDBByTimestampParameters:
@@ -3084,6 +3354,108 @@ components:
         bookmark_id:
           type: string
           description: ID of a bookmark to rollback this VDB Group to.
+    UpdateVDBGroupParameters:
+      type: object
+      description: Parameters to update a VDB group.
+      properties:
+        name:
+          type: string
+          description: The name of the VDB group.
+          minLength: 1
+          maxLength: 256
+          example: my-vdb-group
+        vdb_ids:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 256
+          minItems: 1
+          example: ["vdb-1", "vdb-2"]
+    DSourceSnapshotParameters:
+      type: object
+      description: Parameters to snapshot a DSource.
+      properties:
+        drop_and_recreate_devices:
+          type: boolean
+          description: |
+            If this parameter is set to true, older devices will be dropped and new
+            devices created instead of trying to remap the devices. This might increase
+            the space utilization on Delphix Engine. (ASE only)
+        sync_strategy:
+          type: string
+          enum: ["latest_backup", "new_backup", "specific_backup"]
+          description: |
+            Determines how the Delphix Engine will take a backup:
+            * `latest_backup` - Use the most recent backup.
+            * `new_backup` - Delphix will take a new backup of your source database.
+            * `specific_backup` - Use a specific backup. Using this option requires setting
+              `ase_backup_files` for ASE dSources or `mssql_backup_uuid` for MSSql dSources.
+            Default is `new_backup`.
+            (ASE, MSSql only)
+        ase_backup_files:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 4096
+          description: When using the `specific_backup` sync_strategy, determines the backup files. (ASE Only)
+        mssql_backup_uuid:
+          type: string
+          minLength: 1
+          maxLength: 4096
+          description: When using the `specific_backup` sync_strategy, determines the Backup Set UUID. (MSSql only)
+        compression_enabled:
+          type: boolean
+          description: When using the `new_backup` sync_strategy, determines if compression must be enabled. Defaults
+            to the configuration of the ingestion strategy configured on the Delphix Engine for this dSource. (MSSql only)
+        availability_group_backup_policy:
+          type: string
+          enum : ["primary", "secondary_only", "prefer_secondary"]
+          description: |
+            When using the `new_backup` sync_strategy for an MSSql Availability Group, determines the backup policy:
+            * `primary` - Backups only go to the primary node.
+            * `secondary_only` - Backups only go to secondary nodes. If secondary nodes are down, backups will fail.
+            * `prefer_secondary` - Backups go to secondary nodes, but if secondary nodes are down, backups will go to the primary node.
+            (MSSql only)
+        do_not_resume:
+          type: boolean
+          description: |
+            Indicates whether a fresh SnapSync must be started regardless if it was possible to
+            resume the current SnapSync. If true, we will not resume but instead ignore previous progress
+            and backup all datafiles even if already completed from previous failed SnapSync. This does not
+            force a full backup, if an incremental was in progress this will start a new incremental snapshot.
+            (Oracle only)
+        double_sync:
+          type: boolean
+          description: |
+            Indicates whether two SnapSyncs should be performed in immediate succession to reduce the number
+            of logs required to provision the snapshot. This may significantly reduce the time necessary to
+            provision from a snapshot.
+            (Oracle only).
+        force_full_backup:
+          type: boolean
+          description: Whether or not to take another full backup of the source database. (Oracle only)
+        skip_space_check:
+          type: boolean
+          description: |
+            Skip check that tests if there is enough space available to store the database in
+            the Delphix Engine. The Delphix Engine estimates how much space a database will occupy after
+            compression and prevents SnapSync if insufficient space is available. This safeguard can be
+            overridden using this option. This may be useful when linking highly compressible databases.
+            (Oracle only)
+        files_for_partial_full_backup:
+          type: array
+          minItems: 1
+          maxItems: 10000
+          items:
+            type: integer
+            format: int64
+          description: |
+            List of datafiles to take a full backup of. This would be useful in situations
+            where certain datafiles could not be backed up during previous SnapSync due to corruption
+            or because they went offline.
+            (Oracle only)
     UpdateVDBParameters:
       type: object
       description: Parameters to update a VDB.
@@ -3141,15 +3513,15 @@ components:
           description: Whether to enable new DBID for Oracle
         cdc_on_provision:
           type: boolean
-          description: Whether to enable CDC on provision for MSSQL
+          description: Whether to enable CDC on provision for MSSql
         pre_script:
           type: string
-          description: Pre script for MSSQL.
+          description: Pre script for MSSql.
           minLength: 1
           maxLength: 1024
         post_script:
           type: string
-          description: Post script for MSSQL.
+          description: Post script for MSSql.
           minLength: 1
           maxLength: 1024
     EnableVDBParameters:
@@ -3250,6 +3622,15 @@ components:
         api_client_entity_id:
           type: integer
           format: int64
+    ListSnapshotsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snapshot'
+        response_metadata:
+          $ref: '#/components/schemas/PaginatedResponseMetadata'
     Job:
       description: An asynchronous task.
       type: object
@@ -3673,9 +4054,9 @@ components:
             $ref: '#/components/schemas/Tag'
     ProvisionVDBResponse:
       properties:
-        job_id:
-          type: string
-          description: The ID of the provisioning job.
+        job:
+          $ref: '#/components/schemas/Job'
+          description: The initiated job.
         vdb:
           $ref: '#/components/schemas/VDB'
           description: The provisionned VDB.
@@ -3819,6 +4200,12 @@ components:
           minLength: 1
           maxLength: 256
           example: my-vault
+        vault_username:
+          type: string
+          description: Delphix display name for the vault user
+          minLength: 1
+          maxLength: 256
+          example: my-vault-user
         hashicorp_vault_engine:
           type: string
           description: Vault engine name where the credential is stored.
@@ -3849,6 +4236,14 @@ components:
           minLength: 1
           maxLength: 256
           example: Safe=Test;Folder=Test;Object=Test
+        use_kerberos_authentication:
+          type: boolean
+          description: Whether to use kerberos authentication.
+          example: true
+        use_engine_public_key:
+          type: boolean
+          description: Whether to use public key authentication.
+          example: true
     VirtualizationStorageSummaryData:
       required:
         - engine_id
@@ -3992,8 +4387,16 @@ components:
           description: This indicates if this user is primary or not
           type: boolean
           example: false
+        auth_type:
+          description: Authentication type of this user. PasswordCredential indicates username and password are used, SystemKeyCredential indicates Public SSH keys are used, KerberosCredential indicates Kerberos authentication, CyberArkVaultCredential indicates CyberArk Vault is used and HashiCorpVaultCredential indicates that Hashicorp vault is used for authentication
+          type: string
+          enum:
+            - PasswordCredential
+            - SystemKeyCredential
+            - KerberosCredential
+            - CyberArkVaultCredential
+            - HashiCorpVaultCredential
     ReportingSchedule:
-      x-internal: true
       required:
         - report_type
         - cron_expression
@@ -4027,8 +4430,8 @@ components:
         file_format:
           type: string
           enum:
-            - csv
-          example: csv
+            - CSV
+          example: CSV
         enabled:
           type: boolean
           default: true
@@ -4042,24 +4445,26 @@ components:
             format: email
             example: user@example.com
         sort_column:
+          x-internal: true
           type: string
           enum:
-            - engine_name
-            - engine_hostname
-            - total_capacity
-            - free_storage
-            - used_storage
-            - used_percentage
-            - dsource_count
-            - vdb_count
-            - total_object_count
-          example: engine_name
+            - ENGINE_NAME
+            - ENGINE_HOSTNAME
+            - TOTAL_CAPACITY
+            - FREE_STORAGE
+            - USED_STORAGE
+            - USED_PERCENTAGE
+            - DSOURCE_COUNT
+            - VDB_COUNT
+            - TOTAL_OBJECT_COUNT
+          example: ENGINE_NAME
         sort_direction:
+          x-internal: true
           type: string
           enum:
-            - ascending
-            - descending
-          example: ascending
+            - ASCENDING
+            - DESCENDING
+          example: ASCENDING
         row_count:
           type: integer
           minimum: 1
@@ -4326,7 +4731,7 @@ components:
             delete_all_tags:
               description: Delete all tags for given object - No request body required
               summary: Delete all tags
-              value:
+              value: {}
             delete_tags_by_key:
               description: Delete all tags for given object with matching key
               summary: Delete tags by key
@@ -4357,6 +4762,7 @@ components:
               summary: Using HashiCorp Vault
               value:
                 vault: "my-vault"
+                vault_username: "my-vault-user"
                 hashicorp_vault_engine: "kv"
                 hashicorp_vault_secret_path: "oracle-env"
                 hashicorp_vault_username_key: "username"
@@ -4366,7 +4772,19 @@ components:
               summary: Using CyberArk Vault
               value:
                 vault: "my-vault"
+                vault_username: "my-vault-user"
                 cyberark_vault_query_string: "Safe=Test;Folder=Test;Object=Test"
+            using_kerberos:
+              description: This example can be used for creating a user with Kerberos Authentication.
+              summary: Using Kerberos Authentication
+              value:
+                use_kerberos_authentication: true
+            using_public_ssh:
+              description: Allow the Delphix Engine to sign on to this host as this user, without specifying a password. Copy the key from engine interface and add it on a new line in the "~/.ssh/authorized_keys" file in the user's home directory on that host.
+              summary: Using Username and Public Key
+              value:
+                use_engine_public_key: true
+                username: "username"
     CreateEnvironments:
       description: The parameters to create an environment.
       content:
@@ -4442,7 +4860,7 @@ components:
                 dsp_keystore_alias: target-env
                 dsp_truststore_path: /tmp/truststore.keystore
                 dsp_truststore_password: truststore123
-                description: Windows MSSQL target host
+                description: Windows MSSql target host
                 tags:
                   - key: key-1
                     value: value-1
@@ -4466,7 +4884,7 @@ components:
                 hashicorp_vault_username_key: username
                 hashicorp_vault_secret_key: password
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
-                description: Windows MSSQL source host
+                description: Windows MSSql source host
                 tags:
                   - key: key-1
                     value: value-1
@@ -4528,7 +4946,7 @@ components:
                 hashicorp_vault_secret_key: password
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
                 is_target: false
-                description: Windows MSSQL source cluster environment
+                description: Windows MSSql source cluster environment
                 tags:
                   - key: key-1
                     value: value-1
@@ -4554,7 +4972,7 @@ components:
                 hashicorp_vault_secret_key: password
                 cyberark_vault_query_string: Safe=Test;Folder=Test;Object=Test
                 is_target: true
-                description: Windows MSSQL target cluster environment
+                description: Windows MSSql target cluster environment
                 tags:
                   - key: key-1
                     value: value-1
@@ -4726,7 +5144,7 @@ components:
                 dsp_keystore_alias: target-env
                 dsp_truststore_path: c:\temp\truststore.keystore
                 dsp_truststore_password: truststore123
-                description: Windows MSSQL target host
+                description: Windows MSSql target host
             windows_standalone_source:
               description: |
                 The request example is intended for creating Windows standalone source environments.
@@ -4735,7 +5153,7 @@ components:
                 name: win-source
                 hostname: db.host.com
                 staging_environment: 1-WINDOWS_HOST-1
-                description: Windows MSSQL source host
+                description: Windows MSSql source host
             unix_cluster:
               description: |
                 The request example is intended for updating Unix cluster environments.
