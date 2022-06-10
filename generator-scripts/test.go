@@ -44,7 +44,7 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Printf("Retrieved list of Delphix Engines: \n")
-	for _, engine := range engines {
+	for _, engine := range engines.GetItems() {
 		fmt.Printf("%s \n", engine.Hostname)
 	}
 }
