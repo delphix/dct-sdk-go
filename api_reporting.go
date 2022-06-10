@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -267,7 +267,7 @@ func (r ApiGetDsourceUsageReportRequest) Limit(limit int32) ApiGetDsourceUsageRe
 	r.limit = &limit
 	return r
 }
-// Cursor to fetch the next or previous page of results.
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiGetDsourceUsageReportRequest) Cursor(cursor string) ApiGetDsourceUsageReportRequest {
 	r.cursor = &cursor
 	return r
@@ -328,6 +328,118 @@ func (a *ReportingApiService) GetDsourceUsageReportExecute(r ApiGetDsourceUsageR
 
 	// to determine the Accept header
 	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetProductInfoRequest struct {
+	ctx context.Context
+	ApiService *ReportingApiService
+}
+
+
+func (r ApiGetProductInfoRequest) Execute() (*ProductInfo, *http.Response, error) {
+	return r.ApiService.GetProductInfoExecute(r)
+}
+
+/*
+GetProductInfo Returns the DCT Product Information.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetProductInfoRequest
+*/
+func (a *ReportingApiService) GetProductInfo(ctx context.Context) ApiGetProductInfoRequest {
+	return ApiGetProductInfoRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ProductInfo
+func (a *ReportingApiService) GetProductInfoExecute(r ApiGetProductInfoRequest) (*ProductInfo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProductInfo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetProductInfo")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reporting/product_info"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -625,7 +737,7 @@ func (r ApiGetVdbInventoryReportRequest) Limit(limit int32) ApiGetVdbInventoryRe
 	r.limit = &limit
 	return r
 }
-// Cursor to fetch the next or previous page of results.
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiGetVdbInventoryReportRequest) Cursor(cursor string) ApiGetVdbInventoryReportRequest {
 	r.cursor = &cursor
 	return r

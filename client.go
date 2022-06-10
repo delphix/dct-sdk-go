@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the Delphix DCT API API v1.0
+// APIClient manages communication with the Delphix DCT API API v2.0.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -54,9 +54,9 @@ type APIClient struct {
 
 	BookmarksApi *BookmarksApiService
 
-	DSourcesApi *DSourcesApiService
+	ConnectivityApi *ConnectivityApiService
 
-	EnginesApi *EnginesApiService
+	DSourcesApi *DSourcesApiService
 
 	EnvironmentsApi *EnvironmentsApiService
 
@@ -93,8 +93,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	// API Services
 	c.ApiClientsApi = (*ApiClientsApiService)(&c.common)
 	c.BookmarksApi = (*BookmarksApiService)(&c.common)
+	c.ConnectivityApi = (*ConnectivityApiService)(&c.common)
 	c.DSourcesApi = (*DSourcesApiService)(&c.common)
-	c.EnginesApi = (*EnginesApiService)(&c.common)
 	c.EnvironmentsApi = (*EnvironmentsApiService)(&c.common)
 	c.JobsApi = (*JobsApiService)(&c.common)
 	c.ManagementApi = (*ManagementApiService)(&c.common)

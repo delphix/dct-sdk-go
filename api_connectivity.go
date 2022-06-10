@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -24,32 +24,32 @@ var (
 	_ context.Context
 )
 
-// EnginesApiService EnginesApi service
-type EnginesApiService service
+// ConnectivityApiService ConnectivityApi service
+type ConnectivityApiService service
 
 type ApiConnectivityCheckRequest struct {
 	ctx context.Context
-	ApiService *EnginesApiService
-	engineConnectivityCheckRequest *EngineConnectivityCheckRequest
+	ApiService *ConnectivityApiService
+	connectivityCheckParameters *ConnectivityCheckParameters
 }
 
 // The api to check connectivity of engine and a remote host on given port.
-func (r ApiConnectivityCheckRequest) EngineConnectivityCheckRequest(engineConnectivityCheckRequest EngineConnectivityCheckRequest) ApiConnectivityCheckRequest {
-	r.engineConnectivityCheckRequest = &engineConnectivityCheckRequest
+func (r ApiConnectivityCheckRequest) ConnectivityCheckParameters(connectivityCheckParameters ConnectivityCheckParameters) ApiConnectivityCheckRequest {
+	r.connectivityCheckParameters = &connectivityCheckParameters
 	return r
 }
 
-func (r ApiConnectivityCheckRequest) Execute() (*EngineConnectivityCheckResponse, *http.Response, error) {
+func (r ApiConnectivityCheckRequest) Execute() (*ConnectivityCheckResponse, *http.Response, error) {
 	return r.ApiService.ConnectivityCheckExecute(r)
 }
 
 /*
-ConnectivityCheck Checks connectivity between an engine and a remote host on a given port.
+ConnectivityCheck Checks connectivity between an engine and a remote host machine on a given port.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiConnectivityCheckRequest
 */
-func (a *EnginesApiService) ConnectivityCheck(ctx context.Context) ApiConnectivityCheckRequest {
+func (a *ConnectivityApiService) ConnectivityCheck(ctx context.Context) ApiConnectivityCheckRequest {
 	return ApiConnectivityCheckRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -57,27 +57,27 @@ func (a *EnginesApiService) ConnectivityCheck(ctx context.Context) ApiConnectivi
 }
 
 // Execute executes the request
-//  @return EngineConnectivityCheckResponse
-func (a *EnginesApiService) ConnectivityCheckExecute(r ApiConnectivityCheckRequest) (*EngineConnectivityCheckResponse, *http.Response, error) {
+//  @return ConnectivityCheckResponse
+func (a *ConnectivityApiService) ConnectivityCheckExecute(r ApiConnectivityCheckRequest) (*ConnectivityCheckResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *EngineConnectivityCheckResponse
+		localVarReturnValue  *ConnectivityCheckResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnginesApiService.ConnectivityCheck")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectivityApiService.ConnectivityCheck")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/engines/connectivity/check"
+	localVarPath := localBasePath + "/connectivity/check"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.engineConnectivityCheckRequest == nil {
-		return localVarReturnValue, nil, reportError("engineConnectivityCheckRequest is required and must be specified")
+	if r.connectivityCheckParameters == nil {
+		return localVarReturnValue, nil, reportError("connectivityCheckParameters is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -98,7 +98,7 @@ func (a *EnginesApiService) ConnectivityCheckExecute(r ApiConnectivityCheckReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.engineConnectivityCheckRequest
+	localVarPostBody = r.connectivityCheckParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

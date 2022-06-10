@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -17,6 +17,8 @@ import (
 
 // ProvisionVDBByTimestampParametersAllOf struct for ProvisionVDBByTimestampParametersAllOf
 type ProvisionVDBByTimestampParametersAllOf struct {
+	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
+	EngineId *int64 `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
 	SourceDataId string `json:"source_data_id"`
 }
@@ -37,6 +39,38 @@ func NewProvisionVDBByTimestampParametersAllOf(sourceDataId string) *ProvisionVD
 func NewProvisionVDBByTimestampParametersAllOfWithDefaults() *ProvisionVDBByTimestampParametersAllOf {
 	this := ProvisionVDBByTimestampParametersAllOf{}
 	return &this
+}
+
+// GetEngineId returns the EngineId field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineId() int64 {
+	if o == nil || o.EngineId == nil {
+		var ret int64
+		return ret
+	}
+	return *o.EngineId
+}
+
+// GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineIdOk() (*int64, bool) {
+	if o == nil || o.EngineId == nil {
+		return nil, false
+	}
+	return o.EngineId, true
+}
+
+// HasEngineId returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParametersAllOf) HasEngineId() bool {
+	if o != nil && o.EngineId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineId gets a reference to the given int64 and assigns it to the EngineId field.
+func (o *ProvisionVDBByTimestampParametersAllOf) SetEngineId(v int64) {
+	o.EngineId = &v
 }
 
 // GetSourceDataId returns the SourceDataId field value
@@ -65,6 +99,9 @@ func (o *ProvisionVDBByTimestampParametersAllOf) SetSourceDataId(v string) {
 
 func (o ProvisionVDBByTimestampParametersAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.EngineId != nil {
+		toSerialize["engine_id"] = o.EngineId
+	}
 	if true {
 		toSerialize["source_data_id"] = o.SourceDataId
 	}

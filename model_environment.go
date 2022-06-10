@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -33,6 +33,8 @@ type Environment struct {
 	Hosts []Host `json:"hosts,omitempty"`
 	// The tags to be created for this environment.
 	Tags []Tag `json:"tags,omitempty"`
+	// Repositories associated with this environment. A Repository typically corresponds to a database installation.
+	Repositories []Repository `json:"repositories,omitempty"`
 }
 
 // NewEnvironment instantiates a new Environment object
@@ -318,6 +320,38 @@ func (o *Environment) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetRepositories returns the Repositories field value if set, zero value otherwise.
+func (o *Environment) GetRepositories() []Repository {
+	if o == nil || o.Repositories == nil {
+		var ret []Repository
+		return ret
+	}
+	return o.Repositories
+}
+
+// GetRepositoriesOk returns a tuple with the Repositories field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetRepositoriesOk() ([]Repository, bool) {
+	if o == nil || o.Repositories == nil {
+		return nil, false
+	}
+	return o.Repositories, true
+}
+
+// HasRepositories returns a boolean if a field has been set.
+func (o *Environment) HasRepositories() bool {
+	if o != nil && o.Repositories != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRepositories gets a reference to the given []Repository and assigns it to the Repositories field.
+func (o *Environment) SetRepositories(v []Repository) {
+	o.Repositories = v
+}
+
 func (o Environment) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -343,6 +377,9 @@ func (o Environment) MarshalJSON() ([]byte, error) {
 	}
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
+	}
+	if o.Repositories != nil {
+		toSerialize["repositories"] = o.Repositories
 	}
 	return json.Marshal(toSerialize)
 }

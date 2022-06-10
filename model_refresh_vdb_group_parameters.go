@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -18,15 +18,16 @@ import (
 // RefreshVDBGroupParameters Parameters to refresh a VDB Group.
 type RefreshVDBGroupParameters struct {
 	// ID of a bookmark to refresh this VDB Group to.
-	BookmarkId *string `json:"bookmark_id,omitempty"`
+	BookmarkId string `json:"bookmark_id"`
 }
 
 // NewRefreshVDBGroupParameters instantiates a new RefreshVDBGroupParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRefreshVDBGroupParameters() *RefreshVDBGroupParameters {
+func NewRefreshVDBGroupParameters(bookmarkId string) *RefreshVDBGroupParameters {
 	this := RefreshVDBGroupParameters{}
+	this.BookmarkId = bookmarkId
 	return &this
 }
 
@@ -38,41 +39,33 @@ func NewRefreshVDBGroupParametersWithDefaults() *RefreshVDBGroupParameters {
 	return &this
 }
 
-// GetBookmarkId returns the BookmarkId field value if set, zero value otherwise.
+// GetBookmarkId returns the BookmarkId field value
 func (o *RefreshVDBGroupParameters) GetBookmarkId() string {
-	if o == nil || o.BookmarkId == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.BookmarkId
+
+	return o.BookmarkId
 }
 
-// GetBookmarkIdOk returns a tuple with the BookmarkId field value if set, nil otherwise
+// GetBookmarkIdOk returns a tuple with the BookmarkId field value
 // and a boolean to check if the value has been set.
 func (o *RefreshVDBGroupParameters) GetBookmarkIdOk() (*string, bool) {
-	if o == nil || o.BookmarkId == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.BookmarkId, true
+	return &o.BookmarkId, true
 }
 
-// HasBookmarkId returns a boolean if a field has been set.
-func (o *RefreshVDBGroupParameters) HasBookmarkId() bool {
-	if o != nil && o.BookmarkId != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetBookmarkId gets a reference to the given string and assigns it to the BookmarkId field.
+// SetBookmarkId sets field value
 func (o *RefreshVDBGroupParameters) SetBookmarkId(v string) {
-	o.BookmarkId = &v
+	o.BookmarkId = v
 }
 
 func (o RefreshVDBGroupParameters) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.BookmarkId != nil {
+	if true {
 		toSerialize["bookmark_id"] = o.BookmarkId
 	}
 	return json.Marshal(toSerialize)

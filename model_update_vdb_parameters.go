@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -41,6 +41,7 @@ type UpdateVDBParameters struct {
 	PreScript *string `json:"pre_script,omitempty"`
 	// Post script for MSSql.
 	PostScript *string `json:"post_script,omitempty"`
+	Hooks *VirtualDatasetHooks `json:"hooks,omitempty"`
 }
 
 // NewUpdateVDBParameters instantiates a new UpdateVDBParameters object
@@ -448,6 +449,38 @@ func (o *UpdateVDBParameters) SetPostScript(v string) {
 	o.PostScript = &v
 }
 
+// GetHooks returns the Hooks field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetHooks() VirtualDatasetHooks {
+	if o == nil || o.Hooks == nil {
+		var ret VirtualDatasetHooks
+		return ret
+	}
+	return *o.Hooks
+}
+
+// GetHooksOk returns a tuple with the Hooks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetHooksOk() (*VirtualDatasetHooks, bool) {
+	if o == nil || o.Hooks == nil {
+		return nil, false
+	}
+	return o.Hooks, true
+}
+
+// HasHooks returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasHooks() bool {
+	if o != nil && o.Hooks != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHooks gets a reference to the given VirtualDatasetHooks and assigns it to the Hooks field.
+func (o *UpdateVDBParameters) SetHooks(v VirtualDatasetHooks) {
+	o.Hooks = &v
+}
+
 func (o UpdateVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
@@ -485,6 +518,9 @@ func (o UpdateVDBParameters) MarshalJSON() ([]byte, error) {
 	}
 	if o.PostScript != nil {
 		toSerialize["post_script"] = o.PostScript
+	}
+	if o.Hooks != nil {
+		toSerialize["hooks"] = o.Hooks
 	}
 	return json.Marshal(toSerialize)
 }
