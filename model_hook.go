@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ type Hook struct {
 	Name *string `json:"name,omitempty"`
 	Command string `json:"command"`
 	Shell *string `json:"shell,omitempty"`
+	ElementId *string `json:"element_id,omitempty"`
+	HasCredentials *bool `json:"has_credentials,omitempty"`
 }
 
 // NewHook instantiates a new Hook object
@@ -29,8 +31,6 @@ type Hook struct {
 func NewHook(command string) *Hook {
 	this := Hook{}
 	this.Command = command
-	var shell string = "bash"
-	this.Shell = &shell
 	return &this
 }
 
@@ -39,8 +39,6 @@ func NewHook(command string) *Hook {
 // but it doesn't guarantee that properties required by API are set
 func NewHookWithDefaults() *Hook {
 	this := Hook{}
-	var shell string = "bash"
-	this.Shell = &shell
 	return &this
 }
 
@@ -132,6 +130,70 @@ func (o *Hook) SetShell(v string) {
 	o.Shell = &v
 }
 
+// GetElementId returns the ElementId field value if set, zero value otherwise.
+func (o *Hook) GetElementId() string {
+	if o == nil || o.ElementId == nil {
+		var ret string
+		return ret
+	}
+	return *o.ElementId
+}
+
+// GetElementIdOk returns a tuple with the ElementId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetElementIdOk() (*string, bool) {
+	if o == nil || o.ElementId == nil {
+		return nil, false
+	}
+	return o.ElementId, true
+}
+
+// HasElementId returns a boolean if a field has been set.
+func (o *Hook) HasElementId() bool {
+	if o != nil && o.ElementId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetElementId gets a reference to the given string and assigns it to the ElementId field.
+func (o *Hook) SetElementId(v string) {
+	o.ElementId = &v
+}
+
+// GetHasCredentials returns the HasCredentials field value if set, zero value otherwise.
+func (o *Hook) GetHasCredentials() bool {
+	if o == nil || o.HasCredentials == nil {
+		var ret bool
+		return ret
+	}
+	return *o.HasCredentials
+}
+
+// GetHasCredentialsOk returns a tuple with the HasCredentials field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetHasCredentialsOk() (*bool, bool) {
+	if o == nil || o.HasCredentials == nil {
+		return nil, false
+	}
+	return o.HasCredentials, true
+}
+
+// HasHasCredentials returns a boolean if a field has been set.
+func (o *Hook) HasHasCredentials() bool {
+	if o != nil && o.HasCredentials != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHasCredentials gets a reference to the given bool and assigns it to the HasCredentials field.
+func (o *Hook) SetHasCredentials(v bool) {
+	o.HasCredentials = &v
+}
+
 func (o Hook) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
@@ -142,6 +204,12 @@ func (o Hook) MarshalJSON() ([]byte, error) {
 	}
 	if o.Shell != nil {
 		toSerialize["shell"] = o.Shell
+	}
+	if o.ElementId != nil {
+		toSerialize["element_id"] = o.ElementId
+	}
+	if o.HasCredentials != nil {
+		toSerialize["has_credentials"] = o.HasCredentials
 	}
 	return json.Marshal(toSerialize)
 }

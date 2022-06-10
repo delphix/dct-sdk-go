@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -406,7 +406,7 @@ func (r ApiGetDsourceSnapshotsRequest) Limit(limit int32) ApiGetDsourceSnapshots
 	r.limit = &limit
 	return r
 }
-// Cursor to fetch the next or previous page of results.
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiGetDsourceSnapshotsRequest) Cursor(cursor string) ApiGetDsourceSnapshotsRequest {
 	r.cursor = &cursor
 	return r
@@ -542,7 +542,7 @@ func (r ApiGetDsourcesRequest) Limit(limit int32) ApiGetDsourcesRequest {
 	r.limit = &limit
 	return r
 }
-// Cursor to fetch the next or previous page of results.
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiGetDsourcesRequest) Cursor(cursor string) ApiGetDsourcesRequest {
 	r.cursor = &cursor
 	return r
@@ -792,7 +792,7 @@ func (r ApiSearchDsourcesRequest) Limit(limit int32) ApiSearchDsourcesRequest {
 	r.limit = &limit
 	return r
 }
-// Cursor to fetch the next or previous page of results.
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiSearchDsourcesRequest) Cursor(cursor string) ApiSearchDsourcesRequest {
 	r.cursor = &cursor
 	return r

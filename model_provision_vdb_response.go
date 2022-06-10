@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -18,7 +18,8 @@ import (
 // ProvisionVDBResponse struct for ProvisionVDBResponse
 type ProvisionVDBResponse struct {
 	Job *Job `json:"job,omitempty"`
-	Vdb *VDB `json:"vdb,omitempty"`
+	// The ID of the provisioned vdb.
+	VdbId *string `json:"vdb_id,omitempty"`
 }
 
 // NewProvisionVDBResponse instantiates a new ProvisionVDBResponse object
@@ -70,36 +71,36 @@ func (o *ProvisionVDBResponse) SetJob(v Job) {
 	o.Job = &v
 }
 
-// GetVdb returns the Vdb field value if set, zero value otherwise.
-func (o *ProvisionVDBResponse) GetVdb() VDB {
-	if o == nil || o.Vdb == nil {
-		var ret VDB
+// GetVdbId returns the VdbId field value if set, zero value otherwise.
+func (o *ProvisionVDBResponse) GetVdbId() string {
+	if o == nil || o.VdbId == nil {
+		var ret string
 		return ret
 	}
-	return *o.Vdb
+	return *o.VdbId
 }
 
-// GetVdbOk returns a tuple with the Vdb field value if set, nil otherwise
+// GetVdbIdOk returns a tuple with the VdbId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProvisionVDBResponse) GetVdbOk() (*VDB, bool) {
-	if o == nil || o.Vdb == nil {
+func (o *ProvisionVDBResponse) GetVdbIdOk() (*string, bool) {
+	if o == nil || o.VdbId == nil {
 		return nil, false
 	}
-	return o.Vdb, true
+	return o.VdbId, true
 }
 
-// HasVdb returns a boolean if a field has been set.
-func (o *ProvisionVDBResponse) HasVdb() bool {
-	if o != nil && o.Vdb != nil {
+// HasVdbId returns a boolean if a field has been set.
+func (o *ProvisionVDBResponse) HasVdbId() bool {
+	if o != nil && o.VdbId != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetVdb gets a reference to the given VDB and assigns it to the Vdb field.
-func (o *ProvisionVDBResponse) SetVdb(v VDB) {
-	o.Vdb = &v
+// SetVdbId gets a reference to the given string and assigns it to the VdbId field.
+func (o *ProvisionVDBResponse) SetVdbId(v string) {
+	o.VdbId = &v
 }
 
 func (o ProvisionVDBResponse) MarshalJSON() ([]byte, error) {
@@ -107,8 +108,8 @@ func (o ProvisionVDBResponse) MarshalJSON() ([]byte, error) {
 	if o.Job != nil {
 		toSerialize["job"] = o.Job
 	}
-	if o.Vdb != nil {
-		toSerialize["vdb"] = o.Vdb
+	if o.VdbId != nil {
+		toSerialize["vdb_id"] = o.VdbId
 	}
 	return json.Marshal(toSerialize)
 }
