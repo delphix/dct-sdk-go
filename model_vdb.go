@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -45,6 +45,7 @@ type VDB struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// The date this VDB was created.
 	CreationDate NullableTime `json:"creation_date,omitempty"`
+	Hooks *VirtualDatasetHooks `json:"hooks,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -622,6 +623,38 @@ func (o *VDB) UnsetCreationDate() {
 	o.CreationDate.Unset()
 }
 
+// GetHooks returns the Hooks field value if set, zero value otherwise.
+func (o *VDB) GetHooks() VirtualDatasetHooks {
+	if o == nil || o.Hooks == nil {
+		var ret VirtualDatasetHooks
+		return ret
+	}
+	return *o.Hooks
+}
+
+// GetHooksOk returns a tuple with the Hooks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetHooksOk() (*VirtualDatasetHooks, bool) {
+	if o == nil || o.Hooks == nil {
+		return nil, false
+	}
+	return o.Hooks, true
+}
+
+// HasHooks returns a boolean if a field has been set.
+func (o *VDB) HasHooks() bool {
+	if o != nil && o.Hooks != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHooks gets a reference to the given VirtualDatasetHooks and assigns it to the Hooks field.
+func (o *VDB) SetHooks(v VirtualDatasetHooks) {
+	o.Hooks = &v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -665,6 +698,9 @@ func (o VDB) MarshalJSON() ([]byte, error) {
 	}
 	if o.CreationDate.IsSet() {
 		toSerialize["creation_date"] = o.CreationDate.Get()
+	}
+	if o.Hooks != nil {
+		toSerialize["hooks"] = o.Hooks
 	}
 	return json.Marshal(toSerialize)
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -23,7 +23,7 @@ type EnvironmentUser struct {
 	Username *string `json:"username,omitempty"`
 	// This indicates if this user is primary or not
 	PrimaryUser *bool `json:"primary_user,omitempty"`
-	// Authentication type of this user. PasswordCredential indicates username and password are used, SystemKeyCredential indicates Public SSH keys are used, KerberosCredential indicates Kerberos authentication, CyberArkVaultCredential indicates CyberArk Vault is used and HashiCorpVaultCredential indicates that Hashicorp vault is used for authentication
+	// Authentication type of this user. PasswordCredential indicates username and password are used, SystemKeyCredential indicates public key based security credential, KeyPairCredential indicates public key based security credential consisting of a user specified key pair, KerberosCredential indicates Kerberos authentication, CyberArkVaultCredential indicates CyberArk Vault is used and HashiCorpVaultCredential indicates that Hashicorp vault is used for authentication
 	AuthType *string `json:"auth_type,omitempty"`
 }
 

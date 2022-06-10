@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -377,7 +377,7 @@ type ApiGetApiClientsRequest struct {
 }
 
 
-func (r ApiGetApiClientsRequest) Execute() ([]ApiClient, *http.Response, error) {
+func (r ApiGetApiClientsRequest) Execute() (*ListApiClientsResponse, *http.Response, error) {
 	return r.ApiService.GetApiClientsExecute(r)
 }
 
@@ -395,13 +395,13 @@ func (a *ApiClientsApiService) GetApiClients(ctx context.Context) ApiGetApiClien
 }
 
 // Execute executes the request
-//  @return []ApiClient
-func (a *ApiClientsApiService) GetApiClientsExecute(r ApiGetApiClientsRequest) ([]ApiClient, *http.Response, error) {
+//  @return ListApiClientsResponse
+func (a *ApiClientsApiService) GetApiClientsExecute(r ApiGetApiClientsRequest) (*ListApiClientsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []ApiClient
+		localVarReturnValue  *ListApiClientsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApiClientsApiService.GetApiClients")

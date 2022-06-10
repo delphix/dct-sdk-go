@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -47,6 +47,10 @@ type RegisteredEngine struct {
 	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	// the status of the engine 
 	Status NullableString `json:"status,omitempty"`
+	// The status of the connection to the engine.
+	ConnectionStatus NullableString `json:"connection_status,omitempty"`
+	// If set, details about the status of the connection to the engine.
+	ConnectionStatusDetails NullableString `json:"connection_status_details,omitempty"`
 	Username NullableString `json:"username,omitempty"`
 	Password NullableString `json:"password,omitempty"`
 	// Arguments to pass to the Vault CLI tool to retrieve the username for the engine.
@@ -650,6 +654,90 @@ func (o *RegisteredEngine) UnsetStatus() {
 	o.Status.Unset()
 }
 
+// GetConnectionStatus returns the ConnectionStatus field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetConnectionStatus() string {
+	if o == nil || o.ConnectionStatus.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.ConnectionStatus.Get()
+}
+
+// GetConnectionStatusOk returns a tuple with the ConnectionStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetConnectionStatusOk() (*string, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return o.ConnectionStatus.Get(), o.ConnectionStatus.IsSet()
+}
+
+// HasConnectionStatus returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasConnectionStatus() bool {
+	if o != nil && o.ConnectionStatus.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionStatus gets a reference to the given NullableString and assigns it to the ConnectionStatus field.
+func (o *RegisteredEngine) SetConnectionStatus(v string) {
+	o.ConnectionStatus.Set(&v)
+}
+// SetConnectionStatusNil sets the value for ConnectionStatus to be an explicit nil
+func (o *RegisteredEngine) SetConnectionStatusNil() {
+	o.ConnectionStatus.Set(nil)
+}
+
+// UnsetConnectionStatus ensures that no value is present for ConnectionStatus, not even an explicit nil
+func (o *RegisteredEngine) UnsetConnectionStatus() {
+	o.ConnectionStatus.Unset()
+}
+
+// GetConnectionStatusDetails returns the ConnectionStatusDetails field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetConnectionStatusDetails() string {
+	if o == nil || o.ConnectionStatusDetails.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.ConnectionStatusDetails.Get()
+}
+
+// GetConnectionStatusDetailsOk returns a tuple with the ConnectionStatusDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetConnectionStatusDetailsOk() (*string, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return o.ConnectionStatusDetails.Get(), o.ConnectionStatusDetails.IsSet()
+}
+
+// HasConnectionStatusDetails returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasConnectionStatusDetails() bool {
+	if o != nil && o.ConnectionStatusDetails.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionStatusDetails gets a reference to the given NullableString and assigns it to the ConnectionStatusDetails field.
+func (o *RegisteredEngine) SetConnectionStatusDetails(v string) {
+	o.ConnectionStatusDetails.Set(&v)
+}
+// SetConnectionStatusDetailsNil sets the value for ConnectionStatusDetails to be an explicit nil
+func (o *RegisteredEngine) SetConnectionStatusDetailsNil() {
+	o.ConnectionStatusDetails.Set(nil)
+}
+
+// UnsetConnectionStatusDetails ensures that no value is present for ConnectionStatusDetails, not even an explicit nil
+func (o *RegisteredEngine) UnsetConnectionStatusDetails() {
+	o.ConnectionStatusDetails.Unset()
+}
+
 // GetUsername returns the Username field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetUsername() string {
 	if o == nil || o.Username.Get() == nil {
@@ -920,6 +1008,12 @@ func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
+	}
+	if o.ConnectionStatus.IsSet() {
+		toSerialize["connection_status"] = o.ConnectionStatus.Get()
+	}
+	if o.ConnectionStatusDetails.IsSet() {
+		toSerialize["connection_status_details"] = o.ConnectionStatusDetails.Get()
 	}
 	if o.Username.IsSet() {
 		toSerialize["username"] = o.Username.Get()
