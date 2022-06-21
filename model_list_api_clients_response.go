@@ -17,7 +17,8 @@ import (
 
 // ListApiClientsResponse struct for ListApiClientsResponse
 type ListApiClientsResponse struct {
-	Items []ApiClient `json:"items,omitempty"`
+	Items []ModelApiClient `json:"items,omitempty"`
+	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
 // NewListApiClientsResponse instantiates a new ListApiClientsResponse object
@@ -38,9 +39,9 @@ func NewListApiClientsResponseWithDefaults() *ListApiClientsResponse {
 }
 
 // GetItems returns the Items field value if set, zero value otherwise.
-func (o *ListApiClientsResponse) GetItems() []ApiClient {
+func (o *ListApiClientsResponse) GetItems() []ModelApiClient {
 	if o == nil || o.Items == nil {
-		var ret []ApiClient
+		var ret []ModelApiClient
 		return ret
 	}
 	return o.Items
@@ -48,7 +49,7 @@ func (o *ListApiClientsResponse) GetItems() []ApiClient {
 
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListApiClientsResponse) GetItemsOk() ([]ApiClient, bool) {
+func (o *ListApiClientsResponse) GetItemsOk() ([]ModelApiClient, bool) {
 	if o == nil || o.Items == nil {
 		return nil, false
 	}
@@ -64,15 +65,50 @@ func (o *ListApiClientsResponse) HasItems() bool {
 	return false
 }
 
-// SetItems gets a reference to the given []ApiClient and assigns it to the Items field.
-func (o *ListApiClientsResponse) SetItems(v []ApiClient) {
+// SetItems gets a reference to the given []ModelApiClient and assigns it to the Items field.
+func (o *ListApiClientsResponse) SetItems(v []ModelApiClient) {
 	o.Items = v
+}
+
+// GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
+func (o *ListApiClientsResponse) GetResponseMetadata() PaginatedResponseMetadata {
+	if o == nil || o.ResponseMetadata == nil {
+		var ret PaginatedResponseMetadata
+		return ret
+	}
+	return *o.ResponseMetadata
+}
+
+// GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListApiClientsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
+	if o == nil || o.ResponseMetadata == nil {
+		return nil, false
+	}
+	return o.ResponseMetadata, true
+}
+
+// HasResponseMetadata returns a boolean if a field has been set.
+func (o *ListApiClientsResponse) HasResponseMetadata() bool {
+	if o != nil && o.ResponseMetadata != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
+func (o *ListApiClientsResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
+	o.ResponseMetadata = &v
 }
 
 func (o ListApiClientsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Items != nil {
 		toSerialize["items"] = o.Items
+	}
+	if o.ResponseMetadata != nil {
+		toSerialize["response_metadata"] = o.ResponseMetadata
 	}
 	return json.Marshal(toSerialize)
 }

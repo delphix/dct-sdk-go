@@ -21,7 +21,7 @@ type ConnectivityCheckParameters struct {
 	EngineId string `json:"engine_id"`
 	// The hostname of the remote host machine to check.
 	Host string `json:"host"`
-	// The port of the remote hsot machine to check.
+	// The port of the remote host machine to check.
 	Port NullableInt32 `json:"port"`
 }
 

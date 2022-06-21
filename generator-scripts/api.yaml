@@ -40,6 +40,10 @@ paths:
       operationId: get_bookmarks
       tags:
       - Bookmarks
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/bookmarksSortParam'
       responses:
         '200':
           description: OK
@@ -53,8 +57,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Bookmark'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
     post:
       tags:
       - Bookmarks
@@ -82,6 +86,41 @@ paths:
                   job:
                     $ref: '#/components/schemas/Job'
                     description: The initiated job.
+  /bookmarks/search:
+    post:
+      summary: Search for bookmarks.
+      operationId: search_bookmarks
+      tags:
+      - Bookmarks
+      x-filterable:
+        description: Bookmark fields which can be used in filter expressions.
+        fields:
+        - id
+        - name
+        - creation_date
+        - vdb_ids
+        - retention
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/bookmarksSortParam'
+      requestBody:
+        $ref: '#/components/requestBodies/SearchBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchBookmarksResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bookmark'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
   /bookmarks/{bookmarkId}:
     parameters:
     - in: path
@@ -125,6 +164,10 @@ paths:
       operationId: get_vdb_groups_by_bookmark
       tags:
       - Bookmarks
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/vdbGroupsSortParam'
       responses:
         '200':
           description: OK
@@ -138,6 +181,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/VDBGroup'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
   /sources:
     get:
       summary: List all sources.
@@ -147,6 +192,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/sourcesSortParam'
       responses:
         '200':
           description: OK
@@ -162,6 +208,47 @@ paths:
                       $ref: '#/components/schemas/Source'
                   errors:
                     $ref: '#/components/schemas/Errors'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
+  /sources/search:
+    post:
+      summary: Search for Sources.
+      operationId: search_sources
+      tags:
+      - Sources
+      x-filterable:
+        description: Source fields which can be used in filter expressions.
+        fields:
+        - id
+        - database_type
+        - name
+        - database_version
+        - environment_id
+        - data_uuid
+        - ip_address
+        - fqdn
+        - size
+        - jdbc_connection_string
+        - plugin_version
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/sourcesSortParam'
+      requestBody:
+        $ref: '#/components/requestBodies/SearchBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchSourcesResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Source'
                   response_metadata:
                     $ref: '#/components/schemas/PaginatedResponseMetadata'
   /sources/{sourceId}:
@@ -194,6 +281,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/dsourcesSortParam'
       responses:
         '200':
           description: OK
@@ -212,7 +300,6 @@ paths:
                   response_metadata:
                     $ref: '#/components/schemas/PaginatedResponseMetadata'
   /dsources/search:
-    x-internal: false
     post:
       summary: Search for DSources.
       operationId: search_dsources
@@ -237,6 +324,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/dsourcesSortParam'
       requestBody:
         $ref: '#/components/requestBodies/SearchBody'
       responses:
@@ -404,6 +492,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/vdbsSortParam'
       responses:
         '200':
           description: OK
@@ -447,6 +536,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/vdbsSortParam'
       requestBody:
         $ref: '#/components/requestBodies/SearchBody'
       responses:
@@ -507,7 +597,7 @@ paths:
     parameters:
     - $ref: '#/components/parameters/vdbIdParam'
     get:
-      summary: List Snapshots for a dSource.
+      summary: List Snapshots for a VDB.
       operationId: get_vdb_snapshots
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -934,6 +1024,10 @@ paths:
     get:
       summary: List all VDBGroups.
       operationId: get_vdb_groups
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/vdbGroupsSortParam'
       tags:
       - VDBGroups
       responses:
@@ -949,8 +1043,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/VDBGroup'
-                  errors:
-                    $ref: '#/components/schemas/Errors'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
     post:
       summary: Create a new VDBGroup.
       tags:
@@ -1012,6 +1106,39 @@ paths:
                   job:
                     $ref: '#/components/schemas/Job'
                     description: Initiated job.
+  /vdb-groups/search:
+    post:
+      summary: Search for VDB Groups.
+      operationId: search_vdb_groups
+      tags:
+      - VDBGroups
+      x-filterable:
+        description: VDB Group fields which can be used in filter expressions.
+        fields:
+        - id
+        - name
+        - vdb_ids
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/vdbGroupsSortParam'
+      requestBody:
+        $ref: '#/components/requestBodies/SearchBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                title: SearchVDBGroupResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VDBGroup'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
   /vdb-groups/{vdbGroupId}:
     parameters:
     - $ref: '#/components/parameters/vdbGroupIdParam'
@@ -1114,6 +1241,10 @@ paths:
     get:
       summary: List bookmarks compatible with this VDB Group.
       operationId: get_bookmarks_by_vdb_group
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/bookmarksSortParam'
       tags:
       - VDBGroups
       responses:
@@ -1129,6 +1260,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Bookmark'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
   /snapshots/{snapshotId}:
     parameters:
     - in: path
@@ -1159,6 +1292,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/envSortParam'
       responses:
         '200':
           description: OK
@@ -1180,9 +1314,9 @@ paths:
       tags:
       - Environments
       summary: Create an environment.
-      operationId: create_environments
+      operationId: create_environment
       requestBody:
-        $ref: '#/components/requestBodies/CreateEnvironments'
+        $ref: '#/components/requestBodies/CreateEnvironment'
       responses:
         '200':
           description: Environment creation initiated
@@ -1339,7 +1473,7 @@ paths:
   /environments/{environmentId}/enable:
     parameters:
     - $ref: '#/components/parameters/environmentIdParam'
-    put:
+    post:
       tags:
       - Environments
       summary: Enable a disabled environment.
@@ -1359,7 +1493,7 @@ paths:
   /environments/{environmentId}/disable:
     parameters:
     - $ref: '#/components/parameters/environmentIdParam'
-    put:
+    post:
       tags:
       - Environments
       summary: Disable environment.
@@ -1379,7 +1513,7 @@ paths:
   /environments/{environmentId}/refresh:
     parameters:
     - $ref: '#/components/parameters/environmentIdParam'
-    put:
+    post:
       tags:
       - Environments
       summary: Refresh environment.
@@ -1479,7 +1613,7 @@ paths:
     parameters:
     - $ref: '#/components/parameters/environmentIdParam'
     - $ref: '#/components/parameters/userRefParam'
-    put:
+    post:
       tags:
       - Environments
       summary: Set primary environment user.
@@ -1523,6 +1657,10 @@ paths:
       - Management
       summary: Returns a list of registered engines.
       operationId: get_registered_engines
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/engineSortParam'
       responses:
         '200':
           description: OK
@@ -1536,6 +1674,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/RegisteredEngine'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
   /jobs/{jobId}:
     parameters:
     - in: path
@@ -1656,6 +1796,8 @@ paths:
         - username
         - hashicorp_vault_id
         - tags
+        - connection_status
+        - connection_status_details
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
@@ -1734,15 +1876,25 @@ paths:
       - Management
       summary: Returns a list of configured Hashicorp vaults.
       operationId: get_hashicorp_vaults
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/hashicorpVaultsSortParam'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/HashicorpVault'
+                type: object
+                title: ListHashicorpVaultsResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HashicorpVault'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
     post:
       tags:
       - Management
@@ -1797,6 +1949,10 @@ paths:
     get:
       summary: Returns a list of API clients.
       operationId: get_api_clients
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/apiClientsSortParam'
       tags:
       - ApiClients
       responses:
@@ -1811,7 +1967,9 @@ paths:
                   items:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ApiClient'
+                      $ref: '#/components/schemas/ModelApiClient'
+                  response_metadata:
+                    $ref: '#/components/schemas/PaginatedResponseMetadata'
     post:
       tags:
       - ApiClients
@@ -1855,7 +2013,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schemas/ApiClient'
+                $ref: '#/components/schemas/ModelApiClient'
     put:
       summary: |
         Update an Api client.
@@ -1867,7 +2025,7 @@ paths:
           application/json:
             schema:
               x-body-name: api_client
-              $ref: '#/components/schemas/ApiClient'
+              $ref: '#/components/schemas/ModelApiClient'
         required: true
       responses:
         '200':
@@ -1876,7 +2034,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schemas/ApiClient'
+                $ref: '#/components/schemas/ModelApiClient'
     delete:
       tags:
       - ApiClients
@@ -2025,6 +2183,36 @@ paths:
                   engine_name,name,unvirtualized_space,actual_space,dependant_vdbs
                   engine1,prod01,1849457664,607240704,0
                   engine2,test03,1696232960,1290392576,2
+  /reporting/api-usage-report:
+    get:
+      summary: Gets the report of API usage metrics over a given time period.
+      tags:
+      - Reporting
+      parameters:
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      operationId: get_api_usage_report
+      responses:
+        '200':
+          description: Returns a list of API usage metrics.
+          content:
+            application/json:
+              schema:
+                type: object
+                title: ApiUsageReportResponse
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApiUsageData'
+            text/csv:
+              schema:
+                type: string
+                example: |
+                  api_endpoint,api_method,api_count
+                  /v2/bookmarks,GET,1
+                  /v2/bookmarks/search,POST,1
+                  /v2/management/engines,GET,1
   /reporting/schedule:
     post:
       tags:
@@ -2154,30 +2342,52 @@ components:
         type: string
         minLength: 1
         maxLength: 4096
+    startDate:
+      name: start_date
+      in: query
+      description: Report start date/time. Defaults to first API request.
+      example: '2022-05-29T15:00:00-04:00'
+      schema:
+        type: string
+        format: date-time
+    endDate:
+      name: end_date
+      in: query
+      description: Report end date/time. Defaults to current time.
+      example: '2022-06-07T15:10:00-04:00'
+      schema:
+        type: string
+        format: date-time
     envSortParam:
       name: sort
       in: query
-      description: A property name with a prepended '-' signifies descending order.
-      example: key
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
       required: false
       schema:
         type: string
         enum:
+        - id
+        - -id
         - name
         - -name
         - namespace
         - -namespace
-        - is_cluster
-        - -is_cluster
+        - engine_id
+        - -engine_id
         - enabled
         - -enabled
+        - is_cluster
+        - -is_cluster
         nullable: true
         example: name
     engineSortParam:
       name: sort
       in: query
-      description: A property name with a prepended '-' signifies descending order.
-      example: key
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
       required: false
       schema:
         type: string
@@ -2205,7 +2415,192 @@ components:
         - username
         - -username
         - hashicorp_vault_id
-        - -hashicorp_vault_id
+        - -hashicorp_vault_id connection_status
+        - -connection_status
+        - connection_status_details
+        - -connection_status_details
+        nullable: true
+        example: name
+    vdbsSortParam:
+      name: sort
+      in: query
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
+      required: false
+      schema:
+        type: string
+        enum:
+        - id
+        - -id
+        - database_type
+        - -database_type
+        - name
+        - -name
+        - database_version
+        - -database_version
+        - size
+        - -size
+        - engine_id
+        - -engine_id
+        - status
+        - -status
+        - environment_id
+        - -environment_id
+        - ip_address
+        - -ip_address
+        - fqdn
+        - -fqdn
+        - parent_id
+        - -parent_id
+        - group_name
+        - -group_name
+        - creation_date
+        - -creation_date
+        nullable: true
+        example: name
+    dsourcesSortParam:
+      name: sort
+      in: query
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
+      required: false
+      schema:
+        type: string
+        enum:
+        - id
+        - -id
+        - database_type
+        - -database_type
+        - name
+        - -name
+        - database_version
+        - -database_version
+        - data_uuid
+        - -data_uuid
+        - storage_size
+        - -storage_size
+        - plugin_version
+        - -plugin_version
+        - creation_date
+        - -creation_date
+        - group_name
+        - -group_name
+        - enabled
+        - -enabled
+        - engine_id
+        - -engine_id
+        - source_id
+        - -source_id
+        - status
+        - -status
+        nullable: true
+        example: name
+    sourcesSortParam:
+      name: sort
+      in: query
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
+      required: false
+      schema:
+        type: string
+        enum:
+        - id
+        - -id
+        - database_type
+        - -database_type
+        - name
+        - -name
+        - database_version
+        - -database_version
+        - environment_id
+        - -environment_id
+        - data_uuid
+        - -data_uuid
+        - ip_address
+        - -ip_address
+        - fqdn
+        - -fqdn
+        - size
+        - -size
+        - jdbc_connection_string
+        - -jdbc_connection_string
+        - plugin_version
+        - -plugin_version
+        nullable: true
+        example: name
+    bookmarksSortParam:
+      name: sort
+      in: query
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
+      required: false
+      schema:
+        type: string
+        enum:
+        - id
+        - -id
+        - name
+        - -name
+        - creation_date
+        - -creation_date
+        - vdb_ids
+        - -vdb_ids
+        - retention
+        - -retention
+        nullable: true
+        example: name
+    vdbGroupsSortParam:
+      name: sort
+      in: query
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
+      required: false
+      schema:
+        type: string
+        enum:
+        - id
+        - -id
+        - name
+        - -name
+        - vdb_ids
+        - -vdb_ids
+        nullable: true
+        example: name
+    hashicorpVaultsSortParam:
+      name: sort
+      in: query
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
+      required: false
+      schema:
+        type: string
+        enum:
+        - id
+        - -id
+        nullable: true
+        example: name
+    apiClientsSortParam:
+      name: sort
+      in: query
+      description: The field to sort results by. A property name with a prepended
+        '-' signifies descending order.
+      example: id
+      required: false
+      schema:
+        type: string
+        enum:
+        - id
+        - -id
+        - api_client_id
+        - -api_client_id
+        - name
+        - -name
         nullable: true
         example: name
     vdbIdParam:
@@ -3154,6 +3549,20 @@ components:
           type: integer
           format: int64
           example: 8382160896
+        available:
+          description: True if the host is up and a connection can be established
+            from the engine.
+          type: boolean
+          example: false
+        available_timestamp:
+          description: The last time the available property was updated.
+          type: string
+          format: date-time
+          example: '2022-06-02T17:49:11.457Z'
+        not_available_reason:
+          description: The reason why the host is not available.
+          type: string
+          example: Failed to connect to host
     VirtualDatasetHooks:
       description: VDB operation hooks.
       type: object
@@ -3889,7 +4298,7 @@ components:
           type: string
           readOnly: true
           description: Name of the object affected by the error.
-    ApiClient:
+    ModelApiClient:
       properties:
         id:
           description: The entity ID of this API client.
@@ -3946,6 +4355,27 @@ components:
         api_client_entity_id:
           type: integer
           format: int64
+    ApiUsageData:
+      required:
+      - api_endpoint
+      - api_method
+      - api_count
+      properties:
+        api_endpoint:
+          description: API called.
+          type: string
+          minLength: 1
+          example: /v2/management/engines
+        api_method:
+          description: HTTP method for API called.
+          type: string
+          minLength: 1
+          example: GET
+        api_count:
+          description: Count of API calls over the requested timeframe.
+          type: integer
+          format: int64
+          example: 4200
     ListSnapshotsResponse:
       type: object
       properties:
@@ -4533,7 +4963,7 @@ components:
           type: string
           example: test.host.com
         port:
-          description: The port of the remote hsot machine to check.
+          description: The port of the remote host machine to check.
           type: integer
           minimum: 0
           maximum: 65535
@@ -4953,6 +5383,58 @@ components:
             type: string
             format: email
             example: user@example.com
+        sort_column:
+          type: string
+          enum:
+          - engine_id
+          - engine_name
+          - engine_hostname
+          - total_capacity
+          - free_storage
+          - used_storage
+          - used_percentage
+          - dsource_count
+          - vdb_count
+          - total_object_count
+          - name
+          - unvirtualized_space
+          - actual_space
+          - dependant_vdbs
+          - type
+          - version
+          - parent_id
+          - parent_name
+          - creation_date
+          - parent_timeflow_location
+          - parent_timeflow_timestamp
+          - parent_timeflow_timezone
+          - enabled
+          - status
+          - -engine_id
+          - -engine_name
+          - -engine_hostname
+          - -total_capacity
+          - -free_storage
+          - -used_storage
+          - -used_percentage
+          - -dsource_count
+          - -vdb_count
+          - -total_object_count
+          - -unvirtualized_space
+          - -actual_space
+          - -dependant_vdbs
+          - -name
+          - -type
+          - -version
+          - -parent_id
+          - -parent_name
+          - -creation_date
+          - -parent_timeflow_location
+          - -parent_timeflow_timestamp
+          - -parent_timeflow_timezone
+          - -enabled
+          - -status
+          example: engine_name
         row_count:
           type: integer
           minimum: 1
@@ -5460,7 +5942,7 @@ components:
               value:
                 use_engine_public_key: true
                 username: username
-    CreateEnvironments:
+    CreateEnvironment:
       description: The parameters to create an environment.
       content:
         application/json:

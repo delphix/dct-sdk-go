@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // Host A physical/virtual server.
@@ -25,6 +26,12 @@ type Host struct {
 	OsVersion *string `json:"os_version,omitempty"`
 	// The total amount of memory on this host in bytes.
 	MemorySize *int64 `json:"memory_size,omitempty"`
+	// True if the host is up and a connection can be established from the engine.
+	Available *bool `json:"available,omitempty"`
+	// The last time the available property was updated.
+	AvailableTimestamp *time.Time `json:"available_timestamp,omitempty"`
+	// The reason why the host is not available.
+	NotAvailableReason *string `json:"not_available_reason,omitempty"`
 }
 
 // NewHost instantiates a new Host object
@@ -172,6 +179,102 @@ func (o *Host) SetMemorySize(v int64) {
 	o.MemorySize = &v
 }
 
+// GetAvailable returns the Available field value if set, zero value otherwise.
+func (o *Host) GetAvailable() bool {
+	if o == nil || o.Available == nil {
+		var ret bool
+		return ret
+	}
+	return *o.Available
+}
+
+// GetAvailableOk returns a tuple with the Available field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetAvailableOk() (*bool, bool) {
+	if o == nil || o.Available == nil {
+		return nil, false
+	}
+	return o.Available, true
+}
+
+// HasAvailable returns a boolean if a field has been set.
+func (o *Host) HasAvailable() bool {
+	if o != nil && o.Available != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAvailable gets a reference to the given bool and assigns it to the Available field.
+func (o *Host) SetAvailable(v bool) {
+	o.Available = &v
+}
+
+// GetAvailableTimestamp returns the AvailableTimestamp field value if set, zero value otherwise.
+func (o *Host) GetAvailableTimestamp() time.Time {
+	if o == nil || o.AvailableTimestamp == nil {
+		var ret time.Time
+		return ret
+	}
+	return *o.AvailableTimestamp
+}
+
+// GetAvailableTimestampOk returns a tuple with the AvailableTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetAvailableTimestampOk() (*time.Time, bool) {
+	if o == nil || o.AvailableTimestamp == nil {
+		return nil, false
+	}
+	return o.AvailableTimestamp, true
+}
+
+// HasAvailableTimestamp returns a boolean if a field has been set.
+func (o *Host) HasAvailableTimestamp() bool {
+	if o != nil && o.AvailableTimestamp != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAvailableTimestamp gets a reference to the given time.Time and assigns it to the AvailableTimestamp field.
+func (o *Host) SetAvailableTimestamp(v time.Time) {
+	o.AvailableTimestamp = &v
+}
+
+// GetNotAvailableReason returns the NotAvailableReason field value if set, zero value otherwise.
+func (o *Host) GetNotAvailableReason() string {
+	if o == nil || o.NotAvailableReason == nil {
+		var ret string
+		return ret
+	}
+	return *o.NotAvailableReason
+}
+
+// GetNotAvailableReasonOk returns a tuple with the NotAvailableReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetNotAvailableReasonOk() (*string, bool) {
+	if o == nil || o.NotAvailableReason == nil {
+		return nil, false
+	}
+	return o.NotAvailableReason, true
+}
+
+// HasNotAvailableReason returns a boolean if a field has been set.
+func (o *Host) HasNotAvailableReason() bool {
+	if o != nil && o.NotAvailableReason != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNotAvailableReason gets a reference to the given string and assigns it to the NotAvailableReason field.
+func (o *Host) SetNotAvailableReason(v string) {
+	o.NotAvailableReason = &v
+}
+
 func (o Host) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Hostname != nil {
@@ -185,6 +288,15 @@ func (o Host) MarshalJSON() ([]byte, error) {
 	}
 	if o.MemorySize != nil {
 		toSerialize["memory_size"] = o.MemorySize
+	}
+	if o.Available != nil {
+		toSerialize["available"] = o.Available
+	}
+	if o.AvailableTimestamp != nil {
+		toSerialize["available_timestamp"] = o.AvailableTimestamp
+	}
+	if o.NotAvailableReason != nil {
+		toSerialize["not_available_reason"] = o.NotAvailableReason
 	}
 	return json.Marshal(toSerialize)
 }

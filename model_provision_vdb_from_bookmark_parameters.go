@@ -3,9 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-
 API version: 2.0.0
-
 Contact: support@delphix.com
 */
 
@@ -19,7 +17,6 @@ import (
 
 // ProvisionVDBFromBookmarkParameters struct for ProvisionVDBFromBookmarkParameters
 type ProvisionVDBFromBookmarkParameters struct {
-
 	// The commands to execute on the target environment before refreshing the VDB.
 	PreRefresh []Hook `json:"pre_refresh,omitempty"`
 	// The commands to execute on the target environment after refreshing the VDB.
@@ -66,27 +63,22 @@ type ProvisionVDBFromBookmarkParameters struct {
 	RepositoryId *string `json:"repository_id,omitempty"`
 	// Option to automatically select a compatible environment and repository. Mutually exclusive with repository_id.
 	AutoSelectRepository *bool `json:"auto_select_repository,omitempty"`
-
 	// Indicates whether the Engine should automatically restart this virtual source when target host reboot is detected.
 	VdbRestart *bool `json:"vdb_restart,omitempty"`
 	// The ID of the target VDB Template (Oracle Only).
 	TemplateId *string `json:"template_id,omitempty"`
-
 	// The ID of the configuration template to apply to the auxiliary container database. This is only relevant when provisioning a Multitenant pluggable database into an existing CDB, i.e when the cdb_id property is set.(Oracle Only)
 	AuxiliaryTemplateId *string `json:"auxiliary_template_id,omitempty"`
-
 	// Target VDB file mapping rules (Oracle Only). Rules must be line separated (\\n or \\r) and each line must have the format \"pattern:replacement\". Lines are applied in order.
 	FileMappingRules *string `json:"file_mapping_rules,omitempty"`
 	// Target VDB SID name (Oracle Only).
 	OracleInstanceName *string `json:"oracle_instance_name,omitempty"`
 	// Target VDB db_unique_name (Oracle Only).
 	UniqueName *string `json:"unique_name,omitempty"`
-
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the name of the provisioned vCDB (Oracle Multitenant Only).
 	VcdbName *string `json:"vcdb_name,omitempty"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the database name of the provisioned vCDB. Defaults to the value of the vcdb_name property. (Oracle Multitenant Only).
 	VcdbDatabaseName *string `json:"vcdb_database_name,omitempty"`
-
 	// Mount point for the VDB (Oracle, ASE Only).
 	MountPoint *string `json:"mount_point,omitempty"`
 	// Whether to open the database after provision (Oracle Only).
@@ -194,7 +186,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPostRefreshOk() ([]Hook, bool) {
 // HasPostRefresh returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPostRefresh() bool {
 	if o != nil && o.PostRefresh != nil {
-
 		return true
 	}
 
@@ -227,13 +218,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPreRollbackOk() ([]Hook, bool) {
 // HasPreRollback returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPreRollback() bool {
 	if o != nil && o.PreRollback != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetPreRollback gets a reference to the given []Hook and assigns it to the PreRollback field.
 func (o *ProvisionVDBFromBookmarkParameters) SetPreRollback(v []Hook) {
@@ -261,7 +250,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPostRollbackOk() ([]Hook, bool) 
 // HasPostRollback returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPostRollback() bool {
 	if o != nil && o.PostRollback != nil {
-
 		return true
 	}
 
@@ -294,7 +282,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetConfigureCloneOk() ([]Hook, bool
 // HasConfigureClone returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasConfigureClone() bool {
 	if o != nil && o.ConfigureClone != nil {
-
 		return true
 	}
 
@@ -327,7 +314,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPreSnapshotOk() ([]Hook, bool) {
 // HasPreSnapshot returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPreSnapshot() bool {
 	if o != nil && o.PreSnapshot != nil {
-
 		return true
 	}
 
@@ -360,7 +346,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPostSnapshotOk() ([]Hook, bool) 
 // HasPostSnapshot returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPostSnapshot() bool {
 	if o != nil && o.PostSnapshot != nil {
-
 		return true
 	}
 
@@ -393,7 +378,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPreStartOk() ([]Hook, bool) {
 // HasPreStart returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPreStart() bool {
 	if o != nil && o.PreStart != nil {
-
 		return true
 	}
 
@@ -426,7 +410,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPostStartOk() ([]Hook, bool) {
 // HasPostStart returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPostStart() bool {
 	if o != nil && o.PostStart != nil {
-
 		return true
 	}
 
@@ -459,7 +442,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPreStopOk() ([]Hook, bool) {
 // HasPreStop returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPreStop() bool {
 	if o != nil && o.PreStop != nil {
-
 		return true
 	}
 
@@ -492,7 +474,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetPostStopOk() ([]Hook, bool) {
 // HasPostStop returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasPostStop() bool {
 	if o != nil && o.PostStop != nil {
-
 		return true
 	}
 
@@ -525,13 +506,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetTargetGroupIdOk() (*string, bool
 // HasTargetGroupId returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasTargetGroupId() bool {
 	if o != nil && o.TargetGroupId != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetTargetGroupId gets a reference to the given string and assigns it to the TargetGroupId field.
 func (o *ProvisionVDBFromBookmarkParameters) SetTargetGroupId(v string) {
@@ -559,13 +538,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetNameOk() (*string, bool) {
 // HasName returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasName() bool {
 	if o != nil && o.Name != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *ProvisionVDBFromBookmarkParameters) SetName(v string) {
@@ -593,13 +570,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetDatabaseNameOk() (*string, bool)
 // HasDatabaseName returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasDatabaseName() bool {
 	if o != nil && o.DatabaseName != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
 func (o *ProvisionVDBFromBookmarkParameters) SetDatabaseName(v string) {
@@ -627,13 +602,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetCdbIdOk() (*string, bool) {
 // HasCdbId returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasCdbId() bool {
 	if o != nil && o.CdbId != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetCdbId gets a reference to the given string and assigns it to the CdbId field.
 func (o *ProvisionVDBFromBookmarkParameters) SetCdbId(v string) {
@@ -661,13 +634,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetClusterNodeIdsOk() ([]string, bo
 // HasClusterNodeIds returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasClusterNodeIds() bool {
 	if o != nil && o.ClusterNodeIds != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetClusterNodeIds gets a reference to the given []string and assigns it to the ClusterNodeIds field.
 func (o *ProvisionVDBFromBookmarkParameters) SetClusterNodeIds(v []string) {
@@ -695,7 +666,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetTruncateLogOnCheckpointOk() (*bo
 // HasTruncateLogOnCheckpoint returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasTruncateLogOnCheckpoint() bool {
 	if o != nil && o.TruncateLogOnCheckpoint != nil {
-
 		return true
 	}
 
@@ -728,7 +698,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetOsUsernameOk() (*string, bool) {
 // HasOsUsername returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasOsUsername() bool {
 	if o != nil && o.OsUsername != nil {
-
 		return true
 	}
 
@@ -761,7 +730,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetOsPasswordOk() (*string, bool) {
 // HasOsPassword returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasOsPassword() bool {
 	if o != nil && o.OsPassword != nil {
-
 		return true
 	}
 
@@ -826,13 +794,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetEnvironmentUserIdOk() (*string, 
 // HasEnvironmentUserId returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasEnvironmentUserId() bool {
 	if o != nil && o.EnvironmentUserId != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetEnvironmentUserId gets a reference to the given string and assigns it to the EnvironmentUserId field.
 func (o *ProvisionVDBFromBookmarkParameters) SetEnvironmentUserId(v string) {
@@ -860,13 +826,11 @@ func (o *ProvisionVDBFromBookmarkParameters) GetRepositoryIdOk() (*string, bool)
 // HasRepositoryId returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasRepositoryId() bool {
 	if o != nil && o.RepositoryId != nil {
-
 		return true
 	}
 
 	return false
 }
-
 
 // SetRepositoryId gets a reference to the given string and assigns it to the RepositoryId field.
 func (o *ProvisionVDBFromBookmarkParameters) SetRepositoryId(v string) {
@@ -894,7 +858,6 @@ func (o *ProvisionVDBFromBookmarkParameters) GetAutoSelectRepositoryOk() (*bool,
 // HasAutoSelectRepository returns a boolean if a field has been set.
 func (o *ProvisionVDBFromBookmarkParameters) HasAutoSelectRepository() bool {
 	if o != nil && o.AutoSelectRepository != nil {
-
 		return true
 	}
 
@@ -1001,7 +964,6 @@ func (o *ProvisionVDBFromBookmarkParameters) HasAuxiliaryTemplateId() bool {
 func (o *ProvisionVDBFromBookmarkParameters) SetAuxiliaryTemplateId(v string) {
 	o.AuxiliaryTemplateId = &v
 }
-
 
 // GetFileMappingRules returns the FileMappingRules field value if set, zero value otherwise.
 func (o *ProvisionVDBFromBookmarkParameters) GetFileMappingRules() string {
@@ -1162,7 +1124,6 @@ func (o *ProvisionVDBFromBookmarkParameters) HasVcdbDatabaseName() bool {
 func (o *ProvisionVDBFromBookmarkParameters) SetVcdbDatabaseName(v string) {
 	o.VcdbDatabaseName = &v
 }
-
 
 // GetMountPoint returns the MountPoint field value if set, zero value otherwise.
 func (o *ProvisionVDBFromBookmarkParameters) GetMountPoint() string {
@@ -1771,7 +1732,6 @@ func (o ProvisionVDBFromBookmarkParameters) MarshalJSON() ([]byte, error) {
 	if o.AutoSelectRepository != nil {
 		toSerialize["auto_select_repository"] = o.AutoSelectRepository
 	}
-
 	if o.VdbRestart != nil {
 		toSerialize["vdb_restart"] = o.VdbRestart
 	}
@@ -1781,7 +1741,6 @@ func (o ProvisionVDBFromBookmarkParameters) MarshalJSON() ([]byte, error) {
 	if o.AuxiliaryTemplateId != nil {
 		toSerialize["auxiliary_template_id"] = o.AuxiliaryTemplateId
 	}
-
 	if o.FileMappingRules != nil {
 		toSerialize["file_mapping_rules"] = o.FileMappingRules
 	}
@@ -1791,14 +1750,12 @@ func (o ProvisionVDBFromBookmarkParameters) MarshalJSON() ([]byte, error) {
 	if o.UniqueName != nil {
 		toSerialize["unique_name"] = o.UniqueName
 	}
-
 	if o.VcdbName != nil {
 		toSerialize["vcdb_name"] = o.VcdbName
 	}
 	if o.VcdbDatabaseName != nil {
 		toSerialize["vcdb_database_name"] = o.VcdbDatabaseName
 	}
-
 	if o.MountPoint != nil {
 		toSerialize["mount_point"] = o.MountPoint
 	}

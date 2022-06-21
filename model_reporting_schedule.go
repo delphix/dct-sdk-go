@@ -27,6 +27,7 @@ type ReportingSchedule struct {
 	FileFormat string `json:"file_format"`
 	Enabled bool `json:"enabled"`
 	Recipients []string `json:"recipients"`
+	SortColumn *string `json:"sort_column,omitempty"`
 	RowCount *int32 `json:"row_count,omitempty"`
 }
 
@@ -270,6 +271,38 @@ func (o *ReportingSchedule) SetRecipients(v []string) {
 	o.Recipients = v
 }
 
+// GetSortColumn returns the SortColumn field value if set, zero value otherwise.
+func (o *ReportingSchedule) GetSortColumn() string {
+	if o == nil || o.SortColumn == nil {
+		var ret string
+		return ret
+	}
+	return *o.SortColumn
+}
+
+// GetSortColumnOk returns a tuple with the SortColumn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReportingSchedule) GetSortColumnOk() (*string, bool) {
+	if o == nil || o.SortColumn == nil {
+		return nil, false
+	}
+	return o.SortColumn, true
+}
+
+// HasSortColumn returns a boolean if a field has been set.
+func (o *ReportingSchedule) HasSortColumn() bool {
+	if o != nil && o.SortColumn != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSortColumn gets a reference to the given string and assigns it to the SortColumn field.
+func (o *ReportingSchedule) SetSortColumn(v string) {
+	o.SortColumn = &v
+}
+
 // GetRowCount returns the RowCount field value if set, zero value otherwise.
 func (o *ReportingSchedule) GetRowCount() int32 {
 	if o == nil || o.RowCount == nil {
@@ -327,6 +360,9 @@ func (o ReportingSchedule) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["recipients"] = o.Recipients
+	}
+	if o.SortColumn != nil {
+		toSerialize["sort_column"] = o.SortColumn
 	}
 	if o.RowCount != nil {
 		toSerialize["row_count"] = o.RowCount
