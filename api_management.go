@@ -739,10 +739,28 @@ func (a *ManagementApiService) GetHashicorpVaultExecute(r ApiGetHashicorpVaultRe
 type ApiGetHashicorpVaultsRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
+	limit *int32
+	cursor *string
+	sort *string
 }
 
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetHashicorpVaultsRequest) Limit(limit int32) ApiGetHashicorpVaultsRequest {
+	r.limit = &limit
+	return r
+}
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetHashicorpVaultsRequest) Cursor(cursor string) ApiGetHashicorpVaultsRequest {
+	r.cursor = &cursor
+	return r
+}
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetHashicorpVaultsRequest) Sort(sort string) ApiGetHashicorpVaultsRequest {
+	r.sort = &sort
+	return r
+}
 
-func (r ApiGetHashicorpVaultsRequest) Execute() ([]HashicorpVault, *http.Response, error) {
+func (r ApiGetHashicorpVaultsRequest) Execute() (*ListHashicorpVaultsResponse, *http.Response, error) {
 	return r.ApiService.GetHashicorpVaultsExecute(r)
 }
 
@@ -760,13 +778,13 @@ func (a *ManagementApiService) GetHashicorpVaults(ctx context.Context) ApiGetHas
 }
 
 // Execute executes the request
-//  @return []HashicorpVault
-func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaultsRequest) ([]HashicorpVault, *http.Response, error) {
+//  @return ListHashicorpVaultsResponse
+func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaultsRequest) (*ListHashicorpVaultsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []HashicorpVault
+		localVarReturnValue  *ListHashicorpVaultsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetHashicorpVaults")
@@ -780,6 +798,15 @@ func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaults
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+	}
+	if r.cursor != nil {
+		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+	}
+	if r.sort != nil {
+		localVarQueryParams.Add("sort", parameterToString(*r.sort, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -970,8 +997,26 @@ func (a *ManagementApiService) GetRegisteredEngineExecute(r ApiGetRegisteredEngi
 type ApiGetRegisteredEnginesRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
+	limit *int32
+	cursor *string
+	sort *string
 }
 
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetRegisteredEnginesRequest) Limit(limit int32) ApiGetRegisteredEnginesRequest {
+	r.limit = &limit
+	return r
+}
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetRegisteredEnginesRequest) Cursor(cursor string) ApiGetRegisteredEnginesRequest {
+	r.cursor = &cursor
+	return r
+}
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetRegisteredEnginesRequest) Sort(sort string) ApiGetRegisteredEnginesRequest {
+	r.sort = &sort
+	return r
+}
 
 func (r ApiGetRegisteredEnginesRequest) Execute() (*ListRegisteredEnginesResponse, *http.Response, error) {
 	return r.ApiService.GetRegisteredEnginesExecute(r)
@@ -1011,6 +1056,15 @@ func (a *ManagementApiService) GetRegisteredEnginesExecute(r ApiGetRegisteredEng
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+	}
+	if r.cursor != nil {
+		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+	}
+	if r.sort != nil {
+		localVarQueryParams.Add("sort", parameterToString(*r.sort, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1333,7 +1387,7 @@ func (r ApiSearchEnginesRequest) Cursor(cursor string) ApiSearchEnginesRequest {
 	r.cursor = &cursor
 	return r
 }
-// A property name with a prepended &#39;-&#39; signifies descending order.
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
 func (r ApiSearchEnginesRequest) Sort(sort string) ApiSearchEnginesRequest {
 	r.sort = &sort
 	return r
