@@ -262,7 +262,7 @@ type ApiGetApiClientRequest struct {
 }
 
 
-func (r ApiGetApiClientRequest) Execute() (*ApiClient, *http.Response, error) {
+func (r ApiGetApiClientRequest) Execute() (*ModelApiClient, *http.Response, error) {
 	return r.ApiService.GetApiClientExecute(r)
 }
 
@@ -282,13 +282,13 @@ func (a *ApiClientsApiService) GetApiClient(ctx context.Context, id int64) ApiGe
 }
 
 // Execute executes the request
-//  @return ApiClient
-func (a *ApiClientsApiService) GetApiClientExecute(r ApiGetApiClientRequest) (*ApiClient, *http.Response, error) {
+//  @return ModelApiClient
+func (a *ApiClientsApiService) GetApiClientExecute(r ApiGetApiClientRequest) (*ModelApiClient, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ApiClient
+		localVarReturnValue  *ModelApiClient
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApiClientsApiService.GetApiClient")
@@ -374,8 +374,26 @@ func (a *ApiClientsApiService) GetApiClientExecute(r ApiGetApiClientRequest) (*A
 type ApiGetApiClientsRequest struct {
 	ctx context.Context
 	ApiService *ApiClientsApiService
+	limit *int32
+	cursor *string
+	sort *string
 }
 
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetApiClientsRequest) Limit(limit int32) ApiGetApiClientsRequest {
+	r.limit = &limit
+	return r
+}
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetApiClientsRequest) Cursor(cursor string) ApiGetApiClientsRequest {
+	r.cursor = &cursor
+	return r
+}
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetApiClientsRequest) Sort(sort string) ApiGetApiClientsRequest {
+	r.sort = &sort
+	return r
+}
 
 func (r ApiGetApiClientsRequest) Execute() (*ListApiClientsResponse, *http.Response, error) {
 	return r.ApiService.GetApiClientsExecute(r)
@@ -415,6 +433,15 @@ func (a *ApiClientsApiService) GetApiClientsExecute(r ApiGetApiClientsRequest) (
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+	}
+	if r.cursor != nil {
+		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+	}
+	if r.sort != nil {
+		localVarQueryParams.Add("sort", parameterToString(*r.sort, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -487,15 +514,15 @@ type ApiUpdateApiClientRequest struct {
 	ctx context.Context
 	ApiService *ApiClientsApiService
 	id int64
-	apiClient *ApiClient
+	modelApiClient *ModelApiClient
 }
 
-func (r ApiUpdateApiClientRequest) ApiClient(apiClient ApiClient) ApiUpdateApiClientRequest {
-	r.apiClient = &apiClient
+func (r ApiUpdateApiClientRequest) ModelApiClient(modelApiClient ModelApiClient) ApiUpdateApiClientRequest {
+	r.modelApiClient = &modelApiClient
 	return r
 }
 
-func (r ApiUpdateApiClientRequest) Execute() (*ApiClient, *http.Response, error) {
+func (r ApiUpdateApiClientRequest) Execute() (*ModelApiClient, *http.Response, error) {
 	return r.ApiService.UpdateApiClientExecute(r)
 }
 
@@ -515,13 +542,13 @@ func (a *ApiClientsApiService) UpdateApiClient(ctx context.Context, id int64) Ap
 }
 
 // Execute executes the request
-//  @return ApiClient
-func (a *ApiClientsApiService) UpdateApiClientExecute(r ApiUpdateApiClientRequest) (*ApiClient, *http.Response, error) {
+//  @return ModelApiClient
+func (a *ApiClientsApiService) UpdateApiClientExecute(r ApiUpdateApiClientRequest) (*ModelApiClient, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ApiClient
+		localVarReturnValue  *ModelApiClient
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApiClientsApiService.UpdateApiClient")
@@ -535,8 +562,8 @@ func (a *ApiClientsApiService) UpdateApiClientExecute(r ApiUpdateApiClientReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.apiClient == nil {
-		return localVarReturnValue, nil, reportError("apiClient is required and must be specified")
+	if r.modelApiClient == nil {
+		return localVarReturnValue, nil, reportError("modelApiClient is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -557,7 +584,7 @@ func (a *ApiClientsApiService) UpdateApiClientExecute(r ApiUpdateApiClientReques
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.apiClient
+	localVarPostBody = r.modelApiClient
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

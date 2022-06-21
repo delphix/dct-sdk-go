@@ -15,33 +15,33 @@ import (
 	"encoding/json"
 )
 
-// ListSnapshotsResponse struct for ListSnapshotsResponse
-type ListSnapshotsResponse struct {
-	Items []Snapshot `json:"items,omitempty"`
+// ListHashicorpVaultsResponse struct for ListHashicorpVaultsResponse
+type ListHashicorpVaultsResponse struct {
+	Items []HashicorpVault `json:"items,omitempty"`
 	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
-// NewListSnapshotsResponse instantiates a new ListSnapshotsResponse object
+// NewListHashicorpVaultsResponse instantiates a new ListHashicorpVaultsResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewListSnapshotsResponse() *ListSnapshotsResponse {
-	this := ListSnapshotsResponse{}
+func NewListHashicorpVaultsResponse() *ListHashicorpVaultsResponse {
+	this := ListHashicorpVaultsResponse{}
 	return &this
 }
 
-// NewListSnapshotsResponseWithDefaults instantiates a new ListSnapshotsResponse object
+// NewListHashicorpVaultsResponseWithDefaults instantiates a new ListHashicorpVaultsResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewListSnapshotsResponseWithDefaults() *ListSnapshotsResponse {
-	this := ListSnapshotsResponse{}
+func NewListHashicorpVaultsResponseWithDefaults() *ListHashicorpVaultsResponse {
+	this := ListHashicorpVaultsResponse{}
 	return &this
 }
 
 // GetItems returns the Items field value if set, zero value otherwise.
-func (o *ListSnapshotsResponse) GetItems() []Snapshot {
+func (o *ListHashicorpVaultsResponse) GetItems() []HashicorpVault {
 	if o == nil || o.Items == nil {
-		var ret []Snapshot
+		var ret []HashicorpVault
 		return ret
 	}
 	return o.Items
@@ -49,7 +49,7 @@ func (o *ListSnapshotsResponse) GetItems() []Snapshot {
 
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListSnapshotsResponse) GetItemsOk() ([]Snapshot, bool) {
+func (o *ListHashicorpVaultsResponse) GetItemsOk() ([]HashicorpVault, bool) {
 	if o == nil || o.Items == nil {
 		return nil, false
 	}
@@ -57,7 +57,7 @@ func (o *ListSnapshotsResponse) GetItemsOk() ([]Snapshot, bool) {
 }
 
 // HasItems returns a boolean if a field has been set.
-func (o *ListSnapshotsResponse) HasItems() bool {
+func (o *ListHashicorpVaultsResponse) HasItems() bool {
 	if o != nil && o.Items != nil {
 		return true
 	}
@@ -65,13 +65,13 @@ func (o *ListSnapshotsResponse) HasItems() bool {
 	return false
 }
 
-// SetItems gets a reference to the given []Snapshot and assigns it to the Items field.
-func (o *ListSnapshotsResponse) SetItems(v []Snapshot) {
+// SetItems gets a reference to the given []HashicorpVault and assigns it to the Items field.
+func (o *ListHashicorpVaultsResponse) SetItems(v []HashicorpVault) {
 	o.Items = v
 }
 
 // GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
-func (o *ListSnapshotsResponse) GetResponseMetadata() PaginatedResponseMetadata {
+func (o *ListHashicorpVaultsResponse) GetResponseMetadata() PaginatedResponseMetadata {
 	if o == nil || o.ResponseMetadata == nil {
 		var ret PaginatedResponseMetadata
 		return ret
@@ -81,7 +81,7 @@ func (o *ListSnapshotsResponse) GetResponseMetadata() PaginatedResponseMetadata 
 
 // GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListSnapshotsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
+func (o *ListHashicorpVaultsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
 	if o == nil || o.ResponseMetadata == nil {
 		return nil, false
 	}
@@ -89,7 +89,7 @@ func (o *ListSnapshotsResponse) GetResponseMetadataOk() (*PaginatedResponseMetad
 }
 
 // HasResponseMetadata returns a boolean if a field has been set.
-func (o *ListSnapshotsResponse) HasResponseMetadata() bool {
+func (o *ListHashicorpVaultsResponse) HasResponseMetadata() bool {
 	if o != nil && o.ResponseMetadata != nil {
 		return true
 	}
@@ -98,11 +98,11 @@ func (o *ListSnapshotsResponse) HasResponseMetadata() bool {
 }
 
 // SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
-func (o *ListSnapshotsResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
+func (o *ListHashicorpVaultsResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
 	o.ResponseMetadata = &v
 }
 
-func (o ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
+func (o ListHashicorpVaultsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Items != nil {
 		toSerialize["items"] = o.Items
@@ -113,38 +113,38 @@ func (o ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableListSnapshotsResponse struct {
-	value *ListSnapshotsResponse
+type NullableListHashicorpVaultsResponse struct {
+	value *ListHashicorpVaultsResponse
 	isSet bool
 }
 
-func (v NullableListSnapshotsResponse) Get() *ListSnapshotsResponse {
+func (v NullableListHashicorpVaultsResponse) Get() *ListHashicorpVaultsResponse {
 	return v.value
 }
 
-func (v *NullableListSnapshotsResponse) Set(val *ListSnapshotsResponse) {
+func (v *NullableListHashicorpVaultsResponse) Set(val *ListHashicorpVaultsResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableListSnapshotsResponse) IsSet() bool {
+func (v NullableListHashicorpVaultsResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableListSnapshotsResponse) Unset() {
+func (v *NullableListHashicorpVaultsResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableListSnapshotsResponse(val *ListSnapshotsResponse) *NullableListSnapshotsResponse {
-	return &NullableListSnapshotsResponse{value: val, isSet: true}
+func NewNullableListHashicorpVaultsResponse(val *ListHashicorpVaultsResponse) *NullableListHashicorpVaultsResponse {
+	return &NullableListHashicorpVaultsResponse{value: val, isSet: true}
 }
 
-func (v NullableListSnapshotsResponse) MarshalJSON() ([]byte, error) {
+func (v NullableListHashicorpVaultsResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableListSnapshotsResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableListHashicorpVaultsResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -18,6 +18,7 @@ import (
 // ListRegisteredEnginesResponse struct for ListRegisteredEnginesResponse
 type ListRegisteredEnginesResponse struct {
 	Items []RegisteredEngine `json:"items,omitempty"`
+	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
 // NewListRegisteredEnginesResponse instantiates a new ListRegisteredEnginesResponse object
@@ -69,10 +70,45 @@ func (o *ListRegisteredEnginesResponse) SetItems(v []RegisteredEngine) {
 	o.Items = v
 }
 
+// GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
+func (o *ListRegisteredEnginesResponse) GetResponseMetadata() PaginatedResponseMetadata {
+	if o == nil || o.ResponseMetadata == nil {
+		var ret PaginatedResponseMetadata
+		return ret
+	}
+	return *o.ResponseMetadata
+}
+
+// GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListRegisteredEnginesResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
+	if o == nil || o.ResponseMetadata == nil {
+		return nil, false
+	}
+	return o.ResponseMetadata, true
+}
+
+// HasResponseMetadata returns a boolean if a field has been set.
+func (o *ListRegisteredEnginesResponse) HasResponseMetadata() bool {
+	if o != nil && o.ResponseMetadata != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
+func (o *ListRegisteredEnginesResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
+	o.ResponseMetadata = &v
+}
+
 func (o ListRegisteredEnginesResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Items != nil {
 		toSerialize["items"] = o.Items
+	}
+	if o.ResponseMetadata != nil {
+		toSerialize["response_metadata"] = o.ResponseMetadata
 	}
 	return json.Marshal(toSerialize)
 }

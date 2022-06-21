@@ -89,6 +89,7 @@ Class | Method | HTTP request | Description
 *BookmarksApi* | [**GetBookmarkById**](docs/BookmarksApi.md#getbookmarkbyid) | **Get** /bookmarks/{bookmarkId} | Get a bookmark by ID.
 *BookmarksApi* | [**GetBookmarks**](docs/BookmarksApi.md#getbookmarks) | **Get** /bookmarks | List all bookmarks.
 *BookmarksApi* | [**GetVdbGroupsByBookmark**](docs/BookmarksApi.md#getvdbgroupsbybookmark) | **Get** /bookmarks/{bookmarkId}/vdb-groups | List VDB Groups compatible with this bookmark.
+*BookmarksApi* | [**SearchBookmarks**](docs/BookmarksApi.md#searchbookmarks) | **Post** /bookmarks/search | Search for bookmarks.
 *ConnectivityApi* | [**ConnectivityCheck**](docs/ConnectivityApi.md#connectivitycheck) | **Post** /connectivity/check | Checks connectivity between an engine and a remote host machine on a given port.
 *DSourcesApi* | [**CreateTagsDsource**](docs/DSourcesApi.md#createtagsdsource) | **Post** /dsources/{dsourceId}/tags | Create tags for a dSource.
 *DSourcesApi* | [**DeleteTagsDsource**](docs/DSourcesApi.md#deletetagsdsource) | **Post** /dsources/{dsourceId}/tags/delete | Delete tags for a dSource.
@@ -98,20 +99,20 @@ Class | Method | HTTP request | Description
 *DSourcesApi* | [**GetTagsDsource**](docs/DSourcesApi.md#gettagsdsource) | **Get** /dsources/{dsourceId}/tags | Get tags for a dSource.
 *DSourcesApi* | [**SearchDsources**](docs/DSourcesApi.md#searchdsources) | **Post** /dsources/search | Search for DSources.
 *DSourcesApi* | [**SnapshotDsource**](docs/DSourcesApi.md#snapshotdsource) | **Post** /dsources/{dsourceId}/snapshots | Snapshot a DSource.
+*EnvironmentsApi* | [**CreateEnvironment**](docs/EnvironmentsApi.md#createenvironment) | **Post** /environments | Create an environment.
 *EnvironmentsApi* | [**CreateEnvironmentTags**](docs/EnvironmentsApi.md#createenvironmenttags) | **Post** /environments/{environmentId}/tags | Create tags for an Environment.
 *EnvironmentsApi* | [**CreateEnvironmentUser**](docs/EnvironmentsApi.md#createenvironmentuser) | **Post** /environments/{environmentId}/users | Create environment user.
-*EnvironmentsApi* | [**CreateEnvironments**](docs/EnvironmentsApi.md#createenvironments) | **Post** /environments | Create an environment.
 *EnvironmentsApi* | [**DeleteEnvironment**](docs/EnvironmentsApi.md#deleteenvironment) | **Delete** /environments/{environmentId} | Delete an environment by ID.
 *EnvironmentsApi* | [**DeleteEnvironmentTags**](docs/EnvironmentsApi.md#deleteenvironmenttags) | **Post** /environments/{environmentId}/tags/delete | Delete tags for an Environment.
 *EnvironmentsApi* | [**DeleteEnvironmentUser**](docs/EnvironmentsApi.md#deleteenvironmentuser) | **Delete** /environments/{environmentId}/users/{userRef} | Delete environment user.
-*EnvironmentsApi* | [**DisableEnvironment**](docs/EnvironmentsApi.md#disableenvironment) | **Put** /environments/{environmentId}/disable | Disable environment.
-*EnvironmentsApi* | [**EnableEnvironment**](docs/EnvironmentsApi.md#enableenvironment) | **Put** /environments/{environmentId}/enable | Enable a disabled environment.
+*EnvironmentsApi* | [**DisableEnvironment**](docs/EnvironmentsApi.md#disableenvironment) | **Post** /environments/{environmentId}/disable | Disable environment.
+*EnvironmentsApi* | [**EnableEnvironment**](docs/EnvironmentsApi.md#enableenvironment) | **Post** /environments/{environmentId}/enable | Enable a disabled environment.
 *EnvironmentsApi* | [**GetEnvironmentById**](docs/EnvironmentsApi.md#getenvironmentbyid) | **Get** /environments/{environmentId} | Returns an environment by ID.
 *EnvironmentsApi* | [**GetEnvironments**](docs/EnvironmentsApi.md#getenvironments) | **Get** /environments | List all environments.
 *EnvironmentsApi* | [**GetTagsEnvironment**](docs/EnvironmentsApi.md#gettagsenvironment) | **Get** /environments/{environmentId}/tags | Get tags for an Environment.
 *EnvironmentsApi* | [**ListEnvironmentUsers**](docs/EnvironmentsApi.md#listenvironmentusers) | **Get** /environments/{environmentId}/users | List environment users.
-*EnvironmentsApi* | [**PrimaryEnvironmentUser**](docs/EnvironmentsApi.md#primaryenvironmentuser) | **Put** /environments/{environmentId}/users/{userRef}/primary | Set primary environment user.
-*EnvironmentsApi* | [**RefreshEnvironment**](docs/EnvironmentsApi.md#refreshenvironment) | **Put** /environments/{environmentId}/refresh | Refresh environment.
+*EnvironmentsApi* | [**PrimaryEnvironmentUser**](docs/EnvironmentsApi.md#primaryenvironmentuser) | **Post** /environments/{environmentId}/users/{userRef}/primary | Set primary environment user.
+*EnvironmentsApi* | [**RefreshEnvironment**](docs/EnvironmentsApi.md#refreshenvironment) | **Post** /environments/{environmentId}/refresh | Refresh environment.
 *EnvironmentsApi* | [**SearchEnvironments**](docs/EnvironmentsApi.md#searchenvironments) | **Post** /environments/search | Search for environments.
 *EnvironmentsApi* | [**UpdateEnvironment**](docs/EnvironmentsApi.md#updateenvironment) | **Put** /environments/{environmentId} | Update an environment by ID.
 *EnvironmentsApi* | [**UpdateEnvironmentUser**](docs/EnvironmentsApi.md#updateenvironmentuser) | **Put** /environments/{environmentId}/users/{userRef} | Update environment user.
@@ -135,6 +136,7 @@ Class | Method | HTTP request | Description
 *ManagementApi* | [**ValidateSmtpConfig**](docs/ManagementApi.md#validatesmtpconfig) | **Post** /management/smtp/validate | Validate SMTP Config.
 *ReportingApi* | [**CreateReportingSchedule**](docs/ReportingApi.md#createreportingschedule) | **Post** /reporting/schedule | Create a new report schedule.
 *ReportingApi* | [**DeleteReportingSchedule**](docs/ReportingApi.md#deletereportingschedule) | **Delete** /reporting/schedule/{reportId} | Delete report schedule by ID.
+*ReportingApi* | [**GetApiUsageReport**](docs/ReportingApi.md#getapiusagereport) | **Get** /reporting/api-usage-report | Gets the report of API usage metrics over a given time period.
 *ReportingApi* | [**GetDsourceUsageReport**](docs/ReportingApi.md#getdsourceusagereport) | **Get** /reporting/dsource-usage-report | Gets the usage report for virtualization engine dSources.
 *ReportingApi* | [**GetProductInfo**](docs/ReportingApi.md#getproductinfo) | **Get** /reporting/product_info | Returns the DCT Product Information.
 *ReportingApi* | [**GetReportingScheduleById**](docs/ReportingApi.md#getreportingschedulebyid) | **Get** /reporting/schedule/{reportId} | Returns a report schedule by ID.
@@ -145,6 +147,7 @@ Class | Method | HTTP request | Description
 *SnapshotsApi* | [**GetSnapshotById**](docs/SnapshotsApi.md#getsnapshotbyid) | **Get** /snapshots/{snapshotId} | Get a Snapshot by ID.
 *SourcesApi* | [**GetSourceById**](docs/SourcesApi.md#getsourcebyid) | **Get** /sources/{sourceId} | Get a source by ID.
 *SourcesApi* | [**GetSources**](docs/SourcesApi.md#getsources) | **Get** /sources | List all sources.
+*SourcesApi* | [**SearchSources**](docs/SourcesApi.md#searchsources) | **Post** /sources/search | Search for Sources.
 *VDBGroupsApi* | [**CreateVdbGroup**](docs/VDBGroupsApi.md#createvdbgroup) | **Post** /vdb-groups | Create a new VDBGroup.
 *VDBGroupsApi* | [**DeleteVdbGroup**](docs/VDBGroupsApi.md#deletevdbgroup) | **Delete** /vdb-groups/{vdbGroupId} | Delete a VDBGoup.
 *VDBGroupsApi* | [**GetBookmarksByVdbGroup**](docs/VDBGroupsApi.md#getbookmarksbyvdbgroup) | **Get** /vdb-groups/{vdbGroupId}/bookmarks | List bookmarks compatible with this VDB Group.
@@ -153,6 +156,7 @@ Class | Method | HTTP request | Description
 *VDBGroupsApi* | [**ProvisionVdbGroupFromBookmark**](docs/VDBGroupsApi.md#provisionvdbgroupfrombookmark) | **Post** /vdb-groups/provision_from_bookmark | Provision a new VDB Group from a Bookmark.
 *VDBGroupsApi* | [**RefreshVdbGroup**](docs/VDBGroupsApi.md#refreshvdbgroup) | **Post** /vdb-groups/{vdbGroupId}/refresh | Refresh a VDBGroup.
 *VDBGroupsApi* | [**RollbackVdbGroup**](docs/VDBGroupsApi.md#rollbackvdbgroup) | **Post** /vdb-groups/{vdbGroupId}/rollback | Rollback a VDBGroup.
+*VDBGroupsApi* | [**SearchVdbGroups**](docs/VDBGroupsApi.md#searchvdbgroups) | **Post** /vdb-groups/search | Search for VDB Groups.
 *VDBGroupsApi* | [**UpdateVdbGroupById**](docs/VDBGroupsApi.md#updatevdbgroupbyid) | **Patch** /vdb-groups/{vdbGroupId} | Update values of a VDB group.
 *VDBsApi* | [**CreateVdbTags**](docs/VDBsApi.md#createvdbtags) | **Post** /vdbs/{vdbId}/tags | Create tags for a VDB.
 *VDBsApi* | [**DeleteVdb**](docs/VDBsApi.md#deletevdb) | **Post** /vdbs/{vdbId}/delete | Delete a VDB.
@@ -161,7 +165,7 @@ Class | Method | HTTP request | Description
 *VDBsApi* | [**EnableVdb**](docs/VDBsApi.md#enablevdb) | **Post** /vdbs/{vdbId}/enable | Enable a VDB.
 *VDBsApi* | [**GetTagsVdb**](docs/VDBsApi.md#gettagsvdb) | **Get** /vdbs/{vdbId}/tags | Get tags for a VDB.
 *VDBsApi* | [**GetVdbById**](docs/VDBsApi.md#getvdbbyid) | **Get** /vdbs/{vdbId} | Get a VDB by ID.
-*VDBsApi* | [**GetVdbSnapshots**](docs/VDBsApi.md#getvdbsnapshots) | **Get** /vdbs/{vdbId}/snapshots | List Snapshots for a dSource.
+*VDBsApi* | [**GetVdbSnapshots**](docs/VDBsApi.md#getvdbsnapshots) | **Get** /vdbs/{vdbId}/snapshots | List Snapshots for a VDB.
 *VDBsApi* | [**GetVdbs**](docs/VDBsApi.md#getvdbs) | **Get** /vdbs | List all vdbs.
 *VDBsApi* | [**ProvisionVdbBySnapshot**](docs/VDBsApi.md#provisionvdbbysnapshot) | **Post** /vdbs/provision_by_snapshot | Provision a new VDB by snapshot.
 *VDBsApi* | [**ProvisionVdbByTimestamp**](docs/VDBsApi.md#provisionvdbbytimestamp) | **Post** /vdbs/provision_by_timestamp | Provision a new VDB by timestamp.
@@ -181,9 +185,10 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [ApiClient](docs/ApiClient.md)
  - [ApiClientCreateParameter](docs/ApiClientCreateParameter.md)
  - [ApiClientCreateResponse](docs/ApiClientCreateResponse.md)
+ - [ApiUsageData](docs/ApiUsageData.md)
+ - [ApiUsageReportResponse](docs/ApiUsageReportResponse.md)
  - [BaseProvisionVDBParameters](docs/BaseProvisionVDBParameters.md)
  - [BaseProvisionVDBParametersAllOf](docs/BaseProvisionVDBParametersAllOf.md)
  - [Bookmark](docs/Bookmark.md)
@@ -231,6 +236,7 @@ Class | Method | HTTP request | Description
  - [ListDSourcesResponse](docs/ListDSourcesResponse.md)
  - [ListEnvironmentUsers](docs/ListEnvironmentUsers.md)
  - [ListEnvironmentsResponse](docs/ListEnvironmentsResponse.md)
+ - [ListHashicorpVaultsResponse](docs/ListHashicorpVaultsResponse.md)
  - [ListRegisteredEnginesResponse](docs/ListRegisteredEnginesResponse.md)
  - [ListReportingScheduleResponse](docs/ListReportingScheduleResponse.md)
  - [ListSnapshotsResponse](docs/ListSnapshotsResponse.md)
@@ -238,6 +244,7 @@ Class | Method | HTTP request | Description
  - [ListVDBGroupsByBookmarkResponse](docs/ListVDBGroupsByBookmarkResponse.md)
  - [ListVDBGroupsResponse](docs/ListVDBGroupsResponse.md)
  - [ListVDBsResponse](docs/ListVDBsResponse.md)
+ - [ModelApiClient](docs/ModelApiClient.md)
  - [PaginatedResponseMetadata](docs/PaginatedResponseMetadata.md)
  - [PrimaryEnvironmentUserResponse](docs/PrimaryEnvironmentUserResponse.md)
  - [ProductHistory](docs/ProductHistory.md)
@@ -274,9 +281,12 @@ Class | Method | HTTP request | Description
  - [SMTPConfigParams](docs/SMTPConfigParams.md)
  - [SMTPConfigValidate](docs/SMTPConfigValidate.md)
  - [SearchBody](docs/SearchBody.md)
+ - [SearchBookmarksResponse](docs/SearchBookmarksResponse.md)
  - [SearchDSourcesResponse](docs/SearchDSourcesResponse.md)
  - [SearchEnginesResponse](docs/SearchEnginesResponse.md)
  - [SearchEnvironmentsResponse](docs/SearchEnvironmentsResponse.md)
+ - [SearchSourcesResponse](docs/SearchSourcesResponse.md)
+ - [SearchVDBGroupResponse](docs/SearchVDBGroupResponse.md)
  - [SearchVDBsResponse](docs/SearchVDBsResponse.md)
  - [Snapshot](docs/Snapshot.md)
  - [SnapshotDSourceResponse](docs/SnapshotDSourceResponse.md)

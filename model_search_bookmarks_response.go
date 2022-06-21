@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 1.0
+API version: 2.0.0
 Contact: support@delphix.com
 */
 
@@ -18,6 +18,7 @@ import (
 // SearchBookmarksResponse struct for SearchBookmarksResponse
 type SearchBookmarksResponse struct {
 	Items []Bookmark `json:"items,omitempty"`
+	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
 // NewSearchBookmarksResponse instantiates a new SearchBookmarksResponse object
@@ -69,10 +70,45 @@ func (o *SearchBookmarksResponse) SetItems(v []Bookmark) {
 	o.Items = v
 }
 
+// GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
+func (o *SearchBookmarksResponse) GetResponseMetadata() PaginatedResponseMetadata {
+	if o == nil || o.ResponseMetadata == nil {
+		var ret PaginatedResponseMetadata
+		return ret
+	}
+	return *o.ResponseMetadata
+}
+
+// GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchBookmarksResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
+	if o == nil || o.ResponseMetadata == nil {
+		return nil, false
+	}
+	return o.ResponseMetadata, true
+}
+
+// HasResponseMetadata returns a boolean if a field has been set.
+func (o *SearchBookmarksResponse) HasResponseMetadata() bool {
+	if o != nil && o.ResponseMetadata != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
+func (o *SearchBookmarksResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
+	o.ResponseMetadata = &v
+}
+
 func (o SearchBookmarksResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Items != nil {
 		toSerialize["items"] = o.Items
+	}
+	if o.ResponseMetadata != nil {
+		toSerialize["response_metadata"] = o.ResponseMetadata
 	}
 	return json.Marshal(toSerialize)
 }

@@ -18,8 +18,7 @@ import (
 // ListVDBGroupsResponse struct for ListVDBGroupsResponse
 type ListVDBGroupsResponse struct {
 	Items []VDBGroup `json:"items,omitempty"`
-	// Sadly, sometimes requests to the API are not successful. Failures can occur for a wide range of reasons. The Errors object contains information about full or partial failures which might have occurred during the request.
-	Errors []Error `json:"errors,omitempty"`
+	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
 // NewListVDBGroupsResponse instantiates a new ListVDBGroupsResponse object
@@ -71,36 +70,36 @@ func (o *ListVDBGroupsResponse) SetItems(v []VDBGroup) {
 	o.Items = v
 }
 
-// GetErrors returns the Errors field value if set, zero value otherwise.
-func (o *ListVDBGroupsResponse) GetErrors() []Error {
-	if o == nil || o.Errors == nil {
-		var ret []Error
+// GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
+func (o *ListVDBGroupsResponse) GetResponseMetadata() PaginatedResponseMetadata {
+	if o == nil || o.ResponseMetadata == nil {
+		var ret PaginatedResponseMetadata
 		return ret
 	}
-	return o.Errors
+	return *o.ResponseMetadata
 }
 
-// GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
+// GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListVDBGroupsResponse) GetErrorsOk() ([]Error, bool) {
-	if o == nil || o.Errors == nil {
+func (o *ListVDBGroupsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
+	if o == nil || o.ResponseMetadata == nil {
 		return nil, false
 	}
-	return o.Errors, true
+	return o.ResponseMetadata, true
 }
 
-// HasErrors returns a boolean if a field has been set.
-func (o *ListVDBGroupsResponse) HasErrors() bool {
-	if o != nil && o.Errors != nil {
+// HasResponseMetadata returns a boolean if a field has been set.
+func (o *ListVDBGroupsResponse) HasResponseMetadata() bool {
+	if o != nil && o.ResponseMetadata != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetErrors gets a reference to the given []Error and assigns it to the Errors field.
-func (o *ListVDBGroupsResponse) SetErrors(v []Error) {
-	o.Errors = v
+// SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
+func (o *ListVDBGroupsResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
+	o.ResponseMetadata = &v
 }
 
 func (o ListVDBGroupsResponse) MarshalJSON() ([]byte, error) {
@@ -108,8 +107,8 @@ func (o ListVDBGroupsResponse) MarshalJSON() ([]byte, error) {
 	if o.Items != nil {
 		toSerialize["items"] = o.Items
 	}
-	if o.Errors != nil {
-		toSerialize["errors"] = o.Errors
+	if o.ResponseMetadata != nil {
+		toSerialize["response_metadata"] = o.ResponseMetadata
 	}
 	return json.Marshal(toSerialize)
 }
