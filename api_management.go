@@ -31,7 +31,7 @@ type ManagementApiService service
 type ApiCreateEngineTagsRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
-	engineId int64
+	engineId string
 	tagsRequest *TagsRequest
 }
 
@@ -49,10 +49,10 @@ func (r ApiCreateEngineTagsRequest) Execute() (*TagsResponse, *http.Response, er
 CreateEngineTags Create tags for a engine.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
+ @param engineId The ID of the registered engine.
  @return ApiCreateEngineTagsRequest
 */
-func (a *ManagementApiService) CreateEngineTags(ctx context.Context, engineId int64) ApiCreateEngineTagsRequest {
+func (a *ManagementApiService) CreateEngineTags(ctx context.Context, engineId string) ApiCreateEngineTagsRequest {
 	return ApiCreateEngineTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -81,9 +81,6 @@ func (a *ManagementApiService) CreateEngineTagsExecute(r ApiCreateEngineTagsRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
-	}
 	if r.tagsRequest == nil {
 		return localVarReturnValue, nil, reportError("tagsRequest is required and must be specified")
 	}
@@ -283,7 +280,7 @@ func (a *ManagementApiService) CreateHashicorpVaultExecute(r ApiCreateHashicorpV
 type ApiDeleteEngineTagsRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
-	engineId int64
+	engineId string
 	deleteTag *DeleteTag
 }
 
@@ -301,10 +298,10 @@ func (r ApiDeleteEngineTagsRequest) Execute() (*http.Response, error) {
 DeleteEngineTags Delete tags for an Engine.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
+ @param engineId The ID of the registered engine.
  @return ApiDeleteEngineTagsRequest
 */
-func (a *ManagementApiService) DeleteEngineTags(ctx context.Context, engineId int64) ApiDeleteEngineTagsRequest {
+func (a *ManagementApiService) DeleteEngineTags(ctx context.Context, engineId string) ApiDeleteEngineTagsRequest {
 	return ApiDeleteEngineTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -331,9 +328,6 @@ func (a *ManagementApiService) DeleteEngineTagsExecute(r ApiDeleteEngineTagsRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return nil, reportError("engineId must be greater than 1")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -504,7 +498,7 @@ func (a *ManagementApiService) DeleteHashicorpVaultExecute(r ApiDeleteHashicorpV
 type ApiGetEngineTagsRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
-	engineId int64
+	engineId string
 }
 
 
@@ -516,10 +510,10 @@ func (r ApiGetEngineTagsRequest) Execute() (*TagsResponse, *http.Response, error
 GetEngineTags Get tags for a Engine.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
+ @param engineId The ID of the registered engine.
  @return ApiGetEngineTagsRequest
 */
-func (a *ManagementApiService) GetEngineTags(ctx context.Context, engineId int64) ApiGetEngineTagsRequest {
+func (a *ManagementApiService) GetEngineTags(ctx context.Context, engineId string) ApiGetEngineTagsRequest {
 	return ApiGetEngineTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -548,9 +542,6 @@ func (a *ManagementApiService) GetEngineTagsExecute(r ApiGetEngineTagsRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -878,7 +869,7 @@ func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaults
 type ApiGetRegisteredEngineRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
-	engineId int64
+	engineId string
 }
 
 
@@ -890,10 +881,10 @@ func (r ApiGetRegisteredEngineRequest) Execute() (*RegisteredEngine, *http.Respo
 GetRegisteredEngine Returns a registered engine by ID.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
+ @param engineId The ID of the registered engine.
  @return ApiGetRegisteredEngineRequest
 */
-func (a *ManagementApiService) GetRegisteredEngine(ctx context.Context, engineId int64) ApiGetRegisteredEngineRequest {
+func (a *ManagementApiService) GetRegisteredEngine(ctx context.Context, engineId string) ApiGetRegisteredEngineRequest {
 	return ApiGetRegisteredEngineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -922,9 +913,6 @@ func (a *ManagementApiService) GetRegisteredEngineExecute(r ApiGetRegisteredEngi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1518,7 +1506,7 @@ func (a *ManagementApiService) SearchEnginesExecute(r ApiSearchEnginesRequest) (
 type ApiUnregisterEngineRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
-	engineId int64
+	engineId string
 }
 
 
@@ -1530,10 +1518,10 @@ func (r ApiUnregisterEngineRequest) Execute() (*DeleteEngineResponse, *http.Resp
 UnregisterEngine Unregister an engine.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
+ @param engineId The ID of the registered engine.
  @return ApiUnregisterEngineRequest
 */
-func (a *ManagementApiService) UnregisterEngine(ctx context.Context, engineId int64) ApiUnregisterEngineRequest {
+func (a *ManagementApiService) UnregisterEngine(ctx context.Context, engineId string) ApiUnregisterEngineRequest {
 	return ApiUnregisterEngineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1562,9 +1550,6 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1637,7 +1622,7 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 type ApiUpdateRegisteredEngineRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
-	engineId int64
+	engineId string
 	registeredEngine *RegisteredEngine
 }
 
@@ -1655,10 +1640,10 @@ func (r ApiUpdateRegisteredEngineRequest) Execute() (*RegisteredEngine, *http.Re
 UpdateRegisteredEngine Update a registered engine.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
+ @param engineId The ID of the registered engine.
  @return ApiUpdateRegisteredEngineRequest
 */
-func (a *ManagementApiService) UpdateRegisteredEngine(ctx context.Context, engineId int64) ApiUpdateRegisteredEngineRequest {
+func (a *ManagementApiService) UpdateRegisteredEngine(ctx context.Context, engineId string) ApiUpdateRegisteredEngineRequest {
 	return ApiUpdateRegisteredEngineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1687,9 +1672,6 @@ func (a *ManagementApiService) UpdateRegisteredEngineExecute(r ApiUpdateRegister
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
-	}
 	if r.registeredEngine == nil {
 		return localVarReturnValue, nil, reportError("registeredEngine is required and must be specified")
 	}

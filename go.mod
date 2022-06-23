@@ -2,7 +2,7 @@ module github.com/delphix/dct-sdk-go
 
 go 1.17
 
-require golang.org/x/oauth2 v0.0.0-20220608161450-d0670ef3b1eb
+require golang.org/x/oauth2 v0.0.0-20220622183110-fd043fe589d2
 
 require (
 	github.com/golang/protobuf v1.4.2 // indirect

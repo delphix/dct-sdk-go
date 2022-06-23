@@ -24,7 +24,7 @@ type Environment struct {
 	// The namespace of this environment for replicated and restored objects.
 	Namespace NullableString `json:"namespace,omitempty"`
 	// A reference to the Engine that this Environment connection is associated with.
-	EngineId *int64 `json:"engine_id,omitempty"`
+	EngineId *string `json:"engine_id,omitempty"`
 	// True if this environment is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
 	// True if this environment is a cluster of hosts.
@@ -161,9 +161,9 @@ func (o *Environment) UnsetNamespace() {
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *Environment) GetEngineId() int64 {
+func (o *Environment) GetEngineId() string {
 	if o == nil || o.EngineId == nil {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.EngineId
@@ -171,7 +171,7 @@ func (o *Environment) GetEngineId() int64 {
 
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Environment) GetEngineIdOk() (*int64, bool) {
+func (o *Environment) GetEngineIdOk() (*string, bool) {
 	if o == nil || o.EngineId == nil {
 		return nil, false
 	}
@@ -187,8 +187,8 @@ func (o *Environment) HasEngineId() bool {
 	return false
 }
 
-// SetEngineId gets a reference to the given int64 and assigns it to the EngineId field.
-func (o *Environment) SetEngineId(v int64) {
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
+func (o *Environment) SetEngineId(v string) {
 	o.EngineId = &v
 }
 

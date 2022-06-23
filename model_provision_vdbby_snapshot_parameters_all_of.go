@@ -18,7 +18,7 @@ import (
 // ProvisionVDBBySnapshotParametersAllOf struct for ProvisionVDBBySnapshotParametersAllOf
 type ProvisionVDBBySnapshotParametersAllOf struct {
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
-	EngineId *int64 `json:"engine_id,omitempty"`
+	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source. If this property is not set, the data_source of the snapshot_id will be used.
 	SourceDataId *string `json:"source_data_id,omitempty"`
 }
@@ -41,9 +41,9 @@ func NewProvisionVDBBySnapshotParametersAllOfWithDefaults() *ProvisionVDBBySnaps
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *ProvisionVDBBySnapshotParametersAllOf) GetEngineId() int64 {
+func (o *ProvisionVDBBySnapshotParametersAllOf) GetEngineId() string {
 	if o == nil || o.EngineId == nil {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.EngineId
@@ -51,7 +51,7 @@ func (o *ProvisionVDBBySnapshotParametersAllOf) GetEngineId() int64 {
 
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProvisionVDBBySnapshotParametersAllOf) GetEngineIdOk() (*int64, bool) {
+func (o *ProvisionVDBBySnapshotParametersAllOf) GetEngineIdOk() (*string, bool) {
 	if o == nil || o.EngineId == nil {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *ProvisionVDBBySnapshotParametersAllOf) HasEngineId() bool {
 	return false
 }
 
-// SetEngineId gets a reference to the given int64 and assigns it to the EngineId field.
-func (o *ProvisionVDBBySnapshotParametersAllOf) SetEngineId(v int64) {
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
+func (o *ProvisionVDBBySnapshotParametersAllOf) SetEngineId(v string) {
 	o.EngineId = &v
 }
 
