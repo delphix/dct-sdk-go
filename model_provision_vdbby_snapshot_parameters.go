@@ -114,7 +114,7 @@ type ProvisionVDBBySnapshotParameters struct {
 	// The ID of the snapshot from which to execute the operation. If the snapshot_id is not, selects the latest snapshot.
 	SnapshotId *string `json:"snapshot_id,omitempty"`
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
-	EngineId *int64 `json:"engine_id,omitempty"`
+	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source. If this property is not set, the data_source of the snapshot_id will be used.
 	SourceDataId *string `json:"source_data_id,omitempty"`
 }
@@ -1673,9 +1673,9 @@ func (o *ProvisionVDBBySnapshotParameters) SetSnapshotId(v string) {
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *ProvisionVDBBySnapshotParameters) GetEngineId() int64 {
+func (o *ProvisionVDBBySnapshotParameters) GetEngineId() string {
 	if o == nil || o.EngineId == nil {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.EngineId
@@ -1683,7 +1683,7 @@ func (o *ProvisionVDBBySnapshotParameters) GetEngineId() int64 {
 
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProvisionVDBBySnapshotParameters) GetEngineIdOk() (*int64, bool) {
+func (o *ProvisionVDBBySnapshotParameters) GetEngineIdOk() (*string, bool) {
 	if o == nil || o.EngineId == nil {
 		return nil, false
 	}
@@ -1699,8 +1699,8 @@ func (o *ProvisionVDBBySnapshotParameters) HasEngineId() bool {
 	return false
 }
 
-// SetEngineId gets a reference to the given int64 and assigns it to the EngineId field.
-func (o *ProvisionVDBBySnapshotParameters) SetEngineId(v int64) {
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
+func (o *ProvisionVDBBySnapshotParameters) SetEngineId(v string) {
 	o.EngineId = &v
 }
 

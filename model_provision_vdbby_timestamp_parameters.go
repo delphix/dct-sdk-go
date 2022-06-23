@@ -117,7 +117,7 @@ type ProvisionVDBByTimestampParameters struct {
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
 	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
-	EngineId *int64 `json:"engine_id,omitempty"`
+	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
 	SourceDataId string `json:"source_data_id"`
 }
@@ -1709,9 +1709,9 @@ func (o *ProvisionVDBByTimestampParameters) SetTimestampInDatabaseTimezone(v str
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *ProvisionVDBByTimestampParameters) GetEngineId() int64 {
+func (o *ProvisionVDBByTimestampParameters) GetEngineId() string {
 	if o == nil || o.EngineId == nil {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.EngineId
@@ -1719,7 +1719,7 @@ func (o *ProvisionVDBByTimestampParameters) GetEngineId() int64 {
 
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProvisionVDBByTimestampParameters) GetEngineIdOk() (*int64, bool) {
+func (o *ProvisionVDBByTimestampParameters) GetEngineIdOk() (*string, bool) {
 	if o == nil || o.EngineId == nil {
 		return nil, false
 	}
@@ -1735,8 +1735,8 @@ func (o *ProvisionVDBByTimestampParameters) HasEngineId() bool {
 	return false
 }
 
-// SetEngineId gets a reference to the given int64 and assigns it to the EngineId field.
-func (o *ProvisionVDBByTimestampParameters) SetEngineId(v int64) {
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
+func (o *ProvisionVDBByTimestampParameters) SetEngineId(v string) {
 	o.EngineId = &v
 }
 

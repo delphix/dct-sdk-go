@@ -18,7 +18,7 @@ import (
 // ProvisionVDBByTimestampParametersAllOf struct for ProvisionVDBByTimestampParametersAllOf
 type ProvisionVDBByTimestampParametersAllOf struct {
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
-	EngineId *int64 `json:"engine_id,omitempty"`
+	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
 	SourceDataId string `json:"source_data_id"`
 }
@@ -42,9 +42,9 @@ func NewProvisionVDBByTimestampParametersAllOfWithDefaults() *ProvisionVDBByTime
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineId() int64 {
+func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineId() string {
 	if o == nil || o.EngineId == nil {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.EngineId
@@ -52,7 +52,7 @@ func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineId() int64 {
 
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineIdOk() (*int64, bool) {
+func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineIdOk() (*string, bool) {
 	if o == nil || o.EngineId == nil {
 		return nil, false
 	}
@@ -68,8 +68,8 @@ func (o *ProvisionVDBByTimestampParametersAllOf) HasEngineId() bool {
 	return false
 }
 
-// SetEngineId gets a reference to the given int64 and assigns it to the EngineId field.
-func (o *ProvisionVDBByTimestampParametersAllOf) SetEngineId(v int64) {
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
+func (o *ProvisionVDBByTimestampParametersAllOf) SetEngineId(v string) {
 	o.EngineId = &v
 }
 

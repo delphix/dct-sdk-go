@@ -20,7 +20,7 @@ type EnvironmentCreateParameters struct {
 	// The name of the environment.
 	Name *string `json:"name,omitempty"`
 	// The ID of the Engine onto which to create the environment.
-	EngineId int64 `json:"engine_id"`
+	EngineId string `json:"engine_id"`
 	// Operating system type of the environment.
 	OsName string `json:"os_name"`
 	// Whether the environment to be created is a cluster.
@@ -101,7 +101,7 @@ type EnvironmentCreateParameters struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEnvironmentCreateParameters(engineId int64, osName string, hostname string) *EnvironmentCreateParameters {
+func NewEnvironmentCreateParameters(engineId string, osName string, hostname string) *EnvironmentCreateParameters {
 	this := EnvironmentCreateParameters{}
 	this.EngineId = engineId
 	this.OsName = osName
@@ -158,9 +158,9 @@ func (o *EnvironmentCreateParameters) SetName(v string) {
 }
 
 // GetEngineId returns the EngineId field value
-func (o *EnvironmentCreateParameters) GetEngineId() int64 {
+func (o *EnvironmentCreateParameters) GetEngineId() string {
 	if o == nil {
-		var ret int64
+		var ret string
 		return ret
 	}
 
@@ -169,7 +169,7 @@ func (o *EnvironmentCreateParameters) GetEngineId() int64 {
 
 // GetEngineIdOk returns a tuple with the EngineId field value
 // and a boolean to check if the value has been set.
-func (o *EnvironmentCreateParameters) GetEngineIdOk() (*int64, bool) {
+func (o *EnvironmentCreateParameters) GetEngineIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -177,7 +177,7 @@ func (o *EnvironmentCreateParameters) GetEngineIdOk() (*int64, bool) {
 }
 
 // SetEngineId sets field value
-func (o *EnvironmentCreateParameters) SetEngineId(v int64) {
+func (o *EnvironmentCreateParameters) SetEngineId(v string) {
 	o.EngineId = v
 }
 
