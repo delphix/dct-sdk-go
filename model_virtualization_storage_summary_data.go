@@ -18,7 +18,7 @@ import (
 // VirtualizationStorageSummaryData struct for VirtualizationStorageSummaryData
 type VirtualizationStorageSummaryData struct {
 	// A reference to the engine.
-	EngineId int64 `json:"engine_id"`
+	EngineId string `json:"engine_id"`
 	// The engine name.
 	EngineName string `json:"engine_name"`
 	// The engine hostname.
@@ -43,7 +43,7 @@ type VirtualizationStorageSummaryData struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVirtualizationStorageSummaryData(engineId int64, engineName string, engineHostname string) *VirtualizationStorageSummaryData {
+func NewVirtualizationStorageSummaryData(engineId string, engineName string, engineHostname string) *VirtualizationStorageSummaryData {
 	this := VirtualizationStorageSummaryData{}
 	this.EngineId = engineId
 	this.EngineName = engineName
@@ -60,9 +60,9 @@ func NewVirtualizationStorageSummaryDataWithDefaults() *VirtualizationStorageSum
 }
 
 // GetEngineId returns the EngineId field value
-func (o *VirtualizationStorageSummaryData) GetEngineId() int64 {
+func (o *VirtualizationStorageSummaryData) GetEngineId() string {
 	if o == nil {
-		var ret int64
+		var ret string
 		return ret
 	}
 
@@ -71,7 +71,7 @@ func (o *VirtualizationStorageSummaryData) GetEngineId() int64 {
 
 // GetEngineIdOk returns a tuple with the EngineId field value
 // and a boolean to check if the value has been set.
-func (o *VirtualizationStorageSummaryData) GetEngineIdOk() (*int64, bool) {
+func (o *VirtualizationStorageSummaryData) GetEngineIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -79,7 +79,7 @@ func (o *VirtualizationStorageSummaryData) GetEngineIdOk() (*int64, bool) {
 }
 
 // SetEngineId sets field value
-func (o *VirtualizationStorageSummaryData) SetEngineId(v int64) {
+func (o *VirtualizationStorageSummaryData) SetEngineId(v string) {
 	o.EngineId = v
 }
 

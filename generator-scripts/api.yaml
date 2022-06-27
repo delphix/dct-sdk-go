@@ -5166,8 +5166,8 @@ components:
       properties:
         engine_id:
           description: A reference to the engine.
-          type: integer
-          format: int64
+          type: string
+          minLength: 1
           example: engine-123
         engine_name:
           description: The engine name.
