@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the VirtualDatasetHooks type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &VirtualDatasetHooks{}
 
 // VirtualDatasetHooks VDB operation hooks.
 type VirtualDatasetHooks struct {
@@ -60,7 +63,7 @@ func NewVirtualDatasetHooksWithDefaults() *VirtualDatasetHooks {
 
 // GetPreRefresh returns the PreRefresh field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPreRefresh() []Hook {
-	if o == nil || o.PreRefresh == nil {
+	if o == nil || IsNil(o.PreRefresh) {
 		var ret []Hook
 		return ret
 	}
@@ -70,7 +73,7 @@ func (o *VirtualDatasetHooks) GetPreRefresh() []Hook {
 // GetPreRefreshOk returns a tuple with the PreRefresh field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPreRefreshOk() ([]Hook, bool) {
-	if o == nil || o.PreRefresh == nil {
+	if o == nil || IsNil(o.PreRefresh) {
 		return nil, false
 	}
 	return o.PreRefresh, true
@@ -78,7 +81,7 @@ func (o *VirtualDatasetHooks) GetPreRefreshOk() ([]Hook, bool) {
 
 // HasPreRefresh returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPreRefresh() bool {
-	if o != nil && o.PreRefresh != nil {
+	if o != nil && !IsNil(o.PreRefresh) {
 		return true
 	}
 
@@ -92,7 +95,7 @@ func (o *VirtualDatasetHooks) SetPreRefresh(v []Hook) {
 
 // GetPostRefresh returns the PostRefresh field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPostRefresh() []Hook {
-	if o == nil || o.PostRefresh == nil {
+	if o == nil || IsNil(o.PostRefresh) {
 		var ret []Hook
 		return ret
 	}
@@ -102,7 +105,7 @@ func (o *VirtualDatasetHooks) GetPostRefresh() []Hook {
 // GetPostRefreshOk returns a tuple with the PostRefresh field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPostRefreshOk() ([]Hook, bool) {
-	if o == nil || o.PostRefresh == nil {
+	if o == nil || IsNil(o.PostRefresh) {
 		return nil, false
 	}
 	return o.PostRefresh, true
@@ -110,7 +113,7 @@ func (o *VirtualDatasetHooks) GetPostRefreshOk() ([]Hook, bool) {
 
 // HasPostRefresh returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPostRefresh() bool {
-	if o != nil && o.PostRefresh != nil {
+	if o != nil && !IsNil(o.PostRefresh) {
 		return true
 	}
 
@@ -124,7 +127,7 @@ func (o *VirtualDatasetHooks) SetPostRefresh(v []Hook) {
 
 // GetPreRollback returns the PreRollback field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPreRollback() []Hook {
-	if o == nil || o.PreRollback == nil {
+	if o == nil || IsNil(o.PreRollback) {
 		var ret []Hook
 		return ret
 	}
@@ -134,7 +137,7 @@ func (o *VirtualDatasetHooks) GetPreRollback() []Hook {
 // GetPreRollbackOk returns a tuple with the PreRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPreRollbackOk() ([]Hook, bool) {
-	if o == nil || o.PreRollback == nil {
+	if o == nil || IsNil(o.PreRollback) {
 		return nil, false
 	}
 	return o.PreRollback, true
@@ -142,7 +145,7 @@ func (o *VirtualDatasetHooks) GetPreRollbackOk() ([]Hook, bool) {
 
 // HasPreRollback returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPreRollback() bool {
-	if o != nil && o.PreRollback != nil {
+	if o != nil && !IsNil(o.PreRollback) {
 		return true
 	}
 
@@ -156,7 +159,7 @@ func (o *VirtualDatasetHooks) SetPreRollback(v []Hook) {
 
 // GetPostRollback returns the PostRollback field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPostRollback() []Hook {
-	if o == nil || o.PostRollback == nil {
+	if o == nil || IsNil(o.PostRollback) {
 		var ret []Hook
 		return ret
 	}
@@ -166,7 +169,7 @@ func (o *VirtualDatasetHooks) GetPostRollback() []Hook {
 // GetPostRollbackOk returns a tuple with the PostRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPostRollbackOk() ([]Hook, bool) {
-	if o == nil || o.PostRollback == nil {
+	if o == nil || IsNil(o.PostRollback) {
 		return nil, false
 	}
 	return o.PostRollback, true
@@ -174,7 +177,7 @@ func (o *VirtualDatasetHooks) GetPostRollbackOk() ([]Hook, bool) {
 
 // HasPostRollback returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPostRollback() bool {
-	if o != nil && o.PostRollback != nil {
+	if o != nil && !IsNil(o.PostRollback) {
 		return true
 	}
 
@@ -188,7 +191,7 @@ func (o *VirtualDatasetHooks) SetPostRollback(v []Hook) {
 
 // GetConfigureClone returns the ConfigureClone field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetConfigureClone() []Hook {
-	if o == nil || o.ConfigureClone == nil {
+	if o == nil || IsNil(o.ConfigureClone) {
 		var ret []Hook
 		return ret
 	}
@@ -198,7 +201,7 @@ func (o *VirtualDatasetHooks) GetConfigureClone() []Hook {
 // GetConfigureCloneOk returns a tuple with the ConfigureClone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetConfigureCloneOk() ([]Hook, bool) {
-	if o == nil || o.ConfigureClone == nil {
+	if o == nil || IsNil(o.ConfigureClone) {
 		return nil, false
 	}
 	return o.ConfigureClone, true
@@ -206,7 +209,7 @@ func (o *VirtualDatasetHooks) GetConfigureCloneOk() ([]Hook, bool) {
 
 // HasConfigureClone returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasConfigureClone() bool {
-	if o != nil && o.ConfigureClone != nil {
+	if o != nil && !IsNil(o.ConfigureClone) {
 		return true
 	}
 
@@ -220,7 +223,7 @@ func (o *VirtualDatasetHooks) SetConfigureClone(v []Hook) {
 
 // GetPreSnapshot returns the PreSnapshot field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPreSnapshot() []Hook {
-	if o == nil || o.PreSnapshot == nil {
+	if o == nil || IsNil(o.PreSnapshot) {
 		var ret []Hook
 		return ret
 	}
@@ -230,7 +233,7 @@ func (o *VirtualDatasetHooks) GetPreSnapshot() []Hook {
 // GetPreSnapshotOk returns a tuple with the PreSnapshot field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPreSnapshotOk() ([]Hook, bool) {
-	if o == nil || o.PreSnapshot == nil {
+	if o == nil || IsNil(o.PreSnapshot) {
 		return nil, false
 	}
 	return o.PreSnapshot, true
@@ -238,7 +241,7 @@ func (o *VirtualDatasetHooks) GetPreSnapshotOk() ([]Hook, bool) {
 
 // HasPreSnapshot returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPreSnapshot() bool {
-	if o != nil && o.PreSnapshot != nil {
+	if o != nil && !IsNil(o.PreSnapshot) {
 		return true
 	}
 
@@ -252,7 +255,7 @@ func (o *VirtualDatasetHooks) SetPreSnapshot(v []Hook) {
 
 // GetPostSnapshot returns the PostSnapshot field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPostSnapshot() []Hook {
-	if o == nil || o.PostSnapshot == nil {
+	if o == nil || IsNil(o.PostSnapshot) {
 		var ret []Hook
 		return ret
 	}
@@ -262,7 +265,7 @@ func (o *VirtualDatasetHooks) GetPostSnapshot() []Hook {
 // GetPostSnapshotOk returns a tuple with the PostSnapshot field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPostSnapshotOk() ([]Hook, bool) {
-	if o == nil || o.PostSnapshot == nil {
+	if o == nil || IsNil(o.PostSnapshot) {
 		return nil, false
 	}
 	return o.PostSnapshot, true
@@ -270,7 +273,7 @@ func (o *VirtualDatasetHooks) GetPostSnapshotOk() ([]Hook, bool) {
 
 // HasPostSnapshot returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPostSnapshot() bool {
-	if o != nil && o.PostSnapshot != nil {
+	if o != nil && !IsNil(o.PostSnapshot) {
 		return true
 	}
 
@@ -284,7 +287,7 @@ func (o *VirtualDatasetHooks) SetPostSnapshot(v []Hook) {
 
 // GetPreStart returns the PreStart field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPreStart() []Hook {
-	if o == nil || o.PreStart == nil {
+	if o == nil || IsNil(o.PreStart) {
 		var ret []Hook
 		return ret
 	}
@@ -294,7 +297,7 @@ func (o *VirtualDatasetHooks) GetPreStart() []Hook {
 // GetPreStartOk returns a tuple with the PreStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPreStartOk() ([]Hook, bool) {
-	if o == nil || o.PreStart == nil {
+	if o == nil || IsNil(o.PreStart) {
 		return nil, false
 	}
 	return o.PreStart, true
@@ -302,7 +305,7 @@ func (o *VirtualDatasetHooks) GetPreStartOk() ([]Hook, bool) {
 
 // HasPreStart returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPreStart() bool {
-	if o != nil && o.PreStart != nil {
+	if o != nil && !IsNil(o.PreStart) {
 		return true
 	}
 
@@ -316,7 +319,7 @@ func (o *VirtualDatasetHooks) SetPreStart(v []Hook) {
 
 // GetPostStart returns the PostStart field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPostStart() []Hook {
-	if o == nil || o.PostStart == nil {
+	if o == nil || IsNil(o.PostStart) {
 		var ret []Hook
 		return ret
 	}
@@ -326,7 +329,7 @@ func (o *VirtualDatasetHooks) GetPostStart() []Hook {
 // GetPostStartOk returns a tuple with the PostStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPostStartOk() ([]Hook, bool) {
-	if o == nil || o.PostStart == nil {
+	if o == nil || IsNil(o.PostStart) {
 		return nil, false
 	}
 	return o.PostStart, true
@@ -334,7 +337,7 @@ func (o *VirtualDatasetHooks) GetPostStartOk() ([]Hook, bool) {
 
 // HasPostStart returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPostStart() bool {
-	if o != nil && o.PostStart != nil {
+	if o != nil && !IsNil(o.PostStart) {
 		return true
 	}
 
@@ -348,7 +351,7 @@ func (o *VirtualDatasetHooks) SetPostStart(v []Hook) {
 
 // GetPreStop returns the PreStop field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPreStop() []Hook {
-	if o == nil || o.PreStop == nil {
+	if o == nil || IsNil(o.PreStop) {
 		var ret []Hook
 		return ret
 	}
@@ -358,7 +361,7 @@ func (o *VirtualDatasetHooks) GetPreStop() []Hook {
 // GetPreStopOk returns a tuple with the PreStop field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPreStopOk() ([]Hook, bool) {
-	if o == nil || o.PreStop == nil {
+	if o == nil || IsNil(o.PreStop) {
 		return nil, false
 	}
 	return o.PreStop, true
@@ -366,7 +369,7 @@ func (o *VirtualDatasetHooks) GetPreStopOk() ([]Hook, bool) {
 
 // HasPreStop returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPreStop() bool {
-	if o != nil && o.PreStop != nil {
+	if o != nil && !IsNil(o.PreStop) {
 		return true
 	}
 
@@ -380,7 +383,7 @@ func (o *VirtualDatasetHooks) SetPreStop(v []Hook) {
 
 // GetPostStop returns the PostStop field value if set, zero value otherwise.
 func (o *VirtualDatasetHooks) GetPostStop() []Hook {
-	if o == nil || o.PostStop == nil {
+	if o == nil || IsNil(o.PostStop) {
 		var ret []Hook
 		return ret
 	}
@@ -390,7 +393,7 @@ func (o *VirtualDatasetHooks) GetPostStop() []Hook {
 // GetPostStopOk returns a tuple with the PostStop field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualDatasetHooks) GetPostStopOk() ([]Hook, bool) {
-	if o == nil || o.PostStop == nil {
+	if o == nil || IsNil(o.PostStop) {
 		return nil, false
 	}
 	return o.PostStop, true
@@ -398,7 +401,7 @@ func (o *VirtualDatasetHooks) GetPostStopOk() ([]Hook, bool) {
 
 // HasPostStop returns a boolean if a field has been set.
 func (o *VirtualDatasetHooks) HasPostStop() bool {
-	if o != nil && o.PostStop != nil {
+	if o != nil && !IsNil(o.PostStop) {
 		return true
 	}
 
@@ -411,41 +414,49 @@ func (o *VirtualDatasetHooks) SetPostStop(v []Hook) {
 }
 
 func (o VirtualDatasetHooks) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PreRefresh != nil {
-		toSerialize["pre_refresh"] = o.PreRefresh
-	}
-	if o.PostRefresh != nil {
-		toSerialize["post_refresh"] = o.PostRefresh
-	}
-	if o.PreRollback != nil {
-		toSerialize["pre_rollback"] = o.PreRollback
-	}
-	if o.PostRollback != nil {
-		toSerialize["post_rollback"] = o.PostRollback
-	}
-	if o.ConfigureClone != nil {
-		toSerialize["configure_clone"] = o.ConfigureClone
-	}
-	if o.PreSnapshot != nil {
-		toSerialize["pre_snapshot"] = o.PreSnapshot
-	}
-	if o.PostSnapshot != nil {
-		toSerialize["post_snapshot"] = o.PostSnapshot
-	}
-	if o.PreStart != nil {
-		toSerialize["pre_start"] = o.PreStart
-	}
-	if o.PostStart != nil {
-		toSerialize["post_start"] = o.PostStart
-	}
-	if o.PreStop != nil {
-		toSerialize["pre_stop"] = o.PreStop
-	}
-	if o.PostStop != nil {
-		toSerialize["post_stop"] = o.PostStop
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o VirtualDatasetHooks) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PreRefresh) {
+		toSerialize["pre_refresh"] = o.PreRefresh
+	}
+	if !IsNil(o.PostRefresh) {
+		toSerialize["post_refresh"] = o.PostRefresh
+	}
+	if !IsNil(o.PreRollback) {
+		toSerialize["pre_rollback"] = o.PreRollback
+	}
+	if !IsNil(o.PostRollback) {
+		toSerialize["post_rollback"] = o.PostRollback
+	}
+	if !IsNil(o.ConfigureClone) {
+		toSerialize["configure_clone"] = o.ConfigureClone
+	}
+	if !IsNil(o.PreSnapshot) {
+		toSerialize["pre_snapshot"] = o.PreSnapshot
+	}
+	if !IsNil(o.PostSnapshot) {
+		toSerialize["post_snapshot"] = o.PostSnapshot
+	}
+	if !IsNil(o.PreStart) {
+		toSerialize["pre_start"] = o.PreStart
+	}
+	if !IsNil(o.PostStart) {
+		toSerialize["post_start"] = o.PostStart
+	}
+	if !IsNil(o.PreStop) {
+		toSerialize["pre_stop"] = o.PreStop
+	}
+	if !IsNil(o.PostStop) {
+		toSerialize["post_stop"] = o.PostStop
+	}
+	return toSerialize, nil
 }
 
 type NullableVirtualDatasetHooks struct {

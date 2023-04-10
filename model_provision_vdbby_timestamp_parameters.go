@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the ProvisionVDBByTimestampParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProvisionVDBByTimestampParameters{}
 
 // ProvisionVDBByTimestampParameters struct for ProvisionVDBByTimestampParameters
 type ProvisionVDBByTimestampParameters struct {
@@ -46,7 +49,7 @@ type ProvisionVDBByTimestampParameters struct {
 	Name *string `json:"name,omitempty"`
 	// The name of the database on the target environment. Defaults to the value of the name property.
 	DatabaseName *string `json:"database_name,omitempty"`
-	// The ID of the container database (CDB) to provision an Oracle Multitenant database into. This corresponds to a Source API object. When this is not set, a new vCDB will be provisioned.
+	// The ID of the container database (CDB) to provision an Oracle Multitenant database into. This corresponds to a CDB or VCDB API object. When this is not set, a new vCDB will be provisioned.
 	CdbId *string `json:"cdb_id,omitempty"`
 	// The cluster node ids, name or addresses for this provision operation (Oracle RAC Only).
 	ClusterNodeIds []string `json:"cluster_node_ids,omitempty"`
@@ -80,7 +83,7 @@ type ProvisionVDBByTimestampParameters struct {
 	VcdbName *string `json:"vcdb_name,omitempty"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the database name of the provisioned vCDB. Defaults to the value of the vcdb_name property. (Oracle Multitenant Only).
 	VcdbDatabaseName *string `json:"vcdb_database_name,omitempty"`
-	// Mount point for the VDB (Oracle, ASE Only).
+	// Mount point for the VDB (Oracle, ASE, AppData).
 	MountPoint *string `json:"mount_point,omitempty"`
 	// Whether to open the database after provision (Oracle Only).
 	OpenResetLogs *bool `json:"open_reset_logs,omitempty"`
@@ -110,6 +113,32 @@ type ProvisionVDBByTimestampParameters struct {
 	CustomEnvVars *map[string]string `json:"custom_env_vars,omitempty"`
 	// Environment files to be sourced when the Engine creates a VDB. This path can be followed by parameters. Paths and parameters are separated by spaces.
 	CustomEnvFiles []string `json:"custom_env_files,omitempty"`
+	// Environment files to be sourced when the Engine creates an Oracle RAC VDB. This path can be followed by parameters. Paths and parameters are separated by spaces.
+	OracleRacCustomEnvFiles []OracleRacCustomEnvFile `json:"oracle_rac_custom_env_files,omitempty"`
+	// Environment variable to be set when the engine creates an Oracle RAC VDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution.
+	OracleRacCustomEnvVars []OracleRacCustomEnvVar `json:"oracle_rac_custom_env_vars,omitempty"`
+	// Path to a copy of the parent's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots containing encrypted database files. (Oracle Multitenant Only)
+	ParentTdeKeystorePath *string `json:"parentTdeKeystorePath,omitempty"`
+	// The password of the keystore specified in parentTdeKeystorePath. (Oracle Multitenant Only)
+	ParentTdeKeystorePassword *string `json:"parent_tde_keystore_password,omitempty"`
+	// Secret to be used while exporting and importing vPDB encryption keys if Transparent Data Encryption is enabled on the vPDB. (Oracle Multitenant Only)
+	TdeExportedKeyFileSecret *string `json:"tde_exported_key_file_secret,omitempty"`
+	// ID of the key created by Delphix. (Oracle Multitenant Only)
+	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
+	// Path to the keystore of the target vCDB. (Oracle Multitenant Only)
+	TargetVcdbTdeKeystorePath *string `json:"target_vcdb_tde_keystore_path,omitempty"`
+	// The password for the Transparent Data Encryption keystore associated with the CDB. (Oracle Multitenant Only)
+	CdbTdeKeystorePassword *string `json:"cdb_tde_keystore_password,omitempty"`
+	// ID of the key created by Delphix. (Oracle Multitenant Only)
+	VcdbTdeKeyIdentifier *string `json:"vcdb_tde_key_identifier,omitempty"`
+	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
+	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
+	// Specifies additional locations on which to mount a subdirectory of an AppData container.
+	AdditionalMountPoints []AdditionalMountPoint `json:"additional_mount_points,omitempty"`
+	// The list of parameters specified by the source config schema in the toolkit
+	AppdataConfigParams map[string]interface{} `json:"appdata_config_params,omitempty"`
+	// Database configuration parameter overrides.
+	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	// The tags to be created for VDB.
 	Tags []Tag `json:"tags,omitempty"`
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
@@ -120,6 +149,8 @@ type ProvisionVDBByTimestampParameters struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
 	SourceDataId string `json:"source_data_id"`
+	// Whether the account provisioning this VDB must be configured as owner of the VDB.
+	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
 
 // NewProvisionVDBByTimestampParameters instantiates a new ProvisionVDBByTimestampParameters object
@@ -129,6 +160,8 @@ type ProvisionVDBByTimestampParameters struct {
 func NewProvisionVDBByTimestampParameters(sourceDataId string) *ProvisionVDBByTimestampParameters {
 	this := ProvisionVDBByTimestampParameters{}
 	this.SourceDataId = sourceDataId
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
@@ -137,12 +170,14 @@ func NewProvisionVDBByTimestampParameters(sourceDataId string) *ProvisionVDBByTi
 // but it doesn't guarantee that properties required by API are set
 func NewProvisionVDBByTimestampParametersWithDefaults() *ProvisionVDBByTimestampParameters {
 	this := ProvisionVDBByTimestampParameters{}
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
 // GetPreRefresh returns the PreRefresh field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPreRefresh() []Hook {
-	if o == nil || o.PreRefresh == nil {
+	if o == nil || IsNil(o.PreRefresh) {
 		var ret []Hook
 		return ret
 	}
@@ -152,7 +187,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreRefresh() []Hook {
 // GetPreRefreshOk returns a tuple with the PreRefresh field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPreRefreshOk() ([]Hook, bool) {
-	if o == nil || o.PreRefresh == nil {
+	if o == nil || IsNil(o.PreRefresh) {
 		return nil, false
 	}
 	return o.PreRefresh, true
@@ -160,7 +195,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreRefreshOk() ([]Hook, bool) {
 
 // HasPreRefresh returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPreRefresh() bool {
-	if o != nil && o.PreRefresh != nil {
+	if o != nil && !IsNil(o.PreRefresh) {
 		return true
 	}
 
@@ -174,7 +209,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPreRefresh(v []Hook) {
 
 // GetPostRefresh returns the PostRefresh field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPostRefresh() []Hook {
-	if o == nil || o.PostRefresh == nil {
+	if o == nil || IsNil(o.PostRefresh) {
 		var ret []Hook
 		return ret
 	}
@@ -184,7 +219,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostRefresh() []Hook {
 // GetPostRefreshOk returns a tuple with the PostRefresh field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPostRefreshOk() ([]Hook, bool) {
-	if o == nil || o.PostRefresh == nil {
+	if o == nil || IsNil(o.PostRefresh) {
 		return nil, false
 	}
 	return o.PostRefresh, true
@@ -192,7 +227,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostRefreshOk() ([]Hook, bool) {
 
 // HasPostRefresh returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPostRefresh() bool {
-	if o != nil && o.PostRefresh != nil {
+	if o != nil && !IsNil(o.PostRefresh) {
 		return true
 	}
 
@@ -206,7 +241,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPostRefresh(v []Hook) {
 
 // GetPreRollback returns the PreRollback field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPreRollback() []Hook {
-	if o == nil || o.PreRollback == nil {
+	if o == nil || IsNil(o.PreRollback) {
 		var ret []Hook
 		return ret
 	}
@@ -216,7 +251,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreRollback() []Hook {
 // GetPreRollbackOk returns a tuple with the PreRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPreRollbackOk() ([]Hook, bool) {
-	if o == nil || o.PreRollback == nil {
+	if o == nil || IsNil(o.PreRollback) {
 		return nil, false
 	}
 	return o.PreRollback, true
@@ -224,7 +259,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreRollbackOk() ([]Hook, bool) {
 
 // HasPreRollback returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPreRollback() bool {
-	if o != nil && o.PreRollback != nil {
+	if o != nil && !IsNil(o.PreRollback) {
 		return true
 	}
 
@@ -238,7 +273,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPreRollback(v []Hook) {
 
 // GetPostRollback returns the PostRollback field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPostRollback() []Hook {
-	if o == nil || o.PostRollback == nil {
+	if o == nil || IsNil(o.PostRollback) {
 		var ret []Hook
 		return ret
 	}
@@ -248,7 +283,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostRollback() []Hook {
 // GetPostRollbackOk returns a tuple with the PostRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPostRollbackOk() ([]Hook, bool) {
-	if o == nil || o.PostRollback == nil {
+	if o == nil || IsNil(o.PostRollback) {
 		return nil, false
 	}
 	return o.PostRollback, true
@@ -256,7 +291,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostRollbackOk() ([]Hook, bool) {
 
 // HasPostRollback returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPostRollback() bool {
-	if o != nil && o.PostRollback != nil {
+	if o != nil && !IsNil(o.PostRollback) {
 		return true
 	}
 
@@ -270,7 +305,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPostRollback(v []Hook) {
 
 // GetConfigureClone returns the ConfigureClone field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetConfigureClone() []Hook {
-	if o == nil || o.ConfigureClone == nil {
+	if o == nil || IsNil(o.ConfigureClone) {
 		var ret []Hook
 		return ret
 	}
@@ -280,7 +315,7 @@ func (o *ProvisionVDBByTimestampParameters) GetConfigureClone() []Hook {
 // GetConfigureCloneOk returns a tuple with the ConfigureClone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetConfigureCloneOk() ([]Hook, bool) {
-	if o == nil || o.ConfigureClone == nil {
+	if o == nil || IsNil(o.ConfigureClone) {
 		return nil, false
 	}
 	return o.ConfigureClone, true
@@ -288,7 +323,7 @@ func (o *ProvisionVDBByTimestampParameters) GetConfigureCloneOk() ([]Hook, bool)
 
 // HasConfigureClone returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasConfigureClone() bool {
-	if o != nil && o.ConfigureClone != nil {
+	if o != nil && !IsNil(o.ConfigureClone) {
 		return true
 	}
 
@@ -302,7 +337,7 @@ func (o *ProvisionVDBByTimestampParameters) SetConfigureClone(v []Hook) {
 
 // GetPreSnapshot returns the PreSnapshot field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPreSnapshot() []Hook {
-	if o == nil || o.PreSnapshot == nil {
+	if o == nil || IsNil(o.PreSnapshot) {
 		var ret []Hook
 		return ret
 	}
@@ -312,7 +347,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreSnapshot() []Hook {
 // GetPreSnapshotOk returns a tuple with the PreSnapshot field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPreSnapshotOk() ([]Hook, bool) {
-	if o == nil || o.PreSnapshot == nil {
+	if o == nil || IsNil(o.PreSnapshot) {
 		return nil, false
 	}
 	return o.PreSnapshot, true
@@ -320,7 +355,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreSnapshotOk() ([]Hook, bool) {
 
 // HasPreSnapshot returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPreSnapshot() bool {
-	if o != nil && o.PreSnapshot != nil {
+	if o != nil && !IsNil(o.PreSnapshot) {
 		return true
 	}
 
@@ -334,7 +369,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPreSnapshot(v []Hook) {
 
 // GetPostSnapshot returns the PostSnapshot field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPostSnapshot() []Hook {
-	if o == nil || o.PostSnapshot == nil {
+	if o == nil || IsNil(o.PostSnapshot) {
 		var ret []Hook
 		return ret
 	}
@@ -344,7 +379,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostSnapshot() []Hook {
 // GetPostSnapshotOk returns a tuple with the PostSnapshot field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPostSnapshotOk() ([]Hook, bool) {
-	if o == nil || o.PostSnapshot == nil {
+	if o == nil || IsNil(o.PostSnapshot) {
 		return nil, false
 	}
 	return o.PostSnapshot, true
@@ -352,7 +387,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostSnapshotOk() ([]Hook, bool) {
 
 // HasPostSnapshot returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPostSnapshot() bool {
-	if o != nil && o.PostSnapshot != nil {
+	if o != nil && !IsNil(o.PostSnapshot) {
 		return true
 	}
 
@@ -366,7 +401,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPostSnapshot(v []Hook) {
 
 // GetPreStart returns the PreStart field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPreStart() []Hook {
-	if o == nil || o.PreStart == nil {
+	if o == nil || IsNil(o.PreStart) {
 		var ret []Hook
 		return ret
 	}
@@ -376,7 +411,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreStart() []Hook {
 // GetPreStartOk returns a tuple with the PreStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPreStartOk() ([]Hook, bool) {
-	if o == nil || o.PreStart == nil {
+	if o == nil || IsNil(o.PreStart) {
 		return nil, false
 	}
 	return o.PreStart, true
@@ -384,7 +419,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreStartOk() ([]Hook, bool) {
 
 // HasPreStart returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPreStart() bool {
-	if o != nil && o.PreStart != nil {
+	if o != nil && !IsNil(o.PreStart) {
 		return true
 	}
 
@@ -398,7 +433,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPreStart(v []Hook) {
 
 // GetPostStart returns the PostStart field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPostStart() []Hook {
-	if o == nil || o.PostStart == nil {
+	if o == nil || IsNil(o.PostStart) {
 		var ret []Hook
 		return ret
 	}
@@ -408,7 +443,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostStart() []Hook {
 // GetPostStartOk returns a tuple with the PostStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPostStartOk() ([]Hook, bool) {
-	if o == nil || o.PostStart == nil {
+	if o == nil || IsNil(o.PostStart) {
 		return nil, false
 	}
 	return o.PostStart, true
@@ -416,7 +451,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostStartOk() ([]Hook, bool) {
 
 // HasPostStart returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPostStart() bool {
-	if o != nil && o.PostStart != nil {
+	if o != nil && !IsNil(o.PostStart) {
 		return true
 	}
 
@@ -430,7 +465,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPostStart(v []Hook) {
 
 // GetPreStop returns the PreStop field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPreStop() []Hook {
-	if o == nil || o.PreStop == nil {
+	if o == nil || IsNil(o.PreStop) {
 		var ret []Hook
 		return ret
 	}
@@ -440,7 +475,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreStop() []Hook {
 // GetPreStopOk returns a tuple with the PreStop field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPreStopOk() ([]Hook, bool) {
-	if o == nil || o.PreStop == nil {
+	if o == nil || IsNil(o.PreStop) {
 		return nil, false
 	}
 	return o.PreStop, true
@@ -448,7 +483,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreStopOk() ([]Hook, bool) {
 
 // HasPreStop returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPreStop() bool {
-	if o != nil && o.PreStop != nil {
+	if o != nil && !IsNil(o.PreStop) {
 		return true
 	}
 
@@ -462,7 +497,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPreStop(v []Hook) {
 
 // GetPostStop returns the PostStop field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPostStop() []Hook {
-	if o == nil || o.PostStop == nil {
+	if o == nil || IsNil(o.PostStop) {
 		var ret []Hook
 		return ret
 	}
@@ -472,7 +507,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostStop() []Hook {
 // GetPostStopOk returns a tuple with the PostStop field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPostStopOk() ([]Hook, bool) {
-	if o == nil || o.PostStop == nil {
+	if o == nil || IsNil(o.PostStop) {
 		return nil, false
 	}
 	return o.PostStop, true
@@ -480,7 +515,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostStopOk() ([]Hook, bool) {
 
 // HasPostStop returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPostStop() bool {
-	if o != nil && o.PostStop != nil {
+	if o != nil && !IsNil(o.PostStop) {
 		return true
 	}
 
@@ -494,7 +529,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPostStop(v []Hook) {
 
 // GetTargetGroupId returns the TargetGroupId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTargetGroupId() string {
-	if o == nil || o.TargetGroupId == nil {
+	if o == nil || IsNil(o.TargetGroupId) {
 		var ret string
 		return ret
 	}
@@ -504,7 +539,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTargetGroupId() string {
 // GetTargetGroupIdOk returns a tuple with the TargetGroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetTargetGroupIdOk() (*string, bool) {
-	if o == nil || o.TargetGroupId == nil {
+	if o == nil || IsNil(o.TargetGroupId) {
 		return nil, false
 	}
 	return o.TargetGroupId, true
@@ -512,7 +547,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTargetGroupIdOk() (*string, bool)
 
 // HasTargetGroupId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasTargetGroupId() bool {
-	if o != nil && o.TargetGroupId != nil {
+	if o != nil && !IsNil(o.TargetGroupId) {
 		return true
 	}
 
@@ -526,7 +561,7 @@ func (o *ProvisionVDBByTimestampParameters) SetTargetGroupId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -536,7 +571,7 @@ func (o *ProvisionVDBByTimestampParameters) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -544,7 +579,7 @@ func (o *ProvisionVDBByTimestampParameters) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -558,7 +593,7 @@ func (o *ProvisionVDBByTimestampParameters) SetName(v string) {
 
 // GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetDatabaseName() string {
-	if o == nil || o.DatabaseName == nil {
+	if o == nil || IsNil(o.DatabaseName) {
 		var ret string
 		return ret
 	}
@@ -568,7 +603,7 @@ func (o *ProvisionVDBByTimestampParameters) GetDatabaseName() string {
 // GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetDatabaseNameOk() (*string, bool) {
-	if o == nil || o.DatabaseName == nil {
+	if o == nil || IsNil(o.DatabaseName) {
 		return nil, false
 	}
 	return o.DatabaseName, true
@@ -576,7 +611,7 @@ func (o *ProvisionVDBByTimestampParameters) GetDatabaseNameOk() (*string, bool) 
 
 // HasDatabaseName returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasDatabaseName() bool {
-	if o != nil && o.DatabaseName != nil {
+	if o != nil && !IsNil(o.DatabaseName) {
 		return true
 	}
 
@@ -590,7 +625,7 @@ func (o *ProvisionVDBByTimestampParameters) SetDatabaseName(v string) {
 
 // GetCdbId returns the CdbId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetCdbId() string {
-	if o == nil || o.CdbId == nil {
+	if o == nil || IsNil(o.CdbId) {
 		var ret string
 		return ret
 	}
@@ -600,7 +635,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCdbId() string {
 // GetCdbIdOk returns a tuple with the CdbId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetCdbIdOk() (*string, bool) {
-	if o == nil || o.CdbId == nil {
+	if o == nil || IsNil(o.CdbId) {
 		return nil, false
 	}
 	return o.CdbId, true
@@ -608,7 +643,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCdbIdOk() (*string, bool) {
 
 // HasCdbId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasCdbId() bool {
-	if o != nil && o.CdbId != nil {
+	if o != nil && !IsNil(o.CdbId) {
 		return true
 	}
 
@@ -622,7 +657,7 @@ func (o *ProvisionVDBByTimestampParameters) SetCdbId(v string) {
 
 // GetClusterNodeIds returns the ClusterNodeIds field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetClusterNodeIds() []string {
-	if o == nil || o.ClusterNodeIds == nil {
+	if o == nil || IsNil(o.ClusterNodeIds) {
 		var ret []string
 		return ret
 	}
@@ -632,7 +667,7 @@ func (o *ProvisionVDBByTimestampParameters) GetClusterNodeIds() []string {
 // GetClusterNodeIdsOk returns a tuple with the ClusterNodeIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetClusterNodeIdsOk() ([]string, bool) {
-	if o == nil || o.ClusterNodeIds == nil {
+	if o == nil || IsNil(o.ClusterNodeIds) {
 		return nil, false
 	}
 	return o.ClusterNodeIds, true
@@ -640,7 +675,7 @@ func (o *ProvisionVDBByTimestampParameters) GetClusterNodeIdsOk() ([]string, boo
 
 // HasClusterNodeIds returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasClusterNodeIds() bool {
-	if o != nil && o.ClusterNodeIds != nil {
+	if o != nil && !IsNil(o.ClusterNodeIds) {
 		return true
 	}
 
@@ -654,7 +689,7 @@ func (o *ProvisionVDBByTimestampParameters) SetClusterNodeIds(v []string) {
 
 // GetTruncateLogOnCheckpoint returns the TruncateLogOnCheckpoint field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTruncateLogOnCheckpoint() bool {
-	if o == nil || o.TruncateLogOnCheckpoint == nil {
+	if o == nil || IsNil(o.TruncateLogOnCheckpoint) {
 		var ret bool
 		return ret
 	}
@@ -664,7 +699,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTruncateLogOnCheckpoint() bool {
 // GetTruncateLogOnCheckpointOk returns a tuple with the TruncateLogOnCheckpoint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetTruncateLogOnCheckpointOk() (*bool, bool) {
-	if o == nil || o.TruncateLogOnCheckpoint == nil {
+	if o == nil || IsNil(o.TruncateLogOnCheckpoint) {
 		return nil, false
 	}
 	return o.TruncateLogOnCheckpoint, true
@@ -672,7 +707,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTruncateLogOnCheckpointOk() (*boo
 
 // HasTruncateLogOnCheckpoint returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasTruncateLogOnCheckpoint() bool {
-	if o != nil && o.TruncateLogOnCheckpoint != nil {
+	if o != nil && !IsNil(o.TruncateLogOnCheckpoint) {
 		return true
 	}
 
@@ -686,7 +721,7 @@ func (o *ProvisionVDBByTimestampParameters) SetTruncateLogOnCheckpoint(v bool) {
 
 // GetOsUsername returns the OsUsername field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetOsUsername() string {
-	if o == nil || o.OsUsername == nil {
+	if o == nil || IsNil(o.OsUsername) {
 		var ret string
 		return ret
 	}
@@ -696,7 +731,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOsUsername() string {
 // GetOsUsernameOk returns a tuple with the OsUsername field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetOsUsernameOk() (*string, bool) {
-	if o == nil || o.OsUsername == nil {
+	if o == nil || IsNil(o.OsUsername) {
 		return nil, false
 	}
 	return o.OsUsername, true
@@ -704,7 +739,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOsUsernameOk() (*string, bool) {
 
 // HasOsUsername returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasOsUsername() bool {
-	if o != nil && o.OsUsername != nil {
+	if o != nil && !IsNil(o.OsUsername) {
 		return true
 	}
 
@@ -718,7 +753,7 @@ func (o *ProvisionVDBByTimestampParameters) SetOsUsername(v string) {
 
 // GetOsPassword returns the OsPassword field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetOsPassword() string {
-	if o == nil || o.OsPassword == nil {
+	if o == nil || IsNil(o.OsPassword) {
 		var ret string
 		return ret
 	}
@@ -728,7 +763,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOsPassword() string {
 // GetOsPasswordOk returns a tuple with the OsPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetOsPasswordOk() (*string, bool) {
-	if o == nil || o.OsPassword == nil {
+	if o == nil || IsNil(o.OsPassword) {
 		return nil, false
 	}
 	return o.OsPassword, true
@@ -736,7 +771,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOsPasswordOk() (*string, bool) {
 
 // HasOsPassword returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasOsPassword() bool {
-	if o != nil && o.OsPassword != nil {
+	if o != nil && !IsNil(o.OsPassword) {
 		return true
 	}
 
@@ -750,7 +785,7 @@ func (o *ProvisionVDBByTimestampParameters) SetOsPassword(v string) {
 
 // GetEnvironmentId returns the EnvironmentId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetEnvironmentId() string {
-	if o == nil || o.EnvironmentId == nil {
+	if o == nil || IsNil(o.EnvironmentId) {
 		var ret string
 		return ret
 	}
@@ -760,7 +795,7 @@ func (o *ProvisionVDBByTimestampParameters) GetEnvironmentId() string {
 // GetEnvironmentIdOk returns a tuple with the EnvironmentId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetEnvironmentIdOk() (*string, bool) {
-	if o == nil || o.EnvironmentId == nil {
+	if o == nil || IsNil(o.EnvironmentId) {
 		return nil, false
 	}
 	return o.EnvironmentId, true
@@ -768,7 +803,7 @@ func (o *ProvisionVDBByTimestampParameters) GetEnvironmentIdOk() (*string, bool)
 
 // HasEnvironmentId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasEnvironmentId() bool {
-	if o != nil && o.EnvironmentId != nil {
+	if o != nil && !IsNil(o.EnvironmentId) {
 		return true
 	}
 
@@ -782,7 +817,7 @@ func (o *ProvisionVDBByTimestampParameters) SetEnvironmentId(v string) {
 
 // GetEnvironmentUserId returns the EnvironmentUserId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetEnvironmentUserId() string {
-	if o == nil || o.EnvironmentUserId == nil {
+	if o == nil || IsNil(o.EnvironmentUserId) {
 		var ret string
 		return ret
 	}
@@ -792,7 +827,7 @@ func (o *ProvisionVDBByTimestampParameters) GetEnvironmentUserId() string {
 // GetEnvironmentUserIdOk returns a tuple with the EnvironmentUserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetEnvironmentUserIdOk() (*string, bool) {
-	if o == nil || o.EnvironmentUserId == nil {
+	if o == nil || IsNil(o.EnvironmentUserId) {
 		return nil, false
 	}
 	return o.EnvironmentUserId, true
@@ -800,7 +835,7 @@ func (o *ProvisionVDBByTimestampParameters) GetEnvironmentUserIdOk() (*string, b
 
 // HasEnvironmentUserId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasEnvironmentUserId() bool {
-	if o != nil && o.EnvironmentUserId != nil {
+	if o != nil && !IsNil(o.EnvironmentUserId) {
 		return true
 	}
 
@@ -814,7 +849,7 @@ func (o *ProvisionVDBByTimestampParameters) SetEnvironmentUserId(v string) {
 
 // GetRepositoryId returns the RepositoryId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetRepositoryId() string {
-	if o == nil || o.RepositoryId == nil {
+	if o == nil || IsNil(o.RepositoryId) {
 		var ret string
 		return ret
 	}
@@ -824,7 +859,7 @@ func (o *ProvisionVDBByTimestampParameters) GetRepositoryId() string {
 // GetRepositoryIdOk returns a tuple with the RepositoryId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetRepositoryIdOk() (*string, bool) {
-	if o == nil || o.RepositoryId == nil {
+	if o == nil || IsNil(o.RepositoryId) {
 		return nil, false
 	}
 	return o.RepositoryId, true
@@ -832,7 +867,7 @@ func (o *ProvisionVDBByTimestampParameters) GetRepositoryIdOk() (*string, bool) 
 
 // HasRepositoryId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasRepositoryId() bool {
-	if o != nil && o.RepositoryId != nil {
+	if o != nil && !IsNil(o.RepositoryId) {
 		return true
 	}
 
@@ -846,7 +881,7 @@ func (o *ProvisionVDBByTimestampParameters) SetRepositoryId(v string) {
 
 // GetAutoSelectRepository returns the AutoSelectRepository field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetAutoSelectRepository() bool {
-	if o == nil || o.AutoSelectRepository == nil {
+	if o == nil || IsNil(o.AutoSelectRepository) {
 		var ret bool
 		return ret
 	}
@@ -856,7 +891,7 @@ func (o *ProvisionVDBByTimestampParameters) GetAutoSelectRepository() bool {
 // GetAutoSelectRepositoryOk returns a tuple with the AutoSelectRepository field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetAutoSelectRepositoryOk() (*bool, bool) {
-	if o == nil || o.AutoSelectRepository == nil {
+	if o == nil || IsNil(o.AutoSelectRepository) {
 		return nil, false
 	}
 	return o.AutoSelectRepository, true
@@ -864,7 +899,7 @@ func (o *ProvisionVDBByTimestampParameters) GetAutoSelectRepositoryOk() (*bool, 
 
 // HasAutoSelectRepository returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasAutoSelectRepository() bool {
-	if o != nil && o.AutoSelectRepository != nil {
+	if o != nil && !IsNil(o.AutoSelectRepository) {
 		return true
 	}
 
@@ -878,7 +913,7 @@ func (o *ProvisionVDBByTimestampParameters) SetAutoSelectRepository(v bool) {
 
 // GetVdbRestart returns the VdbRestart field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetVdbRestart() bool {
-	if o == nil || o.VdbRestart == nil {
+	if o == nil || IsNil(o.VdbRestart) {
 		var ret bool
 		return ret
 	}
@@ -888,7 +923,7 @@ func (o *ProvisionVDBByTimestampParameters) GetVdbRestart() bool {
 // GetVdbRestartOk returns a tuple with the VdbRestart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetVdbRestartOk() (*bool, bool) {
-	if o == nil || o.VdbRestart == nil {
+	if o == nil || IsNil(o.VdbRestart) {
 		return nil, false
 	}
 	return o.VdbRestart, true
@@ -896,7 +931,7 @@ func (o *ProvisionVDBByTimestampParameters) GetVdbRestartOk() (*bool, bool) {
 
 // HasVdbRestart returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasVdbRestart() bool {
-	if o != nil && o.VdbRestart != nil {
+	if o != nil && !IsNil(o.VdbRestart) {
 		return true
 	}
 
@@ -910,7 +945,7 @@ func (o *ProvisionVDBByTimestampParameters) SetVdbRestart(v bool) {
 
 // GetTemplateId returns the TemplateId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTemplateId() string {
-	if o == nil || o.TemplateId == nil {
+	if o == nil || IsNil(o.TemplateId) {
 		var ret string
 		return ret
 	}
@@ -920,7 +955,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTemplateId() string {
 // GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetTemplateIdOk() (*string, bool) {
-	if o == nil || o.TemplateId == nil {
+	if o == nil || IsNil(o.TemplateId) {
 		return nil, false
 	}
 	return o.TemplateId, true
@@ -928,7 +963,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTemplateIdOk() (*string, bool) {
 
 // HasTemplateId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasTemplateId() bool {
-	if o != nil && o.TemplateId != nil {
+	if o != nil && !IsNil(o.TemplateId) {
 		return true
 	}
 
@@ -942,7 +977,7 @@ func (o *ProvisionVDBByTimestampParameters) SetTemplateId(v string) {
 
 // GetAuxiliaryTemplateId returns the AuxiliaryTemplateId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetAuxiliaryTemplateId() string {
-	if o == nil || o.AuxiliaryTemplateId == nil {
+	if o == nil || IsNil(o.AuxiliaryTemplateId) {
 		var ret string
 		return ret
 	}
@@ -952,7 +987,7 @@ func (o *ProvisionVDBByTimestampParameters) GetAuxiliaryTemplateId() string {
 // GetAuxiliaryTemplateIdOk returns a tuple with the AuxiliaryTemplateId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetAuxiliaryTemplateIdOk() (*string, bool) {
-	if o == nil || o.AuxiliaryTemplateId == nil {
+	if o == nil || IsNil(o.AuxiliaryTemplateId) {
 		return nil, false
 	}
 	return o.AuxiliaryTemplateId, true
@@ -960,7 +995,7 @@ func (o *ProvisionVDBByTimestampParameters) GetAuxiliaryTemplateIdOk() (*string,
 
 // HasAuxiliaryTemplateId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasAuxiliaryTemplateId() bool {
-	if o != nil && o.AuxiliaryTemplateId != nil {
+	if o != nil && !IsNil(o.AuxiliaryTemplateId) {
 		return true
 	}
 
@@ -974,7 +1009,7 @@ func (o *ProvisionVDBByTimestampParameters) SetAuxiliaryTemplateId(v string) {
 
 // GetFileMappingRules returns the FileMappingRules field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetFileMappingRules() string {
-	if o == nil || o.FileMappingRules == nil {
+	if o == nil || IsNil(o.FileMappingRules) {
 		var ret string
 		return ret
 	}
@@ -984,7 +1019,7 @@ func (o *ProvisionVDBByTimestampParameters) GetFileMappingRules() string {
 // GetFileMappingRulesOk returns a tuple with the FileMappingRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetFileMappingRulesOk() (*string, bool) {
-	if o == nil || o.FileMappingRules == nil {
+	if o == nil || IsNil(o.FileMappingRules) {
 		return nil, false
 	}
 	return o.FileMappingRules, true
@@ -992,7 +1027,7 @@ func (o *ProvisionVDBByTimestampParameters) GetFileMappingRulesOk() (*string, bo
 
 // HasFileMappingRules returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasFileMappingRules() bool {
-	if o != nil && o.FileMappingRules != nil {
+	if o != nil && !IsNil(o.FileMappingRules) {
 		return true
 	}
 
@@ -1006,7 +1041,7 @@ func (o *ProvisionVDBByTimestampParameters) SetFileMappingRules(v string) {
 
 // GetOracleInstanceName returns the OracleInstanceName field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetOracleInstanceName() string {
-	if o == nil || o.OracleInstanceName == nil {
+	if o == nil || IsNil(o.OracleInstanceName) {
 		var ret string
 		return ret
 	}
@@ -1016,7 +1051,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOracleInstanceName() string {
 // GetOracleInstanceNameOk returns a tuple with the OracleInstanceName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetOracleInstanceNameOk() (*string, bool) {
-	if o == nil || o.OracleInstanceName == nil {
+	if o == nil || IsNil(o.OracleInstanceName) {
 		return nil, false
 	}
 	return o.OracleInstanceName, true
@@ -1024,7 +1059,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOracleInstanceNameOk() (*string, 
 
 // HasOracleInstanceName returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasOracleInstanceName() bool {
-	if o != nil && o.OracleInstanceName != nil {
+	if o != nil && !IsNil(o.OracleInstanceName) {
 		return true
 	}
 
@@ -1038,7 +1073,7 @@ func (o *ProvisionVDBByTimestampParameters) SetOracleInstanceName(v string) {
 
 // GetUniqueName returns the UniqueName field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetUniqueName() string {
-	if o == nil || o.UniqueName == nil {
+	if o == nil || IsNil(o.UniqueName) {
 		var ret string
 		return ret
 	}
@@ -1048,7 +1083,7 @@ func (o *ProvisionVDBByTimestampParameters) GetUniqueName() string {
 // GetUniqueNameOk returns a tuple with the UniqueName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetUniqueNameOk() (*string, bool) {
-	if o == nil || o.UniqueName == nil {
+	if o == nil || IsNil(o.UniqueName) {
 		return nil, false
 	}
 	return o.UniqueName, true
@@ -1056,7 +1091,7 @@ func (o *ProvisionVDBByTimestampParameters) GetUniqueNameOk() (*string, bool) {
 
 // HasUniqueName returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasUniqueName() bool {
-	if o != nil && o.UniqueName != nil {
+	if o != nil && !IsNil(o.UniqueName) {
 		return true
 	}
 
@@ -1070,7 +1105,7 @@ func (o *ProvisionVDBByTimestampParameters) SetUniqueName(v string) {
 
 // GetVcdbName returns the VcdbName field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetVcdbName() string {
-	if o == nil || o.VcdbName == nil {
+	if o == nil || IsNil(o.VcdbName) {
 		var ret string
 		return ret
 	}
@@ -1080,7 +1115,7 @@ func (o *ProvisionVDBByTimestampParameters) GetVcdbName() string {
 // GetVcdbNameOk returns a tuple with the VcdbName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetVcdbNameOk() (*string, bool) {
-	if o == nil || o.VcdbName == nil {
+	if o == nil || IsNil(o.VcdbName) {
 		return nil, false
 	}
 	return o.VcdbName, true
@@ -1088,7 +1123,7 @@ func (o *ProvisionVDBByTimestampParameters) GetVcdbNameOk() (*string, bool) {
 
 // HasVcdbName returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasVcdbName() bool {
-	if o != nil && o.VcdbName != nil {
+	if o != nil && !IsNil(o.VcdbName) {
 		return true
 	}
 
@@ -1102,7 +1137,7 @@ func (o *ProvisionVDBByTimestampParameters) SetVcdbName(v string) {
 
 // GetVcdbDatabaseName returns the VcdbDatabaseName field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetVcdbDatabaseName() string {
-	if o == nil || o.VcdbDatabaseName == nil {
+	if o == nil || IsNil(o.VcdbDatabaseName) {
 		var ret string
 		return ret
 	}
@@ -1112,7 +1147,7 @@ func (o *ProvisionVDBByTimestampParameters) GetVcdbDatabaseName() string {
 // GetVcdbDatabaseNameOk returns a tuple with the VcdbDatabaseName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetVcdbDatabaseNameOk() (*string, bool) {
-	if o == nil || o.VcdbDatabaseName == nil {
+	if o == nil || IsNil(o.VcdbDatabaseName) {
 		return nil, false
 	}
 	return o.VcdbDatabaseName, true
@@ -1120,7 +1155,7 @@ func (o *ProvisionVDBByTimestampParameters) GetVcdbDatabaseNameOk() (*string, bo
 
 // HasVcdbDatabaseName returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasVcdbDatabaseName() bool {
-	if o != nil && o.VcdbDatabaseName != nil {
+	if o != nil && !IsNil(o.VcdbDatabaseName) {
 		return true
 	}
 
@@ -1134,7 +1169,7 @@ func (o *ProvisionVDBByTimestampParameters) SetVcdbDatabaseName(v string) {
 
 // GetMountPoint returns the MountPoint field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetMountPoint() string {
-	if o == nil || o.MountPoint == nil {
+	if o == nil || IsNil(o.MountPoint) {
 		var ret string
 		return ret
 	}
@@ -1144,7 +1179,7 @@ func (o *ProvisionVDBByTimestampParameters) GetMountPoint() string {
 // GetMountPointOk returns a tuple with the MountPoint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetMountPointOk() (*string, bool) {
-	if o == nil || o.MountPoint == nil {
+	if o == nil || IsNil(o.MountPoint) {
 		return nil, false
 	}
 	return o.MountPoint, true
@@ -1152,7 +1187,7 @@ func (o *ProvisionVDBByTimestampParameters) GetMountPointOk() (*string, bool) {
 
 // HasMountPoint returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasMountPoint() bool {
-	if o != nil && o.MountPoint != nil {
+	if o != nil && !IsNil(o.MountPoint) {
 		return true
 	}
 
@@ -1166,7 +1201,7 @@ func (o *ProvisionVDBByTimestampParameters) SetMountPoint(v string) {
 
 // GetOpenResetLogs returns the OpenResetLogs field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetOpenResetLogs() bool {
-	if o == nil || o.OpenResetLogs == nil {
+	if o == nil || IsNil(o.OpenResetLogs) {
 		var ret bool
 		return ret
 	}
@@ -1176,7 +1211,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOpenResetLogs() bool {
 // GetOpenResetLogsOk returns a tuple with the OpenResetLogs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetOpenResetLogsOk() (*bool, bool) {
-	if o == nil || o.OpenResetLogs == nil {
+	if o == nil || IsNil(o.OpenResetLogs) {
 		return nil, false
 	}
 	return o.OpenResetLogs, true
@@ -1184,7 +1219,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOpenResetLogsOk() (*bool, bool) {
 
 // HasOpenResetLogs returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasOpenResetLogs() bool {
-	if o != nil && o.OpenResetLogs != nil {
+	if o != nil && !IsNil(o.OpenResetLogs) {
 		return true
 	}
 
@@ -1198,7 +1233,7 @@ func (o *ProvisionVDBByTimestampParameters) SetOpenResetLogs(v bool) {
 
 // GetSnapshotPolicyId returns the SnapshotPolicyId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetSnapshotPolicyId() string {
-	if o == nil || o.SnapshotPolicyId == nil {
+	if o == nil || IsNil(o.SnapshotPolicyId) {
 		var ret string
 		return ret
 	}
@@ -1208,7 +1243,7 @@ func (o *ProvisionVDBByTimestampParameters) GetSnapshotPolicyId() string {
 // GetSnapshotPolicyIdOk returns a tuple with the SnapshotPolicyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetSnapshotPolicyIdOk() (*string, bool) {
-	if o == nil || o.SnapshotPolicyId == nil {
+	if o == nil || IsNil(o.SnapshotPolicyId) {
 		return nil, false
 	}
 	return o.SnapshotPolicyId, true
@@ -1216,7 +1251,7 @@ func (o *ProvisionVDBByTimestampParameters) GetSnapshotPolicyIdOk() (*string, bo
 
 // HasSnapshotPolicyId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasSnapshotPolicyId() bool {
-	if o != nil && o.SnapshotPolicyId != nil {
+	if o != nil && !IsNil(o.SnapshotPolicyId) {
 		return true
 	}
 
@@ -1230,7 +1265,7 @@ func (o *ProvisionVDBByTimestampParameters) SetSnapshotPolicyId(v string) {
 
 // GetRetentionPolicyId returns the RetentionPolicyId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetRetentionPolicyId() string {
-	if o == nil || o.RetentionPolicyId == nil {
+	if o == nil || IsNil(o.RetentionPolicyId) {
 		var ret string
 		return ret
 	}
@@ -1240,7 +1275,7 @@ func (o *ProvisionVDBByTimestampParameters) GetRetentionPolicyId() string {
 // GetRetentionPolicyIdOk returns a tuple with the RetentionPolicyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetRetentionPolicyIdOk() (*string, bool) {
-	if o == nil || o.RetentionPolicyId == nil {
+	if o == nil || IsNil(o.RetentionPolicyId) {
 		return nil, false
 	}
 	return o.RetentionPolicyId, true
@@ -1248,7 +1283,7 @@ func (o *ProvisionVDBByTimestampParameters) GetRetentionPolicyIdOk() (*string, b
 
 // HasRetentionPolicyId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasRetentionPolicyId() bool {
-	if o != nil && o.RetentionPolicyId != nil {
+	if o != nil && !IsNil(o.RetentionPolicyId) {
 		return true
 	}
 
@@ -1262,7 +1297,7 @@ func (o *ProvisionVDBByTimestampParameters) SetRetentionPolicyId(v string) {
 
 // GetRecoveryModel returns the RecoveryModel field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetRecoveryModel() string {
-	if o == nil || o.RecoveryModel == nil {
+	if o == nil || IsNil(o.RecoveryModel) {
 		var ret string
 		return ret
 	}
@@ -1272,7 +1307,7 @@ func (o *ProvisionVDBByTimestampParameters) GetRecoveryModel() string {
 // GetRecoveryModelOk returns a tuple with the RecoveryModel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetRecoveryModelOk() (*string, bool) {
-	if o == nil || o.RecoveryModel == nil {
+	if o == nil || IsNil(o.RecoveryModel) {
 		return nil, false
 	}
 	return o.RecoveryModel, true
@@ -1280,7 +1315,7 @@ func (o *ProvisionVDBByTimestampParameters) GetRecoveryModelOk() (*string, bool)
 
 // HasRecoveryModel returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasRecoveryModel() bool {
-	if o != nil && o.RecoveryModel != nil {
+	if o != nil && !IsNil(o.RecoveryModel) {
 		return true
 	}
 
@@ -1294,7 +1329,7 @@ func (o *ProvisionVDBByTimestampParameters) SetRecoveryModel(v string) {
 
 // GetPreScript returns the PreScript field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPreScript() string {
-	if o == nil || o.PreScript == nil {
+	if o == nil || IsNil(o.PreScript) {
 		var ret string
 		return ret
 	}
@@ -1304,7 +1339,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreScript() string {
 // GetPreScriptOk returns a tuple with the PreScript field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPreScriptOk() (*string, bool) {
-	if o == nil || o.PreScript == nil {
+	if o == nil || IsNil(o.PreScript) {
 		return nil, false
 	}
 	return o.PreScript, true
@@ -1312,7 +1347,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreScriptOk() (*string, bool) {
 
 // HasPreScript returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPreScript() bool {
-	if o != nil && o.PreScript != nil {
+	if o != nil && !IsNil(o.PreScript) {
 		return true
 	}
 
@@ -1326,7 +1361,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPreScript(v string) {
 
 // GetPostScript returns the PostScript field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetPostScript() string {
-	if o == nil || o.PostScript == nil {
+	if o == nil || IsNil(o.PostScript) {
 		var ret string
 		return ret
 	}
@@ -1336,7 +1371,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostScript() string {
 // GetPostScriptOk returns a tuple with the PostScript field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetPostScriptOk() (*string, bool) {
-	if o == nil || o.PostScript == nil {
+	if o == nil || IsNil(o.PostScript) {
 		return nil, false
 	}
 	return o.PostScript, true
@@ -1344,7 +1379,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostScriptOk() (*string, bool) {
 
 // HasPostScript returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasPostScript() bool {
-	if o != nil && o.PostScript != nil {
+	if o != nil && !IsNil(o.PostScript) {
 		return true
 	}
 
@@ -1358,7 +1393,7 @@ func (o *ProvisionVDBByTimestampParameters) SetPostScript(v string) {
 
 // GetCdcOnProvision returns the CdcOnProvision field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetCdcOnProvision() bool {
-	if o == nil || o.CdcOnProvision == nil {
+	if o == nil || IsNil(o.CdcOnProvision) {
 		var ret bool
 		return ret
 	}
@@ -1368,7 +1403,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCdcOnProvision() bool {
 // GetCdcOnProvisionOk returns a tuple with the CdcOnProvision field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetCdcOnProvisionOk() (*bool, bool) {
-	if o == nil || o.CdcOnProvision == nil {
+	if o == nil || IsNil(o.CdcOnProvision) {
 		return nil, false
 	}
 	return o.CdcOnProvision, true
@@ -1376,7 +1411,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCdcOnProvisionOk() (*bool, bool) 
 
 // HasCdcOnProvision returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasCdcOnProvision() bool {
-	if o != nil && o.CdcOnProvision != nil {
+	if o != nil && !IsNil(o.CdcOnProvision) {
 		return true
 	}
 
@@ -1390,7 +1425,7 @@ func (o *ProvisionVDBByTimestampParameters) SetCdcOnProvision(v bool) {
 
 // GetOnlineLogSize returns the OnlineLogSize field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetOnlineLogSize() int32 {
-	if o == nil || o.OnlineLogSize == nil {
+	if o == nil || IsNil(o.OnlineLogSize) {
 		var ret int32
 		return ret
 	}
@@ -1400,7 +1435,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOnlineLogSize() int32 {
 // GetOnlineLogSizeOk returns a tuple with the OnlineLogSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetOnlineLogSizeOk() (*int32, bool) {
-	if o == nil || o.OnlineLogSize == nil {
+	if o == nil || IsNil(o.OnlineLogSize) {
 		return nil, false
 	}
 	return o.OnlineLogSize, true
@@ -1408,7 +1443,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOnlineLogSizeOk() (*int32, bool) 
 
 // HasOnlineLogSize returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasOnlineLogSize() bool {
-	if o != nil && o.OnlineLogSize != nil {
+	if o != nil && !IsNil(o.OnlineLogSize) {
 		return true
 	}
 
@@ -1422,7 +1457,7 @@ func (o *ProvisionVDBByTimestampParameters) SetOnlineLogSize(v int32) {
 
 // GetOnlineLogGroups returns the OnlineLogGroups field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetOnlineLogGroups() int32 {
-	if o == nil || o.OnlineLogGroups == nil {
+	if o == nil || IsNil(o.OnlineLogGroups) {
 		var ret int32
 		return ret
 	}
@@ -1432,7 +1467,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOnlineLogGroups() int32 {
 // GetOnlineLogGroupsOk returns a tuple with the OnlineLogGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetOnlineLogGroupsOk() (*int32, bool) {
-	if o == nil || o.OnlineLogGroups == nil {
+	if o == nil || IsNil(o.OnlineLogGroups) {
 		return nil, false
 	}
 	return o.OnlineLogGroups, true
@@ -1440,7 +1475,7 @@ func (o *ProvisionVDBByTimestampParameters) GetOnlineLogGroupsOk() (*int32, bool
 
 // HasOnlineLogGroups returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasOnlineLogGroups() bool {
-	if o != nil && o.OnlineLogGroups != nil {
+	if o != nil && !IsNil(o.OnlineLogGroups) {
 		return true
 	}
 
@@ -1454,7 +1489,7 @@ func (o *ProvisionVDBByTimestampParameters) SetOnlineLogGroups(v int32) {
 
 // GetArchiveLog returns the ArchiveLog field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetArchiveLog() bool {
-	if o == nil || o.ArchiveLog == nil {
+	if o == nil || IsNil(o.ArchiveLog) {
 		var ret bool
 		return ret
 	}
@@ -1464,7 +1499,7 @@ func (o *ProvisionVDBByTimestampParameters) GetArchiveLog() bool {
 // GetArchiveLogOk returns a tuple with the ArchiveLog field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetArchiveLogOk() (*bool, bool) {
-	if o == nil || o.ArchiveLog == nil {
+	if o == nil || IsNil(o.ArchiveLog) {
 		return nil, false
 	}
 	return o.ArchiveLog, true
@@ -1472,7 +1507,7 @@ func (o *ProvisionVDBByTimestampParameters) GetArchiveLogOk() (*bool, bool) {
 
 // HasArchiveLog returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasArchiveLog() bool {
-	if o != nil && o.ArchiveLog != nil {
+	if o != nil && !IsNil(o.ArchiveLog) {
 		return true
 	}
 
@@ -1486,7 +1521,7 @@ func (o *ProvisionVDBByTimestampParameters) SetArchiveLog(v bool) {
 
 // GetNewDbid returns the NewDbid field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetNewDbid() bool {
-	if o == nil || o.NewDbid == nil {
+	if o == nil || IsNil(o.NewDbid) {
 		var ret bool
 		return ret
 	}
@@ -1496,7 +1531,7 @@ func (o *ProvisionVDBByTimestampParameters) GetNewDbid() bool {
 // GetNewDbidOk returns a tuple with the NewDbid field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetNewDbidOk() (*bool, bool) {
-	if o == nil || o.NewDbid == nil {
+	if o == nil || IsNil(o.NewDbid) {
 		return nil, false
 	}
 	return o.NewDbid, true
@@ -1504,7 +1539,7 @@ func (o *ProvisionVDBByTimestampParameters) GetNewDbidOk() (*bool, bool) {
 
 // HasNewDbid returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasNewDbid() bool {
-	if o != nil && o.NewDbid != nil {
+	if o != nil && !IsNil(o.NewDbid) {
 		return true
 	}
 
@@ -1518,7 +1553,7 @@ func (o *ProvisionVDBByTimestampParameters) SetNewDbid(v bool) {
 
 // GetListenerIds returns the ListenerIds field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetListenerIds() []string {
-	if o == nil || o.ListenerIds == nil {
+	if o == nil || IsNil(o.ListenerIds) {
 		var ret []string
 		return ret
 	}
@@ -1528,7 +1563,7 @@ func (o *ProvisionVDBByTimestampParameters) GetListenerIds() []string {
 // GetListenerIdsOk returns a tuple with the ListenerIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetListenerIdsOk() ([]string, bool) {
-	if o == nil || o.ListenerIds == nil {
+	if o == nil || IsNil(o.ListenerIds) {
 		return nil, false
 	}
 	return o.ListenerIds, true
@@ -1536,7 +1571,7 @@ func (o *ProvisionVDBByTimestampParameters) GetListenerIdsOk() ([]string, bool) 
 
 // HasListenerIds returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasListenerIds() bool {
-	if o != nil && o.ListenerIds != nil {
+	if o != nil && !IsNil(o.ListenerIds) {
 		return true
 	}
 
@@ -1550,7 +1585,7 @@ func (o *ProvisionVDBByTimestampParameters) SetListenerIds(v []string) {
 
 // GetCustomEnvVars returns the CustomEnvVars field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetCustomEnvVars() map[string]string {
-	if o == nil || o.CustomEnvVars == nil {
+	if o == nil || IsNil(o.CustomEnvVars) {
 		var ret map[string]string
 		return ret
 	}
@@ -1560,7 +1595,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCustomEnvVars() map[string]string
 // GetCustomEnvVarsOk returns a tuple with the CustomEnvVars field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetCustomEnvVarsOk() (*map[string]string, bool) {
-	if o == nil || o.CustomEnvVars == nil {
+	if o == nil || IsNil(o.CustomEnvVars) {
 		return nil, false
 	}
 	return o.CustomEnvVars, true
@@ -1568,7 +1603,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCustomEnvVarsOk() (*map[string]st
 
 // HasCustomEnvVars returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasCustomEnvVars() bool {
-	if o != nil && o.CustomEnvVars != nil {
+	if o != nil && !IsNil(o.CustomEnvVars) {
 		return true
 	}
 
@@ -1582,7 +1617,7 @@ func (o *ProvisionVDBByTimestampParameters) SetCustomEnvVars(v map[string]string
 
 // GetCustomEnvFiles returns the CustomEnvFiles field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetCustomEnvFiles() []string {
-	if o == nil || o.CustomEnvFiles == nil {
+	if o == nil || IsNil(o.CustomEnvFiles) {
 		var ret []string
 		return ret
 	}
@@ -1592,7 +1627,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCustomEnvFiles() []string {
 // GetCustomEnvFilesOk returns a tuple with the CustomEnvFiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetCustomEnvFilesOk() ([]string, bool) {
-	if o == nil || o.CustomEnvFiles == nil {
+	if o == nil || IsNil(o.CustomEnvFiles) {
 		return nil, false
 	}
 	return o.CustomEnvFiles, true
@@ -1600,7 +1635,7 @@ func (o *ProvisionVDBByTimestampParameters) GetCustomEnvFilesOk() ([]string, boo
 
 // HasCustomEnvFiles returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasCustomEnvFiles() bool {
-	if o != nil && o.CustomEnvFiles != nil {
+	if o != nil && !IsNil(o.CustomEnvFiles) {
 		return true
 	}
 
@@ -1612,9 +1647,428 @@ func (o *ProvisionVDBByTimestampParameters) SetCustomEnvFiles(v []string) {
 	o.CustomEnvFiles = v
 }
 
+// GetOracleRacCustomEnvFiles returns the OracleRacCustomEnvFiles field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetOracleRacCustomEnvFiles() []OracleRacCustomEnvFile {
+	if o == nil || IsNil(o.OracleRacCustomEnvFiles) {
+		var ret []OracleRacCustomEnvFile
+		return ret
+	}
+	return o.OracleRacCustomEnvFiles
+}
+
+// GetOracleRacCustomEnvFilesOk returns a tuple with the OracleRacCustomEnvFiles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetOracleRacCustomEnvFilesOk() ([]OracleRacCustomEnvFile, bool) {
+	if o == nil || IsNil(o.OracleRacCustomEnvFiles) {
+		return nil, false
+	}
+	return o.OracleRacCustomEnvFiles, true
+}
+
+// HasOracleRacCustomEnvFiles returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasOracleRacCustomEnvFiles() bool {
+	if o != nil && !IsNil(o.OracleRacCustomEnvFiles) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleRacCustomEnvFiles gets a reference to the given []OracleRacCustomEnvFile and assigns it to the OracleRacCustomEnvFiles field.
+func (o *ProvisionVDBByTimestampParameters) SetOracleRacCustomEnvFiles(v []OracleRacCustomEnvFile) {
+	o.OracleRacCustomEnvFiles = v
+}
+
+// GetOracleRacCustomEnvVars returns the OracleRacCustomEnvVars field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetOracleRacCustomEnvVars() []OracleRacCustomEnvVar {
+	if o == nil || IsNil(o.OracleRacCustomEnvVars) {
+		var ret []OracleRacCustomEnvVar
+		return ret
+	}
+	return o.OracleRacCustomEnvVars
+}
+
+// GetOracleRacCustomEnvVarsOk returns a tuple with the OracleRacCustomEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetOracleRacCustomEnvVarsOk() ([]OracleRacCustomEnvVar, bool) {
+	if o == nil || IsNil(o.OracleRacCustomEnvVars) {
+		return nil, false
+	}
+	return o.OracleRacCustomEnvVars, true
+}
+
+// HasOracleRacCustomEnvVars returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasOracleRacCustomEnvVars() bool {
+	if o != nil && !IsNil(o.OracleRacCustomEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleRacCustomEnvVars gets a reference to the given []OracleRacCustomEnvVar and assigns it to the OracleRacCustomEnvVars field.
+func (o *ProvisionVDBByTimestampParameters) SetOracleRacCustomEnvVars(v []OracleRacCustomEnvVar) {
+	o.OracleRacCustomEnvVars = v
+}
+
+// GetParentTdeKeystorePath returns the ParentTdeKeystorePath field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetParentTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentTdeKeystorePath
+}
+
+// GetParentTdeKeystorePathOk returns a tuple with the ParentTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetParentTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentTdeKeystorePath, true
+}
+
+// HasParentTdeKeystorePath returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasParentTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentTdeKeystorePath gets a reference to the given string and assigns it to the ParentTdeKeystorePath field.
+func (o *ProvisionVDBByTimestampParameters) SetParentTdeKeystorePath(v string) {
+	o.ParentTdeKeystorePath = &v
+}
+
+// GetParentTdeKeystorePassword returns the ParentTdeKeystorePassword field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetParentTdeKeystorePassword() string {
+	if o == nil || IsNil(o.ParentTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.ParentTdeKeystorePassword
+}
+
+// GetParentTdeKeystorePasswordOk returns a tuple with the ParentTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetParentTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.ParentTdeKeystorePassword, true
+}
+
+// HasParentTdeKeystorePassword returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasParentTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.ParentTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentTdeKeystorePassword gets a reference to the given string and assigns it to the ParentTdeKeystorePassword field.
+func (o *ProvisionVDBByTimestampParameters) SetParentTdeKeystorePassword(v string) {
+	o.ParentTdeKeystorePassword = &v
+}
+
+// GetTdeExportedKeyFileSecret returns the TdeExportedKeyFileSecret field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetTdeExportedKeyFileSecret() string {
+	if o == nil || IsNil(o.TdeExportedKeyFileSecret) {
+		var ret string
+		return ret
+	}
+	return *o.TdeExportedKeyFileSecret
+}
+
+// GetTdeExportedKeyFileSecretOk returns a tuple with the TdeExportedKeyFileSecret field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetTdeExportedKeyFileSecretOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeExportedKeyFileSecret) {
+		return nil, false
+	}
+	return o.TdeExportedKeyFileSecret, true
+}
+
+// HasTdeExportedKeyFileSecret returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasTdeExportedKeyFileSecret() bool {
+	if o != nil && !IsNil(o.TdeExportedKeyFileSecret) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeExportedKeyFileSecret gets a reference to the given string and assigns it to the TdeExportedKeyFileSecret field.
+func (o *ProvisionVDBByTimestampParameters) SetTdeExportedKeyFileSecret(v string) {
+	o.TdeExportedKeyFileSecret = &v
+}
+
+// GetTdeKeyIdentifier returns the TdeKeyIdentifier field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetTdeKeyIdentifier() string {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeyIdentifier
+}
+
+// GetTdeKeyIdentifierOk returns a tuple with the TdeKeyIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetTdeKeyIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		return nil, false
+	}
+	return o.TdeKeyIdentifier, true
+}
+
+// HasTdeKeyIdentifier returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasTdeKeyIdentifier() bool {
+	if o != nil && !IsNil(o.TdeKeyIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeyIdentifier gets a reference to the given string and assigns it to the TdeKeyIdentifier field.
+func (o *ProvisionVDBByTimestampParameters) SetTdeKeyIdentifier(v string) {
+	o.TdeKeyIdentifier = &v
+}
+
+// GetTargetVcdbTdeKeystorePath returns the TargetVcdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetTargetVcdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.TargetVcdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.TargetVcdbTdeKeystorePath
+}
+
+// GetTargetVcdbTdeKeystorePathOk returns a tuple with the TargetVcdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetTargetVcdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetVcdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.TargetVcdbTdeKeystorePath, true
+}
+
+// HasTargetVcdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasTargetVcdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.TargetVcdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetVcdbTdeKeystorePath gets a reference to the given string and assigns it to the TargetVcdbTdeKeystorePath field.
+func (o *ProvisionVDBByTimestampParameters) SetTargetVcdbTdeKeystorePath(v string) {
+	o.TargetVcdbTdeKeystorePath = &v
+}
+
+// GetCdbTdeKeystorePassword returns the CdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetCdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.CdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.CdbTdeKeystorePassword
+}
+
+// GetCdbTdeKeystorePasswordOk returns a tuple with the CdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetCdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.CdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.CdbTdeKeystorePassword, true
+}
+
+// HasCdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasCdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.CdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbTdeKeystorePassword gets a reference to the given string and assigns it to the CdbTdeKeystorePassword field.
+func (o *ProvisionVDBByTimestampParameters) SetCdbTdeKeystorePassword(v string) {
+	o.CdbTdeKeystorePassword = &v
+}
+
+// GetVcdbTdeKeyIdentifier returns the VcdbTdeKeyIdentifier field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetVcdbTdeKeyIdentifier() string {
+	if o == nil || IsNil(o.VcdbTdeKeyIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.VcdbTdeKeyIdentifier
+}
+
+// GetVcdbTdeKeyIdentifierOk returns a tuple with the VcdbTdeKeyIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetVcdbTdeKeyIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.VcdbTdeKeyIdentifier) {
+		return nil, false
+	}
+	return o.VcdbTdeKeyIdentifier, true
+}
+
+// HasVcdbTdeKeyIdentifier returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasVcdbTdeKeyIdentifier() bool {
+	if o != nil && !IsNil(o.VcdbTdeKeyIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbTdeKeyIdentifier gets a reference to the given string and assigns it to the VcdbTdeKeyIdentifier field.
+func (o *ProvisionVDBByTimestampParameters) SetVcdbTdeKeyIdentifier(v string) {
+	o.VcdbTdeKeyIdentifier = &v
+}
+
+// GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetAppdataSourceParams() map[string]interface{} {
+	if o == nil || IsNil(o.AppdataSourceParams) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AppdataSourceParams
+}
+
+// GetAppdataSourceParamsOk returns a tuple with the AppdataSourceParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetAppdataSourceParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AppdataSourceParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.AppdataSourceParams, true
+}
+
+// HasAppdataSourceParams returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasAppdataSourceParams() bool {
+	if o != nil && !IsNil(o.AppdataSourceParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataSourceParams gets a reference to the given map[string]interface{} and assigns it to the AppdataSourceParams field.
+func (o *ProvisionVDBByTimestampParameters) SetAppdataSourceParams(v map[string]interface{}) {
+	o.AppdataSourceParams = v
+}
+
+// GetAdditionalMountPoints returns the AdditionalMountPoints field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProvisionVDBByTimestampParameters) GetAdditionalMountPoints() []AdditionalMountPoint {
+	if o == nil {
+		var ret []AdditionalMountPoint
+		return ret
+	}
+	return o.AdditionalMountPoints
+}
+
+// GetAdditionalMountPointsOk returns a tuple with the AdditionalMountPoints field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProvisionVDBByTimestampParameters) GetAdditionalMountPointsOk() ([]AdditionalMountPoint, bool) {
+	if o == nil || IsNil(o.AdditionalMountPoints) {
+		return nil, false
+	}
+	return o.AdditionalMountPoints, true
+}
+
+// HasAdditionalMountPoints returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasAdditionalMountPoints() bool {
+	if o != nil && IsNil(o.AdditionalMountPoints) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdditionalMountPoints gets a reference to the given []AdditionalMountPoint and assigns it to the AdditionalMountPoints field.
+func (o *ProvisionVDBByTimestampParameters) SetAdditionalMountPoints(v []AdditionalMountPoint) {
+	o.AdditionalMountPoints = v
+}
+
+// GetAppdataConfigParams returns the AppdataConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProvisionVDBByTimestampParameters) GetAppdataConfigParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AppdataConfigParams
+}
+
+// GetAppdataConfigParamsOk returns a tuple with the AppdataConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProvisionVDBByTimestampParameters) GetAppdataConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AppdataConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.AppdataConfigParams, true
+}
+
+// HasAppdataConfigParams returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasAppdataConfigParams() bool {
+	if o != nil && IsNil(o.AppdataConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataConfigParams gets a reference to the given map[string]interface{} and assigns it to the AppdataConfigParams field.
+func (o *ProvisionVDBByTimestampParameters) SetAppdataConfigParams(v map[string]interface{}) {
+	o.AppdataConfigParams = v
+}
+
+// GetConfigParams returns the ConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProvisionVDBByTimestampParameters) GetConfigParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.ConfigParams
+}
+
+// GetConfigParamsOk returns a tuple with the ConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProvisionVDBByTimestampParameters) GetConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.ConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.ConfigParams, true
+}
+
+// HasConfigParams returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasConfigParams() bool {
+	if o != nil && IsNil(o.ConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfigParams gets a reference to the given map[string]interface{} and assigns it to the ConfigParams field.
+func (o *ProvisionVDBByTimestampParameters) SetConfigParams(v map[string]interface{}) {
+	o.ConfigParams = v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -1624,7 +2078,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -1632,7 +2086,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -1646,7 +2100,7 @@ func (o *ProvisionVDBByTimestampParameters) SetTags(v []Tag) {
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTimestamp() time.Time {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		var ret time.Time
 		return ret
 	}
@@ -1656,7 +2110,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTimestamp() time.Time {
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetTimestampOk() (*time.Time, bool) {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
 	return o.Timestamp, true
@@ -1664,7 +2118,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTimestampOk() (*time.Time, bool) 
 
 // HasTimestamp returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasTimestamp() bool {
-	if o != nil && o.Timestamp != nil {
+	if o != nil && !IsNil(o.Timestamp) {
 		return true
 	}
 
@@ -1678,7 +2132,7 @@ func (o *ProvisionVDBByTimestampParameters) SetTimestamp(v time.Time) {
 
 // GetTimestampInDatabaseTimezone returns the TimestampInDatabaseTimezone field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTimestampInDatabaseTimezone() string {
-	if o == nil || o.TimestampInDatabaseTimezone == nil {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
 		var ret string
 		return ret
 	}
@@ -1688,7 +2142,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTimestampInDatabaseTimezone() str
 // GetTimestampInDatabaseTimezoneOk returns a tuple with the TimestampInDatabaseTimezone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetTimestampInDatabaseTimezoneOk() (*string, bool) {
-	if o == nil || o.TimestampInDatabaseTimezone == nil {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
 		return nil, false
 	}
 	return o.TimestampInDatabaseTimezone, true
@@ -1696,7 +2150,7 @@ func (o *ProvisionVDBByTimestampParameters) GetTimestampInDatabaseTimezoneOk() (
 
 // HasTimestampInDatabaseTimezone returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasTimestampInDatabaseTimezone() bool {
-	if o != nil && o.TimestampInDatabaseTimezone != nil {
+	if o != nil && !IsNil(o.TimestampInDatabaseTimezone) {
 		return true
 	}
 
@@ -1710,7 +2164,7 @@ func (o *ProvisionVDBByTimestampParameters) SetTimestampInDatabaseTimezone(v str
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetEngineId() string {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		var ret string
 		return ret
 	}
@@ -1720,7 +2174,7 @@ func (o *ProvisionVDBByTimestampParameters) GetEngineId() string {
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetEngineIdOk() (*string, bool) {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		return nil, false
 	}
 	return o.EngineId, true
@@ -1728,7 +2182,7 @@ func (o *ProvisionVDBByTimestampParameters) GetEngineIdOk() (*string, bool) {
 
 // HasEngineId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasEngineId() bool {
-	if o != nil && o.EngineId != nil {
+	if o != nil && !IsNil(o.EngineId) {
 		return true
 	}
 
@@ -1753,7 +2207,7 @@ func (o *ProvisionVDBByTimestampParameters) GetSourceDataId() string {
 // GetSourceDataIdOk returns a tuple with the SourceDataId field value
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParameters) GetSourceDataIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.SourceDataId, true
@@ -1764,162 +2218,242 @@ func (o *ProvisionVDBByTimestampParameters) SetSourceDataId(v string) {
 	o.SourceDataId = v
 }
 
+// GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetMakeCurrentAccountOwner() bool {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		var ret bool
+		return ret
+	}
+	return *o.MakeCurrentAccountOwner
+}
+
+// GetMakeCurrentAccountOwnerOk returns a tuple with the MakeCurrentAccountOwner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetMakeCurrentAccountOwnerOk() (*bool, bool) {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		return nil, false
+	}
+	return o.MakeCurrentAccountOwner, true
+}
+
+// HasMakeCurrentAccountOwner returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasMakeCurrentAccountOwner() bool {
+	if o != nil && !IsNil(o.MakeCurrentAccountOwner) {
+		return true
+	}
+
+	return false
+}
+
+// SetMakeCurrentAccountOwner gets a reference to the given bool and assigns it to the MakeCurrentAccountOwner field.
+func (o *ProvisionVDBByTimestampParameters) SetMakeCurrentAccountOwner(v bool) {
+	o.MakeCurrentAccountOwner = &v
+}
+
 func (o ProvisionVDBByTimestampParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PreRefresh != nil {
-		toSerialize["pre_refresh"] = o.PreRefresh
-	}
-	if o.PostRefresh != nil {
-		toSerialize["post_refresh"] = o.PostRefresh
-	}
-	if o.PreRollback != nil {
-		toSerialize["pre_rollback"] = o.PreRollback
-	}
-	if o.PostRollback != nil {
-		toSerialize["post_rollback"] = o.PostRollback
-	}
-	if o.ConfigureClone != nil {
-		toSerialize["configure_clone"] = o.ConfigureClone
-	}
-	if o.PreSnapshot != nil {
-		toSerialize["pre_snapshot"] = o.PreSnapshot
-	}
-	if o.PostSnapshot != nil {
-		toSerialize["post_snapshot"] = o.PostSnapshot
-	}
-	if o.PreStart != nil {
-		toSerialize["pre_start"] = o.PreStart
-	}
-	if o.PostStart != nil {
-		toSerialize["post_start"] = o.PostStart
-	}
-	if o.PreStop != nil {
-		toSerialize["pre_stop"] = o.PreStop
-	}
-	if o.PostStop != nil {
-		toSerialize["post_stop"] = o.PostStop
-	}
-	if o.TargetGroupId != nil {
-		toSerialize["target_group_id"] = o.TargetGroupId
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.DatabaseName != nil {
-		toSerialize["database_name"] = o.DatabaseName
-	}
-	if o.CdbId != nil {
-		toSerialize["cdb_id"] = o.CdbId
-	}
-	if o.ClusterNodeIds != nil {
-		toSerialize["cluster_node_ids"] = o.ClusterNodeIds
-	}
-	if o.TruncateLogOnCheckpoint != nil {
-		toSerialize["truncate_log_on_checkpoint"] = o.TruncateLogOnCheckpoint
-	}
-	if o.OsUsername != nil {
-		toSerialize["os_username"] = o.OsUsername
-	}
-	if o.OsPassword != nil {
-		toSerialize["os_password"] = o.OsPassword
-	}
-	if o.EnvironmentId != nil {
-		toSerialize["environment_id"] = o.EnvironmentId
-	}
-	if o.EnvironmentUserId != nil {
-		toSerialize["environment_user_id"] = o.EnvironmentUserId
-	}
-	if o.RepositoryId != nil {
-		toSerialize["repository_id"] = o.RepositoryId
-	}
-	if o.AutoSelectRepository != nil {
-		toSerialize["auto_select_repository"] = o.AutoSelectRepository
-	}
-	if o.VdbRestart != nil {
-		toSerialize["vdb_restart"] = o.VdbRestart
-	}
-	if o.TemplateId != nil {
-		toSerialize["template_id"] = o.TemplateId
-	}
-	if o.AuxiliaryTemplateId != nil {
-		toSerialize["auxiliary_template_id"] = o.AuxiliaryTemplateId
-	}
-	if o.FileMappingRules != nil {
-		toSerialize["file_mapping_rules"] = o.FileMappingRules
-	}
-	if o.OracleInstanceName != nil {
-		toSerialize["oracle_instance_name"] = o.OracleInstanceName
-	}
-	if o.UniqueName != nil {
-		toSerialize["unique_name"] = o.UniqueName
-	}
-	if o.VcdbName != nil {
-		toSerialize["vcdb_name"] = o.VcdbName
-	}
-	if o.VcdbDatabaseName != nil {
-		toSerialize["vcdb_database_name"] = o.VcdbDatabaseName
-	}
-	if o.MountPoint != nil {
-		toSerialize["mount_point"] = o.MountPoint
-	}
-	if o.OpenResetLogs != nil {
-		toSerialize["open_reset_logs"] = o.OpenResetLogs
-	}
-	if o.SnapshotPolicyId != nil {
-		toSerialize["snapshot_policy_id"] = o.SnapshotPolicyId
-	}
-	if o.RetentionPolicyId != nil {
-		toSerialize["retention_policy_id"] = o.RetentionPolicyId
-	}
-	if o.RecoveryModel != nil {
-		toSerialize["recovery_model"] = o.RecoveryModel
-	}
-	if o.PreScript != nil {
-		toSerialize["pre_script"] = o.PreScript
-	}
-	if o.PostScript != nil {
-		toSerialize["post_script"] = o.PostScript
-	}
-	if o.CdcOnProvision != nil {
-		toSerialize["cdc_on_provision"] = o.CdcOnProvision
-	}
-	if o.OnlineLogSize != nil {
-		toSerialize["online_log_size"] = o.OnlineLogSize
-	}
-	if o.OnlineLogGroups != nil {
-		toSerialize["online_log_groups"] = o.OnlineLogGroups
-	}
-	if o.ArchiveLog != nil {
-		toSerialize["archive_log"] = o.ArchiveLog
-	}
-	if o.NewDbid != nil {
-		toSerialize["new_dbid"] = o.NewDbid
-	}
-	if o.ListenerIds != nil {
-		toSerialize["listener_ids"] = o.ListenerIds
-	}
-	if o.CustomEnvVars != nil {
-		toSerialize["custom_env_vars"] = o.CustomEnvVars
-	}
-	if o.CustomEnvFiles != nil {
-		toSerialize["custom_env_files"] = o.CustomEnvFiles
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Timestamp != nil {
-		toSerialize["timestamp"] = o.Timestamp
-	}
-	if o.TimestampInDatabaseTimezone != nil {
-		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
-	}
-	if o.EngineId != nil {
-		toSerialize["engine_id"] = o.EngineId
-	}
-	if true {
-		toSerialize["source_data_id"] = o.SourceDataId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PreRefresh) {
+		toSerialize["pre_refresh"] = o.PreRefresh
+	}
+	if !IsNil(o.PostRefresh) {
+		toSerialize["post_refresh"] = o.PostRefresh
+	}
+	if !IsNil(o.PreRollback) {
+		toSerialize["pre_rollback"] = o.PreRollback
+	}
+	if !IsNil(o.PostRollback) {
+		toSerialize["post_rollback"] = o.PostRollback
+	}
+	if !IsNil(o.ConfigureClone) {
+		toSerialize["configure_clone"] = o.ConfigureClone
+	}
+	if !IsNil(o.PreSnapshot) {
+		toSerialize["pre_snapshot"] = o.PreSnapshot
+	}
+	if !IsNil(o.PostSnapshot) {
+		toSerialize["post_snapshot"] = o.PostSnapshot
+	}
+	if !IsNil(o.PreStart) {
+		toSerialize["pre_start"] = o.PreStart
+	}
+	if !IsNil(o.PostStart) {
+		toSerialize["post_start"] = o.PostStart
+	}
+	if !IsNil(o.PreStop) {
+		toSerialize["pre_stop"] = o.PreStop
+	}
+	if !IsNil(o.PostStop) {
+		toSerialize["post_stop"] = o.PostStop
+	}
+	if !IsNil(o.TargetGroupId) {
+		toSerialize["target_group_id"] = o.TargetGroupId
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
+	}
+	if !IsNil(o.CdbId) {
+		toSerialize["cdb_id"] = o.CdbId
+	}
+	if !IsNil(o.ClusterNodeIds) {
+		toSerialize["cluster_node_ids"] = o.ClusterNodeIds
+	}
+	if !IsNil(o.TruncateLogOnCheckpoint) {
+		toSerialize["truncate_log_on_checkpoint"] = o.TruncateLogOnCheckpoint
+	}
+	if !IsNil(o.OsUsername) {
+		toSerialize["os_username"] = o.OsUsername
+	}
+	if !IsNil(o.OsPassword) {
+		toSerialize["os_password"] = o.OsPassword
+	}
+	if !IsNil(o.EnvironmentId) {
+		toSerialize["environment_id"] = o.EnvironmentId
+	}
+	if !IsNil(o.EnvironmentUserId) {
+		toSerialize["environment_user_id"] = o.EnvironmentUserId
+	}
+	if !IsNil(o.RepositoryId) {
+		toSerialize["repository_id"] = o.RepositoryId
+	}
+	if !IsNil(o.AutoSelectRepository) {
+		toSerialize["auto_select_repository"] = o.AutoSelectRepository
+	}
+	if !IsNil(o.VdbRestart) {
+		toSerialize["vdb_restart"] = o.VdbRestart
+	}
+	if !IsNil(o.TemplateId) {
+		toSerialize["template_id"] = o.TemplateId
+	}
+	if !IsNil(o.AuxiliaryTemplateId) {
+		toSerialize["auxiliary_template_id"] = o.AuxiliaryTemplateId
+	}
+	if !IsNil(o.FileMappingRules) {
+		toSerialize["file_mapping_rules"] = o.FileMappingRules
+	}
+	if !IsNil(o.OracleInstanceName) {
+		toSerialize["oracle_instance_name"] = o.OracleInstanceName
+	}
+	if !IsNil(o.UniqueName) {
+		toSerialize["unique_name"] = o.UniqueName
+	}
+	if !IsNil(o.VcdbName) {
+		toSerialize["vcdb_name"] = o.VcdbName
+	}
+	if !IsNil(o.VcdbDatabaseName) {
+		toSerialize["vcdb_database_name"] = o.VcdbDatabaseName
+	}
+	if !IsNil(o.MountPoint) {
+		toSerialize["mount_point"] = o.MountPoint
+	}
+	if !IsNil(o.OpenResetLogs) {
+		toSerialize["open_reset_logs"] = o.OpenResetLogs
+	}
+	if !IsNil(o.SnapshotPolicyId) {
+		toSerialize["snapshot_policy_id"] = o.SnapshotPolicyId
+	}
+	if !IsNil(o.RetentionPolicyId) {
+		toSerialize["retention_policy_id"] = o.RetentionPolicyId
+	}
+	if !IsNil(o.RecoveryModel) {
+		toSerialize["recovery_model"] = o.RecoveryModel
+	}
+	if !IsNil(o.PreScript) {
+		toSerialize["pre_script"] = o.PreScript
+	}
+	if !IsNil(o.PostScript) {
+		toSerialize["post_script"] = o.PostScript
+	}
+	if !IsNil(o.CdcOnProvision) {
+		toSerialize["cdc_on_provision"] = o.CdcOnProvision
+	}
+	if !IsNil(o.OnlineLogSize) {
+		toSerialize["online_log_size"] = o.OnlineLogSize
+	}
+	if !IsNil(o.OnlineLogGroups) {
+		toSerialize["online_log_groups"] = o.OnlineLogGroups
+	}
+	if !IsNil(o.ArchiveLog) {
+		toSerialize["archive_log"] = o.ArchiveLog
+	}
+	if !IsNil(o.NewDbid) {
+		toSerialize["new_dbid"] = o.NewDbid
+	}
+	if !IsNil(o.ListenerIds) {
+		toSerialize["listener_ids"] = o.ListenerIds
+	}
+	if !IsNil(o.CustomEnvVars) {
+		toSerialize["custom_env_vars"] = o.CustomEnvVars
+	}
+	if !IsNil(o.CustomEnvFiles) {
+		toSerialize["custom_env_files"] = o.CustomEnvFiles
+	}
+	if !IsNil(o.OracleRacCustomEnvFiles) {
+		toSerialize["oracle_rac_custom_env_files"] = o.OracleRacCustomEnvFiles
+	}
+	if !IsNil(o.OracleRacCustomEnvVars) {
+		toSerialize["oracle_rac_custom_env_vars"] = o.OracleRacCustomEnvVars
+	}
+	if !IsNil(o.ParentTdeKeystorePath) {
+		toSerialize["parentTdeKeystorePath"] = o.ParentTdeKeystorePath
+	}
+	if !IsNil(o.ParentTdeKeystorePassword) {
+		toSerialize["parent_tde_keystore_password"] = o.ParentTdeKeystorePassword
+	}
+	if !IsNil(o.TdeExportedKeyFileSecret) {
+		toSerialize["tde_exported_key_file_secret"] = o.TdeExportedKeyFileSecret
+	}
+	if !IsNil(o.TdeKeyIdentifier) {
+		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
+	}
+	if !IsNil(o.TargetVcdbTdeKeystorePath) {
+		toSerialize["target_vcdb_tde_keystore_path"] = o.TargetVcdbTdeKeystorePath
+	}
+	if !IsNil(o.CdbTdeKeystorePassword) {
+		toSerialize["cdb_tde_keystore_password"] = o.CdbTdeKeystorePassword
+	}
+	if !IsNil(o.VcdbTdeKeyIdentifier) {
+		toSerialize["vcdb_tde_key_identifier"] = o.VcdbTdeKeyIdentifier
+	}
+	if !IsNil(o.AppdataSourceParams) {
+		toSerialize["appdata_source_params"] = o.AppdataSourceParams
+	}
+	if o.AdditionalMountPoints != nil {
+		toSerialize["additional_mount_points"] = o.AdditionalMountPoints
+	}
+	if o.AppdataConfigParams != nil {
+		toSerialize["appdata_config_params"] = o.AppdataConfigParams
+	}
+	if o.ConfigParams != nil {
+		toSerialize["config_params"] = o.ConfigParams
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.TimestampInDatabaseTimezone) {
+		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
+	}
+	if !IsNil(o.EngineId) {
+		toSerialize["engine_id"] = o.EngineId
+	}
+	toSerialize["source_data_id"] = o.SourceDataId
+	if !IsNil(o.MakeCurrentAccountOwner) {
+		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
+	}
+	return toSerialize, nil
 }
 
 type NullableProvisionVDBByTimestampParameters struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the EnvironmentUserParams type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EnvironmentUserParams{}
 
 // EnvironmentUserParams struct for EnvironmentUserParams
 type EnvironmentUserParams struct {
@@ -60,7 +63,7 @@ func NewEnvironmentUserParamsWithDefaults() *EnvironmentUserParams {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -70,7 +73,7 @@ func (o *EnvironmentUserParams) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -78,7 +81,7 @@ func (o *EnvironmentUserParams) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -92,7 +95,7 @@ func (o *EnvironmentUserParams) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -102,7 +105,7 @@ func (o *EnvironmentUserParams) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -110,7 +113,7 @@ func (o *EnvironmentUserParams) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -124,7 +127,7 @@ func (o *EnvironmentUserParams) SetPassword(v string) {
 
 // GetVault returns the Vault field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetVault() string {
-	if o == nil || o.Vault == nil {
+	if o == nil || IsNil(o.Vault) {
 		var ret string
 		return ret
 	}
@@ -134,7 +137,7 @@ func (o *EnvironmentUserParams) GetVault() string {
 // GetVaultOk returns a tuple with the Vault field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetVaultOk() (*string, bool) {
-	if o == nil || o.Vault == nil {
+	if o == nil || IsNil(o.Vault) {
 		return nil, false
 	}
 	return o.Vault, true
@@ -142,7 +145,7 @@ func (o *EnvironmentUserParams) GetVaultOk() (*string, bool) {
 
 // HasVault returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasVault() bool {
-	if o != nil && o.Vault != nil {
+	if o != nil && !IsNil(o.Vault) {
 		return true
 	}
 
@@ -156,7 +159,7 @@ func (o *EnvironmentUserParams) SetVault(v string) {
 
 // GetVaultUsername returns the VaultUsername field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetVaultUsername() string {
-	if o == nil || o.VaultUsername == nil {
+	if o == nil || IsNil(o.VaultUsername) {
 		var ret string
 		return ret
 	}
@@ -166,7 +169,7 @@ func (o *EnvironmentUserParams) GetVaultUsername() string {
 // GetVaultUsernameOk returns a tuple with the VaultUsername field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetVaultUsernameOk() (*string, bool) {
-	if o == nil || o.VaultUsername == nil {
+	if o == nil || IsNil(o.VaultUsername) {
 		return nil, false
 	}
 	return o.VaultUsername, true
@@ -174,7 +177,7 @@ func (o *EnvironmentUserParams) GetVaultUsernameOk() (*string, bool) {
 
 // HasVaultUsername returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasVaultUsername() bool {
-	if o != nil && o.VaultUsername != nil {
+	if o != nil && !IsNil(o.VaultUsername) {
 		return true
 	}
 
@@ -188,7 +191,7 @@ func (o *EnvironmentUserParams) SetVaultUsername(v string) {
 
 // GetHashicorpVaultEngine returns the HashicorpVaultEngine field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetHashicorpVaultEngine() string {
-	if o == nil || o.HashicorpVaultEngine == nil {
+	if o == nil || IsNil(o.HashicorpVaultEngine) {
 		var ret string
 		return ret
 	}
@@ -198,7 +201,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultEngine() string {
 // GetHashicorpVaultEngineOk returns a tuple with the HashicorpVaultEngine field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetHashicorpVaultEngineOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultEngine == nil {
+	if o == nil || IsNil(o.HashicorpVaultEngine) {
 		return nil, false
 	}
 	return o.HashicorpVaultEngine, true
@@ -206,7 +209,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultEngineOk() (*string, bool) {
 
 // HasHashicorpVaultEngine returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasHashicorpVaultEngine() bool {
-	if o != nil && o.HashicorpVaultEngine != nil {
+	if o != nil && !IsNil(o.HashicorpVaultEngine) {
 		return true
 	}
 
@@ -220,7 +223,7 @@ func (o *EnvironmentUserParams) SetHashicorpVaultEngine(v string) {
 
 // GetHashicorpVaultSecretPath returns the HashicorpVaultSecretPath field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetHashicorpVaultSecretPath() string {
-	if o == nil || o.HashicorpVaultSecretPath == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretPath) {
 		var ret string
 		return ret
 	}
@@ -230,7 +233,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultSecretPath() string {
 // GetHashicorpVaultSecretPathOk returns a tuple with the HashicorpVaultSecretPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetHashicorpVaultSecretPathOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultSecretPath == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretPath) {
 		return nil, false
 	}
 	return o.HashicorpVaultSecretPath, true
@@ -238,7 +241,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultSecretPathOk() (*string, bool) 
 
 // HasHashicorpVaultSecretPath returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasHashicorpVaultSecretPath() bool {
-	if o != nil && o.HashicorpVaultSecretPath != nil {
+	if o != nil && !IsNil(o.HashicorpVaultSecretPath) {
 		return true
 	}
 
@@ -252,7 +255,7 @@ func (o *EnvironmentUserParams) SetHashicorpVaultSecretPath(v string) {
 
 // GetHashicorpVaultUsernameKey returns the HashicorpVaultUsernameKey field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetHashicorpVaultUsernameKey() string {
-	if o == nil || o.HashicorpVaultUsernameKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultUsernameKey) {
 		var ret string
 		return ret
 	}
@@ -262,7 +265,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultUsernameKey() string {
 // GetHashicorpVaultUsernameKeyOk returns a tuple with the HashicorpVaultUsernameKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetHashicorpVaultUsernameKeyOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultUsernameKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultUsernameKey) {
 		return nil, false
 	}
 	return o.HashicorpVaultUsernameKey, true
@@ -270,7 +273,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultUsernameKeyOk() (*string, bool)
 
 // HasHashicorpVaultUsernameKey returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasHashicorpVaultUsernameKey() bool {
-	if o != nil && o.HashicorpVaultUsernameKey != nil {
+	if o != nil && !IsNil(o.HashicorpVaultUsernameKey) {
 		return true
 	}
 
@@ -284,7 +287,7 @@ func (o *EnvironmentUserParams) SetHashicorpVaultUsernameKey(v string) {
 
 // GetHashicorpVaultSecretKey returns the HashicorpVaultSecretKey field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetHashicorpVaultSecretKey() string {
-	if o == nil || o.HashicorpVaultSecretKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretKey) {
 		var ret string
 		return ret
 	}
@@ -294,7 +297,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultSecretKey() string {
 // GetHashicorpVaultSecretKeyOk returns a tuple with the HashicorpVaultSecretKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetHashicorpVaultSecretKeyOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultSecretKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretKey) {
 		return nil, false
 	}
 	return o.HashicorpVaultSecretKey, true
@@ -302,7 +305,7 @@ func (o *EnvironmentUserParams) GetHashicorpVaultSecretKeyOk() (*string, bool) {
 
 // HasHashicorpVaultSecretKey returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasHashicorpVaultSecretKey() bool {
-	if o != nil && o.HashicorpVaultSecretKey != nil {
+	if o != nil && !IsNil(o.HashicorpVaultSecretKey) {
 		return true
 	}
 
@@ -316,7 +319,7 @@ func (o *EnvironmentUserParams) SetHashicorpVaultSecretKey(v string) {
 
 // GetCyberarkVaultQueryString returns the CyberarkVaultQueryString field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetCyberarkVaultQueryString() string {
-	if o == nil || o.CyberarkVaultQueryString == nil {
+	if o == nil || IsNil(o.CyberarkVaultQueryString) {
 		var ret string
 		return ret
 	}
@@ -326,7 +329,7 @@ func (o *EnvironmentUserParams) GetCyberarkVaultQueryString() string {
 // GetCyberarkVaultQueryStringOk returns a tuple with the CyberarkVaultQueryString field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetCyberarkVaultQueryStringOk() (*string, bool) {
-	if o == nil || o.CyberarkVaultQueryString == nil {
+	if o == nil || IsNil(o.CyberarkVaultQueryString) {
 		return nil, false
 	}
 	return o.CyberarkVaultQueryString, true
@@ -334,7 +337,7 @@ func (o *EnvironmentUserParams) GetCyberarkVaultQueryStringOk() (*string, bool) 
 
 // HasCyberarkVaultQueryString returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasCyberarkVaultQueryString() bool {
-	if o != nil && o.CyberarkVaultQueryString != nil {
+	if o != nil && !IsNil(o.CyberarkVaultQueryString) {
 		return true
 	}
 
@@ -348,7 +351,7 @@ func (o *EnvironmentUserParams) SetCyberarkVaultQueryString(v string) {
 
 // GetUseKerberosAuthentication returns the UseKerberosAuthentication field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetUseKerberosAuthentication() bool {
-	if o == nil || o.UseKerberosAuthentication == nil {
+	if o == nil || IsNil(o.UseKerberosAuthentication) {
 		var ret bool
 		return ret
 	}
@@ -358,7 +361,7 @@ func (o *EnvironmentUserParams) GetUseKerberosAuthentication() bool {
 // GetUseKerberosAuthenticationOk returns a tuple with the UseKerberosAuthentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetUseKerberosAuthenticationOk() (*bool, bool) {
-	if o == nil || o.UseKerberosAuthentication == nil {
+	if o == nil || IsNil(o.UseKerberosAuthentication) {
 		return nil, false
 	}
 	return o.UseKerberosAuthentication, true
@@ -366,7 +369,7 @@ func (o *EnvironmentUserParams) GetUseKerberosAuthenticationOk() (*bool, bool) {
 
 // HasUseKerberosAuthentication returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasUseKerberosAuthentication() bool {
-	if o != nil && o.UseKerberosAuthentication != nil {
+	if o != nil && !IsNil(o.UseKerberosAuthentication) {
 		return true
 	}
 
@@ -380,7 +383,7 @@ func (o *EnvironmentUserParams) SetUseKerberosAuthentication(v bool) {
 
 // GetUseEnginePublicKey returns the UseEnginePublicKey field value if set, zero value otherwise.
 func (o *EnvironmentUserParams) GetUseEnginePublicKey() bool {
-	if o == nil || o.UseEnginePublicKey == nil {
+	if o == nil || IsNil(o.UseEnginePublicKey) {
 		var ret bool
 		return ret
 	}
@@ -390,7 +393,7 @@ func (o *EnvironmentUserParams) GetUseEnginePublicKey() bool {
 // GetUseEnginePublicKeyOk returns a tuple with the UseEnginePublicKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUserParams) GetUseEnginePublicKeyOk() (*bool, bool) {
-	if o == nil || o.UseEnginePublicKey == nil {
+	if o == nil || IsNil(o.UseEnginePublicKey) {
 		return nil, false
 	}
 	return o.UseEnginePublicKey, true
@@ -398,7 +401,7 @@ func (o *EnvironmentUserParams) GetUseEnginePublicKeyOk() (*bool, bool) {
 
 // HasUseEnginePublicKey returns a boolean if a field has been set.
 func (o *EnvironmentUserParams) HasUseEnginePublicKey() bool {
-	if o != nil && o.UseEnginePublicKey != nil {
+	if o != nil && !IsNil(o.UseEnginePublicKey) {
 		return true
 	}
 
@@ -411,41 +414,49 @@ func (o *EnvironmentUserParams) SetUseEnginePublicKey(v bool) {
 }
 
 func (o EnvironmentUserParams) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.Vault != nil {
-		toSerialize["vault"] = o.Vault
-	}
-	if o.VaultUsername != nil {
-		toSerialize["vault_username"] = o.VaultUsername
-	}
-	if o.HashicorpVaultEngine != nil {
-		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
-	}
-	if o.HashicorpVaultSecretPath != nil {
-		toSerialize["hashicorp_vault_secret_path"] = o.HashicorpVaultSecretPath
-	}
-	if o.HashicorpVaultUsernameKey != nil {
-		toSerialize["hashicorp_vault_username_key"] = o.HashicorpVaultUsernameKey
-	}
-	if o.HashicorpVaultSecretKey != nil {
-		toSerialize["hashicorp_vault_secret_key"] = o.HashicorpVaultSecretKey
-	}
-	if o.CyberarkVaultQueryString != nil {
-		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
-	}
-	if o.UseKerberosAuthentication != nil {
-		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
-	}
-	if o.UseEnginePublicKey != nil {
-		toSerialize["use_engine_public_key"] = o.UseEnginePublicKey
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EnvironmentUserParams) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.Vault) {
+		toSerialize["vault"] = o.Vault
+	}
+	if !IsNil(o.VaultUsername) {
+		toSerialize["vault_username"] = o.VaultUsername
+	}
+	if !IsNil(o.HashicorpVaultEngine) {
+		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
+	}
+	if !IsNil(o.HashicorpVaultSecretPath) {
+		toSerialize["hashicorp_vault_secret_path"] = o.HashicorpVaultSecretPath
+	}
+	if !IsNil(o.HashicorpVaultUsernameKey) {
+		toSerialize["hashicorp_vault_username_key"] = o.HashicorpVaultUsernameKey
+	}
+	if !IsNil(o.HashicorpVaultSecretKey) {
+		toSerialize["hashicorp_vault_secret_key"] = o.HashicorpVaultSecretKey
+	}
+	if !IsNil(o.CyberarkVaultQueryString) {
+		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
+	}
+	if !IsNil(o.UseKerberosAuthentication) {
+		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
+	}
+	if !IsNil(o.UseEnginePublicKey) {
+		toSerialize["use_engine_public_key"] = o.UseEnginePublicKey
+	}
+	return toSerialize, nil
 }
 
 type NullableEnvironmentUserParams struct {

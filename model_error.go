@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the Error type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Error{}
 
 // Error struct for Error
 type Error struct {
@@ -42,7 +45,7 @@ func NewErrorWithDefaults() *Error {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *Error) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *Error) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -60,7 +63,7 @@ func (o *Error) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *Error) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *Error) SetMessage(v string) {
 
 // GetObjectName returns the ObjectName field value if set, zero value otherwise.
 func (o *Error) GetObjectName() string {
-	if o == nil || o.ObjectName == nil {
+	if o == nil || IsNil(o.ObjectName) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *Error) GetObjectName() string {
 // GetObjectNameOk returns a tuple with the ObjectName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetObjectNameOk() (*string, bool) {
-	if o == nil || o.ObjectName == nil {
+	if o == nil || IsNil(o.ObjectName) {
 		return nil, false
 	}
 	return o.ObjectName, true
@@ -92,7 +95,7 @@ func (o *Error) GetObjectNameOk() (*string, bool) {
 
 // HasObjectName returns a boolean if a field has been set.
 func (o *Error) HasObjectName() bool {
-	if o != nil && o.ObjectName != nil {
+	if o != nil && !IsNil(o.ObjectName) {
 		return true
 	}
 
@@ -105,14 +108,18 @@ func (o *Error) SetObjectName(v string) {
 }
 
 func (o Error) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.ObjectName != nil {
-		toSerialize["object_name"] = o.ObjectName
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Error) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	// skip: message is readOnly
+	// skip: object_name is readOnly
+	return toSerialize, nil
 }
 
 type NullableError struct {

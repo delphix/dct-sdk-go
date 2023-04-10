@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the CreateVDBGroupResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateVDBGroupResponse{}
 
 // CreateVDBGroupResponse struct for CreateVDBGroupResponse
 type CreateVDBGroupResponse struct {
@@ -39,7 +42,7 @@ func NewCreateVDBGroupResponseWithDefaults() *CreateVDBGroupResponse {
 
 // GetVdbGroup returns the VdbGroup field value if set, zero value otherwise.
 func (o *CreateVDBGroupResponse) GetVdbGroup() VDBGroup {
-	if o == nil || o.VdbGroup == nil {
+	if o == nil || IsNil(o.VdbGroup) {
 		var ret VDBGroup
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *CreateVDBGroupResponse) GetVdbGroup() VDBGroup {
 // GetVdbGroupOk returns a tuple with the VdbGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateVDBGroupResponse) GetVdbGroupOk() (*VDBGroup, bool) {
-	if o == nil || o.VdbGroup == nil {
+	if o == nil || IsNil(o.VdbGroup) {
 		return nil, false
 	}
 	return o.VdbGroup, true
@@ -57,7 +60,7 @@ func (o *CreateVDBGroupResponse) GetVdbGroupOk() (*VDBGroup, bool) {
 
 // HasVdbGroup returns a boolean if a field has been set.
 func (o *CreateVDBGroupResponse) HasVdbGroup() bool {
-	if o != nil && o.VdbGroup != nil {
+	if o != nil && !IsNil(o.VdbGroup) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *CreateVDBGroupResponse) SetVdbGroup(v VDBGroup) {
 }
 
 func (o CreateVDBGroupResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.VdbGroup != nil {
-		toSerialize["vdb_group"] = o.VdbGroup
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateVDBGroupResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.VdbGroup) {
+		toSerialize["vdb_group"] = o.VdbGroup
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateVDBGroupResponse struct {

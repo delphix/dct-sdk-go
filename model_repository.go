@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the Repository type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Repository{}
 
 // Repository struct for Repository
 type Repository struct {
@@ -53,6 +56,12 @@ type Repository struct {
 	FulltextInstalled *bool `json:"fulltext_installed,omitempty"`
 	// The internal version is tied to the data format of a database and is used to detect compatibility.
 	InternalVersion *int64 `json:"internal_version,omitempty"`
+	// MSSQL cluster instances name.
+	MssqlClusterInstancesName []string `json:"mssql_cluster_instances_name,omitempty"`
+	// MSSQL cluster instances version.
+	MssqlClusterInstancesVersion []string `json:"mssql_cluster_instances_version,omitempty"`
+	// Directory where the installation home is located.
+	InstallationHome *string `json:"installation_home,omitempty"`
 }
 
 // NewRepository instantiates a new Repository object
@@ -74,7 +83,7 @@ func NewRepositoryWithDefaults() *Repository {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Repository) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -84,7 +93,7 @@ func (o *Repository) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -92,7 +101,7 @@ func (o *Repository) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Repository) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -106,7 +115,7 @@ func (o *Repository) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Repository) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -116,7 +125,7 @@ func (o *Repository) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -124,7 +133,7 @@ func (o *Repository) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *Repository) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -138,7 +147,7 @@ func (o *Repository) SetName(v string) {
 
 // GetDatabaseType returns the DatabaseType field value if set, zero value otherwise.
 func (o *Repository) GetDatabaseType() string {
-	if o == nil || o.DatabaseType == nil {
+	if o == nil || IsNil(o.DatabaseType) {
 		var ret string
 		return ret
 	}
@@ -148,7 +157,7 @@ func (o *Repository) GetDatabaseType() string {
 // GetDatabaseTypeOk returns a tuple with the DatabaseType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetDatabaseTypeOk() (*string, bool) {
-	if o == nil || o.DatabaseType == nil {
+	if o == nil || IsNil(o.DatabaseType) {
 		return nil, false
 	}
 	return o.DatabaseType, true
@@ -156,7 +165,7 @@ func (o *Repository) GetDatabaseTypeOk() (*string, bool) {
 
 // HasDatabaseType returns a boolean if a field has been set.
 func (o *Repository) HasDatabaseType() bool {
-	if o != nil && o.DatabaseType != nil {
+	if o != nil && !IsNil(o.DatabaseType) {
 		return true
 	}
 
@@ -170,7 +179,7 @@ func (o *Repository) SetDatabaseType(v string) {
 
 // GetAllowProvisioning returns the AllowProvisioning field value if set, zero value otherwise.
 func (o *Repository) GetAllowProvisioning() bool {
-	if o == nil || o.AllowProvisioning == nil {
+	if o == nil || IsNil(o.AllowProvisioning) {
 		var ret bool
 		return ret
 	}
@@ -180,7 +189,7 @@ func (o *Repository) GetAllowProvisioning() bool {
 // GetAllowProvisioningOk returns a tuple with the AllowProvisioning field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetAllowProvisioningOk() (*bool, bool) {
-	if o == nil || o.AllowProvisioning == nil {
+	if o == nil || IsNil(o.AllowProvisioning) {
 		return nil, false
 	}
 	return o.AllowProvisioning, true
@@ -188,7 +197,7 @@ func (o *Repository) GetAllowProvisioningOk() (*bool, bool) {
 
 // HasAllowProvisioning returns a boolean if a field has been set.
 func (o *Repository) HasAllowProvisioning() bool {
-	if o != nil && o.AllowProvisioning != nil {
+	if o != nil && !IsNil(o.AllowProvisioning) {
 		return true
 	}
 
@@ -202,7 +211,7 @@ func (o *Repository) SetAllowProvisioning(v bool) {
 
 // GetIsStaging returns the IsStaging field value if set, zero value otherwise.
 func (o *Repository) GetIsStaging() bool {
-	if o == nil || o.IsStaging == nil {
+	if o == nil || IsNil(o.IsStaging) {
 		var ret bool
 		return ret
 	}
@@ -212,7 +221,7 @@ func (o *Repository) GetIsStaging() bool {
 // GetIsStagingOk returns a tuple with the IsStaging field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetIsStagingOk() (*bool, bool) {
-	if o == nil || o.IsStaging == nil {
+	if o == nil || IsNil(o.IsStaging) {
 		return nil, false
 	}
 	return o.IsStaging, true
@@ -220,7 +229,7 @@ func (o *Repository) GetIsStagingOk() (*bool, bool) {
 
 // HasIsStaging returns a boolean if a field has been set.
 func (o *Repository) HasIsStaging() bool {
-	if o != nil && o.IsStaging != nil {
+	if o != nil && !IsNil(o.IsStaging) {
 		return true
 	}
 
@@ -234,7 +243,7 @@ func (o *Repository) SetIsStaging(v bool) {
 
 // GetOracleBase returns the OracleBase field value if set, zero value otherwise.
 func (o *Repository) GetOracleBase() string {
-	if o == nil || o.OracleBase == nil {
+	if o == nil || IsNil(o.OracleBase) {
 		var ret string
 		return ret
 	}
@@ -244,7 +253,7 @@ func (o *Repository) GetOracleBase() string {
 // GetOracleBaseOk returns a tuple with the OracleBase field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetOracleBaseOk() (*string, bool) {
-	if o == nil || o.OracleBase == nil {
+	if o == nil || IsNil(o.OracleBase) {
 		return nil, false
 	}
 	return o.OracleBase, true
@@ -252,7 +261,7 @@ func (o *Repository) GetOracleBaseOk() (*string, bool) {
 
 // HasOracleBase returns a boolean if a field has been set.
 func (o *Repository) HasOracleBase() bool {
-	if o != nil && o.OracleBase != nil {
+	if o != nil && !IsNil(o.OracleBase) {
 		return true
 	}
 
@@ -266,7 +275,7 @@ func (o *Repository) SetOracleBase(v string) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *Repository) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -276,7 +285,7 @@ func (o *Repository) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -284,7 +293,7 @@ func (o *Repository) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *Repository) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -298,7 +307,7 @@ func (o *Repository) SetVersion(v string) {
 
 // GetBits returns the Bits field value if set, zero value otherwise.
 func (o *Repository) GetBits() int32 {
-	if o == nil || o.Bits == nil {
+	if o == nil || IsNil(o.Bits) {
 		var ret int32
 		return ret
 	}
@@ -308,7 +317,7 @@ func (o *Repository) GetBits() int32 {
 // GetBitsOk returns a tuple with the Bits field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetBitsOk() (*int32, bool) {
-	if o == nil || o.Bits == nil {
+	if o == nil || IsNil(o.Bits) {
 		return nil, false
 	}
 	return o.Bits, true
@@ -316,7 +325,7 @@ func (o *Repository) GetBitsOk() (*int32, bool) {
 
 // HasBits returns a boolean if a field has been set.
 func (o *Repository) HasBits() bool {
-	if o != nil && o.Bits != nil {
+	if o != nil && !IsNil(o.Bits) {
 		return true
 	}
 
@@ -330,7 +339,7 @@ func (o *Repository) SetBits(v int32) {
 
 // GetInstallGroup returns the InstallGroup field value if set, zero value otherwise.
 func (o *Repository) GetInstallGroup() string {
-	if o == nil || o.InstallGroup == nil {
+	if o == nil || IsNil(o.InstallGroup) {
 		var ret string
 		return ret
 	}
@@ -340,7 +349,7 @@ func (o *Repository) GetInstallGroup() string {
 // GetInstallGroupOk returns a tuple with the InstallGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetInstallGroupOk() (*string, bool) {
-	if o == nil || o.InstallGroup == nil {
+	if o == nil || IsNil(o.InstallGroup) {
 		return nil, false
 	}
 	return o.InstallGroup, true
@@ -348,7 +357,7 @@ func (o *Repository) GetInstallGroupOk() (*string, bool) {
 
 // HasInstallGroup returns a boolean if a field has been set.
 func (o *Repository) HasInstallGroup() bool {
-	if o != nil && o.InstallGroup != nil {
+	if o != nil && !IsNil(o.InstallGroup) {
 		return true
 	}
 
@@ -362,7 +371,7 @@ func (o *Repository) SetInstallGroup(v string) {
 
 // GetInstallUser returns the InstallUser field value if set, zero value otherwise.
 func (o *Repository) GetInstallUser() string {
-	if o == nil || o.InstallUser == nil {
+	if o == nil || IsNil(o.InstallUser) {
 		var ret string
 		return ret
 	}
@@ -372,7 +381,7 @@ func (o *Repository) GetInstallUser() string {
 // GetInstallUserOk returns a tuple with the InstallUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetInstallUserOk() (*string, bool) {
-	if o == nil || o.InstallUser == nil {
+	if o == nil || IsNil(o.InstallUser) {
 		return nil, false
 	}
 	return o.InstallUser, true
@@ -380,7 +389,7 @@ func (o *Repository) GetInstallUserOk() (*string, bool) {
 
 // HasInstallUser returns a boolean if a field has been set.
 func (o *Repository) HasInstallUser() bool {
-	if o != nil && o.InstallUser != nil {
+	if o != nil && !IsNil(o.InstallUser) {
 		return true
 	}
 
@@ -394,7 +403,7 @@ func (o *Repository) SetInstallUser(v string) {
 
 // GetRac returns the Rac field value if set, zero value otherwise.
 func (o *Repository) GetRac() bool {
-	if o == nil || o.Rac == nil {
+	if o == nil || IsNil(o.Rac) {
 		var ret bool
 		return ret
 	}
@@ -404,7 +413,7 @@ func (o *Repository) GetRac() bool {
 // GetRacOk returns a tuple with the Rac field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetRacOk() (*bool, bool) {
-	if o == nil || o.Rac == nil {
+	if o == nil || IsNil(o.Rac) {
 		return nil, false
 	}
 	return o.Rac, true
@@ -412,7 +421,7 @@ func (o *Repository) GetRacOk() (*bool, bool) {
 
 // HasRac returns a boolean if a field has been set.
 func (o *Repository) HasRac() bool {
-	if o != nil && o.Rac != nil {
+	if o != nil && !IsNil(o.Rac) {
 		return true
 	}
 
@@ -426,7 +435,7 @@ func (o *Repository) SetRac(v bool) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *Repository) GetPorts() []int64 {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []int64
 		return ret
 	}
@@ -436,7 +445,7 @@ func (o *Repository) GetPorts() []int64 {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetPortsOk() ([]int64, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -444,7 +453,7 @@ func (o *Repository) GetPortsOk() ([]int64, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *Repository) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -458,7 +467,7 @@ func (o *Repository) SetPorts(v []int64) {
 
 // GetDumpHistoryFile returns the DumpHistoryFile field value if set, zero value otherwise.
 func (o *Repository) GetDumpHistoryFile() string {
-	if o == nil || o.DumpHistoryFile == nil {
+	if o == nil || IsNil(o.DumpHistoryFile) {
 		var ret string
 		return ret
 	}
@@ -468,7 +477,7 @@ func (o *Repository) GetDumpHistoryFile() string {
 // GetDumpHistoryFileOk returns a tuple with the DumpHistoryFile field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetDumpHistoryFileOk() (*string, bool) {
-	if o == nil || o.DumpHistoryFile == nil {
+	if o == nil || IsNil(o.DumpHistoryFile) {
 		return nil, false
 	}
 	return o.DumpHistoryFile, true
@@ -476,7 +485,7 @@ func (o *Repository) GetDumpHistoryFileOk() (*string, bool) {
 
 // HasDumpHistoryFile returns a boolean if a field has been set.
 func (o *Repository) HasDumpHistoryFile() bool {
-	if o != nil && o.DumpHistoryFile != nil {
+	if o != nil && !IsNil(o.DumpHistoryFile) {
 		return true
 	}
 
@@ -490,7 +499,7 @@ func (o *Repository) SetDumpHistoryFile(v string) {
 
 // GetPageSize returns the PageSize field value if set, zero value otherwise.
 func (o *Repository) GetPageSize() int64 {
-	if o == nil || o.PageSize == nil {
+	if o == nil || IsNil(o.PageSize) {
 		var ret int64
 		return ret
 	}
@@ -500,7 +509,7 @@ func (o *Repository) GetPageSize() int64 {
 // GetPageSizeOk returns a tuple with the PageSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetPageSizeOk() (*int64, bool) {
-	if o == nil || o.PageSize == nil {
+	if o == nil || IsNil(o.PageSize) {
 		return nil, false
 	}
 	return o.PageSize, true
@@ -508,7 +517,7 @@ func (o *Repository) GetPageSizeOk() (*int64, bool) {
 
 // HasPageSize returns a boolean if a field has been set.
 func (o *Repository) HasPageSize() bool {
-	if o != nil && o.PageSize != nil {
+	if o != nil && !IsNil(o.PageSize) {
 		return true
 	}
 
@@ -522,7 +531,7 @@ func (o *Repository) SetPageSize(v int64) {
 
 // GetOwner returns the Owner field value if set, zero value otherwise.
 func (o *Repository) GetOwner() string {
-	if o == nil || o.Owner == nil {
+	if o == nil || IsNil(o.Owner) {
 		var ret string
 		return ret
 	}
@@ -532,7 +541,7 @@ func (o *Repository) GetOwner() string {
 // GetOwnerOk returns a tuple with the Owner field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetOwnerOk() (*string, bool) {
-	if o == nil || o.Owner == nil {
+	if o == nil || IsNil(o.Owner) {
 		return nil, false
 	}
 	return o.Owner, true
@@ -540,7 +549,7 @@ func (o *Repository) GetOwnerOk() (*string, bool) {
 
 // HasOwner returns a boolean if a field has been set.
 func (o *Repository) HasOwner() bool {
-	if o != nil && o.Owner != nil {
+	if o != nil && !IsNil(o.Owner) {
 		return true
 	}
 
@@ -554,7 +563,7 @@ func (o *Repository) SetOwner(v string) {
 
 // GetInstallationPath returns the InstallationPath field value if set, zero value otherwise.
 func (o *Repository) GetInstallationPath() string {
-	if o == nil || o.InstallationPath == nil {
+	if o == nil || IsNil(o.InstallationPath) {
 		var ret string
 		return ret
 	}
@@ -564,7 +573,7 @@ func (o *Repository) GetInstallationPath() string {
 // GetInstallationPathOk returns a tuple with the InstallationPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetInstallationPathOk() (*string, bool) {
-	if o == nil || o.InstallationPath == nil {
+	if o == nil || IsNil(o.InstallationPath) {
 		return nil, false
 	}
 	return o.InstallationPath, true
@@ -572,7 +581,7 @@ func (o *Repository) GetInstallationPathOk() (*string, bool) {
 
 // HasInstallationPath returns a boolean if a field has been set.
 func (o *Repository) HasInstallationPath() bool {
-	if o != nil && o.InstallationPath != nil {
+	if o != nil && !IsNil(o.InstallationPath) {
 		return true
 	}
 
@@ -586,7 +595,7 @@ func (o *Repository) SetInstallationPath(v string) {
 
 // GetFulltextInstalled returns the FulltextInstalled field value if set, zero value otherwise.
 func (o *Repository) GetFulltextInstalled() bool {
-	if o == nil || o.FulltextInstalled == nil {
+	if o == nil || IsNil(o.FulltextInstalled) {
 		var ret bool
 		return ret
 	}
@@ -596,7 +605,7 @@ func (o *Repository) GetFulltextInstalled() bool {
 // GetFulltextInstalledOk returns a tuple with the FulltextInstalled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetFulltextInstalledOk() (*bool, bool) {
-	if o == nil || o.FulltextInstalled == nil {
+	if o == nil || IsNil(o.FulltextInstalled) {
 		return nil, false
 	}
 	return o.FulltextInstalled, true
@@ -604,7 +613,7 @@ func (o *Repository) GetFulltextInstalledOk() (*bool, bool) {
 
 // HasFulltextInstalled returns a boolean if a field has been set.
 func (o *Repository) HasFulltextInstalled() bool {
-	if o != nil && o.FulltextInstalled != nil {
+	if o != nil && !IsNil(o.FulltextInstalled) {
 		return true
 	}
 
@@ -618,7 +627,7 @@ func (o *Repository) SetFulltextInstalled(v bool) {
 
 // GetInternalVersion returns the InternalVersion field value if set, zero value otherwise.
 func (o *Repository) GetInternalVersion() int64 {
-	if o == nil || o.InternalVersion == nil {
+	if o == nil || IsNil(o.InternalVersion) {
 		var ret int64
 		return ret
 	}
@@ -628,7 +637,7 @@ func (o *Repository) GetInternalVersion() int64 {
 // GetInternalVersionOk returns a tuple with the InternalVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Repository) GetInternalVersionOk() (*int64, bool) {
-	if o == nil || o.InternalVersion == nil {
+	if o == nil || IsNil(o.InternalVersion) {
 		return nil, false
 	}
 	return o.InternalVersion, true
@@ -636,7 +645,7 @@ func (o *Repository) GetInternalVersionOk() (*int64, bool) {
 
 // HasInternalVersion returns a boolean if a field has been set.
 func (o *Repository) HasInternalVersion() bool {
-	if o != nil && o.InternalVersion != nil {
+	if o != nil && !IsNil(o.InternalVersion) {
 		return true
 	}
 
@@ -648,63 +657,176 @@ func (o *Repository) SetInternalVersion(v int64) {
 	o.InternalVersion = &v
 }
 
+// GetMssqlClusterInstancesName returns the MssqlClusterInstancesName field value if set, zero value otherwise.
+func (o *Repository) GetMssqlClusterInstancesName() []string {
+	if o == nil || IsNil(o.MssqlClusterInstancesName) {
+		var ret []string
+		return ret
+	}
+	return o.MssqlClusterInstancesName
+}
+
+// GetMssqlClusterInstancesNameOk returns a tuple with the MssqlClusterInstancesName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetMssqlClusterInstancesNameOk() ([]string, bool) {
+	if o == nil || IsNil(o.MssqlClusterInstancesName) {
+		return nil, false
+	}
+	return o.MssqlClusterInstancesName, true
+}
+
+// HasMssqlClusterInstancesName returns a boolean if a field has been set.
+func (o *Repository) HasMssqlClusterInstancesName() bool {
+	if o != nil && !IsNil(o.MssqlClusterInstancesName) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlClusterInstancesName gets a reference to the given []string and assigns it to the MssqlClusterInstancesName field.
+func (o *Repository) SetMssqlClusterInstancesName(v []string) {
+	o.MssqlClusterInstancesName = v
+}
+
+// GetMssqlClusterInstancesVersion returns the MssqlClusterInstancesVersion field value if set, zero value otherwise.
+func (o *Repository) GetMssqlClusterInstancesVersion() []string {
+	if o == nil || IsNil(o.MssqlClusterInstancesVersion) {
+		var ret []string
+		return ret
+	}
+	return o.MssqlClusterInstancesVersion
+}
+
+// GetMssqlClusterInstancesVersionOk returns a tuple with the MssqlClusterInstancesVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetMssqlClusterInstancesVersionOk() ([]string, bool) {
+	if o == nil || IsNil(o.MssqlClusterInstancesVersion) {
+		return nil, false
+	}
+	return o.MssqlClusterInstancesVersion, true
+}
+
+// HasMssqlClusterInstancesVersion returns a boolean if a field has been set.
+func (o *Repository) HasMssqlClusterInstancesVersion() bool {
+	if o != nil && !IsNil(o.MssqlClusterInstancesVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlClusterInstancesVersion gets a reference to the given []string and assigns it to the MssqlClusterInstancesVersion field.
+func (o *Repository) SetMssqlClusterInstancesVersion(v []string) {
+	o.MssqlClusterInstancesVersion = v
+}
+
+// GetInstallationHome returns the InstallationHome field value if set, zero value otherwise.
+func (o *Repository) GetInstallationHome() string {
+	if o == nil || IsNil(o.InstallationHome) {
+		var ret string
+		return ret
+	}
+	return *o.InstallationHome
+}
+
+// GetInstallationHomeOk returns a tuple with the InstallationHome field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetInstallationHomeOk() (*string, bool) {
+	if o == nil || IsNil(o.InstallationHome) {
+		return nil, false
+	}
+	return o.InstallationHome, true
+}
+
+// HasInstallationHome returns a boolean if a field has been set.
+func (o *Repository) HasInstallationHome() bool {
+	if o != nil && !IsNil(o.InstallationHome) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstallationHome gets a reference to the given string and assigns it to the InstallationHome field.
+func (o *Repository) SetInstallationHome(v string) {
+	o.InstallationHome = &v
+}
+
 func (o Repository) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.DatabaseType != nil {
-		toSerialize["database_type"] = o.DatabaseType
-	}
-	if o.AllowProvisioning != nil {
-		toSerialize["allow_provisioning"] = o.AllowProvisioning
-	}
-	if o.IsStaging != nil {
-		toSerialize["is_staging"] = o.IsStaging
-	}
-	if o.OracleBase != nil {
-		toSerialize["oracle_base"] = o.OracleBase
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.Bits != nil {
-		toSerialize["bits"] = o.Bits
-	}
-	if o.InstallGroup != nil {
-		toSerialize["install_group"] = o.InstallGroup
-	}
-	if o.InstallUser != nil {
-		toSerialize["install_user"] = o.InstallUser
-	}
-	if o.Rac != nil {
-		toSerialize["rac"] = o.Rac
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
-	}
-	if o.DumpHistoryFile != nil {
-		toSerialize["dump_history_file"] = o.DumpHistoryFile
-	}
-	if o.PageSize != nil {
-		toSerialize["page_size"] = o.PageSize
-	}
-	if o.Owner != nil {
-		toSerialize["owner"] = o.Owner
-	}
-	if o.InstallationPath != nil {
-		toSerialize["installation_path"] = o.InstallationPath
-	}
-	if o.FulltextInstalled != nil {
-		toSerialize["fulltext_installed"] = o.FulltextInstalled
-	}
-	if o.InternalVersion != nil {
-		toSerialize["internal_version"] = o.InternalVersion
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Repository) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.DatabaseType) {
+		toSerialize["database_type"] = o.DatabaseType
+	}
+	if !IsNil(o.AllowProvisioning) {
+		toSerialize["allow_provisioning"] = o.AllowProvisioning
+	}
+	if !IsNil(o.IsStaging) {
+		toSerialize["is_staging"] = o.IsStaging
+	}
+	if !IsNil(o.OracleBase) {
+		toSerialize["oracle_base"] = o.OracleBase
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.Bits) {
+		toSerialize["bits"] = o.Bits
+	}
+	if !IsNil(o.InstallGroup) {
+		toSerialize["install_group"] = o.InstallGroup
+	}
+	if !IsNil(o.InstallUser) {
+		toSerialize["install_user"] = o.InstallUser
+	}
+	if !IsNil(o.Rac) {
+		toSerialize["rac"] = o.Rac
+	}
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	if !IsNil(o.DumpHistoryFile) {
+		toSerialize["dump_history_file"] = o.DumpHistoryFile
+	}
+	if !IsNil(o.PageSize) {
+		toSerialize["page_size"] = o.PageSize
+	}
+	if !IsNil(o.Owner) {
+		toSerialize["owner"] = o.Owner
+	}
+	if !IsNil(o.InstallationPath) {
+		toSerialize["installation_path"] = o.InstallationPath
+	}
+	if !IsNil(o.FulltextInstalled) {
+		toSerialize["fulltext_installed"] = o.FulltextInstalled
+	}
+	if !IsNil(o.InternalVersion) {
+		toSerialize["internal_version"] = o.InternalVersion
+	}
+	if !IsNil(o.MssqlClusterInstancesName) {
+		toSerialize["mssql_cluster_instances_name"] = o.MssqlClusterInstancesName
+	}
+	if !IsNil(o.MssqlClusterInstancesVersion) {
+		toSerialize["mssql_cluster_instances_version"] = o.MssqlClusterInstancesVersion
+	}
+	if !IsNil(o.InstallationHome) {
+		toSerialize["installation_home"] = o.InstallationHome
+	}
+	return toSerialize, nil
 }
 
 type NullableRepository struct {

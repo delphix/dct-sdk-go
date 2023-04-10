@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the RollbackVDBByTimestampParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RollbackVDBByTimestampParameters{}
 
 // RollbackVDBByTimestampParameters struct for RollbackVDBByTimestampParameters
 type RollbackVDBByTimestampParameters struct {
@@ -43,7 +46,7 @@ func NewRollbackVDBByTimestampParametersWithDefaults() *RollbackVDBByTimestampPa
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
 func (o *RollbackVDBByTimestampParameters) GetTimestamp() time.Time {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		var ret time.Time
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *RollbackVDBByTimestampParameters) GetTimestamp() time.Time {
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RollbackVDBByTimestampParameters) GetTimestampOk() (*time.Time, bool) {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
 	return o.Timestamp, true
@@ -61,7 +64,7 @@ func (o *RollbackVDBByTimestampParameters) GetTimestampOk() (*time.Time, bool) {
 
 // HasTimestamp returns a boolean if a field has been set.
 func (o *RollbackVDBByTimestampParameters) HasTimestamp() bool {
-	if o != nil && o.Timestamp != nil {
+	if o != nil && !IsNil(o.Timestamp) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *RollbackVDBByTimestampParameters) SetTimestamp(v time.Time) {
 
 // GetTimestampInDatabaseTimezone returns the TimestampInDatabaseTimezone field value if set, zero value otherwise.
 func (o *RollbackVDBByTimestampParameters) GetTimestampInDatabaseTimezone() string {
-	if o == nil || o.TimestampInDatabaseTimezone == nil {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *RollbackVDBByTimestampParameters) GetTimestampInDatabaseTimezone() stri
 // GetTimestampInDatabaseTimezoneOk returns a tuple with the TimestampInDatabaseTimezone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RollbackVDBByTimestampParameters) GetTimestampInDatabaseTimezoneOk() (*string, bool) {
-	if o == nil || o.TimestampInDatabaseTimezone == nil {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
 		return nil, false
 	}
 	return o.TimestampInDatabaseTimezone, true
@@ -93,7 +96,7 @@ func (o *RollbackVDBByTimestampParameters) GetTimestampInDatabaseTimezoneOk() (*
 
 // HasTimestampInDatabaseTimezone returns a boolean if a field has been set.
 func (o *RollbackVDBByTimestampParameters) HasTimestampInDatabaseTimezone() bool {
-	if o != nil && o.TimestampInDatabaseTimezone != nil {
+	if o != nil && !IsNil(o.TimestampInDatabaseTimezone) {
 		return true
 	}
 
@@ -106,14 +109,22 @@ func (o *RollbackVDBByTimestampParameters) SetTimestampInDatabaseTimezone(v stri
 }
 
 func (o RollbackVDBByTimestampParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Timestamp != nil {
-		toSerialize["timestamp"] = o.Timestamp
-	}
-	if o.TimestampInDatabaseTimezone != nil {
-		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RollbackVDBByTimestampParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.TimestampInDatabaseTimezone) {
+		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
+	}
+	return toSerialize, nil
 }
 
 type NullableRollbackVDBByTimestampParameters struct {

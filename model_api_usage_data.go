@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,24 +15,33 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApiUsageData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApiUsageData{}
+
 // ApiUsageData struct for ApiUsageData
 type ApiUsageData struct {
 	// API called.
-	ApiEndpoint string `json:"api_endpoint"`
+	ApiEndpoint *string `json:"api_endpoint,omitempty"`
 	// HTTP method for API called.
-	ApiMethod string `json:"api_method"`
+	ApiMethod *string `json:"api_method,omitempty"`
 	// Count of API calls over the requested timeframe.
 	ApiCount int64 `json:"api_count"`
+	// Whether the API calls are of kind automation or management
+	Kind *string `json:"kind,omitempty"`
+	// Name of the api client that called the API endpoint
+	ClientName *string `json:"client_name,omitempty"`
+	// Version of the api client that called the API endpoint
+	UserAgent *string `json:"user_agent,omitempty"`
+	// DCT version at the time of api call
+	DctVersion *string `json:"dct_version,omitempty"`
 }
 
 // NewApiUsageData instantiates a new ApiUsageData object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewApiUsageData(apiEndpoint string, apiMethod string, apiCount int64) *ApiUsageData {
+func NewApiUsageData(apiCount int64) *ApiUsageData {
 	this := ApiUsageData{}
-	this.ApiEndpoint = apiEndpoint
-	this.ApiMethod = apiMethod
 	this.ApiCount = apiCount
 	return &this
 }
@@ -45,52 +54,68 @@ func NewApiUsageDataWithDefaults() *ApiUsageData {
 	return &this
 }
 
-// GetApiEndpoint returns the ApiEndpoint field value
+// GetApiEndpoint returns the ApiEndpoint field value if set, zero value otherwise.
 func (o *ApiUsageData) GetApiEndpoint() string {
-	if o == nil {
+	if o == nil || IsNil(o.ApiEndpoint) {
 		var ret string
 		return ret
 	}
-
-	return o.ApiEndpoint
+	return *o.ApiEndpoint
 }
 
-// GetApiEndpointOk returns a tuple with the ApiEndpoint field value
+// GetApiEndpointOk returns a tuple with the ApiEndpoint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApiUsageData) GetApiEndpointOk() (*string, bool) {
-	if o == nil  {
+	if o == nil || IsNil(o.ApiEndpoint) {
 		return nil, false
 	}
-	return &o.ApiEndpoint, true
+	return o.ApiEndpoint, true
 }
 
-// SetApiEndpoint sets field value
+// HasApiEndpoint returns a boolean if a field has been set.
+func (o *ApiUsageData) HasApiEndpoint() bool {
+	if o != nil && !IsNil(o.ApiEndpoint) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiEndpoint gets a reference to the given string and assigns it to the ApiEndpoint field.
 func (o *ApiUsageData) SetApiEndpoint(v string) {
-	o.ApiEndpoint = v
+	o.ApiEndpoint = &v
 }
 
-// GetApiMethod returns the ApiMethod field value
+// GetApiMethod returns the ApiMethod field value if set, zero value otherwise.
 func (o *ApiUsageData) GetApiMethod() string {
-	if o == nil {
+	if o == nil || IsNil(o.ApiMethod) {
 		var ret string
 		return ret
 	}
-
-	return o.ApiMethod
+	return *o.ApiMethod
 }
 
-// GetApiMethodOk returns a tuple with the ApiMethod field value
+// GetApiMethodOk returns a tuple with the ApiMethod field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApiUsageData) GetApiMethodOk() (*string, bool) {
-	if o == nil  {
+	if o == nil || IsNil(o.ApiMethod) {
 		return nil, false
 	}
-	return &o.ApiMethod, true
+	return o.ApiMethod, true
 }
 
-// SetApiMethod sets field value
+// HasApiMethod returns a boolean if a field has been set.
+func (o *ApiUsageData) HasApiMethod() bool {
+	if o != nil && !IsNil(o.ApiMethod) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiMethod gets a reference to the given string and assigns it to the ApiMethod field.
 func (o *ApiUsageData) SetApiMethod(v string) {
-	o.ApiMethod = v
+	o.ApiMethod = &v
 }
 
 // GetApiCount returns the ApiCount field value
@@ -106,7 +131,7 @@ func (o *ApiUsageData) GetApiCount() int64 {
 // GetApiCountOk returns a tuple with the ApiCount field value
 // and a boolean to check if the value has been set.
 func (o *ApiUsageData) GetApiCountOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.ApiCount, true
@@ -117,18 +142,164 @@ func (o *ApiUsageData) SetApiCount(v int64) {
 	o.ApiCount = v
 }
 
+// GetKind returns the Kind field value if set, zero value otherwise.
+func (o *ApiUsageData) GetKind() string {
+	if o == nil || IsNil(o.Kind) {
+		var ret string
+		return ret
+	}
+	return *o.Kind
+}
+
+// GetKindOk returns a tuple with the Kind field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiUsageData) GetKindOk() (*string, bool) {
+	if o == nil || IsNil(o.Kind) {
+		return nil, false
+	}
+	return o.Kind, true
+}
+
+// HasKind returns a boolean if a field has been set.
+func (o *ApiUsageData) HasKind() bool {
+	if o != nil && !IsNil(o.Kind) {
+		return true
+	}
+
+	return false
+}
+
+// SetKind gets a reference to the given string and assigns it to the Kind field.
+func (o *ApiUsageData) SetKind(v string) {
+	o.Kind = &v
+}
+
+// GetClientName returns the ClientName field value if set, zero value otherwise.
+func (o *ApiUsageData) GetClientName() string {
+	if o == nil || IsNil(o.ClientName) {
+		var ret string
+		return ret
+	}
+	return *o.ClientName
+}
+
+// GetClientNameOk returns a tuple with the ClientName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiUsageData) GetClientNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ClientName) {
+		return nil, false
+	}
+	return o.ClientName, true
+}
+
+// HasClientName returns a boolean if a field has been set.
+func (o *ApiUsageData) HasClientName() bool {
+	if o != nil && !IsNil(o.ClientName) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientName gets a reference to the given string and assigns it to the ClientName field.
+func (o *ApiUsageData) SetClientName(v string) {
+	o.ClientName = &v
+}
+
+// GetUserAgent returns the UserAgent field value if set, zero value otherwise.
+func (o *ApiUsageData) GetUserAgent() string {
+	if o == nil || IsNil(o.UserAgent) {
+		var ret string
+		return ret
+	}
+	return *o.UserAgent
+}
+
+// GetUserAgentOk returns a tuple with the UserAgent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiUsageData) GetUserAgentOk() (*string, bool) {
+	if o == nil || IsNil(o.UserAgent) {
+		return nil, false
+	}
+	return o.UserAgent, true
+}
+
+// HasUserAgent returns a boolean if a field has been set.
+func (o *ApiUsageData) HasUserAgent() bool {
+	if o != nil && !IsNil(o.UserAgent) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserAgent gets a reference to the given string and assigns it to the UserAgent field.
+func (o *ApiUsageData) SetUserAgent(v string) {
+	o.UserAgent = &v
+}
+
+// GetDctVersion returns the DctVersion field value if set, zero value otherwise.
+func (o *ApiUsageData) GetDctVersion() string {
+	if o == nil || IsNil(o.DctVersion) {
+		var ret string
+		return ret
+	}
+	return *o.DctVersion
+}
+
+// GetDctVersionOk returns a tuple with the DctVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiUsageData) GetDctVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.DctVersion) {
+		return nil, false
+	}
+	return o.DctVersion, true
+}
+
+// HasDctVersion returns a boolean if a field has been set.
+func (o *ApiUsageData) HasDctVersion() bool {
+	if o != nil && !IsNil(o.DctVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctVersion gets a reference to the given string and assigns it to the DctVersion field.
+func (o *ApiUsageData) SetDctVersion(v string) {
+	o.DctVersion = &v
+}
+
 func (o ApiUsageData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["api_endpoint"] = o.ApiEndpoint
-	}
-	if true {
-		toSerialize["api_method"] = o.ApiMethod
-	}
-	if true {
-		toSerialize["api_count"] = o.ApiCount
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApiUsageData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ApiEndpoint) {
+		toSerialize["api_endpoint"] = o.ApiEndpoint
+	}
+	if !IsNil(o.ApiMethod) {
+		toSerialize["api_method"] = o.ApiMethod
+	}
+	toSerialize["api_count"] = o.ApiCount
+	if !IsNil(o.Kind) {
+		toSerialize["kind"] = o.Kind
+	}
+	if !IsNil(o.ClientName) {
+		toSerialize["client_name"] = o.ClientName
+	}
+	if !IsNil(o.UserAgent) {
+		toSerialize["user_agent"] = o.UserAgent
+	}
+	if !IsNil(o.DctVersion) {
+		toSerialize["dct_version"] = o.DctVersion
+	}
+	return toSerialize, nil
 }
 
 type NullableApiUsageData struct {

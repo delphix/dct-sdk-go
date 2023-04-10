@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the RefreshVDBGroupParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RefreshVDBGroupParameters{}
 
 // RefreshVDBGroupParameters Parameters to refresh a VDB Group.
 type RefreshVDBGroupParameters struct {
@@ -52,7 +55,7 @@ func (o *RefreshVDBGroupParameters) GetBookmarkId() string {
 // GetBookmarkIdOk returns a tuple with the BookmarkId field value
 // and a boolean to check if the value has been set.
 func (o *RefreshVDBGroupParameters) GetBookmarkIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.BookmarkId, true
@@ -64,11 +67,17 @@ func (o *RefreshVDBGroupParameters) SetBookmarkId(v string) {
 }
 
 func (o RefreshVDBGroupParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["bookmark_id"] = o.BookmarkId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RefreshVDBGroupParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["bookmark_id"] = o.BookmarkId
+	return toSerialize, nil
 }
 
 type NullableRefreshVDBGroupParameters struct {

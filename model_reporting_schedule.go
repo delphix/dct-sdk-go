@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the ReportingSchedule type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReportingSchedule{}
 
 // ReportingSchedule struct for ReportingSchedule
 type ReportingSchedule struct {
@@ -27,6 +30,7 @@ type ReportingSchedule struct {
 	FileFormat string `json:"file_format"`
 	Enabled bool `json:"enabled"`
 	Recipients []string `json:"recipients"`
+	Tags []Tag `json:"tags,omitempty"`
 	SortColumn *string `json:"sort_column,omitempty"`
 	RowCount *int32 `json:"row_count,omitempty"`
 }
@@ -57,7 +61,7 @@ func NewReportingScheduleWithDefaults() *ReportingSchedule {
 
 // GetReportId returns the ReportId field value if set, zero value otherwise.
 func (o *ReportingSchedule) GetReportId() int32 {
-	if o == nil || o.ReportId == nil {
+	if o == nil || IsNil(o.ReportId) {
 		var ret int32
 		return ret
 	}
@@ -67,7 +71,7 @@ func (o *ReportingSchedule) GetReportId() int32 {
 // GetReportIdOk returns a tuple with the ReportId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetReportIdOk() (*int32, bool) {
-	if o == nil || o.ReportId == nil {
+	if o == nil || IsNil(o.ReportId) {
 		return nil, false
 	}
 	return o.ReportId, true
@@ -75,7 +79,7 @@ func (o *ReportingSchedule) GetReportIdOk() (*int32, bool) {
 
 // HasReportId returns a boolean if a field has been set.
 func (o *ReportingSchedule) HasReportId() bool {
-	if o != nil && o.ReportId != nil {
+	if o != nil && !IsNil(o.ReportId) {
 		return true
 	}
 
@@ -100,7 +104,7 @@ func (o *ReportingSchedule) GetReportType() string {
 // GetReportTypeOk returns a tuple with the ReportType field value
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetReportTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.ReportType, true
@@ -124,7 +128,7 @@ func (o *ReportingSchedule) GetCronExpression() string {
 // GetCronExpressionOk returns a tuple with the CronExpression field value
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetCronExpressionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.CronExpression, true
@@ -137,7 +141,7 @@ func (o *ReportingSchedule) SetCronExpression(v string) {
 
 // GetTimeZone returns the TimeZone field value if set, zero value otherwise.
 func (o *ReportingSchedule) GetTimeZone() string {
-	if o == nil || o.TimeZone == nil {
+	if o == nil || IsNil(o.TimeZone) {
 		var ret string
 		return ret
 	}
@@ -147,7 +151,7 @@ func (o *ReportingSchedule) GetTimeZone() string {
 // GetTimeZoneOk returns a tuple with the TimeZone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetTimeZoneOk() (*string, bool) {
-	if o == nil || o.TimeZone == nil {
+	if o == nil || IsNil(o.TimeZone) {
 		return nil, false
 	}
 	return o.TimeZone, true
@@ -155,7 +159,7 @@ func (o *ReportingSchedule) GetTimeZoneOk() (*string, bool) {
 
 // HasTimeZone returns a boolean if a field has been set.
 func (o *ReportingSchedule) HasTimeZone() bool {
-	if o != nil && o.TimeZone != nil {
+	if o != nil && !IsNil(o.TimeZone) {
 		return true
 	}
 
@@ -169,7 +173,7 @@ func (o *ReportingSchedule) SetTimeZone(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *ReportingSchedule) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -179,7 +183,7 @@ func (o *ReportingSchedule) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -187,7 +191,7 @@ func (o *ReportingSchedule) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *ReportingSchedule) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -212,7 +216,7 @@ func (o *ReportingSchedule) GetFileFormat() string {
 // GetFileFormatOk returns a tuple with the FileFormat field value
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetFileFormatOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.FileFormat, true
@@ -236,7 +240,7 @@ func (o *ReportingSchedule) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetEnabledOk() (*bool, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Enabled, true
@@ -260,7 +264,7 @@ func (o *ReportingSchedule) GetRecipients() []string {
 // GetRecipientsOk returns a tuple with the Recipients field value
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetRecipientsOk() ([]string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Recipients, true
@@ -271,9 +275,41 @@ func (o *ReportingSchedule) SetRecipients(v []string) {
 	o.Recipients = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *ReportingSchedule) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReportingSchedule) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *ReportingSchedule) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *ReportingSchedule) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 // GetSortColumn returns the SortColumn field value if set, zero value otherwise.
 func (o *ReportingSchedule) GetSortColumn() string {
-	if o == nil || o.SortColumn == nil {
+	if o == nil || IsNil(o.SortColumn) {
 		var ret string
 		return ret
 	}
@@ -283,7 +319,7 @@ func (o *ReportingSchedule) GetSortColumn() string {
 // GetSortColumnOk returns a tuple with the SortColumn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetSortColumnOk() (*string, bool) {
-	if o == nil || o.SortColumn == nil {
+	if o == nil || IsNil(o.SortColumn) {
 		return nil, false
 	}
 	return o.SortColumn, true
@@ -291,7 +327,7 @@ func (o *ReportingSchedule) GetSortColumnOk() (*string, bool) {
 
 // HasSortColumn returns a boolean if a field has been set.
 func (o *ReportingSchedule) HasSortColumn() bool {
-	if o != nil && o.SortColumn != nil {
+	if o != nil && !IsNil(o.SortColumn) {
 		return true
 	}
 
@@ -305,7 +341,7 @@ func (o *ReportingSchedule) SetSortColumn(v string) {
 
 // GetRowCount returns the RowCount field value if set, zero value otherwise.
 func (o *ReportingSchedule) GetRowCount() int32 {
-	if o == nil || o.RowCount == nil {
+	if o == nil || IsNil(o.RowCount) {
 		var ret int32
 		return ret
 	}
@@ -315,7 +351,7 @@ func (o *ReportingSchedule) GetRowCount() int32 {
 // GetRowCountOk returns a tuple with the RowCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportingSchedule) GetRowCountOk() (*int32, bool) {
-	if o == nil || o.RowCount == nil {
+	if o == nil || IsNil(o.RowCount) {
 		return nil, false
 	}
 	return o.RowCount, true
@@ -323,7 +359,7 @@ func (o *ReportingSchedule) GetRowCountOk() (*int32, bool) {
 
 // HasRowCount returns a boolean if a field has been set.
 func (o *ReportingSchedule) HasRowCount() bool {
-	if o != nil && o.RowCount != nil {
+	if o != nil && !IsNil(o.RowCount) {
 		return true
 	}
 
@@ -336,38 +372,37 @@ func (o *ReportingSchedule) SetRowCount(v int32) {
 }
 
 func (o ReportingSchedule) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ReportId != nil {
-		toSerialize["report_id"] = o.ReportId
-	}
-	if true {
-		toSerialize["report_type"] = o.ReportType
-	}
-	if true {
-		toSerialize["cron_expression"] = o.CronExpression
-	}
-	if o.TimeZone != nil {
-		toSerialize["time_zone"] = o.TimeZone
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if true {
-		toSerialize["file_format"] = o.FileFormat
-	}
-	if true {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if true {
-		toSerialize["recipients"] = o.Recipients
-	}
-	if o.SortColumn != nil {
-		toSerialize["sort_column"] = o.SortColumn
-	}
-	if o.RowCount != nil {
-		toSerialize["row_count"] = o.RowCount
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReportingSchedule) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	// skip: report_id is readOnly
+	toSerialize["report_type"] = o.ReportType
+	toSerialize["cron_expression"] = o.CronExpression
+	if !IsNil(o.TimeZone) {
+		toSerialize["time_zone"] = o.TimeZone
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	toSerialize["file_format"] = o.FileFormat
+	toSerialize["enabled"] = o.Enabled
+	toSerialize["recipients"] = o.Recipients
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.SortColumn) {
+		toSerialize["sort_column"] = o.SortColumn
+	}
+	if !IsNil(o.RowCount) {
+		toSerialize["row_count"] = o.RowCount
+	}
+	return toSerialize, nil
 }
 
 type NullableReportingSchedule struct {

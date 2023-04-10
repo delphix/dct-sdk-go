@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,9 +15,12 @@ import (
 	"encoding/json"
 )
 
+// checks if the RefreshVDBFromBookmarkParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RefreshVDBFromBookmarkParameters{}
+
 // RefreshVDBFromBookmarkParameters struct for RefreshVDBFromBookmarkParameters
 type RefreshVDBFromBookmarkParameters struct {
-	// The ID of the bookmark from which to execute the operation. The boomkark must contain only one VDB.
+	// The ID of the bookmark from which to execute the operation. The bookmark must contain only one VDB.
 	BookmarkId string `json:"bookmark_id"`
 }
 
@@ -52,7 +55,7 @@ func (o *RefreshVDBFromBookmarkParameters) GetBookmarkId() string {
 // GetBookmarkIdOk returns a tuple with the BookmarkId field value
 // and a boolean to check if the value has been set.
 func (o *RefreshVDBFromBookmarkParameters) GetBookmarkIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.BookmarkId, true
@@ -64,11 +67,17 @@ func (o *RefreshVDBFromBookmarkParameters) SetBookmarkId(v string) {
 }
 
 func (o RefreshVDBFromBookmarkParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["bookmark_id"] = o.BookmarkId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RefreshVDBFromBookmarkParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["bookmark_id"] = o.BookmarkId
+	return toSerialize, nil
 }
 
 type NullableRefreshVDBFromBookmarkParameters struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the EnvironmentCreateParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EnvironmentCreateParameters{}
 
 // EnvironmentCreateParameters struct for EnvironmentCreateParameters
 type EnvironmentCreateParameters struct {
@@ -33,6 +36,8 @@ type EnvironmentCreateParameters struct {
 	StagingEnvironment *string `json:"staging_environment,omitempty"`
 	// Specify port on which Delphix connector will run. This is mandatory parameter when creating Windows target environments.
 	ConnectorPort *int32 `json:"connector_port,omitempty"`
+	// Unique per Delphix key used to authenticate with the remote Delphix Connector.
+	ConnectorAuthenticationKey *string `json:"connector_authentication_key,omitempty"`
 	// Whether the environment to be created is a target cluster environment. This property is used only when creating Windows cluster environments.
 	IsTarget *bool `json:"is_target,omitempty"`
 	// ssh port of the host.
@@ -95,6 +100,8 @@ type EnvironmentCreateParameters struct {
 	Description *string `json:"description,omitempty"`
 	// The tags to be created for this environment.
 	Tags []Tag `json:"tags,omitempty"`
+	// Whether the account creating this environment must be configured as owner of the environment.
+	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
 
 // NewEnvironmentCreateParameters instantiates a new EnvironmentCreateParameters object
@@ -110,6 +117,8 @@ func NewEnvironmentCreateParameters(engineId string, osName string, hostname str
 	this.Hostname = hostname
 	var sshPort int64 = 22
 	this.SshPort = &sshPort
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
@@ -122,12 +131,14 @@ func NewEnvironmentCreateParametersWithDefaults() *EnvironmentCreateParameters {
 	this.IsCluster = &isCluster
 	var sshPort int64 = 22
 	this.SshPort = &sshPort
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -137,7 +148,7 @@ func (o *EnvironmentCreateParameters) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -145,7 +156,7 @@ func (o *EnvironmentCreateParameters) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -170,7 +181,7 @@ func (o *EnvironmentCreateParameters) GetEngineId() string {
 // GetEngineIdOk returns a tuple with the EngineId field value
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetEngineIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.EngineId, true
@@ -194,7 +205,7 @@ func (o *EnvironmentCreateParameters) GetOsName() string {
 // GetOsNameOk returns a tuple with the OsName field value
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetOsNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.OsName, true
@@ -207,7 +218,7 @@ func (o *EnvironmentCreateParameters) SetOsName(v string) {
 
 // GetIsCluster returns the IsCluster field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetIsCluster() bool {
-	if o == nil || o.IsCluster == nil {
+	if o == nil || IsNil(o.IsCluster) {
 		var ret bool
 		return ret
 	}
@@ -217,7 +228,7 @@ func (o *EnvironmentCreateParameters) GetIsCluster() bool {
 // GetIsClusterOk returns a tuple with the IsCluster field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetIsClusterOk() (*bool, bool) {
-	if o == nil || o.IsCluster == nil {
+	if o == nil || IsNil(o.IsCluster) {
 		return nil, false
 	}
 	return o.IsCluster, true
@@ -225,7 +236,7 @@ func (o *EnvironmentCreateParameters) GetIsClusterOk() (*bool, bool) {
 
 // HasIsCluster returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasIsCluster() bool {
-	if o != nil && o.IsCluster != nil {
+	if o != nil && !IsNil(o.IsCluster) {
 		return true
 	}
 
@@ -239,7 +250,7 @@ func (o *EnvironmentCreateParameters) SetIsCluster(v bool) {
 
 // GetClusterHome returns the ClusterHome field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetClusterHome() string {
-	if o == nil || o.ClusterHome == nil {
+	if o == nil || IsNil(o.ClusterHome) {
 		var ret string
 		return ret
 	}
@@ -249,7 +260,7 @@ func (o *EnvironmentCreateParameters) GetClusterHome() string {
 // GetClusterHomeOk returns a tuple with the ClusterHome field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetClusterHomeOk() (*string, bool) {
-	if o == nil || o.ClusterHome == nil {
+	if o == nil || IsNil(o.ClusterHome) {
 		return nil, false
 	}
 	return o.ClusterHome, true
@@ -257,7 +268,7 @@ func (o *EnvironmentCreateParameters) GetClusterHomeOk() (*string, bool) {
 
 // HasClusterHome returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasClusterHome() bool {
-	if o != nil && o.ClusterHome != nil {
+	if o != nil && !IsNil(o.ClusterHome) {
 		return true
 	}
 
@@ -282,7 +293,7 @@ func (o *EnvironmentCreateParameters) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetHostnameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Hostname, true
@@ -295,7 +306,7 @@ func (o *EnvironmentCreateParameters) SetHostname(v string) {
 
 // GetStagingEnvironment returns the StagingEnvironment field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetStagingEnvironment() string {
-	if o == nil || o.StagingEnvironment == nil {
+	if o == nil || IsNil(o.StagingEnvironment) {
 		var ret string
 		return ret
 	}
@@ -305,7 +316,7 @@ func (o *EnvironmentCreateParameters) GetStagingEnvironment() string {
 // GetStagingEnvironmentOk returns a tuple with the StagingEnvironment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetStagingEnvironmentOk() (*string, bool) {
-	if o == nil || o.StagingEnvironment == nil {
+	if o == nil || IsNil(o.StagingEnvironment) {
 		return nil, false
 	}
 	return o.StagingEnvironment, true
@@ -313,7 +324,7 @@ func (o *EnvironmentCreateParameters) GetStagingEnvironmentOk() (*string, bool) 
 
 // HasStagingEnvironment returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasStagingEnvironment() bool {
-	if o != nil && o.StagingEnvironment != nil {
+	if o != nil && !IsNil(o.StagingEnvironment) {
 		return true
 	}
 
@@ -327,7 +338,7 @@ func (o *EnvironmentCreateParameters) SetStagingEnvironment(v string) {
 
 // GetConnectorPort returns the ConnectorPort field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetConnectorPort() int32 {
-	if o == nil || o.ConnectorPort == nil {
+	if o == nil || IsNil(o.ConnectorPort) {
 		var ret int32
 		return ret
 	}
@@ -337,7 +348,7 @@ func (o *EnvironmentCreateParameters) GetConnectorPort() int32 {
 // GetConnectorPortOk returns a tuple with the ConnectorPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetConnectorPortOk() (*int32, bool) {
-	if o == nil || o.ConnectorPort == nil {
+	if o == nil || IsNil(o.ConnectorPort) {
 		return nil, false
 	}
 	return o.ConnectorPort, true
@@ -345,7 +356,7 @@ func (o *EnvironmentCreateParameters) GetConnectorPortOk() (*int32, bool) {
 
 // HasConnectorPort returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasConnectorPort() bool {
-	if o != nil && o.ConnectorPort != nil {
+	if o != nil && !IsNil(o.ConnectorPort) {
 		return true
 	}
 
@@ -357,9 +368,41 @@ func (o *EnvironmentCreateParameters) SetConnectorPort(v int32) {
 	o.ConnectorPort = &v
 }
 
+// GetConnectorAuthenticationKey returns the ConnectorAuthenticationKey field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetConnectorAuthenticationKey() string {
+	if o == nil || IsNil(o.ConnectorAuthenticationKey) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectorAuthenticationKey
+}
+
+// GetConnectorAuthenticationKeyOk returns a tuple with the ConnectorAuthenticationKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetConnectorAuthenticationKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.ConnectorAuthenticationKey) {
+		return nil, false
+	}
+	return o.ConnectorAuthenticationKey, true
+}
+
+// HasConnectorAuthenticationKey returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasConnectorAuthenticationKey() bool {
+	if o != nil && !IsNil(o.ConnectorAuthenticationKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectorAuthenticationKey gets a reference to the given string and assigns it to the ConnectorAuthenticationKey field.
+func (o *EnvironmentCreateParameters) SetConnectorAuthenticationKey(v string) {
+	o.ConnectorAuthenticationKey = &v
+}
+
 // GetIsTarget returns the IsTarget field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetIsTarget() bool {
-	if o == nil || o.IsTarget == nil {
+	if o == nil || IsNil(o.IsTarget) {
 		var ret bool
 		return ret
 	}
@@ -369,7 +412,7 @@ func (o *EnvironmentCreateParameters) GetIsTarget() bool {
 // GetIsTargetOk returns a tuple with the IsTarget field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetIsTargetOk() (*bool, bool) {
-	if o == nil || o.IsTarget == nil {
+	if o == nil || IsNil(o.IsTarget) {
 		return nil, false
 	}
 	return o.IsTarget, true
@@ -377,7 +420,7 @@ func (o *EnvironmentCreateParameters) GetIsTargetOk() (*bool, bool) {
 
 // HasIsTarget returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasIsTarget() bool {
-	if o != nil && o.IsTarget != nil {
+	if o != nil && !IsNil(o.IsTarget) {
 		return true
 	}
 
@@ -391,7 +434,7 @@ func (o *EnvironmentCreateParameters) SetIsTarget(v bool) {
 
 // GetSshPort returns the SshPort field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetSshPort() int64 {
-	if o == nil || o.SshPort == nil {
+	if o == nil || IsNil(o.SshPort) {
 		var ret int64
 		return ret
 	}
@@ -401,7 +444,7 @@ func (o *EnvironmentCreateParameters) GetSshPort() int64 {
 // GetSshPortOk returns a tuple with the SshPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetSshPortOk() (*int64, bool) {
-	if o == nil || o.SshPort == nil {
+	if o == nil || IsNil(o.SshPort) {
 		return nil, false
 	}
 	return o.SshPort, true
@@ -409,7 +452,7 @@ func (o *EnvironmentCreateParameters) GetSshPortOk() (*int64, bool) {
 
 // HasSshPort returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasSshPort() bool {
-	if o != nil && o.SshPort != nil {
+	if o != nil && !IsNil(o.SshPort) {
 		return true
 	}
 
@@ -423,7 +466,7 @@ func (o *EnvironmentCreateParameters) SetSshPort(v int64) {
 
 // GetToolkitPath returns the ToolkitPath field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetToolkitPath() string {
-	if o == nil || o.ToolkitPath == nil {
+	if o == nil || IsNil(o.ToolkitPath) {
 		var ret string
 		return ret
 	}
@@ -433,7 +476,7 @@ func (o *EnvironmentCreateParameters) GetToolkitPath() string {
 // GetToolkitPathOk returns a tuple with the ToolkitPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetToolkitPathOk() (*string, bool) {
-	if o == nil || o.ToolkitPath == nil {
+	if o == nil || IsNil(o.ToolkitPath) {
 		return nil, false
 	}
 	return o.ToolkitPath, true
@@ -441,7 +484,7 @@ func (o *EnvironmentCreateParameters) GetToolkitPathOk() (*string, bool) {
 
 // HasToolkitPath returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasToolkitPath() bool {
-	if o != nil && o.ToolkitPath != nil {
+	if o != nil && !IsNil(o.ToolkitPath) {
 		return true
 	}
 
@@ -455,7 +498,7 @@ func (o *EnvironmentCreateParameters) SetToolkitPath(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -465,7 +508,7 @@ func (o *EnvironmentCreateParameters) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -473,7 +516,7 @@ func (o *EnvironmentCreateParameters) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -487,7 +530,7 @@ func (o *EnvironmentCreateParameters) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -497,7 +540,7 @@ func (o *EnvironmentCreateParameters) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -505,7 +548,7 @@ func (o *EnvironmentCreateParameters) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -519,7 +562,7 @@ func (o *EnvironmentCreateParameters) SetPassword(v string) {
 
 // GetVault returns the Vault field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetVault() string {
-	if o == nil || o.Vault == nil {
+	if o == nil || IsNil(o.Vault) {
 		var ret string
 		return ret
 	}
@@ -529,7 +572,7 @@ func (o *EnvironmentCreateParameters) GetVault() string {
 // GetVaultOk returns a tuple with the Vault field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetVaultOk() (*string, bool) {
-	if o == nil || o.Vault == nil {
+	if o == nil || IsNil(o.Vault) {
 		return nil, false
 	}
 	return o.Vault, true
@@ -537,7 +580,7 @@ func (o *EnvironmentCreateParameters) GetVaultOk() (*string, bool) {
 
 // HasVault returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasVault() bool {
-	if o != nil && o.Vault != nil {
+	if o != nil && !IsNil(o.Vault) {
 		return true
 	}
 
@@ -551,7 +594,7 @@ func (o *EnvironmentCreateParameters) SetVault(v string) {
 
 // GetHashicorpVaultEngine returns the HashicorpVaultEngine field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultEngine() string {
-	if o == nil || o.HashicorpVaultEngine == nil {
+	if o == nil || IsNil(o.HashicorpVaultEngine) {
 		var ret string
 		return ret
 	}
@@ -561,7 +604,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultEngine() string {
 // GetHashicorpVaultEngineOk returns a tuple with the HashicorpVaultEngine field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultEngineOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultEngine == nil {
+	if o == nil || IsNil(o.HashicorpVaultEngine) {
 		return nil, false
 	}
 	return o.HashicorpVaultEngine, true
@@ -569,7 +612,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultEngineOk() (*string, bool
 
 // HasHashicorpVaultEngine returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasHashicorpVaultEngine() bool {
-	if o != nil && o.HashicorpVaultEngine != nil {
+	if o != nil && !IsNil(o.HashicorpVaultEngine) {
 		return true
 	}
 
@@ -583,7 +626,7 @@ func (o *EnvironmentCreateParameters) SetHashicorpVaultEngine(v string) {
 
 // GetHashicorpVaultSecretPath returns the HashicorpVaultSecretPath field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretPath() string {
-	if o == nil || o.HashicorpVaultSecretPath == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretPath) {
 		var ret string
 		return ret
 	}
@@ -593,7 +636,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretPath() string {
 // GetHashicorpVaultSecretPathOk returns a tuple with the HashicorpVaultSecretPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretPathOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultSecretPath == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretPath) {
 		return nil, false
 	}
 	return o.HashicorpVaultSecretPath, true
@@ -601,7 +644,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretPathOk() (*string, 
 
 // HasHashicorpVaultSecretPath returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasHashicorpVaultSecretPath() bool {
-	if o != nil && o.HashicorpVaultSecretPath != nil {
+	if o != nil && !IsNil(o.HashicorpVaultSecretPath) {
 		return true
 	}
 
@@ -615,7 +658,7 @@ func (o *EnvironmentCreateParameters) SetHashicorpVaultSecretPath(v string) {
 
 // GetHashicorpVaultUsernameKey returns the HashicorpVaultUsernameKey field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultUsernameKey() string {
-	if o == nil || o.HashicorpVaultUsernameKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultUsernameKey) {
 		var ret string
 		return ret
 	}
@@ -625,7 +668,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultUsernameKey() string {
 // GetHashicorpVaultUsernameKeyOk returns a tuple with the HashicorpVaultUsernameKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultUsernameKeyOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultUsernameKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultUsernameKey) {
 		return nil, false
 	}
 	return o.HashicorpVaultUsernameKey, true
@@ -633,7 +676,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultUsernameKeyOk() (*string,
 
 // HasHashicorpVaultUsernameKey returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasHashicorpVaultUsernameKey() bool {
-	if o != nil && o.HashicorpVaultUsernameKey != nil {
+	if o != nil && !IsNil(o.HashicorpVaultUsernameKey) {
 		return true
 	}
 
@@ -647,7 +690,7 @@ func (o *EnvironmentCreateParameters) SetHashicorpVaultUsernameKey(v string) {
 
 // GetHashicorpVaultSecretKey returns the HashicorpVaultSecretKey field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretKey() string {
-	if o == nil || o.HashicorpVaultSecretKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretKey) {
 		var ret string
 		return ret
 	}
@@ -657,7 +700,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretKey() string {
 // GetHashicorpVaultSecretKeyOk returns a tuple with the HashicorpVaultSecretKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretKeyOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultSecretKey == nil {
+	if o == nil || IsNil(o.HashicorpVaultSecretKey) {
 		return nil, false
 	}
 	return o.HashicorpVaultSecretKey, true
@@ -665,7 +708,7 @@ func (o *EnvironmentCreateParameters) GetHashicorpVaultSecretKeyOk() (*string, b
 
 // HasHashicorpVaultSecretKey returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasHashicorpVaultSecretKey() bool {
-	if o != nil && o.HashicorpVaultSecretKey != nil {
+	if o != nil && !IsNil(o.HashicorpVaultSecretKey) {
 		return true
 	}
 
@@ -679,7 +722,7 @@ func (o *EnvironmentCreateParameters) SetHashicorpVaultSecretKey(v string) {
 
 // GetCyberarkVaultQueryString returns the CyberarkVaultQueryString field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetCyberarkVaultQueryString() string {
-	if o == nil || o.CyberarkVaultQueryString == nil {
+	if o == nil || IsNil(o.CyberarkVaultQueryString) {
 		var ret string
 		return ret
 	}
@@ -689,7 +732,7 @@ func (o *EnvironmentCreateParameters) GetCyberarkVaultQueryString() string {
 // GetCyberarkVaultQueryStringOk returns a tuple with the CyberarkVaultQueryString field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetCyberarkVaultQueryStringOk() (*string, bool) {
-	if o == nil || o.CyberarkVaultQueryString == nil {
+	if o == nil || IsNil(o.CyberarkVaultQueryString) {
 		return nil, false
 	}
 	return o.CyberarkVaultQueryString, true
@@ -697,7 +740,7 @@ func (o *EnvironmentCreateParameters) GetCyberarkVaultQueryStringOk() (*string, 
 
 // HasCyberarkVaultQueryString returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasCyberarkVaultQueryString() bool {
-	if o != nil && o.CyberarkVaultQueryString != nil {
+	if o != nil && !IsNil(o.CyberarkVaultQueryString) {
 		return true
 	}
 
@@ -711,7 +754,7 @@ func (o *EnvironmentCreateParameters) SetCyberarkVaultQueryString(v string) {
 
 // GetUseKerberosAuthentication returns the UseKerberosAuthentication field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetUseKerberosAuthentication() bool {
-	if o == nil || o.UseKerberosAuthentication == nil {
+	if o == nil || IsNil(o.UseKerberosAuthentication) {
 		var ret bool
 		return ret
 	}
@@ -721,7 +764,7 @@ func (o *EnvironmentCreateParameters) GetUseKerberosAuthentication() bool {
 // GetUseKerberosAuthenticationOk returns a tuple with the UseKerberosAuthentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetUseKerberosAuthenticationOk() (*bool, bool) {
-	if o == nil || o.UseKerberosAuthentication == nil {
+	if o == nil || IsNil(o.UseKerberosAuthentication) {
 		return nil, false
 	}
 	return o.UseKerberosAuthentication, true
@@ -729,7 +772,7 @@ func (o *EnvironmentCreateParameters) GetUseKerberosAuthenticationOk() (*bool, b
 
 // HasUseKerberosAuthentication returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasUseKerberosAuthentication() bool {
-	if o != nil && o.UseKerberosAuthentication != nil {
+	if o != nil && !IsNil(o.UseKerberosAuthentication) {
 		return true
 	}
 
@@ -743,7 +786,7 @@ func (o *EnvironmentCreateParameters) SetUseKerberosAuthentication(v bool) {
 
 // GetUseEnginePublicKey returns the UseEnginePublicKey field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetUseEnginePublicKey() bool {
-	if o == nil || o.UseEnginePublicKey == nil {
+	if o == nil || IsNil(o.UseEnginePublicKey) {
 		var ret bool
 		return ret
 	}
@@ -753,7 +796,7 @@ func (o *EnvironmentCreateParameters) GetUseEnginePublicKey() bool {
 // GetUseEnginePublicKeyOk returns a tuple with the UseEnginePublicKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetUseEnginePublicKeyOk() (*bool, bool) {
-	if o == nil || o.UseEnginePublicKey == nil {
+	if o == nil || IsNil(o.UseEnginePublicKey) {
 		return nil, false
 	}
 	return o.UseEnginePublicKey, true
@@ -761,7 +804,7 @@ func (o *EnvironmentCreateParameters) GetUseEnginePublicKeyOk() (*bool, bool) {
 
 // HasUseEnginePublicKey returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasUseEnginePublicKey() bool {
-	if o != nil && o.UseEnginePublicKey != nil {
+	if o != nil && !IsNil(o.UseEnginePublicKey) {
 		return true
 	}
 
@@ -775,7 +818,7 @@ func (o *EnvironmentCreateParameters) SetUseEnginePublicKey(v bool) {
 
 // GetNfsAddresses returns the NfsAddresses field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetNfsAddresses() []string {
-	if o == nil || o.NfsAddresses == nil {
+	if o == nil || IsNil(o.NfsAddresses) {
 		var ret []string
 		return ret
 	}
@@ -785,7 +828,7 @@ func (o *EnvironmentCreateParameters) GetNfsAddresses() []string {
 // GetNfsAddressesOk returns a tuple with the NfsAddresses field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetNfsAddressesOk() ([]string, bool) {
-	if o == nil || o.NfsAddresses == nil {
+	if o == nil || IsNil(o.NfsAddresses) {
 		return nil, false
 	}
 	return o.NfsAddresses, true
@@ -793,7 +836,7 @@ func (o *EnvironmentCreateParameters) GetNfsAddressesOk() ([]string, bool) {
 
 // HasNfsAddresses returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasNfsAddresses() bool {
-	if o != nil && o.NfsAddresses != nil {
+	if o != nil && !IsNil(o.NfsAddresses) {
 		return true
 	}
 
@@ -807,7 +850,7 @@ func (o *EnvironmentCreateParameters) SetNfsAddresses(v []string) {
 
 // GetAseDbUsername returns the AseDbUsername field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbUsername() string {
-	if o == nil || o.AseDbUsername == nil {
+	if o == nil || IsNil(o.AseDbUsername) {
 		var ret string
 		return ret
 	}
@@ -817,7 +860,7 @@ func (o *EnvironmentCreateParameters) GetAseDbUsername() string {
 // GetAseDbUsernameOk returns a tuple with the AseDbUsername field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbUsernameOk() (*string, bool) {
-	if o == nil || o.AseDbUsername == nil {
+	if o == nil || IsNil(o.AseDbUsername) {
 		return nil, false
 	}
 	return o.AseDbUsername, true
@@ -825,7 +868,7 @@ func (o *EnvironmentCreateParameters) GetAseDbUsernameOk() (*string, bool) {
 
 // HasAseDbUsername returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbUsername() bool {
-	if o != nil && o.AseDbUsername != nil {
+	if o != nil && !IsNil(o.AseDbUsername) {
 		return true
 	}
 
@@ -839,7 +882,7 @@ func (o *EnvironmentCreateParameters) SetAseDbUsername(v string) {
 
 // GetAseDbPassword returns the AseDbPassword field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbPassword() string {
-	if o == nil || o.AseDbPassword == nil {
+	if o == nil || IsNil(o.AseDbPassword) {
 		var ret string
 		return ret
 	}
@@ -849,7 +892,7 @@ func (o *EnvironmentCreateParameters) GetAseDbPassword() string {
 // GetAseDbPasswordOk returns a tuple with the AseDbPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbPasswordOk() (*string, bool) {
-	if o == nil || o.AseDbPassword == nil {
+	if o == nil || IsNil(o.AseDbPassword) {
 		return nil, false
 	}
 	return o.AseDbPassword, true
@@ -857,7 +900,7 @@ func (o *EnvironmentCreateParameters) GetAseDbPasswordOk() (*string, bool) {
 
 // HasAseDbPassword returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbPassword() bool {
-	if o != nil && o.AseDbPassword != nil {
+	if o != nil && !IsNil(o.AseDbPassword) {
 		return true
 	}
 
@@ -871,7 +914,7 @@ func (o *EnvironmentCreateParameters) SetAseDbPassword(v string) {
 
 // GetAseDbVault returns the AseDbVault field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbVault() string {
-	if o == nil || o.AseDbVault == nil {
+	if o == nil || IsNil(o.AseDbVault) {
 		var ret string
 		return ret
 	}
@@ -881,7 +924,7 @@ func (o *EnvironmentCreateParameters) GetAseDbVault() string {
 // GetAseDbVaultOk returns a tuple with the AseDbVault field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbVaultOk() (*string, bool) {
-	if o == nil || o.AseDbVault == nil {
+	if o == nil || IsNil(o.AseDbVault) {
 		return nil, false
 	}
 	return o.AseDbVault, true
@@ -889,7 +932,7 @@ func (o *EnvironmentCreateParameters) GetAseDbVaultOk() (*string, bool) {
 
 // HasAseDbVault returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbVault() bool {
-	if o != nil && o.AseDbVault != nil {
+	if o != nil && !IsNil(o.AseDbVault) {
 		return true
 	}
 
@@ -903,7 +946,7 @@ func (o *EnvironmentCreateParameters) SetAseDbVault(v string) {
 
 // GetAseDbHashicorpVaultEngine returns the AseDbHashicorpVaultEngine field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultEngine() string {
-	if o == nil || o.AseDbHashicorpVaultEngine == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultEngine) {
 		var ret string
 		return ret
 	}
@@ -913,7 +956,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultEngine() string {
 // GetAseDbHashicorpVaultEngineOk returns a tuple with the AseDbHashicorpVaultEngine field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultEngineOk() (*string, bool) {
-	if o == nil || o.AseDbHashicorpVaultEngine == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultEngine) {
 		return nil, false
 	}
 	return o.AseDbHashicorpVaultEngine, true
@@ -921,7 +964,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultEngineOk() (*string,
 
 // HasAseDbHashicorpVaultEngine returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultEngine() bool {
-	if o != nil && o.AseDbHashicorpVaultEngine != nil {
+	if o != nil && !IsNil(o.AseDbHashicorpVaultEngine) {
 		return true
 	}
 
@@ -935,7 +978,7 @@ func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultEngine(v string) {
 
 // GetAseDbHashicorpVaultSecretPath returns the AseDbHashicorpVaultSecretPath field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretPath() string {
-	if o == nil || o.AseDbHashicorpVaultSecretPath == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultSecretPath) {
 		var ret string
 		return ret
 	}
@@ -945,7 +988,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretPath() string 
 // GetAseDbHashicorpVaultSecretPathOk returns a tuple with the AseDbHashicorpVaultSecretPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretPathOk() (*string, bool) {
-	if o == nil || o.AseDbHashicorpVaultSecretPath == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultSecretPath) {
 		return nil, false
 	}
 	return o.AseDbHashicorpVaultSecretPath, true
@@ -953,7 +996,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretPathOk() (*str
 
 // HasAseDbHashicorpVaultSecretPath returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultSecretPath() bool {
-	if o != nil && o.AseDbHashicorpVaultSecretPath != nil {
+	if o != nil && !IsNil(o.AseDbHashicorpVaultSecretPath) {
 		return true
 	}
 
@@ -967,7 +1010,7 @@ func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultSecretPath(v string)
 
 // GetAseDbHashicorpVaultUsernameKey returns the AseDbHashicorpVaultUsernameKey field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultUsernameKey() string {
-	if o == nil || o.AseDbHashicorpVaultUsernameKey == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultUsernameKey) {
 		var ret string
 		return ret
 	}
@@ -977,7 +1020,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultUsernameKey() string
 // GetAseDbHashicorpVaultUsernameKeyOk returns a tuple with the AseDbHashicorpVaultUsernameKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultUsernameKeyOk() (*string, bool) {
-	if o == nil || o.AseDbHashicorpVaultUsernameKey == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultUsernameKey) {
 		return nil, false
 	}
 	return o.AseDbHashicorpVaultUsernameKey, true
@@ -985,7 +1028,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultUsernameKeyOk() (*st
 
 // HasAseDbHashicorpVaultUsernameKey returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultUsernameKey() bool {
-	if o != nil && o.AseDbHashicorpVaultUsernameKey != nil {
+	if o != nil && !IsNil(o.AseDbHashicorpVaultUsernameKey) {
 		return true
 	}
 
@@ -999,7 +1042,7 @@ func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultUsernameKey(v string
 
 // GetAseDbHashicorpVaultSecretKey returns the AseDbHashicorpVaultSecretKey field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretKey() string {
-	if o == nil || o.AseDbHashicorpVaultSecretKey == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultSecretKey) {
 		var ret string
 		return ret
 	}
@@ -1009,7 +1052,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretKey() string {
 // GetAseDbHashicorpVaultSecretKeyOk returns a tuple with the AseDbHashicorpVaultSecretKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretKeyOk() (*string, bool) {
-	if o == nil || o.AseDbHashicorpVaultSecretKey == nil {
+	if o == nil || IsNil(o.AseDbHashicorpVaultSecretKey) {
 		return nil, false
 	}
 	return o.AseDbHashicorpVaultSecretKey, true
@@ -1017,7 +1060,7 @@ func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretKeyOk() (*stri
 
 // HasAseDbHashicorpVaultSecretKey returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultSecretKey() bool {
-	if o != nil && o.AseDbHashicorpVaultSecretKey != nil {
+	if o != nil && !IsNil(o.AseDbHashicorpVaultSecretKey) {
 		return true
 	}
 
@@ -1031,7 +1074,7 @@ func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultSecretKey(v string) 
 
 // GetAseDbCyberarkVaultQueryString returns the AseDbCyberarkVaultQueryString field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbCyberarkVaultQueryString() string {
-	if o == nil || o.AseDbCyberarkVaultQueryString == nil {
+	if o == nil || IsNil(o.AseDbCyberarkVaultQueryString) {
 		var ret string
 		return ret
 	}
@@ -1041,7 +1084,7 @@ func (o *EnvironmentCreateParameters) GetAseDbCyberarkVaultQueryString() string 
 // GetAseDbCyberarkVaultQueryStringOk returns a tuple with the AseDbCyberarkVaultQueryString field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbCyberarkVaultQueryStringOk() (*string, bool) {
-	if o == nil || o.AseDbCyberarkVaultQueryString == nil {
+	if o == nil || IsNil(o.AseDbCyberarkVaultQueryString) {
 		return nil, false
 	}
 	return o.AseDbCyberarkVaultQueryString, true
@@ -1049,7 +1092,7 @@ func (o *EnvironmentCreateParameters) GetAseDbCyberarkVaultQueryStringOk() (*str
 
 // HasAseDbCyberarkVaultQueryString returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbCyberarkVaultQueryString() bool {
-	if o != nil && o.AseDbCyberarkVaultQueryString != nil {
+	if o != nil && !IsNil(o.AseDbCyberarkVaultQueryString) {
 		return true
 	}
 
@@ -1063,7 +1106,7 @@ func (o *EnvironmentCreateParameters) SetAseDbCyberarkVaultQueryString(v string)
 
 // GetAseDbUseKerberosAuthentication returns the AseDbUseKerberosAuthentication field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthentication() bool {
-	if o == nil || o.AseDbUseKerberosAuthentication == nil {
+	if o == nil || IsNil(o.AseDbUseKerberosAuthentication) {
 		var ret bool
 		return ret
 	}
@@ -1073,7 +1116,7 @@ func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthentication() bool {
 // GetAseDbUseKerberosAuthenticationOk returns a tuple with the AseDbUseKerberosAuthentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthenticationOk() (*bool, bool) {
-	if o == nil || o.AseDbUseKerberosAuthentication == nil {
+	if o == nil || IsNil(o.AseDbUseKerberosAuthentication) {
 		return nil, false
 	}
 	return o.AseDbUseKerberosAuthentication, true
@@ -1081,7 +1124,7 @@ func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthenticationOk() (*bo
 
 // HasAseDbUseKerberosAuthentication returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasAseDbUseKerberosAuthentication() bool {
-	if o != nil && o.AseDbUseKerberosAuthentication != nil {
+	if o != nil && !IsNil(o.AseDbUseKerberosAuthentication) {
 		return true
 	}
 
@@ -1095,7 +1138,7 @@ func (o *EnvironmentCreateParameters) SetAseDbUseKerberosAuthentication(v bool) 
 
 // GetJavaHome returns the JavaHome field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetJavaHome() string {
-	if o == nil || o.JavaHome == nil {
+	if o == nil || IsNil(o.JavaHome) {
 		var ret string
 		return ret
 	}
@@ -1105,7 +1148,7 @@ func (o *EnvironmentCreateParameters) GetJavaHome() string {
 // GetJavaHomeOk returns a tuple with the JavaHome field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetJavaHomeOk() (*string, bool) {
-	if o == nil || o.JavaHome == nil {
+	if o == nil || IsNil(o.JavaHome) {
 		return nil, false
 	}
 	return o.JavaHome, true
@@ -1113,7 +1156,7 @@ func (o *EnvironmentCreateParameters) GetJavaHomeOk() (*string, bool) {
 
 // HasJavaHome returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasJavaHome() bool {
-	if o != nil && o.JavaHome != nil {
+	if o != nil && !IsNil(o.JavaHome) {
 		return true
 	}
 
@@ -1127,7 +1170,7 @@ func (o *EnvironmentCreateParameters) SetJavaHome(v string) {
 
 // GetDspKeystorePath returns the DspKeystorePath field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetDspKeystorePath() string {
-	if o == nil || o.DspKeystorePath == nil {
+	if o == nil || IsNil(o.DspKeystorePath) {
 		var ret string
 		return ret
 	}
@@ -1137,7 +1180,7 @@ func (o *EnvironmentCreateParameters) GetDspKeystorePath() string {
 // GetDspKeystorePathOk returns a tuple with the DspKeystorePath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetDspKeystorePathOk() (*string, bool) {
-	if o == nil || o.DspKeystorePath == nil {
+	if o == nil || IsNil(o.DspKeystorePath) {
 		return nil, false
 	}
 	return o.DspKeystorePath, true
@@ -1145,7 +1188,7 @@ func (o *EnvironmentCreateParameters) GetDspKeystorePathOk() (*string, bool) {
 
 // HasDspKeystorePath returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasDspKeystorePath() bool {
-	if o != nil && o.DspKeystorePath != nil {
+	if o != nil && !IsNil(o.DspKeystorePath) {
 		return true
 	}
 
@@ -1159,7 +1202,7 @@ func (o *EnvironmentCreateParameters) SetDspKeystorePath(v string) {
 
 // GetDspKeystorePassword returns the DspKeystorePassword field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetDspKeystorePassword() string {
-	if o == nil || o.DspKeystorePassword == nil {
+	if o == nil || IsNil(o.DspKeystorePassword) {
 		var ret string
 		return ret
 	}
@@ -1169,7 +1212,7 @@ func (o *EnvironmentCreateParameters) GetDspKeystorePassword() string {
 // GetDspKeystorePasswordOk returns a tuple with the DspKeystorePassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetDspKeystorePasswordOk() (*string, bool) {
-	if o == nil || o.DspKeystorePassword == nil {
+	if o == nil || IsNil(o.DspKeystorePassword) {
 		return nil, false
 	}
 	return o.DspKeystorePassword, true
@@ -1177,7 +1220,7 @@ func (o *EnvironmentCreateParameters) GetDspKeystorePasswordOk() (*string, bool)
 
 // HasDspKeystorePassword returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasDspKeystorePassword() bool {
-	if o != nil && o.DspKeystorePassword != nil {
+	if o != nil && !IsNil(o.DspKeystorePassword) {
 		return true
 	}
 
@@ -1191,7 +1234,7 @@ func (o *EnvironmentCreateParameters) SetDspKeystorePassword(v string) {
 
 // GetDspKeystoreAlias returns the DspKeystoreAlias field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetDspKeystoreAlias() string {
-	if o == nil || o.DspKeystoreAlias == nil {
+	if o == nil || IsNil(o.DspKeystoreAlias) {
 		var ret string
 		return ret
 	}
@@ -1201,7 +1244,7 @@ func (o *EnvironmentCreateParameters) GetDspKeystoreAlias() string {
 // GetDspKeystoreAliasOk returns a tuple with the DspKeystoreAlias field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetDspKeystoreAliasOk() (*string, bool) {
-	if o == nil || o.DspKeystoreAlias == nil {
+	if o == nil || IsNil(o.DspKeystoreAlias) {
 		return nil, false
 	}
 	return o.DspKeystoreAlias, true
@@ -1209,7 +1252,7 @@ func (o *EnvironmentCreateParameters) GetDspKeystoreAliasOk() (*string, bool) {
 
 // HasDspKeystoreAlias returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasDspKeystoreAlias() bool {
-	if o != nil && o.DspKeystoreAlias != nil {
+	if o != nil && !IsNil(o.DspKeystoreAlias) {
 		return true
 	}
 
@@ -1223,7 +1266,7 @@ func (o *EnvironmentCreateParameters) SetDspKeystoreAlias(v string) {
 
 // GetDspTruststorePath returns the DspTruststorePath field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetDspTruststorePath() string {
-	if o == nil || o.DspTruststorePath == nil {
+	if o == nil || IsNil(o.DspTruststorePath) {
 		var ret string
 		return ret
 	}
@@ -1233,7 +1276,7 @@ func (o *EnvironmentCreateParameters) GetDspTruststorePath() string {
 // GetDspTruststorePathOk returns a tuple with the DspTruststorePath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetDspTruststorePathOk() (*string, bool) {
-	if o == nil || o.DspTruststorePath == nil {
+	if o == nil || IsNil(o.DspTruststorePath) {
 		return nil, false
 	}
 	return o.DspTruststorePath, true
@@ -1241,7 +1284,7 @@ func (o *EnvironmentCreateParameters) GetDspTruststorePathOk() (*string, bool) {
 
 // HasDspTruststorePath returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasDspTruststorePath() bool {
-	if o != nil && o.DspTruststorePath != nil {
+	if o != nil && !IsNil(o.DspTruststorePath) {
 		return true
 	}
 
@@ -1255,7 +1298,7 @@ func (o *EnvironmentCreateParameters) SetDspTruststorePath(v string) {
 
 // GetDspTruststorePassword returns the DspTruststorePassword field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetDspTruststorePassword() string {
-	if o == nil || o.DspTruststorePassword == nil {
+	if o == nil || IsNil(o.DspTruststorePassword) {
 		var ret string
 		return ret
 	}
@@ -1265,7 +1308,7 @@ func (o *EnvironmentCreateParameters) GetDspTruststorePassword() string {
 // GetDspTruststorePasswordOk returns a tuple with the DspTruststorePassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetDspTruststorePasswordOk() (*string, bool) {
-	if o == nil || o.DspTruststorePassword == nil {
+	if o == nil || IsNil(o.DspTruststorePassword) {
 		return nil, false
 	}
 	return o.DspTruststorePassword, true
@@ -1273,7 +1316,7 @@ func (o *EnvironmentCreateParameters) GetDspTruststorePasswordOk() (*string, boo
 
 // HasDspTruststorePassword returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasDspTruststorePassword() bool {
-	if o != nil && o.DspTruststorePassword != nil {
+	if o != nil && !IsNil(o.DspTruststorePassword) {
 		return true
 	}
 
@@ -1287,7 +1330,7 @@ func (o *EnvironmentCreateParameters) SetDspTruststorePassword(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -1297,7 +1340,7 @@ func (o *EnvironmentCreateParameters) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -1305,7 +1348,7 @@ func (o *EnvironmentCreateParameters) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -1319,7 +1362,7 @@ func (o *EnvironmentCreateParameters) SetDescription(v string) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -1329,7 +1372,7 @@ func (o *EnvironmentCreateParameters) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentCreateParameters) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -1337,7 +1380,7 @@ func (o *EnvironmentCreateParameters) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *EnvironmentCreateParameters) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -1349,126 +1392,166 @@ func (o *EnvironmentCreateParameters) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetMakeCurrentAccountOwner() bool {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		var ret bool
+		return ret
+	}
+	return *o.MakeCurrentAccountOwner
+}
+
+// GetMakeCurrentAccountOwnerOk returns a tuple with the MakeCurrentAccountOwner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetMakeCurrentAccountOwnerOk() (*bool, bool) {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		return nil, false
+	}
+	return o.MakeCurrentAccountOwner, true
+}
+
+// HasMakeCurrentAccountOwner returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasMakeCurrentAccountOwner() bool {
+	if o != nil && !IsNil(o.MakeCurrentAccountOwner) {
+		return true
+	}
+
+	return false
+}
+
+// SetMakeCurrentAccountOwner gets a reference to the given bool and assigns it to the MakeCurrentAccountOwner field.
+func (o *EnvironmentCreateParameters) SetMakeCurrentAccountOwner(v bool) {
+	o.MakeCurrentAccountOwner = &v
+}
+
 func (o EnvironmentCreateParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["engine_id"] = o.EngineId
-	}
-	if true {
-		toSerialize["os_name"] = o.OsName
-	}
-	if o.IsCluster != nil {
-		toSerialize["is_cluster"] = o.IsCluster
-	}
-	if o.ClusterHome != nil {
-		toSerialize["cluster_home"] = o.ClusterHome
-	}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.StagingEnvironment != nil {
-		toSerialize["staging_environment"] = o.StagingEnvironment
-	}
-	if o.ConnectorPort != nil {
-		toSerialize["connector_port"] = o.ConnectorPort
-	}
-	if o.IsTarget != nil {
-		toSerialize["is_target"] = o.IsTarget
-	}
-	if o.SshPort != nil {
-		toSerialize["ssh_port"] = o.SshPort
-	}
-	if o.ToolkitPath != nil {
-		toSerialize["toolkit_path"] = o.ToolkitPath
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.Vault != nil {
-		toSerialize["vault"] = o.Vault
-	}
-	if o.HashicorpVaultEngine != nil {
-		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
-	}
-	if o.HashicorpVaultSecretPath != nil {
-		toSerialize["hashicorp_vault_secret_path"] = o.HashicorpVaultSecretPath
-	}
-	if o.HashicorpVaultUsernameKey != nil {
-		toSerialize["hashicorp_vault_username_key"] = o.HashicorpVaultUsernameKey
-	}
-	if o.HashicorpVaultSecretKey != nil {
-		toSerialize["hashicorp_vault_secret_key"] = o.HashicorpVaultSecretKey
-	}
-	if o.CyberarkVaultQueryString != nil {
-		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
-	}
-	if o.UseKerberosAuthentication != nil {
-		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
-	}
-	if o.UseEnginePublicKey != nil {
-		toSerialize["use_engine_public_key"] = o.UseEnginePublicKey
-	}
-	if o.NfsAddresses != nil {
-		toSerialize["nfs_addresses"] = o.NfsAddresses
-	}
-	if o.AseDbUsername != nil {
-		toSerialize["ase_db_username"] = o.AseDbUsername
-	}
-	if o.AseDbPassword != nil {
-		toSerialize["ase_db_password"] = o.AseDbPassword
-	}
-	if o.AseDbVault != nil {
-		toSerialize["ase_db_vault"] = o.AseDbVault
-	}
-	if o.AseDbHashicorpVaultEngine != nil {
-		toSerialize["ase_db_hashicorp_vault_engine"] = o.AseDbHashicorpVaultEngine
-	}
-	if o.AseDbHashicorpVaultSecretPath != nil {
-		toSerialize["ase_db_hashicorp_vault_secret_path"] = o.AseDbHashicorpVaultSecretPath
-	}
-	if o.AseDbHashicorpVaultUsernameKey != nil {
-		toSerialize["ase_db_hashicorp_vault_username_key"] = o.AseDbHashicorpVaultUsernameKey
-	}
-	if o.AseDbHashicorpVaultSecretKey != nil {
-		toSerialize["ase_db_hashicorp_vault_secret_key"] = o.AseDbHashicorpVaultSecretKey
-	}
-	if o.AseDbCyberarkVaultQueryString != nil {
-		toSerialize["ase_db_cyberark_vault_query_string"] = o.AseDbCyberarkVaultQueryString
-	}
-	if o.AseDbUseKerberosAuthentication != nil {
-		toSerialize["ase_db_use_kerberos_authentication"] = o.AseDbUseKerberosAuthentication
-	}
-	if o.JavaHome != nil {
-		toSerialize["java_home"] = o.JavaHome
-	}
-	if o.DspKeystorePath != nil {
-		toSerialize["dsp_keystore_path"] = o.DspKeystorePath
-	}
-	if o.DspKeystorePassword != nil {
-		toSerialize["dsp_keystore_password"] = o.DspKeystorePassword
-	}
-	if o.DspKeystoreAlias != nil {
-		toSerialize["dsp_keystore_alias"] = o.DspKeystoreAlias
-	}
-	if o.DspTruststorePath != nil {
-		toSerialize["dsp_truststore_path"] = o.DspTruststorePath
-	}
-	if o.DspTruststorePassword != nil {
-		toSerialize["dsp_truststore_password"] = o.DspTruststorePassword
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EnvironmentCreateParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	toSerialize["engine_id"] = o.EngineId
+	toSerialize["os_name"] = o.OsName
+	if !IsNil(o.IsCluster) {
+		toSerialize["is_cluster"] = o.IsCluster
+	}
+	if !IsNil(o.ClusterHome) {
+		toSerialize["cluster_home"] = o.ClusterHome
+	}
+	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.StagingEnvironment) {
+		toSerialize["staging_environment"] = o.StagingEnvironment
+	}
+	if !IsNil(o.ConnectorPort) {
+		toSerialize["connector_port"] = o.ConnectorPort
+	}
+	if !IsNil(o.ConnectorAuthenticationKey) {
+		toSerialize["connector_authentication_key"] = o.ConnectorAuthenticationKey
+	}
+	if !IsNil(o.IsTarget) {
+		toSerialize["is_target"] = o.IsTarget
+	}
+	if !IsNil(o.SshPort) {
+		toSerialize["ssh_port"] = o.SshPort
+	}
+	if !IsNil(o.ToolkitPath) {
+		toSerialize["toolkit_path"] = o.ToolkitPath
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.Vault) {
+		toSerialize["vault"] = o.Vault
+	}
+	if !IsNil(o.HashicorpVaultEngine) {
+		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
+	}
+	if !IsNil(o.HashicorpVaultSecretPath) {
+		toSerialize["hashicorp_vault_secret_path"] = o.HashicorpVaultSecretPath
+	}
+	if !IsNil(o.HashicorpVaultUsernameKey) {
+		toSerialize["hashicorp_vault_username_key"] = o.HashicorpVaultUsernameKey
+	}
+	if !IsNil(o.HashicorpVaultSecretKey) {
+		toSerialize["hashicorp_vault_secret_key"] = o.HashicorpVaultSecretKey
+	}
+	if !IsNil(o.CyberarkVaultQueryString) {
+		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
+	}
+	if !IsNil(o.UseKerberosAuthentication) {
+		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
+	}
+	if !IsNil(o.UseEnginePublicKey) {
+		toSerialize["use_engine_public_key"] = o.UseEnginePublicKey
+	}
+	if !IsNil(o.NfsAddresses) {
+		toSerialize["nfs_addresses"] = o.NfsAddresses
+	}
+	if !IsNil(o.AseDbUsername) {
+		toSerialize["ase_db_username"] = o.AseDbUsername
+	}
+	if !IsNil(o.AseDbPassword) {
+		toSerialize["ase_db_password"] = o.AseDbPassword
+	}
+	if !IsNil(o.AseDbVault) {
+		toSerialize["ase_db_vault"] = o.AseDbVault
+	}
+	if !IsNil(o.AseDbHashicorpVaultEngine) {
+		toSerialize["ase_db_hashicorp_vault_engine"] = o.AseDbHashicorpVaultEngine
+	}
+	if !IsNil(o.AseDbHashicorpVaultSecretPath) {
+		toSerialize["ase_db_hashicorp_vault_secret_path"] = o.AseDbHashicorpVaultSecretPath
+	}
+	if !IsNil(o.AseDbHashicorpVaultUsernameKey) {
+		toSerialize["ase_db_hashicorp_vault_username_key"] = o.AseDbHashicorpVaultUsernameKey
+	}
+	if !IsNil(o.AseDbHashicorpVaultSecretKey) {
+		toSerialize["ase_db_hashicorp_vault_secret_key"] = o.AseDbHashicorpVaultSecretKey
+	}
+	if !IsNil(o.AseDbCyberarkVaultQueryString) {
+		toSerialize["ase_db_cyberark_vault_query_string"] = o.AseDbCyberarkVaultQueryString
+	}
+	if !IsNil(o.AseDbUseKerberosAuthentication) {
+		toSerialize["ase_db_use_kerberos_authentication"] = o.AseDbUseKerberosAuthentication
+	}
+	if !IsNil(o.JavaHome) {
+		toSerialize["java_home"] = o.JavaHome
+	}
+	if !IsNil(o.DspKeystorePath) {
+		toSerialize["dsp_keystore_path"] = o.DspKeystorePath
+	}
+	if !IsNil(o.DspKeystorePassword) {
+		toSerialize["dsp_keystore_password"] = o.DspKeystorePassword
+	}
+	if !IsNil(o.DspKeystoreAlias) {
+		toSerialize["dsp_keystore_alias"] = o.DspKeystoreAlias
+	}
+	if !IsNil(o.DspTruststorePath) {
+		toSerialize["dsp_truststore_path"] = o.DspTruststorePath
+	}
+	if !IsNil(o.DspTruststorePassword) {
+		toSerialize["dsp_truststore_password"] = o.DspTruststorePassword
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.MakeCurrentAccountOwner) {
+		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
+	}
+	return toSerialize, nil
 }
 
 type NullableEnvironmentCreateParameters struct {

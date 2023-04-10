@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the ListBookmarksByVDBGroupsResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListBookmarksByVDBGroupsResponse{}
 
 // ListBookmarksByVDBGroupsResponse struct for ListBookmarksByVDBGroupsResponse
 type ListBookmarksByVDBGroupsResponse struct {
@@ -40,7 +43,7 @@ func NewListBookmarksByVDBGroupsResponseWithDefaults() *ListBookmarksByVDBGroups
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *ListBookmarksByVDBGroupsResponse) GetItems() []Bookmark {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []Bookmark
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ListBookmarksByVDBGroupsResponse) GetItems() []Bookmark {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListBookmarksByVDBGroupsResponse) GetItemsOk() ([]Bookmark, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -58,7 +61,7 @@ func (o *ListBookmarksByVDBGroupsResponse) GetItemsOk() ([]Bookmark, bool) {
 
 // HasItems returns a boolean if a field has been set.
 func (o *ListBookmarksByVDBGroupsResponse) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *ListBookmarksByVDBGroupsResponse) SetItems(v []Bookmark) {
 
 // GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
 func (o *ListBookmarksByVDBGroupsResponse) GetResponseMetadata() PaginatedResponseMetadata {
-	if o == nil || o.ResponseMetadata == nil {
+	if o == nil || IsNil(o.ResponseMetadata) {
 		var ret PaginatedResponseMetadata
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *ListBookmarksByVDBGroupsResponse) GetResponseMetadata() PaginatedRespon
 // GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListBookmarksByVDBGroupsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
-	if o == nil || o.ResponseMetadata == nil {
+	if o == nil || IsNil(o.ResponseMetadata) {
 		return nil, false
 	}
 	return o.ResponseMetadata, true
@@ -90,7 +93,7 @@ func (o *ListBookmarksByVDBGroupsResponse) GetResponseMetadataOk() (*PaginatedRe
 
 // HasResponseMetadata returns a boolean if a field has been set.
 func (o *ListBookmarksByVDBGroupsResponse) HasResponseMetadata() bool {
-	if o != nil && o.ResponseMetadata != nil {
+	if o != nil && !IsNil(o.ResponseMetadata) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *ListBookmarksByVDBGroupsResponse) SetResponseMetadata(v PaginatedRespon
 }
 
 func (o ListBookmarksByVDBGroupsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
-	}
-	if o.ResponseMetadata != nil {
-		toSerialize["response_metadata"] = o.ResponseMetadata
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ListBookmarksByVDBGroupsResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	if !IsNil(o.ResponseMetadata) {
+		toSerialize["response_metadata"] = o.ResponseMetadata
+	}
+	return toSerialize, nil
 }
 
 type NullableListBookmarksByVDBGroupsResponse struct {

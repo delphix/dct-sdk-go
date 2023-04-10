@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectivityCheckParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectivityCheckParameters{}
+
 // ConnectivityCheckParameters Parameters to check connectivity between engine and remote host.
 type ConnectivityCheckParameters struct {
 	// The ID of the engine to check.
@@ -23,6 +26,10 @@ type ConnectivityCheckParameters struct {
 	Host string `json:"host"`
 	// The port of the remote host machine to check.
 	Port NullableInt32 `json:"port"`
+	// The username of the remote host machine to check.
+	Username *string `json:"username,omitempty"`
+	// The password of the remote host machine to check.
+	Password *string `json:"password,omitempty"`
 }
 
 // NewConnectivityCheckParameters instantiates a new ConnectivityCheckParameters object
@@ -58,7 +65,7 @@ func (o *ConnectivityCheckParameters) GetEngineId() string {
 // GetEngineIdOk returns a tuple with the EngineId field value
 // and a boolean to check if the value has been set.
 func (o *ConnectivityCheckParameters) GetEngineIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.EngineId, true
@@ -82,7 +89,7 @@ func (o *ConnectivityCheckParameters) GetHost() string {
 // GetHostOk returns a tuple with the Host field value
 // and a boolean to check if the value has been set.
 func (o *ConnectivityCheckParameters) GetHostOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Host, true
@@ -108,7 +115,7 @@ func (o *ConnectivityCheckParameters) GetPort() int32 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ConnectivityCheckParameters) GetPortOk() (*int32, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Port.Get(), o.Port.IsSet()
@@ -119,18 +126,90 @@ func (o *ConnectivityCheckParameters) SetPort(v int32) {
 	o.Port.Set(&v)
 }
 
+// GetUsername returns the Username field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetUsername() string {
+	if o == nil || IsNil(o.Username) {
+		var ret string
+		return ret
+	}
+	return *o.Username
+}
+
+// GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.Username) {
+		return nil, false
+	}
+	return o.Username, true
+}
+
+// HasUsername returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasUsername() bool {
+	if o != nil && !IsNil(o.Username) {
+		return true
+	}
+
+	return false
+}
+
+// SetUsername gets a reference to the given string and assigns it to the Username field.
+func (o *ConnectivityCheckParameters) SetUsername(v string) {
+	o.Username = &v
+}
+
+// GetPassword returns the Password field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetPassword() string {
+	if o == nil || IsNil(o.Password) {
+		var ret string
+		return ret
+	}
+	return *o.Password
+}
+
+// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetPasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.Password) {
+		return nil, false
+	}
+	return o.Password, true
+}
+
+// HasPassword returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasPassword() bool {
+	if o != nil && !IsNil(o.Password) {
+		return true
+	}
+
+	return false
+}
+
+// SetPassword gets a reference to the given string and assigns it to the Password field.
+func (o *ConnectivityCheckParameters) SetPassword(v string) {
+	o.Password = &v
+}
+
 func (o ConnectivityCheckParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["engine_id"] = o.EngineId
-	}
-	if true {
-		toSerialize["host"] = o.Host
-	}
-	if true {
-		toSerialize["port"] = o.Port.Get()
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectivityCheckParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["engine_id"] = o.EngineId
+	toSerialize["host"] = o.Host
+	toSerialize["port"] = o.Port.Get()
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectivityCheckParameters struct {

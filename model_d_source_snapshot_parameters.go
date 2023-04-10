@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the DSourceSnapshotParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DSourceSnapshotParameters{}
 
 // DSourceSnapshotParameters Parameters to snapshot a DSource.
 type DSourceSnapshotParameters struct {
@@ -60,7 +63,7 @@ func NewDSourceSnapshotParametersWithDefaults() *DSourceSnapshotParameters {
 
 // GetDropAndRecreateDevices returns the DropAndRecreateDevices field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetDropAndRecreateDevices() bool {
-	if o == nil || o.DropAndRecreateDevices == nil {
+	if o == nil || IsNil(o.DropAndRecreateDevices) {
 		var ret bool
 		return ret
 	}
@@ -70,7 +73,7 @@ func (o *DSourceSnapshotParameters) GetDropAndRecreateDevices() bool {
 // GetDropAndRecreateDevicesOk returns a tuple with the DropAndRecreateDevices field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetDropAndRecreateDevicesOk() (*bool, bool) {
-	if o == nil || o.DropAndRecreateDevices == nil {
+	if o == nil || IsNil(o.DropAndRecreateDevices) {
 		return nil, false
 	}
 	return o.DropAndRecreateDevices, true
@@ -78,7 +81,7 @@ func (o *DSourceSnapshotParameters) GetDropAndRecreateDevicesOk() (*bool, bool) 
 
 // HasDropAndRecreateDevices returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasDropAndRecreateDevices() bool {
-	if o != nil && o.DropAndRecreateDevices != nil {
+	if o != nil && !IsNil(o.DropAndRecreateDevices) {
 		return true
 	}
 
@@ -92,7 +95,7 @@ func (o *DSourceSnapshotParameters) SetDropAndRecreateDevices(v bool) {
 
 // GetSyncStrategy returns the SyncStrategy field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetSyncStrategy() string {
-	if o == nil || o.SyncStrategy == nil {
+	if o == nil || IsNil(o.SyncStrategy) {
 		var ret string
 		return ret
 	}
@@ -102,7 +105,7 @@ func (o *DSourceSnapshotParameters) GetSyncStrategy() string {
 // GetSyncStrategyOk returns a tuple with the SyncStrategy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetSyncStrategyOk() (*string, bool) {
-	if o == nil || o.SyncStrategy == nil {
+	if o == nil || IsNil(o.SyncStrategy) {
 		return nil, false
 	}
 	return o.SyncStrategy, true
@@ -110,7 +113,7 @@ func (o *DSourceSnapshotParameters) GetSyncStrategyOk() (*string, bool) {
 
 // HasSyncStrategy returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasSyncStrategy() bool {
-	if o != nil && o.SyncStrategy != nil {
+	if o != nil && !IsNil(o.SyncStrategy) {
 		return true
 	}
 
@@ -124,7 +127,7 @@ func (o *DSourceSnapshotParameters) SetSyncStrategy(v string) {
 
 // GetAseBackupFiles returns the AseBackupFiles field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetAseBackupFiles() []string {
-	if o == nil || o.AseBackupFiles == nil {
+	if o == nil || IsNil(o.AseBackupFiles) {
 		var ret []string
 		return ret
 	}
@@ -134,7 +137,7 @@ func (o *DSourceSnapshotParameters) GetAseBackupFiles() []string {
 // GetAseBackupFilesOk returns a tuple with the AseBackupFiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetAseBackupFilesOk() ([]string, bool) {
-	if o == nil || o.AseBackupFiles == nil {
+	if o == nil || IsNil(o.AseBackupFiles) {
 		return nil, false
 	}
 	return o.AseBackupFiles, true
@@ -142,7 +145,7 @@ func (o *DSourceSnapshotParameters) GetAseBackupFilesOk() ([]string, bool) {
 
 // HasAseBackupFiles returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasAseBackupFiles() bool {
-	if o != nil && o.AseBackupFiles != nil {
+	if o != nil && !IsNil(o.AseBackupFiles) {
 		return true
 	}
 
@@ -156,7 +159,7 @@ func (o *DSourceSnapshotParameters) SetAseBackupFiles(v []string) {
 
 // GetMssqlBackupUuid returns the MssqlBackupUuid field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetMssqlBackupUuid() string {
-	if o == nil || o.MssqlBackupUuid == nil {
+	if o == nil || IsNil(o.MssqlBackupUuid) {
 		var ret string
 		return ret
 	}
@@ -166,7 +169,7 @@ func (o *DSourceSnapshotParameters) GetMssqlBackupUuid() string {
 // GetMssqlBackupUuidOk returns a tuple with the MssqlBackupUuid field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetMssqlBackupUuidOk() (*string, bool) {
-	if o == nil || o.MssqlBackupUuid == nil {
+	if o == nil || IsNil(o.MssqlBackupUuid) {
 		return nil, false
 	}
 	return o.MssqlBackupUuid, true
@@ -174,7 +177,7 @@ func (o *DSourceSnapshotParameters) GetMssqlBackupUuidOk() (*string, bool) {
 
 // HasMssqlBackupUuid returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasMssqlBackupUuid() bool {
-	if o != nil && o.MssqlBackupUuid != nil {
+	if o != nil && !IsNil(o.MssqlBackupUuid) {
 		return true
 	}
 
@@ -188,7 +191,7 @@ func (o *DSourceSnapshotParameters) SetMssqlBackupUuid(v string) {
 
 // GetCompressionEnabled returns the CompressionEnabled field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetCompressionEnabled() bool {
-	if o == nil || o.CompressionEnabled == nil {
+	if o == nil || IsNil(o.CompressionEnabled) {
 		var ret bool
 		return ret
 	}
@@ -198,7 +201,7 @@ func (o *DSourceSnapshotParameters) GetCompressionEnabled() bool {
 // GetCompressionEnabledOk returns a tuple with the CompressionEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetCompressionEnabledOk() (*bool, bool) {
-	if o == nil || o.CompressionEnabled == nil {
+	if o == nil || IsNil(o.CompressionEnabled) {
 		return nil, false
 	}
 	return o.CompressionEnabled, true
@@ -206,7 +209,7 @@ func (o *DSourceSnapshotParameters) GetCompressionEnabledOk() (*bool, bool) {
 
 // HasCompressionEnabled returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasCompressionEnabled() bool {
-	if o != nil && o.CompressionEnabled != nil {
+	if o != nil && !IsNil(o.CompressionEnabled) {
 		return true
 	}
 
@@ -220,7 +223,7 @@ func (o *DSourceSnapshotParameters) SetCompressionEnabled(v bool) {
 
 // GetAvailabilityGroupBackupPolicy returns the AvailabilityGroupBackupPolicy field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetAvailabilityGroupBackupPolicy() string {
-	if o == nil || o.AvailabilityGroupBackupPolicy == nil {
+	if o == nil || IsNil(o.AvailabilityGroupBackupPolicy) {
 		var ret string
 		return ret
 	}
@@ -230,7 +233,7 @@ func (o *DSourceSnapshotParameters) GetAvailabilityGroupBackupPolicy() string {
 // GetAvailabilityGroupBackupPolicyOk returns a tuple with the AvailabilityGroupBackupPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetAvailabilityGroupBackupPolicyOk() (*string, bool) {
-	if o == nil || o.AvailabilityGroupBackupPolicy == nil {
+	if o == nil || IsNil(o.AvailabilityGroupBackupPolicy) {
 		return nil, false
 	}
 	return o.AvailabilityGroupBackupPolicy, true
@@ -238,7 +241,7 @@ func (o *DSourceSnapshotParameters) GetAvailabilityGroupBackupPolicyOk() (*strin
 
 // HasAvailabilityGroupBackupPolicy returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasAvailabilityGroupBackupPolicy() bool {
-	if o != nil && o.AvailabilityGroupBackupPolicy != nil {
+	if o != nil && !IsNil(o.AvailabilityGroupBackupPolicy) {
 		return true
 	}
 
@@ -252,7 +255,7 @@ func (o *DSourceSnapshotParameters) SetAvailabilityGroupBackupPolicy(v string) {
 
 // GetDoNotResume returns the DoNotResume field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetDoNotResume() bool {
-	if o == nil || o.DoNotResume == nil {
+	if o == nil || IsNil(o.DoNotResume) {
 		var ret bool
 		return ret
 	}
@@ -262,7 +265,7 @@ func (o *DSourceSnapshotParameters) GetDoNotResume() bool {
 // GetDoNotResumeOk returns a tuple with the DoNotResume field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetDoNotResumeOk() (*bool, bool) {
-	if o == nil || o.DoNotResume == nil {
+	if o == nil || IsNil(o.DoNotResume) {
 		return nil, false
 	}
 	return o.DoNotResume, true
@@ -270,7 +273,7 @@ func (o *DSourceSnapshotParameters) GetDoNotResumeOk() (*bool, bool) {
 
 // HasDoNotResume returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasDoNotResume() bool {
-	if o != nil && o.DoNotResume != nil {
+	if o != nil && !IsNil(o.DoNotResume) {
 		return true
 	}
 
@@ -284,7 +287,7 @@ func (o *DSourceSnapshotParameters) SetDoNotResume(v bool) {
 
 // GetDoubleSync returns the DoubleSync field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetDoubleSync() bool {
-	if o == nil || o.DoubleSync == nil {
+	if o == nil || IsNil(o.DoubleSync) {
 		var ret bool
 		return ret
 	}
@@ -294,7 +297,7 @@ func (o *DSourceSnapshotParameters) GetDoubleSync() bool {
 // GetDoubleSyncOk returns a tuple with the DoubleSync field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetDoubleSyncOk() (*bool, bool) {
-	if o == nil || o.DoubleSync == nil {
+	if o == nil || IsNil(o.DoubleSync) {
 		return nil, false
 	}
 	return o.DoubleSync, true
@@ -302,7 +305,7 @@ func (o *DSourceSnapshotParameters) GetDoubleSyncOk() (*bool, bool) {
 
 // HasDoubleSync returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasDoubleSync() bool {
-	if o != nil && o.DoubleSync != nil {
+	if o != nil && !IsNil(o.DoubleSync) {
 		return true
 	}
 
@@ -316,7 +319,7 @@ func (o *DSourceSnapshotParameters) SetDoubleSync(v bool) {
 
 // GetForceFullBackup returns the ForceFullBackup field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetForceFullBackup() bool {
-	if o == nil || o.ForceFullBackup == nil {
+	if o == nil || IsNil(o.ForceFullBackup) {
 		var ret bool
 		return ret
 	}
@@ -326,7 +329,7 @@ func (o *DSourceSnapshotParameters) GetForceFullBackup() bool {
 // GetForceFullBackupOk returns a tuple with the ForceFullBackup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetForceFullBackupOk() (*bool, bool) {
-	if o == nil || o.ForceFullBackup == nil {
+	if o == nil || IsNil(o.ForceFullBackup) {
 		return nil, false
 	}
 	return o.ForceFullBackup, true
@@ -334,7 +337,7 @@ func (o *DSourceSnapshotParameters) GetForceFullBackupOk() (*bool, bool) {
 
 // HasForceFullBackup returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasForceFullBackup() bool {
-	if o != nil && o.ForceFullBackup != nil {
+	if o != nil && !IsNil(o.ForceFullBackup) {
 		return true
 	}
 
@@ -348,7 +351,7 @@ func (o *DSourceSnapshotParameters) SetForceFullBackup(v bool) {
 
 // GetSkipSpaceCheck returns the SkipSpaceCheck field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetSkipSpaceCheck() bool {
-	if o == nil || o.SkipSpaceCheck == nil {
+	if o == nil || IsNil(o.SkipSpaceCheck) {
 		var ret bool
 		return ret
 	}
@@ -358,7 +361,7 @@ func (o *DSourceSnapshotParameters) GetSkipSpaceCheck() bool {
 // GetSkipSpaceCheckOk returns a tuple with the SkipSpaceCheck field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetSkipSpaceCheckOk() (*bool, bool) {
-	if o == nil || o.SkipSpaceCheck == nil {
+	if o == nil || IsNil(o.SkipSpaceCheck) {
 		return nil, false
 	}
 	return o.SkipSpaceCheck, true
@@ -366,7 +369,7 @@ func (o *DSourceSnapshotParameters) GetSkipSpaceCheckOk() (*bool, bool) {
 
 // HasSkipSpaceCheck returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasSkipSpaceCheck() bool {
-	if o != nil && o.SkipSpaceCheck != nil {
+	if o != nil && !IsNil(o.SkipSpaceCheck) {
 		return true
 	}
 
@@ -380,7 +383,7 @@ func (o *DSourceSnapshotParameters) SetSkipSpaceCheck(v bool) {
 
 // GetFilesForPartialFullBackup returns the FilesForPartialFullBackup field value if set, zero value otherwise.
 func (o *DSourceSnapshotParameters) GetFilesForPartialFullBackup() []int64 {
-	if o == nil || o.FilesForPartialFullBackup == nil {
+	if o == nil || IsNil(o.FilesForPartialFullBackup) {
 		var ret []int64
 		return ret
 	}
@@ -390,7 +393,7 @@ func (o *DSourceSnapshotParameters) GetFilesForPartialFullBackup() []int64 {
 // GetFilesForPartialFullBackupOk returns a tuple with the FilesForPartialFullBackup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceSnapshotParameters) GetFilesForPartialFullBackupOk() ([]int64, bool) {
-	if o == nil || o.FilesForPartialFullBackup == nil {
+	if o == nil || IsNil(o.FilesForPartialFullBackup) {
 		return nil, false
 	}
 	return o.FilesForPartialFullBackup, true
@@ -398,7 +401,7 @@ func (o *DSourceSnapshotParameters) GetFilesForPartialFullBackupOk() ([]int64, b
 
 // HasFilesForPartialFullBackup returns a boolean if a field has been set.
 func (o *DSourceSnapshotParameters) HasFilesForPartialFullBackup() bool {
-	if o != nil && o.FilesForPartialFullBackup != nil {
+	if o != nil && !IsNil(o.FilesForPartialFullBackup) {
 		return true
 	}
 
@@ -411,41 +414,49 @@ func (o *DSourceSnapshotParameters) SetFilesForPartialFullBackup(v []int64) {
 }
 
 func (o DSourceSnapshotParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DropAndRecreateDevices != nil {
-		toSerialize["drop_and_recreate_devices"] = o.DropAndRecreateDevices
-	}
-	if o.SyncStrategy != nil {
-		toSerialize["sync_strategy"] = o.SyncStrategy
-	}
-	if o.AseBackupFiles != nil {
-		toSerialize["ase_backup_files"] = o.AseBackupFiles
-	}
-	if o.MssqlBackupUuid != nil {
-		toSerialize["mssql_backup_uuid"] = o.MssqlBackupUuid
-	}
-	if o.CompressionEnabled != nil {
-		toSerialize["compression_enabled"] = o.CompressionEnabled
-	}
-	if o.AvailabilityGroupBackupPolicy != nil {
-		toSerialize["availability_group_backup_policy"] = o.AvailabilityGroupBackupPolicy
-	}
-	if o.DoNotResume != nil {
-		toSerialize["do_not_resume"] = o.DoNotResume
-	}
-	if o.DoubleSync != nil {
-		toSerialize["double_sync"] = o.DoubleSync
-	}
-	if o.ForceFullBackup != nil {
-		toSerialize["force_full_backup"] = o.ForceFullBackup
-	}
-	if o.SkipSpaceCheck != nil {
-		toSerialize["skip_space_check"] = o.SkipSpaceCheck
-	}
-	if o.FilesForPartialFullBackup != nil {
-		toSerialize["files_for_partial_full_backup"] = o.FilesForPartialFullBackup
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DSourceSnapshotParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DropAndRecreateDevices) {
+		toSerialize["drop_and_recreate_devices"] = o.DropAndRecreateDevices
+	}
+	if !IsNil(o.SyncStrategy) {
+		toSerialize["sync_strategy"] = o.SyncStrategy
+	}
+	if !IsNil(o.AseBackupFiles) {
+		toSerialize["ase_backup_files"] = o.AseBackupFiles
+	}
+	if !IsNil(o.MssqlBackupUuid) {
+		toSerialize["mssql_backup_uuid"] = o.MssqlBackupUuid
+	}
+	if !IsNil(o.CompressionEnabled) {
+		toSerialize["compression_enabled"] = o.CompressionEnabled
+	}
+	if !IsNil(o.AvailabilityGroupBackupPolicy) {
+		toSerialize["availability_group_backup_policy"] = o.AvailabilityGroupBackupPolicy
+	}
+	if !IsNil(o.DoNotResume) {
+		toSerialize["do_not_resume"] = o.DoNotResume
+	}
+	if !IsNil(o.DoubleSync) {
+		toSerialize["double_sync"] = o.DoubleSync
+	}
+	if !IsNil(o.ForceFullBackup) {
+		toSerialize["force_full_backup"] = o.ForceFullBackup
+	}
+	if !IsNil(o.SkipSpaceCheck) {
+		toSerialize["skip_space_check"] = o.SkipSpaceCheck
+	}
+	if !IsNil(o.FilesForPartialFullBackup) {
+		toSerialize["files_for_partial_full_backup"] = o.FilesForPartialFullBackup
+	}
+	return toSerialize, nil
 }
 
 type NullableDSourceSnapshotParameters struct {

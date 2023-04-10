@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -16,14 +16,19 @@ import (
 	"time"
 )
 
+// checks if the RefreshVDBByTimestampParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RefreshVDBByTimestampParameters{}
+
 // RefreshVDBByTimestampParameters struct for RefreshVDBByTimestampParameters
 type RefreshVDBByTimestampParameters struct {
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
 	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
-	// ID of the dataset to refresh to
+	// ID of the dataset to refresh to, mutually exclusive with timeflow_id.
 	DatasetId *string `json:"dataset_id,omitempty"`
+	// ID of the timeflow to refresh to, mutually exclusive with dataset_id.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
 }
 
 // NewRefreshVDBByTimestampParameters instantiates a new RefreshVDBByTimestampParameters object
@@ -45,7 +50,7 @@ func NewRefreshVDBByTimestampParametersWithDefaults() *RefreshVDBByTimestampPara
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
 func (o *RefreshVDBByTimestampParameters) GetTimestamp() time.Time {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		var ret time.Time
 		return ret
 	}
@@ -55,7 +60,7 @@ func (o *RefreshVDBByTimestampParameters) GetTimestamp() time.Time {
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RefreshVDBByTimestampParameters) GetTimestampOk() (*time.Time, bool) {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
 	return o.Timestamp, true
@@ -63,7 +68,7 @@ func (o *RefreshVDBByTimestampParameters) GetTimestampOk() (*time.Time, bool) {
 
 // HasTimestamp returns a boolean if a field has been set.
 func (o *RefreshVDBByTimestampParameters) HasTimestamp() bool {
-	if o != nil && o.Timestamp != nil {
+	if o != nil && !IsNil(o.Timestamp) {
 		return true
 	}
 
@@ -77,7 +82,7 @@ func (o *RefreshVDBByTimestampParameters) SetTimestamp(v time.Time) {
 
 // GetTimestampInDatabaseTimezone returns the TimestampInDatabaseTimezone field value if set, zero value otherwise.
 func (o *RefreshVDBByTimestampParameters) GetTimestampInDatabaseTimezone() string {
-	if o == nil || o.TimestampInDatabaseTimezone == nil {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
 		var ret string
 		return ret
 	}
@@ -87,7 +92,7 @@ func (o *RefreshVDBByTimestampParameters) GetTimestampInDatabaseTimezone() strin
 // GetTimestampInDatabaseTimezoneOk returns a tuple with the TimestampInDatabaseTimezone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RefreshVDBByTimestampParameters) GetTimestampInDatabaseTimezoneOk() (*string, bool) {
-	if o == nil || o.TimestampInDatabaseTimezone == nil {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
 		return nil, false
 	}
 	return o.TimestampInDatabaseTimezone, true
@@ -95,7 +100,7 @@ func (o *RefreshVDBByTimestampParameters) GetTimestampInDatabaseTimezoneOk() (*s
 
 // HasTimestampInDatabaseTimezone returns a boolean if a field has been set.
 func (o *RefreshVDBByTimestampParameters) HasTimestampInDatabaseTimezone() bool {
-	if o != nil && o.TimestampInDatabaseTimezone != nil {
+	if o != nil && !IsNil(o.TimestampInDatabaseTimezone) {
 		return true
 	}
 
@@ -109,7 +114,7 @@ func (o *RefreshVDBByTimestampParameters) SetTimestampInDatabaseTimezone(v strin
 
 // GetDatasetId returns the DatasetId field value if set, zero value otherwise.
 func (o *RefreshVDBByTimestampParameters) GetDatasetId() string {
-	if o == nil || o.DatasetId == nil {
+	if o == nil || IsNil(o.DatasetId) {
 		var ret string
 		return ret
 	}
@@ -119,7 +124,7 @@ func (o *RefreshVDBByTimestampParameters) GetDatasetId() string {
 // GetDatasetIdOk returns a tuple with the DatasetId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RefreshVDBByTimestampParameters) GetDatasetIdOk() (*string, bool) {
-	if o == nil || o.DatasetId == nil {
+	if o == nil || IsNil(o.DatasetId) {
 		return nil, false
 	}
 	return o.DatasetId, true
@@ -127,7 +132,7 @@ func (o *RefreshVDBByTimestampParameters) GetDatasetIdOk() (*string, bool) {
 
 // HasDatasetId returns a boolean if a field has been set.
 func (o *RefreshVDBByTimestampParameters) HasDatasetId() bool {
-	if o != nil && o.DatasetId != nil {
+	if o != nil && !IsNil(o.DatasetId) {
 		return true
 	}
 
@@ -139,18 +144,61 @@ func (o *RefreshVDBByTimestampParameters) SetDatasetId(v string) {
 	o.DatasetId = &v
 }
 
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *RefreshVDBByTimestampParameters) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RefreshVDBByTimestampParameters) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *RefreshVDBByTimestampParameters) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *RefreshVDBByTimestampParameters) SetTimeflowId(v string) {
+	o.TimeflowId = &v
+}
+
 func (o RefreshVDBByTimestampParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Timestamp != nil {
-		toSerialize["timestamp"] = o.Timestamp
-	}
-	if o.TimestampInDatabaseTimezone != nil {
-		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
-	}
-	if o.DatasetId != nil {
-		toSerialize["dataset_id"] = o.DatasetId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RefreshVDBByTimestampParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.TimestampInDatabaseTimezone) {
+		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
+	}
+	if !IsNil(o.DatasetId) {
+		toSerialize["dataset_id"] = o.DatasetId
+	}
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
+	}
+	return toSerialize, nil
 }
 
 type NullableRefreshVDBByTimestampParameters struct {

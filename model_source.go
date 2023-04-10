@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the Source type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Source{}
 
 // Source The Delphix representation of the source database (not typically managed by Delphix).
 type Source struct {
@@ -39,6 +42,8 @@ type Source struct {
 	JdbcConnectionString NullableString `json:"jdbc_connection_string,omitempty"`
 	// The version of the plugin associated with this source database.
 	PluginVersion NullableString `json:"plugin_version,omitempty"`
+	IsDsource *bool `json:"is_dsource,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewSource instantiates a new Source object
@@ -60,7 +65,7 @@ func NewSourceWithDefaults() *Source {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Source) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -70,7 +75,7 @@ func (o *Source) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Source) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -78,7 +83,7 @@ func (o *Source) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Source) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -92,7 +97,7 @@ func (o *Source) SetId(v string) {
 
 // GetDatabaseType returns the DatabaseType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetDatabaseType() string {
-	if o == nil || o.DatabaseType.Get() == nil {
+	if o == nil || IsNil(o.DatabaseType.Get()) {
 		var ret string
 		return ret
 	}
@@ -103,7 +108,7 @@ func (o *Source) GetDatabaseType() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetDatabaseTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DatabaseType.Get(), o.DatabaseType.IsSet()
@@ -134,7 +139,7 @@ func (o *Source) UnsetDatabaseType() {
 
 // GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetName() string {
-	if o == nil || o.Name.Get() == nil {
+	if o == nil || IsNil(o.Name.Get()) {
 		var ret string
 		return ret
 	}
@@ -145,7 +150,7 @@ func (o *Source) GetName() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Name.Get(), o.Name.IsSet()
@@ -176,7 +181,7 @@ func (o *Source) UnsetName() {
 
 // GetDatabaseVersion returns the DatabaseVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetDatabaseVersion() string {
-	if o == nil || o.DatabaseVersion.Get() == nil {
+	if o == nil || IsNil(o.DatabaseVersion.Get()) {
 		var ret string
 		return ret
 	}
@@ -187,7 +192,7 @@ func (o *Source) GetDatabaseVersion() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetDatabaseVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DatabaseVersion.Get(), o.DatabaseVersion.IsSet()
@@ -218,7 +223,7 @@ func (o *Source) UnsetDatabaseVersion() {
 
 // GetEnvironmentId returns the EnvironmentId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetEnvironmentId() string {
-	if o == nil || o.EnvironmentId.Get() == nil {
+	if o == nil || IsNil(o.EnvironmentId.Get()) {
 		var ret string
 		return ret
 	}
@@ -229,7 +234,7 @@ func (o *Source) GetEnvironmentId() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetEnvironmentIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.EnvironmentId.Get(), o.EnvironmentId.IsSet()
@@ -260,7 +265,7 @@ func (o *Source) UnsetEnvironmentId() {
 
 // GetDataUuid returns the DataUuid field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetDataUuid() string {
-	if o == nil || o.DataUuid.Get() == nil {
+	if o == nil || IsNil(o.DataUuid.Get()) {
 		var ret string
 		return ret
 	}
@@ -271,7 +276,7 @@ func (o *Source) GetDataUuid() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetDataUuidOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DataUuid.Get(), o.DataUuid.IsSet()
@@ -302,7 +307,7 @@ func (o *Source) UnsetDataUuid() {
 
 // GetIpAddress returns the IpAddress field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetIpAddress() string {
-	if o == nil || o.IpAddress.Get() == nil {
+	if o == nil || IsNil(o.IpAddress.Get()) {
 		var ret string
 		return ret
 	}
@@ -313,7 +318,7 @@ func (o *Source) GetIpAddress() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetIpAddressOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.IpAddress.Get(), o.IpAddress.IsSet()
@@ -344,7 +349,7 @@ func (o *Source) UnsetIpAddress() {
 
 // GetFqdn returns the Fqdn field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetFqdn() string {
-	if o == nil || o.Fqdn.Get() == nil {
+	if o == nil || IsNil(o.Fqdn.Get()) {
 		var ret string
 		return ret
 	}
@@ -355,7 +360,7 @@ func (o *Source) GetFqdn() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetFqdnOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Fqdn.Get(), o.Fqdn.IsSet()
@@ -386,7 +391,7 @@ func (o *Source) UnsetFqdn() {
 
 // GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetSize() int64 {
-	if o == nil || o.Size.Get() == nil {
+	if o == nil || IsNil(o.Size.Get()) {
 		var ret int64
 		return ret
 	}
@@ -397,7 +402,7 @@ func (o *Source) GetSize() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetSizeOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Size.Get(), o.Size.IsSet()
@@ -428,7 +433,7 @@ func (o *Source) UnsetSize() {
 
 // GetJdbcConnectionString returns the JdbcConnectionString field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetJdbcConnectionString() string {
-	if o == nil || o.JdbcConnectionString.Get() == nil {
+	if o == nil || IsNil(o.JdbcConnectionString.Get()) {
 		var ret string
 		return ret
 	}
@@ -439,7 +444,7 @@ func (o *Source) GetJdbcConnectionString() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetJdbcConnectionStringOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.JdbcConnectionString.Get(), o.JdbcConnectionString.IsSet()
@@ -470,7 +475,7 @@ func (o *Source) UnsetJdbcConnectionString() {
 
 // GetPluginVersion returns the PluginVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Source) GetPluginVersion() string {
-	if o == nil || o.PluginVersion.Get() == nil {
+	if o == nil || IsNil(o.PluginVersion.Get()) {
 		var ret string
 		return ret
 	}
@@ -481,7 +486,7 @@ func (o *Source) GetPluginVersion() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Source) GetPluginVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.PluginVersion.Get(), o.PluginVersion.IsSet()
@@ -510,9 +515,81 @@ func (o *Source) UnsetPluginVersion() {
 	o.PluginVersion.Unset()
 }
 
+// GetIsDsource returns the IsDsource field value if set, zero value otherwise.
+func (o *Source) GetIsDsource() bool {
+	if o == nil || IsNil(o.IsDsource) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDsource
+}
+
+// GetIsDsourceOk returns a tuple with the IsDsource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetIsDsourceOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsDsource) {
+		return nil, false
+	}
+	return o.IsDsource, true
+}
+
+// HasIsDsource returns a boolean if a field has been set.
+func (o *Source) HasIsDsource() bool {
+	if o != nil && !IsNil(o.IsDsource) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDsource gets a reference to the given bool and assigns it to the IsDsource field.
+func (o *Source) SetIsDsource(v bool) {
+	o.IsDsource = &v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *Source) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Source) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Source) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o Source) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o Source) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
 	if o.DatabaseType.IsSet() {
@@ -545,7 +622,13 @@ func (o Source) MarshalJSON() ([]byte, error) {
 	if o.PluginVersion.IsSet() {
 		toSerialize["plugin_version"] = o.PluginVersion.Get()
 	}
-	return json.Marshal(toSerialize)
+	if !IsNil(o.IsDsource) {
+		toSerialize["is_dsource"] = o.IsDsource
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableSource struct {

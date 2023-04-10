@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,10 +15,15 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectivityCheckResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectivityCheckResponse{}
+
 // ConnectivityCheckResponse The result of the connectivity check.
 type ConnectivityCheckResponse struct {
 	// A message describing the result of the connectivity check.
 	Message string `json:"message"`
+	// A status describing the status of the connectivity check.
+	Status *string `json:"status,omitempty"`
 }
 
 // NewConnectivityCheckResponse instantiates a new ConnectivityCheckResponse object
@@ -52,7 +57,7 @@ func (o *ConnectivityCheckResponse) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
 func (o *ConnectivityCheckResponse) GetMessageOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Message, true
@@ -63,12 +68,53 @@ func (o *ConnectivityCheckResponse) SetMessage(v string) {
 	o.Message = v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *ConnectivityCheckResponse) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
+		var ret string
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckResponse) GetStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *ConnectivityCheckResponse) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *ConnectivityCheckResponse) SetStatus(v string) {
+	o.Status = &v
+}
+
 func (o ConnectivityCheckResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["message"] = o.Message
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectivityCheckResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["message"] = o.Message
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectivityCheckResponse struct {

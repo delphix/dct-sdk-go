@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the DeleteVDBParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeleteVDBParameters{}
 
 // DeleteVDBParameters Parameters to delete a VDB.
 type DeleteVDBParameters struct {
@@ -44,7 +47,7 @@ func NewDeleteVDBParametersWithDefaults() *DeleteVDBParameters {
 
 // GetForce returns the Force field value if set, zero value otherwise.
 func (o *DeleteVDBParameters) GetForce() bool {
-	if o == nil || o.Force == nil {
+	if o == nil || IsNil(o.Force) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *DeleteVDBParameters) GetForce() bool {
 // GetForceOk returns a tuple with the Force field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeleteVDBParameters) GetForceOk() (*bool, bool) {
-	if o == nil || o.Force == nil {
+	if o == nil || IsNil(o.Force) {
 		return nil, false
 	}
 	return o.Force, true
@@ -62,7 +65,7 @@ func (o *DeleteVDBParameters) GetForceOk() (*bool, bool) {
 
 // HasForce returns a boolean if a field has been set.
 func (o *DeleteVDBParameters) HasForce() bool {
-	if o != nil && o.Force != nil {
+	if o != nil && !IsNil(o.Force) {
 		return true
 	}
 
@@ -75,11 +78,19 @@ func (o *DeleteVDBParameters) SetForce(v bool) {
 }
 
 func (o DeleteVDBParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Force != nil {
-		toSerialize["force"] = o.Force
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeleteVDBParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Force) {
+		toSerialize["force"] = o.Force
+	}
+	return toSerialize, nil
 }
 
 type NullableDeleteVDBParameters struct {

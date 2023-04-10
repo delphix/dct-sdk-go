@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the EnableVDBParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EnableVDBParameters{}
 
 // EnableVDBParameters Parameters to enable a VDB.
 type EnableVDBParameters struct {
@@ -44,7 +47,7 @@ func NewEnableVDBParametersWithDefaults() *EnableVDBParameters {
 
 // GetAttemptStart returns the AttemptStart field value if set, zero value otherwise.
 func (o *EnableVDBParameters) GetAttemptStart() bool {
-	if o == nil || o.AttemptStart == nil {
+	if o == nil || IsNil(o.AttemptStart) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *EnableVDBParameters) GetAttemptStart() bool {
 // GetAttemptStartOk returns a tuple with the AttemptStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnableVDBParameters) GetAttemptStartOk() (*bool, bool) {
-	if o == nil || o.AttemptStart == nil {
+	if o == nil || IsNil(o.AttemptStart) {
 		return nil, false
 	}
 	return o.AttemptStart, true
@@ -62,7 +65,7 @@ func (o *EnableVDBParameters) GetAttemptStartOk() (*bool, bool) {
 
 // HasAttemptStart returns a boolean if a field has been set.
 func (o *EnableVDBParameters) HasAttemptStart() bool {
-	if o != nil && o.AttemptStart != nil {
+	if o != nil && !IsNil(o.AttemptStart) {
 		return true
 	}
 
@@ -75,11 +78,19 @@ func (o *EnableVDBParameters) SetAttemptStart(v bool) {
 }
 
 func (o EnableVDBParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AttemptStart != nil {
-		toSerialize["attempt_start"] = o.AttemptStart
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EnableVDBParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AttemptStart) {
+		toSerialize["attempt_start"] = o.AttemptStart
+	}
+	return toSerialize, nil
 }
 
 type NullableEnableVDBParameters struct {

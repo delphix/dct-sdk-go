@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the ListEnvironmentUsers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListEnvironmentUsers{}
 
 // ListEnvironmentUsers struct for ListEnvironmentUsers
 type ListEnvironmentUsers struct {
@@ -40,7 +43,7 @@ func NewListEnvironmentUsersWithDefaults() *ListEnvironmentUsers {
 
 // GetUsers returns the Users field value if set, zero value otherwise.
 func (o *ListEnvironmentUsers) GetUsers() []EnvironmentUser {
-	if o == nil || o.Users == nil {
+	if o == nil || IsNil(o.Users) {
 		var ret []EnvironmentUser
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ListEnvironmentUsers) GetUsers() []EnvironmentUser {
 // GetUsersOk returns a tuple with the Users field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListEnvironmentUsers) GetUsersOk() ([]EnvironmentUser, bool) {
-	if o == nil || o.Users == nil {
+	if o == nil || IsNil(o.Users) {
 		return nil, false
 	}
 	return o.Users, true
@@ -58,7 +61,7 @@ func (o *ListEnvironmentUsers) GetUsersOk() ([]EnvironmentUser, bool) {
 
 // HasUsers returns a boolean if a field has been set.
 func (o *ListEnvironmentUsers) HasUsers() bool {
-	if o != nil && o.Users != nil {
+	if o != nil && !IsNil(o.Users) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ListEnvironmentUsers) SetUsers(v []EnvironmentUser) {
 }
 
 func (o ListEnvironmentUsers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Users != nil {
-		toSerialize["users"] = o.Users
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ListEnvironmentUsers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Users) {
+		toSerialize["users"] = o.Users
+	}
+	return toSerialize, nil
 }
 
 type NullableListEnvironmentUsers struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,9 +15,13 @@ import (
 	"encoding/json"
 )
 
+// checks if the ListReportingScheduleResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListReportingScheduleResponse{}
+
 // ListReportingScheduleResponse struct for ListReportingScheduleResponse
 type ListReportingScheduleResponse struct {
 	Items []ReportingSchedule `json:"items,omitempty"`
+	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
 // NewListReportingScheduleResponse instantiates a new ListReportingScheduleResponse object
@@ -39,7 +43,7 @@ func NewListReportingScheduleResponseWithDefaults() *ListReportingScheduleRespon
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *ListReportingScheduleResponse) GetItems() []ReportingSchedule {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []ReportingSchedule
 		return ret
 	}
@@ -49,7 +53,7 @@ func (o *ListReportingScheduleResponse) GetItems() []ReportingSchedule {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListReportingScheduleResponse) GetItemsOk() ([]ReportingSchedule, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -57,7 +61,7 @@ func (o *ListReportingScheduleResponse) GetItemsOk() ([]ReportingSchedule, bool)
 
 // HasItems returns a boolean if a field has been set.
 func (o *ListReportingScheduleResponse) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -69,12 +73,55 @@ func (o *ListReportingScheduleResponse) SetItems(v []ReportingSchedule) {
 	o.Items = v
 }
 
+// GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
+func (o *ListReportingScheduleResponse) GetResponseMetadata() PaginatedResponseMetadata {
+	if o == nil || IsNil(o.ResponseMetadata) {
+		var ret PaginatedResponseMetadata
+		return ret
+	}
+	return *o.ResponseMetadata
+}
+
+// GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListReportingScheduleResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
+	if o == nil || IsNil(o.ResponseMetadata) {
+		return nil, false
+	}
+	return o.ResponseMetadata, true
+}
+
+// HasResponseMetadata returns a boolean if a field has been set.
+func (o *ListReportingScheduleResponse) HasResponseMetadata() bool {
+	if o != nil && !IsNil(o.ResponseMetadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
+func (o *ListReportingScheduleResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
+	o.ResponseMetadata = &v
+}
+
 func (o ListReportingScheduleResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ListReportingScheduleResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	if !IsNil(o.ResponseMetadata) {
+		toSerialize["response_metadata"] = o.ResponseMetadata
+	}
+	return toSerialize, nil
 }
 
 type NullableListReportingScheduleResponse struct {

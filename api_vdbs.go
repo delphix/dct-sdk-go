@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,16 +14,12 @@ package delphix_dct_api
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
 
 // VDBsApiService VDBsApi service
 type VDBsApiService service
@@ -76,7 +72,7 @@ func (a *VDBsApiService) CreateVdbTagsExecute(r ApiCreateVdbTagsRequest) (*TagsR
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/tags"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -131,9 +127,9 @@ func (a *VDBsApiService) CreateVdbTagsExecute(r ApiCreateVdbTagsRequest) (*TagsR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -206,7 +202,7 @@ func (a *VDBsApiService) DeleteVdbExecute(r ApiDeleteVdbRequest) (*DeleteVDBResp
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/delete"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -258,9 +254,9 @@ func (a *VDBsApiService) DeleteVdbExecute(r ApiDeleteVdbRequest) (*DeleteVDBResp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -331,7 +327,7 @@ func (a *VDBsApiService) DeleteVdbTagsExecute(r ApiDeleteVdbTagsRequest) (*http.
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/tags/delete"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -383,9 +379,9 @@ func (a *VDBsApiService) DeleteVdbTagsExecute(r ApiDeleteVdbTagsRequest) (*http.
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -449,7 +445,7 @@ func (a *VDBsApiService) DisableVdbExecute(r ApiDisableVdbRequest) (*DisableVDBR
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/disable"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -501,9 +497,9 @@ func (a *VDBsApiService) DisableVdbExecute(r ApiDisableVdbRequest) (*DisableVDBR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -576,7 +572,7 @@ func (a *VDBsApiService) EnableVdbExecute(r ApiEnableVdbRequest) (*EnableVDBResp
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/enable"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -628,9 +624,9 @@ func (a *VDBsApiService) EnableVdbExecute(r ApiEnableVdbRequest) (*EnableVDBResp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -660,7 +656,6 @@ type ApiGetTagsVdbRequest struct {
 	ApiService *VDBsApiService
 	vdbId string
 }
-
 
 func (r ApiGetTagsVdbRequest) Execute() (*TagsResponse, *http.Response, error) {
 	return r.ApiService.GetTagsVdbExecute(r)
@@ -697,7 +692,7 @@ func (a *VDBsApiService) GetTagsVdbExecute(r ApiGetTagsVdbRequest) (*TagsRespons
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/tags"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -747,9 +742,9 @@ func (a *VDBsApiService) GetTagsVdbExecute(r ApiGetTagsVdbRequest) (*TagsRespons
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -779,7 +774,6 @@ type ApiGetVdbByIdRequest struct {
 	ApiService *VDBsApiService
 	vdbId string
 }
-
 
 func (r ApiGetVdbByIdRequest) Execute() (*VDB, *http.Response, error) {
 	return r.ApiService.GetVdbByIdExecute(r)
@@ -816,7 +810,7 @@ func (a *VDBsApiService) GetVdbByIdExecute(r ApiGetVdbByIdRequest) (*VDB, *http.
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -866,9 +860,9 @@ func (a *VDBsApiService) GetVdbByIdExecute(r ApiGetVdbByIdRequest) (*VDB, *http.
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -906,6 +900,7 @@ func (r ApiGetVdbSnapshotsRequest) Limit(limit int32) ApiGetVdbSnapshotsRequest 
 	r.limit = &limit
 	return r
 }
+
 // Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiGetVdbSnapshotsRequest) Cursor(cursor string) ApiGetVdbSnapshotsRequest {
 	r.cursor = &cursor
@@ -947,7 +942,7 @@ func (a *VDBsApiService) GetVdbSnapshotsExecute(r ApiGetVdbSnapshotsRequest) (*L
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/snapshots"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -957,10 +952,10 @@ func (a *VDBsApiService) GetVdbSnapshotsExecute(r ApiGetVdbSnapshotsRequest) (*L
 	}
 
 	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.cursor != nil {
-		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1003,9 +998,9 @@ func (a *VDBsApiService) GetVdbSnapshotsExecute(r ApiGetVdbSnapshotsRequest) (*L
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1036,6 +1031,7 @@ type ApiGetVdbsRequest struct {
 	limit *int32
 	cursor *string
 	sort *string
+	permission *PermissionEnum
 }
 
 // Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
@@ -1043,14 +1039,22 @@ func (r ApiGetVdbsRequest) Limit(limit int32) ApiGetVdbsRequest {
 	r.limit = &limit
 	return r
 }
+
 // Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiGetVdbsRequest) Cursor(cursor string) ApiGetVdbsRequest {
 	r.cursor = &cursor
 	return r
 }
+
 // The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
 func (r ApiGetVdbsRequest) Sort(sort string) ApiGetVdbsRequest {
 	r.sort = &sort
+	return r
+}
+
+// Restrict the objects, which are allowed.
+func (r ApiGetVdbsRequest) Permission(permission PermissionEnum) ApiGetVdbsRequest {
+	r.permission = &permission
 	return r
 }
 
@@ -1093,13 +1097,16 @@ func (a *VDBsApiService) GetVdbsExecute(r ApiGetVdbsRequest) (*ListVDBsResponse,
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.cursor != nil {
-		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
 	}
 	if r.sort != nil {
-		localVarQueryParams.Add("sort", parameterToString(*r.sort, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	}
+	if r.permission != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "permission", r.permission, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1142,9 +1149,9 @@ func (a *VDBsApiService) GetVdbsExecute(r ApiGetVdbsRequest) (*ListVDBsResponse,
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1265,9 +1272,132 @@ func (a *VDBsApiService) ProvisionVdbBySnapshotExecute(r ApiProvisionVdbBySnapsh
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiProvisionVdbBySnapshotDefaultsRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	provisionVDBBySnapshotDefaultsRequest *ProvisionVDBBySnapshotDefaultsRequest
+}
+
+// The request to get default VDB provision parameters for provisioning a new VDB by snapshot.
+func (r ApiProvisionVdbBySnapshotDefaultsRequest) ProvisionVDBBySnapshotDefaultsRequest(provisionVDBBySnapshotDefaultsRequest ProvisionVDBBySnapshotDefaultsRequest) ApiProvisionVdbBySnapshotDefaultsRequest {
+	r.provisionVDBBySnapshotDefaultsRequest = &provisionVDBBySnapshotDefaultsRequest
+	return r
+}
+
+func (r ApiProvisionVdbBySnapshotDefaultsRequest) Execute() (*ProvisionVDBBySnapshotParameters, *http.Response, error) {
+	return r.ApiService.ProvisionVdbBySnapshotDefaultsExecute(r)
+}
+
+/*
+ProvisionVdbBySnapshotDefaults Get default provision parameters for provisioning a new VDB by snapshot.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiProvisionVdbBySnapshotDefaultsRequest
+*/
+func (a *VDBsApiService) ProvisionVdbBySnapshotDefaults(ctx context.Context) ApiProvisionVdbBySnapshotDefaultsRequest {
+	return ApiProvisionVdbBySnapshotDefaultsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ProvisionVDBBySnapshotParameters
+func (a *VDBsApiService) ProvisionVdbBySnapshotDefaultsExecute(r ApiProvisionVdbBySnapshotDefaultsRequest) (*ProvisionVDBBySnapshotParameters, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProvisionVDBBySnapshotParameters
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.ProvisionVdbBySnapshotDefaults")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/provision_by_snapshot/defaults"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.provisionVDBBySnapshotDefaultsRequest == nil {
+		return localVarReturnValue, nil, reportError("provisionVDBBySnapshotDefaultsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.provisionVDBBySnapshotDefaultsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1388,9 +1518,132 @@ func (a *VDBsApiService) ProvisionVdbByTimestampExecute(r ApiProvisionVdbByTimes
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiProvisionVdbByTimestampDefaultsRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	provisionVDBByTimestampDefaultsRequest *ProvisionVDBByTimestampDefaultsRequest
+}
+
+// The request to get default VDB provision parameters for provisioning a new VDB by timestamp.
+func (r ApiProvisionVdbByTimestampDefaultsRequest) ProvisionVDBByTimestampDefaultsRequest(provisionVDBByTimestampDefaultsRequest ProvisionVDBByTimestampDefaultsRequest) ApiProvisionVdbByTimestampDefaultsRequest {
+	r.provisionVDBByTimestampDefaultsRequest = &provisionVDBByTimestampDefaultsRequest
+	return r
+}
+
+func (r ApiProvisionVdbByTimestampDefaultsRequest) Execute() (*ProvisionVDBByTimestampParameters, *http.Response, error) {
+	return r.ApiService.ProvisionVdbByTimestampDefaultsExecute(r)
+}
+
+/*
+ProvisionVdbByTimestampDefaults Get default provision parameters for provisioning a new VDB by timestamp.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiProvisionVdbByTimestampDefaultsRequest
+*/
+func (a *VDBsApiService) ProvisionVdbByTimestampDefaults(ctx context.Context) ApiProvisionVdbByTimestampDefaultsRequest {
+	return ApiProvisionVdbByTimestampDefaultsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ProvisionVDBByTimestampParameters
+func (a *VDBsApiService) ProvisionVdbByTimestampDefaultsExecute(r ApiProvisionVdbByTimestampDefaultsRequest) (*ProvisionVDBByTimestampParameters, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProvisionVDBByTimestampParameters
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.ProvisionVdbByTimestampDefaults")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/provision_by_timestamp/defaults"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.provisionVDBByTimestampDefaultsRequest == nil {
+		return localVarReturnValue, nil, reportError("provisionVDBByTimestampDefaultsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.provisionVDBByTimestampDefaultsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1511,9 +1764,259 @@ func (a *VDBsApiService) ProvisionVdbFromBookmarkExecute(r ApiProvisionVdbFromBo
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiProvisionVdbFromBookmarkDefaultsRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	provisionVDBFromBookmarkDefaultsRequest *ProvisionVDBFromBookmarkDefaultsRequest
+}
+
+// The request to get default VDB provision parameters for provisioning a new VDB from a bookmark.
+func (r ApiProvisionVdbFromBookmarkDefaultsRequest) ProvisionVDBFromBookmarkDefaultsRequest(provisionVDBFromBookmarkDefaultsRequest ProvisionVDBFromBookmarkDefaultsRequest) ApiProvisionVdbFromBookmarkDefaultsRequest {
+	r.provisionVDBFromBookmarkDefaultsRequest = &provisionVDBFromBookmarkDefaultsRequest
+	return r
+}
+
+func (r ApiProvisionVdbFromBookmarkDefaultsRequest) Execute() (*ProvisionVDBFromBookmarkParameters, *http.Response, error) {
+	return r.ApiService.ProvisionVdbFromBookmarkDefaultsExecute(r)
+}
+
+/*
+ProvisionVdbFromBookmarkDefaults Get default provision parameters for provisioning a new VDB from a bookmark.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiProvisionVdbFromBookmarkDefaultsRequest
+*/
+func (a *VDBsApiService) ProvisionVdbFromBookmarkDefaults(ctx context.Context) ApiProvisionVdbFromBookmarkDefaultsRequest {
+	return ApiProvisionVdbFromBookmarkDefaultsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ProvisionVDBFromBookmarkParameters
+func (a *VDBsApiService) ProvisionVdbFromBookmarkDefaultsExecute(r ApiProvisionVdbFromBookmarkDefaultsRequest) (*ProvisionVDBFromBookmarkParameters, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProvisionVDBFromBookmarkParameters
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.ProvisionVdbFromBookmarkDefaults")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/provision_from_bookmark/defaults"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.provisionVDBFromBookmarkDefaultsRequest == nil {
+		return localVarReturnValue, nil, reportError("provisionVDBFromBookmarkDefaultsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.provisionVDBFromBookmarkDefaultsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRefreshVdbByLocationRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	vdbId string
+	refreshVDBByLocationParameters *RefreshVDBByLocationParameters
+}
+
+// The parameters to refresh a VDB.
+func (r ApiRefreshVdbByLocationRequest) RefreshVDBByLocationParameters(refreshVDBByLocationParameters RefreshVDBByLocationParameters) ApiRefreshVdbByLocationRequest {
+	r.refreshVDBByLocationParameters = &refreshVDBByLocationParameters
+	return r
+}
+
+func (r ApiRefreshVdbByLocationRequest) Execute() (*RefreshVDBByLocationResponse, *http.Response, error) {
+	return r.ApiService.RefreshVdbByLocationExecute(r)
+}
+
+/*
+RefreshVdbByLocation Refresh a VDB by location.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbId The ID of the VDB.
+ @return ApiRefreshVdbByLocationRequest
+*/
+func (a *VDBsApiService) RefreshVdbByLocation(ctx context.Context, vdbId string) ApiRefreshVdbByLocationRequest {
+	return ApiRefreshVdbByLocationRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbId: vdbId,
+	}
+}
+
+// Execute executes the request
+//  @return RefreshVDBByLocationResponse
+func (a *VDBsApiService) RefreshVdbByLocationExecute(r ApiRefreshVdbByLocationRequest) (*RefreshVDBByLocationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RefreshVDBByLocationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.RefreshVdbByLocation")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/{vdbId}/refresh_by_location"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.refreshVDBByLocationParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1586,7 +2089,7 @@ func (a *VDBsApiService) RefreshVdbBySnapshotExecute(r ApiRefreshVdbBySnapshotRe
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/refresh_by_snapshot"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1638,9 +2141,9 @@ func (a *VDBsApiService) RefreshVdbBySnapshotExecute(r ApiRefreshVdbBySnapshotRe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1713,7 +2216,7 @@ func (a *VDBsApiService) RefreshVdbByTimestampExecute(r ApiRefreshVdbByTimestamp
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/refresh_by_timestamp"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1765,9 +2268,9 @@ func (a *VDBsApiService) RefreshVdbByTimestampExecute(r ApiRefreshVdbByTimestamp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1840,7 +2343,7 @@ func (a *VDBsApiService) RefreshVdbFromBookmarkExecute(r ApiRefreshVdbFromBookma
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/refresh_from_bookmark"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1892,9 +2395,9 @@ func (a *VDBsApiService) RefreshVdbFromBookmarkExecute(r ApiRefreshVdbFromBookma
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1967,7 +2470,7 @@ func (a *VDBsApiService) RollbackVdbBySnapshotExecute(r ApiRollbackVdbBySnapshot
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/rollback_by_snapshot"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2019,9 +2522,9 @@ func (a *VDBsApiService) RollbackVdbBySnapshotExecute(r ApiRollbackVdbBySnapshot
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2094,7 +2597,7 @@ func (a *VDBsApiService) RollbackVdbByTimestampExecute(r ApiRollbackVdbByTimesta
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/rollback_by_timestamp"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2146,9 +2649,9 @@ func (a *VDBsApiService) RollbackVdbByTimestampExecute(r ApiRollbackVdbByTimesta
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2221,7 +2724,7 @@ func (a *VDBsApiService) RollbackVdbFromBookmarkExecute(r ApiRollbackVdbFromBook
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/rollback_from_bookmark"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2273,9 +2776,9 @@ func (a *VDBsApiService) RollbackVdbFromBookmarkExecute(r ApiRollbackVdbFromBook
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2306,6 +2809,7 @@ type ApiSearchVdbsRequest struct {
 	limit *int32
 	cursor *string
 	sort *string
+	permission *PermissionEnum
 	searchBody *SearchBody
 }
 
@@ -2314,16 +2818,25 @@ func (r ApiSearchVdbsRequest) Limit(limit int32) ApiSearchVdbsRequest {
 	r.limit = &limit
 	return r
 }
+
 // Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
 func (r ApiSearchVdbsRequest) Cursor(cursor string) ApiSearchVdbsRequest {
 	r.cursor = &cursor
 	return r
 }
+
 // The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
 func (r ApiSearchVdbsRequest) Sort(sort string) ApiSearchVdbsRequest {
 	r.sort = &sort
 	return r
 }
+
+// Restrict the objects, which are allowed.
+func (r ApiSearchVdbsRequest) Permission(permission PermissionEnum) ApiSearchVdbsRequest {
+	r.permission = &permission
+	return r
+}
+
 // A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression. 
 func (r ApiSearchVdbsRequest) SearchBody(searchBody SearchBody) ApiSearchVdbsRequest {
 	r.searchBody = &searchBody
@@ -2369,13 +2882,16 @@ func (a *VDBsApiService) SearchVdbsExecute(r ApiSearchVdbsRequest) (*SearchVDBsR
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.cursor != nil {
-		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
 	}
 	if r.sort != nil {
-		localVarQueryParams.Add("sort", parameterToString(*r.sort, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	}
+	if r.permission != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "permission", r.permission, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2420,9 +2936,9 @@ func (a *VDBsApiService) SearchVdbsExecute(r ApiSearchVdbsRequest) (*SearchVDBsR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2452,7 +2968,6 @@ type ApiSnapshotVdbRequest struct {
 	ApiService *VDBsApiService
 	vdbId string
 }
-
 
 func (r ApiSnapshotVdbRequest) Execute() (*SnapshotVDBResponse, *http.Response, error) {
 	return r.ApiService.SnapshotVdbExecute(r)
@@ -2489,7 +3004,7 @@ func (a *VDBsApiService) SnapshotVdbExecute(r ApiSnapshotVdbRequest) (*SnapshotV
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/snapshots"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2539,9 +3054,9 @@ func (a *VDBsApiService) SnapshotVdbExecute(r ApiSnapshotVdbRequest) (*SnapshotV
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2571,7 +3086,6 @@ type ApiStartVdbRequest struct {
 	ApiService *VDBsApiService
 	vdbId string
 }
-
 
 func (r ApiStartVdbRequest) Execute() (*StartVDBResponse, *http.Response, error) {
 	return r.ApiService.StartVdbExecute(r)
@@ -2608,7 +3122,7 @@ func (a *VDBsApiService) StartVdbExecute(r ApiStartVdbRequest) (*StartVDBRespons
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/start"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2658,9 +3172,9 @@ func (a *VDBsApiService) StartVdbExecute(r ApiStartVdbRequest) (*StartVDBRespons
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2690,7 +3204,6 @@ type ApiStopVdbRequest struct {
 	ApiService *VDBsApiService
 	vdbId string
 }
-
 
 func (r ApiStopVdbRequest) Execute() (*StopVDBResponse, *http.Response, error) {
 	return r.ApiService.StopVdbExecute(r)
@@ -2727,7 +3240,7 @@ func (a *VDBsApiService) StopVdbExecute(r ApiStopVdbRequest) (*StopVDBResponse, 
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}/stop"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2777,9 +3290,136 @@ func (a *VDBsApiService) StopVdbExecute(r ApiStopVdbRequest) (*StopVDBResponse, 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSwitchTimeflowRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	vdbId string
+	switchTimeflowParameters *SwitchTimeflowParameters
+}
+
+// The parameters to switch the timeflow of a VDB.
+func (r ApiSwitchTimeflowRequest) SwitchTimeflowParameters(switchTimeflowParameters SwitchTimeflowParameters) ApiSwitchTimeflowRequest {
+	r.switchTimeflowParameters = &switchTimeflowParameters
+	return r
+}
+
+func (r ApiSwitchTimeflowRequest) Execute() (*SwitchTimeflowResponse, *http.Response, error) {
+	return r.ApiService.SwitchTimeflowExecute(r)
+}
+
+/*
+SwitchTimeflow Switches the current timeflow of a VDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbId The ID of the VDB.
+ @return ApiSwitchTimeflowRequest
+*/
+func (a *VDBsApiService) SwitchTimeflow(ctx context.Context, vdbId string) ApiSwitchTimeflowRequest {
+	return ApiSwitchTimeflowRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbId: vdbId,
+	}
+}
+
+// Execute executes the request
+//  @return SwitchTimeflowResponse
+func (a *VDBsApiService) SwitchTimeflowExecute(r ApiSwitchTimeflowRequest) (*SwitchTimeflowResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SwitchTimeflowResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.SwitchTimeflow")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/{vdbId}/switch_timeflow"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.switchTimeflowParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2852,7 +3492,7 @@ func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*Updat
 	}
 
 	localVarPath := localBasePath + "/vdbs/{vdbId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterToString(r.vdbId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2904,9 +3544,9 @@ func (a *VDBsApiService) UpdateVdbByIdExecute(r ApiUpdateVdbByIdRequest) (*Updat
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}

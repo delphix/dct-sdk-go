@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the VDB type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &VDB{}
 
 // VDB A Delphix virtual database or dataset.
 type VDB struct {
@@ -32,6 +35,12 @@ type VDB struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// The runtime status of the VDB. 'Unknown' if all attempts to connect to the dataset failed.
 	Status NullableString `json:"status,omitempty"`
+	// The VDB is masked or not.
+	Masked NullableBool `json:"masked,omitempty"`
+	// The timestamp for parent timeflow.
+	ParentTimeflowTimestamp NullableTime `json:"parent_timeflow_timestamp,omitempty"`
+	// The timezone for parent timeflow.
+	ParentTimeflowTimezone NullableString `json:"parent_timeflow_timezone,omitempty"`
 	// A reference to the Environment that hosts this VDB.
 	EnvironmentId NullableString `json:"environment_id,omitempty"`
 	// The IP address of the VDB's host.
@@ -40,12 +49,34 @@ type VDB struct {
 	Fqdn NullableString `json:"fqdn,omitempty"`
 	// A reference to the parent dataset of this VDB.
 	ParentId NullableString `json:"parent_id,omitempty"`
+	// A reference to the parent dSource of this VDB.
+	ParentDsourceId NullableString `json:"parent_dsource_id,omitempty"`
 	// The name of the group containing this VDB.
 	GroupName NullableString `json:"group_name,omitempty"`
+	// Name of the Engine where this VDB is hosted
+	EngineName NullableString `json:"engine_name,omitempty"`
+	// A reference to the CDB or VCDB associated with this VDB.
+	CdbId NullableString `json:"cdb_id,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 	// The date this VDB was created.
 	CreationDate NullableTime `json:"creation_date,omitempty"`
 	Hooks *VirtualDatasetHooks `json:"hooks,omitempty"`
+	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
+	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
+	// A reference to the Database Template.
+	TemplateId NullableString `json:"template_id,omitempty"`
+	// Database configuration parameter overrides.
+	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
+	// Specifies additional locations on which to mount a subdirectory of an AppData container. Can only be updated while the VDB is disabled.
+	AdditionalMountPoints []AdditionalMountPoint `json:"additional_mount_points,omitempty"`
+	// The parameters specified by the source config schema in the toolkit
+	AppdataConfigParams map[string]interface{} `json:"appdata_config_params,omitempty"`
+	// Mount point for the VDB (Oracle, ASE, AppData).
+	MountPoint *string `json:"mount_point,omitempty"`
+	// A reference to the currently active timeflow for this VDB.
+	CurrentTimeflowId *string `json:"current_timeflow_id,omitempty"`
+	// A reference to the previous timeflow for this VDB.
+	PreviousTimeflowId *string `json:"previous_timeflow_id,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -67,7 +98,7 @@ func NewVDBWithDefaults() *VDB {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *VDB) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -77,7 +108,7 @@ func (o *VDB) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDB) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -85,7 +116,7 @@ func (o *VDB) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *VDB) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -99,7 +130,7 @@ func (o *VDB) SetId(v string) {
 
 // GetDatabaseType returns the DatabaseType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetDatabaseType() string {
-	if o == nil || o.DatabaseType.Get() == nil {
+	if o == nil || IsNil(o.DatabaseType.Get()) {
 		var ret string
 		return ret
 	}
@@ -110,7 +141,7 @@ func (o *VDB) GetDatabaseType() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetDatabaseTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DatabaseType.Get(), o.DatabaseType.IsSet()
@@ -141,7 +172,7 @@ func (o *VDB) UnsetDatabaseType() {
 
 // GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetName() string {
-	if o == nil || o.Name.Get() == nil {
+	if o == nil || IsNil(o.Name.Get()) {
 		var ret string
 		return ret
 	}
@@ -152,7 +183,7 @@ func (o *VDB) GetName() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Name.Get(), o.Name.IsSet()
@@ -183,7 +214,7 @@ func (o *VDB) UnsetName() {
 
 // GetDatabaseVersion returns the DatabaseVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetDatabaseVersion() string {
-	if o == nil || o.DatabaseVersion.Get() == nil {
+	if o == nil || IsNil(o.DatabaseVersion.Get()) {
 		var ret string
 		return ret
 	}
@@ -194,7 +225,7 @@ func (o *VDB) GetDatabaseVersion() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetDatabaseVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DatabaseVersion.Get(), o.DatabaseVersion.IsSet()
@@ -225,7 +256,7 @@ func (o *VDB) UnsetDatabaseVersion() {
 
 // GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetSize() int64 {
-	if o == nil || o.Size.Get() == nil {
+	if o == nil || IsNil(o.Size.Get()) {
 		var ret int64
 		return ret
 	}
@@ -236,7 +267,7 @@ func (o *VDB) GetSize() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetSizeOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Size.Get(), o.Size.IsSet()
@@ -267,7 +298,7 @@ func (o *VDB) UnsetSize() {
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
 func (o *VDB) GetEngineId() string {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		var ret string
 		return ret
 	}
@@ -277,7 +308,7 @@ func (o *VDB) GetEngineId() string {
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDB) GetEngineIdOk() (*string, bool) {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		return nil, false
 	}
 	return o.EngineId, true
@@ -285,7 +316,7 @@ func (o *VDB) GetEngineIdOk() (*string, bool) {
 
 // HasEngineId returns a boolean if a field has been set.
 func (o *VDB) HasEngineId() bool {
-	if o != nil && o.EngineId != nil {
+	if o != nil && !IsNil(o.EngineId) {
 		return true
 	}
 
@@ -299,7 +330,7 @@ func (o *VDB) SetEngineId(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetStatus() string {
-	if o == nil || o.Status.Get() == nil {
+	if o == nil || IsNil(o.Status.Get()) {
 		var ret string
 		return ret
 	}
@@ -310,7 +341,7 @@ func (o *VDB) GetStatus() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetStatusOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Status.Get(), o.Status.IsSet()
@@ -339,9 +370,135 @@ func (o *VDB) UnsetStatus() {
 	o.Status.Unset()
 }
 
+// GetMasked returns the Masked field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetMasked() bool {
+	if o == nil || IsNil(o.Masked.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.Masked.Get()
+}
+
+// GetMaskedOk returns a tuple with the Masked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetMaskedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Masked.Get(), o.Masked.IsSet()
+}
+
+// HasMasked returns a boolean if a field has been set.
+func (o *VDB) HasMasked() bool {
+	if o != nil && o.Masked.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMasked gets a reference to the given NullableBool and assigns it to the Masked field.
+func (o *VDB) SetMasked(v bool) {
+	o.Masked.Set(&v)
+}
+// SetMaskedNil sets the value for Masked to be an explicit nil
+func (o *VDB) SetMaskedNil() {
+	o.Masked.Set(nil)
+}
+
+// UnsetMasked ensures that no value is present for Masked, not even an explicit nil
+func (o *VDB) UnsetMasked() {
+	o.Masked.Unset()
+}
+
+// GetParentTimeflowTimestamp returns the ParentTimeflowTimestamp field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetParentTimeflowTimestamp() time.Time {
+	if o == nil || IsNil(o.ParentTimeflowTimestamp.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ParentTimeflowTimestamp.Get()
+}
+
+// GetParentTimeflowTimestampOk returns a tuple with the ParentTimeflowTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetParentTimeflowTimestampOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ParentTimeflowTimestamp.Get(), o.ParentTimeflowTimestamp.IsSet()
+}
+
+// HasParentTimeflowTimestamp returns a boolean if a field has been set.
+func (o *VDB) HasParentTimeflowTimestamp() bool {
+	if o != nil && o.ParentTimeflowTimestamp.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetParentTimeflowTimestamp gets a reference to the given NullableTime and assigns it to the ParentTimeflowTimestamp field.
+func (o *VDB) SetParentTimeflowTimestamp(v time.Time) {
+	o.ParentTimeflowTimestamp.Set(&v)
+}
+// SetParentTimeflowTimestampNil sets the value for ParentTimeflowTimestamp to be an explicit nil
+func (o *VDB) SetParentTimeflowTimestampNil() {
+	o.ParentTimeflowTimestamp.Set(nil)
+}
+
+// UnsetParentTimeflowTimestamp ensures that no value is present for ParentTimeflowTimestamp, not even an explicit nil
+func (o *VDB) UnsetParentTimeflowTimestamp() {
+	o.ParentTimeflowTimestamp.Unset()
+}
+
+// GetParentTimeflowTimezone returns the ParentTimeflowTimezone field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetParentTimeflowTimezone() string {
+	if o == nil || IsNil(o.ParentTimeflowTimezone.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ParentTimeflowTimezone.Get()
+}
+
+// GetParentTimeflowTimezoneOk returns a tuple with the ParentTimeflowTimezone field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetParentTimeflowTimezoneOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ParentTimeflowTimezone.Get(), o.ParentTimeflowTimezone.IsSet()
+}
+
+// HasParentTimeflowTimezone returns a boolean if a field has been set.
+func (o *VDB) HasParentTimeflowTimezone() bool {
+	if o != nil && o.ParentTimeflowTimezone.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetParentTimeflowTimezone gets a reference to the given NullableString and assigns it to the ParentTimeflowTimezone field.
+func (o *VDB) SetParentTimeflowTimezone(v string) {
+	o.ParentTimeflowTimezone.Set(&v)
+}
+// SetParentTimeflowTimezoneNil sets the value for ParentTimeflowTimezone to be an explicit nil
+func (o *VDB) SetParentTimeflowTimezoneNil() {
+	o.ParentTimeflowTimezone.Set(nil)
+}
+
+// UnsetParentTimeflowTimezone ensures that no value is present for ParentTimeflowTimezone, not even an explicit nil
+func (o *VDB) UnsetParentTimeflowTimezone() {
+	o.ParentTimeflowTimezone.Unset()
+}
+
 // GetEnvironmentId returns the EnvironmentId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetEnvironmentId() string {
-	if o == nil || o.EnvironmentId.Get() == nil {
+	if o == nil || IsNil(o.EnvironmentId.Get()) {
 		var ret string
 		return ret
 	}
@@ -352,7 +509,7 @@ func (o *VDB) GetEnvironmentId() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetEnvironmentIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.EnvironmentId.Get(), o.EnvironmentId.IsSet()
@@ -383,7 +540,7 @@ func (o *VDB) UnsetEnvironmentId() {
 
 // GetIpAddress returns the IpAddress field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetIpAddress() string {
-	if o == nil || o.IpAddress.Get() == nil {
+	if o == nil || IsNil(o.IpAddress.Get()) {
 		var ret string
 		return ret
 	}
@@ -394,7 +551,7 @@ func (o *VDB) GetIpAddress() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetIpAddressOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.IpAddress.Get(), o.IpAddress.IsSet()
@@ -425,7 +582,7 @@ func (o *VDB) UnsetIpAddress() {
 
 // GetFqdn returns the Fqdn field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetFqdn() string {
-	if o == nil || o.Fqdn.Get() == nil {
+	if o == nil || IsNil(o.Fqdn.Get()) {
 		var ret string
 		return ret
 	}
@@ -436,7 +593,7 @@ func (o *VDB) GetFqdn() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetFqdnOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Fqdn.Get(), o.Fqdn.IsSet()
@@ -467,7 +624,7 @@ func (o *VDB) UnsetFqdn() {
 
 // GetParentId returns the ParentId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetParentId() string {
-	if o == nil || o.ParentId.Get() == nil {
+	if o == nil || IsNil(o.ParentId.Get()) {
 		var ret string
 		return ret
 	}
@@ -478,7 +635,7 @@ func (o *VDB) GetParentId() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetParentIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.ParentId.Get(), o.ParentId.IsSet()
@@ -507,9 +664,51 @@ func (o *VDB) UnsetParentId() {
 	o.ParentId.Unset()
 }
 
+// GetParentDsourceId returns the ParentDsourceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetParentDsourceId() string {
+	if o == nil || IsNil(o.ParentDsourceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ParentDsourceId.Get()
+}
+
+// GetParentDsourceIdOk returns a tuple with the ParentDsourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetParentDsourceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ParentDsourceId.Get(), o.ParentDsourceId.IsSet()
+}
+
+// HasParentDsourceId returns a boolean if a field has been set.
+func (o *VDB) HasParentDsourceId() bool {
+	if o != nil && o.ParentDsourceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetParentDsourceId gets a reference to the given NullableString and assigns it to the ParentDsourceId field.
+func (o *VDB) SetParentDsourceId(v string) {
+	o.ParentDsourceId.Set(&v)
+}
+// SetParentDsourceIdNil sets the value for ParentDsourceId to be an explicit nil
+func (o *VDB) SetParentDsourceIdNil() {
+	o.ParentDsourceId.Set(nil)
+}
+
+// UnsetParentDsourceId ensures that no value is present for ParentDsourceId, not even an explicit nil
+func (o *VDB) UnsetParentDsourceId() {
+	o.ParentDsourceId.Unset()
+}
+
 // GetGroupName returns the GroupName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetGroupName() string {
-	if o == nil || o.GroupName.Get() == nil {
+	if o == nil || IsNil(o.GroupName.Get()) {
 		var ret string
 		return ret
 	}
@@ -520,7 +719,7 @@ func (o *VDB) GetGroupName() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetGroupNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.GroupName.Get(), o.GroupName.IsSet()
@@ -549,9 +748,93 @@ func (o *VDB) UnsetGroupName() {
 	o.GroupName.Unset()
 }
 
+// GetEngineName returns the EngineName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.EngineName.Get()
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetEngineNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EngineName.Get(), o.EngineName.IsSet()
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *VDB) HasEngineName() bool {
+	if o != nil && o.EngineName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given NullableString and assigns it to the EngineName field.
+func (o *VDB) SetEngineName(v string) {
+	o.EngineName.Set(&v)
+}
+// SetEngineNameNil sets the value for EngineName to be an explicit nil
+func (o *VDB) SetEngineNameNil() {
+	o.EngineName.Set(nil)
+}
+
+// UnsetEngineName ensures that no value is present for EngineName, not even an explicit nil
+func (o *VDB) UnsetEngineName() {
+	o.EngineName.Unset()
+}
+
+// GetCdbId returns the CdbId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetCdbId() string {
+	if o == nil || IsNil(o.CdbId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CdbId.Get()
+}
+
+// GetCdbIdOk returns a tuple with the CdbId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetCdbIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CdbId.Get(), o.CdbId.IsSet()
+}
+
+// HasCdbId returns a boolean if a field has been set.
+func (o *VDB) HasCdbId() bool {
+	if o != nil && o.CdbId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbId gets a reference to the given NullableString and assigns it to the CdbId field.
+func (o *VDB) SetCdbId(v string) {
+	o.CdbId.Set(&v)
+}
+// SetCdbIdNil sets the value for CdbId to be an explicit nil
+func (o *VDB) SetCdbIdNil() {
+	o.CdbId.Set(nil)
+}
+
+// UnsetCdbId ensures that no value is present for CdbId, not even an explicit nil
+func (o *VDB) UnsetCdbId() {
+	o.CdbId.Unset()
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *VDB) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -561,7 +844,7 @@ func (o *VDB) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDB) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -569,7 +852,7 @@ func (o *VDB) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *VDB) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -583,7 +866,7 @@ func (o *VDB) SetTags(v []Tag) {
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate.Get() == nil {
+	if o == nil || IsNil(o.CreationDate.Get()) {
 		var ret time.Time
 		return ret
 	}
@@ -594,7 +877,7 @@ func (o *VDB) GetCreationDate() time.Time {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *VDB) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.CreationDate.Get(), o.CreationDate.IsSet()
@@ -625,7 +908,7 @@ func (o *VDB) UnsetCreationDate() {
 
 // GetHooks returns the Hooks field value if set, zero value otherwise.
 func (o *VDB) GetHooks() VirtualDatasetHooks {
-	if o == nil || o.Hooks == nil {
+	if o == nil || IsNil(o.Hooks) {
 		var ret VirtualDatasetHooks
 		return ret
 	}
@@ -635,7 +918,7 @@ func (o *VDB) GetHooks() VirtualDatasetHooks {
 // GetHooksOk returns a tuple with the Hooks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDB) GetHooksOk() (*VirtualDatasetHooks, bool) {
-	if o == nil || o.Hooks == nil {
+	if o == nil || IsNil(o.Hooks) {
 		return nil, false
 	}
 	return o.Hooks, true
@@ -643,7 +926,7 @@ func (o *VDB) GetHooksOk() (*VirtualDatasetHooks, bool) {
 
 // HasHooks returns a boolean if a field has been set.
 func (o *VDB) HasHooks() bool {
-	if o != nil && o.Hooks != nil {
+	if o != nil && !IsNil(o.Hooks) {
 		return true
 	}
 
@@ -655,9 +938,287 @@ func (o *VDB) SetHooks(v VirtualDatasetHooks) {
 	o.Hooks = &v
 }
 
+// GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetAppdataSourceParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AppdataSourceParams
+}
+
+// GetAppdataSourceParamsOk returns a tuple with the AppdataSourceParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetAppdataSourceParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AppdataSourceParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.AppdataSourceParams, true
+}
+
+// HasAppdataSourceParams returns a boolean if a field has been set.
+func (o *VDB) HasAppdataSourceParams() bool {
+	if o != nil && IsNil(o.AppdataSourceParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataSourceParams gets a reference to the given map[string]interface{} and assigns it to the AppdataSourceParams field.
+func (o *VDB) SetAppdataSourceParams(v map[string]interface{}) {
+	o.AppdataSourceParams = v
+}
+
+// GetTemplateId returns the TemplateId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetTemplateId() string {
+	if o == nil || IsNil(o.TemplateId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateId.Get()
+}
+
+// GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetTemplateIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TemplateId.Get(), o.TemplateId.IsSet()
+}
+
+// HasTemplateId returns a boolean if a field has been set.
+func (o *VDB) HasTemplateId() bool {
+	if o != nil && o.TemplateId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateId gets a reference to the given NullableString and assigns it to the TemplateId field.
+func (o *VDB) SetTemplateId(v string) {
+	o.TemplateId.Set(&v)
+}
+// SetTemplateIdNil sets the value for TemplateId to be an explicit nil
+func (o *VDB) SetTemplateIdNil() {
+	o.TemplateId.Set(nil)
+}
+
+// UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
+func (o *VDB) UnsetTemplateId() {
+	o.TemplateId.Unset()
+}
+
+// GetConfigParams returns the ConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetConfigParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.ConfigParams
+}
+
+// GetConfigParamsOk returns a tuple with the ConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.ConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.ConfigParams, true
+}
+
+// HasConfigParams returns a boolean if a field has been set.
+func (o *VDB) HasConfigParams() bool {
+	if o != nil && IsNil(o.ConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfigParams gets a reference to the given map[string]interface{} and assigns it to the ConfigParams field.
+func (o *VDB) SetConfigParams(v map[string]interface{}) {
+	o.ConfigParams = v
+}
+
+// GetAdditionalMountPoints returns the AdditionalMountPoints field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetAdditionalMountPoints() []AdditionalMountPoint {
+	if o == nil {
+		var ret []AdditionalMountPoint
+		return ret
+	}
+	return o.AdditionalMountPoints
+}
+
+// GetAdditionalMountPointsOk returns a tuple with the AdditionalMountPoints field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetAdditionalMountPointsOk() ([]AdditionalMountPoint, bool) {
+	if o == nil || IsNil(o.AdditionalMountPoints) {
+		return nil, false
+	}
+	return o.AdditionalMountPoints, true
+}
+
+// HasAdditionalMountPoints returns a boolean if a field has been set.
+func (o *VDB) HasAdditionalMountPoints() bool {
+	if o != nil && IsNil(o.AdditionalMountPoints) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdditionalMountPoints gets a reference to the given []AdditionalMountPoint and assigns it to the AdditionalMountPoints field.
+func (o *VDB) SetAdditionalMountPoints(v []AdditionalMountPoint) {
+	o.AdditionalMountPoints = v
+}
+
+// GetAppdataConfigParams returns the AppdataConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetAppdataConfigParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AppdataConfigParams
+}
+
+// GetAppdataConfigParamsOk returns a tuple with the AppdataConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetAppdataConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AppdataConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.AppdataConfigParams, true
+}
+
+// HasAppdataConfigParams returns a boolean if a field has been set.
+func (o *VDB) HasAppdataConfigParams() bool {
+	if o != nil && IsNil(o.AppdataConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataConfigParams gets a reference to the given map[string]interface{} and assigns it to the AppdataConfigParams field.
+func (o *VDB) SetAppdataConfigParams(v map[string]interface{}) {
+	o.AppdataConfigParams = v
+}
+
+// GetMountPoint returns the MountPoint field value if set, zero value otherwise.
+func (o *VDB) GetMountPoint() string {
+	if o == nil || IsNil(o.MountPoint) {
+		var ret string
+		return ret
+	}
+	return *o.MountPoint
+}
+
+// GetMountPointOk returns a tuple with the MountPoint field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetMountPointOk() (*string, bool) {
+	if o == nil || IsNil(o.MountPoint) {
+		return nil, false
+	}
+	return o.MountPoint, true
+}
+
+// HasMountPoint returns a boolean if a field has been set.
+func (o *VDB) HasMountPoint() bool {
+	if o != nil && !IsNil(o.MountPoint) {
+		return true
+	}
+
+	return false
+}
+
+// SetMountPoint gets a reference to the given string and assigns it to the MountPoint field.
+func (o *VDB) SetMountPoint(v string) {
+	o.MountPoint = &v
+}
+
+// GetCurrentTimeflowId returns the CurrentTimeflowId field value if set, zero value otherwise.
+func (o *VDB) GetCurrentTimeflowId() string {
+	if o == nil || IsNil(o.CurrentTimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.CurrentTimeflowId
+}
+
+// GetCurrentTimeflowIdOk returns a tuple with the CurrentTimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetCurrentTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CurrentTimeflowId) {
+		return nil, false
+	}
+	return o.CurrentTimeflowId, true
+}
+
+// HasCurrentTimeflowId returns a boolean if a field has been set.
+func (o *VDB) HasCurrentTimeflowId() bool {
+	if o != nil && !IsNil(o.CurrentTimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrentTimeflowId gets a reference to the given string and assigns it to the CurrentTimeflowId field.
+func (o *VDB) SetCurrentTimeflowId(v string) {
+	o.CurrentTimeflowId = &v
+}
+
+// GetPreviousTimeflowId returns the PreviousTimeflowId field value if set, zero value otherwise.
+func (o *VDB) GetPreviousTimeflowId() string {
+	if o == nil || IsNil(o.PreviousTimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.PreviousTimeflowId
+}
+
+// GetPreviousTimeflowIdOk returns a tuple with the PreviousTimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetPreviousTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PreviousTimeflowId) {
+		return nil, false
+	}
+	return o.PreviousTimeflowId, true
+}
+
+// HasPreviousTimeflowId returns a boolean if a field has been set.
+func (o *VDB) HasPreviousTimeflowId() bool {
+	if o != nil && !IsNil(o.PreviousTimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreviousTimeflowId gets a reference to the given string and assigns it to the PreviousTimeflowId field.
+func (o *VDB) SetPreviousTimeflowId(v string) {
+	o.PreviousTimeflowId = &v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o VDB) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
 	if o.DatabaseType.IsSet() {
@@ -672,11 +1233,20 @@ func (o VDB) MarshalJSON() ([]byte, error) {
 	if o.Size.IsSet() {
 		toSerialize["size"] = o.Size.Get()
 	}
-	if o.EngineId != nil {
+	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
+	}
+	if o.Masked.IsSet() {
+		toSerialize["masked"] = o.Masked.Get()
+	}
+	if o.ParentTimeflowTimestamp.IsSet() {
+		toSerialize["parent_timeflow_timestamp"] = o.ParentTimeflowTimestamp.Get()
+	}
+	if o.ParentTimeflowTimezone.IsSet() {
+		toSerialize["parent_timeflow_timezone"] = o.ParentTimeflowTimezone.Get()
 	}
 	if o.EnvironmentId.IsSet() {
 		toSerialize["environment_id"] = o.EnvironmentId.Get()
@@ -690,19 +1260,52 @@ func (o VDB) MarshalJSON() ([]byte, error) {
 	if o.ParentId.IsSet() {
 		toSerialize["parent_id"] = o.ParentId.Get()
 	}
+	if o.ParentDsourceId.IsSet() {
+		toSerialize["parent_dsource_id"] = o.ParentDsourceId.Get()
+	}
 	if o.GroupName.IsSet() {
 		toSerialize["group_name"] = o.GroupName.Get()
 	}
-	if o.Tags != nil {
+	if o.EngineName.IsSet() {
+		toSerialize["engine_name"] = o.EngineName.Get()
+	}
+	if o.CdbId.IsSet() {
+		toSerialize["cdb_id"] = o.CdbId.Get()
+	}
+	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
 	if o.CreationDate.IsSet() {
 		toSerialize["creation_date"] = o.CreationDate.Get()
 	}
-	if o.Hooks != nil {
+	if !IsNil(o.Hooks) {
 		toSerialize["hooks"] = o.Hooks
 	}
-	return json.Marshal(toSerialize)
+	if o.AppdataSourceParams != nil {
+		toSerialize["appdata_source_params"] = o.AppdataSourceParams
+	}
+	if o.TemplateId.IsSet() {
+		toSerialize["template_id"] = o.TemplateId.Get()
+	}
+	if o.ConfigParams != nil {
+		toSerialize["config_params"] = o.ConfigParams
+	}
+	if o.AdditionalMountPoints != nil {
+		toSerialize["additional_mount_points"] = o.AdditionalMountPoints
+	}
+	if o.AppdataConfigParams != nil {
+		toSerialize["appdata_config_params"] = o.AppdataConfigParams
+	}
+	if !IsNil(o.MountPoint) {
+		toSerialize["mount_point"] = o.MountPoint
+	}
+	if !IsNil(o.CurrentTimeflowId) {
+		toSerialize["current_timeflow_id"] = o.CurrentTimeflowId
+	}
+	if !IsNil(o.PreviousTimeflowId) {
+		toSerialize["previous_timeflow_id"] = o.PreviousTimeflowId
+	}
+	return toSerialize, nil
 }
 
 type NullableVDB struct {

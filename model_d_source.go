@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -16,7 +16,10 @@ import (
 	"time"
 )
 
-// DSource The Delphix storage-based copy of the source databse including its history.
+// checks if the DSource type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DSource{}
+
+// DSource The Delphix storage-based copy of the source database including its history.
 type DSource struct {
 	// The dSource object entity ID.
 	Id *string `json:"id,omitempty"`
@@ -26,6 +29,8 @@ type DSource struct {
 	Name NullableString `json:"name,omitempty"`
 	// The database version of this dSource.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
+	// The content type of the dSource.
+	ContentType NullableString `json:"content_type,omitempty"`
 	// A universal ID that uniquely identifies the dSource database.
 	DataUuid NullableString `json:"data_uuid,omitempty"`
 	// The actual space used by this dSource, in bytes.
@@ -44,6 +49,14 @@ type DSource struct {
 	SourceId NullableString `json:"source_id,omitempty"`
 	// The runtime status of the dSource. 'Unknown' if all attempts to connect to the source failed.
 	Status NullableString `json:"status,omitempty"`
+	// Name of the Engine where this DSource is hosted
+	EngineName NullableString `json:"engine_name,omitempty"`
+	// A reference to the CDB associated with this dSource.
+	CdbId NullableString `json:"cdb_id,omitempty"`
+	// A reference to the currently active timeflow for this dSource.
+	CurrentTimeflowId *string `json:"current_timeflow_id,omitempty"`
+	// A reference to the previous timeflow for this dSource.
+	PreviousTimeflowId *string `json:"previous_timeflow_id,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -66,7 +79,7 @@ func NewDSourceWithDefaults() *DSource {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *DSource) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -76,7 +89,7 @@ func (o *DSource) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSource) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -84,7 +97,7 @@ func (o *DSource) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *DSource) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -98,7 +111,7 @@ func (o *DSource) SetId(v string) {
 
 // GetDatabaseType returns the DatabaseType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetDatabaseType() string {
-	if o == nil || o.DatabaseType.Get() == nil {
+	if o == nil || IsNil(o.DatabaseType.Get()) {
 		var ret string
 		return ret
 	}
@@ -109,7 +122,7 @@ func (o *DSource) GetDatabaseType() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetDatabaseTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DatabaseType.Get(), o.DatabaseType.IsSet()
@@ -140,7 +153,7 @@ func (o *DSource) UnsetDatabaseType() {
 
 // GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetName() string {
-	if o == nil || o.Name.Get() == nil {
+	if o == nil || IsNil(o.Name.Get()) {
 		var ret string
 		return ret
 	}
@@ -151,7 +164,7 @@ func (o *DSource) GetName() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Name.Get(), o.Name.IsSet()
@@ -182,7 +195,7 @@ func (o *DSource) UnsetName() {
 
 // GetDatabaseVersion returns the DatabaseVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetDatabaseVersion() string {
-	if o == nil || o.DatabaseVersion.Get() == nil {
+	if o == nil || IsNil(o.DatabaseVersion.Get()) {
 		var ret string
 		return ret
 	}
@@ -193,7 +206,7 @@ func (o *DSource) GetDatabaseVersion() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetDatabaseVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DatabaseVersion.Get(), o.DatabaseVersion.IsSet()
@@ -222,9 +235,51 @@ func (o *DSource) UnsetDatabaseVersion() {
 	o.DatabaseVersion.Unset()
 }
 
+// GetContentType returns the ContentType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetContentType() string {
+	if o == nil || IsNil(o.ContentType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ContentType.Get()
+}
+
+// GetContentTypeOk returns a tuple with the ContentType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetContentTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ContentType.Get(), o.ContentType.IsSet()
+}
+
+// HasContentType returns a boolean if a field has been set.
+func (o *DSource) HasContentType() bool {
+	if o != nil && o.ContentType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetContentType gets a reference to the given NullableString and assigns it to the ContentType field.
+func (o *DSource) SetContentType(v string) {
+	o.ContentType.Set(&v)
+}
+// SetContentTypeNil sets the value for ContentType to be an explicit nil
+func (o *DSource) SetContentTypeNil() {
+	o.ContentType.Set(nil)
+}
+
+// UnsetContentType ensures that no value is present for ContentType, not even an explicit nil
+func (o *DSource) UnsetContentType() {
+	o.ContentType.Unset()
+}
+
 // GetDataUuid returns the DataUuid field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetDataUuid() string {
-	if o == nil || o.DataUuid.Get() == nil {
+	if o == nil || IsNil(o.DataUuid.Get()) {
 		var ret string
 		return ret
 	}
@@ -235,7 +290,7 @@ func (o *DSource) GetDataUuid() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetDataUuidOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DataUuid.Get(), o.DataUuid.IsSet()
@@ -266,7 +321,7 @@ func (o *DSource) UnsetDataUuid() {
 
 // GetStorageSize returns the StorageSize field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetStorageSize() int64 {
-	if o == nil || o.StorageSize.Get() == nil {
+	if o == nil || IsNil(o.StorageSize.Get()) {
 		var ret int64
 		return ret
 	}
@@ -277,7 +332,7 @@ func (o *DSource) GetStorageSize() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetStorageSizeOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.StorageSize.Get(), o.StorageSize.IsSet()
@@ -308,7 +363,7 @@ func (o *DSource) UnsetStorageSize() {
 
 // GetPluginVersion returns the PluginVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetPluginVersion() string {
-	if o == nil || o.PluginVersion.Get() == nil {
+	if o == nil || IsNil(o.PluginVersion.Get()) {
 		var ret string
 		return ret
 	}
@@ -319,7 +374,7 @@ func (o *DSource) GetPluginVersion() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetPluginVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.PluginVersion.Get(), o.PluginVersion.IsSet()
@@ -350,7 +405,7 @@ func (o *DSource) UnsetPluginVersion() {
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate.Get() == nil {
+	if o == nil || IsNil(o.CreationDate.Get()) {
 		var ret time.Time
 		return ret
 	}
@@ -361,7 +416,7 @@ func (o *DSource) GetCreationDate() time.Time {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.CreationDate.Get(), o.CreationDate.IsSet()
@@ -392,7 +447,7 @@ func (o *DSource) UnsetCreationDate() {
 
 // GetGroupName returns the GroupName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetGroupName() string {
-	if o == nil || o.GroupName.Get() == nil {
+	if o == nil || IsNil(o.GroupName.Get()) {
 		var ret string
 		return ret
 	}
@@ -403,7 +458,7 @@ func (o *DSource) GetGroupName() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetGroupNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.GroupName.Get(), o.GroupName.IsSet()
@@ -434,7 +489,7 @@ func (o *DSource) UnsetGroupName() {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetEnabled() bool {
-	if o == nil || o.Enabled.Get() == nil {
+	if o == nil || IsNil(o.Enabled.Get()) {
 		var ret bool
 		return ret
 	}
@@ -445,7 +500,7 @@ func (o *DSource) GetEnabled() bool {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetEnabledOk() (*bool, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Enabled.Get(), o.Enabled.IsSet()
@@ -476,7 +531,7 @@ func (o *DSource) UnsetEnabled() {
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
 func (o *DSource) GetEngineId() string {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		var ret string
 		return ret
 	}
@@ -486,7 +541,7 @@ func (o *DSource) GetEngineId() string {
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSource) GetEngineIdOk() (*string, bool) {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		return nil, false
 	}
 	return o.EngineId, true
@@ -494,7 +549,7 @@ func (o *DSource) GetEngineIdOk() (*string, bool) {
 
 // HasEngineId returns a boolean if a field has been set.
 func (o *DSource) HasEngineId() bool {
-	if o != nil && o.EngineId != nil {
+	if o != nil && !IsNil(o.EngineId) {
 		return true
 	}
 
@@ -508,7 +563,7 @@ func (o *DSource) SetEngineId(v string) {
 
 // GetSourceId returns the SourceId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetSourceId() string {
-	if o == nil || o.SourceId.Get() == nil {
+	if o == nil || IsNil(o.SourceId.Get()) {
 		var ret string
 		return ret
 	}
@@ -519,7 +574,7 @@ func (o *DSource) GetSourceId() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetSourceIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.SourceId.Get(), o.SourceId.IsSet()
@@ -550,7 +605,7 @@ func (o *DSource) UnsetSourceId() {
 
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DSource) GetStatus() string {
-	if o == nil || o.Status.Get() == nil {
+	if o == nil || IsNil(o.Status.Get()) {
 		var ret string
 		return ret
 	}
@@ -561,7 +616,7 @@ func (o *DSource) GetStatus() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DSource) GetStatusOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Status.Get(), o.Status.IsSet()
@@ -590,9 +645,157 @@ func (o *DSource) UnsetStatus() {
 	o.Status.Unset()
 }
 
+// GetEngineName returns the EngineName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.EngineName.Get()
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetEngineNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EngineName.Get(), o.EngineName.IsSet()
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *DSource) HasEngineName() bool {
+	if o != nil && o.EngineName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given NullableString and assigns it to the EngineName field.
+func (o *DSource) SetEngineName(v string) {
+	o.EngineName.Set(&v)
+}
+// SetEngineNameNil sets the value for EngineName to be an explicit nil
+func (o *DSource) SetEngineNameNil() {
+	o.EngineName.Set(nil)
+}
+
+// UnsetEngineName ensures that no value is present for EngineName, not even an explicit nil
+func (o *DSource) UnsetEngineName() {
+	o.EngineName.Unset()
+}
+
+// GetCdbId returns the CdbId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetCdbId() string {
+	if o == nil || IsNil(o.CdbId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CdbId.Get()
+}
+
+// GetCdbIdOk returns a tuple with the CdbId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetCdbIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CdbId.Get(), o.CdbId.IsSet()
+}
+
+// HasCdbId returns a boolean if a field has been set.
+func (o *DSource) HasCdbId() bool {
+	if o != nil && o.CdbId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbId gets a reference to the given NullableString and assigns it to the CdbId field.
+func (o *DSource) SetCdbId(v string) {
+	o.CdbId.Set(&v)
+}
+// SetCdbIdNil sets the value for CdbId to be an explicit nil
+func (o *DSource) SetCdbIdNil() {
+	o.CdbId.Set(nil)
+}
+
+// UnsetCdbId ensures that no value is present for CdbId, not even an explicit nil
+func (o *DSource) UnsetCdbId() {
+	o.CdbId.Unset()
+}
+
+// GetCurrentTimeflowId returns the CurrentTimeflowId field value if set, zero value otherwise.
+func (o *DSource) GetCurrentTimeflowId() string {
+	if o == nil || IsNil(o.CurrentTimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.CurrentTimeflowId
+}
+
+// GetCurrentTimeflowIdOk returns a tuple with the CurrentTimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetCurrentTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CurrentTimeflowId) {
+		return nil, false
+	}
+	return o.CurrentTimeflowId, true
+}
+
+// HasCurrentTimeflowId returns a boolean if a field has been set.
+func (o *DSource) HasCurrentTimeflowId() bool {
+	if o != nil && !IsNil(o.CurrentTimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrentTimeflowId gets a reference to the given string and assigns it to the CurrentTimeflowId field.
+func (o *DSource) SetCurrentTimeflowId(v string) {
+	o.CurrentTimeflowId = &v
+}
+
+// GetPreviousTimeflowId returns the PreviousTimeflowId field value if set, zero value otherwise.
+func (o *DSource) GetPreviousTimeflowId() string {
+	if o == nil || IsNil(o.PreviousTimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.PreviousTimeflowId
+}
+
+// GetPreviousTimeflowIdOk returns a tuple with the PreviousTimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPreviousTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PreviousTimeflowId) {
+		return nil, false
+	}
+	return o.PreviousTimeflowId, true
+}
+
+// HasPreviousTimeflowId returns a boolean if a field has been set.
+func (o *DSource) HasPreviousTimeflowId() bool {
+	if o != nil && !IsNil(o.PreviousTimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreviousTimeflowId gets a reference to the given string and assigns it to the PreviousTimeflowId field.
+func (o *DSource) SetPreviousTimeflowId(v string) {
+	o.PreviousTimeflowId = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *DSource) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -602,7 +805,7 @@ func (o *DSource) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSource) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -610,7 +813,7 @@ func (o *DSource) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *DSource) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -623,8 +826,16 @@ func (o *DSource) SetTags(v []Tag) {
 }
 
 func (o DSource) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o DSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
 	if o.DatabaseType.IsSet() {
@@ -635,6 +846,9 @@ func (o DSource) MarshalJSON() ([]byte, error) {
 	}
 	if o.DatabaseVersion.IsSet() {
 		toSerialize["database_version"] = o.DatabaseVersion.Get()
+	}
+	if o.ContentType.IsSet() {
+		toSerialize["content_type"] = o.ContentType.Get()
 	}
 	if o.DataUuid.IsSet() {
 		toSerialize["data_uuid"] = o.DataUuid.Get()
@@ -654,7 +868,7 @@ func (o DSource) MarshalJSON() ([]byte, error) {
 	if o.Enabled.IsSet() {
 		toSerialize["enabled"] = o.Enabled.Get()
 	}
-	if o.EngineId != nil {
+	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
 	if o.SourceId.IsSet() {
@@ -663,10 +877,22 @@ func (o DSource) MarshalJSON() ([]byte, error) {
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
 	}
-	if o.Tags != nil {
+	if o.EngineName.IsSet() {
+		toSerialize["engine_name"] = o.EngineName.Get()
+	}
+	if o.CdbId.IsSet() {
+		toSerialize["cdb_id"] = o.CdbId.Get()
+	}
+	if !IsNil(o.CurrentTimeflowId) {
+		toSerialize["current_timeflow_id"] = o.CurrentTimeflowId
+	}
+	if !IsNil(o.PreviousTimeflowId) {
+		toSerialize["previous_timeflow_id"] = o.PreviousTimeflowId
+	}
+	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableDSource struct {

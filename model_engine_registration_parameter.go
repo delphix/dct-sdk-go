@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,18 +15,33 @@ import (
 	"encoding/json"
 )
 
+// checks if the EngineRegistrationParameter type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EngineRegistrationParameter{}
+
 // EngineRegistrationParameter Parameters to register and authenticate an engine.
 type EngineRegistrationParameter struct {
 	Name string `json:"name"`
 	Hostname string `json:"hostname"`
+	// The virtualization domain admin username.
 	Username NullableString `json:"username,omitempty"`
+	// The virtualization domain admin password.
 	Password NullableString `json:"password,omitempty"`
-	// Arguments to pass to the Vault CLI tool to retrieve the username for the engine.
+	// The masking admin username.
+	MaskingUsername NullableString `json:"masking_username,omitempty"`
+	// The masking admin password.
+	MaskingPassword NullableString `json:"masking_password,omitempty"`
+	// Arguments to pass to the Vault CLI tool to retrieve the virtualzation username for the engine.
 	HashicorpVaultUsernameCommandArgs []string `json:"hashicorp_vault_username_command_args,omitempty"`
-	// Arguments to pass to the Vault CLI tool to retrieve the password for the engine.
+	// Arguments to pass to the Vault CLI tool to retrieve the masking username for the engine.
+	HashicorpVaultMaskingUsernameCommandArgs []string `json:"hashicorp_vault_masking_username_command_args,omitempty"`
+	// Arguments to pass to the Vault CLI tool to retrieve the virtualization password for the engine.
 	HashicorpVaultPasswordCommandArgs []string `json:"hashicorp_vault_password_command_args,omitempty"`
-	// Reference to the Hashicorp vault to use to retrieve engine credentials.
+	// Arguments to pass to the Vault CLI tool to retrieve the masking password for the engine.
+	HashicorpVaultMaskingPasswordCommandArgs []string `json:"hashicorp_vault_masking_password_command_args,omitempty"`
+	// Reference to the Hashicorp vault to use to retrieve virtualization engine credentials.
 	HashicorpVaultId NullableInt64 `json:"hashicorp_vault_id,omitempty"`
+	// Reference to the Hashicorp vault to use to retrieve masking engine credentials.
+	MaskingHashicorpVaultId NullableInt64 `json:"masking_hashicorp_vault_id,omitempty"`
 	// Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the engine's certificate, and set the truststore_path propery. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the engine over HTTPs. Setting this value must only be done if the TLS certificate of the engine does not match the hostname, and the TLS configuration of the engine cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
@@ -79,7 +94,7 @@ func (o *EngineRegistrationParameter) GetName() string {
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *EngineRegistrationParameter) GetNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Name, true
@@ -103,7 +118,7 @@ func (o *EngineRegistrationParameter) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value
 // and a boolean to check if the value has been set.
 func (o *EngineRegistrationParameter) GetHostnameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Hostname, true
@@ -116,7 +131,7 @@ func (o *EngineRegistrationParameter) SetHostname(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EngineRegistrationParameter) GetUsername() string {
-	if o == nil || o.Username.Get() == nil {
+	if o == nil || IsNil(o.Username.Get()) {
 		var ret string
 		return ret
 	}
@@ -127,7 +142,7 @@ func (o *EngineRegistrationParameter) GetUsername() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EngineRegistrationParameter) GetUsernameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Username.Get(), o.Username.IsSet()
@@ -158,7 +173,7 @@ func (o *EngineRegistrationParameter) UnsetUsername() {
 
 // GetPassword returns the Password field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EngineRegistrationParameter) GetPassword() string {
-	if o == nil || o.Password.Get() == nil {
+	if o == nil || IsNil(o.Password.Get()) {
 		var ret string
 		return ret
 	}
@@ -169,7 +184,7 @@ func (o *EngineRegistrationParameter) GetPassword() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EngineRegistrationParameter) GetPasswordOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Password.Get(), o.Password.IsSet()
@@ -198,9 +213,93 @@ func (o *EngineRegistrationParameter) UnsetPassword() {
 	o.Password.Unset()
 }
 
+// GetMaskingUsername returns the MaskingUsername field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EngineRegistrationParameter) GetMaskingUsername() string {
+	if o == nil || IsNil(o.MaskingUsername.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MaskingUsername.Get()
+}
+
+// GetMaskingUsernameOk returns a tuple with the MaskingUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EngineRegistrationParameter) GetMaskingUsernameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingUsername.Get(), o.MaskingUsername.IsSet()
+}
+
+// HasMaskingUsername returns a boolean if a field has been set.
+func (o *EngineRegistrationParameter) HasMaskingUsername() bool {
+	if o != nil && o.MaskingUsername.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingUsername gets a reference to the given NullableString and assigns it to the MaskingUsername field.
+func (o *EngineRegistrationParameter) SetMaskingUsername(v string) {
+	o.MaskingUsername.Set(&v)
+}
+// SetMaskingUsernameNil sets the value for MaskingUsername to be an explicit nil
+func (o *EngineRegistrationParameter) SetMaskingUsernameNil() {
+	o.MaskingUsername.Set(nil)
+}
+
+// UnsetMaskingUsername ensures that no value is present for MaskingUsername, not even an explicit nil
+func (o *EngineRegistrationParameter) UnsetMaskingUsername() {
+	o.MaskingUsername.Unset()
+}
+
+// GetMaskingPassword returns the MaskingPassword field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EngineRegistrationParameter) GetMaskingPassword() string {
+	if o == nil || IsNil(o.MaskingPassword.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MaskingPassword.Get()
+}
+
+// GetMaskingPasswordOk returns a tuple with the MaskingPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EngineRegistrationParameter) GetMaskingPasswordOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingPassword.Get(), o.MaskingPassword.IsSet()
+}
+
+// HasMaskingPassword returns a boolean if a field has been set.
+func (o *EngineRegistrationParameter) HasMaskingPassword() bool {
+	if o != nil && o.MaskingPassword.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingPassword gets a reference to the given NullableString and assigns it to the MaskingPassword field.
+func (o *EngineRegistrationParameter) SetMaskingPassword(v string) {
+	o.MaskingPassword.Set(&v)
+}
+// SetMaskingPasswordNil sets the value for MaskingPassword to be an explicit nil
+func (o *EngineRegistrationParameter) SetMaskingPasswordNil() {
+	o.MaskingPassword.Set(nil)
+}
+
+// UnsetMaskingPassword ensures that no value is present for MaskingPassword, not even an explicit nil
+func (o *EngineRegistrationParameter) UnsetMaskingPassword() {
+	o.MaskingPassword.Unset()
+}
+
 // GetHashicorpVaultUsernameCommandArgs returns the HashicorpVaultUsernameCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EngineRegistrationParameter) GetHashicorpVaultUsernameCommandArgs() []string {
-	if o == nil  {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -211,7 +310,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultUsernameCommandArgs() []s
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EngineRegistrationParameter) GetHashicorpVaultUsernameCommandArgsOk() ([]string, bool) {
-	if o == nil || o.HashicorpVaultUsernameCommandArgs == nil {
+	if o == nil || IsNil(o.HashicorpVaultUsernameCommandArgs) {
 		return nil, false
 	}
 	return o.HashicorpVaultUsernameCommandArgs, true
@@ -219,7 +318,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultUsernameCommandArgsOk() (
 
 // HasHashicorpVaultUsernameCommandArgs returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasHashicorpVaultUsernameCommandArgs() bool {
-	if o != nil && o.HashicorpVaultUsernameCommandArgs != nil {
+	if o != nil && IsNil(o.HashicorpVaultUsernameCommandArgs) {
 		return true
 	}
 
@@ -231,9 +330,42 @@ func (o *EngineRegistrationParameter) SetHashicorpVaultUsernameCommandArgs(v []s
 	o.HashicorpVaultUsernameCommandArgs = v
 }
 
+// GetHashicorpVaultMaskingUsernameCommandArgs returns the HashicorpVaultMaskingUsernameCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EngineRegistrationParameter) GetHashicorpVaultMaskingUsernameCommandArgs() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.HashicorpVaultMaskingUsernameCommandArgs
+}
+
+// GetHashicorpVaultMaskingUsernameCommandArgsOk returns a tuple with the HashicorpVaultMaskingUsernameCommandArgs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EngineRegistrationParameter) GetHashicorpVaultMaskingUsernameCommandArgsOk() ([]string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
+		return nil, false
+	}
+	return o.HashicorpVaultMaskingUsernameCommandArgs, true
+}
+
+// HasHashicorpVaultMaskingUsernameCommandArgs returns a boolean if a field has been set.
+func (o *EngineRegistrationParameter) HasHashicorpVaultMaskingUsernameCommandArgs() bool {
+	if o != nil && IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultMaskingUsernameCommandArgs gets a reference to the given []string and assigns it to the HashicorpVaultMaskingUsernameCommandArgs field.
+func (o *EngineRegistrationParameter) SetHashicorpVaultMaskingUsernameCommandArgs(v []string) {
+	o.HashicorpVaultMaskingUsernameCommandArgs = v
+}
+
 // GetHashicorpVaultPasswordCommandArgs returns the HashicorpVaultPasswordCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EngineRegistrationParameter) GetHashicorpVaultPasswordCommandArgs() []string {
-	if o == nil  {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -244,7 +376,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultPasswordCommandArgs() []s
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EngineRegistrationParameter) GetHashicorpVaultPasswordCommandArgsOk() ([]string, bool) {
-	if o == nil || o.HashicorpVaultPasswordCommandArgs == nil {
+	if o == nil || IsNil(o.HashicorpVaultPasswordCommandArgs) {
 		return nil, false
 	}
 	return o.HashicorpVaultPasswordCommandArgs, true
@@ -252,7 +384,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultPasswordCommandArgsOk() (
 
 // HasHashicorpVaultPasswordCommandArgs returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasHashicorpVaultPasswordCommandArgs() bool {
-	if o != nil && o.HashicorpVaultPasswordCommandArgs != nil {
+	if o != nil && IsNil(o.HashicorpVaultPasswordCommandArgs) {
 		return true
 	}
 
@@ -264,9 +396,42 @@ func (o *EngineRegistrationParameter) SetHashicorpVaultPasswordCommandArgs(v []s
 	o.HashicorpVaultPasswordCommandArgs = v
 }
 
+// GetHashicorpVaultMaskingPasswordCommandArgs returns the HashicorpVaultMaskingPasswordCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EngineRegistrationParameter) GetHashicorpVaultMaskingPasswordCommandArgs() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.HashicorpVaultMaskingPasswordCommandArgs
+}
+
+// GetHashicorpVaultMaskingPasswordCommandArgsOk returns a tuple with the HashicorpVaultMaskingPasswordCommandArgs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EngineRegistrationParameter) GetHashicorpVaultMaskingPasswordCommandArgsOk() ([]string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
+		return nil, false
+	}
+	return o.HashicorpVaultMaskingPasswordCommandArgs, true
+}
+
+// HasHashicorpVaultMaskingPasswordCommandArgs returns a boolean if a field has been set.
+func (o *EngineRegistrationParameter) HasHashicorpVaultMaskingPasswordCommandArgs() bool {
+	if o != nil && IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultMaskingPasswordCommandArgs gets a reference to the given []string and assigns it to the HashicorpVaultMaskingPasswordCommandArgs field.
+func (o *EngineRegistrationParameter) SetHashicorpVaultMaskingPasswordCommandArgs(v []string) {
+	o.HashicorpVaultMaskingPasswordCommandArgs = v
+}
+
 // GetHashicorpVaultId returns the HashicorpVaultId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EngineRegistrationParameter) GetHashicorpVaultId() int64 {
-	if o == nil || o.HashicorpVaultId.Get() == nil {
+	if o == nil || IsNil(o.HashicorpVaultId.Get()) {
 		var ret int64
 		return ret
 	}
@@ -277,7 +442,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultId() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EngineRegistrationParameter) GetHashicorpVaultIdOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.HashicorpVaultId.Get(), o.HashicorpVaultId.IsSet()
@@ -306,9 +471,51 @@ func (o *EngineRegistrationParameter) UnsetHashicorpVaultId() {
 	o.HashicorpVaultId.Unset()
 }
 
+// GetMaskingHashicorpVaultId returns the MaskingHashicorpVaultId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EngineRegistrationParameter) GetMaskingHashicorpVaultId() int64 {
+	if o == nil || IsNil(o.MaskingHashicorpVaultId.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.MaskingHashicorpVaultId.Get()
+}
+
+// GetMaskingHashicorpVaultIdOk returns a tuple with the MaskingHashicorpVaultId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EngineRegistrationParameter) GetMaskingHashicorpVaultIdOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingHashicorpVaultId.Get(), o.MaskingHashicorpVaultId.IsSet()
+}
+
+// HasMaskingHashicorpVaultId returns a boolean if a field has been set.
+func (o *EngineRegistrationParameter) HasMaskingHashicorpVaultId() bool {
+	if o != nil && o.MaskingHashicorpVaultId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingHashicorpVaultId gets a reference to the given NullableInt64 and assigns it to the MaskingHashicorpVaultId field.
+func (o *EngineRegistrationParameter) SetMaskingHashicorpVaultId(v int64) {
+	o.MaskingHashicorpVaultId.Set(&v)
+}
+// SetMaskingHashicorpVaultIdNil sets the value for MaskingHashicorpVaultId to be an explicit nil
+func (o *EngineRegistrationParameter) SetMaskingHashicorpVaultIdNil() {
+	o.MaskingHashicorpVaultId.Set(nil)
+}
+
+// UnsetMaskingHashicorpVaultId ensures that no value is present for MaskingHashicorpVaultId, not even an explicit nil
+func (o *EngineRegistrationParameter) UnsetMaskingHashicorpVaultId() {
+	o.MaskingHashicorpVaultId.Unset()
+}
+
 // GetInsecureSsl returns the InsecureSsl field value if set, zero value otherwise.
 func (o *EngineRegistrationParameter) GetInsecureSsl() bool {
-	if o == nil || o.InsecureSsl == nil {
+	if o == nil || IsNil(o.InsecureSsl) {
 		var ret bool
 		return ret
 	}
@@ -318,7 +525,7 @@ func (o *EngineRegistrationParameter) GetInsecureSsl() bool {
 // GetInsecureSslOk returns a tuple with the InsecureSsl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EngineRegistrationParameter) GetInsecureSslOk() (*bool, bool) {
-	if o == nil || o.InsecureSsl == nil {
+	if o == nil || IsNil(o.InsecureSsl) {
 		return nil, false
 	}
 	return o.InsecureSsl, true
@@ -326,7 +533,7 @@ func (o *EngineRegistrationParameter) GetInsecureSslOk() (*bool, bool) {
 
 // HasInsecureSsl returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasInsecureSsl() bool {
-	if o != nil && o.InsecureSsl != nil {
+	if o != nil && !IsNil(o.InsecureSsl) {
 		return true
 	}
 
@@ -340,7 +547,7 @@ func (o *EngineRegistrationParameter) SetInsecureSsl(v bool) {
 
 // GetUnsafeSslHostnameCheck returns the UnsafeSslHostnameCheck field value if set, zero value otherwise.
 func (o *EngineRegistrationParameter) GetUnsafeSslHostnameCheck() bool {
-	if o == nil || o.UnsafeSslHostnameCheck == nil {
+	if o == nil || IsNil(o.UnsafeSslHostnameCheck) {
 		var ret bool
 		return ret
 	}
@@ -350,7 +557,7 @@ func (o *EngineRegistrationParameter) GetUnsafeSslHostnameCheck() bool {
 // GetUnsafeSslHostnameCheckOk returns a tuple with the UnsafeSslHostnameCheck field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EngineRegistrationParameter) GetUnsafeSslHostnameCheckOk() (*bool, bool) {
-	if o == nil || o.UnsafeSslHostnameCheck == nil {
+	if o == nil || IsNil(o.UnsafeSslHostnameCheck) {
 		return nil, false
 	}
 	return o.UnsafeSslHostnameCheck, true
@@ -358,7 +565,7 @@ func (o *EngineRegistrationParameter) GetUnsafeSslHostnameCheckOk() (*bool, bool
 
 // HasUnsafeSslHostnameCheck returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasUnsafeSslHostnameCheck() bool {
-	if o != nil && o.UnsafeSslHostnameCheck != nil {
+	if o != nil && !IsNil(o.UnsafeSslHostnameCheck) {
 		return true
 	}
 
@@ -372,7 +579,7 @@ func (o *EngineRegistrationParameter) SetUnsafeSslHostnameCheck(v bool) {
 
 // GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EngineRegistrationParameter) GetTruststoreFilename() string {
-	if o == nil || o.TruststoreFilename.Get() == nil {
+	if o == nil || IsNil(o.TruststoreFilename.Get()) {
 		var ret string
 		return ret
 	}
@@ -383,7 +590,7 @@ func (o *EngineRegistrationParameter) GetTruststoreFilename() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EngineRegistrationParameter) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.TruststoreFilename.Get(), o.TruststoreFilename.IsSet()
@@ -414,7 +621,7 @@ func (o *EngineRegistrationParameter) UnsetTruststoreFilename() {
 
 // GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EngineRegistrationParameter) GetTruststorePassword() string {
-	if o == nil || o.TruststorePassword.Get() == nil {
+	if o == nil || IsNil(o.TruststorePassword.Get()) {
 		var ret string
 		return ret
 	}
@@ -425,7 +632,7 @@ func (o *EngineRegistrationParameter) GetTruststorePassword() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *EngineRegistrationParameter) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.TruststorePassword.Get(), o.TruststorePassword.IsSet()
@@ -456,7 +663,7 @@ func (o *EngineRegistrationParameter) UnsetTruststorePassword() {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *EngineRegistrationParameter) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -466,7 +673,7 @@ func (o *EngineRegistrationParameter) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EngineRegistrationParameter) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -474,7 +681,7 @@ func (o *EngineRegistrationParameter) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -487,32 +694,51 @@ func (o *EngineRegistrationParameter) SetTags(v []Tag) {
 }
 
 func (o EngineRegistrationParameter) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o EngineRegistrationParameter) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
+	toSerialize["name"] = o.Name
+	toSerialize["hostname"] = o.Hostname
 	if o.Username.IsSet() {
 		toSerialize["username"] = o.Username.Get()
 	}
 	if o.Password.IsSet() {
 		toSerialize["password"] = o.Password.Get()
 	}
+	if o.MaskingUsername.IsSet() {
+		toSerialize["masking_username"] = o.MaskingUsername.Get()
+	}
+	if o.MaskingPassword.IsSet() {
+		toSerialize["masking_password"] = o.MaskingPassword.Get()
+	}
 	if o.HashicorpVaultUsernameCommandArgs != nil {
 		toSerialize["hashicorp_vault_username_command_args"] = o.HashicorpVaultUsernameCommandArgs
+	}
+	if o.HashicorpVaultMaskingUsernameCommandArgs != nil {
+		toSerialize["hashicorp_vault_masking_username_command_args"] = o.HashicorpVaultMaskingUsernameCommandArgs
 	}
 	if o.HashicorpVaultPasswordCommandArgs != nil {
 		toSerialize["hashicorp_vault_password_command_args"] = o.HashicorpVaultPasswordCommandArgs
 	}
+	if o.HashicorpVaultMaskingPasswordCommandArgs != nil {
+		toSerialize["hashicorp_vault_masking_password_command_args"] = o.HashicorpVaultMaskingPasswordCommandArgs
+	}
 	if o.HashicorpVaultId.IsSet() {
 		toSerialize["hashicorp_vault_id"] = o.HashicorpVaultId.Get()
 	}
-	if o.InsecureSsl != nil {
+	if o.MaskingHashicorpVaultId.IsSet() {
+		toSerialize["masking_hashicorp_vault_id"] = o.MaskingHashicorpVaultId.Get()
+	}
+	if !IsNil(o.InsecureSsl) {
 		toSerialize["insecure_ssl"] = o.InsecureSsl
 	}
-	if o.UnsafeSslHostnameCheck != nil {
+	if !IsNil(o.UnsafeSslHostnameCheck) {
 		toSerialize["unsafe_ssl_hostname_check"] = o.UnsafeSslHostnameCheck
 	}
 	if o.TruststoreFilename.IsSet() {
@@ -521,10 +747,10 @@ func (o EngineRegistrationParameter) MarshalJSON() ([]byte, error) {
 	if o.TruststorePassword.IsSet() {
 		toSerialize["truststore_password"] = o.TruststorePassword.Get()
 	}
-	if o.Tags != nil {
+	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableEngineRegistrationParameter struct {

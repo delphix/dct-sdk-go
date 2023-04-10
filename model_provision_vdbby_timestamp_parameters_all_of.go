@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,12 +15,17 @@ import (
 	"encoding/json"
 )
 
+// checks if the ProvisionVDBByTimestampParametersAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProvisionVDBByTimestampParametersAllOf{}
+
 // ProvisionVDBByTimestampParametersAllOf struct for ProvisionVDBByTimestampParametersAllOf
 type ProvisionVDBByTimestampParametersAllOf struct {
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
 	SourceDataId string `json:"source_data_id"`
+	// Whether the account provisioning this VDB must be configured as owner of the VDB.
+	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
 
 // NewProvisionVDBByTimestampParametersAllOf instantiates a new ProvisionVDBByTimestampParametersAllOf object
@@ -30,6 +35,8 @@ type ProvisionVDBByTimestampParametersAllOf struct {
 func NewProvisionVDBByTimestampParametersAllOf(sourceDataId string) *ProvisionVDBByTimestampParametersAllOf {
 	this := ProvisionVDBByTimestampParametersAllOf{}
 	this.SourceDataId = sourceDataId
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
@@ -38,12 +45,14 @@ func NewProvisionVDBByTimestampParametersAllOf(sourceDataId string) *ProvisionVD
 // but it doesn't guarantee that properties required by API are set
 func NewProvisionVDBByTimestampParametersAllOfWithDefaults() *ProvisionVDBByTimestampParametersAllOf {
 	this := ProvisionVDBByTimestampParametersAllOf{}
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineId() string {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		var ret string
 		return ret
 	}
@@ -53,7 +62,7 @@ func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineId() string {
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineIdOk() (*string, bool) {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		return nil, false
 	}
 	return o.EngineId, true
@@ -61,7 +70,7 @@ func (o *ProvisionVDBByTimestampParametersAllOf) GetEngineIdOk() (*string, bool)
 
 // HasEngineId returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParametersAllOf) HasEngineId() bool {
-	if o != nil && o.EngineId != nil {
+	if o != nil && !IsNil(o.EngineId) {
 		return true
 	}
 
@@ -86,7 +95,7 @@ func (o *ProvisionVDBByTimestampParametersAllOf) GetSourceDataId() string {
 // GetSourceDataIdOk returns a tuple with the SourceDataId field value
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBByTimestampParametersAllOf) GetSourceDataIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.SourceDataId, true
@@ -97,15 +106,56 @@ func (o *ProvisionVDBByTimestampParametersAllOf) SetSourceDataId(v string) {
 	o.SourceDataId = v
 }
 
-func (o ProvisionVDBByTimestampParametersAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.EngineId != nil {
-		toSerialize["engine_id"] = o.EngineId
+// GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParametersAllOf) GetMakeCurrentAccountOwner() bool {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		var ret bool
+		return ret
 	}
-	if true {
-		toSerialize["source_data_id"] = o.SourceDataId
+	return *o.MakeCurrentAccountOwner
+}
+
+// GetMakeCurrentAccountOwnerOk returns a tuple with the MakeCurrentAccountOwner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParametersAllOf) GetMakeCurrentAccountOwnerOk() (*bool, bool) {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		return nil, false
+	}
+	return o.MakeCurrentAccountOwner, true
+}
+
+// HasMakeCurrentAccountOwner returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParametersAllOf) HasMakeCurrentAccountOwner() bool {
+	if o != nil && !IsNil(o.MakeCurrentAccountOwner) {
+		return true
+	}
+
+	return false
+}
+
+// SetMakeCurrentAccountOwner gets a reference to the given bool and assigns it to the MakeCurrentAccountOwner field.
+func (o *ProvisionVDBByTimestampParametersAllOf) SetMakeCurrentAccountOwner(v bool) {
+	o.MakeCurrentAccountOwner = &v
+}
+
+func (o ProvisionVDBByTimestampParametersAllOf) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ProvisionVDBByTimestampParametersAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.EngineId) {
+		toSerialize["engine_id"] = o.EngineId
+	}
+	toSerialize["source_data_id"] = o.SourceDataId
+	if !IsNil(o.MakeCurrentAccountOwner) {
+		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
+	}
+	return toSerialize, nil
 }
 
 type NullableProvisionVDBByTimestampParametersAllOf struct {

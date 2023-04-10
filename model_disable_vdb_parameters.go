@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the DisableVDBParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DisableVDBParameters{}
 
 // DisableVDBParameters Parameters to disable a VDB.
 type DisableVDBParameters struct {
@@ -44,7 +47,7 @@ func NewDisableVDBParametersWithDefaults() *DisableVDBParameters {
 
 // GetAttemptCleanup returns the AttemptCleanup field value if set, zero value otherwise.
 func (o *DisableVDBParameters) GetAttemptCleanup() bool {
-	if o == nil || o.AttemptCleanup == nil {
+	if o == nil || IsNil(o.AttemptCleanup) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *DisableVDBParameters) GetAttemptCleanup() bool {
 // GetAttemptCleanupOk returns a tuple with the AttemptCleanup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DisableVDBParameters) GetAttemptCleanupOk() (*bool, bool) {
-	if o == nil || o.AttemptCleanup == nil {
+	if o == nil || IsNil(o.AttemptCleanup) {
 		return nil, false
 	}
 	return o.AttemptCleanup, true
@@ -62,7 +65,7 @@ func (o *DisableVDBParameters) GetAttemptCleanupOk() (*bool, bool) {
 
 // HasAttemptCleanup returns a boolean if a field has been set.
 func (o *DisableVDBParameters) HasAttemptCleanup() bool {
-	if o != nil && o.AttemptCleanup != nil {
+	if o != nil && !IsNil(o.AttemptCleanup) {
 		return true
 	}
 
@@ -75,11 +78,19 @@ func (o *DisableVDBParameters) SetAttemptCleanup(v bool) {
 }
 
 func (o DisableVDBParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AttemptCleanup != nil {
-		toSerialize["attempt_cleanup"] = o.AttemptCleanup
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DisableVDBParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AttemptCleanup) {
+		toSerialize["attempt_cleanup"] = o.AttemptCleanup
+	}
+	return toSerialize, nil
 }
 
 type NullableDisableVDBParameters struct {

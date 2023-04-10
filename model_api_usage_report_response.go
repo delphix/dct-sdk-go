@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,9 +15,16 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApiUsageReportResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApiUsageReportResponse{}
+
 // ApiUsageReportResponse struct for ApiUsageReportResponse
 type ApiUsageReportResponse struct {
 	Items []ApiUsageData `json:"items,omitempty"`
+	// Total count of automation API calls over the requested timeframe.
+	TotalAutomationApiCount *int64 `json:"total_automation_api_count,omitempty"`
+	// Total count of management API calls over the requested timeframe.
+	TotalManagementApiCount *int64 `json:"total_management_api_count,omitempty"`
 }
 
 // NewApiUsageReportResponse instantiates a new ApiUsageReportResponse object
@@ -39,7 +46,7 @@ func NewApiUsageReportResponseWithDefaults() *ApiUsageReportResponse {
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *ApiUsageReportResponse) GetItems() []ApiUsageData {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []ApiUsageData
 		return ret
 	}
@@ -49,7 +56,7 @@ func (o *ApiUsageReportResponse) GetItems() []ApiUsageData {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApiUsageReportResponse) GetItemsOk() ([]ApiUsageData, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -57,7 +64,7 @@ func (o *ApiUsageReportResponse) GetItemsOk() ([]ApiUsageData, bool) {
 
 // HasItems returns a boolean if a field has been set.
 func (o *ApiUsageReportResponse) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -69,12 +76,90 @@ func (o *ApiUsageReportResponse) SetItems(v []ApiUsageData) {
 	o.Items = v
 }
 
+// GetTotalAutomationApiCount returns the TotalAutomationApiCount field value if set, zero value otherwise.
+func (o *ApiUsageReportResponse) GetTotalAutomationApiCount() int64 {
+	if o == nil || IsNil(o.TotalAutomationApiCount) {
+		var ret int64
+		return ret
+	}
+	return *o.TotalAutomationApiCount
+}
+
+// GetTotalAutomationApiCountOk returns a tuple with the TotalAutomationApiCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiUsageReportResponse) GetTotalAutomationApiCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalAutomationApiCount) {
+		return nil, false
+	}
+	return o.TotalAutomationApiCount, true
+}
+
+// HasTotalAutomationApiCount returns a boolean if a field has been set.
+func (o *ApiUsageReportResponse) HasTotalAutomationApiCount() bool {
+	if o != nil && !IsNil(o.TotalAutomationApiCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalAutomationApiCount gets a reference to the given int64 and assigns it to the TotalAutomationApiCount field.
+func (o *ApiUsageReportResponse) SetTotalAutomationApiCount(v int64) {
+	o.TotalAutomationApiCount = &v
+}
+
+// GetTotalManagementApiCount returns the TotalManagementApiCount field value if set, zero value otherwise.
+func (o *ApiUsageReportResponse) GetTotalManagementApiCount() int64 {
+	if o == nil || IsNil(o.TotalManagementApiCount) {
+		var ret int64
+		return ret
+	}
+	return *o.TotalManagementApiCount
+}
+
+// GetTotalManagementApiCountOk returns a tuple with the TotalManagementApiCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiUsageReportResponse) GetTotalManagementApiCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalManagementApiCount) {
+		return nil, false
+	}
+	return o.TotalManagementApiCount, true
+}
+
+// HasTotalManagementApiCount returns a boolean if a field has been set.
+func (o *ApiUsageReportResponse) HasTotalManagementApiCount() bool {
+	if o != nil && !IsNil(o.TotalManagementApiCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalManagementApiCount gets a reference to the given int64 and assigns it to the TotalManagementApiCount field.
+func (o *ApiUsageReportResponse) SetTotalManagementApiCount(v int64) {
+	o.TotalManagementApiCount = &v
+}
+
 func (o ApiUsageReportResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApiUsageReportResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	if !IsNil(o.TotalAutomationApiCount) {
+		toSerialize["total_automation_api_count"] = o.TotalAutomationApiCount
+	}
+	if !IsNil(o.TotalManagementApiCount) {
+		toSerialize["total_management_api_count"] = o.TotalManagementApiCount
+	}
+	return toSerialize, nil
 }
 
 type NullableApiUsageReportResponse struct {
