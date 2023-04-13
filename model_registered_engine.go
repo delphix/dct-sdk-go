@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the RegisteredEngine type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RegisteredEngine{}
 
 // RegisteredEngine A registered engine's connection and authentication settings.
 type RegisteredEngine struct {
@@ -27,6 +30,8 @@ type RegisteredEngine struct {
 	Version NullableString `json:"version,omitempty"`
 	// The name of this engine.
 	Name string `json:"name"`
+	// The ssh public key of this engine.
+	SshPublicKey *string `json:"ssh_public_key,omitempty"`
 	// The hostname of this engine.
 	Hostname string `json:"hostname"`
 	// The total number of CPU cores on this engine.
@@ -51,16 +56,38 @@ type RegisteredEngine struct {
 	ConnectionStatus NullableString `json:"connection_status,omitempty"`
 	// If set, details about the status of the connection to the engine.
 	ConnectionStatusDetails NullableString `json:"connection_status_details,omitempty"`
+	// The virtualization domain admin username.
 	Username NullableString `json:"username,omitempty"`
+	// The virtualization domain admin password.
 	Password NullableString `json:"password,omitempty"`
-	// Arguments to pass to the Vault CLI tool to retrieve the username for the engine.
+	// The masking admin username.
+	MaskingUsername NullableString `json:"masking_username,omitempty"`
+	// The masking admin password.
+	MaskingPassword NullableString `json:"masking_password,omitempty"`
+	// Arguments to pass to the Vault CLI tool to retrieve the virtualization username for the engine.
 	HashicorpVaultUsernameCommandArgs []string `json:"hashicorp_vault_username_command_args,omitempty"`
-	// Arguments to pass to the Vault CLI tool to retrieve the password for the engine.
+	// Arguments to pass to the Vault CLI tool to retrieve the masking username for the engine.
+	HashicorpVaultMaskingUsernameCommandArgs []string `json:"hashicorp_vault_masking_username_command_args,omitempty"`
+	// Arguments to pass to the Vault CLI tool to retrieve the virtualization password for the engine.
 	HashicorpVaultPasswordCommandArgs []string `json:"hashicorp_vault_password_command_args,omitempty"`
-	// Reference to the Hashicorp vault to use to retrieve engine credentials.
+	// Arguments to pass to the Vault CLI tool to retrieve the masking password for the engine.
+	HashicorpVaultMaskingPasswordCommandArgs []string `json:"hashicorp_vault_masking_password_command_args,omitempty"`
+	// Reference to the Hashicorp vault to use to retrieve masking engine credentials.
+	MaskingHashicorpVaultId NullableInt64 `json:"masking_hashicorp_vault_id,omitempty"`
+	// Reference to the Hashicorp vault to use to retrieve virtualization engine credentials.
 	HashicorpVaultId NullableInt64 `json:"hashicorp_vault_id,omitempty"`
 	// The tags to be created for this engine.
 	Tags []Tag `json:"tags,omitempty"`
+	// The current amount of memory used by running masking jobs in bytes.
+	MaskingMemoryUsed NullableInt64 `json:"masking_memory_used,omitempty"`
+	// The maximum amount of memory available for running masking jobs in bytes.
+	MaskingAllocatedMemory NullableInt64 `json:"masking_allocated_memory,omitempty"`
+	// The number of masking jobs currently running.
+	MaskingJobsRunning NullableInt32 `json:"masking_jobs_running,omitempty"`
+	// The maximum number of masking jobs that can be running at the same time.
+	MaskingMaxConcurrentJobs NullableInt32 `json:"masking_max_concurrent_jobs,omitempty"`
+	// The number of CPU cores available to the masking engine.
+	MaskingAvailableCores NullableInt32 `json:"masking_available_cores,omitempty"`
 }
 
 // NewRegisteredEngine instantiates a new RegisteredEngine object
@@ -92,7 +119,7 @@ func NewRegisteredEngineWithDefaults() *RegisteredEngine {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *RegisteredEngine) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -102,7 +129,7 @@ func (o *RegisteredEngine) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -110,7 +137,7 @@ func (o *RegisteredEngine) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -124,7 +151,7 @@ func (o *RegisteredEngine) SetId(v string) {
 
 // GetUuid returns the Uuid field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetUuid() string {
-	if o == nil || o.Uuid.Get() == nil {
+	if o == nil || IsNil(o.Uuid.Get()) {
 		var ret string
 		return ret
 	}
@@ -135,7 +162,7 @@ func (o *RegisteredEngine) GetUuid() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetUuidOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Uuid.Get(), o.Uuid.IsSet()
@@ -166,7 +193,7 @@ func (o *RegisteredEngine) UnsetUuid() {
 
 // GetType returns the Type field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetType() string {
-	if o == nil || o.Type.Get() == nil {
+	if o == nil || IsNil(o.Type.Get()) {
 		var ret string
 		return ret
 	}
@@ -177,7 +204,7 @@ func (o *RegisteredEngine) GetType() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Type.Get(), o.Type.IsSet()
@@ -208,7 +235,7 @@ func (o *RegisteredEngine) UnsetType() {
 
 // GetVersion returns the Version field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetVersion() string {
-	if o == nil || o.Version.Get() == nil {
+	if o == nil || IsNil(o.Version.Get()) {
 		var ret string
 		return ret
 	}
@@ -219,7 +246,7 @@ func (o *RegisteredEngine) GetVersion() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Version.Get(), o.Version.IsSet()
@@ -261,7 +288,7 @@ func (o *RegisteredEngine) GetName() string {
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Name, true
@@ -270,6 +297,38 @@ func (o *RegisteredEngine) GetNameOk() (*string, bool) {
 // SetName sets field value
 func (o *RegisteredEngine) SetName(v string) {
 	o.Name = v
+}
+
+// GetSshPublicKey returns the SshPublicKey field value if set, zero value otherwise.
+func (o *RegisteredEngine) GetSshPublicKey() string {
+	if o == nil || IsNil(o.SshPublicKey) {
+		var ret string
+		return ret
+	}
+	return *o.SshPublicKey
+}
+
+// GetSshPublicKeyOk returns a tuple with the SshPublicKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RegisteredEngine) GetSshPublicKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.SshPublicKey) {
+		return nil, false
+	}
+	return o.SshPublicKey, true
+}
+
+// HasSshPublicKey returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasSshPublicKey() bool {
+	if o != nil && !IsNil(o.SshPublicKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetSshPublicKey gets a reference to the given string and assigns it to the SshPublicKey field.
+func (o *RegisteredEngine) SetSshPublicKey(v string) {
+	o.SshPublicKey = &v
 }
 
 // GetHostname returns the Hostname field value
@@ -285,7 +344,7 @@ func (o *RegisteredEngine) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetHostnameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Hostname, true
@@ -298,7 +357,7 @@ func (o *RegisteredEngine) SetHostname(v string) {
 
 // GetCpuCoreCount returns the CpuCoreCount field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetCpuCoreCount() int32 {
-	if o == nil || o.CpuCoreCount.Get() == nil {
+	if o == nil || IsNil(o.CpuCoreCount.Get()) {
 		var ret int32
 		return ret
 	}
@@ -309,7 +368,7 @@ func (o *RegisteredEngine) GetCpuCoreCount() int32 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetCpuCoreCountOk() (*int32, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.CpuCoreCount.Get(), o.CpuCoreCount.IsSet()
@@ -340,7 +399,7 @@ func (o *RegisteredEngine) UnsetCpuCoreCount() {
 
 // GetMemorySize returns the MemorySize field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetMemorySize() int64 {
-	if o == nil || o.MemorySize.Get() == nil {
+	if o == nil || IsNil(o.MemorySize.Get()) {
 		var ret int64
 		return ret
 	}
@@ -351,7 +410,7 @@ func (o *RegisteredEngine) GetMemorySize() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetMemorySizeOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.MemorySize.Get(), o.MemorySize.IsSet()
@@ -382,7 +441,7 @@ func (o *RegisteredEngine) UnsetMemorySize() {
 
 // GetDataStorageCapacity returns the DataStorageCapacity field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetDataStorageCapacity() int64 {
-	if o == nil || o.DataStorageCapacity.Get() == nil {
+	if o == nil || IsNil(o.DataStorageCapacity.Get()) {
 		var ret int64
 		return ret
 	}
@@ -393,7 +452,7 @@ func (o *RegisteredEngine) GetDataStorageCapacity() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetDataStorageCapacityOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DataStorageCapacity.Get(), o.DataStorageCapacity.IsSet()
@@ -424,7 +483,7 @@ func (o *RegisteredEngine) UnsetDataStorageCapacity() {
 
 // GetDataStorageUsed returns the DataStorageUsed field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetDataStorageUsed() int64 {
-	if o == nil || o.DataStorageUsed.Get() == nil {
+	if o == nil || IsNil(o.DataStorageUsed.Get()) {
 		var ret int64
 		return ret
 	}
@@ -435,7 +494,7 @@ func (o *RegisteredEngine) GetDataStorageUsed() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetDataStorageUsedOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DataStorageUsed.Get(), o.DataStorageUsed.IsSet()
@@ -466,7 +525,7 @@ func (o *RegisteredEngine) UnsetDataStorageUsed() {
 
 // GetInsecureSsl returns the InsecureSsl field value if set, zero value otherwise.
 func (o *RegisteredEngine) GetInsecureSsl() bool {
-	if o == nil || o.InsecureSsl == nil {
+	if o == nil || IsNil(o.InsecureSsl) {
 		var ret bool
 		return ret
 	}
@@ -476,7 +535,7 @@ func (o *RegisteredEngine) GetInsecureSsl() bool {
 // GetInsecureSslOk returns a tuple with the InsecureSsl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetInsecureSslOk() (*bool, bool) {
-	if o == nil || o.InsecureSsl == nil {
+	if o == nil || IsNil(o.InsecureSsl) {
 		return nil, false
 	}
 	return o.InsecureSsl, true
@@ -484,7 +543,7 @@ func (o *RegisteredEngine) GetInsecureSslOk() (*bool, bool) {
 
 // HasInsecureSsl returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasInsecureSsl() bool {
-	if o != nil && o.InsecureSsl != nil {
+	if o != nil && !IsNil(o.InsecureSsl) {
 		return true
 	}
 
@@ -498,7 +557,7 @@ func (o *RegisteredEngine) SetInsecureSsl(v bool) {
 
 // GetUnsafeSslHostnameCheck returns the UnsafeSslHostnameCheck field value if set, zero value otherwise.
 func (o *RegisteredEngine) GetUnsafeSslHostnameCheck() bool {
-	if o == nil || o.UnsafeSslHostnameCheck == nil {
+	if o == nil || IsNil(o.UnsafeSslHostnameCheck) {
 		var ret bool
 		return ret
 	}
@@ -508,7 +567,7 @@ func (o *RegisteredEngine) GetUnsafeSslHostnameCheck() bool {
 // GetUnsafeSslHostnameCheckOk returns a tuple with the UnsafeSslHostnameCheck field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetUnsafeSslHostnameCheckOk() (*bool, bool) {
-	if o == nil || o.UnsafeSslHostnameCheck == nil {
+	if o == nil || IsNil(o.UnsafeSslHostnameCheck) {
 		return nil, false
 	}
 	return o.UnsafeSslHostnameCheck, true
@@ -516,7 +575,7 @@ func (o *RegisteredEngine) GetUnsafeSslHostnameCheckOk() (*bool, bool) {
 
 // HasUnsafeSslHostnameCheck returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasUnsafeSslHostnameCheck() bool {
-	if o != nil && o.UnsafeSslHostnameCheck != nil {
+	if o != nil && !IsNil(o.UnsafeSslHostnameCheck) {
 		return true
 	}
 
@@ -530,7 +589,7 @@ func (o *RegisteredEngine) SetUnsafeSslHostnameCheck(v bool) {
 
 // GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetTruststoreFilename() string {
-	if o == nil || o.TruststoreFilename.Get() == nil {
+	if o == nil || IsNil(o.TruststoreFilename.Get()) {
 		var ret string
 		return ret
 	}
@@ -541,7 +600,7 @@ func (o *RegisteredEngine) GetTruststoreFilename() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.TruststoreFilename.Get(), o.TruststoreFilename.IsSet()
@@ -572,7 +631,7 @@ func (o *RegisteredEngine) UnsetTruststoreFilename() {
 
 // GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetTruststorePassword() string {
-	if o == nil || o.TruststorePassword.Get() == nil {
+	if o == nil || IsNil(o.TruststorePassword.Get()) {
 		var ret string
 		return ret
 	}
@@ -583,7 +642,7 @@ func (o *RegisteredEngine) GetTruststorePassword() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.TruststorePassword.Get(), o.TruststorePassword.IsSet()
@@ -614,7 +673,7 @@ func (o *RegisteredEngine) UnsetTruststorePassword() {
 
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetStatus() string {
-	if o == nil || o.Status.Get() == nil {
+	if o == nil || IsNil(o.Status.Get()) {
 		var ret string
 		return ret
 	}
@@ -625,7 +684,7 @@ func (o *RegisteredEngine) GetStatus() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetStatusOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Status.Get(), o.Status.IsSet()
@@ -656,7 +715,7 @@ func (o *RegisteredEngine) UnsetStatus() {
 
 // GetConnectionStatus returns the ConnectionStatus field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetConnectionStatus() string {
-	if o == nil || o.ConnectionStatus.Get() == nil {
+	if o == nil || IsNil(o.ConnectionStatus.Get()) {
 		var ret string
 		return ret
 	}
@@ -667,7 +726,7 @@ func (o *RegisteredEngine) GetConnectionStatus() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetConnectionStatusOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.ConnectionStatus.Get(), o.ConnectionStatus.IsSet()
@@ -698,7 +757,7 @@ func (o *RegisteredEngine) UnsetConnectionStatus() {
 
 // GetConnectionStatusDetails returns the ConnectionStatusDetails field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetConnectionStatusDetails() string {
-	if o == nil || o.ConnectionStatusDetails.Get() == nil {
+	if o == nil || IsNil(o.ConnectionStatusDetails.Get()) {
 		var ret string
 		return ret
 	}
@@ -709,7 +768,7 @@ func (o *RegisteredEngine) GetConnectionStatusDetails() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetConnectionStatusDetailsOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.ConnectionStatusDetails.Get(), o.ConnectionStatusDetails.IsSet()
@@ -740,7 +799,7 @@ func (o *RegisteredEngine) UnsetConnectionStatusDetails() {
 
 // GetUsername returns the Username field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetUsername() string {
-	if o == nil || o.Username.Get() == nil {
+	if o == nil || IsNil(o.Username.Get()) {
 		var ret string
 		return ret
 	}
@@ -751,7 +810,7 @@ func (o *RegisteredEngine) GetUsername() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetUsernameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Username.Get(), o.Username.IsSet()
@@ -782,7 +841,7 @@ func (o *RegisteredEngine) UnsetUsername() {
 
 // GetPassword returns the Password field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetPassword() string {
-	if o == nil || o.Password.Get() == nil {
+	if o == nil || IsNil(o.Password.Get()) {
 		var ret string
 		return ret
 	}
@@ -793,7 +852,7 @@ func (o *RegisteredEngine) GetPassword() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetPasswordOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Password.Get(), o.Password.IsSet()
@@ -822,9 +881,93 @@ func (o *RegisteredEngine) UnsetPassword() {
 	o.Password.Unset()
 }
 
+// GetMaskingUsername returns the MaskingUsername field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingUsername() string {
+	if o == nil || IsNil(o.MaskingUsername.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MaskingUsername.Get()
+}
+
+// GetMaskingUsernameOk returns a tuple with the MaskingUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingUsernameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingUsername.Get(), o.MaskingUsername.IsSet()
+}
+
+// HasMaskingUsername returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingUsername() bool {
+	if o != nil && o.MaskingUsername.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingUsername gets a reference to the given NullableString and assigns it to the MaskingUsername field.
+func (o *RegisteredEngine) SetMaskingUsername(v string) {
+	o.MaskingUsername.Set(&v)
+}
+// SetMaskingUsernameNil sets the value for MaskingUsername to be an explicit nil
+func (o *RegisteredEngine) SetMaskingUsernameNil() {
+	o.MaskingUsername.Set(nil)
+}
+
+// UnsetMaskingUsername ensures that no value is present for MaskingUsername, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingUsername() {
+	o.MaskingUsername.Unset()
+}
+
+// GetMaskingPassword returns the MaskingPassword field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingPassword() string {
+	if o == nil || IsNil(o.MaskingPassword.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MaskingPassword.Get()
+}
+
+// GetMaskingPasswordOk returns a tuple with the MaskingPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingPasswordOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingPassword.Get(), o.MaskingPassword.IsSet()
+}
+
+// HasMaskingPassword returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingPassword() bool {
+	if o != nil && o.MaskingPassword.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingPassword gets a reference to the given NullableString and assigns it to the MaskingPassword field.
+func (o *RegisteredEngine) SetMaskingPassword(v string) {
+	o.MaskingPassword.Set(&v)
+}
+// SetMaskingPasswordNil sets the value for MaskingPassword to be an explicit nil
+func (o *RegisteredEngine) SetMaskingPasswordNil() {
+	o.MaskingPassword.Set(nil)
+}
+
+// UnsetMaskingPassword ensures that no value is present for MaskingPassword, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingPassword() {
+	o.MaskingPassword.Unset()
+}
+
 // GetHashicorpVaultUsernameCommandArgs returns the HashicorpVaultUsernameCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetHashicorpVaultUsernameCommandArgs() []string {
-	if o == nil  {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -835,7 +978,7 @@ func (o *RegisteredEngine) GetHashicorpVaultUsernameCommandArgs() []string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetHashicorpVaultUsernameCommandArgsOk() ([]string, bool) {
-	if o == nil || o.HashicorpVaultUsernameCommandArgs == nil {
+	if o == nil || IsNil(o.HashicorpVaultUsernameCommandArgs) {
 		return nil, false
 	}
 	return o.HashicorpVaultUsernameCommandArgs, true
@@ -843,7 +986,7 @@ func (o *RegisteredEngine) GetHashicorpVaultUsernameCommandArgsOk() ([]string, b
 
 // HasHashicorpVaultUsernameCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultUsernameCommandArgs() bool {
-	if o != nil && o.HashicorpVaultUsernameCommandArgs != nil {
+	if o != nil && IsNil(o.HashicorpVaultUsernameCommandArgs) {
 		return true
 	}
 
@@ -855,9 +998,42 @@ func (o *RegisteredEngine) SetHashicorpVaultUsernameCommandArgs(v []string) {
 	o.HashicorpVaultUsernameCommandArgs = v
 }
 
+// GetHashicorpVaultMaskingUsernameCommandArgs returns the HashicorpVaultMaskingUsernameCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetHashicorpVaultMaskingUsernameCommandArgs() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.HashicorpVaultMaskingUsernameCommandArgs
+}
+
+// GetHashicorpVaultMaskingUsernameCommandArgsOk returns a tuple with the HashicorpVaultMaskingUsernameCommandArgs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetHashicorpVaultMaskingUsernameCommandArgsOk() ([]string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
+		return nil, false
+	}
+	return o.HashicorpVaultMaskingUsernameCommandArgs, true
+}
+
+// HasHashicorpVaultMaskingUsernameCommandArgs returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasHashicorpVaultMaskingUsernameCommandArgs() bool {
+	if o != nil && IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultMaskingUsernameCommandArgs gets a reference to the given []string and assigns it to the HashicorpVaultMaskingUsernameCommandArgs field.
+func (o *RegisteredEngine) SetHashicorpVaultMaskingUsernameCommandArgs(v []string) {
+	o.HashicorpVaultMaskingUsernameCommandArgs = v
+}
+
 // GetHashicorpVaultPasswordCommandArgs returns the HashicorpVaultPasswordCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetHashicorpVaultPasswordCommandArgs() []string {
-	if o == nil  {
+	if o == nil {
 		var ret []string
 		return ret
 	}
@@ -868,7 +1044,7 @@ func (o *RegisteredEngine) GetHashicorpVaultPasswordCommandArgs() []string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetHashicorpVaultPasswordCommandArgsOk() ([]string, bool) {
-	if o == nil || o.HashicorpVaultPasswordCommandArgs == nil {
+	if o == nil || IsNil(o.HashicorpVaultPasswordCommandArgs) {
 		return nil, false
 	}
 	return o.HashicorpVaultPasswordCommandArgs, true
@@ -876,7 +1052,7 @@ func (o *RegisteredEngine) GetHashicorpVaultPasswordCommandArgsOk() ([]string, b
 
 // HasHashicorpVaultPasswordCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultPasswordCommandArgs() bool {
-	if o != nil && o.HashicorpVaultPasswordCommandArgs != nil {
+	if o != nil && IsNil(o.HashicorpVaultPasswordCommandArgs) {
 		return true
 	}
 
@@ -888,9 +1064,84 @@ func (o *RegisteredEngine) SetHashicorpVaultPasswordCommandArgs(v []string) {
 	o.HashicorpVaultPasswordCommandArgs = v
 }
 
+// GetHashicorpVaultMaskingPasswordCommandArgs returns the HashicorpVaultMaskingPasswordCommandArgs field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetHashicorpVaultMaskingPasswordCommandArgs() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.HashicorpVaultMaskingPasswordCommandArgs
+}
+
+// GetHashicorpVaultMaskingPasswordCommandArgsOk returns a tuple with the HashicorpVaultMaskingPasswordCommandArgs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetHashicorpVaultMaskingPasswordCommandArgsOk() ([]string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
+		return nil, false
+	}
+	return o.HashicorpVaultMaskingPasswordCommandArgs, true
+}
+
+// HasHashicorpVaultMaskingPasswordCommandArgs returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasHashicorpVaultMaskingPasswordCommandArgs() bool {
+	if o != nil && IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultMaskingPasswordCommandArgs gets a reference to the given []string and assigns it to the HashicorpVaultMaskingPasswordCommandArgs field.
+func (o *RegisteredEngine) SetHashicorpVaultMaskingPasswordCommandArgs(v []string) {
+	o.HashicorpVaultMaskingPasswordCommandArgs = v
+}
+
+// GetMaskingHashicorpVaultId returns the MaskingHashicorpVaultId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingHashicorpVaultId() int64 {
+	if o == nil || IsNil(o.MaskingHashicorpVaultId.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.MaskingHashicorpVaultId.Get()
+}
+
+// GetMaskingHashicorpVaultIdOk returns a tuple with the MaskingHashicorpVaultId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingHashicorpVaultIdOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingHashicorpVaultId.Get(), o.MaskingHashicorpVaultId.IsSet()
+}
+
+// HasMaskingHashicorpVaultId returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingHashicorpVaultId() bool {
+	if o != nil && o.MaskingHashicorpVaultId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingHashicorpVaultId gets a reference to the given NullableInt64 and assigns it to the MaskingHashicorpVaultId field.
+func (o *RegisteredEngine) SetMaskingHashicorpVaultId(v int64) {
+	o.MaskingHashicorpVaultId.Set(&v)
+}
+// SetMaskingHashicorpVaultIdNil sets the value for MaskingHashicorpVaultId to be an explicit nil
+func (o *RegisteredEngine) SetMaskingHashicorpVaultIdNil() {
+	o.MaskingHashicorpVaultId.Set(nil)
+}
+
+// UnsetMaskingHashicorpVaultId ensures that no value is present for MaskingHashicorpVaultId, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingHashicorpVaultId() {
+	o.MaskingHashicorpVaultId.Unset()
+}
+
 // GetHashicorpVaultId returns the HashicorpVaultId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetHashicorpVaultId() int64 {
-	if o == nil || o.HashicorpVaultId.Get() == nil {
+	if o == nil || IsNil(o.HashicorpVaultId.Get()) {
 		var ret int64
 		return ret
 	}
@@ -901,7 +1152,7 @@ func (o *RegisteredEngine) GetHashicorpVaultId() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RegisteredEngine) GetHashicorpVaultIdOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.HashicorpVaultId.Get(), o.HashicorpVaultId.IsSet()
@@ -932,7 +1183,7 @@ func (o *RegisteredEngine) UnsetHashicorpVaultId() {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *RegisteredEngine) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -942,7 +1193,7 @@ func (o *RegisteredEngine) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -950,7 +1201,7 @@ func (o *RegisteredEngine) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -962,11 +1213,227 @@ func (o *RegisteredEngine) SetTags(v []Tag) {
 	o.Tags = v
 }
 
-func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+// GetMaskingMemoryUsed returns the MaskingMemoryUsed field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingMemoryUsed() int64 {
+	if o == nil || IsNil(o.MaskingMemoryUsed.Get()) {
+		var ret int64
+		return ret
 	}
+	return *o.MaskingMemoryUsed.Get()
+}
+
+// GetMaskingMemoryUsedOk returns a tuple with the MaskingMemoryUsed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingMemoryUsedOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingMemoryUsed.Get(), o.MaskingMemoryUsed.IsSet()
+}
+
+// HasMaskingMemoryUsed returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingMemoryUsed() bool {
+	if o != nil && o.MaskingMemoryUsed.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingMemoryUsed gets a reference to the given NullableInt64 and assigns it to the MaskingMemoryUsed field.
+func (o *RegisteredEngine) SetMaskingMemoryUsed(v int64) {
+	o.MaskingMemoryUsed.Set(&v)
+}
+// SetMaskingMemoryUsedNil sets the value for MaskingMemoryUsed to be an explicit nil
+func (o *RegisteredEngine) SetMaskingMemoryUsedNil() {
+	o.MaskingMemoryUsed.Set(nil)
+}
+
+// UnsetMaskingMemoryUsed ensures that no value is present for MaskingMemoryUsed, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingMemoryUsed() {
+	o.MaskingMemoryUsed.Unset()
+}
+
+// GetMaskingAllocatedMemory returns the MaskingAllocatedMemory field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingAllocatedMemory() int64 {
+	if o == nil || IsNil(o.MaskingAllocatedMemory.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.MaskingAllocatedMemory.Get()
+}
+
+// GetMaskingAllocatedMemoryOk returns a tuple with the MaskingAllocatedMemory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingAllocatedMemoryOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingAllocatedMemory.Get(), o.MaskingAllocatedMemory.IsSet()
+}
+
+// HasMaskingAllocatedMemory returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingAllocatedMemory() bool {
+	if o != nil && o.MaskingAllocatedMemory.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingAllocatedMemory gets a reference to the given NullableInt64 and assigns it to the MaskingAllocatedMemory field.
+func (o *RegisteredEngine) SetMaskingAllocatedMemory(v int64) {
+	o.MaskingAllocatedMemory.Set(&v)
+}
+// SetMaskingAllocatedMemoryNil sets the value for MaskingAllocatedMemory to be an explicit nil
+func (o *RegisteredEngine) SetMaskingAllocatedMemoryNil() {
+	o.MaskingAllocatedMemory.Set(nil)
+}
+
+// UnsetMaskingAllocatedMemory ensures that no value is present for MaskingAllocatedMemory, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingAllocatedMemory() {
+	o.MaskingAllocatedMemory.Unset()
+}
+
+// GetMaskingJobsRunning returns the MaskingJobsRunning field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingJobsRunning() int32 {
+	if o == nil || IsNil(o.MaskingJobsRunning.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.MaskingJobsRunning.Get()
+}
+
+// GetMaskingJobsRunningOk returns a tuple with the MaskingJobsRunning field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingJobsRunningOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingJobsRunning.Get(), o.MaskingJobsRunning.IsSet()
+}
+
+// HasMaskingJobsRunning returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingJobsRunning() bool {
+	if o != nil && o.MaskingJobsRunning.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingJobsRunning gets a reference to the given NullableInt32 and assigns it to the MaskingJobsRunning field.
+func (o *RegisteredEngine) SetMaskingJobsRunning(v int32) {
+	o.MaskingJobsRunning.Set(&v)
+}
+// SetMaskingJobsRunningNil sets the value for MaskingJobsRunning to be an explicit nil
+func (o *RegisteredEngine) SetMaskingJobsRunningNil() {
+	o.MaskingJobsRunning.Set(nil)
+}
+
+// UnsetMaskingJobsRunning ensures that no value is present for MaskingJobsRunning, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingJobsRunning() {
+	o.MaskingJobsRunning.Unset()
+}
+
+// GetMaskingMaxConcurrentJobs returns the MaskingMaxConcurrentJobs field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingMaxConcurrentJobs() int32 {
+	if o == nil || IsNil(o.MaskingMaxConcurrentJobs.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.MaskingMaxConcurrentJobs.Get()
+}
+
+// GetMaskingMaxConcurrentJobsOk returns a tuple with the MaskingMaxConcurrentJobs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingMaxConcurrentJobsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingMaxConcurrentJobs.Get(), o.MaskingMaxConcurrentJobs.IsSet()
+}
+
+// HasMaskingMaxConcurrentJobs returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingMaxConcurrentJobs() bool {
+	if o != nil && o.MaskingMaxConcurrentJobs.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingMaxConcurrentJobs gets a reference to the given NullableInt32 and assigns it to the MaskingMaxConcurrentJobs field.
+func (o *RegisteredEngine) SetMaskingMaxConcurrentJobs(v int32) {
+	o.MaskingMaxConcurrentJobs.Set(&v)
+}
+// SetMaskingMaxConcurrentJobsNil sets the value for MaskingMaxConcurrentJobs to be an explicit nil
+func (o *RegisteredEngine) SetMaskingMaxConcurrentJobsNil() {
+	o.MaskingMaxConcurrentJobs.Set(nil)
+}
+
+// UnsetMaskingMaxConcurrentJobs ensures that no value is present for MaskingMaxConcurrentJobs, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingMaxConcurrentJobs() {
+	o.MaskingMaxConcurrentJobs.Unset()
+}
+
+// GetMaskingAvailableCores returns the MaskingAvailableCores field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetMaskingAvailableCores() int32 {
+	if o == nil || IsNil(o.MaskingAvailableCores.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.MaskingAvailableCores.Get()
+}
+
+// GetMaskingAvailableCoresOk returns a tuple with the MaskingAvailableCores field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetMaskingAvailableCoresOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaskingAvailableCores.Get(), o.MaskingAvailableCores.IsSet()
+}
+
+// HasMaskingAvailableCores returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasMaskingAvailableCores() bool {
+	if o != nil && o.MaskingAvailableCores.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingAvailableCores gets a reference to the given NullableInt32 and assigns it to the MaskingAvailableCores field.
+func (o *RegisteredEngine) SetMaskingAvailableCores(v int32) {
+	o.MaskingAvailableCores.Set(&v)
+}
+// SetMaskingAvailableCoresNil sets the value for MaskingAvailableCores to be an explicit nil
+func (o *RegisteredEngine) SetMaskingAvailableCoresNil() {
+	o.MaskingAvailableCores.Set(nil)
+}
+
+// UnsetMaskingAvailableCores ensures that no value is present for MaskingAvailableCores, not even an explicit nil
+func (o *RegisteredEngine) UnsetMaskingAvailableCores() {
+	o.MaskingAvailableCores.Unset()
+}
+
+func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	// skip: id is readOnly
 	if o.Uuid.IsSet() {
 		toSerialize["uuid"] = o.Uuid.Get()
 	}
@@ -976,12 +1443,11 @@ func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	if o.Version.IsSet() {
 		toSerialize["version"] = o.Version.Get()
 	}
-	if true {
-		toSerialize["name"] = o.Name
+	toSerialize["name"] = o.Name
+	if !IsNil(o.SshPublicKey) {
+		toSerialize["ssh_public_key"] = o.SshPublicKey
 	}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
+	toSerialize["hostname"] = o.Hostname
 	if o.CpuCoreCount.IsSet() {
 		toSerialize["cpu_core_count"] = o.CpuCoreCount.Get()
 	}
@@ -994,10 +1460,10 @@ func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	if o.DataStorageUsed.IsSet() {
 		toSerialize["data_storage_used"] = o.DataStorageUsed.Get()
 	}
-	if o.InsecureSsl != nil {
+	if !IsNil(o.InsecureSsl) {
 		toSerialize["insecure_ssl"] = o.InsecureSsl
 	}
-	if o.UnsafeSslHostnameCheck != nil {
+	if !IsNil(o.UnsafeSslHostnameCheck) {
 		toSerialize["unsafe_ssl_hostname_check"] = o.UnsafeSslHostnameCheck
 	}
 	if o.TruststoreFilename.IsSet() {
@@ -1021,19 +1487,49 @@ func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	if o.Password.IsSet() {
 		toSerialize["password"] = o.Password.Get()
 	}
+	if o.MaskingUsername.IsSet() {
+		toSerialize["masking_username"] = o.MaskingUsername.Get()
+	}
+	if o.MaskingPassword.IsSet() {
+		toSerialize["masking_password"] = o.MaskingPassword.Get()
+	}
 	if o.HashicorpVaultUsernameCommandArgs != nil {
 		toSerialize["hashicorp_vault_username_command_args"] = o.HashicorpVaultUsernameCommandArgs
+	}
+	if o.HashicorpVaultMaskingUsernameCommandArgs != nil {
+		toSerialize["hashicorp_vault_masking_username_command_args"] = o.HashicorpVaultMaskingUsernameCommandArgs
 	}
 	if o.HashicorpVaultPasswordCommandArgs != nil {
 		toSerialize["hashicorp_vault_password_command_args"] = o.HashicorpVaultPasswordCommandArgs
 	}
+	if o.HashicorpVaultMaskingPasswordCommandArgs != nil {
+		toSerialize["hashicorp_vault_masking_password_command_args"] = o.HashicorpVaultMaskingPasswordCommandArgs
+	}
+	if o.MaskingHashicorpVaultId.IsSet() {
+		toSerialize["masking_hashicorp_vault_id"] = o.MaskingHashicorpVaultId.Get()
+	}
 	if o.HashicorpVaultId.IsSet() {
 		toSerialize["hashicorp_vault_id"] = o.HashicorpVaultId.Get()
 	}
-	if o.Tags != nil {
+	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
-	return json.Marshal(toSerialize)
+	if o.MaskingMemoryUsed.IsSet() {
+		toSerialize["masking_memory_used"] = o.MaskingMemoryUsed.Get()
+	}
+	if o.MaskingAllocatedMemory.IsSet() {
+		toSerialize["masking_allocated_memory"] = o.MaskingAllocatedMemory.Get()
+	}
+	if o.MaskingJobsRunning.IsSet() {
+		toSerialize["masking_jobs_running"] = o.MaskingJobsRunning.Get()
+	}
+	if o.MaskingMaxConcurrentJobs.IsSet() {
+		toSerialize["masking_max_concurrent_jobs"] = o.MaskingMaxConcurrentJobs.Get()
+	}
+	if o.MaskingAvailableCores.IsSet() {
+		toSerialize["masking_available_cores"] = o.MaskingAvailableCores.Get()
+	}
+	return toSerialize, nil
 }
 
 type NullableRegisteredEngine struct {

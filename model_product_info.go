@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the ProductInfo type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProductInfo{}
 
 // ProductInfo Product Information Response
 type ProductInfo struct {
@@ -46,7 +49,7 @@ func NewProductInfoWithDefaults() *ProductInfo {
 
 // GetApiVersion returns the ApiVersion field value if set, zero value otherwise.
 func (o *ProductInfo) GetApiVersion() string {
-	if o == nil || o.ApiVersion == nil {
+	if o == nil || IsNil(o.ApiVersion) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *ProductInfo) GetApiVersion() string {
 // GetApiVersionOk returns a tuple with the ApiVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProductInfo) GetApiVersionOk() (*string, bool) {
-	if o == nil || o.ApiVersion == nil {
+	if o == nil || IsNil(o.ApiVersion) {
 		return nil, false
 	}
 	return o.ApiVersion, true
@@ -64,7 +67,7 @@ func (o *ProductInfo) GetApiVersionOk() (*string, bool) {
 
 // HasApiVersion returns a boolean if a field has been set.
 func (o *ProductInfo) HasApiVersion() bool {
-	if o != nil && o.ApiVersion != nil {
+	if o != nil && !IsNil(o.ApiVersion) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *ProductInfo) SetApiVersion(v string) {
 
 // GetProductVersion returns the ProductVersion field value if set, zero value otherwise.
 func (o *ProductInfo) GetProductVersion() string {
-	if o == nil || o.ProductVersion == nil {
+	if o == nil || IsNil(o.ProductVersion) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *ProductInfo) GetProductVersion() string {
 // GetProductVersionOk returns a tuple with the ProductVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProductInfo) GetProductVersionOk() (*string, bool) {
-	if o == nil || o.ProductVersion == nil {
+	if o == nil || IsNil(o.ProductVersion) {
 		return nil, false
 	}
 	return o.ProductVersion, true
@@ -96,7 +99,7 @@ func (o *ProductInfo) GetProductVersionOk() (*string, bool) {
 
 // HasProductVersion returns a boolean if a field has been set.
 func (o *ProductInfo) HasProductVersion() bool {
-	if o != nil && o.ProductVersion != nil {
+	if o != nil && !IsNil(o.ProductVersion) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *ProductInfo) SetProductVersion(v string) {
 
 // GetProductUpgradeHistory returns the ProductUpgradeHistory field value if set, zero value otherwise.
 func (o *ProductInfo) GetProductUpgradeHistory() []ProductHistory {
-	if o == nil || o.ProductUpgradeHistory == nil {
+	if o == nil || IsNil(o.ProductUpgradeHistory) {
 		var ret []ProductHistory
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *ProductInfo) GetProductUpgradeHistory() []ProductHistory {
 // GetProductUpgradeHistoryOk returns a tuple with the ProductUpgradeHistory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProductInfo) GetProductUpgradeHistoryOk() ([]ProductHistory, bool) {
-	if o == nil || o.ProductUpgradeHistory == nil {
+	if o == nil || IsNil(o.ProductUpgradeHistory) {
 		return nil, false
 	}
 	return o.ProductUpgradeHistory, true
@@ -128,7 +131,7 @@ func (o *ProductInfo) GetProductUpgradeHistoryOk() ([]ProductHistory, bool) {
 
 // HasProductUpgradeHistory returns a boolean if a field has been set.
 func (o *ProductInfo) HasProductUpgradeHistory() bool {
-	if o != nil && o.ProductUpgradeHistory != nil {
+	if o != nil && !IsNil(o.ProductUpgradeHistory) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *ProductInfo) SetProductUpgradeHistory(v []ProductHistory) {
 
 // GetSupportedApiVersions returns the SupportedApiVersions field value if set, zero value otherwise.
 func (o *ProductInfo) GetSupportedApiVersions() []string {
-	if o == nil || o.SupportedApiVersions == nil {
+	if o == nil || IsNil(o.SupportedApiVersions) {
 		var ret []string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *ProductInfo) GetSupportedApiVersions() []string {
 // GetSupportedApiVersionsOk returns a tuple with the SupportedApiVersions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProductInfo) GetSupportedApiVersionsOk() ([]string, bool) {
-	if o == nil || o.SupportedApiVersions == nil {
+	if o == nil || IsNil(o.SupportedApiVersions) {
 		return nil, false
 	}
 	return o.SupportedApiVersions, true
@@ -160,7 +163,7 @@ func (o *ProductInfo) GetSupportedApiVersionsOk() ([]string, bool) {
 
 // HasSupportedApiVersions returns a boolean if a field has been set.
 func (o *ProductInfo) HasSupportedApiVersions() bool {
-	if o != nil && o.SupportedApiVersions != nil {
+	if o != nil && !IsNil(o.SupportedApiVersions) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *ProductInfo) SetSupportedApiVersions(v []string) {
 }
 
 func (o ProductInfo) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ApiVersion != nil {
-		toSerialize["api_version"] = o.ApiVersion
-	}
-	if o.ProductVersion != nil {
-		toSerialize["product_version"] = o.ProductVersion
-	}
-	if o.ProductUpgradeHistory != nil {
-		toSerialize["product_upgrade_history"] = o.ProductUpgradeHistory
-	}
-	if o.SupportedApiVersions != nil {
-		toSerialize["supported_api_versions"] = o.SupportedApiVersions
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ProductInfo) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ApiVersion) {
+		toSerialize["api_version"] = o.ApiVersion
+	}
+	if !IsNil(o.ProductVersion) {
+		toSerialize["product_version"] = o.ProductVersion
+	}
+	if !IsNil(o.ProductUpgradeHistory) {
+		toSerialize["product_upgrade_history"] = o.ProductUpgradeHistory
+	}
+	if !IsNil(o.SupportedApiVersions) {
+		toSerialize["supported_api_versions"] = o.SupportedApiVersions
+	}
+	return toSerialize, nil
 }
 
 type NullableProductInfo struct {

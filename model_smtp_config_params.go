@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the SMTPConfigParams type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SMTPConfigParams{}
 
 // SMTPConfigParams Parameters to read or update SMTP Config
 type SMTPConfigParams struct {
@@ -56,7 +59,7 @@ func NewSMTPConfigParamsWithDefaults() *SMTPConfigParams {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *SMTPConfigParams) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *SMTPConfigParams) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SMTPConfigParams) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -74,7 +77,7 @@ func (o *SMTPConfigParams) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *SMTPConfigParams) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *SMTPConfigParams) SetEnabled(v bool) {
 
 // GetServer returns the Server field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SMTPConfigParams) GetServer() string {
-	if o == nil || o.Server.Get() == nil {
+	if o == nil || IsNil(o.Server.Get()) {
 		var ret string
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *SMTPConfigParams) GetServer() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SMTPConfigParams) GetServerOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Server.Get(), o.Server.IsSet()
@@ -130,7 +133,7 @@ func (o *SMTPConfigParams) UnsetServer() {
 
 // GetPort returns the Port field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SMTPConfigParams) GetPort() int32 {
-	if o == nil || o.Port.Get() == nil {
+	if o == nil || IsNil(o.Port.Get()) {
 		var ret int32
 		return ret
 	}
@@ -141,7 +144,7 @@ func (o *SMTPConfigParams) GetPort() int32 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SMTPConfigParams) GetPortOk() (*int32, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Port.Get(), o.Port.IsSet()
@@ -172,7 +175,7 @@ func (o *SMTPConfigParams) UnsetPort() {
 
 // GetAuthenticationEnabled returns the AuthenticationEnabled field value if set, zero value otherwise.
 func (o *SMTPConfigParams) GetAuthenticationEnabled() bool {
-	if o == nil || o.AuthenticationEnabled == nil {
+	if o == nil || IsNil(o.AuthenticationEnabled) {
 		var ret bool
 		return ret
 	}
@@ -182,7 +185,7 @@ func (o *SMTPConfigParams) GetAuthenticationEnabled() bool {
 // GetAuthenticationEnabledOk returns a tuple with the AuthenticationEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SMTPConfigParams) GetAuthenticationEnabledOk() (*bool, bool) {
-	if o == nil || o.AuthenticationEnabled == nil {
+	if o == nil || IsNil(o.AuthenticationEnabled) {
 		return nil, false
 	}
 	return o.AuthenticationEnabled, true
@@ -190,7 +193,7 @@ func (o *SMTPConfigParams) GetAuthenticationEnabledOk() (*bool, bool) {
 
 // HasAuthenticationEnabled returns a boolean if a field has been set.
 func (o *SMTPConfigParams) HasAuthenticationEnabled() bool {
-	if o != nil && o.AuthenticationEnabled != nil {
+	if o != nil && !IsNil(o.AuthenticationEnabled) {
 		return true
 	}
 
@@ -204,7 +207,7 @@ func (o *SMTPConfigParams) SetAuthenticationEnabled(v bool) {
 
 // GetTlsEnabled returns the TlsEnabled field value if set, zero value otherwise.
 func (o *SMTPConfigParams) GetTlsEnabled() bool {
-	if o == nil || o.TlsEnabled == nil {
+	if o == nil || IsNil(o.TlsEnabled) {
 		var ret bool
 		return ret
 	}
@@ -214,7 +217,7 @@ func (o *SMTPConfigParams) GetTlsEnabled() bool {
 // GetTlsEnabledOk returns a tuple with the TlsEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SMTPConfigParams) GetTlsEnabledOk() (*bool, bool) {
-	if o == nil || o.TlsEnabled == nil {
+	if o == nil || IsNil(o.TlsEnabled) {
 		return nil, false
 	}
 	return o.TlsEnabled, true
@@ -222,7 +225,7 @@ func (o *SMTPConfigParams) GetTlsEnabledOk() (*bool, bool) {
 
 // HasTlsEnabled returns a boolean if a field has been set.
 func (o *SMTPConfigParams) HasTlsEnabled() bool {
-	if o != nil && o.TlsEnabled != nil {
+	if o != nil && !IsNil(o.TlsEnabled) {
 		return true
 	}
 
@@ -236,7 +239,7 @@ func (o *SMTPConfigParams) SetTlsEnabled(v bool) {
 
 // GetUsername returns the Username field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SMTPConfigParams) GetUsername() string {
-	if o == nil || o.Username.Get() == nil {
+	if o == nil || IsNil(o.Username.Get()) {
 		var ret string
 		return ret
 	}
@@ -247,7 +250,7 @@ func (o *SMTPConfigParams) GetUsername() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SMTPConfigParams) GetUsernameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Username.Get(), o.Username.IsSet()
@@ -278,7 +281,7 @@ func (o *SMTPConfigParams) UnsetUsername() {
 
 // GetPassword returns the Password field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SMTPConfigParams) GetPassword() string {
-	if o == nil || o.Password.Get() == nil {
+	if o == nil || IsNil(o.Password.Get()) {
 		var ret string
 		return ret
 	}
@@ -289,7 +292,7 @@ func (o *SMTPConfigParams) GetPassword() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SMTPConfigParams) GetPasswordOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Password.Get(), o.Password.IsSet()
@@ -320,7 +323,7 @@ func (o *SMTPConfigParams) UnsetPassword() {
 
 // GetFromAddress returns the FromAddress field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SMTPConfigParams) GetFromAddress() string {
-	if o == nil || o.FromAddress.Get() == nil {
+	if o == nil || IsNil(o.FromAddress.Get()) {
 		var ret string
 		return ret
 	}
@@ -331,7 +334,7 @@ func (o *SMTPConfigParams) GetFromAddress() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SMTPConfigParams) GetFromAddressOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.FromAddress.Get(), o.FromAddress.IsSet()
@@ -362,7 +365,7 @@ func (o *SMTPConfigParams) UnsetFromAddress() {
 
 // GetSendTimeout returns the SendTimeout field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SMTPConfigParams) GetSendTimeout() int32 {
-	if o == nil || o.SendTimeout.Get() == nil {
+	if o == nil || IsNil(o.SendTimeout.Get()) {
 		var ret int32
 		return ret
 	}
@@ -373,7 +376,7 @@ func (o *SMTPConfigParams) GetSendTimeout() int32 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SMTPConfigParams) GetSendTimeoutOk() (*int32, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.SendTimeout.Get(), o.SendTimeout.IsSet()
@@ -403,8 +406,16 @@ func (o *SMTPConfigParams) UnsetSendTimeout() {
 }
 
 func (o SMTPConfigParams) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o SMTPConfigParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
+	if !IsNil(o.Enabled) {
 		toSerialize["enabled"] = o.Enabled
 	}
 	if o.Server.IsSet() {
@@ -413,10 +424,10 @@ func (o SMTPConfigParams) MarshalJSON() ([]byte, error) {
 	if o.Port.IsSet() {
 		toSerialize["port"] = o.Port.Get()
 	}
-	if o.AuthenticationEnabled != nil {
+	if !IsNil(o.AuthenticationEnabled) {
 		toSerialize["authentication_enabled"] = o.AuthenticationEnabled
 	}
-	if o.TlsEnabled != nil {
+	if !IsNil(o.TlsEnabled) {
 		toSerialize["tls_enabled"] = o.TlsEnabled
 	}
 	if o.Username.IsSet() {
@@ -431,7 +442,7 @@ func (o SMTPConfigParams) MarshalJSON() ([]byte, error) {
 	if o.SendTimeout.IsSet() {
 		toSerialize["send_timeout"] = o.SendTimeout.Get()
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableSMTPConfigParams struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the UpdateVDBGroupParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateVDBGroupParameters{}
 
 // UpdateVDBGroupParameters Parameters to update a VDB group.
 type UpdateVDBGroupParameters struct {
@@ -41,7 +44,7 @@ func NewUpdateVDBGroupParametersWithDefaults() *UpdateVDBGroupParameters {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *UpdateVDBGroupParameters) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *UpdateVDBGroupParameters) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateVDBGroupParameters) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -59,7 +62,7 @@ func (o *UpdateVDBGroupParameters) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *UpdateVDBGroupParameters) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *UpdateVDBGroupParameters) SetName(v string) {
 
 // GetVdbIds returns the VdbIds field value if set, zero value otherwise.
 func (o *UpdateVDBGroupParameters) GetVdbIds() []string {
-	if o == nil || o.VdbIds == nil {
+	if o == nil || IsNil(o.VdbIds) {
 		var ret []string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *UpdateVDBGroupParameters) GetVdbIds() []string {
 // GetVdbIdsOk returns a tuple with the VdbIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateVDBGroupParameters) GetVdbIdsOk() ([]string, bool) {
-	if o == nil || o.VdbIds == nil {
+	if o == nil || IsNil(o.VdbIds) {
 		return nil, false
 	}
 	return o.VdbIds, true
@@ -91,7 +94,7 @@ func (o *UpdateVDBGroupParameters) GetVdbIdsOk() ([]string, bool) {
 
 // HasVdbIds returns a boolean if a field has been set.
 func (o *UpdateVDBGroupParameters) HasVdbIds() bool {
-	if o != nil && o.VdbIds != nil {
+	if o != nil && !IsNil(o.VdbIds) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *UpdateVDBGroupParameters) SetVdbIds(v []string) {
 }
 
 func (o UpdateVDBGroupParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.VdbIds != nil {
-		toSerialize["vdb_ids"] = o.VdbIds
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateVDBGroupParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.VdbIds) {
+		toSerialize["vdb_ids"] = o.VdbIds
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateVDBGroupParameters struct {

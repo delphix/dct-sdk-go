@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the EnvironmentUser type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EnvironmentUser{}
 
 // EnvironmentUser struct for EnvironmentUser
 type EnvironmentUser struct {
@@ -46,7 +49,7 @@ func NewEnvironmentUserWithDefaults() *EnvironmentUser {
 
 // GetUserRef returns the UserRef field value if set, zero value otherwise.
 func (o *EnvironmentUser) GetUserRef() string {
-	if o == nil || o.UserRef == nil {
+	if o == nil || IsNil(o.UserRef) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *EnvironmentUser) GetUserRef() string {
 // GetUserRefOk returns a tuple with the UserRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUser) GetUserRefOk() (*string, bool) {
-	if o == nil || o.UserRef == nil {
+	if o == nil || IsNil(o.UserRef) {
 		return nil, false
 	}
 	return o.UserRef, true
@@ -64,7 +67,7 @@ func (o *EnvironmentUser) GetUserRefOk() (*string, bool) {
 
 // HasUserRef returns a boolean if a field has been set.
 func (o *EnvironmentUser) HasUserRef() bool {
-	if o != nil && o.UserRef != nil {
+	if o != nil && !IsNil(o.UserRef) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *EnvironmentUser) SetUserRef(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *EnvironmentUser) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *EnvironmentUser) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUser) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -96,7 +99,7 @@ func (o *EnvironmentUser) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *EnvironmentUser) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *EnvironmentUser) SetUsername(v string) {
 
 // GetPrimaryUser returns the PrimaryUser field value if set, zero value otherwise.
 func (o *EnvironmentUser) GetPrimaryUser() bool {
-	if o == nil || o.PrimaryUser == nil {
+	if o == nil || IsNil(o.PrimaryUser) {
 		var ret bool
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *EnvironmentUser) GetPrimaryUser() bool {
 // GetPrimaryUserOk returns a tuple with the PrimaryUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUser) GetPrimaryUserOk() (*bool, bool) {
-	if o == nil || o.PrimaryUser == nil {
+	if o == nil || IsNil(o.PrimaryUser) {
 		return nil, false
 	}
 	return o.PrimaryUser, true
@@ -128,7 +131,7 @@ func (o *EnvironmentUser) GetPrimaryUserOk() (*bool, bool) {
 
 // HasPrimaryUser returns a boolean if a field has been set.
 func (o *EnvironmentUser) HasPrimaryUser() bool {
-	if o != nil && o.PrimaryUser != nil {
+	if o != nil && !IsNil(o.PrimaryUser) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *EnvironmentUser) SetPrimaryUser(v bool) {
 
 // GetAuthType returns the AuthType field value if set, zero value otherwise.
 func (o *EnvironmentUser) GetAuthType() string {
-	if o == nil || o.AuthType == nil {
+	if o == nil || IsNil(o.AuthType) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *EnvironmentUser) GetAuthType() string {
 // GetAuthTypeOk returns a tuple with the AuthType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnvironmentUser) GetAuthTypeOk() (*string, bool) {
-	if o == nil || o.AuthType == nil {
+	if o == nil || IsNil(o.AuthType) {
 		return nil, false
 	}
 	return o.AuthType, true
@@ -160,7 +163,7 @@ func (o *EnvironmentUser) GetAuthTypeOk() (*string, bool) {
 
 // HasAuthType returns a boolean if a field has been set.
 func (o *EnvironmentUser) HasAuthType() bool {
-	if o != nil && o.AuthType != nil {
+	if o != nil && !IsNil(o.AuthType) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *EnvironmentUser) SetAuthType(v string) {
 }
 
 func (o EnvironmentUser) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserRef != nil {
-		toSerialize["user_ref"] = o.UserRef
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.PrimaryUser != nil {
-		toSerialize["primary_user"] = o.PrimaryUser
-	}
-	if o.AuthType != nil {
-		toSerialize["auth_type"] = o.AuthType
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EnvironmentUser) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserRef) {
+		toSerialize["user_ref"] = o.UserRef
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.PrimaryUser) {
+		toSerialize["primary_user"] = o.PrimaryUser
+	}
+	if !IsNil(o.AuthType) {
+		toSerialize["auth_type"] = o.AuthType
+	}
+	return toSerialize, nil
 }
 
 type NullableEnvironmentUser struct {

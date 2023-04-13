@@ -47,4 +47,19 @@ func main() {
 	for _, engine := range engines.GetItems() {
 		fmt.Printf("%s \n", engine.Hostname)
 	}
+
+	req_vdb := client.VDBsApi.GetVdbs(ctx)
+
+    vdbs, _, err := client.VDBsApi.GetVdbsExecute(req_vdb)
+
+    if err != nil {
+        fmt.Print("Error while retrieving Delphix Vdb. \n")
+        fmt.Print(err)
+        os.Exit(1)
+    }
+
+    fmt.Printf("Retrieved list of VDBs: \n")
+    for _, vdbs := range vdbs.GetItems() {
+        fmt.Printf("%s \n", vdbs.GetName())
+    }
 }

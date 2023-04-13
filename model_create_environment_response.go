@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the CreateEnvironmentResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateEnvironmentResponse{}
 
 // CreateEnvironmentResponse struct for CreateEnvironmentResponse
 type CreateEnvironmentResponse struct {
@@ -41,7 +44,7 @@ func NewCreateEnvironmentResponseWithDefaults() *CreateEnvironmentResponse {
 
 // GetJob returns the Job field value if set, zero value otherwise.
 func (o *CreateEnvironmentResponse) GetJob() Job {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		var ret Job
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *CreateEnvironmentResponse) GetJob() Job {
 // GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateEnvironmentResponse) GetJobOk() (*Job, bool) {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		return nil, false
 	}
 	return o.Job, true
@@ -59,7 +62,7 @@ func (o *CreateEnvironmentResponse) GetJobOk() (*Job, bool) {
 
 // HasJob returns a boolean if a field has been set.
 func (o *CreateEnvironmentResponse) HasJob() bool {
-	if o != nil && o.Job != nil {
+	if o != nil && !IsNil(o.Job) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *CreateEnvironmentResponse) SetJob(v Job) {
 
 // GetEnvironmentId returns the EnvironmentId field value if set, zero value otherwise.
 func (o *CreateEnvironmentResponse) GetEnvironmentId() string {
-	if o == nil || o.EnvironmentId == nil {
+	if o == nil || IsNil(o.EnvironmentId) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *CreateEnvironmentResponse) GetEnvironmentId() string {
 // GetEnvironmentIdOk returns a tuple with the EnvironmentId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateEnvironmentResponse) GetEnvironmentIdOk() (*string, bool) {
-	if o == nil || o.EnvironmentId == nil {
+	if o == nil || IsNil(o.EnvironmentId) {
 		return nil, false
 	}
 	return o.EnvironmentId, true
@@ -91,7 +94,7 @@ func (o *CreateEnvironmentResponse) GetEnvironmentIdOk() (*string, bool) {
 
 // HasEnvironmentId returns a boolean if a field has been set.
 func (o *CreateEnvironmentResponse) HasEnvironmentId() bool {
-	if o != nil && o.EnvironmentId != nil {
+	if o != nil && !IsNil(o.EnvironmentId) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *CreateEnvironmentResponse) SetEnvironmentId(v string) {
 }
 
 func (o CreateEnvironmentResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Job != nil {
-		toSerialize["job"] = o.Job
-	}
-	if o.EnvironmentId != nil {
-		toSerialize["environment_id"] = o.EnvironmentId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateEnvironmentResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
+	if !IsNil(o.EnvironmentId) {
+		toSerialize["environment_id"] = o.EnvironmentId
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateEnvironmentResponse struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the VDBGroup type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &VDBGroup{}
+
 // VDBGroup A collection of virtual databases and datesets.
 type VDBGroup struct {
 	// A unique identifier for the entity.
@@ -23,6 +26,7 @@ type VDBGroup struct {
 	Name string `json:"name"`
 	// The list of VDB IDs in this VDBGroup.
 	VdbIds []string `json:"vdb_ids"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewVDBGroup instantiates a new VDBGroup object
@@ -58,7 +62,7 @@ func (o *VDBGroup) GetId() string {
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *VDBGroup) GetIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Id, true
@@ -82,7 +86,7 @@ func (o *VDBGroup) GetName() string {
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *VDBGroup) GetNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Name, true
@@ -106,7 +110,7 @@ func (o *VDBGroup) GetVdbIds() []string {
 // GetVdbIdsOk returns a tuple with the VdbIds field value
 // and a boolean to check if the value has been set.
 func (o *VDBGroup) GetVdbIdsOk() ([]string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.VdbIds, true
@@ -117,18 +121,55 @@ func (o *VDBGroup) SetVdbIds(v []string) {
 	o.VdbIds = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *VDBGroup) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *VDBGroup) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *VDBGroup) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o VDBGroup) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["vdb_ids"] = o.VdbIds
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o VDBGroup) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	// skip: id is readOnly
+	toSerialize["name"] = o.Name
+	toSerialize["vdb_ids"] = o.VdbIds
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableVDBGroup struct {

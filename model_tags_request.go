@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the TagsRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TagsRequest{}
 
 // TagsRequest struct for TagsRequest
 type TagsRequest struct {
@@ -52,7 +55,7 @@ func (o *TagsRequest) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value
 // and a boolean to check if the value has been set.
 func (o *TagsRequest) GetTagsOk() ([]Tag, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Tags, true
@@ -64,11 +67,17 @@ func (o *TagsRequest) SetTags(v []Tag) {
 }
 
 func (o TagsRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["tags"] = o.Tags
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TagsRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["tags"] = o.Tags
+	return toSerialize, nil
 }
 
 type NullableTagsRequest struct {

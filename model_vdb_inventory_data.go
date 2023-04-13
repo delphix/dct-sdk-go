@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the VDBInventoryData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &VDBInventoryData{}
 
 // VDBInventoryData struct for VDBInventoryData
 type VDBInventoryData struct {
@@ -51,7 +54,7 @@ func NewVDBInventoryDataWithDefaults() *VDBInventoryData {
 
 // GetEngineName returns the EngineName field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetEngineName() string {
-	if o == nil || o.EngineName == nil {
+	if o == nil || IsNil(o.EngineName) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *VDBInventoryData) GetEngineName() string {
 // GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetEngineNameOk() (*string, bool) {
-	if o == nil || o.EngineName == nil {
+	if o == nil || IsNil(o.EngineName) {
 		return nil, false
 	}
 	return o.EngineName, true
@@ -69,7 +72,7 @@ func (o *VDBInventoryData) GetEngineNameOk() (*string, bool) {
 
 // HasEngineName returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasEngineName() bool {
-	if o != nil && o.EngineName != nil {
+	if o != nil && !IsNil(o.EngineName) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *VDBInventoryData) SetEngineName(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *VDBInventoryData) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -101,7 +104,7 @@ func (o *VDBInventoryData) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *VDBInventoryData) SetName(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *VDBInventoryData) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -133,7 +136,7 @@ func (o *VDBInventoryData) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *VDBInventoryData) SetType(v string) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *VDBInventoryData) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -165,7 +168,7 @@ func (o *VDBInventoryData) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *VDBInventoryData) SetVersion(v string) {
 
 // GetParentName returns the ParentName field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetParentName() string {
-	if o == nil || o.ParentName == nil {
+	if o == nil || IsNil(o.ParentName) {
 		var ret string
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *VDBInventoryData) GetParentName() string {
 // GetParentNameOk returns a tuple with the ParentName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetParentNameOk() (*string, bool) {
-	if o == nil || o.ParentName == nil {
+	if o == nil || IsNil(o.ParentName) {
 		return nil, false
 	}
 	return o.ParentName, true
@@ -197,7 +200,7 @@ func (o *VDBInventoryData) GetParentNameOk() (*string, bool) {
 
 // HasParentName returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasParentName() bool {
-	if o != nil && o.ParentName != nil {
+	if o != nil && !IsNil(o.ParentName) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *VDBInventoryData) SetParentName(v string) {
 
 // GetParentId returns the ParentId field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetParentId() string {
-	if o == nil || o.ParentId == nil {
+	if o == nil || IsNil(o.ParentId) {
 		var ret string
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *VDBInventoryData) GetParentId() string {
 // GetParentIdOk returns a tuple with the ParentId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetParentIdOk() (*string, bool) {
-	if o == nil || o.ParentId == nil {
+	if o == nil || IsNil(o.ParentId) {
 		return nil, false
 	}
 	return o.ParentId, true
@@ -229,7 +232,7 @@ func (o *VDBInventoryData) GetParentIdOk() (*string, bool) {
 
 // HasParentId returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasParentId() bool {
-	if o != nil && o.ParentId != nil {
+	if o != nil && !IsNil(o.ParentId) {
 		return true
 	}
 
@@ -243,7 +246,7 @@ func (o *VDBInventoryData) SetParentId(v string) {
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		var ret time.Time
 		return ret
 	}
@@ -253,7 +256,7 @@ func (o *VDBInventoryData) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		return nil, false
 	}
 	return o.CreationDate, true
@@ -261,7 +264,7 @@ func (o *VDBInventoryData) GetCreationDateOk() (*time.Time, bool) {
 
 // HasCreationDate returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasCreationDate() bool {
-	if o != nil && o.CreationDate != nil {
+	if o != nil && !IsNil(o.CreationDate) {
 		return true
 	}
 
@@ -275,7 +278,7 @@ func (o *VDBInventoryData) SetCreationDate(v time.Time) {
 
 // GetParentTimeflowLocation returns the ParentTimeflowLocation field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetParentTimeflowLocation() string {
-	if o == nil || o.ParentTimeflowLocation == nil {
+	if o == nil || IsNil(o.ParentTimeflowLocation) {
 		var ret string
 		return ret
 	}
@@ -285,7 +288,7 @@ func (o *VDBInventoryData) GetParentTimeflowLocation() string {
 // GetParentTimeflowLocationOk returns a tuple with the ParentTimeflowLocation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetParentTimeflowLocationOk() (*string, bool) {
-	if o == nil || o.ParentTimeflowLocation == nil {
+	if o == nil || IsNil(o.ParentTimeflowLocation) {
 		return nil, false
 	}
 	return o.ParentTimeflowLocation, true
@@ -293,7 +296,7 @@ func (o *VDBInventoryData) GetParentTimeflowLocationOk() (*string, bool) {
 
 // HasParentTimeflowLocation returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasParentTimeflowLocation() bool {
-	if o != nil && o.ParentTimeflowLocation != nil {
+	if o != nil && !IsNil(o.ParentTimeflowLocation) {
 		return true
 	}
 
@@ -307,7 +310,7 @@ func (o *VDBInventoryData) SetParentTimeflowLocation(v string) {
 
 // GetParentTimeflowTimestamp returns the ParentTimeflowTimestamp field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetParentTimeflowTimestamp() time.Time {
-	if o == nil || o.ParentTimeflowTimestamp == nil {
+	if o == nil || IsNil(o.ParentTimeflowTimestamp) {
 		var ret time.Time
 		return ret
 	}
@@ -317,7 +320,7 @@ func (o *VDBInventoryData) GetParentTimeflowTimestamp() time.Time {
 // GetParentTimeflowTimestampOk returns a tuple with the ParentTimeflowTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetParentTimeflowTimestampOk() (*time.Time, bool) {
-	if o == nil || o.ParentTimeflowTimestamp == nil {
+	if o == nil || IsNil(o.ParentTimeflowTimestamp) {
 		return nil, false
 	}
 	return o.ParentTimeflowTimestamp, true
@@ -325,7 +328,7 @@ func (o *VDBInventoryData) GetParentTimeflowTimestampOk() (*time.Time, bool) {
 
 // HasParentTimeflowTimestamp returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasParentTimeflowTimestamp() bool {
-	if o != nil && o.ParentTimeflowTimestamp != nil {
+	if o != nil && !IsNil(o.ParentTimeflowTimestamp) {
 		return true
 	}
 
@@ -339,7 +342,7 @@ func (o *VDBInventoryData) SetParentTimeflowTimestamp(v time.Time) {
 
 // GetParentTimeflowTimezone returns the ParentTimeflowTimezone field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetParentTimeflowTimezone() string {
-	if o == nil || o.ParentTimeflowTimezone == nil {
+	if o == nil || IsNil(o.ParentTimeflowTimezone) {
 		var ret string
 		return ret
 	}
@@ -349,7 +352,7 @@ func (o *VDBInventoryData) GetParentTimeflowTimezone() string {
 // GetParentTimeflowTimezoneOk returns a tuple with the ParentTimeflowTimezone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetParentTimeflowTimezoneOk() (*string, bool) {
-	if o == nil || o.ParentTimeflowTimezone == nil {
+	if o == nil || IsNil(o.ParentTimeflowTimezone) {
 		return nil, false
 	}
 	return o.ParentTimeflowTimezone, true
@@ -357,7 +360,7 @@ func (o *VDBInventoryData) GetParentTimeflowTimezoneOk() (*string, bool) {
 
 // HasParentTimeflowTimezone returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasParentTimeflowTimezone() bool {
-	if o != nil && o.ParentTimeflowTimezone != nil {
+	if o != nil && !IsNil(o.ParentTimeflowTimezone) {
 		return true
 	}
 
@@ -371,7 +374,7 @@ func (o *VDBInventoryData) SetParentTimeflowTimezone(v string) {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -381,7 +384,7 @@ func (o *VDBInventoryData) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -389,7 +392,7 @@ func (o *VDBInventoryData) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -403,7 +406,7 @@ func (o *VDBInventoryData) SetEnabled(v bool) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -413,7 +416,7 @@ func (o *VDBInventoryData) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBInventoryData) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -421,7 +424,7 @@ func (o *VDBInventoryData) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *VDBInventoryData) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -434,44 +437,52 @@ func (o *VDBInventoryData) SetStatus(v string) {
 }
 
 func (o VDBInventoryData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.EngineName != nil {
-		toSerialize["engine_name"] = o.EngineName
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.ParentName != nil {
-		toSerialize["parent_name"] = o.ParentName
-	}
-	if o.ParentId != nil {
-		toSerialize["parent_id"] = o.ParentId
-	}
-	if o.CreationDate != nil {
-		toSerialize["creation_date"] = o.CreationDate
-	}
-	if o.ParentTimeflowLocation != nil {
-		toSerialize["parent_timeflow_location"] = o.ParentTimeflowLocation
-	}
-	if o.ParentTimeflowTimestamp != nil {
-		toSerialize["parent_timeflow_timestamp"] = o.ParentTimeflowTimestamp
-	}
-	if o.ParentTimeflowTimezone != nil {
-		toSerialize["parent_timeflow_timezone"] = o.ParentTimeflowTimezone
-	}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o VDBInventoryData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.ParentName) {
+		toSerialize["parent_name"] = o.ParentName
+	}
+	if !IsNil(o.ParentId) {
+		toSerialize["parent_id"] = o.ParentId
+	}
+	if !IsNil(o.CreationDate) {
+		toSerialize["creation_date"] = o.CreationDate
+	}
+	if !IsNil(o.ParentTimeflowLocation) {
+		toSerialize["parent_timeflow_location"] = o.ParentTimeflowLocation
+	}
+	if !IsNil(o.ParentTimeflowTimestamp) {
+		toSerialize["parent_timeflow_timestamp"] = o.ParentTimeflowTimestamp
+	}
+	if !IsNil(o.ParentTimeflowTimezone) {
+		toSerialize["parent_timeflow_timezone"] = o.ParentTimeflowTimezone
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
 }
 
 type NullableVDBInventoryData struct {

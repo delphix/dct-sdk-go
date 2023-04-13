@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DSourceUsageData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DSourceUsageData{}
+
 // DSourceUsageData struct for DSourceUsageData
 type DSourceUsageData struct {
 	// The name of the engine the dSource belongs to.
@@ -23,7 +26,7 @@ type DSourceUsageData struct {
 	Name *string `json:"name,omitempty"`
 	// The the disk space that would be required if not using Delphix virtualizion, in bytes.
 	UnvirtualizedSpace *int64 `json:"unvirtualized_space,omitempty"`
-	// The actual space used by this dSource, in bytes. This includes the disk space used by the current copy of the data as well as the snaphots and log files retained to enable provisioning from historical versions.
+	// The actual space used by this dSource, in bytes. This includes the disk space used by the current copy of the data as well as the snapshots and log files retained to enable provisioning from historical versions.
 	ActualSpace *int64 `json:"actual_space,omitempty"`
 	// The number of VDBs that are dependant on this dSource. This includes all VDB descendants that have this dSource as an ancestor.
 	DependantVdbs *int32 `json:"dependant_vdbs,omitempty"`
@@ -48,7 +51,7 @@ func NewDSourceUsageDataWithDefaults() *DSourceUsageData {
 
 // GetEngineName returns the EngineName field value if set, zero value otherwise.
 func (o *DSourceUsageData) GetEngineName() string {
-	if o == nil || o.EngineName == nil {
+	if o == nil || IsNil(o.EngineName) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *DSourceUsageData) GetEngineName() string {
 // GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceUsageData) GetEngineNameOk() (*string, bool) {
-	if o == nil || o.EngineName == nil {
+	if o == nil || IsNil(o.EngineName) {
 		return nil, false
 	}
 	return o.EngineName, true
@@ -66,7 +69,7 @@ func (o *DSourceUsageData) GetEngineNameOk() (*string, bool) {
 
 // HasEngineName returns a boolean if a field has been set.
 func (o *DSourceUsageData) HasEngineName() bool {
-	if o != nil && o.EngineName != nil {
+	if o != nil && !IsNil(o.EngineName) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *DSourceUsageData) SetEngineName(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *DSourceUsageData) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *DSourceUsageData) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceUsageData) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -98,7 +101,7 @@ func (o *DSourceUsageData) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *DSourceUsageData) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *DSourceUsageData) SetName(v string) {
 
 // GetUnvirtualizedSpace returns the UnvirtualizedSpace field value if set, zero value otherwise.
 func (o *DSourceUsageData) GetUnvirtualizedSpace() int64 {
-	if o == nil || o.UnvirtualizedSpace == nil {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
 		var ret int64
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *DSourceUsageData) GetUnvirtualizedSpace() int64 {
 // GetUnvirtualizedSpaceOk returns a tuple with the UnvirtualizedSpace field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceUsageData) GetUnvirtualizedSpaceOk() (*int64, bool) {
-	if o == nil || o.UnvirtualizedSpace == nil {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
 		return nil, false
 	}
 	return o.UnvirtualizedSpace, true
@@ -130,7 +133,7 @@ func (o *DSourceUsageData) GetUnvirtualizedSpaceOk() (*int64, bool) {
 
 // HasUnvirtualizedSpace returns a boolean if a field has been set.
 func (o *DSourceUsageData) HasUnvirtualizedSpace() bool {
-	if o != nil && o.UnvirtualizedSpace != nil {
+	if o != nil && !IsNil(o.UnvirtualizedSpace) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *DSourceUsageData) SetUnvirtualizedSpace(v int64) {
 
 // GetActualSpace returns the ActualSpace field value if set, zero value otherwise.
 func (o *DSourceUsageData) GetActualSpace() int64 {
-	if o == nil || o.ActualSpace == nil {
+	if o == nil || IsNil(o.ActualSpace) {
 		var ret int64
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *DSourceUsageData) GetActualSpace() int64 {
 // GetActualSpaceOk returns a tuple with the ActualSpace field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceUsageData) GetActualSpaceOk() (*int64, bool) {
-	if o == nil || o.ActualSpace == nil {
+	if o == nil || IsNil(o.ActualSpace) {
 		return nil, false
 	}
 	return o.ActualSpace, true
@@ -162,7 +165,7 @@ func (o *DSourceUsageData) GetActualSpaceOk() (*int64, bool) {
 
 // HasActualSpace returns a boolean if a field has been set.
 func (o *DSourceUsageData) HasActualSpace() bool {
-	if o != nil && o.ActualSpace != nil {
+	if o != nil && !IsNil(o.ActualSpace) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *DSourceUsageData) SetActualSpace(v int64) {
 
 // GetDependantVdbs returns the DependantVdbs field value if set, zero value otherwise.
 func (o *DSourceUsageData) GetDependantVdbs() int32 {
-	if o == nil || o.DependantVdbs == nil {
+	if o == nil || IsNil(o.DependantVdbs) {
 		var ret int32
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *DSourceUsageData) GetDependantVdbs() int32 {
 // GetDependantVdbsOk returns a tuple with the DependantVdbs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceUsageData) GetDependantVdbsOk() (*int32, bool) {
-	if o == nil || o.DependantVdbs == nil {
+	if o == nil || IsNil(o.DependantVdbs) {
 		return nil, false
 	}
 	return o.DependantVdbs, true
@@ -194,7 +197,7 @@ func (o *DSourceUsageData) GetDependantVdbsOk() (*int32, bool) {
 
 // HasDependantVdbs returns a boolean if a field has been set.
 func (o *DSourceUsageData) HasDependantVdbs() bool {
-	if o != nil && o.DependantVdbs != nil {
+	if o != nil && !IsNil(o.DependantVdbs) {
 		return true
 	}
 
@@ -207,23 +210,31 @@ func (o *DSourceUsageData) SetDependantVdbs(v int32) {
 }
 
 func (o DSourceUsageData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.EngineName != nil {
-		toSerialize["engine_name"] = o.EngineName
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.UnvirtualizedSpace != nil {
-		toSerialize["unvirtualized_space"] = o.UnvirtualizedSpace
-	}
-	if o.ActualSpace != nil {
-		toSerialize["actual_space"] = o.ActualSpace
-	}
-	if o.DependantVdbs != nil {
-		toSerialize["dependant_vdbs"] = o.DependantVdbs
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DSourceUsageData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.UnvirtualizedSpace) {
+		toSerialize["unvirtualized_space"] = o.UnvirtualizedSpace
+	}
+	if !IsNil(o.ActualSpace) {
+		toSerialize["actual_space"] = o.ActualSpace
+	}
+	if !IsNil(o.DependantVdbs) {
+		toSerialize["dependant_vdbs"] = o.DependantVdbs
+	}
+	return toSerialize, nil
 }
 
 type NullableDSourceUsageData struct {

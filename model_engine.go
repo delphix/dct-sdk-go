@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the Engine type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Engine{}
 
 // Engine A Delphix Virtualization or Masking Engine.
 type Engine struct {
@@ -70,7 +73,7 @@ func NewEngineWithDefaults() *Engine {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Engine) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -80,7 +83,7 @@ func (o *Engine) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Engine) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -88,7 +91,7 @@ func (o *Engine) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Engine) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -102,7 +105,7 @@ func (o *Engine) SetId(v string) {
 
 // GetUuid returns the Uuid field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetUuid() string {
-	if o == nil || o.Uuid.Get() == nil {
+	if o == nil || IsNil(o.Uuid.Get()) {
 		var ret string
 		return ret
 	}
@@ -113,7 +116,7 @@ func (o *Engine) GetUuid() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetUuidOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Uuid.Get(), o.Uuid.IsSet()
@@ -144,7 +147,7 @@ func (o *Engine) UnsetUuid() {
 
 // GetType returns the Type field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetType() string {
-	if o == nil || o.Type.Get() == nil {
+	if o == nil || IsNil(o.Type.Get()) {
 		var ret string
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *Engine) GetType() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Type.Get(), o.Type.IsSet()
@@ -186,7 +189,7 @@ func (o *Engine) UnsetType() {
 
 // GetVersion returns the Version field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetVersion() string {
-	if o == nil || o.Version.Get() == nil {
+	if o == nil || IsNil(o.Version.Get()) {
 		var ret string
 		return ret
 	}
@@ -197,7 +200,7 @@ func (o *Engine) GetVersion() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Version.Get(), o.Version.IsSet()
@@ -228,7 +231,7 @@ func (o *Engine) UnsetVersion() {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Engine) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -238,7 +241,7 @@ func (o *Engine) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Engine) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -246,7 +249,7 @@ func (o *Engine) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *Engine) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -260,7 +263,7 @@ func (o *Engine) SetName(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *Engine) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -270,7 +273,7 @@ func (o *Engine) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Engine) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -278,7 +281,7 @@ func (o *Engine) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *Engine) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -292,7 +295,7 @@ func (o *Engine) SetHostname(v string) {
 
 // GetRegistrationStatus returns the RegistrationStatus field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetRegistrationStatus() string {
-	if o == nil || o.RegistrationStatus.Get() == nil {
+	if o == nil || IsNil(o.RegistrationStatus.Get()) {
 		var ret string
 		return ret
 	}
@@ -303,7 +306,7 @@ func (o *Engine) GetRegistrationStatus() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetRegistrationStatusOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.RegistrationStatus.Get(), o.RegistrationStatus.IsSet()
@@ -334,7 +337,7 @@ func (o *Engine) UnsetRegistrationStatus() {
 
 // GetConnectionStatus returns the ConnectionStatus field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetConnectionStatus() string {
-	if o == nil || o.ConnectionStatus.Get() == nil {
+	if o == nil || IsNil(o.ConnectionStatus.Get()) {
 		var ret string
 		return ret
 	}
@@ -345,7 +348,7 @@ func (o *Engine) GetConnectionStatus() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetConnectionStatusOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.ConnectionStatus.Get(), o.ConnectionStatus.IsSet()
@@ -376,7 +379,7 @@ func (o *Engine) UnsetConnectionStatus() {
 
 // GetLastConnectionTime returns the LastConnectionTime field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetLastConnectionTime() time.Time {
-	if o == nil || o.LastConnectionTime.Get() == nil {
+	if o == nil || IsNil(o.LastConnectionTime.Get()) {
 		var ret time.Time
 		return ret
 	}
@@ -387,7 +390,7 @@ func (o *Engine) GetLastConnectionTime() time.Time {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetLastConnectionTimeOk() (*time.Time, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.LastConnectionTime.Get(), o.LastConnectionTime.IsSet()
@@ -418,7 +421,7 @@ func (o *Engine) UnsetLastConnectionTime() {
 
 // GetBootStorageCapacity returns the BootStorageCapacity field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetBootStorageCapacity() int64 {
-	if o == nil || o.BootStorageCapacity.Get() == nil {
+	if o == nil || IsNil(o.BootStorageCapacity.Get()) {
 		var ret int64
 		return ret
 	}
@@ -429,7 +432,7 @@ func (o *Engine) GetBootStorageCapacity() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetBootStorageCapacityOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.BootStorageCapacity.Get(), o.BootStorageCapacity.IsSet()
@@ -460,7 +463,7 @@ func (o *Engine) UnsetBootStorageCapacity() {
 
 // GetCpuCoreCount returns the CpuCoreCount field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetCpuCoreCount() int32 {
-	if o == nil || o.CpuCoreCount.Get() == nil {
+	if o == nil || IsNil(o.CpuCoreCount.Get()) {
 		var ret int32
 		return ret
 	}
@@ -471,7 +474,7 @@ func (o *Engine) GetCpuCoreCount() int32 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetCpuCoreCountOk() (*int32, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.CpuCoreCount.Get(), o.CpuCoreCount.IsSet()
@@ -502,7 +505,7 @@ func (o *Engine) UnsetCpuCoreCount() {
 
 // GetCpuType returns the CpuType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetCpuType() string {
-	if o == nil || o.CpuType.Get() == nil {
+	if o == nil || IsNil(o.CpuType.Get()) {
 		var ret string
 		return ret
 	}
@@ -513,7 +516,7 @@ func (o *Engine) GetCpuType() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetCpuTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.CpuType.Get(), o.CpuType.IsSet()
@@ -544,7 +547,7 @@ func (o *Engine) UnsetCpuType() {
 
 // GetMemorySize returns the MemorySize field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetMemorySize() int64 {
-	if o == nil || o.MemorySize.Get() == nil {
+	if o == nil || IsNil(o.MemorySize.Get()) {
 		var ret int64
 		return ret
 	}
@@ -555,7 +558,7 @@ func (o *Engine) GetMemorySize() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetMemorySizeOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.MemorySize.Get(), o.MemorySize.IsSet()
@@ -586,7 +589,7 @@ func (o *Engine) UnsetMemorySize() {
 
 // GetDataStorageCapacity returns the DataStorageCapacity field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetDataStorageCapacity() int64 {
-	if o == nil || o.DataStorageCapacity.Get() == nil {
+	if o == nil || IsNil(o.DataStorageCapacity.Get()) {
 		var ret int64
 		return ret
 	}
@@ -597,7 +600,7 @@ func (o *Engine) GetDataStorageCapacity() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetDataStorageCapacityOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DataStorageCapacity.Get(), o.DataStorageCapacity.IsSet()
@@ -628,7 +631,7 @@ func (o *Engine) UnsetDataStorageCapacity() {
 
 // GetDataStorageUsed returns the DataStorageUsed field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Engine) GetDataStorageUsed() int64 {
-	if o == nil || o.DataStorageUsed.Get() == nil {
+	if o == nil || IsNil(o.DataStorageUsed.Get()) {
 		var ret int64
 		return ret
 	}
@@ -639,7 +642,7 @@ func (o *Engine) GetDataStorageUsed() int64 {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Engine) GetDataStorageUsedOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.DataStorageUsed.Get(), o.DataStorageUsed.IsSet()
@@ -670,7 +673,7 @@ func (o *Engine) UnsetDataStorageUsed() {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Engine) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -680,7 +683,7 @@ func (o *Engine) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Engine) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -688,7 +691,7 @@ func (o *Engine) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Engine) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -701,8 +704,16 @@ func (o *Engine) SetTags(v []Tag) {
 }
 
 func (o Engine) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o Engine) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
 	if o.Uuid.IsSet() {
@@ -714,10 +725,10 @@ func (o Engine) MarshalJSON() ([]byte, error) {
 	if o.Version.IsSet() {
 		toSerialize["version"] = o.Version.Get()
 	}
-	if o.Name != nil {
+	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.Hostname != nil {
+	if !IsNil(o.Hostname) {
 		toSerialize["hostname"] = o.Hostname
 	}
 	if o.RegistrationStatus.IsSet() {
@@ -747,10 +758,10 @@ func (o Engine) MarshalJSON() ([]byte, error) {
 	if o.DataStorageUsed.IsSet() {
 		toSerialize["data_storage_used"] = o.DataStorageUsed.Get()
 	}
-	if o.Tags != nil {
+	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableEngine struct {

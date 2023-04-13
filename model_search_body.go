@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the SearchBody type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SearchBody{}
 
 // SearchBody Search body.
 type SearchBody struct {
@@ -39,7 +42,7 @@ func NewSearchBodyWithDefaults() *SearchBody {
 
 // GetFilterExpression returns the FilterExpression field value if set, zero value otherwise.
 func (o *SearchBody) GetFilterExpression() string {
-	if o == nil || o.FilterExpression == nil {
+	if o == nil || IsNil(o.FilterExpression) {
 		var ret string
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *SearchBody) GetFilterExpression() string {
 // GetFilterExpressionOk returns a tuple with the FilterExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchBody) GetFilterExpressionOk() (*string, bool) {
-	if o == nil || o.FilterExpression == nil {
+	if o == nil || IsNil(o.FilterExpression) {
 		return nil, false
 	}
 	return o.FilterExpression, true
@@ -57,7 +60,7 @@ func (o *SearchBody) GetFilterExpressionOk() (*string, bool) {
 
 // HasFilterExpression returns a boolean if a field has been set.
 func (o *SearchBody) HasFilterExpression() bool {
-	if o != nil && o.FilterExpression != nil {
+	if o != nil && !IsNil(o.FilterExpression) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *SearchBody) SetFilterExpression(v string) {
 }
 
 func (o SearchBody) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.FilterExpression != nil {
-		toSerialize["filter_expression"] = o.FilterExpression
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SearchBody) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.FilterExpression) {
+		toSerialize["filter_expression"] = o.FilterExpression
+	}
+	return toSerialize, nil
 }
 
 type NullableSearchBody struct {

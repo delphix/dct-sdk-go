@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the SMTPConfigValidate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SMTPConfigValidate{}
 
 // SMTPConfigValidate Parameters to validate SMTP Config
 type SMTPConfigValidate struct {
@@ -51,7 +54,7 @@ func (o *SMTPConfigValidate) GetToAddress() string {
 // GetToAddressOk returns a tuple with the ToAddress field value
 // and a boolean to check if the value has been set.
 func (o *SMTPConfigValidate) GetToAddressOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.ToAddress, true
@@ -63,11 +66,17 @@ func (o *SMTPConfigValidate) SetToAddress(v string) {
 }
 
 func (o SMTPConfigValidate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["to_address"] = o.ToAddress
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SMTPConfigValidate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["to_address"] = o.ToAddress
+	return toSerialize, nil
 }
 
 type NullableSMTPConfigValidate struct {

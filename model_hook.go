@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the Hook type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Hook{}
 
 // Hook struct for Hook
 type Hook struct {
@@ -44,7 +47,7 @@ func NewHookWithDefaults() *Hook {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Hook) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *Hook) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -62,7 +65,7 @@ func (o *Hook) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *Hook) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -87,7 +90,7 @@ func (o *Hook) GetCommand() string {
 // GetCommandOk returns a tuple with the Command field value
 // and a boolean to check if the value has been set.
 func (o *Hook) GetCommandOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Command, true
@@ -100,7 +103,7 @@ func (o *Hook) SetCommand(v string) {
 
 // GetShell returns the Shell field value if set, zero value otherwise.
 func (o *Hook) GetShell() string {
-	if o == nil || o.Shell == nil {
+	if o == nil || IsNil(o.Shell) {
 		var ret string
 		return ret
 	}
@@ -110,7 +113,7 @@ func (o *Hook) GetShell() string {
 // GetShellOk returns a tuple with the Shell field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetShellOk() (*string, bool) {
-	if o == nil || o.Shell == nil {
+	if o == nil || IsNil(o.Shell) {
 		return nil, false
 	}
 	return o.Shell, true
@@ -118,7 +121,7 @@ func (o *Hook) GetShellOk() (*string, bool) {
 
 // HasShell returns a boolean if a field has been set.
 func (o *Hook) HasShell() bool {
-	if o != nil && o.Shell != nil {
+	if o != nil && !IsNil(o.Shell) {
 		return true
 	}
 
@@ -132,7 +135,7 @@ func (o *Hook) SetShell(v string) {
 
 // GetElementId returns the ElementId field value if set, zero value otherwise.
 func (o *Hook) GetElementId() string {
-	if o == nil || o.ElementId == nil {
+	if o == nil || IsNil(o.ElementId) {
 		var ret string
 		return ret
 	}
@@ -142,7 +145,7 @@ func (o *Hook) GetElementId() string {
 // GetElementIdOk returns a tuple with the ElementId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetElementIdOk() (*string, bool) {
-	if o == nil || o.ElementId == nil {
+	if o == nil || IsNil(o.ElementId) {
 		return nil, false
 	}
 	return o.ElementId, true
@@ -150,7 +153,7 @@ func (o *Hook) GetElementIdOk() (*string, bool) {
 
 // HasElementId returns a boolean if a field has been set.
 func (o *Hook) HasElementId() bool {
-	if o != nil && o.ElementId != nil {
+	if o != nil && !IsNil(o.ElementId) {
 		return true
 	}
 
@@ -164,7 +167,7 @@ func (o *Hook) SetElementId(v string) {
 
 // GetHasCredentials returns the HasCredentials field value if set, zero value otherwise.
 func (o *Hook) GetHasCredentials() bool {
-	if o == nil || o.HasCredentials == nil {
+	if o == nil || IsNil(o.HasCredentials) {
 		var ret bool
 		return ret
 	}
@@ -174,7 +177,7 @@ func (o *Hook) GetHasCredentials() bool {
 // GetHasCredentialsOk returns a tuple with the HasCredentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetHasCredentialsOk() (*bool, bool) {
-	if o == nil || o.HasCredentials == nil {
+	if o == nil || IsNil(o.HasCredentials) {
 		return nil, false
 	}
 	return o.HasCredentials, true
@@ -182,7 +185,7 @@ func (o *Hook) GetHasCredentialsOk() (*bool, bool) {
 
 // HasHasCredentials returns a boolean if a field has been set.
 func (o *Hook) HasHasCredentials() bool {
-	if o != nil && o.HasCredentials != nil {
+	if o != nil && !IsNil(o.HasCredentials) {
 		return true
 	}
 
@@ -195,23 +198,29 @@ func (o *Hook) SetHasCredentials(v bool) {
 }
 
 func (o Hook) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["command"] = o.Command
-	}
-	if o.Shell != nil {
-		toSerialize["shell"] = o.Shell
-	}
-	if o.ElementId != nil {
-		toSerialize["element_id"] = o.ElementId
-	}
-	if o.HasCredentials != nil {
-		toSerialize["has_credentials"] = o.HasCredentials
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Hook) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	toSerialize["command"] = o.Command
+	if !IsNil(o.Shell) {
+		toSerialize["shell"] = o.Shell
+	}
+	if !IsNil(o.ElementId) {
+		toSerialize["element_id"] = o.ElementId
+	}
+	if !IsNil(o.HasCredentials) {
+		toSerialize["has_credentials"] = o.HasCredentials
+	}
+	return toSerialize, nil
 }
 
 type NullableHook struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -16,16 +16,71 @@ import (
 	"time"
 )
 
+// checks if the Snapshot type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Snapshot{}
+
 // Snapshot Virtualization Engine Snapshot of a dSource or VDB.
 type Snapshot struct {
 	// The Snapshot ID.
 	Id *string `json:"id,omitempty"`
+	// The id of the engine the snapshot belongs to.
+	EngineId *string `json:"engine_id,omitempty"`
+	// Alternate namespace for this object, for replicated and restored snapshots.
+	Namespace NullableString `json:"namespace,omitempty"`
+	// The snapshot's name.
+	Name *string `json:"name,omitempty"`
+	// Indicates what type of recovery strategies must be invoked when provisioning from this snapshot.
+	Consistency *string `json:"consistency,omitempty"`
+	// Indicates if a virtual database provisioned from this snapshot will be missing nologging changes.
+	MissingNonLoggedData *bool `json:"missing_non_logged_data,omitempty"`
+	// The ID of the Snapshot's dSource or VDB.
+	DatasetId *string `json:"dataset_id,omitempty"`
+	// The time when the snapshot was created.
+	CreationTime *time.Time `json:"creation_time,omitempty"`
+	// The timestamp within the parent TimeFlow at which this snapshot was initiated. \\ No recovery earlier than this point needs to be applied in order to provision a database from \\ this snapshot. If start_timestamp equals timestamp, then no recovery needs to be \\ applied in order to provision a database. 
+	StartTimestamp *time.Time `json:"start_timestamp,omitempty"`
+	// The database specific indentifier within the parent TimeFlow at which this snapshot was initiated. \\ No recovery earlier than this point needs to be applied in order to provision a database from \\ this snapshot. If start_location equals location, then no recovery needs to be \\ applied in order to provision a database. 
+	StartLocation *string `json:"start_location,omitempty"`
 	// The logical time of the data contained in this Snapshot.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// Database specific identifier for the data contained in this Snapshot, such as the Log Sequence Number (LSN) for MSsql databases, System Change Number (SCN) for Oracle databases.
 	Location *string `json:"location,omitempty"`
-	// The ID of the Snapshot's dSource or VDB.
-	DatasetId *string `json:"dataset_id,omitempty"`
+	// Retention policy, in days. A value of -1 indicates the snapshot should be kept forever. Deprecated in favor of expiration and retain_forever.
+	// Deprecated
+	Retention *int64 `json:"retention,omitempty"`
+	// The expiration date of this snapshot. If this is unset and retain_forever is false, the snapshot is subject to the retention policy of its dataset.
+	Expiration *string `json:"expiration,omitempty"`
+	// Indicates that the snapshot is protected from retention, i.e it will be kept forever. If false, see expiration.
+	RetainForever *bool `json:"retain_forever,omitempty"`
+	// The TimeFlow this snapshot was taken on.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
+	// Time zone of the source database at the time the snapshot was taken.
+	Timezone *string `json:"timezone,omitempty"`
+	// Version of database source repository at the time the snapshot was taken.
+	Version NullableString `json:"version,omitempty"`
+	// Indicates that this snapshot is in a transient state and should not be user visible.
+	Temporary *bool `json:"temporary,omitempty"`
+	// The toolkit associated with this snapshot.
+	AppdataToolkit *string `json:"appdata_toolkit,omitempty"`
+	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
+	AppdataMetadata *string `json:"appdata_metadata,omitempty"`
+	// Database encryption key present for this snapshot.
+	AseDbEncryptionKey *string `json:"ase_db_encryption_key,omitempty"`
+	// Internal version of the source database at the time the snapshot was taken.
+	MssqlInternalVersion *int32 `json:"mssql_internal_version,omitempty"`
+	// UUID of the source database backup that was restored for this snapshot.
+	MssqlBackupSetUuid *string `json:"mssql_backup_set_uuid,omitempty"`
+	// Backup software used to restore the source database backup for this snapshot
+	MssqlBackupSoftwareType *string `json:"mssql_backup_software_type,omitempty"`
+	// Backup software used to restore the source database backup for this snapshot
+	MssqlBackupLocationType *string `json:"mssql_backup_location_type,omitempty"`
+	// True if the staging push dSource snapshot is empty.
+	MssqlEmptySnapshot *bool `json:"mssql_empty_snapshot,omitempty"`
+	// True if this snapshot was taken of a standby database.
+	OracleFromPhysicalStandbyVdb *bool `json:"oracle_from_physical_standby_vdb,omitempty"`
+	// Online redo log size in bytes when this snapshot was taken.
+	OracleRedoLogSizeInBytes *int64 `json:"oracle_redo_log_size_in_bytes,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewSnapshot instantiates a new Snapshot object
@@ -47,7 +102,7 @@ func NewSnapshotWithDefaults() *Snapshot {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Snapshot) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -57,7 +112,7 @@ func (o *Snapshot) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Snapshot) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -65,7 +120,7 @@ func (o *Snapshot) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Snapshot) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -77,9 +132,307 @@ func (o *Snapshot) SetId(v string) {
 	o.Id = &v
 }
 
+// GetEngineId returns the EngineId field value if set, zero value otherwise.
+func (o *Snapshot) GetEngineId() string {
+	if o == nil || IsNil(o.EngineId) {
+		var ret string
+		return ret
+	}
+	return *o.EngineId
+}
+
+// GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetEngineIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineId) {
+		return nil, false
+	}
+	return o.EngineId, true
+}
+
+// HasEngineId returns a boolean if a field has been set.
+func (o *Snapshot) HasEngineId() bool {
+	if o != nil && !IsNil(o.EngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
+func (o *Snapshot) SetEngineId(v string) {
+	o.EngineId = &v
+}
+
+// GetNamespace returns the Namespace field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Snapshot) GetNamespace() string {
+	if o == nil || IsNil(o.Namespace.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Namespace.Get()
+}
+
+// GetNamespaceOk returns a tuple with the Namespace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Snapshot) GetNamespaceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Namespace.Get(), o.Namespace.IsSet()
+}
+
+// HasNamespace returns a boolean if a field has been set.
+func (o *Snapshot) HasNamespace() bool {
+	if o != nil && o.Namespace.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespace gets a reference to the given NullableString and assigns it to the Namespace field.
+func (o *Snapshot) SetNamespace(v string) {
+	o.Namespace.Set(&v)
+}
+// SetNamespaceNil sets the value for Namespace to be an explicit nil
+func (o *Snapshot) SetNamespaceNil() {
+	o.Namespace.Set(nil)
+}
+
+// UnsetNamespace ensures that no value is present for Namespace, not even an explicit nil
+func (o *Snapshot) UnsetNamespace() {
+	o.Namespace.Unset()
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *Snapshot) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *Snapshot) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *Snapshot) SetName(v string) {
+	o.Name = &v
+}
+
+// GetConsistency returns the Consistency field value if set, zero value otherwise.
+func (o *Snapshot) GetConsistency() string {
+	if o == nil || IsNil(o.Consistency) {
+		var ret string
+		return ret
+	}
+	return *o.Consistency
+}
+
+// GetConsistencyOk returns a tuple with the Consistency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetConsistencyOk() (*string, bool) {
+	if o == nil || IsNil(o.Consistency) {
+		return nil, false
+	}
+	return o.Consistency, true
+}
+
+// HasConsistency returns a boolean if a field has been set.
+func (o *Snapshot) HasConsistency() bool {
+	if o != nil && !IsNil(o.Consistency) {
+		return true
+	}
+
+	return false
+}
+
+// SetConsistency gets a reference to the given string and assigns it to the Consistency field.
+func (o *Snapshot) SetConsistency(v string) {
+	o.Consistency = &v
+}
+
+// GetMissingNonLoggedData returns the MissingNonLoggedData field value if set, zero value otherwise.
+func (o *Snapshot) GetMissingNonLoggedData() bool {
+	if o == nil || IsNil(o.MissingNonLoggedData) {
+		var ret bool
+		return ret
+	}
+	return *o.MissingNonLoggedData
+}
+
+// GetMissingNonLoggedDataOk returns a tuple with the MissingNonLoggedData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetMissingNonLoggedDataOk() (*bool, bool) {
+	if o == nil || IsNil(o.MissingNonLoggedData) {
+		return nil, false
+	}
+	return o.MissingNonLoggedData, true
+}
+
+// HasMissingNonLoggedData returns a boolean if a field has been set.
+func (o *Snapshot) HasMissingNonLoggedData() bool {
+	if o != nil && !IsNil(o.MissingNonLoggedData) {
+		return true
+	}
+
+	return false
+}
+
+// SetMissingNonLoggedData gets a reference to the given bool and assigns it to the MissingNonLoggedData field.
+func (o *Snapshot) SetMissingNonLoggedData(v bool) {
+	o.MissingNonLoggedData = &v
+}
+
+// GetDatasetId returns the DatasetId field value if set, zero value otherwise.
+func (o *Snapshot) GetDatasetId() string {
+	if o == nil || IsNil(o.DatasetId) {
+		var ret string
+		return ret
+	}
+	return *o.DatasetId
+}
+
+// GetDatasetIdOk returns a tuple with the DatasetId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetDatasetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DatasetId) {
+		return nil, false
+	}
+	return o.DatasetId, true
+}
+
+// HasDatasetId returns a boolean if a field has been set.
+func (o *Snapshot) HasDatasetId() bool {
+	if o != nil && !IsNil(o.DatasetId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatasetId gets a reference to the given string and assigns it to the DatasetId field.
+func (o *Snapshot) SetDatasetId(v string) {
+	o.DatasetId = &v
+}
+
+// GetCreationTime returns the CreationTime field value if set, zero value otherwise.
+func (o *Snapshot) GetCreationTime() time.Time {
+	if o == nil || IsNil(o.CreationTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreationTime
+}
+
+// GetCreationTimeOk returns a tuple with the CreationTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetCreationTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreationTime) {
+		return nil, false
+	}
+	return o.CreationTime, true
+}
+
+// HasCreationTime returns a boolean if a field has been set.
+func (o *Snapshot) HasCreationTime() bool {
+	if o != nil && !IsNil(o.CreationTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreationTime gets a reference to the given time.Time and assigns it to the CreationTime field.
+func (o *Snapshot) SetCreationTime(v time.Time) {
+	o.CreationTime = &v
+}
+
+// GetStartTimestamp returns the StartTimestamp field value if set, zero value otherwise.
+func (o *Snapshot) GetStartTimestamp() time.Time {
+	if o == nil || IsNil(o.StartTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.StartTimestamp
+}
+
+// GetStartTimestampOk returns a tuple with the StartTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetStartTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.StartTimestamp) {
+		return nil, false
+	}
+	return o.StartTimestamp, true
+}
+
+// HasStartTimestamp returns a boolean if a field has been set.
+func (o *Snapshot) HasStartTimestamp() bool {
+	if o != nil && !IsNil(o.StartTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetStartTimestamp gets a reference to the given time.Time and assigns it to the StartTimestamp field.
+func (o *Snapshot) SetStartTimestamp(v time.Time) {
+	o.StartTimestamp = &v
+}
+
+// GetStartLocation returns the StartLocation field value if set, zero value otherwise.
+func (o *Snapshot) GetStartLocation() string {
+	if o == nil || IsNil(o.StartLocation) {
+		var ret string
+		return ret
+	}
+	return *o.StartLocation
+}
+
+// GetStartLocationOk returns a tuple with the StartLocation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetStartLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.StartLocation) {
+		return nil, false
+	}
+	return o.StartLocation, true
+}
+
+// HasStartLocation returns a boolean if a field has been set.
+func (o *Snapshot) HasStartLocation() bool {
+	if o != nil && !IsNil(o.StartLocation) {
+		return true
+	}
+
+	return false
+}
+
+// SetStartLocation gets a reference to the given string and assigns it to the StartLocation field.
+func (o *Snapshot) SetStartLocation(v string) {
+	o.StartLocation = &v
+}
+
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
 func (o *Snapshot) GetTimestamp() time.Time {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		var ret time.Time
 		return ret
 	}
@@ -89,7 +442,7 @@ func (o *Snapshot) GetTimestamp() time.Time {
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Snapshot) GetTimestampOk() (*time.Time, bool) {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
 	return o.Timestamp, true
@@ -97,7 +450,7 @@ func (o *Snapshot) GetTimestampOk() (*time.Time, bool) {
 
 // HasTimestamp returns a boolean if a field has been set.
 func (o *Snapshot) HasTimestamp() bool {
-	if o != nil && o.Timestamp != nil {
+	if o != nil && !IsNil(o.Timestamp) {
 		return true
 	}
 
@@ -111,7 +464,7 @@ func (o *Snapshot) SetTimestamp(v time.Time) {
 
 // GetLocation returns the Location field value if set, zero value otherwise.
 func (o *Snapshot) GetLocation() string {
-	if o == nil || o.Location == nil {
+	if o == nil || IsNil(o.Location) {
 		var ret string
 		return ret
 	}
@@ -121,7 +474,7 @@ func (o *Snapshot) GetLocation() string {
 // GetLocationOk returns a tuple with the Location field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Snapshot) GetLocationOk() (*string, bool) {
-	if o == nil || o.Location == nil {
+	if o == nil || IsNil(o.Location) {
 		return nil, false
 	}
 	return o.Location, true
@@ -129,7 +482,7 @@ func (o *Snapshot) GetLocationOk() (*string, bool) {
 
 // HasLocation returns a boolean if a field has been set.
 func (o *Snapshot) HasLocation() bool {
-	if o != nil && o.Location != nil {
+	if o != nil && !IsNil(o.Location) {
 		return true
 	}
 
@@ -141,53 +494,696 @@ func (o *Snapshot) SetLocation(v string) {
 	o.Location = &v
 }
 
-// GetDatasetId returns the DatasetId field value if set, zero value otherwise.
-func (o *Snapshot) GetDatasetId() string {
-	if o == nil || o.DatasetId == nil {
-		var ret string
+// GetRetention returns the Retention field value if set, zero value otherwise.
+// Deprecated
+func (o *Snapshot) GetRetention() int64 {
+	if o == nil || IsNil(o.Retention) {
+		var ret int64
 		return ret
 	}
-	return *o.DatasetId
+	return *o.Retention
 }
 
-// GetDatasetIdOk returns a tuple with the DatasetId field value if set, nil otherwise
+// GetRetentionOk returns a tuple with the Retention field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Snapshot) GetDatasetIdOk() (*string, bool) {
-	if o == nil || o.DatasetId == nil {
+// Deprecated
+func (o *Snapshot) GetRetentionOk() (*int64, bool) {
+	if o == nil || IsNil(o.Retention) {
 		return nil, false
 	}
-	return o.DatasetId, true
+	return o.Retention, true
 }
 
-// HasDatasetId returns a boolean if a field has been set.
-func (o *Snapshot) HasDatasetId() bool {
-	if o != nil && o.DatasetId != nil {
+// HasRetention returns a boolean if a field has been set.
+func (o *Snapshot) HasRetention() bool {
+	if o != nil && !IsNil(o.Retention) {
 		return true
 	}
 
 	return false
 }
 
-// SetDatasetId gets a reference to the given string and assigns it to the DatasetId field.
-func (o *Snapshot) SetDatasetId(v string) {
-	o.DatasetId = &v
+// SetRetention gets a reference to the given int64 and assigns it to the Retention field.
+// Deprecated
+func (o *Snapshot) SetRetention(v int64) {
+	o.Retention = &v
+}
+
+// GetExpiration returns the Expiration field value if set, zero value otherwise.
+func (o *Snapshot) GetExpiration() string {
+	if o == nil || IsNil(o.Expiration) {
+		var ret string
+		return ret
+	}
+	return *o.Expiration
+}
+
+// GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetExpirationOk() (*string, bool) {
+	if o == nil || IsNil(o.Expiration) {
+		return nil, false
+	}
+	return o.Expiration, true
+}
+
+// HasExpiration returns a boolean if a field has been set.
+func (o *Snapshot) HasExpiration() bool {
+	if o != nil && !IsNil(o.Expiration) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiration gets a reference to the given string and assigns it to the Expiration field.
+func (o *Snapshot) SetExpiration(v string) {
+	o.Expiration = &v
+}
+
+// GetRetainForever returns the RetainForever field value if set, zero value otherwise.
+func (o *Snapshot) GetRetainForever() bool {
+	if o == nil || IsNil(o.RetainForever) {
+		var ret bool
+		return ret
+	}
+	return *o.RetainForever
+}
+
+// GetRetainForeverOk returns a tuple with the RetainForever field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetRetainForeverOk() (*bool, bool) {
+	if o == nil || IsNil(o.RetainForever) {
+		return nil, false
+	}
+	return o.RetainForever, true
+}
+
+// HasRetainForever returns a boolean if a field has been set.
+func (o *Snapshot) HasRetainForever() bool {
+	if o != nil && !IsNil(o.RetainForever) {
+		return true
+	}
+
+	return false
+}
+
+// SetRetainForever gets a reference to the given bool and assigns it to the RetainForever field.
+func (o *Snapshot) SetRetainForever(v bool) {
+	o.RetainForever = &v
+}
+
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *Snapshot) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *Snapshot) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *Snapshot) SetTimeflowId(v string) {
+	o.TimeflowId = &v
+}
+
+// GetTimezone returns the Timezone field value if set, zero value otherwise.
+func (o *Snapshot) GetTimezone() string {
+	if o == nil || IsNil(o.Timezone) {
+		var ret string
+		return ret
+	}
+	return *o.Timezone
+}
+
+// GetTimezoneOk returns a tuple with the Timezone field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetTimezoneOk() (*string, bool) {
+	if o == nil || IsNil(o.Timezone) {
+		return nil, false
+	}
+	return o.Timezone, true
+}
+
+// HasTimezone returns a boolean if a field has been set.
+func (o *Snapshot) HasTimezone() bool {
+	if o != nil && !IsNil(o.Timezone) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimezone gets a reference to the given string and assigns it to the Timezone field.
+func (o *Snapshot) SetTimezone(v string) {
+	o.Timezone = &v
+}
+
+// GetVersion returns the Version field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Snapshot) GetVersion() string {
+	if o == nil || IsNil(o.Version.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Version.Get()
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Snapshot) GetVersionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Version.Get(), o.Version.IsSet()
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *Snapshot) HasVersion() bool {
+	if o != nil && o.Version.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given NullableString and assigns it to the Version field.
+func (o *Snapshot) SetVersion(v string) {
+	o.Version.Set(&v)
+}
+// SetVersionNil sets the value for Version to be an explicit nil
+func (o *Snapshot) SetVersionNil() {
+	o.Version.Set(nil)
+}
+
+// UnsetVersion ensures that no value is present for Version, not even an explicit nil
+func (o *Snapshot) UnsetVersion() {
+	o.Version.Unset()
+}
+
+// GetTemporary returns the Temporary field value if set, zero value otherwise.
+func (o *Snapshot) GetTemporary() bool {
+	if o == nil || IsNil(o.Temporary) {
+		var ret bool
+		return ret
+	}
+	return *o.Temporary
+}
+
+// GetTemporaryOk returns a tuple with the Temporary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetTemporaryOk() (*bool, bool) {
+	if o == nil || IsNil(o.Temporary) {
+		return nil, false
+	}
+	return o.Temporary, true
+}
+
+// HasTemporary returns a boolean if a field has been set.
+func (o *Snapshot) HasTemporary() bool {
+	if o != nil && !IsNil(o.Temporary) {
+		return true
+	}
+
+	return false
+}
+
+// SetTemporary gets a reference to the given bool and assigns it to the Temporary field.
+func (o *Snapshot) SetTemporary(v bool) {
+	o.Temporary = &v
+}
+
+// GetAppdataToolkit returns the AppdataToolkit field value if set, zero value otherwise.
+func (o *Snapshot) GetAppdataToolkit() string {
+	if o == nil || IsNil(o.AppdataToolkit) {
+		var ret string
+		return ret
+	}
+	return *o.AppdataToolkit
+}
+
+// GetAppdataToolkitOk returns a tuple with the AppdataToolkit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetAppdataToolkitOk() (*string, bool) {
+	if o == nil || IsNil(o.AppdataToolkit) {
+		return nil, false
+	}
+	return o.AppdataToolkit, true
+}
+
+// HasAppdataToolkit returns a boolean if a field has been set.
+func (o *Snapshot) HasAppdataToolkit() bool {
+	if o != nil && !IsNil(o.AppdataToolkit) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataToolkit gets a reference to the given string and assigns it to the AppdataToolkit field.
+func (o *Snapshot) SetAppdataToolkit(v string) {
+	o.AppdataToolkit = &v
+}
+
+// GetAppdataMetadata returns the AppdataMetadata field value if set, zero value otherwise.
+func (o *Snapshot) GetAppdataMetadata() string {
+	if o == nil || IsNil(o.AppdataMetadata) {
+		var ret string
+		return ret
+	}
+	return *o.AppdataMetadata
+}
+
+// GetAppdataMetadataOk returns a tuple with the AppdataMetadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetAppdataMetadataOk() (*string, bool) {
+	if o == nil || IsNil(o.AppdataMetadata) {
+		return nil, false
+	}
+	return o.AppdataMetadata, true
+}
+
+// HasAppdataMetadata returns a boolean if a field has been set.
+func (o *Snapshot) HasAppdataMetadata() bool {
+	if o != nil && !IsNil(o.AppdataMetadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataMetadata gets a reference to the given string and assigns it to the AppdataMetadata field.
+func (o *Snapshot) SetAppdataMetadata(v string) {
+	o.AppdataMetadata = &v
+}
+
+// GetAseDbEncryptionKey returns the AseDbEncryptionKey field value if set, zero value otherwise.
+func (o *Snapshot) GetAseDbEncryptionKey() string {
+	if o == nil || IsNil(o.AseDbEncryptionKey) {
+		var ret string
+		return ret
+	}
+	return *o.AseDbEncryptionKey
+}
+
+// GetAseDbEncryptionKeyOk returns a tuple with the AseDbEncryptionKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetAseDbEncryptionKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.AseDbEncryptionKey) {
+		return nil, false
+	}
+	return o.AseDbEncryptionKey, true
+}
+
+// HasAseDbEncryptionKey returns a boolean if a field has been set.
+func (o *Snapshot) HasAseDbEncryptionKey() bool {
+	if o != nil && !IsNil(o.AseDbEncryptionKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbEncryptionKey gets a reference to the given string and assigns it to the AseDbEncryptionKey field.
+func (o *Snapshot) SetAseDbEncryptionKey(v string) {
+	o.AseDbEncryptionKey = &v
+}
+
+// GetMssqlInternalVersion returns the MssqlInternalVersion field value if set, zero value otherwise.
+func (o *Snapshot) GetMssqlInternalVersion() int32 {
+	if o == nil || IsNil(o.MssqlInternalVersion) {
+		var ret int32
+		return ret
+	}
+	return *o.MssqlInternalVersion
+}
+
+// GetMssqlInternalVersionOk returns a tuple with the MssqlInternalVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetMssqlInternalVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.MssqlInternalVersion) {
+		return nil, false
+	}
+	return o.MssqlInternalVersion, true
+}
+
+// HasMssqlInternalVersion returns a boolean if a field has been set.
+func (o *Snapshot) HasMssqlInternalVersion() bool {
+	if o != nil && !IsNil(o.MssqlInternalVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlInternalVersion gets a reference to the given int32 and assigns it to the MssqlInternalVersion field.
+func (o *Snapshot) SetMssqlInternalVersion(v int32) {
+	o.MssqlInternalVersion = &v
+}
+
+// GetMssqlBackupSetUuid returns the MssqlBackupSetUuid field value if set, zero value otherwise.
+func (o *Snapshot) GetMssqlBackupSetUuid() string {
+	if o == nil || IsNil(o.MssqlBackupSetUuid) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlBackupSetUuid
+}
+
+// GetMssqlBackupSetUuidOk returns a tuple with the MssqlBackupSetUuid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetMssqlBackupSetUuidOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlBackupSetUuid) {
+		return nil, false
+	}
+	return o.MssqlBackupSetUuid, true
+}
+
+// HasMssqlBackupSetUuid returns a boolean if a field has been set.
+func (o *Snapshot) HasMssqlBackupSetUuid() bool {
+	if o != nil && !IsNil(o.MssqlBackupSetUuid) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlBackupSetUuid gets a reference to the given string and assigns it to the MssqlBackupSetUuid field.
+func (o *Snapshot) SetMssqlBackupSetUuid(v string) {
+	o.MssqlBackupSetUuid = &v
+}
+
+// GetMssqlBackupSoftwareType returns the MssqlBackupSoftwareType field value if set, zero value otherwise.
+func (o *Snapshot) GetMssqlBackupSoftwareType() string {
+	if o == nil || IsNil(o.MssqlBackupSoftwareType) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlBackupSoftwareType
+}
+
+// GetMssqlBackupSoftwareTypeOk returns a tuple with the MssqlBackupSoftwareType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetMssqlBackupSoftwareTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlBackupSoftwareType) {
+		return nil, false
+	}
+	return o.MssqlBackupSoftwareType, true
+}
+
+// HasMssqlBackupSoftwareType returns a boolean if a field has been set.
+func (o *Snapshot) HasMssqlBackupSoftwareType() bool {
+	if o != nil && !IsNil(o.MssqlBackupSoftwareType) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlBackupSoftwareType gets a reference to the given string and assigns it to the MssqlBackupSoftwareType field.
+func (o *Snapshot) SetMssqlBackupSoftwareType(v string) {
+	o.MssqlBackupSoftwareType = &v
+}
+
+// GetMssqlBackupLocationType returns the MssqlBackupLocationType field value if set, zero value otherwise.
+func (o *Snapshot) GetMssqlBackupLocationType() string {
+	if o == nil || IsNil(o.MssqlBackupLocationType) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlBackupLocationType
+}
+
+// GetMssqlBackupLocationTypeOk returns a tuple with the MssqlBackupLocationType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetMssqlBackupLocationTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlBackupLocationType) {
+		return nil, false
+	}
+	return o.MssqlBackupLocationType, true
+}
+
+// HasMssqlBackupLocationType returns a boolean if a field has been set.
+func (o *Snapshot) HasMssqlBackupLocationType() bool {
+	if o != nil && !IsNil(o.MssqlBackupLocationType) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlBackupLocationType gets a reference to the given string and assigns it to the MssqlBackupLocationType field.
+func (o *Snapshot) SetMssqlBackupLocationType(v string) {
+	o.MssqlBackupLocationType = &v
+}
+
+// GetMssqlEmptySnapshot returns the MssqlEmptySnapshot field value if set, zero value otherwise.
+func (o *Snapshot) GetMssqlEmptySnapshot() bool {
+	if o == nil || IsNil(o.MssqlEmptySnapshot) {
+		var ret bool
+		return ret
+	}
+	return *o.MssqlEmptySnapshot
+}
+
+// GetMssqlEmptySnapshotOk returns a tuple with the MssqlEmptySnapshot field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetMssqlEmptySnapshotOk() (*bool, bool) {
+	if o == nil || IsNil(o.MssqlEmptySnapshot) {
+		return nil, false
+	}
+	return o.MssqlEmptySnapshot, true
+}
+
+// HasMssqlEmptySnapshot returns a boolean if a field has been set.
+func (o *Snapshot) HasMssqlEmptySnapshot() bool {
+	if o != nil && !IsNil(o.MssqlEmptySnapshot) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlEmptySnapshot gets a reference to the given bool and assigns it to the MssqlEmptySnapshot field.
+func (o *Snapshot) SetMssqlEmptySnapshot(v bool) {
+	o.MssqlEmptySnapshot = &v
+}
+
+// GetOracleFromPhysicalStandbyVdb returns the OracleFromPhysicalStandbyVdb field value if set, zero value otherwise.
+func (o *Snapshot) GetOracleFromPhysicalStandbyVdb() bool {
+	if o == nil || IsNil(o.OracleFromPhysicalStandbyVdb) {
+		var ret bool
+		return ret
+	}
+	return *o.OracleFromPhysicalStandbyVdb
+}
+
+// GetOracleFromPhysicalStandbyVdbOk returns a tuple with the OracleFromPhysicalStandbyVdb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetOracleFromPhysicalStandbyVdbOk() (*bool, bool) {
+	if o == nil || IsNil(o.OracleFromPhysicalStandbyVdb) {
+		return nil, false
+	}
+	return o.OracleFromPhysicalStandbyVdb, true
+}
+
+// HasOracleFromPhysicalStandbyVdb returns a boolean if a field has been set.
+func (o *Snapshot) HasOracleFromPhysicalStandbyVdb() bool {
+	if o != nil && !IsNil(o.OracleFromPhysicalStandbyVdb) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleFromPhysicalStandbyVdb gets a reference to the given bool and assigns it to the OracleFromPhysicalStandbyVdb field.
+func (o *Snapshot) SetOracleFromPhysicalStandbyVdb(v bool) {
+	o.OracleFromPhysicalStandbyVdb = &v
+}
+
+// GetOracleRedoLogSizeInBytes returns the OracleRedoLogSizeInBytes field value if set, zero value otherwise.
+func (o *Snapshot) GetOracleRedoLogSizeInBytes() int64 {
+	if o == nil || IsNil(o.OracleRedoLogSizeInBytes) {
+		var ret int64
+		return ret
+	}
+	return *o.OracleRedoLogSizeInBytes
+}
+
+// GetOracleRedoLogSizeInBytesOk returns a tuple with the OracleRedoLogSizeInBytes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetOracleRedoLogSizeInBytesOk() (*int64, bool) {
+	if o == nil || IsNil(o.OracleRedoLogSizeInBytes) {
+		return nil, false
+	}
+	return o.OracleRedoLogSizeInBytes, true
+}
+
+// HasOracleRedoLogSizeInBytes returns a boolean if a field has been set.
+func (o *Snapshot) HasOracleRedoLogSizeInBytes() bool {
+	if o != nil && !IsNil(o.OracleRedoLogSizeInBytes) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleRedoLogSizeInBytes gets a reference to the given int64 and assigns it to the OracleRedoLogSizeInBytes field.
+func (o *Snapshot) SetOracleRedoLogSizeInBytes(v int64) {
+	o.OracleRedoLogSizeInBytes = &v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *Snapshot) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Snapshot) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Snapshot) SetTags(v []Tag) {
+	o.Tags = v
 }
 
 func (o Snapshot) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Timestamp != nil {
-		toSerialize["timestamp"] = o.Timestamp
-	}
-	if o.Location != nil {
-		toSerialize["location"] = o.Location
-	}
-	if o.DatasetId != nil {
-		toSerialize["dataset_id"] = o.DatasetId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Snapshot) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.EngineId) {
+		toSerialize["engine_id"] = o.EngineId
+	}
+	if o.Namespace.IsSet() {
+		toSerialize["namespace"] = o.Namespace.Get()
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Consistency) {
+		toSerialize["consistency"] = o.Consistency
+	}
+	if !IsNil(o.MissingNonLoggedData) {
+		toSerialize["missing_non_logged_data"] = o.MissingNonLoggedData
+	}
+	if !IsNil(o.DatasetId) {
+		toSerialize["dataset_id"] = o.DatasetId
+	}
+	if !IsNil(o.CreationTime) {
+		toSerialize["creation_time"] = o.CreationTime
+	}
+	if !IsNil(o.StartTimestamp) {
+		toSerialize["start_timestamp"] = o.StartTimestamp
+	}
+	if !IsNil(o.StartLocation) {
+		toSerialize["start_location"] = o.StartLocation
+	}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.Location) {
+		toSerialize["location"] = o.Location
+	}
+	if !IsNil(o.Retention) {
+		toSerialize["retention"] = o.Retention
+	}
+	if !IsNil(o.Expiration) {
+		toSerialize["expiration"] = o.Expiration
+	}
+	if !IsNil(o.RetainForever) {
+		toSerialize["retain_forever"] = o.RetainForever
+	}
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
+	}
+	if !IsNil(o.Timezone) {
+		toSerialize["timezone"] = o.Timezone
+	}
+	if o.Version.IsSet() {
+		toSerialize["version"] = o.Version.Get()
+	}
+	if !IsNil(o.Temporary) {
+		toSerialize["temporary"] = o.Temporary
+	}
+	if !IsNil(o.AppdataToolkit) {
+		toSerialize["appdata_toolkit"] = o.AppdataToolkit
+	}
+	if !IsNil(o.AppdataMetadata) {
+		toSerialize["appdata_metadata"] = o.AppdataMetadata
+	}
+	if !IsNil(o.AseDbEncryptionKey) {
+		toSerialize["ase_db_encryption_key"] = o.AseDbEncryptionKey
+	}
+	if !IsNil(o.MssqlInternalVersion) {
+		toSerialize["mssql_internal_version"] = o.MssqlInternalVersion
+	}
+	if !IsNil(o.MssqlBackupSetUuid) {
+		toSerialize["mssql_backup_set_uuid"] = o.MssqlBackupSetUuid
+	}
+	if !IsNil(o.MssqlBackupSoftwareType) {
+		toSerialize["mssql_backup_software_type"] = o.MssqlBackupSoftwareType
+	}
+	if !IsNil(o.MssqlBackupLocationType) {
+		toSerialize["mssql_backup_location_type"] = o.MssqlBackupLocationType
+	}
+	if !IsNil(o.MssqlEmptySnapshot) {
+		toSerialize["mssql_empty_snapshot"] = o.MssqlEmptySnapshot
+	}
+	if !IsNil(o.OracleFromPhysicalStandbyVdb) {
+		toSerialize["oracle_from_physical_standby_vdb"] = o.OracleFromPhysicalStandbyVdb
+	}
+	if !IsNil(o.OracleRedoLogSizeInBytes) {
+		toSerialize["oracle_redo_log_size_in_bytes"] = o.OracleRedoLogSizeInBytes
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableSnapshot struct {

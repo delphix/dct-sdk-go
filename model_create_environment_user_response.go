@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the CreateEnvironmentUserResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateEnvironmentUserResponse{}
 
 // CreateEnvironmentUserResponse struct for CreateEnvironmentUserResponse
 type CreateEnvironmentUserResponse struct {
@@ -41,7 +44,7 @@ func NewCreateEnvironmentUserResponseWithDefaults() *CreateEnvironmentUserRespon
 
 // GetUserRef returns the UserRef field value if set, zero value otherwise.
 func (o *CreateEnvironmentUserResponse) GetUserRef() string {
-	if o == nil || o.UserRef == nil {
+	if o == nil || IsNil(o.UserRef) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *CreateEnvironmentUserResponse) GetUserRef() string {
 // GetUserRefOk returns a tuple with the UserRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateEnvironmentUserResponse) GetUserRefOk() (*string, bool) {
-	if o == nil || o.UserRef == nil {
+	if o == nil || IsNil(o.UserRef) {
 		return nil, false
 	}
 	return o.UserRef, true
@@ -59,7 +62,7 @@ func (o *CreateEnvironmentUserResponse) GetUserRefOk() (*string, bool) {
 
 // HasUserRef returns a boolean if a field has been set.
 func (o *CreateEnvironmentUserResponse) HasUserRef() bool {
-	if o != nil && o.UserRef != nil {
+	if o != nil && !IsNil(o.UserRef) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *CreateEnvironmentUserResponse) SetUserRef(v string) {
 
 // GetJob returns the Job field value if set, zero value otherwise.
 func (o *CreateEnvironmentUserResponse) GetJob() Job {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		var ret Job
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *CreateEnvironmentUserResponse) GetJob() Job {
 // GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateEnvironmentUserResponse) GetJobOk() (*Job, bool) {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		return nil, false
 	}
 	return o.Job, true
@@ -91,7 +94,7 @@ func (o *CreateEnvironmentUserResponse) GetJobOk() (*Job, bool) {
 
 // HasJob returns a boolean if a field has been set.
 func (o *CreateEnvironmentUserResponse) HasJob() bool {
-	if o != nil && o.Job != nil {
+	if o != nil && !IsNil(o.Job) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *CreateEnvironmentUserResponse) SetJob(v Job) {
 }
 
 func (o CreateEnvironmentUserResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserRef != nil {
-		toSerialize["user_ref"] = o.UserRef
-	}
-	if o.Job != nil {
-		toSerialize["job"] = o.Job
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateEnvironmentUserResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserRef) {
+		toSerialize["user_ref"] = o.UserRef
+	}
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateEnvironmentUserResponse struct {

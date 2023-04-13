@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the DSourceUsageReportResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DSourceUsageReportResponse{}
 
 // DSourceUsageReportResponse struct for DSourceUsageReportResponse
 type DSourceUsageReportResponse struct {
@@ -40,7 +43,7 @@ func NewDSourceUsageReportResponseWithDefaults() *DSourceUsageReportResponse {
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *DSourceUsageReportResponse) GetItems() []DSourceUsageData {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []DSourceUsageData
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *DSourceUsageReportResponse) GetItems() []DSourceUsageData {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceUsageReportResponse) GetItemsOk() ([]DSourceUsageData, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -58,7 +61,7 @@ func (o *DSourceUsageReportResponse) GetItemsOk() ([]DSourceUsageData, bool) {
 
 // HasItems returns a boolean if a field has been set.
 func (o *DSourceUsageReportResponse) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *DSourceUsageReportResponse) SetItems(v []DSourceUsageData) {
 
 // GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
 func (o *DSourceUsageReportResponse) GetResponseMetadata() PaginatedResponseMetadata {
-	if o == nil || o.ResponseMetadata == nil {
+	if o == nil || IsNil(o.ResponseMetadata) {
 		var ret PaginatedResponseMetadata
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *DSourceUsageReportResponse) GetResponseMetadata() PaginatedResponseMeta
 // GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DSourceUsageReportResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
-	if o == nil || o.ResponseMetadata == nil {
+	if o == nil || IsNil(o.ResponseMetadata) {
 		return nil, false
 	}
 	return o.ResponseMetadata, true
@@ -90,7 +93,7 @@ func (o *DSourceUsageReportResponse) GetResponseMetadataOk() (*PaginatedResponse
 
 // HasResponseMetadata returns a boolean if a field has been set.
 func (o *DSourceUsageReportResponse) HasResponseMetadata() bool {
-	if o != nil && o.ResponseMetadata != nil {
+	if o != nil && !IsNil(o.ResponseMetadata) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *DSourceUsageReportResponse) SetResponseMetadata(v PaginatedResponseMeta
 }
 
 func (o DSourceUsageReportResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
-	}
-	if o.ResponseMetadata != nil {
-		toSerialize["response_metadata"] = o.ResponseMetadata
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DSourceUsageReportResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	if !IsNil(o.ResponseMetadata) {
+		toSerialize["response_metadata"] = o.ResponseMetadata
+	}
+	return toSerialize, nil
 }
 
 type NullableDSourceUsageReportResponse struct {

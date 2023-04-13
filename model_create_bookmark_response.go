@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the CreateBookmarkResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateBookmarkResponse{}
 
 // CreateBookmarkResponse struct for CreateBookmarkResponse
 type CreateBookmarkResponse struct {
@@ -40,7 +43,7 @@ func NewCreateBookmarkResponseWithDefaults() *CreateBookmarkResponse {
 
 // GetBookmark returns the Bookmark field value if set, zero value otherwise.
 func (o *CreateBookmarkResponse) GetBookmark() Bookmark {
-	if o == nil || o.Bookmark == nil {
+	if o == nil || IsNil(o.Bookmark) {
 		var ret Bookmark
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *CreateBookmarkResponse) GetBookmark() Bookmark {
 // GetBookmarkOk returns a tuple with the Bookmark field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateBookmarkResponse) GetBookmarkOk() (*Bookmark, bool) {
-	if o == nil || o.Bookmark == nil {
+	if o == nil || IsNil(o.Bookmark) {
 		return nil, false
 	}
 	return o.Bookmark, true
@@ -58,7 +61,7 @@ func (o *CreateBookmarkResponse) GetBookmarkOk() (*Bookmark, bool) {
 
 // HasBookmark returns a boolean if a field has been set.
 func (o *CreateBookmarkResponse) HasBookmark() bool {
-	if o != nil && o.Bookmark != nil {
+	if o != nil && !IsNil(o.Bookmark) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *CreateBookmarkResponse) SetBookmark(v Bookmark) {
 
 // GetJob returns the Job field value if set, zero value otherwise.
 func (o *CreateBookmarkResponse) GetJob() Job {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		var ret Job
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *CreateBookmarkResponse) GetJob() Job {
 // GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateBookmarkResponse) GetJobOk() (*Job, bool) {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		return nil, false
 	}
 	return o.Job, true
@@ -90,7 +93,7 @@ func (o *CreateBookmarkResponse) GetJobOk() (*Job, bool) {
 
 // HasJob returns a boolean if a field has been set.
 func (o *CreateBookmarkResponse) HasJob() bool {
-	if o != nil && o.Job != nil {
+	if o != nil && !IsNil(o.Job) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *CreateBookmarkResponse) SetJob(v Job) {
 }
 
 func (o CreateBookmarkResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Bookmark != nil {
-		toSerialize["bookmark"] = o.Bookmark
-	}
-	if o.Job != nil {
-		toSerialize["job"] = o.Job
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateBookmarkResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Bookmark) {
+		toSerialize["bookmark"] = o.Bookmark
+	}
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateBookmarkResponse struct {

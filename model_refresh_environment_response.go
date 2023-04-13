@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the RefreshEnvironmentResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RefreshEnvironmentResponse{}
 
 // RefreshEnvironmentResponse struct for RefreshEnvironmentResponse
 type RefreshEnvironmentResponse struct {
@@ -39,7 +42,7 @@ func NewRefreshEnvironmentResponseWithDefaults() *RefreshEnvironmentResponse {
 
 // GetJob returns the Job field value if set, zero value otherwise.
 func (o *RefreshEnvironmentResponse) GetJob() Job {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		var ret Job
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *RefreshEnvironmentResponse) GetJob() Job {
 // GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RefreshEnvironmentResponse) GetJobOk() (*Job, bool) {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		return nil, false
 	}
 	return o.Job, true
@@ -57,7 +60,7 @@ func (o *RefreshEnvironmentResponse) GetJobOk() (*Job, bool) {
 
 // HasJob returns a boolean if a field has been set.
 func (o *RefreshEnvironmentResponse) HasJob() bool {
-	if o != nil && o.Job != nil {
+	if o != nil && !IsNil(o.Job) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *RefreshEnvironmentResponse) SetJob(v Job) {
 }
 
 func (o RefreshEnvironmentResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Job != nil {
-		toSerialize["job"] = o.Job
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RefreshEnvironmentResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
+	return toSerialize, nil
 }
 
 type NullableRefreshEnvironmentResponse struct {

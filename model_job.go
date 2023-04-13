@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Job type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Job{}
+
 // Job An asynchronous task.
 type Job struct {
 	// The Job entity ID.
@@ -26,12 +29,17 @@ type Job struct {
 	Type *string `json:"type,omitempty"`
 	// Details about the failure for FAILED jobs.
 	ErrorDetails *string `json:"error_details,omitempty"`
+	// Warnings for the job.
+	WarningMessage *string `json:"warning_message,omitempty"`
 	// A reference to the job's target.
 	TargetId *string `json:"target_id,omitempty"`
 	// The time the job started executing.
 	StartTime *time.Time `json:"start_time,omitempty"`
 	// The time the job was last updated.
 	UpdateTime *time.Time `json:"update_time,omitempty"`
+	// traceId of the request which created this Job
+	TraceId *string `json:"trace_id,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewJob instantiates a new Job object
@@ -53,7 +61,7 @@ func NewJobWithDefaults() *Job {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Job) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -63,7 +71,7 @@ func (o *Job) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Job) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -71,7 +79,7 @@ func (o *Job) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Job) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -85,7 +93,7 @@ func (o *Job) SetId(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *Job) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -95,7 +103,7 @@ func (o *Job) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Job) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -103,7 +111,7 @@ func (o *Job) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *Job) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -117,7 +125,7 @@ func (o *Job) SetStatus(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *Job) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -127,7 +135,7 @@ func (o *Job) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Job) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -135,7 +143,7 @@ func (o *Job) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *Job) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -149,7 +157,7 @@ func (o *Job) SetType(v string) {
 
 // GetErrorDetails returns the ErrorDetails field value if set, zero value otherwise.
 func (o *Job) GetErrorDetails() string {
-	if o == nil || o.ErrorDetails == nil {
+	if o == nil || IsNil(o.ErrorDetails) {
 		var ret string
 		return ret
 	}
@@ -159,7 +167,7 @@ func (o *Job) GetErrorDetails() string {
 // GetErrorDetailsOk returns a tuple with the ErrorDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Job) GetErrorDetailsOk() (*string, bool) {
-	if o == nil || o.ErrorDetails == nil {
+	if o == nil || IsNil(o.ErrorDetails) {
 		return nil, false
 	}
 	return o.ErrorDetails, true
@@ -167,7 +175,7 @@ func (o *Job) GetErrorDetailsOk() (*string, bool) {
 
 // HasErrorDetails returns a boolean if a field has been set.
 func (o *Job) HasErrorDetails() bool {
-	if o != nil && o.ErrorDetails != nil {
+	if o != nil && !IsNil(o.ErrorDetails) {
 		return true
 	}
 
@@ -179,9 +187,41 @@ func (o *Job) SetErrorDetails(v string) {
 	o.ErrorDetails = &v
 }
 
+// GetWarningMessage returns the WarningMessage field value if set, zero value otherwise.
+func (o *Job) GetWarningMessage() string {
+	if o == nil || IsNil(o.WarningMessage) {
+		var ret string
+		return ret
+	}
+	return *o.WarningMessage
+}
+
+// GetWarningMessageOk returns a tuple with the WarningMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetWarningMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.WarningMessage) {
+		return nil, false
+	}
+	return o.WarningMessage, true
+}
+
+// HasWarningMessage returns a boolean if a field has been set.
+func (o *Job) HasWarningMessage() bool {
+	if o != nil && !IsNil(o.WarningMessage) {
+		return true
+	}
+
+	return false
+}
+
+// SetWarningMessage gets a reference to the given string and assigns it to the WarningMessage field.
+func (o *Job) SetWarningMessage(v string) {
+	o.WarningMessage = &v
+}
+
 // GetTargetId returns the TargetId field value if set, zero value otherwise.
 func (o *Job) GetTargetId() string {
-	if o == nil || o.TargetId == nil {
+	if o == nil || IsNil(o.TargetId) {
 		var ret string
 		return ret
 	}
@@ -191,7 +231,7 @@ func (o *Job) GetTargetId() string {
 // GetTargetIdOk returns a tuple with the TargetId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Job) GetTargetIdOk() (*string, bool) {
-	if o == nil || o.TargetId == nil {
+	if o == nil || IsNil(o.TargetId) {
 		return nil, false
 	}
 	return o.TargetId, true
@@ -199,7 +239,7 @@ func (o *Job) GetTargetIdOk() (*string, bool) {
 
 // HasTargetId returns a boolean if a field has been set.
 func (o *Job) HasTargetId() bool {
-	if o != nil && o.TargetId != nil {
+	if o != nil && !IsNil(o.TargetId) {
 		return true
 	}
 
@@ -213,7 +253,7 @@ func (o *Job) SetTargetId(v string) {
 
 // GetStartTime returns the StartTime field value if set, zero value otherwise.
 func (o *Job) GetStartTime() time.Time {
-	if o == nil || o.StartTime == nil {
+	if o == nil || IsNil(o.StartTime) {
 		var ret time.Time
 		return ret
 	}
@@ -223,7 +263,7 @@ func (o *Job) GetStartTime() time.Time {
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Job) GetStartTimeOk() (*time.Time, bool) {
-	if o == nil || o.StartTime == nil {
+	if o == nil || IsNil(o.StartTime) {
 		return nil, false
 	}
 	return o.StartTime, true
@@ -231,7 +271,7 @@ func (o *Job) GetStartTimeOk() (*time.Time, bool) {
 
 // HasStartTime returns a boolean if a field has been set.
 func (o *Job) HasStartTime() bool {
-	if o != nil && o.StartTime != nil {
+	if o != nil && !IsNil(o.StartTime) {
 		return true
 	}
 
@@ -245,7 +285,7 @@ func (o *Job) SetStartTime(v time.Time) {
 
 // GetUpdateTime returns the UpdateTime field value if set, zero value otherwise.
 func (o *Job) GetUpdateTime() time.Time {
-	if o == nil || o.UpdateTime == nil {
+	if o == nil || IsNil(o.UpdateTime) {
 		var ret time.Time
 		return ret
 	}
@@ -255,7 +295,7 @@ func (o *Job) GetUpdateTime() time.Time {
 // GetUpdateTimeOk returns a tuple with the UpdateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Job) GetUpdateTimeOk() (*time.Time, bool) {
-	if o == nil || o.UpdateTime == nil {
+	if o == nil || IsNil(o.UpdateTime) {
 		return nil, false
 	}
 	return o.UpdateTime, true
@@ -263,7 +303,7 @@ func (o *Job) GetUpdateTimeOk() (*time.Time, bool) {
 
 // HasUpdateTime returns a boolean if a field has been set.
 func (o *Job) HasUpdateTime() bool {
-	if o != nil && o.UpdateTime != nil {
+	if o != nil && !IsNil(o.UpdateTime) {
 		return true
 	}
 
@@ -275,30 +315,111 @@ func (o *Job) SetUpdateTime(v time.Time) {
 	o.UpdateTime = &v
 }
 
+// GetTraceId returns the TraceId field value if set, zero value otherwise.
+func (o *Job) GetTraceId() string {
+	if o == nil || IsNil(o.TraceId) {
+		var ret string
+		return ret
+	}
+	return *o.TraceId
+}
+
+// GetTraceIdOk returns a tuple with the TraceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetTraceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TraceId) {
+		return nil, false
+	}
+	return o.TraceId, true
+}
+
+// HasTraceId returns a boolean if a field has been set.
+func (o *Job) HasTraceId() bool {
+	if o != nil && !IsNil(o.TraceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTraceId gets a reference to the given string and assigns it to the TraceId field.
+func (o *Job) SetTraceId(v string) {
+	o.TraceId = &v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *Job) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Job) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Job) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o Job) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.ErrorDetails != nil {
-		toSerialize["error_details"] = o.ErrorDetails
-	}
-	if o.TargetId != nil {
-		toSerialize["target_id"] = o.TargetId
-	}
-	if o.StartTime != nil {
-		toSerialize["start_time"] = o.StartTime
-	}
-	if o.UpdateTime != nil {
-		toSerialize["update_time"] = o.UpdateTime
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Job) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.ErrorDetails) {
+		toSerialize["error_details"] = o.ErrorDetails
+	}
+	if !IsNil(o.WarningMessage) {
+		toSerialize["warning_message"] = o.WarningMessage
+	}
+	if !IsNil(o.TargetId) {
+		toSerialize["target_id"] = o.TargetId
+	}
+	if !IsNil(o.StartTime) {
+		toSerialize["start_time"] = o.StartTime
+	}
+	if !IsNil(o.UpdateTime) {
+		toSerialize["update_time"] = o.UpdateTime
+	}
+	if !IsNil(o.TraceId) {
+		toSerialize["trace_id"] = o.TraceId
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableJob struct {

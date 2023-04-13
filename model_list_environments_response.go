@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the ListEnvironmentsResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListEnvironmentsResponse{}
 
 // ListEnvironmentsResponse struct for ListEnvironmentsResponse
 type ListEnvironmentsResponse struct {
@@ -42,7 +45,7 @@ func NewListEnvironmentsResponseWithDefaults() *ListEnvironmentsResponse {
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *ListEnvironmentsResponse) GetItems() []Environment {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []Environment
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ListEnvironmentsResponse) GetItems() []Environment {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListEnvironmentsResponse) GetItemsOk() ([]Environment, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -60,7 +63,7 @@ func (o *ListEnvironmentsResponse) GetItemsOk() ([]Environment, bool) {
 
 // HasItems returns a boolean if a field has been set.
 func (o *ListEnvironmentsResponse) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ListEnvironmentsResponse) SetItems(v []Environment) {
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
 func (o *ListEnvironmentsResponse) GetErrors() []Error {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		var ret []Error
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ListEnvironmentsResponse) GetErrors() []Error {
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListEnvironmentsResponse) GetErrorsOk() ([]Error, bool) {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		return nil, false
 	}
 	return o.Errors, true
@@ -92,7 +95,7 @@ func (o *ListEnvironmentsResponse) GetErrorsOk() ([]Error, bool) {
 
 // HasErrors returns a boolean if a field has been set.
 func (o *ListEnvironmentsResponse) HasErrors() bool {
-	if o != nil && o.Errors != nil {
+	if o != nil && !IsNil(o.Errors) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *ListEnvironmentsResponse) SetErrors(v []Error) {
 
 // GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
 func (o *ListEnvironmentsResponse) GetResponseMetadata() PaginatedResponseMetadata {
-	if o == nil || o.ResponseMetadata == nil {
+	if o == nil || IsNil(o.ResponseMetadata) {
 		var ret PaginatedResponseMetadata
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *ListEnvironmentsResponse) GetResponseMetadata() PaginatedResponseMetada
 // GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListEnvironmentsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
-	if o == nil || o.ResponseMetadata == nil {
+	if o == nil || IsNil(o.ResponseMetadata) {
 		return nil, false
 	}
 	return o.ResponseMetadata, true
@@ -124,7 +127,7 @@ func (o *ListEnvironmentsResponse) GetResponseMetadataOk() (*PaginatedResponseMe
 
 // HasResponseMetadata returns a boolean if a field has been set.
 func (o *ListEnvironmentsResponse) HasResponseMetadata() bool {
-	if o != nil && o.ResponseMetadata != nil {
+	if o != nil && !IsNil(o.ResponseMetadata) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *ListEnvironmentsResponse) SetResponseMetadata(v PaginatedResponseMetada
 }
 
 func (o ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
-	}
-	if o.Errors != nil {
-		toSerialize["errors"] = o.Errors
-	}
-	if o.ResponseMetadata != nil {
-		toSerialize["response_metadata"] = o.ResponseMetadata
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ListEnvironmentsResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	if !IsNil(o.Errors) {
+		toSerialize["errors"] = o.Errors
+	}
+	if !IsNil(o.ResponseMetadata) {
+		toSerialize["response_metadata"] = o.ResponseMetadata
+	}
+	return toSerialize, nil
 }
 
 type NullableListEnvironmentsResponse struct {

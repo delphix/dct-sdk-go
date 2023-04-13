@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -16,30 +16,36 @@ import (
 	"time"
 )
 
+// checks if the Bookmark type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Bookmark{}
+
 // Bookmark A Data Control Tower object that references points in time for one or more datasets.
 type Bookmark struct {
 	// The Bookmark object entity ID.
 	Id *string `json:"id,omitempty"`
 	// The user-defined name of this bookmark.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The date and time that this bookmark was created.
 	CreationDate *time.Time `json:"creation_date,omitempty"`
 	// The list of VDB IDs associated with this bookmark.
-	VdbIds []string `json:"vdb_ids"`
-	// The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever.
+	VdbIds []string `json:"vdb_ids,omitempty"`
+	// The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever. Deprecated in favor of expiration.
+	// Deprecated
 	Retention *int64 `json:"retention,omitempty"`
+	// The expiration for this bookmark. When unset, indicates the bookmark is kept forever.
+	Expiration *string `json:"expiration,omitempty"`
 	// A message with details about operation progress or state of this bookmark.
 	Status NullableString `json:"status,omitempty"`
+	// The tags to be created for this Bookmark.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewBookmark instantiates a new Bookmark object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBookmark(name string, vdbIds []string) *Bookmark {
+func NewBookmark() *Bookmark {
 	this := Bookmark{}
-	this.Name = name
-	this.VdbIds = vdbIds
 	return &this
 }
 
@@ -53,7 +59,7 @@ func NewBookmarkWithDefaults() *Bookmark {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Bookmark) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -63,7 +69,7 @@ func (o *Bookmark) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Bookmark) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -71,7 +77,7 @@ func (o *Bookmark) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Bookmark) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -83,33 +89,41 @@ func (o *Bookmark) SetId(v string) {
 	o.Id = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *Bookmark) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Bookmark) GetNameOk() (*string, bool) {
-	if o == nil  {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *Bookmark) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Bookmark) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
 func (o *Bookmark) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		var ret time.Time
 		return ret
 	}
@@ -119,7 +133,7 @@ func (o *Bookmark) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Bookmark) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		return nil, false
 	}
 	return o.CreationDate, true
@@ -127,7 +141,7 @@ func (o *Bookmark) GetCreationDateOk() (*time.Time, bool) {
 
 // HasCreationDate returns a boolean if a field has been set.
 func (o *Bookmark) HasCreationDate() bool {
-	if o != nil && o.CreationDate != nil {
+	if o != nil && !IsNil(o.CreationDate) {
 		return true
 	}
 
@@ -139,33 +153,42 @@ func (o *Bookmark) SetCreationDate(v time.Time) {
 	o.CreationDate = &v
 }
 
-// GetVdbIds returns the VdbIds field value
+// GetVdbIds returns the VdbIds field value if set, zero value otherwise.
 func (o *Bookmark) GetVdbIds() []string {
-	if o == nil {
+	if o == nil || IsNil(o.VdbIds) {
 		var ret []string
 		return ret
 	}
-
 	return o.VdbIds
 }
 
-// GetVdbIdsOk returns a tuple with the VdbIds field value
+// GetVdbIdsOk returns a tuple with the VdbIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Bookmark) GetVdbIdsOk() ([]string, bool) {
-	if o == nil  {
+	if o == nil || IsNil(o.VdbIds) {
 		return nil, false
 	}
 	return o.VdbIds, true
 }
 
-// SetVdbIds sets field value
+// HasVdbIds returns a boolean if a field has been set.
+func (o *Bookmark) HasVdbIds() bool {
+	if o != nil && !IsNil(o.VdbIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbIds gets a reference to the given []string and assigns it to the VdbIds field.
 func (o *Bookmark) SetVdbIds(v []string) {
 	o.VdbIds = v
 }
 
 // GetRetention returns the Retention field value if set, zero value otherwise.
+// Deprecated
 func (o *Bookmark) GetRetention() int64 {
-	if o == nil || o.Retention == nil {
+	if o == nil || IsNil(o.Retention) {
 		var ret int64
 		return ret
 	}
@@ -174,8 +197,9 @@ func (o *Bookmark) GetRetention() int64 {
 
 // GetRetentionOk returns a tuple with the Retention field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *Bookmark) GetRetentionOk() (*int64, bool) {
-	if o == nil || o.Retention == nil {
+	if o == nil || IsNil(o.Retention) {
 		return nil, false
 	}
 	return o.Retention, true
@@ -183,7 +207,7 @@ func (o *Bookmark) GetRetentionOk() (*int64, bool) {
 
 // HasRetention returns a boolean if a field has been set.
 func (o *Bookmark) HasRetention() bool {
-	if o != nil && o.Retention != nil {
+	if o != nil && !IsNil(o.Retention) {
 		return true
 	}
 
@@ -191,13 +215,46 @@ func (o *Bookmark) HasRetention() bool {
 }
 
 // SetRetention gets a reference to the given int64 and assigns it to the Retention field.
+// Deprecated
 func (o *Bookmark) SetRetention(v int64) {
 	o.Retention = &v
 }
 
+// GetExpiration returns the Expiration field value if set, zero value otherwise.
+func (o *Bookmark) GetExpiration() string {
+	if o == nil || IsNil(o.Expiration) {
+		var ret string
+		return ret
+	}
+	return *o.Expiration
+}
+
+// GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetExpirationOk() (*string, bool) {
+	if o == nil || IsNil(o.Expiration) {
+		return nil, false
+	}
+	return o.Expiration, true
+}
+
+// HasExpiration returns a boolean if a field has been set.
+func (o *Bookmark) HasExpiration() bool {
+	if o != nil && !IsNil(o.Expiration) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiration gets a reference to the given string and assigns it to the Expiration field.
+func (o *Bookmark) SetExpiration(v string) {
+	o.Expiration = &v
+}
+
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Bookmark) GetStatus() string {
-	if o == nil || o.Status.Get() == nil {
+	if o == nil || IsNil(o.Status.Get()) {
 		var ret string
 		return ret
 	}
@@ -208,7 +265,7 @@ func (o *Bookmark) GetStatus() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Bookmark) GetStatusOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Status.Get(), o.Status.IsSet()
@@ -237,27 +294,69 @@ func (o *Bookmark) UnsetStatus() {
 	o.Status.Unset()
 }
 
-func (o Bookmark) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *Bookmark) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
 	}
-	if true {
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Bookmark) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Bookmark) SetTags(v []Tag) {
+	o.Tags = v
+}
+
+func (o Bookmark) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o Bookmark) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	// skip: id is readOnly
+	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.CreationDate != nil {
-		toSerialize["creation_date"] = o.CreationDate
-	}
-	if true {
+	// skip: creation_date is readOnly
+	if !IsNil(o.VdbIds) {
 		toSerialize["vdb_ids"] = o.VdbIds
 	}
-	if o.Retention != nil {
+	if !IsNil(o.Retention) {
 		toSerialize["retention"] = o.Retention
+	}
+	if !IsNil(o.Expiration) {
+		toSerialize["expiration"] = o.Expiration
 	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
 	}
-	return json.Marshal(toSerialize)
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableBookmark struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the ProductHistory type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProductHistory{}
 
 // ProductHistory struct for ProductHistory
 type ProductHistory struct {
@@ -43,7 +46,7 @@ func NewProductHistoryWithDefaults() *ProductHistory {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *ProductHistory) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *ProductHistory) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProductHistory) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -61,7 +64,7 @@ func (o *ProductHistory) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *ProductHistory) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *ProductHistory) SetVersion(v string) {
 
 // GetInstalledOn returns the InstalledOn field value if set, zero value otherwise.
 func (o *ProductHistory) GetInstalledOn() time.Time {
-	if o == nil || o.InstalledOn == nil {
+	if o == nil || IsNil(o.InstalledOn) {
 		var ret time.Time
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *ProductHistory) GetInstalledOn() time.Time {
 // GetInstalledOnOk returns a tuple with the InstalledOn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProductHistory) GetInstalledOnOk() (*time.Time, bool) {
-	if o == nil || o.InstalledOn == nil {
+	if o == nil || IsNil(o.InstalledOn) {
 		return nil, false
 	}
 	return o.InstalledOn, true
@@ -93,7 +96,7 @@ func (o *ProductHistory) GetInstalledOnOk() (*time.Time, bool) {
 
 // HasInstalledOn returns a boolean if a field has been set.
 func (o *ProductHistory) HasInstalledOn() bool {
-	if o != nil && o.InstalledOn != nil {
+	if o != nil && !IsNil(o.InstalledOn) {
 		return true
 	}
 
@@ -106,14 +109,22 @@ func (o *ProductHistory) SetInstalledOn(v time.Time) {
 }
 
 func (o ProductHistory) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.InstalledOn != nil {
-		toSerialize["installed_on"] = o.InstalledOn
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ProductHistory) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.InstalledOn) {
+		toSerialize["installed_on"] = o.InstalledOn
+	}
+	return toSerialize, nil
 }
 
 type NullableProductHistory struct {

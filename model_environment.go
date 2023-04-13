@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the Environment type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Environment{}
 
 // Environment A grouping of a single host or a cluster of hosts.
 type Environment struct {
@@ -29,12 +32,18 @@ type Environment struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	// True if this environment is a cluster of hosts.
 	IsCluster *bool `json:"is_cluster,omitempty"`
+	// Cluster home for RAC environment.
+	ClusterHome *string `json:"cluster_home,omitempty"`
+	// True if this windows environment is a target environment.
+	IsWindowsTarget *bool `json:"is_windows_target,omitempty"`
 	// The hosts that are part of this environment.
 	Hosts []Host `json:"hosts,omitempty"`
 	// The tags to be created for this environment.
 	Tags []Tag `json:"tags,omitempty"`
 	// Repositories associated with this environment. A Repository typically corresponds to a database installation.
 	Repositories []Repository `json:"repositories,omitempty"`
+	// Oracle listeners associated with this environment.
+	Listeners []OracleListener `json:"listeners,omitempty"`
 }
 
 // NewEnvironment instantiates a new Environment object
@@ -56,7 +65,7 @@ func NewEnvironmentWithDefaults() *Environment {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Environment) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -66,7 +75,7 @@ func (o *Environment) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -74,7 +83,7 @@ func (o *Environment) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Environment) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -88,7 +97,7 @@ func (o *Environment) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Environment) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -98,7 +107,7 @@ func (o *Environment) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -106,7 +115,7 @@ func (o *Environment) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *Environment) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -120,7 +129,7 @@ func (o *Environment) SetName(v string) {
 
 // GetNamespace returns the Namespace field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Environment) GetNamespace() string {
-	if o == nil || o.Namespace.Get() == nil {
+	if o == nil || IsNil(o.Namespace.Get()) {
 		var ret string
 		return ret
 	}
@@ -131,7 +140,7 @@ func (o *Environment) GetNamespace() string {
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Environment) GetNamespaceOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.Namespace.Get(), o.Namespace.IsSet()
@@ -162,7 +171,7 @@ func (o *Environment) UnsetNamespace() {
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
 func (o *Environment) GetEngineId() string {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		var ret string
 		return ret
 	}
@@ -172,7 +181,7 @@ func (o *Environment) GetEngineId() string {
 // GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetEngineIdOk() (*string, bool) {
-	if o == nil || o.EngineId == nil {
+	if o == nil || IsNil(o.EngineId) {
 		return nil, false
 	}
 	return o.EngineId, true
@@ -180,7 +189,7 @@ func (o *Environment) GetEngineIdOk() (*string, bool) {
 
 // HasEngineId returns a boolean if a field has been set.
 func (o *Environment) HasEngineId() bool {
-	if o != nil && o.EngineId != nil {
+	if o != nil && !IsNil(o.EngineId) {
 		return true
 	}
 
@@ -194,7 +203,7 @@ func (o *Environment) SetEngineId(v string) {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *Environment) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -204,7 +213,7 @@ func (o *Environment) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -212,7 +221,7 @@ func (o *Environment) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *Environment) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -226,7 +235,7 @@ func (o *Environment) SetEnabled(v bool) {
 
 // GetIsCluster returns the IsCluster field value if set, zero value otherwise.
 func (o *Environment) GetIsCluster() bool {
-	if o == nil || o.IsCluster == nil {
+	if o == nil || IsNil(o.IsCluster) {
 		var ret bool
 		return ret
 	}
@@ -236,7 +245,7 @@ func (o *Environment) GetIsCluster() bool {
 // GetIsClusterOk returns a tuple with the IsCluster field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetIsClusterOk() (*bool, bool) {
-	if o == nil || o.IsCluster == nil {
+	if o == nil || IsNil(o.IsCluster) {
 		return nil, false
 	}
 	return o.IsCluster, true
@@ -244,7 +253,7 @@ func (o *Environment) GetIsClusterOk() (*bool, bool) {
 
 // HasIsCluster returns a boolean if a field has been set.
 func (o *Environment) HasIsCluster() bool {
-	if o != nil && o.IsCluster != nil {
+	if o != nil && !IsNil(o.IsCluster) {
 		return true
 	}
 
@@ -256,9 +265,73 @@ func (o *Environment) SetIsCluster(v bool) {
 	o.IsCluster = &v
 }
 
+// GetClusterHome returns the ClusterHome field value if set, zero value otherwise.
+func (o *Environment) GetClusterHome() string {
+	if o == nil || IsNil(o.ClusterHome) {
+		var ret string
+		return ret
+	}
+	return *o.ClusterHome
+}
+
+// GetClusterHomeOk returns a tuple with the ClusterHome field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetClusterHomeOk() (*string, bool) {
+	if o == nil || IsNil(o.ClusterHome) {
+		return nil, false
+	}
+	return o.ClusterHome, true
+}
+
+// HasClusterHome returns a boolean if a field has been set.
+func (o *Environment) HasClusterHome() bool {
+	if o != nil && !IsNil(o.ClusterHome) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterHome gets a reference to the given string and assigns it to the ClusterHome field.
+func (o *Environment) SetClusterHome(v string) {
+	o.ClusterHome = &v
+}
+
+// GetIsWindowsTarget returns the IsWindowsTarget field value if set, zero value otherwise.
+func (o *Environment) GetIsWindowsTarget() bool {
+	if o == nil || IsNil(o.IsWindowsTarget) {
+		var ret bool
+		return ret
+	}
+	return *o.IsWindowsTarget
+}
+
+// GetIsWindowsTargetOk returns a tuple with the IsWindowsTarget field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetIsWindowsTargetOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsWindowsTarget) {
+		return nil, false
+	}
+	return o.IsWindowsTarget, true
+}
+
+// HasIsWindowsTarget returns a boolean if a field has been set.
+func (o *Environment) HasIsWindowsTarget() bool {
+	if o != nil && !IsNil(o.IsWindowsTarget) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsWindowsTarget gets a reference to the given bool and assigns it to the IsWindowsTarget field.
+func (o *Environment) SetIsWindowsTarget(v bool) {
+	o.IsWindowsTarget = &v
+}
+
 // GetHosts returns the Hosts field value if set, zero value otherwise.
 func (o *Environment) GetHosts() []Host {
-	if o == nil || o.Hosts == nil {
+	if o == nil || IsNil(o.Hosts) {
 		var ret []Host
 		return ret
 	}
@@ -268,7 +341,7 @@ func (o *Environment) GetHosts() []Host {
 // GetHostsOk returns a tuple with the Hosts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetHostsOk() ([]Host, bool) {
-	if o == nil || o.Hosts == nil {
+	if o == nil || IsNil(o.Hosts) {
 		return nil, false
 	}
 	return o.Hosts, true
@@ -276,7 +349,7 @@ func (o *Environment) GetHostsOk() ([]Host, bool) {
 
 // HasHosts returns a boolean if a field has been set.
 func (o *Environment) HasHosts() bool {
-	if o != nil && o.Hosts != nil {
+	if o != nil && !IsNil(o.Hosts) {
 		return true
 	}
 
@@ -290,7 +363,7 @@ func (o *Environment) SetHosts(v []Host) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Environment) GetTags() []Tag {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []Tag
 		return ret
 	}
@@ -300,7 +373,7 @@ func (o *Environment) GetTags() []Tag {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetTagsOk() ([]Tag, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -308,7 +381,7 @@ func (o *Environment) GetTagsOk() ([]Tag, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Environment) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -322,7 +395,7 @@ func (o *Environment) SetTags(v []Tag) {
 
 // GetRepositories returns the Repositories field value if set, zero value otherwise.
 func (o *Environment) GetRepositories() []Repository {
-	if o == nil || o.Repositories == nil {
+	if o == nil || IsNil(o.Repositories) {
 		var ret []Repository
 		return ret
 	}
@@ -332,7 +405,7 @@ func (o *Environment) GetRepositories() []Repository {
 // GetRepositoriesOk returns a tuple with the Repositories field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Environment) GetRepositoriesOk() ([]Repository, bool) {
-	if o == nil || o.Repositories == nil {
+	if o == nil || IsNil(o.Repositories) {
 		return nil, false
 	}
 	return o.Repositories, true
@@ -340,7 +413,7 @@ func (o *Environment) GetRepositoriesOk() ([]Repository, bool) {
 
 // HasRepositories returns a boolean if a field has been set.
 func (o *Environment) HasRepositories() bool {
-	if o != nil && o.Repositories != nil {
+	if o != nil && !IsNil(o.Repositories) {
 		return true
 	}
 
@@ -352,36 +425,85 @@ func (o *Environment) SetRepositories(v []Repository) {
 	o.Repositories = v
 }
 
+// GetListeners returns the Listeners field value if set, zero value otherwise.
+func (o *Environment) GetListeners() []OracleListener {
+	if o == nil || IsNil(o.Listeners) {
+		var ret []OracleListener
+		return ret
+	}
+	return o.Listeners
+}
+
+// GetListenersOk returns a tuple with the Listeners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetListenersOk() ([]OracleListener, bool) {
+	if o == nil || IsNil(o.Listeners) {
+		return nil, false
+	}
+	return o.Listeners, true
+}
+
+// HasListeners returns a boolean if a field has been set.
+func (o *Environment) HasListeners() bool {
+	if o != nil && !IsNil(o.Listeners) {
+		return true
+	}
+
+	return false
+}
+
+// SetListeners gets a reference to the given []OracleListener and assigns it to the Listeners field.
+func (o *Environment) SetListeners(v []OracleListener) {
+	o.Listeners = v
+}
+
 func (o Environment) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o Environment) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.Name != nil {
+	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
 	if o.Namespace.IsSet() {
 		toSerialize["namespace"] = o.Namespace.Get()
 	}
-	if o.EngineId != nil {
+	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
-	if o.Enabled != nil {
+	if !IsNil(o.Enabled) {
 		toSerialize["enabled"] = o.Enabled
 	}
-	if o.IsCluster != nil {
+	if !IsNil(o.IsCluster) {
 		toSerialize["is_cluster"] = o.IsCluster
 	}
-	if o.Hosts != nil {
+	if !IsNil(o.ClusterHome) {
+		toSerialize["cluster_home"] = o.ClusterHome
+	}
+	if !IsNil(o.IsWindowsTarget) {
+		toSerialize["is_windows_target"] = o.IsWindowsTarget
+	}
+	if !IsNil(o.Hosts) {
 		toSerialize["hosts"] = o.Hosts
 	}
-	if o.Tags != nil {
+	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
-	if o.Repositories != nil {
+	if !IsNil(o.Repositories) {
 		toSerialize["repositories"] = o.Repositories
 	}
-	return json.Marshal(toSerialize)
+	if !IsNil(o.Listeners) {
+		toSerialize["listeners"] = o.Listeners
+	}
+	return toSerialize, nil
 }
 
 type NullableEnvironment struct {

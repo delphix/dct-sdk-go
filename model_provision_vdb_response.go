@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the ProvisionVDBResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProvisionVDBResponse{}
 
 // ProvisionVDBResponse struct for ProvisionVDBResponse
 type ProvisionVDBResponse struct {
@@ -41,7 +44,7 @@ func NewProvisionVDBResponseWithDefaults() *ProvisionVDBResponse {
 
 // GetJob returns the Job field value if set, zero value otherwise.
 func (o *ProvisionVDBResponse) GetJob() Job {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		var ret Job
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *ProvisionVDBResponse) GetJob() Job {
 // GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBResponse) GetJobOk() (*Job, bool) {
-	if o == nil || o.Job == nil {
+	if o == nil || IsNil(o.Job) {
 		return nil, false
 	}
 	return o.Job, true
@@ -59,7 +62,7 @@ func (o *ProvisionVDBResponse) GetJobOk() (*Job, bool) {
 
 // HasJob returns a boolean if a field has been set.
 func (o *ProvisionVDBResponse) HasJob() bool {
-	if o != nil && o.Job != nil {
+	if o != nil && !IsNil(o.Job) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *ProvisionVDBResponse) SetJob(v Job) {
 
 // GetVdbId returns the VdbId field value if set, zero value otherwise.
 func (o *ProvisionVDBResponse) GetVdbId() string {
-	if o == nil || o.VdbId == nil {
+	if o == nil || IsNil(o.VdbId) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *ProvisionVDBResponse) GetVdbId() string {
 // GetVdbIdOk returns a tuple with the VdbId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProvisionVDBResponse) GetVdbIdOk() (*string, bool) {
-	if o == nil || o.VdbId == nil {
+	if o == nil || IsNil(o.VdbId) {
 		return nil, false
 	}
 	return o.VdbId, true
@@ -91,7 +94,7 @@ func (o *ProvisionVDBResponse) GetVdbIdOk() (*string, bool) {
 
 // HasVdbId returns a boolean if a field has been set.
 func (o *ProvisionVDBResponse) HasVdbId() bool {
-	if o != nil && o.VdbId != nil {
+	if o != nil && !IsNil(o.VdbId) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *ProvisionVDBResponse) SetVdbId(v string) {
 }
 
 func (o ProvisionVDBResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Job != nil {
-		toSerialize["job"] = o.Job
-	}
-	if o.VdbId != nil {
-		toSerialize["vdb_id"] = o.VdbId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ProvisionVDBResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
+	if !IsNil(o.VdbId) {
+		toSerialize["vdb_id"] = o.VdbId
+	}
+	return toSerialize, nil
 }
 
 type NullableProvisionVDBResponse struct {

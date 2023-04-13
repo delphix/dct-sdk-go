@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the RefreshVDBBySnapshotParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RefreshVDBBySnapshotParameters{}
 
 // RefreshVDBBySnapshotParameters struct for RefreshVDBBySnapshotParameters
 type RefreshVDBBySnapshotParameters struct {
@@ -40,7 +43,7 @@ func NewRefreshVDBBySnapshotParametersWithDefaults() *RefreshVDBBySnapshotParame
 
 // GetSnapshotId returns the SnapshotId field value if set, zero value otherwise.
 func (o *RefreshVDBBySnapshotParameters) GetSnapshotId() string {
-	if o == nil || o.SnapshotId == nil {
+	if o == nil || IsNil(o.SnapshotId) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *RefreshVDBBySnapshotParameters) GetSnapshotId() string {
 // GetSnapshotIdOk returns a tuple with the SnapshotId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RefreshVDBBySnapshotParameters) GetSnapshotIdOk() (*string, bool) {
-	if o == nil || o.SnapshotId == nil {
+	if o == nil || IsNil(o.SnapshotId) {
 		return nil, false
 	}
 	return o.SnapshotId, true
@@ -58,7 +61,7 @@ func (o *RefreshVDBBySnapshotParameters) GetSnapshotIdOk() (*string, bool) {
 
 // HasSnapshotId returns a boolean if a field has been set.
 func (o *RefreshVDBBySnapshotParameters) HasSnapshotId() bool {
-	if o != nil && o.SnapshotId != nil {
+	if o != nil && !IsNil(o.SnapshotId) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *RefreshVDBBySnapshotParameters) SetSnapshotId(v string) {
 }
 
 func (o RefreshVDBBySnapshotParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SnapshotId != nil {
-		toSerialize["snapshot_id"] = o.SnapshotId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RefreshVDBBySnapshotParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SnapshotId) {
+		toSerialize["snapshot_id"] = o.SnapshotId
+	}
+	return toSerialize, nil
 }
 
 type NullableRefreshVDBBySnapshotParameters struct {

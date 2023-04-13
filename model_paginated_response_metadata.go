@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,9 @@ package delphix_dct_api
 import (
 	"encoding/json"
 )
+
+// checks if the PaginatedResponseMetadata type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PaginatedResponseMetadata{}
 
 // PaginatedResponseMetadata struct for PaginatedResponseMetadata
 type PaginatedResponseMetadata struct {
@@ -44,7 +47,7 @@ func NewPaginatedResponseMetadataWithDefaults() *PaginatedResponseMetadata {
 
 // GetPrevCursor returns the PrevCursor field value if set, zero value otherwise.
 func (o *PaginatedResponseMetadata) GetPrevCursor() string {
-	if o == nil || o.PrevCursor == nil {
+	if o == nil || IsNil(o.PrevCursor) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *PaginatedResponseMetadata) GetPrevCursor() string {
 // GetPrevCursorOk returns a tuple with the PrevCursor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PaginatedResponseMetadata) GetPrevCursorOk() (*string, bool) {
-	if o == nil || o.PrevCursor == nil {
+	if o == nil || IsNil(o.PrevCursor) {
 		return nil, false
 	}
 	return o.PrevCursor, true
@@ -62,7 +65,7 @@ func (o *PaginatedResponseMetadata) GetPrevCursorOk() (*string, bool) {
 
 // HasPrevCursor returns a boolean if a field has been set.
 func (o *PaginatedResponseMetadata) HasPrevCursor() bool {
-	if o != nil && o.PrevCursor != nil {
+	if o != nil && !IsNil(o.PrevCursor) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *PaginatedResponseMetadata) SetPrevCursor(v string) {
 
 // GetNextCursor returns the NextCursor field value if set, zero value otherwise.
 func (o *PaginatedResponseMetadata) GetNextCursor() string {
-	if o == nil || o.NextCursor == nil {
+	if o == nil || IsNil(o.NextCursor) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *PaginatedResponseMetadata) GetNextCursor() string {
 // GetNextCursorOk returns a tuple with the NextCursor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PaginatedResponseMetadata) GetNextCursorOk() (*string, bool) {
-	if o == nil || o.NextCursor == nil {
+	if o == nil || IsNil(o.NextCursor) {
 		return nil, false
 	}
 	return o.NextCursor, true
@@ -94,7 +97,7 @@ func (o *PaginatedResponseMetadata) GetNextCursorOk() (*string, bool) {
 
 // HasNextCursor returns a boolean if a field has been set.
 func (o *PaginatedResponseMetadata) HasNextCursor() bool {
-	if o != nil && o.NextCursor != nil {
+	if o != nil && !IsNil(o.NextCursor) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *PaginatedResponseMetadata) SetNextCursor(v string) {
 
 // GetTotal returns the Total field value if set, zero value otherwise.
 func (o *PaginatedResponseMetadata) GetTotal() int32 {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret int32
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *PaginatedResponseMetadata) GetTotal() int32 {
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PaginatedResponseMetadata) GetTotalOk() (*int32, bool) {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
 	return o.Total, true
@@ -126,7 +129,7 @@ func (o *PaginatedResponseMetadata) GetTotalOk() (*int32, bool) {
 
 // HasTotal returns a boolean if a field has been set.
 func (o *PaginatedResponseMetadata) HasTotal() bool {
-	if o != nil && o.Total != nil {
+	if o != nil && !IsNil(o.Total) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *PaginatedResponseMetadata) SetTotal(v int32) {
 }
 
 func (o PaginatedResponseMetadata) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PrevCursor != nil {
-		toSerialize["prev_cursor"] = o.PrevCursor
-	}
-	if o.NextCursor != nil {
-		toSerialize["next_cursor"] = o.NextCursor
-	}
-	if o.Total != nil {
-		toSerialize["total"] = o.Total
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PaginatedResponseMetadata) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PrevCursor) {
+		toSerialize["prev_cursor"] = o.PrevCursor
+	}
+	if !IsNil(o.NextCursor) {
+		toSerialize["next_cursor"] = o.NextCursor
+	}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
+	}
+	return toSerialize, nil
 }
 
 type NullablePaginatedResponseMetadata struct {

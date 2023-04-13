@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 2.0.0
+API version: 3.1.0
 Contact: support@delphix.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the HashicorpVault type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &HashicorpVault{}
+
 // HashicorpVault Configuration required to connect and authenticate with an Hashicorp Vault which stores engines username and passwords.
 type HashicorpVault struct {
 	Id *int64 `json:"id,omitempty"`
@@ -22,6 +25,7 @@ type HashicorpVault struct {
 	EnvVariables *map[string]string `json:"env_variables,omitempty"`
 	// Arguments to the \"vault\" CLI tool to be used to fetch a client token (or \"login\"). If supporting files, such as TLS certificates, must be used to authenticate, they can be mounted to the /etc/config directory. This property must not be set when using the TOKEN authentication method as login is not required. 
 	LoginCommandArgs []string `json:"login_command_args,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewHashicorpVault instantiates a new HashicorpVault object
@@ -43,7 +47,7 @@ func NewHashicorpVaultWithDefaults() *HashicorpVault {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *HashicorpVault) GetId() int64 {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret int64
 		return ret
 	}
@@ -53,7 +57,7 @@ func (o *HashicorpVault) GetId() int64 {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *HashicorpVault) GetIdOk() (*int64, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -61,7 +65,7 @@ func (o *HashicorpVault) GetIdOk() (*int64, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *HashicorpVault) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -75,7 +79,7 @@ func (o *HashicorpVault) SetId(v int64) {
 
 // GetEnvVariables returns the EnvVariables field value if set, zero value otherwise.
 func (o *HashicorpVault) GetEnvVariables() map[string]string {
-	if o == nil || o.EnvVariables == nil {
+	if o == nil || IsNil(o.EnvVariables) {
 		var ret map[string]string
 		return ret
 	}
@@ -85,7 +89,7 @@ func (o *HashicorpVault) GetEnvVariables() map[string]string {
 // GetEnvVariablesOk returns a tuple with the EnvVariables field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *HashicorpVault) GetEnvVariablesOk() (*map[string]string, bool) {
-	if o == nil || o.EnvVariables == nil {
+	if o == nil || IsNil(o.EnvVariables) {
 		return nil, false
 	}
 	return o.EnvVariables, true
@@ -93,7 +97,7 @@ func (o *HashicorpVault) GetEnvVariablesOk() (*map[string]string, bool) {
 
 // HasEnvVariables returns a boolean if a field has been set.
 func (o *HashicorpVault) HasEnvVariables() bool {
-	if o != nil && o.EnvVariables != nil {
+	if o != nil && !IsNil(o.EnvVariables) {
 		return true
 	}
 
@@ -107,7 +111,7 @@ func (o *HashicorpVault) SetEnvVariables(v map[string]string) {
 
 // GetLoginCommandArgs returns the LoginCommandArgs field value if set, zero value otherwise.
 func (o *HashicorpVault) GetLoginCommandArgs() []string {
-	if o == nil || o.LoginCommandArgs == nil {
+	if o == nil || IsNil(o.LoginCommandArgs) {
 		var ret []string
 		return ret
 	}
@@ -117,7 +121,7 @@ func (o *HashicorpVault) GetLoginCommandArgs() []string {
 // GetLoginCommandArgsOk returns a tuple with the LoginCommandArgs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *HashicorpVault) GetLoginCommandArgsOk() ([]string, bool) {
-	if o == nil || o.LoginCommandArgs == nil {
+	if o == nil || IsNil(o.LoginCommandArgs) {
 		return nil, false
 	}
 	return o.LoginCommandArgs, true
@@ -125,7 +129,7 @@ func (o *HashicorpVault) GetLoginCommandArgsOk() ([]string, bool) {
 
 // HasLoginCommandArgs returns a boolean if a field has been set.
 func (o *HashicorpVault) HasLoginCommandArgs() bool {
-	if o != nil && o.LoginCommandArgs != nil {
+	if o != nil && !IsNil(o.LoginCommandArgs) {
 		return true
 	}
 
@@ -137,18 +141,59 @@ func (o *HashicorpVault) SetLoginCommandArgs(v []string) {
 	o.LoginCommandArgs = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *HashicorpVault) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HashicorpVault) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *HashicorpVault) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *HashicorpVault) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o HashicorpVault) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.EnvVariables != nil {
-		toSerialize["env_variables"] = o.EnvVariables
-	}
-	if o.LoginCommandArgs != nil {
-		toSerialize["login_command_args"] = o.LoginCommandArgs
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o HashicorpVault) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	// skip: id is readOnly
+	if !IsNil(o.EnvVariables) {
+		toSerialize["env_variables"] = o.EnvVariables
+	}
+	if !IsNil(o.LoginCommandArgs) {
+		toSerialize["login_command_args"] = o.LoginCommandArgs
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableHashicorpVault struct {
