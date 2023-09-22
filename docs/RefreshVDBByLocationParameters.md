@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Location** | **string** | The database specific identifier for tracking transactions (SCN, LSN, etc). | 
+**Location** | Pointer to **string** | The database specific identifier for tracking transactions (SCN, LSN, etc). | [optional] 
 **DatasetId** | Pointer to **string** | ID of the dataset to refresh to, mutually exclusive with timeflow_id. | [optional] 
 **TimeflowId** | Pointer to **string** | ID of the timeflow to refresh to, mutually exclusive with dataset_id. | [optional] 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewRefreshVDBByLocationParameters
 
-`func NewRefreshVDBByLocationParameters(location string, ) *RefreshVDBByLocationParameters`
+`func NewRefreshVDBByLocationParameters() *RefreshVDBByLocationParameters`
 
 NewRefreshVDBByLocationParameters instantiates a new RefreshVDBByLocationParameters object
 This constructor will assign default values to properties that have it defined,
@@ -46,6 +46,11 @@ and a boolean to check if the value has been set.
 
 SetLocation sets Location field to given value.
 
+### HasLocation
+
+`func (o *RefreshVDBByLocationParameters) HasLocation() bool`
+
+HasLocation returns a boolean if a field has been set.
 
 ### GetDatasetId
 

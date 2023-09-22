@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -24,9 +24,15 @@ type VirtualDatasetHooks struct {
 	PreRefresh []Hook `json:"pre_refresh,omitempty"`
 	// The commands to execute on the target environment after refreshing the VDB.
 	PostRefresh []Hook `json:"post_refresh,omitempty"`
+	// The commands to execute on the target environment before refreshing the VDB with data from itself.
+	PreSelfRefresh []Hook `json:"pre_self_refresh,omitempty"`
+	// The commands to execute on the target environment after refreshing the VDB with data from itself.
+	PostSelfRefresh []Hook `json:"post_self_refresh,omitempty"`
 	// The commands to execute on the target environment before rewinding the VDB.
+	// Deprecated
 	PreRollback []Hook `json:"pre_rollback,omitempty"`
 	// The commands to execute on the target environment after rewinding the VDB.
+	// Deprecated
 	PostRollback []Hook `json:"post_rollback,omitempty"`
 	// The commands to execute on the target environment when the VDB is created or refreshed.
 	ConfigureClone []Hook `json:"configure_clone,omitempty"`
@@ -125,7 +131,72 @@ func (o *VirtualDatasetHooks) SetPostRefresh(v []Hook) {
 	o.PostRefresh = v
 }
 
+// GetPreSelfRefresh returns the PreSelfRefresh field value if set, zero value otherwise.
+func (o *VirtualDatasetHooks) GetPreSelfRefresh() []Hook {
+	if o == nil || IsNil(o.PreSelfRefresh) {
+		var ret []Hook
+		return ret
+	}
+	return o.PreSelfRefresh
+}
+
+// GetPreSelfRefreshOk returns a tuple with the PreSelfRefresh field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualDatasetHooks) GetPreSelfRefreshOk() ([]Hook, bool) {
+	if o == nil || IsNil(o.PreSelfRefresh) {
+		return nil, false
+	}
+	return o.PreSelfRefresh, true
+}
+
+// HasPreSelfRefresh returns a boolean if a field has been set.
+func (o *VirtualDatasetHooks) HasPreSelfRefresh() bool {
+	if o != nil && !IsNil(o.PreSelfRefresh) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreSelfRefresh gets a reference to the given []Hook and assigns it to the PreSelfRefresh field.
+func (o *VirtualDatasetHooks) SetPreSelfRefresh(v []Hook) {
+	o.PreSelfRefresh = v
+}
+
+// GetPostSelfRefresh returns the PostSelfRefresh field value if set, zero value otherwise.
+func (o *VirtualDatasetHooks) GetPostSelfRefresh() []Hook {
+	if o == nil || IsNil(o.PostSelfRefresh) {
+		var ret []Hook
+		return ret
+	}
+	return o.PostSelfRefresh
+}
+
+// GetPostSelfRefreshOk returns a tuple with the PostSelfRefresh field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualDatasetHooks) GetPostSelfRefreshOk() ([]Hook, bool) {
+	if o == nil || IsNil(o.PostSelfRefresh) {
+		return nil, false
+	}
+	return o.PostSelfRefresh, true
+}
+
+// HasPostSelfRefresh returns a boolean if a field has been set.
+func (o *VirtualDatasetHooks) HasPostSelfRefresh() bool {
+	if o != nil && !IsNil(o.PostSelfRefresh) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostSelfRefresh gets a reference to the given []Hook and assigns it to the PostSelfRefresh field.
+func (o *VirtualDatasetHooks) SetPostSelfRefresh(v []Hook) {
+	o.PostSelfRefresh = v
+}
+
 // GetPreRollback returns the PreRollback field value if set, zero value otherwise.
+// Deprecated
 func (o *VirtualDatasetHooks) GetPreRollback() []Hook {
 	if o == nil || IsNil(o.PreRollback) {
 		var ret []Hook
@@ -136,6 +207,7 @@ func (o *VirtualDatasetHooks) GetPreRollback() []Hook {
 
 // GetPreRollbackOk returns a tuple with the PreRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *VirtualDatasetHooks) GetPreRollbackOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.PreRollback) {
 		return nil, false
@@ -153,11 +225,13 @@ func (o *VirtualDatasetHooks) HasPreRollback() bool {
 }
 
 // SetPreRollback gets a reference to the given []Hook and assigns it to the PreRollback field.
+// Deprecated
 func (o *VirtualDatasetHooks) SetPreRollback(v []Hook) {
 	o.PreRollback = v
 }
 
 // GetPostRollback returns the PostRollback field value if set, zero value otherwise.
+// Deprecated
 func (o *VirtualDatasetHooks) GetPostRollback() []Hook {
 	if o == nil || IsNil(o.PostRollback) {
 		var ret []Hook
@@ -168,6 +242,7 @@ func (o *VirtualDatasetHooks) GetPostRollback() []Hook {
 
 // GetPostRollbackOk returns a tuple with the PostRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *VirtualDatasetHooks) GetPostRollbackOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.PostRollback) {
 		return nil, false
@@ -185,6 +260,7 @@ func (o *VirtualDatasetHooks) HasPostRollback() bool {
 }
 
 // SetPostRollback gets a reference to the given []Hook and assigns it to the PostRollback field.
+// Deprecated
 func (o *VirtualDatasetHooks) SetPostRollback(v []Hook) {
 	o.PostRollback = v
 }
@@ -428,6 +504,12 @@ func (o VirtualDatasetHooks) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PostRefresh) {
 		toSerialize["post_refresh"] = o.PostRefresh
+	}
+	if !IsNil(o.PreSelfRefresh) {
+		toSerialize["pre_self_refresh"] = o.PreSelfRefresh
+	}
+	if !IsNil(o.PostSelfRefresh) {
+		toSerialize["post_self_refresh"] = o.PostSelfRefresh
 	}
 	if !IsNil(o.PreRollback) {
 		toSerialize["pre_rollback"] = o.PreRollback

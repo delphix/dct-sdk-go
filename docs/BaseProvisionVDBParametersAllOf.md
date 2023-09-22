@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **DatabaseName** | Pointer to **string** | The name of the database on the target environment. Defaults to the value of the name property. | [optional] 
 **CdbId** | Pointer to **string** | The ID of the container database (CDB) to provision an Oracle Multitenant database into. This corresponds to a CDB or VCDB API object. When this is not set, a new vCDB will be provisioned. | [optional] 
 **ClusterNodeIds** | Pointer to **[]string** | The cluster node ids, name or addresses for this provision operation (Oracle RAC Only). | [optional] 
+**ClusterNodeInstances** | Pointer to [**[]ClusterNodeInstance**](ClusterNodeInstance.md) | The cluster node instances details for this provision operation(Oracle RAC Only).This property is mutually exclusive with cluster_node_ids. | [optional] 
 **TruncateLogOnCheckpoint** | Pointer to **bool** | Whether to truncate log on checkpoint (ASE only). | [optional] 
 **OsUsername** | Pointer to **string** | The name of the privileged user to run the provision operation (Oracle Only). | [optional] 
 **OsPassword** | Pointer to **string** | The password of the privileged user to run the provision operation (Oracle Only). | [optional] 
@@ -52,6 +53,11 @@ Name | Type | Description | Notes
 **AdditionalMountPoints** | Pointer to [**[]AdditionalMountPoint**](AdditionalMountPoint.md) | Specifies additional locations on which to mount a subdirectory of an AppData container. | [optional] 
 **AppdataConfigParams** | Pointer to **map[string]interface{}** | The list of parameters specified by the source config schema in the toolkit | [optional] 
 **ConfigParams** | Pointer to **map[string]interface{}** | Database configuration parameter overrides. | [optional] 
+**PrivilegedOsUser** | Pointer to **string** | This privileged unix username will be used to create the VDB. Leave this field blank if you do not want to use privilege elevation. The unix privileged username should begin with a letter or an underscore, followed by letters, digits, underscores, or dashes. They can end with a dollar sign (postgres only). | [optional] 
+**PostgresPort** | Pointer to **int32** | Port number for Postgres target database (postgres only). | [optional] 
+**ConfigSettingsStg** | Pointer to [**[]ConfigSettingsStg**](ConfigSettingsStg.md) | Custom Database-Level config settings (postgres only). | [optional] 
+**VcdbRestart** | Pointer to **bool** | Indicates whether the Engine should automatically restart this vCDB when target host reboot is detected. If vdb_restart property value is not explicitly set and vcdb_restart is set as false - the vdb_restart property is defaulted to false. | [optional] 
+**MssqlFailoverDriveLetter** | Pointer to **string** | Base drive letter location for mount points. (MSSql Only). | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for VDB. | [optional] 
 
 ## Methods
@@ -197,6 +203,31 @@ SetClusterNodeIds sets ClusterNodeIds field to given value.
 `func (o *BaseProvisionVDBParametersAllOf) HasClusterNodeIds() bool`
 
 HasClusterNodeIds returns a boolean if a field has been set.
+
+### GetClusterNodeInstances
+
+`func (o *BaseProvisionVDBParametersAllOf) GetClusterNodeInstances() []ClusterNodeInstance`
+
+GetClusterNodeInstances returns the ClusterNodeInstances field if non-nil, zero value otherwise.
+
+### GetClusterNodeInstancesOk
+
+`func (o *BaseProvisionVDBParametersAllOf) GetClusterNodeInstancesOk() (*[]ClusterNodeInstance, bool)`
+
+GetClusterNodeInstancesOk returns a tuple with the ClusterNodeInstances field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClusterNodeInstances
+
+`func (o *BaseProvisionVDBParametersAllOf) SetClusterNodeInstances(v []ClusterNodeInstance)`
+
+SetClusterNodeInstances sets ClusterNodeInstances field to given value.
+
+### HasClusterNodeInstances
+
+`func (o *BaseProvisionVDBParametersAllOf) HasClusterNodeInstances() bool`
+
+HasClusterNodeInstances returns a boolean if a field has been set.
 
 ### GetTruncateLogOnCheckpoint
 
@@ -1303,6 +1334,131 @@ HasConfigParams returns a boolean if a field has been set.
 `func (o *BaseProvisionVDBParametersAllOf) UnsetConfigParams()`
 
 UnsetConfigParams ensures that no value is present for ConfigParams, not even an explicit nil
+### GetPrivilegedOsUser
+
+`func (o *BaseProvisionVDBParametersAllOf) GetPrivilegedOsUser() string`
+
+GetPrivilegedOsUser returns the PrivilegedOsUser field if non-nil, zero value otherwise.
+
+### GetPrivilegedOsUserOk
+
+`func (o *BaseProvisionVDBParametersAllOf) GetPrivilegedOsUserOk() (*string, bool)`
+
+GetPrivilegedOsUserOk returns a tuple with the PrivilegedOsUser field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPrivilegedOsUser
+
+`func (o *BaseProvisionVDBParametersAllOf) SetPrivilegedOsUser(v string)`
+
+SetPrivilegedOsUser sets PrivilegedOsUser field to given value.
+
+### HasPrivilegedOsUser
+
+`func (o *BaseProvisionVDBParametersAllOf) HasPrivilegedOsUser() bool`
+
+HasPrivilegedOsUser returns a boolean if a field has been set.
+
+### GetPostgresPort
+
+`func (o *BaseProvisionVDBParametersAllOf) GetPostgresPort() int32`
+
+GetPostgresPort returns the PostgresPort field if non-nil, zero value otherwise.
+
+### GetPostgresPortOk
+
+`func (o *BaseProvisionVDBParametersAllOf) GetPostgresPortOk() (*int32, bool)`
+
+GetPostgresPortOk returns a tuple with the PostgresPort field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostgresPort
+
+`func (o *BaseProvisionVDBParametersAllOf) SetPostgresPort(v int32)`
+
+SetPostgresPort sets PostgresPort field to given value.
+
+### HasPostgresPort
+
+`func (o *BaseProvisionVDBParametersAllOf) HasPostgresPort() bool`
+
+HasPostgresPort returns a boolean if a field has been set.
+
+### GetConfigSettingsStg
+
+`func (o *BaseProvisionVDBParametersAllOf) GetConfigSettingsStg() []ConfigSettingsStg`
+
+GetConfigSettingsStg returns the ConfigSettingsStg field if non-nil, zero value otherwise.
+
+### GetConfigSettingsStgOk
+
+`func (o *BaseProvisionVDBParametersAllOf) GetConfigSettingsStgOk() (*[]ConfigSettingsStg, bool)`
+
+GetConfigSettingsStgOk returns a tuple with the ConfigSettingsStg field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfigSettingsStg
+
+`func (o *BaseProvisionVDBParametersAllOf) SetConfigSettingsStg(v []ConfigSettingsStg)`
+
+SetConfigSettingsStg sets ConfigSettingsStg field to given value.
+
+### HasConfigSettingsStg
+
+`func (o *BaseProvisionVDBParametersAllOf) HasConfigSettingsStg() bool`
+
+HasConfigSettingsStg returns a boolean if a field has been set.
+
+### GetVcdbRestart
+
+`func (o *BaseProvisionVDBParametersAllOf) GetVcdbRestart() bool`
+
+GetVcdbRestart returns the VcdbRestart field if non-nil, zero value otherwise.
+
+### GetVcdbRestartOk
+
+`func (o *BaseProvisionVDBParametersAllOf) GetVcdbRestartOk() (*bool, bool)`
+
+GetVcdbRestartOk returns a tuple with the VcdbRestart field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVcdbRestart
+
+`func (o *BaseProvisionVDBParametersAllOf) SetVcdbRestart(v bool)`
+
+SetVcdbRestart sets VcdbRestart field to given value.
+
+### HasVcdbRestart
+
+`func (o *BaseProvisionVDBParametersAllOf) HasVcdbRestart() bool`
+
+HasVcdbRestart returns a boolean if a field has been set.
+
+### GetMssqlFailoverDriveLetter
+
+`func (o *BaseProvisionVDBParametersAllOf) GetMssqlFailoverDriveLetter() string`
+
+GetMssqlFailoverDriveLetter returns the MssqlFailoverDriveLetter field if non-nil, zero value otherwise.
+
+### GetMssqlFailoverDriveLetterOk
+
+`func (o *BaseProvisionVDBParametersAllOf) GetMssqlFailoverDriveLetterOk() (*string, bool)`
+
+GetMssqlFailoverDriveLetterOk returns a tuple with the MssqlFailoverDriveLetter field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMssqlFailoverDriveLetter
+
+`func (o *BaseProvisionVDBParametersAllOf) SetMssqlFailoverDriveLetter(v string)`
+
+SetMssqlFailoverDriveLetter sets MssqlFailoverDriveLetter field to given value.
+
+### HasMssqlFailoverDriveLetter
+
+`func (o *BaseProvisionVDBParametersAllOf) HasMssqlFailoverDriveLetter() bool`
+
+HasMssqlFailoverDriveLetter returns a boolean if a field has been set.
+
 ### GetTags
 
 `func (o *BaseProvisionVDBParametersAllOf) GetTags() []Tag`

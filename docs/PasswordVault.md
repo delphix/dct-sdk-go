@@ -6,6 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The password vault ID. | [optional] 
 **Name** | Pointer to **string** | The name of this password vault. | [optional] 
+**NamespaceId** | Pointer to **string** | The namespace id of this password vault. | [optional] 
+**NamespaceName** | Pointer to **string** | The namespace name of this password vault. | [optional] 
+**IsReplica** | Pointer to **bool** | Is this a replicated object. | [optional] 
 **EngineId** | Pointer to **string** | Id of the Engine that this password vault belongs to. | [optional] 
 **EngineName** | Pointer to **string** | Name of the Engine that this password vault belongs to. | [optional] 
 **Type** | Pointer to **string** | The type of this password vault. | [optional] 
@@ -82,6 +85,81 @@ SetName sets Name field to given value.
 `func (o *PasswordVault) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetNamespaceId
+
+`func (o *PasswordVault) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *PasswordVault) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *PasswordVault) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *PasswordVault) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### GetNamespaceName
+
+`func (o *PasswordVault) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *PasswordVault) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *PasswordVault) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *PasswordVault) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### GetIsReplica
+
+`func (o *PasswordVault) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *PasswordVault) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *PasswordVault) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *PasswordVault) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
 
 ### GetEngineId
 

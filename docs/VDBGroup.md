@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **Id** | **string** | A unique identifier for the entity. | [readonly] 
 **Name** | **string** | A unique name for the entity. | 
 **VdbIds** | **[]string** | The list of VDB IDs in this VDBGroup. | 
+**IsLocked** | Pointer to **bool** | Indicates whether the VDBGroup is locked. | [optional] 
+**LockedBy** | Pointer to **int64** | The Id of the account that locked the VDBGroup. | [optional] 
+**LockedByName** | Pointer to **string** | The name of the account that locked the VDBGroup. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
@@ -87,6 +90,81 @@ and a boolean to check if the value has been set.
 
 SetVdbIds sets VdbIds field to given value.
 
+
+### GetIsLocked
+
+`func (o *VDBGroup) GetIsLocked() bool`
+
+GetIsLocked returns the IsLocked field if non-nil, zero value otherwise.
+
+### GetIsLockedOk
+
+`func (o *VDBGroup) GetIsLockedOk() (*bool, bool)`
+
+GetIsLockedOk returns a tuple with the IsLocked field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsLocked
+
+`func (o *VDBGroup) SetIsLocked(v bool)`
+
+SetIsLocked sets IsLocked field to given value.
+
+### HasIsLocked
+
+`func (o *VDBGroup) HasIsLocked() bool`
+
+HasIsLocked returns a boolean if a field has been set.
+
+### GetLockedBy
+
+`func (o *VDBGroup) GetLockedBy() int64`
+
+GetLockedBy returns the LockedBy field if non-nil, zero value otherwise.
+
+### GetLockedByOk
+
+`func (o *VDBGroup) GetLockedByOk() (*int64, bool)`
+
+GetLockedByOk returns a tuple with the LockedBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLockedBy
+
+`func (o *VDBGroup) SetLockedBy(v int64)`
+
+SetLockedBy sets LockedBy field to given value.
+
+### HasLockedBy
+
+`func (o *VDBGroup) HasLockedBy() bool`
+
+HasLockedBy returns a boolean if a field has been set.
+
+### GetLockedByName
+
+`func (o *VDBGroup) GetLockedByName() string`
+
+GetLockedByName returns the LockedByName field if non-nil, zero value otherwise.
+
+### GetLockedByNameOk
+
+`func (o *VDBGroup) GetLockedByNameOk() (*string, bool)`
+
+GetLockedByNameOk returns a tuple with the LockedByName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLockedByName
+
+`func (o *VDBGroup) SetLockedByName(v string)`
+
+SetLockedByName sets LockedByName field to given value.
+
+### HasLockedByName
+
+`func (o *VDBGroup) HasLockedByName() bool`
+
+HasLockedByName returns a boolean if a field has been set.
 
 ### GetTags
 

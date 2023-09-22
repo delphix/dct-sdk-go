@@ -4,15 +4,15 @@ All URIs are relative to */v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**TimeToUpdateSources**](TestApi.md#TimeToUpdateSources) | **Post** /time-to-update-sources | set sources loop count variable - this is being used during performance testing.
+[**EnableScaleTesting**](TestApi.md#EnableScaleTesting) | **Post** /enable-scale-testing | This is used for performance testing to enable engine and object duplication.
 
 
 
-## TimeToUpdateSources
+## EnableScaleTesting
 
-> TimeToUpdateSourcesResponse TimeToUpdateSources(ctx).TimeToUpdateSourcesRequest(timeToUpdateSourcesRequest).Execute()
+> EnableScaleTesting(ctx).EnableScaleTestingRequest(enableScaleTestingRequest).Execute()
 
-set sources loop count variable - this is being used during performance testing.
+This is used for performance testing to enable engine and object duplication.
 
 ### Example
 
@@ -27,17 +27,15 @@ import (
 )
 
 func main() {
-    timeToUpdateSourcesRequest := *openapiclient.NewTimeToUpdateSourcesRequest(int32(123), []string{"EnginesList_example"}, int32(123), int32(123)) // TimeToUpdateSourcesRequest |  (optional)
+    enableScaleTestingRequest := *openapiclient.NewEnableScaleTestingRequest(int32(123), []string{"EnginesList_example"}, int32(123), int32(123)) // EnableScaleTestingRequest |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.TestApi.TimeToUpdateSources(context.Background()).TimeToUpdateSourcesRequest(timeToUpdateSourcesRequest).Execute()
+    r, err := apiClient.TestApi.EnableScaleTesting(context.Background()).EnableScaleTestingRequest(enableScaleTestingRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `TestApi.TimeToUpdateSources``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `TestApi.EnableScaleTesting``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `TimeToUpdateSources`: TimeToUpdateSourcesResponse
-    fmt.Fprintf(os.Stdout, "Response from `TestApi.TimeToUpdateSources`: %v\n", resp)
 }
 ```
 
@@ -47,16 +45,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTimeToUpdateSourcesRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiEnableScaleTestingRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **timeToUpdateSourcesRequest** | [**TimeToUpdateSourcesRequest**](TimeToUpdateSourcesRequest.md) |  | 
+ **enableScaleTestingRequest** | [**EnableScaleTestingRequest**](EnableScaleTestingRequest.md) |  | 
 
 ### Return type
 
-[**TimeToUpdateSourcesResponse**](TimeToUpdateSourcesResponse.md)
+ (empty response body)
 
 ### Authorization
 
@@ -65,7 +63,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

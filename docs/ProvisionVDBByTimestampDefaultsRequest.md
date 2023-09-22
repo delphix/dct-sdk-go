@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **TimestampInDatabaseTimezone** | Pointer to **string** | The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp. | [optional] 
 **EngineId** | Pointer to **string** | The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored. | [optional] 
 **SourceDataId** | **string** | The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source. | 
+**TimeflowId** | Pointer to **string** | The Timeflow ID. | [optional] 
 
 ## Methods
 
@@ -122,6 +123,31 @@ and a boolean to check if the value has been set.
 
 SetSourceDataId sets SourceDataId field to given value.
 
+
+### GetTimeflowId
+
+`func (o *ProvisionVDBByTimestampDefaultsRequest) GetTimeflowId() string`
+
+GetTimeflowId returns the TimeflowId field if non-nil, zero value otherwise.
+
+### GetTimeflowIdOk
+
+`func (o *ProvisionVDBByTimestampDefaultsRequest) GetTimeflowIdOk() (*string, bool)`
+
+GetTimeflowIdOk returns a tuple with the TimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeflowId
+
+`func (o *ProvisionVDBByTimestampDefaultsRequest) SetTimeflowId(v string)`
+
+SetTimeflowId sets TimeflowId field to given value.
+
+### HasTimeflowId
+
+`func (o *ProvisionVDBByTimestampDefaultsRequest) HasTimeflowId() bool`
+
+HasTimeflowId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

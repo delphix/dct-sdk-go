@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,12 @@ type VCDB struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this vCDB.
 	Name NullableString `json:"name,omitempty"`
+	// The namespace id of this vCDB.
+	NamespaceId NullableString `json:"namespace_id,omitempty"`
+	// The namespace name of this vCDB.
+	NamespaceName NullableString `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica NullableBool `json:"is_replica,omitempty"`
 	// The version of this vCDB.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
 	// A reference to the Environment that hosts this vCDB.
@@ -43,6 +49,10 @@ type VCDB struct {
 	GroupName NullableString `json:"group_name,omitempty"`
 	// Whether the vCDB is enabled or not.
 	Enabled *bool `json:"enabled,omitempty"`
+	// The content type of the vcdb.
+	ContentType NullableString `json:"content_type,omitempty"`
+	// Indicates whether the Engine should automatically restart this vcdb when target host reboot is detected.
+	VcdbRestart *bool `json:"vcdb_restart,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -135,6 +145,132 @@ func (o *VCDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *VCDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VCDB) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId.Get()
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VCDB) GetNamespaceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NamespaceId.Get(), o.NamespaceId.IsSet()
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *VCDB) HasNamespaceId() bool {
+	if o != nil && o.NamespaceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given NullableString and assigns it to the NamespaceId field.
+func (o *VCDB) SetNamespaceId(v string) {
+	o.NamespaceId.Set(&v)
+}
+// SetNamespaceIdNil sets the value for NamespaceId to be an explicit nil
+func (o *VCDB) SetNamespaceIdNil() {
+	o.NamespaceId.Set(nil)
+}
+
+// UnsetNamespaceId ensures that no value is present for NamespaceId, not even an explicit nil
+func (o *VCDB) UnsetNamespaceId() {
+	o.NamespaceId.Unset()
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VCDB) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName.Get()
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VCDB) GetNamespaceNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NamespaceName.Get(), o.NamespaceName.IsSet()
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *VCDB) HasNamespaceName() bool {
+	if o != nil && o.NamespaceName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given NullableString and assigns it to the NamespaceName field.
+func (o *VCDB) SetNamespaceName(v string) {
+	o.NamespaceName.Set(&v)
+}
+// SetNamespaceNameNil sets the value for NamespaceName to be an explicit nil
+func (o *VCDB) SetNamespaceNameNil() {
+	o.NamespaceName.Set(nil)
+}
+
+// UnsetNamespaceName ensures that no value is present for NamespaceName, not even an explicit nil
+func (o *VCDB) UnsetNamespaceName() {
+	o.NamespaceName.Unset()
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VCDB) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica.Get()
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VCDB) GetIsReplicaOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsReplica.Get(), o.IsReplica.IsSet()
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *VCDB) HasIsReplica() bool {
+	if o != nil && o.IsReplica.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given NullableBool and assigns it to the IsReplica field.
+func (o *VCDB) SetIsReplica(v bool) {
+	o.IsReplica.Set(&v)
+}
+// SetIsReplicaNil sets the value for IsReplica to be an explicit nil
+func (o *VCDB) SetIsReplicaNil() {
+	o.IsReplica.Set(nil)
+}
+
+// UnsetIsReplica ensures that no value is present for IsReplica, not even an explicit nil
+func (o *VCDB) UnsetIsReplica() {
+	o.IsReplica.Unset()
 }
 
 // GetDatabaseVersion returns the DatabaseVersion field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -485,6 +621,80 @@ func (o *VCDB) SetEnabled(v bool) {
 	o.Enabled = &v
 }
 
+// GetContentType returns the ContentType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VCDB) GetContentType() string {
+	if o == nil || IsNil(o.ContentType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ContentType.Get()
+}
+
+// GetContentTypeOk returns a tuple with the ContentType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VCDB) GetContentTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ContentType.Get(), o.ContentType.IsSet()
+}
+
+// HasContentType returns a boolean if a field has been set.
+func (o *VCDB) HasContentType() bool {
+	if o != nil && o.ContentType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetContentType gets a reference to the given NullableString and assigns it to the ContentType field.
+func (o *VCDB) SetContentType(v string) {
+	o.ContentType.Set(&v)
+}
+// SetContentTypeNil sets the value for ContentType to be an explicit nil
+func (o *VCDB) SetContentTypeNil() {
+	o.ContentType.Set(nil)
+}
+
+// UnsetContentType ensures that no value is present for ContentType, not even an explicit nil
+func (o *VCDB) UnsetContentType() {
+	o.ContentType.Unset()
+}
+
+// GetVcdbRestart returns the VcdbRestart field value if set, zero value otherwise.
+func (o *VCDB) GetVcdbRestart() bool {
+	if o == nil || IsNil(o.VcdbRestart) {
+		var ret bool
+		return ret
+	}
+	return *o.VcdbRestart
+}
+
+// GetVcdbRestartOk returns a tuple with the VcdbRestart field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetVcdbRestartOk() (*bool, bool) {
+	if o == nil || IsNil(o.VcdbRestart) {
+		return nil, false
+	}
+	return o.VcdbRestart, true
+}
+
+// HasVcdbRestart returns a boolean if a field has been set.
+func (o *VCDB) HasVcdbRestart() bool {
+	if o != nil && !IsNil(o.VcdbRestart) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbRestart gets a reference to the given bool and assigns it to the VcdbRestart field.
+func (o *VCDB) SetVcdbRestart(v bool) {
+	o.VcdbRestart = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *VCDB) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -533,6 +743,15 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
 	}
+	if o.NamespaceId.IsSet() {
+		toSerialize["namespace_id"] = o.NamespaceId.Get()
+	}
+	if o.NamespaceName.IsSet() {
+		toSerialize["namespace_name"] = o.NamespaceName.Get()
+	}
+	if o.IsReplica.IsSet() {
+		toSerialize["is_replica"] = o.IsReplica.Get()
+	}
 	if o.DatabaseVersion.IsSet() {
 		toSerialize["database_version"] = o.DatabaseVersion.Get()
 	}
@@ -559,6 +778,12 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Enabled) {
 		toSerialize["enabled"] = o.Enabled
+	}
+	if o.ContentType.IsSet() {
+		toSerialize["content_type"] = o.ContentType.Get()
+	}
+	if !IsNil(o.VcdbRestart) {
+		toSerialize["vcdb_restart"] = o.VcdbRestart
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

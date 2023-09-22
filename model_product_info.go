@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,8 @@ type ProductInfo struct {
 	ApiVersion *string `json:"api_version,omitempty"`
 	// Current installed product version.
 	ProductVersion *string `json:"product_version,omitempty"`
+	// System UUID
+	SystemUuid *string `json:"system_uuid,omitempty"`
 	// Product upgrade history.
 	ProductUpgradeHistory []ProductHistory `json:"product_upgrade_history,omitempty"`
 	// All the supported API versions.
@@ -111,6 +113,38 @@ func (o *ProductInfo) SetProductVersion(v string) {
 	o.ProductVersion = &v
 }
 
+// GetSystemUuid returns the SystemUuid field value if set, zero value otherwise.
+func (o *ProductInfo) GetSystemUuid() string {
+	if o == nil || IsNil(o.SystemUuid) {
+		var ret string
+		return ret
+	}
+	return *o.SystemUuid
+}
+
+// GetSystemUuidOk returns a tuple with the SystemUuid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductInfo) GetSystemUuidOk() (*string, bool) {
+	if o == nil || IsNil(o.SystemUuid) {
+		return nil, false
+	}
+	return o.SystemUuid, true
+}
+
+// HasSystemUuid returns a boolean if a field has been set.
+func (o *ProductInfo) HasSystemUuid() bool {
+	if o != nil && !IsNil(o.SystemUuid) {
+		return true
+	}
+
+	return false
+}
+
+// SetSystemUuid gets a reference to the given string and assigns it to the SystemUuid field.
+func (o *ProductInfo) SetSystemUuid(v string) {
+	o.SystemUuid = &v
+}
+
 // GetProductUpgradeHistory returns the ProductUpgradeHistory field value if set, zero value otherwise.
 func (o *ProductInfo) GetProductUpgradeHistory() []ProductHistory {
 	if o == nil || IsNil(o.ProductUpgradeHistory) {
@@ -190,6 +224,9 @@ func (o ProductInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ProductVersion) {
 		toSerialize["product_version"] = o.ProductVersion
+	}
+	if !IsNil(o.SystemUuid) {
+		toSerialize["system_uuid"] = o.SystemUuid
 	}
 	if !IsNil(o.ProductUpgradeHistory) {
 		toSerialize["product_upgrade_history"] = o.ProductUpgradeHistory

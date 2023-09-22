@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,12 @@ type VDBGroup struct {
 	Name string `json:"name"`
 	// The list of VDB IDs in this VDBGroup.
 	VdbIds []string `json:"vdb_ids"`
+	// Indicates whether the VDBGroup is locked.
+	IsLocked *bool `json:"is_locked,omitempty"`
+	// The Id of the account that locked the VDBGroup.
+	LockedBy *int64 `json:"locked_by,omitempty"`
+	// The name of the account that locked the VDBGroup.
+	LockedByName *string `json:"locked_by_name,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -121,6 +127,102 @@ func (o *VDBGroup) SetVdbIds(v []string) {
 	o.VdbIds = v
 }
 
+// GetIsLocked returns the IsLocked field value if set, zero value otherwise.
+func (o *VDBGroup) GetIsLocked() bool {
+	if o == nil || IsNil(o.IsLocked) {
+		var ret bool
+		return ret
+	}
+	return *o.IsLocked
+}
+
+// GetIsLockedOk returns a tuple with the IsLocked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetIsLockedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsLocked) {
+		return nil, false
+	}
+	return o.IsLocked, true
+}
+
+// HasIsLocked returns a boolean if a field has been set.
+func (o *VDBGroup) HasIsLocked() bool {
+	if o != nil && !IsNil(o.IsLocked) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsLocked gets a reference to the given bool and assigns it to the IsLocked field.
+func (o *VDBGroup) SetIsLocked(v bool) {
+	o.IsLocked = &v
+}
+
+// GetLockedBy returns the LockedBy field value if set, zero value otherwise.
+func (o *VDBGroup) GetLockedBy() int64 {
+	if o == nil || IsNil(o.LockedBy) {
+		var ret int64
+		return ret
+	}
+	return *o.LockedBy
+}
+
+// GetLockedByOk returns a tuple with the LockedBy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetLockedByOk() (*int64, bool) {
+	if o == nil || IsNil(o.LockedBy) {
+		return nil, false
+	}
+	return o.LockedBy, true
+}
+
+// HasLockedBy returns a boolean if a field has been set.
+func (o *VDBGroup) HasLockedBy() bool {
+	if o != nil && !IsNil(o.LockedBy) {
+		return true
+	}
+
+	return false
+}
+
+// SetLockedBy gets a reference to the given int64 and assigns it to the LockedBy field.
+func (o *VDBGroup) SetLockedBy(v int64) {
+	o.LockedBy = &v
+}
+
+// GetLockedByName returns the LockedByName field value if set, zero value otherwise.
+func (o *VDBGroup) GetLockedByName() string {
+	if o == nil || IsNil(o.LockedByName) {
+		var ret string
+		return ret
+	}
+	return *o.LockedByName
+}
+
+// GetLockedByNameOk returns a tuple with the LockedByName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetLockedByNameOk() (*string, bool) {
+	if o == nil || IsNil(o.LockedByName) {
+		return nil, false
+	}
+	return o.LockedByName, true
+}
+
+// HasLockedByName returns a boolean if a field has been set.
+func (o *VDBGroup) HasLockedByName() bool {
+	if o != nil && !IsNil(o.LockedByName) {
+		return true
+	}
+
+	return false
+}
+
+// SetLockedByName gets a reference to the given string and assigns it to the LockedByName field.
+func (o *VDBGroup) SetLockedByName(v string) {
+	o.LockedByName = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *VDBGroup) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -166,6 +268,15 @@ func (o VDBGroup) ToMap() (map[string]interface{}, error) {
 	// skip: id is readOnly
 	toSerialize["name"] = o.Name
 	toSerialize["vdb_ids"] = o.VdbIds
+	if !IsNil(o.IsLocked) {
+		toSerialize["is_locked"] = o.IsLocked
+	}
+	if !IsNil(o.LockedBy) {
+		toSerialize["locked_by"] = o.LockedBy
+	}
+	if !IsNil(o.LockedByName) {
+		toSerialize["locked_by_name"] = o.LockedByName
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}

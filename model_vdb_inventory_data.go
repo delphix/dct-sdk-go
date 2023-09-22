@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -21,18 +21,34 @@ var _ MappedNullable = &VDBInventoryData{}
 
 // VDBInventoryData struct for VDBInventoryData
 type VDBInventoryData struct {
+	// The name of the engine the VDB belongs to.
 	EngineName *string `json:"engine_name,omitempty"`
+	// The name of the VDB.
 	Name *string `json:"name,omitempty"`
+	// The database type of the VDB.
 	Type *string `json:"type,omitempty"`
+	// The database version of the VDB.
 	Version *string `json:"version,omitempty"`
+	// The name of the VDB's parent dataset.
 	ParentName *string `json:"parent_name,omitempty"`
+	// A reference to the parent dataset of the VDB.
 	ParentId *string `json:"parent_id,omitempty"`
+	// The date the VDB was created.
 	CreationDate *time.Time `json:"creation_date,omitempty"`
+	// The date the VDB was last refreshed.
+	LastRefreshedDate *time.Time `json:"last_refreshed_date,omitempty"`
+	// The location for the VDB's parent timeflow.
 	ParentTimeflowLocation *string `json:"parent_timeflow_location,omitempty"`
+	// The timestamp for the VDB's parent timeflow.
 	ParentTimeflowTimestamp *time.Time `json:"parent_timeflow_timestamp,omitempty"`
+	// The timezone for the VDB's parent timeflow.
 	ParentTimeflowTimezone *string `json:"parent_timeflow_timezone,omitempty"`
+	// Whether the VDB is enabled
 	Enabled *bool `json:"enabled,omitempty"`
+	// The runtime status of the VDB. 'Unknown' if all attempts to connect to the dataset failed.
 	Status *string `json:"status,omitempty"`
+	// The actual space used by the VDB, in bytes.
+	StorageSize *int64 `json:"storage_size,omitempty"`
 }
 
 // NewVDBInventoryData instantiates a new VDBInventoryData object
@@ -276,6 +292,38 @@ func (o *VDBInventoryData) SetCreationDate(v time.Time) {
 	o.CreationDate = &v
 }
 
+// GetLastRefreshedDate returns the LastRefreshedDate field value if set, zero value otherwise.
+func (o *VDBInventoryData) GetLastRefreshedDate() time.Time {
+	if o == nil || IsNil(o.LastRefreshedDate) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastRefreshedDate
+}
+
+// GetLastRefreshedDateOk returns a tuple with the LastRefreshedDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBInventoryData) GetLastRefreshedDateOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastRefreshedDate) {
+		return nil, false
+	}
+	return o.LastRefreshedDate, true
+}
+
+// HasLastRefreshedDate returns a boolean if a field has been set.
+func (o *VDBInventoryData) HasLastRefreshedDate() bool {
+	if o != nil && !IsNil(o.LastRefreshedDate) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastRefreshedDate gets a reference to the given time.Time and assigns it to the LastRefreshedDate field.
+func (o *VDBInventoryData) SetLastRefreshedDate(v time.Time) {
+	o.LastRefreshedDate = &v
+}
+
 // GetParentTimeflowLocation returns the ParentTimeflowLocation field value if set, zero value otherwise.
 func (o *VDBInventoryData) GetParentTimeflowLocation() string {
 	if o == nil || IsNil(o.ParentTimeflowLocation) {
@@ -436,6 +484,38 @@ func (o *VDBInventoryData) SetStatus(v string) {
 	o.Status = &v
 }
 
+// GetStorageSize returns the StorageSize field value if set, zero value otherwise.
+func (o *VDBInventoryData) GetStorageSize() int64 {
+	if o == nil || IsNil(o.StorageSize) {
+		var ret int64
+		return ret
+	}
+	return *o.StorageSize
+}
+
+// GetStorageSizeOk returns a tuple with the StorageSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBInventoryData) GetStorageSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.StorageSize) {
+		return nil, false
+	}
+	return o.StorageSize, true
+}
+
+// HasStorageSize returns a boolean if a field has been set.
+func (o *VDBInventoryData) HasStorageSize() bool {
+	if o != nil && !IsNil(o.StorageSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageSize gets a reference to the given int64 and assigns it to the StorageSize field.
+func (o *VDBInventoryData) SetStorageSize(v int64) {
+	o.StorageSize = &v
+}
+
 func (o VDBInventoryData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -467,6 +547,9 @@ func (o VDBInventoryData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CreationDate) {
 		toSerialize["creation_date"] = o.CreationDate
 	}
+	if !IsNil(o.LastRefreshedDate) {
+		toSerialize["last_refreshed_date"] = o.LastRefreshedDate
+	}
 	if !IsNil(o.ParentTimeflowLocation) {
 		toSerialize["parent_timeflow_location"] = o.ParentTimeflowLocation
 	}
@@ -481,6 +564,9 @@ func (o VDBInventoryData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.StorageSize) {
+		toSerialize["storage_size"] = o.StorageSize
 	}
 	return toSerialize, nil
 }

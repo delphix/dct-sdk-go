@@ -21,6 +21,8 @@
 
 * `ENVIRONMENT` (value: `"ENVIRONMENT"`)
 
+* `MASKING_ENVIRONMENT` (value: `"MASKING_ENVIRONMENT"`)
+
 * `MASKING_JOB` (value: `"MASKING_JOB"`)
 
 * `MASKING_JOB_SET` (value: `"MASKING_JOB_SET"`)
@@ -42,6 +44,20 @@
 * `VIRTUALIZATION_POLICY` (value: `"VIRTUALIZATION_POLICY"`)
 
 * `DATASET_GROUP` (value: `"DATASET_GROUP"`)
+
+* `ENGINE_VAULT` (value: `"ENGINE_VAULT"`)
+
+* `KERBEROS_CONFIG` (value: `"KERBEROS_CONFIG"`)
+
+* `TIMEFLOW` (value: `"TIMEFLOW"`)
+
+* `MASKING_ALGORITHM` (value: `"MASKING_ALGORITHM"`)
+
+* `HYPERSCALE_INSTANCE` (value: `"HYPERSCALE_INSTANCE"`)
+
+* `HYPERSCALE_CONNECTOR` (value: `"HYPERSCALE_CONNECTOR"`)
+
+* `HYPERSCALE_DATASET` (value: `"HYPERSCALE_DATASET"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

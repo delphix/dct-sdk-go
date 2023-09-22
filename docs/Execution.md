@@ -6,8 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The Execution entity ID. | [optional] 
 **EngineId** | Pointer to **string** | The ID of the engine where this execution ran. | [optional] 
+**HyperscaleInstanceId** | Pointer to **string** |  | [optional] 
 **EngineName** | Pointer to **string** | The name of the engine where this execution ran. | [optional] 
 **MaskingJobId** | Pointer to **string** | The ID of the masking job that is being executed. | [optional] 
+**MaskingJobName** | Pointer to **string** | The name of the masking job that is being executed. | [optional] 
 **SourceConnectorId** | Pointer to **string** | The ID of the source connector. This field is only used for multi-tenant jobs that are also on-the-fly. | [optional] 
 **TargetConnectorId** | Pointer to **string** | The ID of the target connector. This field is only used for multi-tenant jobs. | [optional] 
 **Status** | Pointer to **string** | The status of the execution regarding its completion. | [optional] 
@@ -19,6 +21,8 @@ Name | Type | Description | Notes
 **SubmitTime** | Pointer to **time.Time** | The date and time that this execution was submitted. | [optional] 
 **EndTime** | Pointer to **time.Time** | The date and time that this execution completed. | [optional] 
 **TaskEvents** | Pointer to [**[]TaskEvent**](TaskEvent.md) | The progression of steps or events performed by this execution. Only available for executions on masking engines that are version 6.0.14.0 and higher. | [optional] 
+**HyperscaleTaskEvents** | Pointer to [**[]HyperscaleTaskEvent**](HyperscaleTaskEvent.md) |  | [optional] 
+**Progress** | Pointer to **float32** | Progress of the task (value between 0 and 1, Hyperscale executions only) | [optional] 
 
 ## Methods
 
@@ -89,6 +93,31 @@ SetEngineId sets EngineId field to given value.
 
 HasEngineId returns a boolean if a field has been set.
 
+### GetHyperscaleInstanceId
+
+`func (o *Execution) GetHyperscaleInstanceId() string`
+
+GetHyperscaleInstanceId returns the HyperscaleInstanceId field if non-nil, zero value otherwise.
+
+### GetHyperscaleInstanceIdOk
+
+`func (o *Execution) GetHyperscaleInstanceIdOk() (*string, bool)`
+
+GetHyperscaleInstanceIdOk returns a tuple with the HyperscaleInstanceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHyperscaleInstanceId
+
+`func (o *Execution) SetHyperscaleInstanceId(v string)`
+
+SetHyperscaleInstanceId sets HyperscaleInstanceId field to given value.
+
+### HasHyperscaleInstanceId
+
+`func (o *Execution) HasHyperscaleInstanceId() bool`
+
+HasHyperscaleInstanceId returns a boolean if a field has been set.
+
 ### GetEngineName
 
 `func (o *Execution) GetEngineName() string`
@@ -138,6 +167,31 @@ SetMaskingJobId sets MaskingJobId field to given value.
 `func (o *Execution) HasMaskingJobId() bool`
 
 HasMaskingJobId returns a boolean if a field has been set.
+
+### GetMaskingJobName
+
+`func (o *Execution) GetMaskingJobName() string`
+
+GetMaskingJobName returns the MaskingJobName field if non-nil, zero value otherwise.
+
+### GetMaskingJobNameOk
+
+`func (o *Execution) GetMaskingJobNameOk() (*string, bool)`
+
+GetMaskingJobNameOk returns a tuple with the MaskingJobName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaskingJobName
+
+`func (o *Execution) SetMaskingJobName(v string)`
+
+SetMaskingJobName sets MaskingJobName field to given value.
+
+### HasMaskingJobName
+
+`func (o *Execution) HasMaskingJobName() bool`
+
+HasMaskingJobName returns a boolean if a field has been set.
 
 ### GetSourceConnectorId
 
@@ -413,6 +467,56 @@ SetTaskEvents sets TaskEvents field to given value.
 `func (o *Execution) HasTaskEvents() bool`
 
 HasTaskEvents returns a boolean if a field has been set.
+
+### GetHyperscaleTaskEvents
+
+`func (o *Execution) GetHyperscaleTaskEvents() []HyperscaleTaskEvent`
+
+GetHyperscaleTaskEvents returns the HyperscaleTaskEvents field if non-nil, zero value otherwise.
+
+### GetHyperscaleTaskEventsOk
+
+`func (o *Execution) GetHyperscaleTaskEventsOk() (*[]HyperscaleTaskEvent, bool)`
+
+GetHyperscaleTaskEventsOk returns a tuple with the HyperscaleTaskEvents field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHyperscaleTaskEvents
+
+`func (o *Execution) SetHyperscaleTaskEvents(v []HyperscaleTaskEvent)`
+
+SetHyperscaleTaskEvents sets HyperscaleTaskEvents field to given value.
+
+### HasHyperscaleTaskEvents
+
+`func (o *Execution) HasHyperscaleTaskEvents() bool`
+
+HasHyperscaleTaskEvents returns a boolean if a field has been set.
+
+### GetProgress
+
+`func (o *Execution) GetProgress() float32`
+
+GetProgress returns the Progress field if non-nil, zero value otherwise.
+
+### GetProgressOk
+
+`func (o *Execution) GetProgressOk() (*float32, bool)`
+
+GetProgressOk returns a tuple with the Progress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProgress
+
+`func (o *Execution) SetProgress(v float32)`
+
+SetProgress sets Progress field to given value.
+
+### HasProgress
+
+`func (o *Execution) HasProgress() bool`
+
+HasProgress returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

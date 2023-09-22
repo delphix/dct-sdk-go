@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,498 @@ import (
 
 // EnvironmentsApiService EnvironmentsApi service
 type EnvironmentsApiService service
+
+type ApiCompatibleRepositoriesByLocationRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsApiService
+	locationCompatibleRepositoryRequest *LocationCompatibleRepositoryRequest
+}
+
+// The request to get compatible repositories for provisioning a new VDB by location.
+func (r ApiCompatibleRepositoriesByLocationRequest) LocationCompatibleRepositoryRequest(locationCompatibleRepositoryRequest LocationCompatibleRepositoryRequest) ApiCompatibleRepositoriesByLocationRequest {
+	r.locationCompatibleRepositoryRequest = &locationCompatibleRepositoryRequest
+	return r
+}
+
+func (r ApiCompatibleRepositoriesByLocationRequest) Execute() (*LocationCompatibleEnvironmentsResponse, *http.Response, error) {
+	return r.ApiService.CompatibleRepositoriesByLocationExecute(r)
+}
+
+/*
+CompatibleRepositoriesByLocation Get compatible repositories corresponding to the location.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCompatibleRepositoriesByLocationRequest
+*/
+func (a *EnvironmentsApiService) CompatibleRepositoriesByLocation(ctx context.Context) ApiCompatibleRepositoriesByLocationRequest {
+	return ApiCompatibleRepositoriesByLocationRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return LocationCompatibleEnvironmentsResponse
+func (a *EnvironmentsApiService) CompatibleRepositoriesByLocationExecute(r ApiCompatibleRepositoriesByLocationRequest) (*LocationCompatibleEnvironmentsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *LocationCompatibleEnvironmentsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesByLocation")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/compatible_repositories_by_location"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.locationCompatibleRepositoryRequest == nil {
+		return localVarReturnValue, nil, reportError("locationCompatibleRepositoryRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.locationCompatibleRepositoryRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCompatibleRepositoriesBySnapshotRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsApiService
+	snapshotCompatibleRepositoryRequest *SnapshotCompatibleRepositoryRequest
+}
+
+// The request to get compatible repositories for provisioning a new VDB by snapshot.
+func (r ApiCompatibleRepositoriesBySnapshotRequest) SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest SnapshotCompatibleRepositoryRequest) ApiCompatibleRepositoriesBySnapshotRequest {
+	r.snapshotCompatibleRepositoryRequest = &snapshotCompatibleRepositoryRequest
+	return r
+}
+
+func (r ApiCompatibleRepositoriesBySnapshotRequest) Execute() (*SnapshotCompatibleEnvironmentsResponse, *http.Response, error) {
+	return r.ApiService.CompatibleRepositoriesBySnapshotExecute(r)
+}
+
+/*
+CompatibleRepositoriesBySnapshot Get compatible repositories corresponding to the snapshot.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCompatibleRepositoriesBySnapshotRequest
+*/
+func (a *EnvironmentsApiService) CompatibleRepositoriesBySnapshot(ctx context.Context) ApiCompatibleRepositoriesBySnapshotRequest {
+	return ApiCompatibleRepositoriesBySnapshotRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return SnapshotCompatibleEnvironmentsResponse
+func (a *EnvironmentsApiService) CompatibleRepositoriesBySnapshotExecute(r ApiCompatibleRepositoriesBySnapshotRequest) (*SnapshotCompatibleEnvironmentsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SnapshotCompatibleEnvironmentsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesBySnapshot")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/compatible_repositories_by_snapshot"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.snapshotCompatibleRepositoryRequest == nil {
+		return localVarReturnValue, nil, reportError("snapshotCompatibleRepositoryRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.snapshotCompatibleRepositoryRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCompatibleRepositoriesByTimestampRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsApiService
+	timestampCompatibleRepositoryRequest *TimestampCompatibleRepositoryRequest
+}
+
+// The request to get compatible repositories for provisioning a new VDB by timestamp.
+func (r ApiCompatibleRepositoriesByTimestampRequest) TimestampCompatibleRepositoryRequest(timestampCompatibleRepositoryRequest TimestampCompatibleRepositoryRequest) ApiCompatibleRepositoriesByTimestampRequest {
+	r.timestampCompatibleRepositoryRequest = &timestampCompatibleRepositoryRequest
+	return r
+}
+
+func (r ApiCompatibleRepositoriesByTimestampRequest) Execute() (*TimestampCompatibleEnvironmentsResponse, *http.Response, error) {
+	return r.ApiService.CompatibleRepositoriesByTimestampExecute(r)
+}
+
+/*
+CompatibleRepositoriesByTimestamp Get compatible repositories corresponding to the timestamp.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCompatibleRepositoriesByTimestampRequest
+*/
+func (a *EnvironmentsApiService) CompatibleRepositoriesByTimestamp(ctx context.Context) ApiCompatibleRepositoriesByTimestampRequest {
+	return ApiCompatibleRepositoriesByTimestampRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return TimestampCompatibleEnvironmentsResponse
+func (a *EnvironmentsApiService) CompatibleRepositoriesByTimestampExecute(r ApiCompatibleRepositoriesByTimestampRequest) (*TimestampCompatibleEnvironmentsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TimestampCompatibleEnvironmentsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesByTimestamp")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/compatible_repositories_by_timestamp"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.timestampCompatibleRepositoryRequest == nil {
+		return localVarReturnValue, nil, reportError("timestampCompatibleRepositoryRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.timestampCompatibleRepositoryRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCompatibleRepositoriesFromBookmarkRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsApiService
+	bookmarkCompatibleRepositoryRequest *BookmarkCompatibleRepositoryRequest
+}
+
+// The request to get compatible repositories for provisioning a new VDB by bookmark.
+func (r ApiCompatibleRepositoriesFromBookmarkRequest) BookmarkCompatibleRepositoryRequest(bookmarkCompatibleRepositoryRequest BookmarkCompatibleRepositoryRequest) ApiCompatibleRepositoriesFromBookmarkRequest {
+	r.bookmarkCompatibleRepositoryRequest = &bookmarkCompatibleRepositoryRequest
+	return r
+}
+
+func (r ApiCompatibleRepositoriesFromBookmarkRequest) Execute() (*BookmarkCompatibleEnvironmentsResponse, *http.Response, error) {
+	return r.ApiService.CompatibleRepositoriesFromBookmarkExecute(r)
+}
+
+/*
+CompatibleRepositoriesFromBookmark Get compatible repositories corresponding to the bookmark.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCompatibleRepositoriesFromBookmarkRequest
+*/
+func (a *EnvironmentsApiService) CompatibleRepositoriesFromBookmark(ctx context.Context) ApiCompatibleRepositoriesFromBookmarkRequest {
+	return ApiCompatibleRepositoriesFromBookmarkRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return BookmarkCompatibleEnvironmentsResponse
+func (a *EnvironmentsApiService) CompatibleRepositoriesFromBookmarkExecute(r ApiCompatibleRepositoriesFromBookmarkRequest) (*BookmarkCompatibleEnvironmentsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *BookmarkCompatibleEnvironmentsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesFromBookmark")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/compatible_repositories_from_bookmark"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.bookmarkCompatibleRepositoryRequest == nil {
+		return localVarReturnValue, nil, reportError("bookmarkCompatibleRepositoryRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.bookmarkCompatibleRepositoryRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreateEnvironmentRequest struct {
 	ctx context.Context
@@ -2144,129 +2636,6 @@ func (a *EnvironmentsApiService) SearchEnvironmentsExecute(r ApiSearchEnvironmen
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSnapshotCompatibleRepositoriesRequest struct {
-	ctx context.Context
-	ApiService *EnvironmentsApiService
-	snapshotCompatibleRepositoryRequest *SnapshotCompatibleRepositoryRequest
-}
-
-// The request to get compatible repositories for provisioning a new VDB by snapshot.
-func (r ApiSnapshotCompatibleRepositoriesRequest) SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest SnapshotCompatibleRepositoryRequest) ApiSnapshotCompatibleRepositoriesRequest {
-	r.snapshotCompatibleRepositoryRequest = &snapshotCompatibleRepositoryRequest
-	return r
-}
-
-func (r ApiSnapshotCompatibleRepositoriesRequest) Execute() (*SnapshotCompatibleRepositories, *http.Response, error) {
-	return r.ApiService.SnapshotCompatibleRepositoriesExecute(r)
-}
-
-/*
-SnapshotCompatibleRepositories Get compatible repositories corresponding to the snapshot.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSnapshotCompatibleRepositoriesRequest
-*/
-func (a *EnvironmentsApiService) SnapshotCompatibleRepositories(ctx context.Context) ApiSnapshotCompatibleRepositoriesRequest {
-	return ApiSnapshotCompatibleRepositoriesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return SnapshotCompatibleRepositories
-func (a *EnvironmentsApiService) SnapshotCompatibleRepositoriesExecute(r ApiSnapshotCompatibleRepositoriesRequest) (*SnapshotCompatibleRepositories, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SnapshotCompatibleRepositories
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.SnapshotCompatibleRepositories")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/environments/snapshot_compatible_repositories"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.snapshotCompatibleRepositoryRequest == nil {
-		return localVarReturnValue, nil, reportError("snapshotCompatibleRepositoryRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.snapshotCompatibleRepositoryRequest
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUpdateEnvironmentRequest struct {
 	ctx context.Context
 	ApiService *EnvironmentsApiService
@@ -2617,6 +2986,145 @@ func (a *EnvironmentsApiService) UpdateHostExecute(r ApiUpdateHostRequest) (*Upd
 	}
 	// body params
 	localVarPostBody = r.hostUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateRepositoryRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsApiService
+	environmentId string
+	repositoryId string
+	updateRepositoryParameters *UpdateRepositoryParameters
+}
+
+func (r ApiUpdateRepositoryRequest) UpdateRepositoryParameters(updateRepositoryParameters UpdateRepositoryParameters) ApiUpdateRepositoryRequest {
+	r.updateRepositoryParameters = &updateRepositoryParameters
+	return r
+}
+
+func (r ApiUpdateRepositoryRequest) Execute() (*UpdateRepositoryResponse, *http.Response, error) {
+	return r.ApiService.UpdateRepositoryExecute(r)
+}
+
+/*
+UpdateRepository Update a Repository.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param environmentId The ID of the environment.
+ @param repositoryId The ID of the repository.
+ @return ApiUpdateRepositoryRequest
+*/
+func (a *EnvironmentsApiService) UpdateRepository(ctx context.Context, environmentId string, repositoryId string) ApiUpdateRepositoryRequest {
+	return ApiUpdateRepositoryRequest{
+		ApiService: a,
+		ctx: ctx,
+		environmentId: environmentId,
+		repositoryId: repositoryId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateRepositoryResponse
+func (a *EnvironmentsApiService) UpdateRepositoryExecute(r ApiUpdateRepositoryRequest) (*UpdateRepositoryResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateRepositoryResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.UpdateRepository")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/{environmentId}/repository/{repositoryId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"environmentId"+"}", url.PathEscape(parameterValueToString(r.environmentId, "environmentId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repositoryId"+"}", url.PathEscape(parameterValueToString(r.repositoryId, "repositoryId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.environmentId) < 1 {
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
+	}
+	if strlen(r.repositoryId) < 1 {
+		return localVarReturnValue, nil, reportError("repositoryId must have at least 1 elements")
+	}
+	if strlen(r.repositoryId) > 256 {
+		return localVarReturnValue, nil, reportError("repositoryId must have less than 256 elements")
+	}
+	if r.updateRepositoryParameters == nil {
+		return localVarReturnValue, nil, reportError("updateRepositoryParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateRepositoryParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

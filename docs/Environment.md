@@ -6,12 +6,16 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The Environment object entity ID. | [optional] 
 **Name** | Pointer to **string** | The name of this environment. | [optional] 
+**NamespaceId** | Pointer to **string** | The namespace id of this environment. | [optional] 
+**NamespaceName** | Pointer to **string** | The namespace name of this environment. | [optional] 
+**IsReplica** | Pointer to **bool** | Is this a replicated object. | [optional] 
 **Namespace** | Pointer to **NullableString** | The namespace of this environment for replicated and restored objects. | [optional] 
 **EngineId** | Pointer to **string** | A reference to the Engine that this Environment connection is associated with. | [optional] 
 **Enabled** | Pointer to **bool** | True if this environment is enabled. | [optional] 
 **IsCluster** | Pointer to **bool** | True if this environment is a cluster of hosts. | [optional] 
 **ClusterHome** | Pointer to **string** | Cluster home for RAC environment. | [optional] 
 **IsWindowsTarget** | Pointer to **bool** | True if this windows environment is a target environment. | [optional] 
+**StagingEnvironment** | Pointer to **string** | ID of the staging environment. | [optional] 
 **Hosts** | Pointer to [**[]Host**](Host.md) | The hosts that are part of this environment. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for this environment. | [optional] 
 **Repositories** | Pointer to [**[]Repository**](Repository.md) | Repositories associated with this environment. A Repository typically corresponds to a database installation. | [optional] 
@@ -85,6 +89,81 @@ SetName sets Name field to given value.
 `func (o *Environment) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetNamespaceId
+
+`func (o *Environment) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *Environment) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *Environment) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *Environment) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### GetNamespaceName
+
+`func (o *Environment) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *Environment) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *Environment) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *Environment) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### GetIsReplica
+
+`func (o *Environment) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *Environment) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *Environment) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *Environment) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
 
 ### GetNamespace
 
@@ -245,6 +324,31 @@ SetIsWindowsTarget sets IsWindowsTarget field to given value.
 `func (o *Environment) HasIsWindowsTarget() bool`
 
 HasIsWindowsTarget returns a boolean if a field has been set.
+
+### GetStagingEnvironment
+
+`func (o *Environment) GetStagingEnvironment() string`
+
+GetStagingEnvironment returns the StagingEnvironment field if non-nil, zero value otherwise.
+
+### GetStagingEnvironmentOk
+
+`func (o *Environment) GetStagingEnvironmentOk() (*string, bool)`
+
+GetStagingEnvironmentOk returns a tuple with the StagingEnvironment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStagingEnvironment
+
+`func (o *Environment) SetStagingEnvironment(v string)`
+
+SetStagingEnvironment sets StagingEnvironment field to given value.
+
+### HasStagingEnvironment
+
+`func (o *Environment) HasStagingEnvironment() bool`
+
+HasStagingEnvironment returns a boolean if a field has been set.
 
 ### GetHosts
 

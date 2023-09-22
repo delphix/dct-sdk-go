@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,12 @@ type PasswordVault struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this password vault.
 	Name *string `json:"name,omitempty"`
+	// The namespace id of this password vault.
+	NamespaceId *string `json:"namespace_id,omitempty"`
+	// The namespace name of this password vault.
+	NamespaceName *string `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica *bool `json:"is_replica,omitempty"`
 	// Id of the Engine that this password vault belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
 	// Name of the Engine that this password vault belongs to.
@@ -119,6 +125,102 @@ func (o *PasswordVault) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *PasswordVault) SetName(v string) {
 	o.Name = &v
+}
+
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
+func (o *PasswordVault) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PasswordVault) GetNamespaceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceId) {
+		return nil, false
+	}
+	return o.NamespaceId, true
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *PasswordVault) HasNamespaceId() bool {
+	if o != nil && !IsNil(o.NamespaceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given string and assigns it to the NamespaceId field.
+func (o *PasswordVault) SetNamespaceId(v string) {
+	o.NamespaceId = &v
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise.
+func (o *PasswordVault) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PasswordVault) GetNamespaceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceName) {
+		return nil, false
+	}
+	return o.NamespaceName, true
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *PasswordVault) HasNamespaceName() bool {
+	if o != nil && !IsNil(o.NamespaceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given string and assigns it to the NamespaceName field.
+func (o *PasswordVault) SetNamespaceName(v string) {
+	o.NamespaceName = &v
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *PasswordVault) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PasswordVault) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *PasswordVault) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *PasswordVault) SetIsReplica(v bool) {
+	o.IsReplica = &v
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -370,6 +472,15 @@ func (o PasswordVault) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.NamespaceId) {
+		toSerialize["namespace_id"] = o.NamespaceId
+	}
+	if !IsNil(o.NamespaceName) {
+		toSerialize["namespace_name"] = o.NamespaceName
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId

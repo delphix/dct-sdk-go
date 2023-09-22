@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**FindByTimestamp**](SnapshotsApi.md#FindByTimestamp) | **Get** /snapshots/find_by_timestamp | Get the snapshots at this timestamp for a dataset.
 [**GetSnapshotById**](SnapshotsApi.md#GetSnapshotById) | **Get** /snapshots/{snapshotId} | Get a Snapshot by ID.
 [**GetSnapshotTags**](SnapshotsApi.md#GetSnapshotTags) | **Get** /snapshots/{snapshotId}/tags | Get tags for a Snapshot.
+[**GetSnapshotTimeflowRange**](SnapshotsApi.md#GetSnapshotTimeflowRange) | **Get** /snapshots/{snapshotId}/timeflow_range | Return the provisionable timeflow range based on a specific snapshot.
 [**GetSnapshots**](SnapshotsApi.md#GetSnapshots) | **Get** /snapshots | Retrieve the list of snapshots.
 [**SearchSnapshots**](SnapshotsApi.md#SearchSnapshots) | **Post** /snapshots/search | Search snapshots.
 [**UnsetSnapshotRetention**](SnapshotsApi.md#UnsetSnapshotRetention) | **Post** /snapshots/{snapshotId}/unset_expiration | Unset a Snapshot&#39;s expiration, removing expiration and retain_forever values for the snapshot.
@@ -478,6 +479,74 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**TagsResponse**](TagsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSnapshotTimeflowRange
+
+> TimeflowRange GetSnapshotTimeflowRange(ctx, snapshotId).Execute()
+
+Return the provisionable timeflow range based on a specific snapshot.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    snapshotId := "snapshotId_example" // string | The ID of the snapshot.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.SnapshotsApi.GetSnapshotTimeflowRange(context.Background(), snapshotId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `SnapshotsApi.GetSnapshotTimeflowRange``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetSnapshotTimeflowRange`: TimeflowRange
+    fmt.Fprintf(os.Stdout, "Response from `SnapshotsApi.GetSnapshotTimeflowRange`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**snapshotId** | **string** | The ID of the snapshot. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSnapshotTimeflowRangeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**TimeflowRange**](TimeflowRange.md)
 
 ### Authorization
 

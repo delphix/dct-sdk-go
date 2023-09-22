@@ -8,6 +8,9 @@ Name | Type | Description | Notes
 **EngineId** | Pointer to **string** | The id of the engine the snapshot belongs to. | [optional] 
 **Namespace** | Pointer to **NullableString** | Alternate namespace for this object, for replicated and restored snapshots. | [optional] 
 **Name** | Pointer to **string** | The snapshot&#39;s name. | [optional] 
+**NamespaceId** | Pointer to **string** | The namespace id of this snapshot. | [optional] 
+**NamespaceName** | Pointer to **string** | The namespace name of this snapshot. | [optional] 
+**IsReplica** | Pointer to **bool** | Is this a replicated object. | [optional] 
 **Consistency** | Pointer to **string** | Indicates what type of recovery strategies must be invoked when provisioning from this snapshot. | [optional] 
 **MissingNonLoggedData** | Pointer to **bool** | Indicates if a virtual database provisioned from this snapshot will be missing nologging changes. | [optional] 
 **DatasetId** | Pointer to **string** | The ID of the Snapshot&#39;s dSource or VDB. | [optional] 
@@ -17,8 +20,10 @@ Name | Type | Description | Notes
 **Timestamp** | Pointer to **time.Time** | The logical time of the data contained in this Snapshot. | [optional] 
 **Location** | Pointer to **string** | Database specific identifier for the data contained in this Snapshot, such as the Log Sequence Number (LSN) for MSsql databases, System Change Number (SCN) for Oracle databases. | [optional] 
 **Retention** | Pointer to **int64** | Retention policy, in days. A value of -1 indicates the snapshot should be kept forever. Deprecated in favor of expiration and retain_forever. | [optional] 
-**Expiration** | Pointer to **string** | The expiration date of this snapshot. If this is unset and retain_forever is false, the snapshot is subject to the retention policy of its dataset. | [optional] 
+**Expiration** | Pointer to **string** | The expiration date of this snapshot. If this is unset and retain_forever is false, and the snapshot is not included in a Bookmark, the snapshot is subject to the retention policy of its dataset. | [optional] 
 **RetainForever** | Pointer to **bool** | Indicates that the snapshot is protected from retention, i.e it will be kept forever. If false, see expiration. | [optional] 
+**EffectiveExpiration** | Pointer to **string** | The effective expiration is that max of the snapshot expiration and the expiration of any Bookmark which includes this snapshot. | [optional] 
+**EffectiveRetainForever** | Pointer to **bool** | True if retain_forever is set or a Bookmark retains this snapshot forever. | [optional] 
 **TimeflowId** | Pointer to **string** | The TimeFlow this snapshot was taken on. | [optional] 
 **Timezone** | Pointer to **string** | Time zone of the source database at the time the snapshot was taken. | [optional] 
 **Version** | Pointer to **NullableString** | Version of database source repository at the time the snapshot was taken. | [optional] 
@@ -163,6 +168,81 @@ SetName sets Name field to given value.
 `func (o *Snapshot) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetNamespaceId
+
+`func (o *Snapshot) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *Snapshot) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *Snapshot) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *Snapshot) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### GetNamespaceName
+
+`func (o *Snapshot) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *Snapshot) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *Snapshot) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *Snapshot) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### GetIsReplica
+
+`func (o *Snapshot) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *Snapshot) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *Snapshot) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *Snapshot) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
 
 ### GetConsistency
 
@@ -438,6 +518,56 @@ SetRetainForever sets RetainForever field to given value.
 `func (o *Snapshot) HasRetainForever() bool`
 
 HasRetainForever returns a boolean if a field has been set.
+
+### GetEffectiveExpiration
+
+`func (o *Snapshot) GetEffectiveExpiration() string`
+
+GetEffectiveExpiration returns the EffectiveExpiration field if non-nil, zero value otherwise.
+
+### GetEffectiveExpirationOk
+
+`func (o *Snapshot) GetEffectiveExpirationOk() (*string, bool)`
+
+GetEffectiveExpirationOk returns a tuple with the EffectiveExpiration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEffectiveExpiration
+
+`func (o *Snapshot) SetEffectiveExpiration(v string)`
+
+SetEffectiveExpiration sets EffectiveExpiration field to given value.
+
+### HasEffectiveExpiration
+
+`func (o *Snapshot) HasEffectiveExpiration() bool`
+
+HasEffectiveExpiration returns a boolean if a field has been set.
+
+### GetEffectiveRetainForever
+
+`func (o *Snapshot) GetEffectiveRetainForever() bool`
+
+GetEffectiveRetainForever returns the EffectiveRetainForever field if non-nil, zero value otherwise.
+
+### GetEffectiveRetainForeverOk
+
+`func (o *Snapshot) GetEffectiveRetainForeverOk() (*bool, bool)`
+
+GetEffectiveRetainForeverOk returns a tuple with the EffectiveRetainForever field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEffectiveRetainForever
+
+`func (o *Snapshot) SetEffectiveRetainForever(v bool)`
+
+SetEffectiveRetainForever sets EffectiveRetainForever field to given value.
+
+### HasEffectiveRetainForever
+
+`func (o *Snapshot) HasEffectiveRetainForever() bool`
+
+HasEffectiveRetainForever returns a boolean if a field has been set.
 
 ### GetTimeflowId
 

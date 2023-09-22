@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -27,6 +27,12 @@ type Timeflow struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// Alternate namespace for this object, for replicated and restored timeflows.
 	Namespace NullableString `json:"namespace,omitempty"`
+	// The namespace id of this timeflows.
+	NamespaceId NullableString `json:"namespace_id,omitempty"`
+	// The namespace name of this timeflows.
+	NamespaceName NullableString `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica *bool `json:"is_replica,omitempty"`
 	// The timeflow's name.
 	Name *string `json:"name,omitempty"`
 	// The ID of the timeflow's dSource or VDB.
@@ -175,6 +181,122 @@ func (o *Timeflow) SetNamespaceNil() {
 // UnsetNamespace ensures that no value is present for Namespace, not even an explicit nil
 func (o *Timeflow) UnsetNamespace() {
 	o.Namespace.Unset()
+}
+
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Timeflow) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId.Get()
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Timeflow) GetNamespaceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NamespaceId.Get(), o.NamespaceId.IsSet()
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *Timeflow) HasNamespaceId() bool {
+	if o != nil && o.NamespaceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given NullableString and assigns it to the NamespaceId field.
+func (o *Timeflow) SetNamespaceId(v string) {
+	o.NamespaceId.Set(&v)
+}
+// SetNamespaceIdNil sets the value for NamespaceId to be an explicit nil
+func (o *Timeflow) SetNamespaceIdNil() {
+	o.NamespaceId.Set(nil)
+}
+
+// UnsetNamespaceId ensures that no value is present for NamespaceId, not even an explicit nil
+func (o *Timeflow) UnsetNamespaceId() {
+	o.NamespaceId.Unset()
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Timeflow) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName.Get()
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Timeflow) GetNamespaceNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NamespaceName.Get(), o.NamespaceName.IsSet()
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *Timeflow) HasNamespaceName() bool {
+	if o != nil && o.NamespaceName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given NullableString and assigns it to the NamespaceName field.
+func (o *Timeflow) SetNamespaceName(v string) {
+	o.NamespaceName.Set(&v)
+}
+// SetNamespaceNameNil sets the value for NamespaceName to be an explicit nil
+func (o *Timeflow) SetNamespaceNameNil() {
+	o.NamespaceName.Set(nil)
+}
+
+// UnsetNamespaceName ensures that no value is present for NamespaceName, not even an explicit nil
+func (o *Timeflow) UnsetNamespaceName() {
+	o.NamespaceName.Unset()
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *Timeflow) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *Timeflow) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *Timeflow) SetIsReplica(v bool) {
+	o.IsReplica = &v
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
@@ -611,6 +733,15 @@ func (o Timeflow) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Namespace.IsSet() {
 		toSerialize["namespace"] = o.Namespace.Get()
+	}
+	if o.NamespaceId.IsSet() {
+		toSerialize["namespace_id"] = o.NamespaceId.Get()
+	}
+	if o.NamespaceName.IsSet() {
+		toSerialize["namespace_name"] = o.NamespaceName.Get()
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name

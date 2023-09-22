@@ -9,8 +9,10 @@ Method | HTTP request | Description
 [**DeleteReportingSchedule**](ReportingApi.md#DeleteReportingSchedule) | **Delete** /reporting/schedule/{reportId} | Delete report schedule by ID.
 [**DeleteReportingScheduleTag**](ReportingApi.md#DeleteReportingScheduleTag) | **Post** /reporting/schedule/{reportId}/tags/delete | Delete tags for a report schedule.
 [**GetApiUsageReport**](ReportingApi.md#GetApiUsageReport) | **Get** /reporting/api-usage-report | Gets the report of API usage metrics over a given time period. This API returns at the most 10000 results in the response to protect against the server running out of memory. Users might not hit this limit with the default report without any &#39;apiUsageReportGroupByParam&#39; param but can hit this limit if the groupBy is by too granular like by &#39;client_name&#39; or &#39;user_agent&#39; only. Hence it is advisable to use startDate and endDate to &#39;limit&#39; the scope of the report.
+[**GetAuditLogsSummaryReport**](ReportingApi.md#GetAuditLogsSummaryReport) | **Get** /reporting/audit-logs-summary-report | Gets the audit log summary report.
 [**GetDsourceConsumptionReport**](ReportingApi.md#GetDsourceConsumptionReport) | **Get** /reporting/dsource-consumption-report | Gets the consumption report for virtualization engine dSources.
 [**GetDsourceUsageReport**](ReportingApi.md#GetDsourceUsageReport) | **Get** /reporting/dsource-usage-report | Gets the usage report for virtualization engine dSources.
+[**GetMaskingExecutionMetricsReport**](ReportingApi.md#GetMaskingExecutionMetricsReport) | **Get** /reporting/masking-execution-metrics | Get the masking execution metrics report.
 [**GetProductInfo**](ReportingApi.md#GetProductInfo) | **Get** /reporting/product_info | Returns the DCT Product Information.
 [**GetReportingScheduleById**](ReportingApi.md#GetReportingScheduleById) | **Get** /reporting/schedule/{reportId} | Returns a report schedule by ID.
 [**GetReportingScheduleTags**](ReportingApi.md#GetReportingScheduleTags) | **Get** /reporting/schedule/{reportId}/tags | Get tags for a report schedule.
@@ -19,6 +21,8 @@ Method | HTTP request | Description
 [**GetVirtualizationStorageSummaryReport**](ReportingApi.md#GetVirtualizationStorageSummaryReport) | **Get** /reporting/virtualization-storage-summary-report | Gets the storage summary report for virtualization engines.
 [**SearchDsourceConsumptionReport**](ReportingApi.md#SearchDsourceConsumptionReport) | **Post** /reporting/dsource-consumption-report/search | Search the consumption report for virtualization engine DSources.
 [**SearchDsourceUsageReport**](ReportingApi.md#SearchDsourceUsageReport) | **Post** /reporting/dsource-usage-report/search | Search the usage report for virtualization engine dSources.
+[**SearchMaskingExecutionMetricsReport**](ReportingApi.md#SearchMaskingExecutionMetricsReport) | **Post** /reporting/masking-execution-metrics/search | Search the Masking execution metrics report.
+[**SearchReportingSchedules**](ReportingApi.md#SearchReportingSchedules) | **Post** /reporting/schedule/search | Search for report schedules.
 [**SearchVdbInventoryReport**](ReportingApi.md#SearchVdbInventoryReport) | **Post** /reporting/vdb-inventory-report/search | Search the inventory report for virtualization engine VDBs.
 [**SearchVirtualizationStorageSummaryReport**](ReportingApi.md#SearchVirtualizationStorageSummaryReport) | **Post** /reporting/virtualization-storage-summary-report/search | Search the storage summary report for virtualization engines.
 [**UpdateReportingSchedule**](ReportingApi.md#UpdateReportingSchedule) | **Put** /reporting/schedule/{reportId} | Update a reporting schedule by ID.
@@ -370,6 +374,74 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAuditLogsSummaryReport
+
+> AuditLogsSummaryReportResponse GetAuditLogsSummaryReport(ctx).Limit(limit).Cursor(cursor).Sort(sort).Execute()
+
+Gets the audit log summary report.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    limit := int32(100) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000. (optional) (default to 10000)
+    cursor := "cursor_example" // string | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the 'prev_cursor' or 'next_cursor' property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. (optional)
+    sort := "account_first_name" // string | The field to sort results by. A property name with a prepended '-' signifies descending order. (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ReportingApi.GetAuditLogsSummaryReport(context.Background()).Limit(limit).Cursor(cursor).Sort(sort).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ReportingApi.GetAuditLogsSummaryReport``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetAuditLogsSummaryReport`: AuditLogsSummaryReportResponse
+    fmt.Fprintf(os.Stdout, "Response from `ReportingApi.GetAuditLogsSummaryReport`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAuditLogsSummaryReportRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000. | [default to 10000]
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. | 
+ **sort** | **string** | The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order. | 
+
+### Return type
+
+[**AuditLogsSummaryReportResponse**](AuditLogsSummaryReportResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/csv
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetDsourceConsumptionReport
 
 > DSourceConsumptionReportResponse GetDsourceConsumptionReport(ctx).Limit(limit).Cursor(cursor).Sort(sort).Execute()
@@ -491,6 +563,74 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DSourceUsageReportResponse**](DSourceUsageReportResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/csv
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetMaskingExecutionMetricsReport
+
+> MaskingExecutionMetricsReportResponse GetMaskingExecutionMetricsReport(ctx).Limit(limit).Cursor(cursor).Sort(sort).Execute()
+
+Get the masking execution metrics report.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    limit := int32(100) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000. (optional) (default to 10000)
+    cursor := "cursor_example" // string | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the 'prev_cursor' or 'next_cursor' property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. (optional)
+    sort := "id" // string | The field to sort results by. A property name with a prepended '-' signifies a descending order. (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ReportingApi.GetMaskingExecutionMetricsReport(context.Background()).Limit(limit).Cursor(cursor).Sort(sort).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ReportingApi.GetMaskingExecutionMetricsReport``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetMaskingExecutionMetricsReport`: MaskingExecutionMetricsReportResponse
+    fmt.Fprintf(os.Stdout, "Response from `ReportingApi.GetMaskingExecutionMetricsReport`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMaskingExecutionMetricsReportRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000. | [default to 10000]
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. | 
+ **sort** | **string** | The field to sort results by. A property name with a prepended &#39;-&#39; signifies a descending order. | 
+
+### Return type
+
+[**MaskingExecutionMetricsReportResponse**](MaskingExecutionMetricsReportResponse.md)
 
 ### Authorization
 
@@ -1039,6 +1179,146 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json, text/csv
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SearchMaskingExecutionMetricsReport
+
+> MaskingExecutionMetricsReportResponse SearchMaskingExecutionMetricsReport(ctx).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+
+Search the Masking execution metrics report.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    limit := int32(100) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000. (optional) (default to 10000)
+    cursor := "cursor_example" // string | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the 'prev_cursor' or 'next_cursor' property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. (optional)
+    sort := "id" // string | The field to sort results by. A property name with a prepended '-' signifies a descending order. (optional)
+    searchBody := *openapiclient.NewSearchBody() // SearchBody | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS 'foobar', field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN ['Goku', 'Vegeta'] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically `SEARCH '12'` would match an item with an attribute with an integer value of `123`.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ 'Goku' | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ 'Goku' |  ## Grouping Parenthesis `()` can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS 'foo')  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \"foo\", \"bar\", \"foo bar\", 'foo', 'bar', 'foo bar' | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], ['foo', \"bar\"] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ReportingApi.SearchMaskingExecutionMetricsReport(context.Background()).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ReportingApi.SearchMaskingExecutionMetricsReport``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SearchMaskingExecutionMetricsReport`: MaskingExecutionMetricsReportResponse
+    fmt.Fprintf(os.Stdout, "Response from `ReportingApi.SearchMaskingExecutionMetricsReport`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSearchMaskingExecutionMetricsReportRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000. | [default to 10000]
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. | 
+ **sort** | **string** | The field to sort results by. A property name with a prepended &#39;-&#39; signifies a descending order. | 
+ **searchBody** | [**SearchBody**](SearchBody.md) | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  | 
+
+### Return type
+
+[**MaskingExecutionMetricsReportResponse**](MaskingExecutionMetricsReportResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, text/csv
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SearchReportingSchedules
+
+> SearchReportingScheduleResponse SearchReportingSchedules(ctx).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+
+Search for report schedules.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    limit := int32(50) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. (optional) (default to 100)
+    cursor := "cursor_example" // string | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the 'prev_cursor' or 'next_cursor' property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. (optional)
+    sort := "report_id" // string | The field to sort results by. A property name with a prepended '-' signifies descending order. (optional)
+    searchBody := *openapiclient.NewSearchBody() // SearchBody | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS 'foobar', field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN ['Goku', 'Vegeta'] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically `SEARCH '12'` would match an item with an attribute with an integer value of `123`.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ 'Goku' | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ 'Goku' |  ## Grouping Parenthesis `()` can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS 'foo')  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \"foo\", \"bar\", \"foo bar\", 'foo', 'bar', 'foo bar' | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], ['foo', \"bar\"] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ReportingApi.SearchReportingSchedules(context.Background()).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ReportingApi.SearchReportingSchedules``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SearchReportingSchedules`: SearchReportingScheduleResponse
+    fmt.Fprintf(os.Stdout, "Response from `ReportingApi.SearchReportingSchedules`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSearchReportingSchedulesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. | [default to 100]
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. | 
+ **sort** | **string** | The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order. | 
+ **searchBody** | [**SearchBody**](SearchBody.md) | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  | 
+
+### Return type
+
+[**SearchReportingScheduleResponse**](SearchReportingScheduleResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

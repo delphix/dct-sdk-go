@@ -7,12 +7,16 @@ Method | HTTP request | Description
 [**CreateTagsDsource**](DSourcesApi.md#CreateTagsDsource) | **Post** /dsources/{dsourceId}/tags | Create tags for a dSource.
 [**DeleteDsource**](DSourcesApi.md#DeleteDsource) | **Post** /dsources/delete | Delete the specified dSource.
 [**DeleteTagsDsource**](DSourcesApi.md#DeleteTagsDsource) | **Post** /dsources/{dsourceId}/tags/delete | Delete tags for a dSource.
+[**GetAppdataDsourceLinkingDefaults**](DSourcesApi.md#GetAppdataDsourceLinkingDefaults) | **Post** /dsources/appdata/defaults | Get defaults for an AppData dSource linking.
+[**GetAseDsourceLinkingDefaults**](DSourcesApi.md#GetAseDsourceLinkingDefaults) | **Post** /dsources/ase/defaults | Get defaults for an ASE dSource linking.
 [**GetDsourceById**](DSourcesApi.md#GetDsourceById) | **Get** /dsources/{dsourceId} | Get a dSource by ID.
-[**GetDsourceLinkingDefaults**](DSourcesApi.md#GetDsourceLinkingDefaults) | **Post** /dsources/defaults | Get defaults for dSource linking.
 [**GetDsourceSnapshots**](DSourcesApi.md#GetDsourceSnapshots) | **Get** /dsources/{dsourceId}/snapshots | List Snapshots for a dSource.
 [**GetDsources**](DSourcesApi.md#GetDsources) | **Get** /dsources | List all dSources.
+[**GetOracleDsourceLinkingDefaults**](DSourcesApi.md#GetOracleDsourceLinkingDefaults) | **Post** /dsources/oracle/defaults | Get defaults for dSource linking.
 [**GetTagsDsource**](DSourcesApi.md#GetTagsDsource) | **Get** /dsources/{dsourceId}/tags | Get tags for a dSource.
-[**LinkDatabase**](DSourcesApi.md#LinkDatabase) | **Post** /dsources | Link a database to Delphix engine.
+[**LinkAppdataDatabase**](DSourcesApi.md#LinkAppdataDatabase) | **Post** /dsources/appdata | Link an AppData database as dSource.
+[**LinkAseDatabase**](DSourcesApi.md#LinkAseDatabase) | **Post** /dsources/ase | Link an ASE database as dSource.
+[**LinkOracleDatabase**](DSourcesApi.md#LinkOracleDatabase) | **Post** /dsources/oracle | Link Oracle database as dSource.
 [**SearchDsources**](DSourcesApi.md#SearchDsources) | **Post** /dsources/search | Search for dSources.
 [**SnapshotDsource**](DSourcesApi.md#SnapshotDsource) | **Post** /dsources/{dsourceId}/snapshots | Snapshot a dSource.
 
@@ -220,6 +224,134 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAppdataDsourceLinkingDefaults
+
+> AppDataDSourceLinkSourceParameters GetAppdataDsourceLinkingDefaults(ctx).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
+
+Get defaults for an AppData dSource linking.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    linkDSourceDefaultRequest := *openapiclient.NewLinkDSourceDefaultRequest("SourceId_example") // LinkDSourceDefaultRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DSourcesApi.GetAppdataDsourceLinkingDefaults(context.Background()).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.GetAppdataDsourceLinkingDefaults``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetAppdataDsourceLinkingDefaults`: AppDataDSourceLinkSourceParameters
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.GetAppdataDsourceLinkingDefaults`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAppdataDsourceLinkingDefaultsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **linkDSourceDefaultRequest** | [**LinkDSourceDefaultRequest**](LinkDSourceDefaultRequest.md) |  | 
+
+### Return type
+
+[**AppDataDSourceLinkSourceParameters**](AppDataDSourceLinkSourceParameters.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAseDsourceLinkingDefaults
+
+> ASEDSourceLinkSourceParameters GetAseDsourceLinkingDefaults(ctx).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
+
+Get defaults for an ASE dSource linking.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    linkDSourceDefaultRequest := *openapiclient.NewLinkDSourceDefaultRequest("SourceId_example") // LinkDSourceDefaultRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DSourcesApi.GetAseDsourceLinkingDefaults(context.Background()).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.GetAseDsourceLinkingDefaults``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetAseDsourceLinkingDefaults`: ASEDSourceLinkSourceParameters
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.GetAseDsourceLinkingDefaults`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAseDsourceLinkingDefaultsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **linkDSourceDefaultRequest** | [**LinkDSourceDefaultRequest**](LinkDSourceDefaultRequest.md) |  | 
+
+### Return type
+
+[**ASEDSourceLinkSourceParameters**](ASEDSourceLinkSourceParameters.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetDsourceById
 
 > DSource GetDsourceById(ctx, dsourceId).Execute()
@@ -281,70 +413,6 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDsourceLinkingDefaults
-
-> LinkDSourceParameters GetDsourceLinkingDefaults(ctx).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
-
-Get defaults for dSource linking.
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/delphix/dct-sdk-go"
-)
-
-func main() {
-    linkDSourceDefaultRequest := *openapiclient.NewLinkDSourceDefaultRequest("SourceId_example") // LinkDSourceDefaultRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DSourcesApi.GetDsourceLinkingDefaults(context.Background()).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.GetDsourceLinkingDefaults``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDsourceLinkingDefaults`: LinkDSourceParameters
-    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.GetDsourceLinkingDefaults`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDsourceLinkingDefaultsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **linkDSourceDefaultRequest** | [**LinkDSourceDefaultRequest**](LinkDSourceDefaultRequest.md) |  | 
-
-### Return type
-
-[**LinkDSourceParameters**](LinkDSourceParameters.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -494,6 +562,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetOracleDsourceLinkingDefaults
+
+> OracleDSourceLinkSourceParameters GetOracleDsourceLinkingDefaults(ctx).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
+
+Get defaults for dSource linking.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    linkDSourceDefaultRequest := *openapiclient.NewLinkDSourceDefaultRequest("SourceId_example") // LinkDSourceDefaultRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DSourcesApi.GetOracleDsourceLinkingDefaults(context.Background()).LinkDSourceDefaultRequest(linkDSourceDefaultRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.GetOracleDsourceLinkingDefaults``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetOracleDsourceLinkingDefaults`: OracleDSourceLinkSourceParameters
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.GetOracleDsourceLinkingDefaults`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetOracleDsourceLinkingDefaultsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **linkDSourceDefaultRequest** | [**LinkDSourceDefaultRequest**](LinkDSourceDefaultRequest.md) |  | 
+
+### Return type
+
+[**OracleDSourceLinkSourceParameters**](OracleDSourceLinkSourceParameters.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetTagsDsource
 
 > TagsResponse GetTagsDsource(ctx, dsourceId).Execute()
@@ -562,11 +694,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## LinkDatabase
+## LinkAppdataDatabase
 
-> LinkDSourceResponse LinkDatabase(ctx).LinkDSourceParameters(linkDSourceParameters).Execute()
+> LinkDSourceResponse LinkAppdataDatabase(ctx).AppDataDSourceLinkSourceParameters(appDataDSourceLinkSourceParameters).Execute()
 
-Link a database to Delphix engine.
+Link an AppData database as dSource.
 
 ### Example
 
@@ -581,17 +713,17 @@ import (
 )
 
 func main() {
-    linkDSourceParameters := *openapiclient.NewLinkDSourceParameters("SourceId_example") // LinkDSourceParameters | The parameters to link a dSource.
+    appDataDSourceLinkSourceParameters := *openapiclient.NewAppDataDSourceLinkSourceParameters("EnvironmentUser_example", map[string]interface{}{"key": interface{}(123)}, map[string]interface{}{"key": interface{}(123)}) // AppDataDSourceLinkSourceParameters | The parameters to link an AppData dSource.
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DSourcesApi.LinkDatabase(context.Background()).LinkDSourceParameters(linkDSourceParameters).Execute()
+    resp, r, err := apiClient.DSourcesApi.LinkAppdataDatabase(context.Background()).AppDataDSourceLinkSourceParameters(appDataDSourceLinkSourceParameters).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.LinkDatabase``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.LinkAppdataDatabase``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `LinkDatabase`: LinkDSourceResponse
-    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.LinkDatabase`: %v\n", resp)
+    // response from `LinkAppdataDatabase`: LinkDSourceResponse
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.LinkAppdataDatabase`: %v\n", resp)
 }
 ```
 
@@ -601,12 +733,140 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiLinkDatabaseRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiLinkAppdataDatabaseRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **linkDSourceParameters** | [**LinkDSourceParameters**](LinkDSourceParameters.md) | The parameters to link a dSource. | 
+ **appDataDSourceLinkSourceParameters** | [**AppDataDSourceLinkSourceParameters**](AppDataDSourceLinkSourceParameters.md) | The parameters to link an AppData dSource. | 
+
+### Return type
+
+[**LinkDSourceResponse**](LinkDSourceResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## LinkAseDatabase
+
+> LinkDSourceResponse LinkAseDatabase(ctx).ASEDSourceLinkSourceParameters(aSEDSourceLinkSourceParameters).Execute()
+
+Link an ASE database as dSource.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    aSEDSourceLinkSourceParameters := *openapiclient.NewASEDSourceLinkSourceParameters("SourceId_example", "LoadBackupPath_example") // ASEDSourceLinkSourceParameters | The parameters to link an ASE dSource.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DSourcesApi.LinkAseDatabase(context.Background()).ASEDSourceLinkSourceParameters(aSEDSourceLinkSourceParameters).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.LinkAseDatabase``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `LinkAseDatabase`: LinkDSourceResponse
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.LinkAseDatabase`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLinkAseDatabaseRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **aSEDSourceLinkSourceParameters** | [**ASEDSourceLinkSourceParameters**](ASEDSourceLinkSourceParameters.md) | The parameters to link an ASE dSource. | 
+
+### Return type
+
+[**LinkDSourceResponse**](LinkDSourceResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## LinkOracleDatabase
+
+> LinkDSourceResponse LinkOracleDatabase(ctx).OracleDSourceLinkSourceParameters(oracleDSourceLinkSourceParameters).Execute()
+
+Link Oracle database as dSource.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    oracleDSourceLinkSourceParameters := *openapiclient.NewOracleDSourceLinkSourceParameters("SourceId_example") // OracleDSourceLinkSourceParameters | The parameters to link an Oracle dSource.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DSourcesApi.LinkOracleDatabase(context.Background()).OracleDSourceLinkSourceParameters(oracleDSourceLinkSourceParameters).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DSourcesApi.LinkOracleDatabase``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `LinkOracleDatabase`: LinkDSourceResponse
+    fmt.Fprintf(os.Stdout, "Response from `DSourcesApi.LinkOracleDatabase`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLinkOracleDatabaseRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **oracleDSourceLinkSourceParameters** | [**OracleDSourceLinkSourceParameters**](OracleDSourceLinkSourceParameters.md) | The parameters to link an Oracle dSource. | 
 
 ### Return type
 

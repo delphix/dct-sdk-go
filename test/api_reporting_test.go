@@ -86,6 +86,18 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test ReportingApiService GetAuditLogsSummaryReport", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ReportingApi.GetAuditLogsSummaryReport(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ReportingApiService GetDsourceConsumptionReport", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -103,6 +115,18 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetDsourceUsageReport(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ReportingApiService GetMaskingExecutionMetricsReport", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ReportingApi.GetMaskingExecutionMetricsReport(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -203,6 +227,30 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.SearchDsourceUsageReport(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ReportingApiService SearchMaskingExecutionMetricsReport", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ReportingApi.SearchMaskingExecutionMetricsReport(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ReportingApiService SearchReportingSchedules", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ReportingApi.SearchReportingSchedules(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

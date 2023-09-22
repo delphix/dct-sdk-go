@@ -11,8 +11,11 @@ Name | Type | Description | Notes
 **Email** | Pointer to **string** | An optional email for the Account. | [optional] 
 **Username** | Pointer to **string** | The username for username/password authentication. This can also be used to provide an optional logical name for the Account. | [optional] 
 **LdapPrincipal** | Pointer to **string** | This value will be used for linking this account to an LDAP user when authenticated with the same LDAP principal. When accounts authenticate with LDAP, an LDAP principal value is calculated based on the username, msad_domain_name, search_base and username_pattern. | [optional] 
+**LastAccessTime** | Pointer to **time.Time** | last time this account made a (successful or failed) API call. Note that updates to this property are asynchronous and make take some time to be reflected. | [optional] 
+**CreationTime** | Pointer to **time.Time** | Creation time of this Account. This value is null for accounts created prior to version 9.0.0 of the product. | [optional] 
 **EffectiveScopes** | Pointer to [**[]EffectiveScope**](EffectiveScope.md) | Access group scopes associated with this account. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for this Account. | [optional] 
+**Enabled** | Pointer to **bool** | Whether this account can be used to make API calls. | [optional] 
 
 ## Methods
 
@@ -208,6 +211,56 @@ SetLdapPrincipal sets LdapPrincipal field to given value.
 
 HasLdapPrincipal returns a boolean if a field has been set.
 
+### GetLastAccessTime
+
+`func (o *Account) GetLastAccessTime() time.Time`
+
+GetLastAccessTime returns the LastAccessTime field if non-nil, zero value otherwise.
+
+### GetLastAccessTimeOk
+
+`func (o *Account) GetLastAccessTimeOk() (*time.Time, bool)`
+
+GetLastAccessTimeOk returns a tuple with the LastAccessTime field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastAccessTime
+
+`func (o *Account) SetLastAccessTime(v time.Time)`
+
+SetLastAccessTime sets LastAccessTime field to given value.
+
+### HasLastAccessTime
+
+`func (o *Account) HasLastAccessTime() bool`
+
+HasLastAccessTime returns a boolean if a field has been set.
+
+### GetCreationTime
+
+`func (o *Account) GetCreationTime() time.Time`
+
+GetCreationTime returns the CreationTime field if non-nil, zero value otherwise.
+
+### GetCreationTimeOk
+
+`func (o *Account) GetCreationTimeOk() (*time.Time, bool)`
+
+GetCreationTimeOk returns a tuple with the CreationTime field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreationTime
+
+`func (o *Account) SetCreationTime(v time.Time)`
+
+SetCreationTime sets CreationTime field to given value.
+
+### HasCreationTime
+
+`func (o *Account) HasCreationTime() bool`
+
+HasCreationTime returns a boolean if a field has been set.
+
 ### GetEffectiveScopes
 
 `func (o *Account) GetEffectiveScopes() []EffectiveScope`
@@ -257,6 +310,31 @@ SetTags sets Tags field to given value.
 `func (o *Account) HasTags() bool`
 
 HasTags returns a boolean if a field has been set.
+
+### GetEnabled
+
+`func (o *Account) GetEnabled() bool`
+
+GetEnabled returns the Enabled field if non-nil, zero value otherwise.
+
+### GetEnabledOk
+
+`func (o *Account) GetEnabledOk() (*bool, bool)`
+
+GetEnabledOk returns a tuple with the Enabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnabled
+
+`func (o *Account) SetEnabled(v bool)`
+
+SetEnabled sets Enabled field to given value.
+
+### HasEnabled
+
+`func (o *Account) HasEnabled() bool`
+
+HasEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

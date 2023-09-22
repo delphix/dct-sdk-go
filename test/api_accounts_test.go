@@ -87,6 +87,32 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test AccountsApiService Disable", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.AccountsApi.Disable(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AccountsApiService EnableAccount", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.AccountsApi.EnableAccount(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AccountsApiService GetAccount", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

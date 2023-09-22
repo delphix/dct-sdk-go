@@ -12,10 +12,13 @@ Method | HTTP request | Description
 [**GetVdbGroup**](VDBGroupsApi.md#GetVdbGroup) | **Get** /vdb-groups/{vdbGroupId} | Get a VDBGroup by name.
 [**GetVdbGroupTags**](VDBGroupsApi.md#GetVdbGroupTags) | **Get** /vdb-groups/{vdbGroupId}/tags | Get tags for a VDB Group.
 [**GetVdbGroups**](VDBGroupsApi.md#GetVdbGroups) | **Get** /vdb-groups | List all VDBGroups.
+[**LockVdbGroup**](VDBGroupsApi.md#LockVdbGroup) | **Post** /vdb-groups/{vdbGroupId}/lock | Lock a VDB Group.
 [**ProvisionVdbGroupFromBookmark**](VDBGroupsApi.md#ProvisionVdbGroupFromBookmark) | **Post** /vdb-groups/provision_from_bookmark | Provision a new VDB Group from a Bookmark.
 [**RefreshVdbGroup**](VDBGroupsApi.md#RefreshVdbGroup) | **Post** /vdb-groups/{vdbGroupId}/refresh | Refresh a VDBGroup.
 [**RollbackVdbGroup**](VDBGroupsApi.md#RollbackVdbGroup) | **Post** /vdb-groups/{vdbGroupId}/rollback | Rollback a VDBGroup.
+[**SearchBookmarksByVdbGroup**](VDBGroupsApi.md#SearchBookmarksByVdbGroup) | **Post** /vdb-groups/{vdbGroupId}/bookmarks/search | Search for bookmarks compatible with this VDB Group.
 [**SearchVdbGroups**](VDBGroupsApi.md#SearchVdbGroups) | **Post** /vdb-groups/search | Search for VDB Groups.
+[**UnlockVdbGroup**](VDBGroupsApi.md#UnlockVdbGroup) | **Post** /vdb-groups/{vdbGroupId}/unlock | Unlock a VDB Group.
 [**UpdateVdbGroupById**](VDBGroupsApi.md#UpdateVdbGroupById) | **Patch** /vdb-groups/{vdbGroupId} | Update values of a VDB group.
 
 
@@ -566,6 +569,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## LockVdbGroup
+
+> VDBGroup LockVdbGroup(ctx, vdbGroupId).LockVDBGroupParameters(lockVDBGroupParameters).Execute()
+
+Lock a VDB Group.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    vdbGroupId := "vdbGroupId_example" // string | The ID or name of the VDBGroup.
+    lockVDBGroupParameters := *openapiclient.NewLockVDBGroupParameters() // LockVDBGroupParameters | The parameters to lock a VDB Group.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.VDBGroupsApi.LockVdbGroup(context.Background(), vdbGroupId).LockVDBGroupParameters(lockVDBGroupParameters).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `VDBGroupsApi.LockVdbGroup``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `LockVdbGroup`: VDBGroup
+    fmt.Fprintf(os.Stdout, "Response from `VDBGroupsApi.LockVdbGroup`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**vdbGroupId** | **string** | The ID or name of the VDBGroup. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLockVdbGroupRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **lockVDBGroupParameters** | [**LockVDBGroupParameters**](LockVDBGroupParameters.md) | The parameters to lock a VDB Group. | 
+
+### Return type
+
+[**VDBGroup**](VDBGroup.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ProvisionVdbGroupFromBookmark
 
 > ProvisionVDBGroupFromBookmarkResponse ProvisionVdbGroupFromBookmark(ctx).ProvisionVDBGroupFromBookmarkParameters(provisionVDBGroupFromBookmarkParameters).Execute()
@@ -770,6 +843,82 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## SearchBookmarksByVdbGroup
+
+> SearchBookmarksByVDBGroupsResponse SearchBookmarksByVdbGroup(ctx, vdbGroupId).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+
+Search for bookmarks compatible with this VDB Group.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    vdbGroupId := "vdbGroupId_example" // string | The ID or name of the VDBGroup.
+    limit := int32(50) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. (optional) (default to 100)
+    cursor := "cursor_example" // string | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the 'prev_cursor' or 'next_cursor' property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. (optional)
+    sort := "id" // string | The field to sort results by. A property name with a prepended '-' signifies descending order. (optional)
+    searchBody := *openapiclient.NewSearchBody() // SearchBody | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS 'foobar', field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN ['Goku', 'Vegeta'] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically `SEARCH '12'` would match an item with an attribute with an integer value of `123`.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ 'Goku' | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ 'Goku' |  ## Grouping Parenthesis `()` can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS 'foo')  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \"foo\", \"bar\", \"foo bar\", 'foo', 'bar', 'foo bar' | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], ['foo', \"bar\"] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.VDBGroupsApi.SearchBookmarksByVdbGroup(context.Background(), vdbGroupId).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `VDBGroupsApi.SearchBookmarksByVdbGroup``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SearchBookmarksByVdbGroup`: SearchBookmarksByVDBGroupsResponse
+    fmt.Fprintf(os.Stdout, "Response from `VDBGroupsApi.SearchBookmarksByVdbGroup`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**vdbGroupId** | **string** | The ID or name of the VDBGroup. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSearchBookmarksByVdbGroupRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. | [default to 100]
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. | 
+ **sort** | **string** | The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order. | 
+ **searchBody** | [**SearchBody**](SearchBody.md) | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  | 
+
+### Return type
+
+[**SearchBookmarksByVDBGroupsResponse**](SearchBookmarksByVDBGroupsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## SearchVdbGroups
 
 > SearchVDBGroupResponse SearchVdbGroups(ctx).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
@@ -833,6 +982,74 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UnlockVdbGroup
+
+> VDBGroup UnlockVdbGroup(ctx, vdbGroupId).Execute()
+
+Unlock a VDB Group.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    vdbGroupId := "vdbGroupId_example" // string | The ID or name of the VDBGroup.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.VDBGroupsApi.UnlockVdbGroup(context.Background(), vdbGroupId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `VDBGroupsApi.UnlockVdbGroup``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UnlockVdbGroup`: VDBGroup
+    fmt.Fprintf(os.Stdout, "Response from `VDBGroupsApi.UnlockVdbGroup`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**vdbGroupId** | **string** | The ID or name of the VDBGroup. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUnlockVdbGroupRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**VDBGroup**](VDBGroup.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

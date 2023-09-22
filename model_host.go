@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -47,6 +47,8 @@ type Host struct {
 	OracleClusterNodeDiscovered *bool `json:"oracle_cluster_node_discovered,omitempty"`
 	// The Virtual IP addresses associated with the OracleClusterNode.
 	OracleClusterNodeVirtualIps []OracleVirtualIP `json:"oracle_cluster_node_virtual_ips,omitempty"`
+	// The instances associated with the OracleClusterNode.
+	OracleClusterNodeInstances []OracleClusterNodeInstance `json:"oracle_cluster_node_instances,omitempty"`
 	// The reference to the associated WindowsClusterNode.
 	WindowsClusterNodeReference *string `json:"windows_cluster_node_reference,omitempty"`
 	// The name of the associated WindowsClusterNode.
@@ -506,6 +508,38 @@ func (o *Host) HasOracleClusterNodeVirtualIps() bool {
 // SetOracleClusterNodeVirtualIps gets a reference to the given []OracleVirtualIP and assigns it to the OracleClusterNodeVirtualIps field.
 func (o *Host) SetOracleClusterNodeVirtualIps(v []OracleVirtualIP) {
 	o.OracleClusterNodeVirtualIps = v
+}
+
+// GetOracleClusterNodeInstances returns the OracleClusterNodeInstances field value if set, zero value otherwise.
+func (o *Host) GetOracleClusterNodeInstances() []OracleClusterNodeInstance {
+	if o == nil || IsNil(o.OracleClusterNodeInstances) {
+		var ret []OracleClusterNodeInstance
+		return ret
+	}
+	return o.OracleClusterNodeInstances
+}
+
+// GetOracleClusterNodeInstancesOk returns a tuple with the OracleClusterNodeInstances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetOracleClusterNodeInstancesOk() ([]OracleClusterNodeInstance, bool) {
+	if o == nil || IsNil(o.OracleClusterNodeInstances) {
+		return nil, false
+	}
+	return o.OracleClusterNodeInstances, true
+}
+
+// HasOracleClusterNodeInstances returns a boolean if a field has been set.
+func (o *Host) HasOracleClusterNodeInstances() bool {
+	if o != nil && !IsNil(o.OracleClusterNodeInstances) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleClusterNodeInstances gets a reference to the given []OracleClusterNodeInstance and assigns it to the OracleClusterNodeInstances field.
+func (o *Host) SetOracleClusterNodeInstances(v []OracleClusterNodeInstance) {
+	o.OracleClusterNodeInstances = v
 }
 
 // GetWindowsClusterNodeReference returns the WindowsClusterNodeReference field value if set, zero value otherwise.
@@ -972,6 +1006,9 @@ func (o Host) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OracleClusterNodeVirtualIps) {
 		toSerialize["oracle_cluster_node_virtual_ips"] = o.OracleClusterNodeVirtualIps
+	}
+	if !IsNil(o.OracleClusterNodeInstances) {
+		toSerialize["oracle_cluster_node_instances"] = o.OracleClusterNodeInstances
 	}
 	if !IsNil(o.WindowsClusterNodeReference) {
 		toSerialize["windows_cluster_node_reference"] = o.WindowsClusterNodeReference

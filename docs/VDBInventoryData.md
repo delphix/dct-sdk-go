@@ -4,18 +4,20 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**EngineName** | Pointer to **string** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**Type** | Pointer to **string** |  | [optional] 
-**Version** | Pointer to **string** |  | [optional] 
-**ParentName** | Pointer to **string** |  | [optional] 
-**ParentId** | Pointer to **string** |  | [optional] 
-**CreationDate** | Pointer to **time.Time** |  | [optional] 
-**ParentTimeflowLocation** | Pointer to **string** |  | [optional] 
-**ParentTimeflowTimestamp** | Pointer to **time.Time** |  | [optional] 
-**ParentTimeflowTimezone** | Pointer to **string** |  | [optional] 
-**Enabled** | Pointer to **bool** |  | [optional] 
-**Status** | Pointer to **string** |  | [optional] 
+**EngineName** | Pointer to **string** | The name of the engine the VDB belongs to. | [optional] 
+**Name** | Pointer to **string** | The name of the VDB. | [optional] 
+**Type** | Pointer to **string** | The database type of the VDB. | [optional] 
+**Version** | Pointer to **string** | The database version of the VDB. | [optional] 
+**ParentName** | Pointer to **string** | The name of the VDB&#39;s parent dataset. | [optional] 
+**ParentId** | Pointer to **string** | A reference to the parent dataset of the VDB. | [optional] 
+**CreationDate** | Pointer to **time.Time** | The date the VDB was created. | [optional] 
+**LastRefreshedDate** | Pointer to **time.Time** | The date the VDB was last refreshed. | [optional] 
+**ParentTimeflowLocation** | Pointer to **string** | The location for the VDB&#39;s parent timeflow. | [optional] 
+**ParentTimeflowTimestamp** | Pointer to **time.Time** | The timestamp for the VDB&#39;s parent timeflow. | [optional] 
+**ParentTimeflowTimezone** | Pointer to **string** | The timezone for the VDB&#39;s parent timeflow. | [optional] 
+**Enabled** | Pointer to **bool** | Whether the VDB is enabled | [optional] 
+**Status** | Pointer to **string** | The runtime status of the VDB. &#39;Unknown&#39; if all attempts to connect to the dataset failed. | [optional] 
+**StorageSize** | Pointer to **int64** | The actual space used by the VDB, in bytes. | [optional] 
 
 ## Methods
 
@@ -211,6 +213,31 @@ SetCreationDate sets CreationDate field to given value.
 
 HasCreationDate returns a boolean if a field has been set.
 
+### GetLastRefreshedDate
+
+`func (o *VDBInventoryData) GetLastRefreshedDate() time.Time`
+
+GetLastRefreshedDate returns the LastRefreshedDate field if non-nil, zero value otherwise.
+
+### GetLastRefreshedDateOk
+
+`func (o *VDBInventoryData) GetLastRefreshedDateOk() (*time.Time, bool)`
+
+GetLastRefreshedDateOk returns a tuple with the LastRefreshedDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastRefreshedDate
+
+`func (o *VDBInventoryData) SetLastRefreshedDate(v time.Time)`
+
+SetLastRefreshedDate sets LastRefreshedDate field to given value.
+
+### HasLastRefreshedDate
+
+`func (o *VDBInventoryData) HasLastRefreshedDate() bool`
+
+HasLastRefreshedDate returns a boolean if a field has been set.
+
 ### GetParentTimeflowLocation
 
 `func (o *VDBInventoryData) GetParentTimeflowLocation() string`
@@ -335,6 +362,31 @@ SetStatus sets Status field to given value.
 `func (o *VDBInventoryData) HasStatus() bool`
 
 HasStatus returns a boolean if a field has been set.
+
+### GetStorageSize
+
+`func (o *VDBInventoryData) GetStorageSize() int64`
+
+GetStorageSize returns the StorageSize field if non-nil, zero value otherwise.
+
+### GetStorageSizeOk
+
+`func (o *VDBInventoryData) GetStorageSizeOk() (*int64, bool)`
+
+GetStorageSizeOk returns a tuple with the StorageSize field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStorageSize
+
+`func (o *VDBInventoryData) SetStorageSize(v int64)`
+
+SetStorageSize sets StorageSize field to given value.
+
+### HasStorageSize
+
+`func (o *VDBInventoryData) HasStorageSize() bool`
+
+HasStorageSize returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

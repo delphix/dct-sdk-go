@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the Account type satisfies the MappedNullable interface at compile time
@@ -34,10 +35,16 @@ type Account struct {
 	Username *string `json:"username,omitempty"`
 	// This value will be used for linking this account to an LDAP user when authenticated with the same LDAP principal. When accounts authenticate with LDAP, an LDAP principal value is calculated based on the username, msad_domain_name, search_base and username_pattern.
 	LdapPrincipal *string `json:"ldap_principal,omitempty"`
+	// last time this account made a (successful or failed) API call. Note that updates to this property are asynchronous and make take some time to be reflected.
+	LastAccessTime *time.Time `json:"last_access_time,omitempty"`
+	// Creation time of this Account. This value is null for accounts created prior to version 9.0.0 of the product.
+	CreationTime *time.Time `json:"creation_time,omitempty"`
 	// Access group scopes associated with this account.
 	EffectiveScopes []EffectiveScope `json:"effective_scopes,omitempty"`
 	// The tags to be created for this Account.
 	Tags []Tag `json:"tags,omitempty"`
+	// Whether this account can be used to make API calls.
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 // NewAccount instantiates a new Account object
@@ -281,6 +288,70 @@ func (o *Account) SetLdapPrincipal(v string) {
 	o.LdapPrincipal = &v
 }
 
+// GetLastAccessTime returns the LastAccessTime field value if set, zero value otherwise.
+func (o *Account) GetLastAccessTime() time.Time {
+	if o == nil || IsNil(o.LastAccessTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastAccessTime
+}
+
+// GetLastAccessTimeOk returns a tuple with the LastAccessTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Account) GetLastAccessTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastAccessTime) {
+		return nil, false
+	}
+	return o.LastAccessTime, true
+}
+
+// HasLastAccessTime returns a boolean if a field has been set.
+func (o *Account) HasLastAccessTime() bool {
+	if o != nil && !IsNil(o.LastAccessTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastAccessTime gets a reference to the given time.Time and assigns it to the LastAccessTime field.
+func (o *Account) SetLastAccessTime(v time.Time) {
+	o.LastAccessTime = &v
+}
+
+// GetCreationTime returns the CreationTime field value if set, zero value otherwise.
+func (o *Account) GetCreationTime() time.Time {
+	if o == nil || IsNil(o.CreationTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreationTime
+}
+
+// GetCreationTimeOk returns a tuple with the CreationTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Account) GetCreationTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreationTime) {
+		return nil, false
+	}
+	return o.CreationTime, true
+}
+
+// HasCreationTime returns a boolean if a field has been set.
+func (o *Account) HasCreationTime() bool {
+	if o != nil && !IsNil(o.CreationTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreationTime gets a reference to the given time.Time and assigns it to the CreationTime field.
+func (o *Account) SetCreationTime(v time.Time) {
+	o.CreationTime = &v
+}
+
 // GetEffectiveScopes returns the EffectiveScopes field value if set, zero value otherwise.
 func (o *Account) GetEffectiveScopes() []EffectiveScope {
 	if o == nil || IsNil(o.EffectiveScopes) {
@@ -345,6 +416,38 @@ func (o *Account) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
+func (o *Account) GetEnabled() bool {
+	if o == nil || IsNil(o.Enabled) {
+		var ret bool
+		return ret
+	}
+	return *o.Enabled
+}
+
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Account) GetEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.Enabled) {
+		return nil, false
+	}
+	return o.Enabled, true
+}
+
+// HasEnabled returns a boolean if a field has been set.
+func (o *Account) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
+func (o *Account) SetEnabled(v bool) {
+	o.Enabled = &v
+}
+
 func (o Account) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -374,11 +477,20 @@ func (o Account) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LdapPrincipal) {
 		toSerialize["ldap_principal"] = o.LdapPrincipal
 	}
+	if !IsNil(o.LastAccessTime) {
+		toSerialize["last_access_time"] = o.LastAccessTime
+	}
+	if !IsNil(o.CreationTime) {
+		toSerialize["creation_time"] = o.CreationTime
+	}
 	if !IsNil(o.EffectiveScopes) {
 		toSerialize["effective_scopes"] = o.EffectiveScopes
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
 	}
 	return toSerialize, nil
 }

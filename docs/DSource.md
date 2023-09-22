@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **Id** | Pointer to **string** | The dSource object entity ID. | [optional] 
 **DatabaseType** | Pointer to **NullableString** | The database type of this dSource. | [optional] 
 **Name** | Pointer to **NullableString** | The container name of this dSource. | [optional] 
+**NamespaceId** | Pointer to **NullableString** | The namespace id of this dSource. | [optional] 
+**NamespaceName** | Pointer to **NullableString** | The namespace name of this dSource. | [optional] 
+**IsReplica** | Pointer to **NullableBool** | Is this a replicated object. | [optional] 
 **DatabaseVersion** | Pointer to **NullableString** | The database version of this dSource. | [optional] 
 **ContentType** | Pointer to **NullableString** | The content type of the dSource. | [optional] 
 **DataUuid** | Pointer to **NullableString** | A universal ID that uniquely identifies the dSource database. | [optional] 
@@ -22,6 +25,7 @@ Name | Type | Description | Notes
 **CdbId** | Pointer to **NullableString** | A reference to the CDB associated with this dSource. | [optional] 
 **CurrentTimeflowId** | Pointer to **string** | A reference to the currently active timeflow for this dSource. | [optional] 
 **PreviousTimeflowId** | Pointer to **string** | A reference to the previous timeflow for this dSource. | [optional] 
+**IsAppdata** | Pointer to **bool** | Indicates whether this dSource has an AppData database. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
@@ -138,6 +142,111 @@ HasName returns a boolean if a field has been set.
 `func (o *DSource) UnsetName()`
 
 UnsetName ensures that no value is present for Name, not even an explicit nil
+### GetNamespaceId
+
+`func (o *DSource) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *DSource) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *DSource) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *DSource) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### SetNamespaceIdNil
+
+`func (o *DSource) SetNamespaceIdNil(b bool)`
+
+ SetNamespaceIdNil sets the value for NamespaceId to be an explicit nil
+
+### UnsetNamespaceId
+`func (o *DSource) UnsetNamespaceId()`
+
+UnsetNamespaceId ensures that no value is present for NamespaceId, not even an explicit nil
+### GetNamespaceName
+
+`func (o *DSource) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *DSource) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *DSource) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *DSource) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### SetNamespaceNameNil
+
+`func (o *DSource) SetNamespaceNameNil(b bool)`
+
+ SetNamespaceNameNil sets the value for NamespaceName to be an explicit nil
+
+### UnsetNamespaceName
+`func (o *DSource) UnsetNamespaceName()`
+
+UnsetNamespaceName ensures that no value is present for NamespaceName, not even an explicit nil
+### GetIsReplica
+
+`func (o *DSource) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *DSource) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *DSource) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *DSource) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
+
+### SetIsReplicaNil
+
+`func (o *DSource) SetIsReplicaNil(b bool)`
+
+ SetIsReplicaNil sets the value for IsReplica to be an explicit nil
+
+### UnsetIsReplica
+`func (o *DSource) UnsetIsReplica()`
+
+UnsetIsReplica ensures that no value is present for IsReplica, not even an explicit nil
 ### GetDatabaseVersion
 
 `func (o *DSource) GetDatabaseVersion() string`
@@ -632,6 +741,31 @@ SetPreviousTimeflowId sets PreviousTimeflowId field to given value.
 `func (o *DSource) HasPreviousTimeflowId() bool`
 
 HasPreviousTimeflowId returns a boolean if a field has been set.
+
+### GetIsAppdata
+
+`func (o *DSource) GetIsAppdata() bool`
+
+GetIsAppdata returns the IsAppdata field if non-nil, zero value otherwise.
+
+### GetIsAppdataOk
+
+`func (o *DSource) GetIsAppdataOk() (*bool, bool)`
+
+GetIsAppdataOk returns a tuple with the IsAppdata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsAppdata
+
+`func (o *DSource) SetIsAppdata(v bool)`
+
+SetIsAppdata sets IsAppdata field to given value.
+
+### HasIsAppdata
+
+`func (o *DSource) HasIsAppdata() bool`
+
+HasIsAppdata returns a boolean if a field has been set.
 
 ### GetTags
 

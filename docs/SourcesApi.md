@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**CreateSourceTags**](SourcesApi.md#CreateSourceTags) | **Post** /sources/{sourceId}/tags | Create tags for a Source.
 [**DeleteSourceTags**](SourcesApi.md#DeleteSourceTags) | **Post** /sources/{sourceId}/tags/delete | Delete tags for a Source.
 [**GetSourceById**](SourcesApi.md#GetSourceById) | **Get** /sources/{sourceId} | Get a source by ID.
+[**GetSourceCompatibleRepo**](SourcesApi.md#GetSourceCompatibleRepo) | **Get** /sources/{sourceId}/staging_compatible_repositories | Returns a list of repositories that match the specified source.
 [**GetSourceTags**](SourcesApi.md#GetSourceTags) | **Get** /sources/{sourceId}/tags | Get tags for a Source.
 [**GetSources**](SourcesApi.md#GetSources) | **Get** /sources | List all sources.
 [**SearchSources**](SourcesApi.md#SearchSources) | **Post** /sources/search | Search for Sources.
@@ -204,6 +205,74 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Source**](Source.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSourceCompatibleRepo
+
+> StagingCompatibleEnvironmentsResponse GetSourceCompatibleRepo(ctx, sourceId).Execute()
+
+Returns a list of repositories that match the specified source.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    sourceId := "sourceId_example" // string | The ID of the Source.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.SourcesApi.GetSourceCompatibleRepo(context.Background(), sourceId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `SourcesApi.GetSourceCompatibleRepo``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetSourceCompatibleRepo`: StagingCompatibleEnvironmentsResponse
+    fmt.Fprintf(os.Stdout, "Response from `SourcesApi.GetSourceCompatibleRepo`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**sourceId** | **string** | The ID of the Source. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSourceCompatibleRepoRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**StagingCompatibleEnvironmentsResponse**](StagingCompatibleEnvironmentsResponse.md)
 
 ### Authorization
 

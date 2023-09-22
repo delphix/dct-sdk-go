@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -46,7 +46,23 @@ type PasswordPoliciesParams struct {
 // will change when the set of required properties is changed
 func NewPasswordPoliciesParams() *PasswordPoliciesParams {
 	this := PasswordPoliciesParams{}
-	var maximumPasswordAttempts int32 = 0
+	var enabled bool = true
+	this.Enabled = &enabled
+	var minLength int32 = 15
+	this.MinLength = &minLength
+	var reuseDisallowLimit int32 = 2
+	this.ReuseDisallowLimit = &reuseDisallowLimit
+	var digit bool = true
+	this.Digit = &digit
+	var uppercaseLetter bool = true
+	this.UppercaseLetter = &uppercaseLetter
+	var lowercaseLetter bool = true
+	this.LowercaseLetter = &lowercaseLetter
+	var specialCharacter bool = true
+	this.SpecialCharacter = &specialCharacter
+	var disallowUsernameAsPassword bool = true
+	this.DisallowUsernameAsPassword = &disallowUsernameAsPassword
+	var maximumPasswordAttempts int32 = 5
 	this.MaximumPasswordAttempts = &maximumPasswordAttempts
 	return &this
 }
@@ -56,7 +72,23 @@ func NewPasswordPoliciesParams() *PasswordPoliciesParams {
 // but it doesn't guarantee that properties required by API are set
 func NewPasswordPoliciesParamsWithDefaults() *PasswordPoliciesParams {
 	this := PasswordPoliciesParams{}
-	var maximumPasswordAttempts int32 = 0
+	var enabled bool = true
+	this.Enabled = &enabled
+	var minLength int32 = 15
+	this.MinLength = &minLength
+	var reuseDisallowLimit int32 = 2
+	this.ReuseDisallowLimit = &reuseDisallowLimit
+	var digit bool = true
+	this.Digit = &digit
+	var uppercaseLetter bool = true
+	this.UppercaseLetter = &uppercaseLetter
+	var lowercaseLetter bool = true
+	this.LowercaseLetter = &lowercaseLetter
+	var specialCharacter bool = true
+	this.SpecialCharacter = &specialCharacter
+	var disallowUsernameAsPassword bool = true
+	this.DisallowUsernameAsPassword = &disallowUsernameAsPassword
+	var maximumPasswordAttempts int32 = 5
 	this.MaximumPasswordAttempts = &maximumPasswordAttempts
 	return &this
 }

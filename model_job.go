@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -25,8 +25,13 @@ type Job struct {
 	Id *string `json:"id,omitempty"`
 	// The status of the job.
 	Status *string `json:"status,omitempty"`
+	// Indicates that the operations performed by this Job have completed successfully, but the object changes are not yet reflected. This is only set when when the JOB is in STARTED status, with the guarantee that the job will not transition to the FAILED status. Note that this flag will likely be replaced with a new status in future API versions and be deprecated.
+	IsWaitingForTelemetry *bool `json:"is_waiting_for_telemetry,omitempty"`
 	// The type of job being done.
+	// Deprecated
 	Type *string `json:"type,omitempty"`
+	// The i18n translated type of job being done.
+	LocalizedType *string `json:"localized_type,omitempty"`
 	// Details about the failure for FAILED jobs.
 	ErrorDetails *string `json:"error_details,omitempty"`
 	// Warnings for the job.
@@ -39,7 +44,15 @@ type Job struct {
 	UpdateTime *time.Time `json:"update_time,omitempty"`
 	// traceId of the request which created this Job
 	TraceId *string `json:"trace_id,omitempty"`
+	// IDs of the engines this Job is executing on.
+	// Deprecated
+	EngineIds []string `json:"engine_ids,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	Engines []Engine `json:"engines,omitempty"`
+	// The ID of the account who initiated this job.
+	AccountId *int32 `json:"account_id,omitempty"`
+	// The account name which initiated this job. It can be either firstname and lastname combination or firstname or lastname or username or email address or Account-<id>.
+	AccountName *string `json:"account_name,omitempty"`
 }
 
 // NewJob instantiates a new Job object
@@ -123,7 +136,40 @@ func (o *Job) SetStatus(v string) {
 	o.Status = &v
 }
 
+// GetIsWaitingForTelemetry returns the IsWaitingForTelemetry field value if set, zero value otherwise.
+func (o *Job) GetIsWaitingForTelemetry() bool {
+	if o == nil || IsNil(o.IsWaitingForTelemetry) {
+		var ret bool
+		return ret
+	}
+	return *o.IsWaitingForTelemetry
+}
+
+// GetIsWaitingForTelemetryOk returns a tuple with the IsWaitingForTelemetry field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetIsWaitingForTelemetryOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsWaitingForTelemetry) {
+		return nil, false
+	}
+	return o.IsWaitingForTelemetry, true
+}
+
+// HasIsWaitingForTelemetry returns a boolean if a field has been set.
+func (o *Job) HasIsWaitingForTelemetry() bool {
+	if o != nil && !IsNil(o.IsWaitingForTelemetry) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsWaitingForTelemetry gets a reference to the given bool and assigns it to the IsWaitingForTelemetry field.
+func (o *Job) SetIsWaitingForTelemetry(v bool) {
+	o.IsWaitingForTelemetry = &v
+}
+
 // GetType returns the Type field value if set, zero value otherwise.
+// Deprecated
 func (o *Job) GetType() string {
 	if o == nil || IsNil(o.Type) {
 		var ret string
@@ -134,6 +180,7 @@ func (o *Job) GetType() string {
 
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *Job) GetTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.Type) {
 		return nil, false
@@ -151,8 +198,41 @@ func (o *Job) HasType() bool {
 }
 
 // SetType gets a reference to the given string and assigns it to the Type field.
+// Deprecated
 func (o *Job) SetType(v string) {
 	o.Type = &v
+}
+
+// GetLocalizedType returns the LocalizedType field value if set, zero value otherwise.
+func (o *Job) GetLocalizedType() string {
+	if o == nil || IsNil(o.LocalizedType) {
+		var ret string
+		return ret
+	}
+	return *o.LocalizedType
+}
+
+// GetLocalizedTypeOk returns a tuple with the LocalizedType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetLocalizedTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.LocalizedType) {
+		return nil, false
+	}
+	return o.LocalizedType, true
+}
+
+// HasLocalizedType returns a boolean if a field has been set.
+func (o *Job) HasLocalizedType() bool {
+	if o != nil && !IsNil(o.LocalizedType) {
+		return true
+	}
+
+	return false
+}
+
+// SetLocalizedType gets a reference to the given string and assigns it to the LocalizedType field.
+func (o *Job) SetLocalizedType(v string) {
+	o.LocalizedType = &v
 }
 
 // GetErrorDetails returns the ErrorDetails field value if set, zero value otherwise.
@@ -347,6 +427,41 @@ func (o *Job) SetTraceId(v string) {
 	o.TraceId = &v
 }
 
+// GetEngineIds returns the EngineIds field value if set, zero value otherwise.
+// Deprecated
+func (o *Job) GetEngineIds() []string {
+	if o == nil || IsNil(o.EngineIds) {
+		var ret []string
+		return ret
+	}
+	return o.EngineIds
+}
+
+// GetEngineIdsOk returns a tuple with the EngineIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *Job) GetEngineIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.EngineIds) {
+		return nil, false
+	}
+	return o.EngineIds, true
+}
+
+// HasEngineIds returns a boolean if a field has been set.
+func (o *Job) HasEngineIds() bool {
+	if o != nil && !IsNil(o.EngineIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineIds gets a reference to the given []string and assigns it to the EngineIds field.
+// Deprecated
+func (o *Job) SetEngineIds(v []string) {
+	o.EngineIds = v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Job) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -379,6 +494,102 @@ func (o *Job) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetEngines returns the Engines field value if set, zero value otherwise.
+func (o *Job) GetEngines() []Engine {
+	if o == nil || IsNil(o.Engines) {
+		var ret []Engine
+		return ret
+	}
+	return o.Engines
+}
+
+// GetEnginesOk returns a tuple with the Engines field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetEnginesOk() ([]Engine, bool) {
+	if o == nil || IsNil(o.Engines) {
+		return nil, false
+	}
+	return o.Engines, true
+}
+
+// HasEngines returns a boolean if a field has been set.
+func (o *Job) HasEngines() bool {
+	if o != nil && !IsNil(o.Engines) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngines gets a reference to the given []Engine and assigns it to the Engines field.
+func (o *Job) SetEngines(v []Engine) {
+	o.Engines = v
+}
+
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *Job) GetAccountId() int32 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int32
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetAccountIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *Job) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int32 and assigns it to the AccountId field.
+func (o *Job) SetAccountId(v int32) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *Job) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *Job) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *Job) SetAccountName(v string) {
+	o.AccountName = &v
+}
+
 func (o Job) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -395,8 +606,14 @@ func (o Job) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
+	if !IsNil(o.IsWaitingForTelemetry) {
+		toSerialize["is_waiting_for_telemetry"] = o.IsWaitingForTelemetry
+	}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.LocalizedType) {
+		toSerialize["localized_type"] = o.LocalizedType
 	}
 	if !IsNil(o.ErrorDetails) {
 		toSerialize["error_details"] = o.ErrorDetails
@@ -416,8 +633,20 @@ func (o Job) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TraceId) {
 		toSerialize["trace_id"] = o.TraceId
 	}
+	if !IsNil(o.EngineIds) {
+		toSerialize["engine_ids"] = o.EngineIds
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Engines) {
+		toSerialize["engines"] = o.Engines
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
 	}
 	return toSerialize, nil
 }

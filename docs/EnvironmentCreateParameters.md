@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **Username** | Pointer to **string** | Username of the OS. | [optional] 
 **Password** | Pointer to **string** | Password of the OS. | [optional] 
 **Vault** | Pointer to **string** | The name or reference of the vault from which to read the host credentials. | [optional] 
+**VaultUsername** | Pointer to **string** | Delphix display name for the vault user | [optional] 
 **HashicorpVaultEngine** | Pointer to **string** | Vault engine name where the credential is stored. | [optional] 
 **HashicorpVaultSecretPath** | Pointer to **string** | Path in the vault engine where the credential is stored. | [optional] 
 **HashicorpVaultUsernameKey** | Pointer to **string** | Key for the username in the key-value store. | [optional] 
@@ -27,6 +28,7 @@ Name | Type | Description | Notes
 **UseKerberosAuthentication** | Pointer to **bool** | Whether to use kerberos authentication. | [optional] 
 **UseEnginePublicKey** | Pointer to **bool** | Whether to use public key authentication. | [optional] 
 **NfsAddresses** | Pointer to **[]string** | array of ip address or hostnames | [optional] 
+**AseDbVaultUsername** | Pointer to **string** | Delphix display name for the vault user | [optional] 
 **AseDbUsername** | Pointer to **string** | username of the SAP ASE database. | [optional] 
 **AseDbPassword** | Pointer to **string** | password of the SAP ASE database. | [optional] 
 **AseDbVault** | Pointer to **string** | The name or reference of the vault from which to read the ASE database credentials. | [optional] 
@@ -425,6 +427,31 @@ SetVault sets Vault field to given value.
 
 HasVault returns a boolean if a field has been set.
 
+### GetVaultUsername
+
+`func (o *EnvironmentCreateParameters) GetVaultUsername() string`
+
+GetVaultUsername returns the VaultUsername field if non-nil, zero value otherwise.
+
+### GetVaultUsernameOk
+
+`func (o *EnvironmentCreateParameters) GetVaultUsernameOk() (*string, bool)`
+
+GetVaultUsernameOk returns a tuple with the VaultUsername field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVaultUsername
+
+`func (o *EnvironmentCreateParameters) SetVaultUsername(v string)`
+
+SetVaultUsername sets VaultUsername field to given value.
+
+### HasVaultUsername
+
+`func (o *EnvironmentCreateParameters) HasVaultUsername() bool`
+
+HasVaultUsername returns a boolean if a field has been set.
+
 ### GetHashicorpVaultEngine
 
 `func (o *EnvironmentCreateParameters) GetHashicorpVaultEngine() string`
@@ -624,6 +651,31 @@ SetNfsAddresses sets NfsAddresses field to given value.
 `func (o *EnvironmentCreateParameters) HasNfsAddresses() bool`
 
 HasNfsAddresses returns a boolean if a field has been set.
+
+### GetAseDbVaultUsername
+
+`func (o *EnvironmentCreateParameters) GetAseDbVaultUsername() string`
+
+GetAseDbVaultUsername returns the AseDbVaultUsername field if non-nil, zero value otherwise.
+
+### GetAseDbVaultUsernameOk
+
+`func (o *EnvironmentCreateParameters) GetAseDbVaultUsernameOk() (*string, bool)`
+
+GetAseDbVaultUsernameOk returns a tuple with the AseDbVaultUsername field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAseDbVaultUsername
+
+`func (o *EnvironmentCreateParameters) SetAseDbVaultUsername(v string)`
+
+SetAseDbVaultUsername sets AseDbVaultUsername field to given value.
+
+### HasAseDbVaultUsername
+
+`func (o *EnvironmentCreateParameters) HasAseDbVaultUsername() bool`
+
+HasAseDbVaultUsername returns a boolean if a field has been set.
 
 ### GetAseDbUsername
 

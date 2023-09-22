@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **OracleClusterNodeEnabled** | Pointer to **bool** | Whether the associated OracleClusterNode is enabled. | [optional] 
 **OracleClusterNodeDiscovered** | Pointer to **bool** | Whether the associated OracleClusterNode was discovered. | [optional] 
 **OracleClusterNodeVirtualIps** | Pointer to [**[]OracleVirtualIP**](OracleVirtualIP.md) | The Virtual IP addresses associated with the OracleClusterNode. | [optional] 
+**OracleClusterNodeInstances** | Pointer to [**[]OracleClusterNodeInstance**](OracleClusterNodeInstance.md) | The instances associated with the OracleClusterNode. | [optional] 
 **WindowsClusterNodeReference** | Pointer to **string** | The reference to the associated WindowsClusterNode. | [optional] 
 **WindowsClusterNodeName** | Pointer to **string** | The name of the associated WindowsClusterNode. | [optional] 
 **WindowsClusterNodeDiscovered** | Pointer to **bool** | Whether the associated Windows cluster node was discovered. | [optional] 
@@ -374,6 +375,31 @@ SetOracleClusterNodeVirtualIps sets OracleClusterNodeVirtualIps field to given v
 `func (o *Host) HasOracleClusterNodeVirtualIps() bool`
 
 HasOracleClusterNodeVirtualIps returns a boolean if a field has been set.
+
+### GetOracleClusterNodeInstances
+
+`func (o *Host) GetOracleClusterNodeInstances() []OracleClusterNodeInstance`
+
+GetOracleClusterNodeInstances returns the OracleClusterNodeInstances field if non-nil, zero value otherwise.
+
+### GetOracleClusterNodeInstancesOk
+
+`func (o *Host) GetOracleClusterNodeInstancesOk() (*[]OracleClusterNodeInstance, bool)`
+
+GetOracleClusterNodeInstancesOk returns a tuple with the OracleClusterNodeInstances field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOracleClusterNodeInstances
+
+`func (o *Host) SetOracleClusterNodeInstances(v []OracleClusterNodeInstance)`
+
+SetOracleClusterNodeInstances sets OracleClusterNodeInstances field to given value.
+
+### HasOracleClusterNodeInstances
+
+`func (o *Host) HasOracleClusterNodeInstances() bool`
+
+HasOracleClusterNodeInstances returns a boolean if a field has been set.
 
 ### GetWindowsClusterNodeReference
 

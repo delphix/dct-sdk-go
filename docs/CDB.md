@@ -6,6 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The CDB object entity ID. | [optional] 
 **Name** | Pointer to **NullableString** | The name of this CDB. | [optional] 
+**NamespaceId** | Pointer to **string** | The namespace id of this CDB. | [optional] 
+**NamespaceName** | Pointer to **string** | The namespace name of this CDB. | [optional] 
+**IsReplica** | Pointer to **bool** | Is this a replicated object. | [optional] 
 **DatabaseVersion** | Pointer to **NullableString** | The version of this CDB. | [optional] 
 **EnvironmentId** | Pointer to **NullableString** | A reference to the Environment that hosts this CDB. | [optional] 
 **Size** | Pointer to **NullableInt64** | The total size of the data files used by this CDB, in bytes. | [optional] 
@@ -92,6 +95,81 @@ HasName returns a boolean if a field has been set.
 `func (o *CDB) UnsetName()`
 
 UnsetName ensures that no value is present for Name, not even an explicit nil
+### GetNamespaceId
+
+`func (o *CDB) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *CDB) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *CDB) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *CDB) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### GetNamespaceName
+
+`func (o *CDB) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *CDB) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *CDB) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *CDB) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### GetIsReplica
+
+`func (o *CDB) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *CDB) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *CDB) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *CDB) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
+
 ### GetDatabaseVersion
 
 `func (o *CDB) GetDatabaseVersion() string`

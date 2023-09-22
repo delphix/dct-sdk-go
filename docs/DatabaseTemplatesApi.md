@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**GetDatabaseTemplates**](DatabaseTemplatesApi.md#GetDatabaseTemplates) | **Get** /database-templates | Retrieve the list of database templates.
 [**ImportDatabaseTemplates**](DatabaseTemplatesApi.md#ImportDatabaseTemplates) | **Post** /database-templates/import | Imports the database templates from an an engine.
 [**SearchDatabaseTemplates**](DatabaseTemplatesApi.md#SearchDatabaseTemplates) | **Post** /database-templates/search | Search DatabaseTemplates.
-[**UndoImportDatabaseTemplates**](DatabaseTemplatesApi.md#UndoImportDatabaseTemplates) | **Post** /database-templates/undo-import | Undo an import of DatabaseTemplates on a engine.
+[**UndoImportDatabaseTemplates**](DatabaseTemplatesApi.md#UndoImportDatabaseTemplates) | **Post** /database-templates/undo-import | Undo an import of DatabaseTemplates on an Engine.
 [**UpdateDatabaseTemplate**](DatabaseTemplatesApi.md#UpdateDatabaseTemplate) | **Patch** /database-templates/{databaseTemplateId} | Updates a DatabaseTemplate by ID
 
 
@@ -628,7 +628,7 @@ Name | Type | Description  | Notes
 
 > UndoImportDatabaseTemplates(ctx).EngineIdBody(engineIdBody).Execute()
 
-Undo an import of DatabaseTemplates on a engine.
+Undo an import of DatabaseTemplates on an Engine.
 
 ### Example
 

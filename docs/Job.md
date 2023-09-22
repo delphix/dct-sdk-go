@@ -6,14 +6,20 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The Job entity ID. | [optional] 
 **Status** | Pointer to **string** | The status of the job. | [optional] 
+**IsWaitingForTelemetry** | Pointer to **bool** | Indicates that the operations performed by this Job have completed successfully, but the object changes are not yet reflected. This is only set when when the JOB is in STARTED status, with the guarantee that the job will not transition to the FAILED status. Note that this flag will likely be replaced with a new status in future API versions and be deprecated. | [optional] 
 **Type** | Pointer to **string** | The type of job being done. | [optional] 
+**LocalizedType** | Pointer to **string** | The i18n translated type of job being done. | [optional] 
 **ErrorDetails** | Pointer to **string** | Details about the failure for FAILED jobs. | [optional] 
 **WarningMessage** | Pointer to **string** | Warnings for the job. | [optional] 
 **TargetId** | Pointer to **string** | A reference to the job&#39;s target. | [optional] 
 **StartTime** | Pointer to **time.Time** | The time the job started executing. | [optional] 
 **UpdateTime** | Pointer to **time.Time** | The time the job was last updated. | [optional] 
 **TraceId** | Pointer to **string** | traceId of the request which created this Job | [optional] 
+**EngineIds** | Pointer to **[]string** | IDs of the engines this Job is executing on. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
+**Engines** | Pointer to [**[]Engine**](Engine.md) |  | [optional] 
+**AccountId** | Pointer to **int32** | The ID of the account who initiated this job. | [optional] 
+**AccountName** | Pointer to **string** | The account name which initiated this job. It can be either firstname and lastname combination or firstname or lastname or username or email address or Account-&lt;id&gt;. | [optional] 
 
 ## Methods
 
@@ -84,6 +90,31 @@ SetStatus sets Status field to given value.
 
 HasStatus returns a boolean if a field has been set.
 
+### GetIsWaitingForTelemetry
+
+`func (o *Job) GetIsWaitingForTelemetry() bool`
+
+GetIsWaitingForTelemetry returns the IsWaitingForTelemetry field if non-nil, zero value otherwise.
+
+### GetIsWaitingForTelemetryOk
+
+`func (o *Job) GetIsWaitingForTelemetryOk() (*bool, bool)`
+
+GetIsWaitingForTelemetryOk returns a tuple with the IsWaitingForTelemetry field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsWaitingForTelemetry
+
+`func (o *Job) SetIsWaitingForTelemetry(v bool)`
+
+SetIsWaitingForTelemetry sets IsWaitingForTelemetry field to given value.
+
+### HasIsWaitingForTelemetry
+
+`func (o *Job) HasIsWaitingForTelemetry() bool`
+
+HasIsWaitingForTelemetry returns a boolean if a field has been set.
+
 ### GetType
 
 `func (o *Job) GetType() string`
@@ -108,6 +139,31 @@ SetType sets Type field to given value.
 `func (o *Job) HasType() bool`
 
 HasType returns a boolean if a field has been set.
+
+### GetLocalizedType
+
+`func (o *Job) GetLocalizedType() string`
+
+GetLocalizedType returns the LocalizedType field if non-nil, zero value otherwise.
+
+### GetLocalizedTypeOk
+
+`func (o *Job) GetLocalizedTypeOk() (*string, bool)`
+
+GetLocalizedTypeOk returns a tuple with the LocalizedType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLocalizedType
+
+`func (o *Job) SetLocalizedType(v string)`
+
+SetLocalizedType sets LocalizedType field to given value.
+
+### HasLocalizedType
+
+`func (o *Job) HasLocalizedType() bool`
+
+HasLocalizedType returns a boolean if a field has been set.
 
 ### GetErrorDetails
 
@@ -259,6 +315,31 @@ SetTraceId sets TraceId field to given value.
 
 HasTraceId returns a boolean if a field has been set.
 
+### GetEngineIds
+
+`func (o *Job) GetEngineIds() []string`
+
+GetEngineIds returns the EngineIds field if non-nil, zero value otherwise.
+
+### GetEngineIdsOk
+
+`func (o *Job) GetEngineIdsOk() (*[]string, bool)`
+
+GetEngineIdsOk returns a tuple with the EngineIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEngineIds
+
+`func (o *Job) SetEngineIds(v []string)`
+
+SetEngineIds sets EngineIds field to given value.
+
+### HasEngineIds
+
+`func (o *Job) HasEngineIds() bool`
+
+HasEngineIds returns a boolean if a field has been set.
+
 ### GetTags
 
 `func (o *Job) GetTags() []Tag`
@@ -283,6 +364,81 @@ SetTags sets Tags field to given value.
 `func (o *Job) HasTags() bool`
 
 HasTags returns a boolean if a field has been set.
+
+### GetEngines
+
+`func (o *Job) GetEngines() []Engine`
+
+GetEngines returns the Engines field if non-nil, zero value otherwise.
+
+### GetEnginesOk
+
+`func (o *Job) GetEnginesOk() (*[]Engine, bool)`
+
+GetEnginesOk returns a tuple with the Engines field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEngines
+
+`func (o *Job) SetEngines(v []Engine)`
+
+SetEngines sets Engines field to given value.
+
+### HasEngines
+
+`func (o *Job) HasEngines() bool`
+
+HasEngines returns a boolean if a field has been set.
+
+### GetAccountId
+
+`func (o *Job) GetAccountId() int32`
+
+GetAccountId returns the AccountId field if non-nil, zero value otherwise.
+
+### GetAccountIdOk
+
+`func (o *Job) GetAccountIdOk() (*int32, bool)`
+
+GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountId
+
+`func (o *Job) SetAccountId(v int32)`
+
+SetAccountId sets AccountId field to given value.
+
+### HasAccountId
+
+`func (o *Job) HasAccountId() bool`
+
+HasAccountId returns a boolean if a field has been set.
+
+### GetAccountName
+
+`func (o *Job) GetAccountName() string`
+
+GetAccountName returns the AccountName field if non-nil, zero value otherwise.
+
+### GetAccountNameOk
+
+`func (o *Job) GetAccountNameOk() (*string, bool)`
+
+GetAccountNameOk returns a tuple with the AccountName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountName
+
+`func (o *Job) SetAccountName(v string)`
+
+SetAccountName sets AccountName field to given value.
+
+### HasAccountName
+
+`func (o *Job) HasAccountName() bool`
+
+HasAccountName returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Items** | Pointer to [**[]ApiUsageData**](ApiUsageData.md) |  | [optional] 
 **TotalAutomationApiCount** | Pointer to **int64** | Total count of automation API calls over the requested timeframe. | [optional] 
-**TotalManagementApiCount** | Pointer to **int64** | Total count of management API calls over the requested timeframe. | [optional] 
+**TotalGovernanceApiCount** | Pointer to **int64** | Total count of governance API calls over the requested timeframe. | [optional] 
 
 ## Methods
 
@@ -77,30 +77,30 @@ SetTotalAutomationApiCount sets TotalAutomationApiCount field to given value.
 
 HasTotalAutomationApiCount returns a boolean if a field has been set.
 
-### GetTotalManagementApiCount
+### GetTotalGovernanceApiCount
 
-`func (o *ApiUsageReportResponse) GetTotalManagementApiCount() int64`
+`func (o *ApiUsageReportResponse) GetTotalGovernanceApiCount() int64`
 
-GetTotalManagementApiCount returns the TotalManagementApiCount field if non-nil, zero value otherwise.
+GetTotalGovernanceApiCount returns the TotalGovernanceApiCount field if non-nil, zero value otherwise.
 
-### GetTotalManagementApiCountOk
+### GetTotalGovernanceApiCountOk
 
-`func (o *ApiUsageReportResponse) GetTotalManagementApiCountOk() (*int64, bool)`
+`func (o *ApiUsageReportResponse) GetTotalGovernanceApiCountOk() (*int64, bool)`
 
-GetTotalManagementApiCountOk returns a tuple with the TotalManagementApiCount field if it's non-nil, zero value otherwise
+GetTotalGovernanceApiCountOk returns a tuple with the TotalGovernanceApiCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTotalManagementApiCount
+### SetTotalGovernanceApiCount
 
-`func (o *ApiUsageReportResponse) SetTotalManagementApiCount(v int64)`
+`func (o *ApiUsageReportResponse) SetTotalGovernanceApiCount(v int64)`
 
-SetTotalManagementApiCount sets TotalManagementApiCount field to given value.
+SetTotalGovernanceApiCount sets TotalGovernanceApiCount field to given value.
 
-### HasTotalManagementApiCount
+### HasTotalGovernanceApiCount
 
-`func (o *ApiUsageReportResponse) HasTotalManagementApiCount() bool`
+`func (o *ApiUsageReportResponse) HasTotalGovernanceApiCount() bool`
 
-HasTotalManagementApiCount returns a boolean if a field has been set.
+HasTotalGovernanceApiCount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

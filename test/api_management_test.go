@@ -191,6 +191,18 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test ManagementApiService GetProxyConfiguration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ManagementApi.GetProxyConfiguration(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ManagementApiService GetRegisteredEngine", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -277,6 +289,18 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test ManagementApiService SearchHashicorpVaults", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ManagementApi.SearchHashicorpVaults(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ManagementApiService UnregisterEngine", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -327,6 +351,18 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test ManagementApiService UpdateProxyConfiguration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ManagementApi.UpdateProxyConfiguration(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ManagementApiService UpdateRegisteredEngine", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -361,6 +397,19 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ManagementApiService ValidateJavaPath", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var engineId string
+
+		httpRes, err := apiClient.ManagementApi.ValidateJavaPath(context.Background(), engineId).Execute()
+
+		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

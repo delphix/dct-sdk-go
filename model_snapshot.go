@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -29,6 +29,12 @@ type Snapshot struct {
 	Namespace NullableString `json:"namespace,omitempty"`
 	// The snapshot's name.
 	Name *string `json:"name,omitempty"`
+	// The namespace id of this snapshot.
+	NamespaceId *string `json:"namespace_id,omitempty"`
+	// The namespace name of this snapshot.
+	NamespaceName *string `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica *bool `json:"is_replica,omitempty"`
 	// Indicates what type of recovery strategies must be invoked when provisioning from this snapshot.
 	Consistency *string `json:"consistency,omitempty"`
 	// Indicates if a virtual database provisioned from this snapshot will be missing nologging changes.
@@ -48,10 +54,14 @@ type Snapshot struct {
 	// Retention policy, in days. A value of -1 indicates the snapshot should be kept forever. Deprecated in favor of expiration and retain_forever.
 	// Deprecated
 	Retention *int64 `json:"retention,omitempty"`
-	// The expiration date of this snapshot. If this is unset and retain_forever is false, the snapshot is subject to the retention policy of its dataset.
+	// The expiration date of this snapshot. If this is unset and retain_forever is false, and the snapshot is not included in a Bookmark, the snapshot is subject to the retention policy of its dataset.
 	Expiration *string `json:"expiration,omitempty"`
 	// Indicates that the snapshot is protected from retention, i.e it will be kept forever. If false, see expiration.
 	RetainForever *bool `json:"retain_forever,omitempty"`
+	// The effective expiration is that max of the snapshot expiration and the expiration of any Bookmark which includes this snapshot.
+	EffectiveExpiration *string `json:"effective_expiration,omitempty"`
+	// True if retain_forever is set or a Bookmark retains this snapshot forever.
+	EffectiveRetainForever *bool `json:"effective_retain_forever,omitempty"`
 	// The TimeFlow this snapshot was taken on.
 	TimeflowId *string `json:"timeflow_id,omitempty"`
 	// Time zone of the source database at the time the snapshot was taken.
@@ -236,6 +246,102 @@ func (o *Snapshot) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Snapshot) SetName(v string) {
 	o.Name = &v
+}
+
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
+func (o *Snapshot) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetNamespaceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceId) {
+		return nil, false
+	}
+	return o.NamespaceId, true
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *Snapshot) HasNamespaceId() bool {
+	if o != nil && !IsNil(o.NamespaceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given string and assigns it to the NamespaceId field.
+func (o *Snapshot) SetNamespaceId(v string) {
+	o.NamespaceId = &v
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise.
+func (o *Snapshot) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetNamespaceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceName) {
+		return nil, false
+	}
+	return o.NamespaceName, true
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *Snapshot) HasNamespaceName() bool {
+	if o != nil && !IsNil(o.NamespaceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given string and assigns it to the NamespaceName field.
+func (o *Snapshot) SetNamespaceName(v string) {
+	o.NamespaceName = &v
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *Snapshot) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *Snapshot) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *Snapshot) SetIsReplica(v bool) {
+	o.IsReplica = &v
 }
 
 // GetConsistency returns the Consistency field value if set, zero value otherwise.
@@ -591,6 +697,70 @@ func (o *Snapshot) HasRetainForever() bool {
 // SetRetainForever gets a reference to the given bool and assigns it to the RetainForever field.
 func (o *Snapshot) SetRetainForever(v bool) {
 	o.RetainForever = &v
+}
+
+// GetEffectiveExpiration returns the EffectiveExpiration field value if set, zero value otherwise.
+func (o *Snapshot) GetEffectiveExpiration() string {
+	if o == nil || IsNil(o.EffectiveExpiration) {
+		var ret string
+		return ret
+	}
+	return *o.EffectiveExpiration
+}
+
+// GetEffectiveExpirationOk returns a tuple with the EffectiveExpiration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetEffectiveExpirationOk() (*string, bool) {
+	if o == nil || IsNil(o.EffectiveExpiration) {
+		return nil, false
+	}
+	return o.EffectiveExpiration, true
+}
+
+// HasEffectiveExpiration returns a boolean if a field has been set.
+func (o *Snapshot) HasEffectiveExpiration() bool {
+	if o != nil && !IsNil(o.EffectiveExpiration) {
+		return true
+	}
+
+	return false
+}
+
+// SetEffectiveExpiration gets a reference to the given string and assigns it to the EffectiveExpiration field.
+func (o *Snapshot) SetEffectiveExpiration(v string) {
+	o.EffectiveExpiration = &v
+}
+
+// GetEffectiveRetainForever returns the EffectiveRetainForever field value if set, zero value otherwise.
+func (o *Snapshot) GetEffectiveRetainForever() bool {
+	if o == nil || IsNil(o.EffectiveRetainForever) {
+		var ret bool
+		return ret
+	}
+	return *o.EffectiveRetainForever
+}
+
+// GetEffectiveRetainForeverOk returns a tuple with the EffectiveRetainForever field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Snapshot) GetEffectiveRetainForeverOk() (*bool, bool) {
+	if o == nil || IsNil(o.EffectiveRetainForever) {
+		return nil, false
+	}
+	return o.EffectiveRetainForever, true
+}
+
+// HasEffectiveRetainForever returns a boolean if a field has been set.
+func (o *Snapshot) HasEffectiveRetainForever() bool {
+	if o != nil && !IsNil(o.EffectiveRetainForever) {
+		return true
+	}
+
+	return false
+}
+
+// SetEffectiveRetainForever gets a reference to the given bool and assigns it to the EffectiveRetainForever field.
+func (o *Snapshot) SetEffectiveRetainForever(v bool) {
+	o.EffectiveRetainForever = &v
 }
 
 // GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
@@ -1105,6 +1275,15 @@ func (o Snapshot) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.NamespaceId) {
+		toSerialize["namespace_id"] = o.NamespaceId
+	}
+	if !IsNil(o.NamespaceName) {
+		toSerialize["namespace_name"] = o.NamespaceName
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
+	}
 	if !IsNil(o.Consistency) {
 		toSerialize["consistency"] = o.Consistency
 	}
@@ -1137,6 +1316,12 @@ func (o Snapshot) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RetainForever) {
 		toSerialize["retain_forever"] = o.RetainForever
+	}
+	if !IsNil(o.EffectiveExpiration) {
+		toSerialize["effective_expiration"] = o.EffectiveExpiration
+	}
+	if !IsNil(o.EffectiveRetainForever) {
+		toSerialize["effective_retain_forever"] = o.EffectiveRetainForever
 	}
 	if !IsNil(o.TimeflowId) {
 		toSerialize["timeflow_id"] = o.TimeflowId

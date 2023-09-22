@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**CancelExecution**](ExecutionsApi.md#CancelExecution) | **Post** /executions/{executionId}/cancel | Cancel an Execution.
 [**GetExecutionById**](ExecutionsApi.md#GetExecutionById) | **Get** /executions/{executionId} | Retrieve an Execution by ID.
 [**GetExecutionEvents**](ExecutionsApi.md#GetExecutionEvents) | **Get** /executions/{executionId}/events | Retrieve the list of events for a masking execution.
+[**GetExecutionLog**](ExecutionsApi.md#GetExecutionLog) | **Get** /executions/{executionId}/log | Retrieve the masking execution log.
 [**GetExecutions**](ExecutionsApi.md#GetExecutions) | **Get** /executions | Retrieve the list of masking executions.
 [**SearchExecutionEvents**](ExecutionsApi.md#SearchExecutionEvents) | **Post** /executions/{executionId}/events/search | Search masking executions events.
 [**SearchExecutions**](ExecutionsApi.md#SearchExecutions) | **Post** /executions/search | Search masking executions.
@@ -208,6 +209,74 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListExecutionEventsResponse**](ListExecutionEventsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetExecutionLog
+
+> ExecutionLog GetExecutionLog(ctx, executionId).Execute()
+
+Retrieve the masking execution log.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    executionId := "executionId_example" // string | The ID of the Execution.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ExecutionsApi.GetExecutionLog(context.Background(), executionId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ExecutionsApi.GetExecutionLog``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetExecutionLog`: ExecutionLog
+    fmt.Fprintf(os.Stdout, "Response from `ExecutionsApi.GetExecutionLog`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**executionId** | **string** | The ID of the Execution. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetExecutionLogRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ExecutionLog**](ExecutionLog.md)
 
 ### Authorization
 

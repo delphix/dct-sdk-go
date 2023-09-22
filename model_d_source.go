@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -27,6 +27,12 @@ type DSource struct {
 	DatabaseType NullableString `json:"database_type,omitempty"`
 	// The container name of this dSource.
 	Name NullableString `json:"name,omitempty"`
+	// The namespace id of this dSource.
+	NamespaceId NullableString `json:"namespace_id,omitempty"`
+	// The namespace name of this dSource.
+	NamespaceName NullableString `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica NullableBool `json:"is_replica,omitempty"`
 	// The database version of this dSource.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
 	// The content type of the dSource.
@@ -57,6 +63,8 @@ type DSource struct {
 	CurrentTimeflowId *string `json:"current_timeflow_id,omitempty"`
 	// A reference to the previous timeflow for this dSource.
 	PreviousTimeflowId *string `json:"previous_timeflow_id,omitempty"`
+	// Indicates whether this dSource has an AppData database.
+	IsAppdata *bool `json:"is_appdata,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -191,6 +199,132 @@ func (o *DSource) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *DSource) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId.Get()
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetNamespaceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NamespaceId.Get(), o.NamespaceId.IsSet()
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *DSource) HasNamespaceId() bool {
+	if o != nil && o.NamespaceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given NullableString and assigns it to the NamespaceId field.
+func (o *DSource) SetNamespaceId(v string) {
+	o.NamespaceId.Set(&v)
+}
+// SetNamespaceIdNil sets the value for NamespaceId to be an explicit nil
+func (o *DSource) SetNamespaceIdNil() {
+	o.NamespaceId.Set(nil)
+}
+
+// UnsetNamespaceId ensures that no value is present for NamespaceId, not even an explicit nil
+func (o *DSource) UnsetNamespaceId() {
+	o.NamespaceId.Unset()
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName.Get()
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetNamespaceNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NamespaceName.Get(), o.NamespaceName.IsSet()
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *DSource) HasNamespaceName() bool {
+	if o != nil && o.NamespaceName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given NullableString and assigns it to the NamespaceName field.
+func (o *DSource) SetNamespaceName(v string) {
+	o.NamespaceName.Set(&v)
+}
+// SetNamespaceNameNil sets the value for NamespaceName to be an explicit nil
+func (o *DSource) SetNamespaceNameNil() {
+	o.NamespaceName.Set(nil)
+}
+
+// UnsetNamespaceName ensures that no value is present for NamespaceName, not even an explicit nil
+func (o *DSource) UnsetNamespaceName() {
+	o.NamespaceName.Unset()
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica.Get()
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetIsReplicaOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsReplica.Get(), o.IsReplica.IsSet()
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *DSource) HasIsReplica() bool {
+	if o != nil && o.IsReplica.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given NullableBool and assigns it to the IsReplica field.
+func (o *DSource) SetIsReplica(v bool) {
+	o.IsReplica.Set(&v)
+}
+// SetIsReplicaNil sets the value for IsReplica to be an explicit nil
+func (o *DSource) SetIsReplicaNil() {
+	o.IsReplica.Set(nil)
+}
+
+// UnsetIsReplica ensures that no value is present for IsReplica, not even an explicit nil
+func (o *DSource) UnsetIsReplica() {
+	o.IsReplica.Unset()
 }
 
 // GetDatabaseVersion returns the DatabaseVersion field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -793,6 +927,38 @@ func (o *DSource) SetPreviousTimeflowId(v string) {
 	o.PreviousTimeflowId = &v
 }
 
+// GetIsAppdata returns the IsAppdata field value if set, zero value otherwise.
+func (o *DSource) GetIsAppdata() bool {
+	if o == nil || IsNil(o.IsAppdata) {
+		var ret bool
+		return ret
+	}
+	return *o.IsAppdata
+}
+
+// GetIsAppdataOk returns a tuple with the IsAppdata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetIsAppdataOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsAppdata) {
+		return nil, false
+	}
+	return o.IsAppdata, true
+}
+
+// HasIsAppdata returns a boolean if a field has been set.
+func (o *DSource) HasIsAppdata() bool {
+	if o != nil && !IsNil(o.IsAppdata) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsAppdata gets a reference to the given bool and assigns it to the IsAppdata field.
+func (o *DSource) SetIsAppdata(v bool) {
+	o.IsAppdata = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *DSource) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -844,6 +1010,15 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
 	}
+	if o.NamespaceId.IsSet() {
+		toSerialize["namespace_id"] = o.NamespaceId.Get()
+	}
+	if o.NamespaceName.IsSet() {
+		toSerialize["namespace_name"] = o.NamespaceName.Get()
+	}
+	if o.IsReplica.IsSet() {
+		toSerialize["is_replica"] = o.IsReplica.Get()
+	}
 	if o.DatabaseVersion.IsSet() {
 		toSerialize["database_version"] = o.DatabaseVersion.Get()
 	}
@@ -888,6 +1063,9 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PreviousTimeflowId) {
 		toSerialize["previous_timeflow_id"] = o.PreviousTimeflowId
+	}
+	if !IsNil(o.IsAppdata) {
+		toSerialize["is_appdata"] = o.IsAppdata
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

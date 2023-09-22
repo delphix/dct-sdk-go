@@ -7,11 +7,19 @@ Name | Type | Description | Notes
 **Id** | Pointer to **string** | The VDB object entity ID. | [optional] 
 **DatabaseType** | Pointer to **NullableString** | The database type of this VDB. | [optional] 
 **Name** | Pointer to **NullableString** | The container name of this VDB. | [optional] 
+**NamespaceId** | Pointer to **string** | The namespace id of this VDB. | [optional] 
+**NamespaceName** | Pointer to **string** | The namespace name of this VDB. | [optional] 
+**IsReplica** | Pointer to **bool** | Is this a replicated object. | [optional] 
+**IsLocked** | Pointer to **bool** | Is this VDB locked. | [optional] 
+**LockedBy** | Pointer to **int64** | The ID of the account that locked this VDB. | [optional] 
+**LockedByName** | Pointer to **string** | The name of the account that locked this VDB. | [optional] 
 **DatabaseVersion** | Pointer to **NullableString** | The database version of this VDB. | [optional] 
 **Size** | Pointer to **NullableInt64** | The total size of this VDB, in bytes. | [optional] 
+**StorageSize** | Pointer to **NullableInt64** | The actual space used by this VDB, in bytes. | [optional] 
 **EngineId** | Pointer to **string** | A reference to the Engine that this VDB belongs to. | [optional] 
 **Status** | Pointer to **NullableString** | The runtime status of the VDB. &#39;Unknown&#39; if all attempts to connect to the dataset failed. | [optional] 
 **Masked** | Pointer to **NullableBool** | The VDB is masked or not. | [optional] 
+**ContentType** | Pointer to **NullableString** | The content type of the vdb. | [optional] 
 **ParentTimeflowTimestamp** | Pointer to **NullableTime** | The timestamp for parent timeflow. | [optional] 
 **ParentTimeflowTimezone** | Pointer to **NullableString** | The timezone for parent timeflow. | [optional] 
 **EnvironmentId** | Pointer to **NullableString** | A reference to the Environment that hosts this VDB. | [optional] 
@@ -33,6 +41,10 @@ Name | Type | Description | Notes
 **MountPoint** | Pointer to **string** | Mount point for the VDB (Oracle, ASE, AppData). | [optional] 
 **CurrentTimeflowId** | Pointer to **string** | A reference to the currently active timeflow for this VDB. | [optional] 
 **PreviousTimeflowId** | Pointer to **string** | A reference to the previous timeflow for this VDB. | [optional] 
+**LastRefreshedDate** | Pointer to **NullableTime** | The date this VDB was last refreshed. | [optional] 
+**VdbRestart** | Pointer to **bool** | Indicates whether the Engine should automatically restart this vdb when target host reboot is detected. | [optional] 
+**IsAppdata** | Pointer to **bool** | Indicates whether this VDB has an AppData database. | [optional] 
+**PluginVersion** | Pointer to **NullableString** | The version of the plugin associated with this VDB. | [optional] 
 
 ## Methods
 
@@ -148,6 +160,156 @@ HasName returns a boolean if a field has been set.
 `func (o *VDB) UnsetName()`
 
 UnsetName ensures that no value is present for Name, not even an explicit nil
+### GetNamespaceId
+
+`func (o *VDB) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *VDB) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *VDB) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *VDB) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### GetNamespaceName
+
+`func (o *VDB) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *VDB) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *VDB) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *VDB) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### GetIsReplica
+
+`func (o *VDB) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *VDB) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *VDB) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *VDB) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
+
+### GetIsLocked
+
+`func (o *VDB) GetIsLocked() bool`
+
+GetIsLocked returns the IsLocked field if non-nil, zero value otherwise.
+
+### GetIsLockedOk
+
+`func (o *VDB) GetIsLockedOk() (*bool, bool)`
+
+GetIsLockedOk returns a tuple with the IsLocked field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsLocked
+
+`func (o *VDB) SetIsLocked(v bool)`
+
+SetIsLocked sets IsLocked field to given value.
+
+### HasIsLocked
+
+`func (o *VDB) HasIsLocked() bool`
+
+HasIsLocked returns a boolean if a field has been set.
+
+### GetLockedBy
+
+`func (o *VDB) GetLockedBy() int64`
+
+GetLockedBy returns the LockedBy field if non-nil, zero value otherwise.
+
+### GetLockedByOk
+
+`func (o *VDB) GetLockedByOk() (*int64, bool)`
+
+GetLockedByOk returns a tuple with the LockedBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLockedBy
+
+`func (o *VDB) SetLockedBy(v int64)`
+
+SetLockedBy sets LockedBy field to given value.
+
+### HasLockedBy
+
+`func (o *VDB) HasLockedBy() bool`
+
+HasLockedBy returns a boolean if a field has been set.
+
+### GetLockedByName
+
+`func (o *VDB) GetLockedByName() string`
+
+GetLockedByName returns the LockedByName field if non-nil, zero value otherwise.
+
+### GetLockedByNameOk
+
+`func (o *VDB) GetLockedByNameOk() (*string, bool)`
+
+GetLockedByNameOk returns a tuple with the LockedByName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLockedByName
+
+`func (o *VDB) SetLockedByName(v string)`
+
+SetLockedByName sets LockedByName field to given value.
+
+### HasLockedByName
+
+`func (o *VDB) HasLockedByName() bool`
+
+HasLockedByName returns a boolean if a field has been set.
+
 ### GetDatabaseVersion
 
 `func (o *VDB) GetDatabaseVersion() string`
@@ -218,6 +380,41 @@ HasSize returns a boolean if a field has been set.
 `func (o *VDB) UnsetSize()`
 
 UnsetSize ensures that no value is present for Size, not even an explicit nil
+### GetStorageSize
+
+`func (o *VDB) GetStorageSize() int64`
+
+GetStorageSize returns the StorageSize field if non-nil, zero value otherwise.
+
+### GetStorageSizeOk
+
+`func (o *VDB) GetStorageSizeOk() (*int64, bool)`
+
+GetStorageSizeOk returns a tuple with the StorageSize field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStorageSize
+
+`func (o *VDB) SetStorageSize(v int64)`
+
+SetStorageSize sets StorageSize field to given value.
+
+### HasStorageSize
+
+`func (o *VDB) HasStorageSize() bool`
+
+HasStorageSize returns a boolean if a field has been set.
+
+### SetStorageSizeNil
+
+`func (o *VDB) SetStorageSizeNil(b bool)`
+
+ SetStorageSizeNil sets the value for StorageSize to be an explicit nil
+
+### UnsetStorageSize
+`func (o *VDB) UnsetStorageSize()`
+
+UnsetStorageSize ensures that no value is present for StorageSize, not even an explicit nil
 ### GetEngineId
 
 `func (o *VDB) GetEngineId() string`
@@ -313,6 +510,41 @@ HasMasked returns a boolean if a field has been set.
 `func (o *VDB) UnsetMasked()`
 
 UnsetMasked ensures that no value is present for Masked, not even an explicit nil
+### GetContentType
+
+`func (o *VDB) GetContentType() string`
+
+GetContentType returns the ContentType field if non-nil, zero value otherwise.
+
+### GetContentTypeOk
+
+`func (o *VDB) GetContentTypeOk() (*string, bool)`
+
+GetContentTypeOk returns a tuple with the ContentType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContentType
+
+`func (o *VDB) SetContentType(v string)`
+
+SetContentType sets ContentType field to given value.
+
+### HasContentType
+
+`func (o *VDB) HasContentType() bool`
+
+HasContentType returns a boolean if a field has been set.
+
+### SetContentTypeNil
+
+`func (o *VDB) SetContentTypeNil(b bool)`
+
+ SetContentTypeNil sets the value for ContentType to be an explicit nil
+
+### UnsetContentType
+`func (o *VDB) UnsetContentType()`
+
+UnsetContentType ensures that no value is present for ContentType, not even an explicit nil
 ### GetParentTimeflowTimestamp
 
 `func (o *VDB) GetParentTimeflowTimestamp() time.Time`
@@ -998,6 +1230,126 @@ SetPreviousTimeflowId sets PreviousTimeflowId field to given value.
 
 HasPreviousTimeflowId returns a boolean if a field has been set.
 
+### GetLastRefreshedDate
+
+`func (o *VDB) GetLastRefreshedDate() time.Time`
+
+GetLastRefreshedDate returns the LastRefreshedDate field if non-nil, zero value otherwise.
+
+### GetLastRefreshedDateOk
+
+`func (o *VDB) GetLastRefreshedDateOk() (*time.Time, bool)`
+
+GetLastRefreshedDateOk returns a tuple with the LastRefreshedDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastRefreshedDate
+
+`func (o *VDB) SetLastRefreshedDate(v time.Time)`
+
+SetLastRefreshedDate sets LastRefreshedDate field to given value.
+
+### HasLastRefreshedDate
+
+`func (o *VDB) HasLastRefreshedDate() bool`
+
+HasLastRefreshedDate returns a boolean if a field has been set.
+
+### SetLastRefreshedDateNil
+
+`func (o *VDB) SetLastRefreshedDateNil(b bool)`
+
+ SetLastRefreshedDateNil sets the value for LastRefreshedDate to be an explicit nil
+
+### UnsetLastRefreshedDate
+`func (o *VDB) UnsetLastRefreshedDate()`
+
+UnsetLastRefreshedDate ensures that no value is present for LastRefreshedDate, not even an explicit nil
+### GetVdbRestart
+
+`func (o *VDB) GetVdbRestart() bool`
+
+GetVdbRestart returns the VdbRestart field if non-nil, zero value otherwise.
+
+### GetVdbRestartOk
+
+`func (o *VDB) GetVdbRestartOk() (*bool, bool)`
+
+GetVdbRestartOk returns a tuple with the VdbRestart field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVdbRestart
+
+`func (o *VDB) SetVdbRestart(v bool)`
+
+SetVdbRestart sets VdbRestart field to given value.
+
+### HasVdbRestart
+
+`func (o *VDB) HasVdbRestart() bool`
+
+HasVdbRestart returns a boolean if a field has been set.
+
+### GetIsAppdata
+
+`func (o *VDB) GetIsAppdata() bool`
+
+GetIsAppdata returns the IsAppdata field if non-nil, zero value otherwise.
+
+### GetIsAppdataOk
+
+`func (o *VDB) GetIsAppdataOk() (*bool, bool)`
+
+GetIsAppdataOk returns a tuple with the IsAppdata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsAppdata
+
+`func (o *VDB) SetIsAppdata(v bool)`
+
+SetIsAppdata sets IsAppdata field to given value.
+
+### HasIsAppdata
+
+`func (o *VDB) HasIsAppdata() bool`
+
+HasIsAppdata returns a boolean if a field has been set.
+
+### GetPluginVersion
+
+`func (o *VDB) GetPluginVersion() string`
+
+GetPluginVersion returns the PluginVersion field if non-nil, zero value otherwise.
+
+### GetPluginVersionOk
+
+`func (o *VDB) GetPluginVersionOk() (*string, bool)`
+
+GetPluginVersionOk returns a tuple with the PluginVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPluginVersion
+
+`func (o *VDB) SetPluginVersion(v string)`
+
+SetPluginVersion sets PluginVersion field to given value.
+
+### HasPluginVersion
+
+`func (o *VDB) HasPluginVersion() bool`
+
+HasPluginVersion returns a boolean if a field has been set.
+
+### SetPluginVersionNil
+
+`func (o *VDB) SetPluginVersionNil(b bool)`
+
+ SetPluginVersionNil sets the value for PluginVersion to be an explicit nil
+
+### UnsetPluginVersion
+`func (o *VDB) UnsetPluginVersion()`
+
+UnsetPluginVersion ensures that no value is present for PluginVersion, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

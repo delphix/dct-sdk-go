@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **MssqlClusterInstancesName** | Pointer to **[]string** | MSSQL cluster instances name. | [optional] 
 **MssqlClusterInstancesVersion** | Pointer to **[]string** | MSSQL cluster instances version. | [optional] 
 **InstallationHome** | Pointer to **string** | Directory where the installation home is located. | [optional] 
+**DriveLetter** | Pointer to **[]string** | MSSQL failover cluster drive letter. | [optional] 
 
 ## Methods
 
@@ -569,6 +570,31 @@ SetInstallationHome sets InstallationHome field to given value.
 `func (o *Repository) HasInstallationHome() bool`
 
 HasInstallationHome returns a boolean if a field has been set.
+
+### GetDriveLetter
+
+`func (o *Repository) GetDriveLetter() []string`
+
+GetDriveLetter returns the DriveLetter field if non-nil, zero value otherwise.
+
+### GetDriveLetterOk
+
+`func (o *Repository) GetDriveLetterOk() (*[]string, bool)`
+
+GetDriveLetterOk returns a tuple with the DriveLetter field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDriveLetter
+
+`func (o *Repository) SetDriveLetter(v []string)`
+
+SetDriveLetter sets DriveLetter field to given value.
+
+### HasDriveLetter
+
+`func (o *Repository) HasDriveLetter() bool`
+
+HasDriveLetter returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

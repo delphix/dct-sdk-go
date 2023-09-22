@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -651,6 +651,154 @@ func (a *VDBsApiService) EnableVdbExecute(r ApiEnableVdbRequest) (*EnableVDBResp
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetBookmarksByVdbRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	vdbId string
+	limit *int32
+	cursor *string
+	sort *string
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetBookmarksByVdbRequest) Limit(limit int32) ApiGetBookmarksByVdbRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetBookmarksByVdbRequest) Cursor(cursor string) ApiGetBookmarksByVdbRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetBookmarksByVdbRequest) Sort(sort string) ApiGetBookmarksByVdbRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiGetBookmarksByVdbRequest) Execute() (*ListBookmarksByVDBResponse, *http.Response, error) {
+	return r.ApiService.GetBookmarksByVdbExecute(r)
+}
+
+/*
+GetBookmarksByVdb List Bookmarks compatible with this VDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbId The ID of the VDB.
+ @return ApiGetBookmarksByVdbRequest
+*/
+func (a *VDBsApiService) GetBookmarksByVdb(ctx context.Context, vdbId string) ApiGetBookmarksByVdbRequest {
+	return ApiGetBookmarksByVdbRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbId: vdbId,
+	}
+}
+
+// Execute executes the request
+//  @return ListBookmarksByVDBResponse
+func (a *VDBsApiService) GetBookmarksByVdbExecute(r ApiGetBookmarksByVdbRequest) (*ListBookmarksByVDBResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListBookmarksByVDBResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.GetBookmarksByVdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/{vdbId}/bookmarks"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbId must have at least 1 elements")
+	}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetTagsVdbRequest struct {
 	ctx context.Context
 	ApiService *VDBsApiService
@@ -1125,6 +1273,382 @@ func (a *VDBsApiService) GetVdbsExecute(r ApiGetVdbsRequest) (*ListVDBsResponse,
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiLockVdbRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	vdbId string
+	lockVDBParameters *LockVDBParameters
+}
+
+// The parameters to lock a VDB.
+func (r ApiLockVdbRequest) LockVDBParameters(lockVDBParameters LockVDBParameters) ApiLockVdbRequest {
+	r.lockVDBParameters = &lockVDBParameters
+	return r
+}
+
+func (r ApiLockVdbRequest) Execute() (*VDB, *http.Response, error) {
+	return r.ApiService.LockVdbExecute(r)
+}
+
+/*
+LockVdb Lock a VDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbId The ID of the VDB.
+ @return ApiLockVdbRequest
+*/
+func (a *VDBsApiService) LockVdb(ctx context.Context, vdbId string) ApiLockVdbRequest {
+	return ApiLockVdbRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbId: vdbId,
+	}
+}
+
+// Execute executes the request
+//  @return VDB
+func (a *VDBsApiService) LockVdbExecute(r ApiLockVdbRequest) (*VDB, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *VDB
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.LockVdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/{vdbId}/lock"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbId must have at least 1 elements")
+	}
+	if r.lockVDBParameters == nil {
+		return localVarReturnValue, nil, reportError("lockVDBParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.lockVDBParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiProvisionVdbByLocationRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	provisionVDBByLocationParameters *ProvisionVDBByLocationParameters
+}
+
+// The parameters to provision a VDB.
+func (r ApiProvisionVdbByLocationRequest) ProvisionVDBByLocationParameters(provisionVDBByLocationParameters ProvisionVDBByLocationParameters) ApiProvisionVdbByLocationRequest {
+	r.provisionVDBByLocationParameters = &provisionVDBByLocationParameters
+	return r
+}
+
+func (r ApiProvisionVdbByLocationRequest) Execute() (*ProvisionVDBResponse, *http.Response, error) {
+	return r.ApiService.ProvisionVdbByLocationExecute(r)
+}
+
+/*
+ProvisionVdbByLocation Provision a new VDB by location.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiProvisionVdbByLocationRequest
+*/
+func (a *VDBsApiService) ProvisionVdbByLocation(ctx context.Context) ApiProvisionVdbByLocationRequest {
+	return ApiProvisionVdbByLocationRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ProvisionVDBResponse
+func (a *VDBsApiService) ProvisionVdbByLocationExecute(r ApiProvisionVdbByLocationRequest) (*ProvisionVDBResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProvisionVDBResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.ProvisionVdbByLocation")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/provision_by_location"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.provisionVDBByLocationParameters == nil {
+		return localVarReturnValue, nil, reportError("provisionVDBByLocationParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.provisionVDBByLocationParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiProvisionVdbByLocationDefaultsRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	provisionVDBByLocationDefaultsRequest *ProvisionVDBByLocationDefaultsRequest
+}
+
+// The request to get default VDB provision parameters for provisioning a new VDB by location.
+func (r ApiProvisionVdbByLocationDefaultsRequest) ProvisionVDBByLocationDefaultsRequest(provisionVDBByLocationDefaultsRequest ProvisionVDBByLocationDefaultsRequest) ApiProvisionVdbByLocationDefaultsRequest {
+	r.provisionVDBByLocationDefaultsRequest = &provisionVDBByLocationDefaultsRequest
+	return r
+}
+
+func (r ApiProvisionVdbByLocationDefaultsRequest) Execute() (*ProvisionVDBByLocationParameters, *http.Response, error) {
+	return r.ApiService.ProvisionVdbByLocationDefaultsExecute(r)
+}
+
+/*
+ProvisionVdbByLocationDefaults Get default provision parameters for provisioning a new VDB by location.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiProvisionVdbByLocationDefaultsRequest
+*/
+func (a *VDBsApiService) ProvisionVdbByLocationDefaults(ctx context.Context) ApiProvisionVdbByLocationDefaultsRequest {
+	return ApiProvisionVdbByLocationDefaultsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ProvisionVDBByLocationParameters
+func (a *VDBsApiService) ProvisionVdbByLocationDefaultsExecute(r ApiProvisionVdbByLocationDefaultsRequest) (*ProvisionVDBByLocationParameters, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProvisionVDBByLocationParameters
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.ProvisionVdbByLocationDefaults")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/provision_by_location/defaults"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.provisionVDBByLocationDefaultsRequest == nil {
+		return localVarReturnValue, nil, reportError("provisionVDBByLocationDefaultsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.provisionVDBByLocationDefaultsRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2445,6 +2969,8 @@ RollbackVdbBySnapshot Rollback a VDB by snapshot.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbId The ID of the VDB.
  @return ApiRollbackVdbBySnapshotRequest
+
+Deprecated
 */
 func (a *VDBsApiService) RollbackVdbBySnapshot(ctx context.Context, vdbId string) ApiRollbackVdbBySnapshotRequest {
 	return ApiRollbackVdbBySnapshotRequest{
@@ -2456,6 +2982,7 @@ func (a *VDBsApiService) RollbackVdbBySnapshot(ctx context.Context, vdbId string
 
 // Execute executes the request
 //  @return RollbackVDBBySnapshotResponse
+// Deprecated
 func (a *VDBsApiService) RollbackVdbBySnapshotExecute(r ApiRollbackVdbBySnapshotRequest) (*RollbackVDBBySnapshotResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
@@ -2572,6 +3099,8 @@ RollbackVdbByTimestamp Rollback a VDB by timestamp.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbId The ID of the VDB.
  @return ApiRollbackVdbByTimestampRequest
+
+Deprecated
 */
 func (a *VDBsApiService) RollbackVdbByTimestamp(ctx context.Context, vdbId string) ApiRollbackVdbByTimestampRequest {
 	return ApiRollbackVdbByTimestampRequest{
@@ -2583,6 +3112,7 @@ func (a *VDBsApiService) RollbackVdbByTimestamp(ctx context.Context, vdbId strin
 
 // Execute executes the request
 //  @return RollbackVDBByTimestampResponse
+// Deprecated
 func (a *VDBsApiService) RollbackVdbByTimestampExecute(r ApiRollbackVdbByTimestampRequest) (*RollbackVDBByTimestampResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
@@ -2699,6 +3229,8 @@ RollbackVdbFromBookmark Rollback a VDB from a bookmark with only the same VDB.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbId The ID of the VDB.
  @return ApiRollbackVdbFromBookmarkRequest
+
+Deprecated
 */
 func (a *VDBsApiService) RollbackVdbFromBookmark(ctx context.Context, vdbId string) ApiRollbackVdbFromBookmarkRequest {
 	return ApiRollbackVdbFromBookmarkRequest{
@@ -2710,6 +3242,7 @@ func (a *VDBsApiService) RollbackVdbFromBookmark(ctx context.Context, vdbId stri
 
 // Execute executes the request
 //  @return RollbackVDBFromBookmarkResponse
+// Deprecated
 func (a *VDBsApiService) RollbackVdbFromBookmarkExecute(r ApiRollbackVdbFromBookmarkRequest) (*RollbackVDBFromBookmarkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
@@ -2752,6 +3285,163 @@ func (a *VDBsApiService) RollbackVdbFromBookmarkExecute(r ApiRollbackVdbFromBook
 	}
 	// body params
 	localVarPostBody = r.rollbackVDBFromBookmarkParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSearchBookmarksByVdbRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	vdbId string
+	limit *int32
+	cursor *string
+	sort *string
+	searchBody *SearchBody
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiSearchBookmarksByVdbRequest) Limit(limit int32) ApiSearchBookmarksByVdbRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiSearchBookmarksByVdbRequest) Cursor(cursor string) ApiSearchBookmarksByVdbRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiSearchBookmarksByVdbRequest) Sort(sort string) ApiSearchBookmarksByVdbRequest {
+	r.sort = &sort
+	return r
+}
+
+// A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression. 
+func (r ApiSearchBookmarksByVdbRequest) SearchBody(searchBody SearchBody) ApiSearchBookmarksByVdbRequest {
+	r.searchBody = &searchBody
+	return r
+}
+
+func (r ApiSearchBookmarksByVdbRequest) Execute() (*SearchBookmarksByVDBResponse, *http.Response, error) {
+	return r.ApiService.SearchBookmarksByVdbExecute(r)
+}
+
+/*
+SearchBookmarksByVdb Search Bookmarks compatible with this VDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbId The ID of the VDB.
+ @return ApiSearchBookmarksByVdbRequest
+*/
+func (a *VDBsApiService) SearchBookmarksByVdb(ctx context.Context, vdbId string) ApiSearchBookmarksByVdbRequest {
+	return ApiSearchBookmarksByVdbRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbId: vdbId,
+	}
+}
+
+// Execute executes the request
+//  @return SearchBookmarksByVDBResponse
+func (a *VDBsApiService) SearchBookmarksByVdbExecute(r ApiSearchBookmarksByVdbRequest) (*SearchBookmarksByVDBResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SearchBookmarksByVDBResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.SearchBookmarksByVdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/{vdbId}/bookmarks/search"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbId must have at least 1 elements")
+	}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.searchBody
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3393,6 +4083,124 @@ func (a *VDBsApiService) SwitchTimeflowExecute(r ApiSwitchTimeflowRequest) (*Swi
 	}
 	// body params
 	localVarPostBody = r.switchTimeflowParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUnlockVdbRequest struct {
+	ctx context.Context
+	ApiService *VDBsApiService
+	vdbId string
+}
+
+func (r ApiUnlockVdbRequest) Execute() (*VDB, *http.Response, error) {
+	return r.ApiService.UnlockVdbExecute(r)
+}
+
+/*
+UnlockVdb Unlock a VDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbId The ID of the VDB.
+ @return ApiUnlockVdbRequest
+*/
+func (a *VDBsApiService) UnlockVdb(ctx context.Context, vdbId string) ApiUnlockVdbRequest {
+	return ApiUnlockVdbRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbId: vdbId,
+	}
+}
+
+// Execute executes the request
+//  @return VDB
+func (a *VDBsApiService) UnlockVdbExecute(r ApiUnlockVdbRequest) (*VDB, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *VDB
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsApiService.UnlockVdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/{vdbId}/unlock"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbId"+"}", url.PathEscape(parameterValueToString(r.vdbId, "vdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

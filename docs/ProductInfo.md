@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ApiVersion** | Pointer to **string** | Current API version. | [optional] 
 **ProductVersion** | Pointer to **string** | Current installed product version. | [optional] 
+**SystemUuid** | Pointer to **string** | System UUID | [optional] 
 **ProductUpgradeHistory** | Pointer to [**[]ProductHistory**](ProductHistory.md) | Product upgrade history. | [optional] 
 **SupportedApiVersions** | Pointer to **[]string** | All the supported API versions. | [optional] 
 
@@ -77,6 +78,31 @@ SetProductVersion sets ProductVersion field to given value.
 `func (o *ProductInfo) HasProductVersion() bool`
 
 HasProductVersion returns a boolean if a field has been set.
+
+### GetSystemUuid
+
+`func (o *ProductInfo) GetSystemUuid() string`
+
+GetSystemUuid returns the SystemUuid field if non-nil, zero value otherwise.
+
+### GetSystemUuidOk
+
+`func (o *ProductInfo) GetSystemUuidOk() (*string, bool)`
+
+GetSystemUuidOk returns a tuple with the SystemUuid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSystemUuid
+
+`func (o *ProductInfo) SetSystemUuid(v string)`
+
+SetSystemUuid sets SystemUuid field to given value.
+
+### HasSystemUuid
+
+`func (o *ProductInfo) HasSystemUuid() bool`
+
+HasSystemUuid returns a boolean if a field has been set.
 
 ### GetProductUpgradeHistory
 

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ApiEndpoint** | Pointer to **string** | API called. | [optional] 
 **ApiMethod** | Pointer to **string** | HTTP method for API called. | [optional] 
 **ApiCount** | **int64** | Count of API calls over the requested timeframe. | 
-**Kind** | Pointer to **string** | Whether the API calls are of kind automation or management | [optional] 
+**Kind** | Pointer to **string** | Whether the API calls are of kind automation or governance | [optional] 
 **ClientName** | Pointer to **string** | Name of the api client that called the API endpoint | [optional] 
 **UserAgent** | Pointer to **string** | Version of the api client that called the API endpoint | [optional] 
 **DctVersion** | Pointer to **string** | DCT version at the time of api call | [optional] 

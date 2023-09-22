@@ -6,6 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The vCDB object entity ID. | [optional] 
 **Name** | Pointer to **NullableString** | The name of this vCDB. | [optional] 
+**NamespaceId** | Pointer to **NullableString** | The namespace id of this vCDB. | [optional] 
+**NamespaceName** | Pointer to **NullableString** | The namespace name of this vCDB. | [optional] 
+**IsReplica** | Pointer to **NullableBool** | Is this a replicated object. | [optional] 
 **DatabaseVersion** | Pointer to **NullableString** | The version of this vCDB. | [optional] 
 **EnvironmentId** | Pointer to **NullableString** | A reference to the Environment that hosts this vCDB. | [optional] 
 **Size** | Pointer to **NullableInt64** | The total size of the data files used by this vCDB, in bytes. | [optional] 
@@ -15,6 +18,8 @@ Name | Type | Description | Notes
 **CreationDate** | Pointer to **NullableTime** | The date this vCDB was created. | [optional] 
 **GroupName** | Pointer to **NullableString** | The name of the group containing this vCDB. | [optional] 
 **Enabled** | Pointer to **bool** | Whether the vCDB is enabled or not. | [optional] 
+**ContentType** | Pointer to **NullableString** | The content type of the vcdb. | [optional] 
+**VcdbRestart** | Pointer to **bool** | Indicates whether the Engine should automatically restart this vcdb when target host reboot is detected. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
@@ -96,6 +101,111 @@ HasName returns a boolean if a field has been set.
 `func (o *VCDB) UnsetName()`
 
 UnsetName ensures that no value is present for Name, not even an explicit nil
+### GetNamespaceId
+
+`func (o *VCDB) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *VCDB) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *VCDB) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *VCDB) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### SetNamespaceIdNil
+
+`func (o *VCDB) SetNamespaceIdNil(b bool)`
+
+ SetNamespaceIdNil sets the value for NamespaceId to be an explicit nil
+
+### UnsetNamespaceId
+`func (o *VCDB) UnsetNamespaceId()`
+
+UnsetNamespaceId ensures that no value is present for NamespaceId, not even an explicit nil
+### GetNamespaceName
+
+`func (o *VCDB) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *VCDB) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *VCDB) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *VCDB) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### SetNamespaceNameNil
+
+`func (o *VCDB) SetNamespaceNameNil(b bool)`
+
+ SetNamespaceNameNil sets the value for NamespaceName to be an explicit nil
+
+### UnsetNamespaceName
+`func (o *VCDB) UnsetNamespaceName()`
+
+UnsetNamespaceName ensures that no value is present for NamespaceName, not even an explicit nil
+### GetIsReplica
+
+`func (o *VCDB) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *VCDB) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *VCDB) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *VCDB) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
+
+### SetIsReplicaNil
+
+`func (o *VCDB) SetIsReplicaNil(b bool)`
+
+ SetIsReplicaNil sets the value for IsReplica to be an explicit nil
+
+### UnsetIsReplica
+`func (o *VCDB) UnsetIsReplica()`
+
+UnsetIsReplica ensures that no value is present for IsReplica, not even an explicit nil
 ### GetDatabaseVersion
 
 `func (o *VCDB) GetDatabaseVersion() string`
@@ -380,6 +490,66 @@ SetEnabled sets Enabled field to given value.
 `func (o *VCDB) HasEnabled() bool`
 
 HasEnabled returns a boolean if a field has been set.
+
+### GetContentType
+
+`func (o *VCDB) GetContentType() string`
+
+GetContentType returns the ContentType field if non-nil, zero value otherwise.
+
+### GetContentTypeOk
+
+`func (o *VCDB) GetContentTypeOk() (*string, bool)`
+
+GetContentTypeOk returns a tuple with the ContentType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContentType
+
+`func (o *VCDB) SetContentType(v string)`
+
+SetContentType sets ContentType field to given value.
+
+### HasContentType
+
+`func (o *VCDB) HasContentType() bool`
+
+HasContentType returns a boolean if a field has been set.
+
+### SetContentTypeNil
+
+`func (o *VCDB) SetContentTypeNil(b bool)`
+
+ SetContentTypeNil sets the value for ContentType to be an explicit nil
+
+### UnsetContentType
+`func (o *VCDB) UnsetContentType()`
+
+UnsetContentType ensures that no value is present for ContentType, not even an explicit nil
+### GetVcdbRestart
+
+`func (o *VCDB) GetVcdbRestart() bool`
+
+GetVcdbRestart returns the VcdbRestart field if non-nil, zero value otherwise.
+
+### GetVcdbRestartOk
+
+`func (o *VCDB) GetVcdbRestartOk() (*bool, bool)`
+
+GetVcdbRestartOk returns a tuple with the VcdbRestart field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVcdbRestart
+
+`func (o *VCDB) SetVcdbRestart(v bool)`
+
+SetVcdbRestart sets VcdbRestart field to given value.
+
+### HasVcdbRestart
+
+`func (o *VCDB) HasVcdbRestart() bool`
+
+HasVcdbRestart returns a boolean if a field has been set.
 
 ### GetTags
 

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **AseDbUsername** | Pointer to **string** | username of the SAP ASE database. | [optional] 
 **AseDbPassword** | Pointer to **string** | password of the SAP ASE database. | [optional] 
 **AseDbVault** | Pointer to **string** | The name or reference of the vault from which to read the ASE database credentials. | [optional] 
+**AseDbVaultUsername** | Pointer to **string** | Delphix display name for the vault user | [optional] 
 **AseDbHashicorpVaultEngine** | Pointer to **string** | Vault engine name where the credential is stored. | [optional] 
 **AseDbHashicorpVaultSecretPath** | Pointer to **string** | Path in the vault engine where the credential is stored. | [optional] 
 **AseDbHashicorpVaultUsernameKey** | Pointer to **string** | Key for the username in the key-value store. | [optional] 
@@ -212,6 +213,31 @@ SetAseDbVault sets AseDbVault field to given value.
 `func (o *EnvironmentUpdateParameters) HasAseDbVault() bool`
 
 HasAseDbVault returns a boolean if a field has been set.
+
+### GetAseDbVaultUsername
+
+`func (o *EnvironmentUpdateParameters) GetAseDbVaultUsername() string`
+
+GetAseDbVaultUsername returns the AseDbVaultUsername field if non-nil, zero value otherwise.
+
+### GetAseDbVaultUsernameOk
+
+`func (o *EnvironmentUpdateParameters) GetAseDbVaultUsernameOk() (*string, bool)`
+
+GetAseDbVaultUsernameOk returns a tuple with the AseDbVaultUsername field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAseDbVaultUsername
+
+`func (o *EnvironmentUpdateParameters) SetAseDbVaultUsername(v string)`
+
+SetAseDbVaultUsername sets AseDbVaultUsername field to given value.
+
+### HasAseDbVaultUsername
+
+`func (o *EnvironmentUpdateParameters) HasAseDbVaultUsername() bool`
+
+HasAseDbVaultUsername returns a boolean if a field has been set.
 
 ### GetAseDbHashicorpVaultEngine
 

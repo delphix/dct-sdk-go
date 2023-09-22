@@ -9,6 +9,8 @@ Method | HTTP request | Description
 [**CreateAccountTags**](AccountsApi.md#CreateAccountTags) | **Post** /management/accounts/{id}/tags | Create tags for an Account.
 [**DeleteAccount**](AccountsApi.md#DeleteAccount) | **Delete** /management/accounts/{id} | Delete an Account
 [**DeleteAccountTags**](AccountsApi.md#DeleteAccountTags) | **Post** /management/accounts/{id}/tags/delete | Delete tags for an Account.
+[**Disable**](AccountsApi.md#Disable) | **Post** /management/accounts/{id}/disable | Disable an Account.
+[**EnableAccount**](AccountsApi.md#EnableAccount) | **Post** /management/accounts/{id}/enable | Enable an Account.
 [**GetAccount**](AccountsApi.md#GetAccount) | **Get** /management/accounts/{id} | Get an Account by id
 [**GetAccountTags**](AccountsApi.md#GetAccountTags) | **Get** /management/accounts/{id}/tags | Get tags for an Account.
 [**GetAccounts**](AccountsApi.md#GetAccounts) | **Get** /management/accounts | Returns a list of Accounts
@@ -349,6 +351,138 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## Disable
+
+> Disable(ctx, id).Execute()
+
+Disable an Account.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    id := int64(789) // int64 | Numeric ID of the Account.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.AccountsApi.Disable(context.Background(), id).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AccountsApi.Disable``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int64** | Numeric ID of the Account. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDisableRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## EnableAccount
+
+> EnableAccount(ctx, id).Execute()
+
+Enable an Account.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    id := int64(789) // int64 | Numeric ID of the Account.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.AccountsApi.EnableAccount(context.Background(), id).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AccountsApi.EnableAccount``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int64** | Numeric ID of the Account. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiEnableAccountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

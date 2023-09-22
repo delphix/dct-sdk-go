@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **Id** | Pointer to **string** | The Timeflow ID. | [optional] 
 **EngineId** | Pointer to **string** | The ID of the engine the timeflow belongs to. | [optional] 
 **Namespace** | Pointer to **NullableString** | Alternate namespace for this object, for replicated and restored timeflows. | [optional] 
+**NamespaceId** | Pointer to **NullableString** | The namespace id of this timeflows. | [optional] 
+**NamespaceName** | Pointer to **NullableString** | The namespace name of this timeflows. | [optional] 
+**IsReplica** | Pointer to **bool** | Is this a replicated object. | [optional] 
 **Name** | Pointer to **string** | The timeflow&#39;s name. | [optional] 
 **DatasetId** | Pointer to **string** | The ID of the timeflow&#39;s dSource or VDB. | [optional] 
 **CreationType** | Pointer to **string** | The source action that created the timeflow. | [optional] 
@@ -125,6 +128,101 @@ HasNamespace returns a boolean if a field has been set.
 `func (o *Timeflow) UnsetNamespace()`
 
 UnsetNamespace ensures that no value is present for Namespace, not even an explicit nil
+### GetNamespaceId
+
+`func (o *Timeflow) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *Timeflow) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *Timeflow) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *Timeflow) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### SetNamespaceIdNil
+
+`func (o *Timeflow) SetNamespaceIdNil(b bool)`
+
+ SetNamespaceIdNil sets the value for NamespaceId to be an explicit nil
+
+### UnsetNamespaceId
+`func (o *Timeflow) UnsetNamespaceId()`
+
+UnsetNamespaceId ensures that no value is present for NamespaceId, not even an explicit nil
+### GetNamespaceName
+
+`func (o *Timeflow) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *Timeflow) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *Timeflow) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *Timeflow) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### SetNamespaceNameNil
+
+`func (o *Timeflow) SetNamespaceNameNil(b bool)`
+
+ SetNamespaceNameNil sets the value for NamespaceName to be an explicit nil
+
+### UnsetNamespaceName
+`func (o *Timeflow) UnsetNamespaceName()`
+
+UnsetNamespaceName ensures that no value is present for NamespaceName, not even an explicit nil
+### GetIsReplica
+
+`func (o *Timeflow) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *Timeflow) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *Timeflow) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *Timeflow) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
+
 ### GetName
 
 `func (o *Timeflow) GetName() string`

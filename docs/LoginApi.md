@@ -5,6 +5,7 @@ All URIs are relative to */v3*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AccountLogin**](LoginApi.md#AccountLogin) | **Post** /login | Login to Account with Username and Password 
+[**AccountLogout**](LoginApi.md#AccountLogout) | **Post** /logout | Invalidates username/password and SSO login session.
 [**TokenInfo**](LoginApi.md#TokenInfo) | **Post** /token-info | Get Token Information 
 
 
@@ -67,6 +68,68 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## AccountLogout
+
+> AccountLogout(ctx).Authorization(authorization).Execute()
+
+Invalidates username/password and SSO login session.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    authorization := "authorization_example" // string | Access token
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.LoginApi.AccountLogout(context.Background()).Authorization(authorization).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `LoginApi.AccountLogout``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAccountLogoutRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **authorization** | **string** | Access token | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

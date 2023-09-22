@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -30,6 +30,8 @@ type BaseProvisionVDBParametersAllOf struct {
 	CdbId *string `json:"cdb_id,omitempty"`
 	// The cluster node ids, name or addresses for this provision operation (Oracle RAC Only).
 	ClusterNodeIds []string `json:"cluster_node_ids,omitempty"`
+	// The cluster node instances details for this provision operation(Oracle RAC Only).This property is mutually exclusive with cluster_node_ids.
+	ClusterNodeInstances []ClusterNodeInstance `json:"cluster_node_instances,omitempty"`
 	// Whether to truncate log on checkpoint (ASE only).
 	TruncateLogOnCheckpoint *bool `json:"truncate_log_on_checkpoint,omitempty"`
 	// The name of the privileged user to run the provision operation (Oracle Only).
@@ -116,6 +118,16 @@ type BaseProvisionVDBParametersAllOf struct {
 	AppdataConfigParams map[string]interface{} `json:"appdata_config_params,omitempty"`
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
+	// This privileged unix username will be used to create the VDB. Leave this field blank if you do not want to use privilege elevation. The unix privileged username should begin with a letter or an underscore, followed by letters, digits, underscores, or dashes. They can end with a dollar sign (postgres only).
+	PrivilegedOsUser *string `json:"privileged_os_user,omitempty"`
+	// Port number for Postgres target database (postgres only).
+	PostgresPort *int32 `json:"postgres_port,omitempty"`
+	// Custom Database-Level config settings (postgres only).
+	ConfigSettingsStg []ConfigSettingsStg `json:"config_settings_stg,omitempty"`
+	// Indicates whether the Engine should automatically restart this vCDB when target host reboot is detected. If vdb_restart property value is not explicitly set and vcdb_restart is set as false - the vdb_restart property is defaulted to false.
+	VcdbRestart *bool `json:"vcdb_restart,omitempty"`
+	// Base drive letter location for mount points. (MSSql Only).
+	MssqlFailoverDriveLetter *string `json:"mssql_failover_drive_letter,omitempty"`
 	// The tags to be created for VDB.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -295,6 +307,38 @@ func (o *BaseProvisionVDBParametersAllOf) HasClusterNodeIds() bool {
 // SetClusterNodeIds gets a reference to the given []string and assigns it to the ClusterNodeIds field.
 func (o *BaseProvisionVDBParametersAllOf) SetClusterNodeIds(v []string) {
 	o.ClusterNodeIds = v
+}
+
+// GetClusterNodeInstances returns the ClusterNodeInstances field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParametersAllOf) GetClusterNodeInstances() []ClusterNodeInstance {
+	if o == nil || IsNil(o.ClusterNodeInstances) {
+		var ret []ClusterNodeInstance
+		return ret
+	}
+	return o.ClusterNodeInstances
+}
+
+// GetClusterNodeInstancesOk returns a tuple with the ClusterNodeInstances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseProvisionVDBParametersAllOf) GetClusterNodeInstancesOk() ([]ClusterNodeInstance, bool) {
+	if o == nil || IsNil(o.ClusterNodeInstances) {
+		return nil, false
+	}
+	return o.ClusterNodeInstances, true
+}
+
+// HasClusterNodeInstances returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParametersAllOf) HasClusterNodeInstances() bool {
+	if o != nil && !IsNil(o.ClusterNodeInstances) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterNodeInstances gets a reference to the given []ClusterNodeInstance and assigns it to the ClusterNodeInstances field.
+func (o *BaseProvisionVDBParametersAllOf) SetClusterNodeInstances(v []ClusterNodeInstance) {
+	o.ClusterNodeInstances = v
 }
 
 // GetTruncateLogOnCheckpoint returns the TruncateLogOnCheckpoint field value if set, zero value otherwise.
@@ -1676,6 +1720,166 @@ func (o *BaseProvisionVDBParametersAllOf) SetConfigParams(v map[string]interface
 	o.ConfigParams = v
 }
 
+// GetPrivilegedOsUser returns the PrivilegedOsUser field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParametersAllOf) GetPrivilegedOsUser() string {
+	if o == nil || IsNil(o.PrivilegedOsUser) {
+		var ret string
+		return ret
+	}
+	return *o.PrivilegedOsUser
+}
+
+// GetPrivilegedOsUserOk returns a tuple with the PrivilegedOsUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseProvisionVDBParametersAllOf) GetPrivilegedOsUserOk() (*string, bool) {
+	if o == nil || IsNil(o.PrivilegedOsUser) {
+		return nil, false
+	}
+	return o.PrivilegedOsUser, true
+}
+
+// HasPrivilegedOsUser returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParametersAllOf) HasPrivilegedOsUser() bool {
+	if o != nil && !IsNil(o.PrivilegedOsUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrivilegedOsUser gets a reference to the given string and assigns it to the PrivilegedOsUser field.
+func (o *BaseProvisionVDBParametersAllOf) SetPrivilegedOsUser(v string) {
+	o.PrivilegedOsUser = &v
+}
+
+// GetPostgresPort returns the PostgresPort field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParametersAllOf) GetPostgresPort() int32 {
+	if o == nil || IsNil(o.PostgresPort) {
+		var ret int32
+		return ret
+	}
+	return *o.PostgresPort
+}
+
+// GetPostgresPortOk returns a tuple with the PostgresPort field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseProvisionVDBParametersAllOf) GetPostgresPortOk() (*int32, bool) {
+	if o == nil || IsNil(o.PostgresPort) {
+		return nil, false
+	}
+	return o.PostgresPort, true
+}
+
+// HasPostgresPort returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParametersAllOf) HasPostgresPort() bool {
+	if o != nil && !IsNil(o.PostgresPort) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostgresPort gets a reference to the given int32 and assigns it to the PostgresPort field.
+func (o *BaseProvisionVDBParametersAllOf) SetPostgresPort(v int32) {
+	o.PostgresPort = &v
+}
+
+// GetConfigSettingsStg returns the ConfigSettingsStg field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParametersAllOf) GetConfigSettingsStg() []ConfigSettingsStg {
+	if o == nil || IsNil(o.ConfigSettingsStg) {
+		var ret []ConfigSettingsStg
+		return ret
+	}
+	return o.ConfigSettingsStg
+}
+
+// GetConfigSettingsStgOk returns a tuple with the ConfigSettingsStg field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseProvisionVDBParametersAllOf) GetConfigSettingsStgOk() ([]ConfigSettingsStg, bool) {
+	if o == nil || IsNil(o.ConfigSettingsStg) {
+		return nil, false
+	}
+	return o.ConfigSettingsStg, true
+}
+
+// HasConfigSettingsStg returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParametersAllOf) HasConfigSettingsStg() bool {
+	if o != nil && !IsNil(o.ConfigSettingsStg) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfigSettingsStg gets a reference to the given []ConfigSettingsStg and assigns it to the ConfigSettingsStg field.
+func (o *BaseProvisionVDBParametersAllOf) SetConfigSettingsStg(v []ConfigSettingsStg) {
+	o.ConfigSettingsStg = v
+}
+
+// GetVcdbRestart returns the VcdbRestart field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParametersAllOf) GetVcdbRestart() bool {
+	if o == nil || IsNil(o.VcdbRestart) {
+		var ret bool
+		return ret
+	}
+	return *o.VcdbRestart
+}
+
+// GetVcdbRestartOk returns a tuple with the VcdbRestart field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseProvisionVDBParametersAllOf) GetVcdbRestartOk() (*bool, bool) {
+	if o == nil || IsNil(o.VcdbRestart) {
+		return nil, false
+	}
+	return o.VcdbRestart, true
+}
+
+// HasVcdbRestart returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParametersAllOf) HasVcdbRestart() bool {
+	if o != nil && !IsNil(o.VcdbRestart) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbRestart gets a reference to the given bool and assigns it to the VcdbRestart field.
+func (o *BaseProvisionVDBParametersAllOf) SetVcdbRestart(v bool) {
+	o.VcdbRestart = &v
+}
+
+// GetMssqlFailoverDriveLetter returns the MssqlFailoverDriveLetter field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParametersAllOf) GetMssqlFailoverDriveLetter() string {
+	if o == nil || IsNil(o.MssqlFailoverDriveLetter) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlFailoverDriveLetter
+}
+
+// GetMssqlFailoverDriveLetterOk returns a tuple with the MssqlFailoverDriveLetter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseProvisionVDBParametersAllOf) GetMssqlFailoverDriveLetterOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlFailoverDriveLetter) {
+		return nil, false
+	}
+	return o.MssqlFailoverDriveLetter, true
+}
+
+// HasMssqlFailoverDriveLetter returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParametersAllOf) HasMssqlFailoverDriveLetter() bool {
+	if o != nil && !IsNil(o.MssqlFailoverDriveLetter) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlFailoverDriveLetter gets a reference to the given string and assigns it to the MssqlFailoverDriveLetter field.
+func (o *BaseProvisionVDBParametersAllOf) SetMssqlFailoverDriveLetter(v string) {
+	o.MssqlFailoverDriveLetter = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *BaseProvisionVDBParametersAllOf) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -1732,6 +1936,9 @@ func (o BaseProvisionVDBParametersAllOf) ToMap() (map[string]interface{}, error)
 	}
 	if !IsNil(o.ClusterNodeIds) {
 		toSerialize["cluster_node_ids"] = o.ClusterNodeIds
+	}
+	if !IsNil(o.ClusterNodeInstances) {
+		toSerialize["cluster_node_instances"] = o.ClusterNodeInstances
 	}
 	if !IsNil(o.TruncateLogOnCheckpoint) {
 		toSerialize["truncate_log_on_checkpoint"] = o.TruncateLogOnCheckpoint
@@ -1861,6 +2068,21 @@ func (o BaseProvisionVDBParametersAllOf) ToMap() (map[string]interface{}, error)
 	}
 	if o.ConfigParams != nil {
 		toSerialize["config_params"] = o.ConfigParams
+	}
+	if !IsNil(o.PrivilegedOsUser) {
+		toSerialize["privileged_os_user"] = o.PrivilegedOsUser
+	}
+	if !IsNil(o.PostgresPort) {
+		toSerialize["postgres_port"] = o.PostgresPort
+	}
+	if !IsNil(o.ConfigSettingsStg) {
+		toSerialize["config_settings_stg"] = o.ConfigSettingsStg
+	}
+	if !IsNil(o.VcdbRestart) {
+		toSerialize["vcdb_restart"] = o.VcdbRestart
+	}
+	if !IsNil(o.MssqlFailoverDriveLetter) {
+		toSerialize["mssql_failover_drive_letter"] = o.MssqlFailoverDriveLetter
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

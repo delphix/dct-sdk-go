@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SourceDataId** | Pointer to **string** | The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source. | [optional] 
-**EngineId** | Pointer to **string** | The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored. | [optional] 
+**SourceDataId** | Pointer to **string** | The ID of the source object (dSource or VDB) to get the compatible repos. All other objects referenced by the parameters must live on the same engine as the source. | [optional] 
+**EngineId** | Pointer to **string** | The ID of the Engine from where to get the compatible repos. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored. | [optional] 
 **SnapshotId** | Pointer to **string** | The ID of the snapshot from which to execute the operation. | [optional] 
 **EnvironmentId** | Pointer to **string** | The ID or name of the target environment. | [optional] 
 

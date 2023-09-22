@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.1.0
+// APIClient manages communication with the Delphix DCT API API v3.5.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -51,6 +51,8 @@ type APIClient struct {
 	// API Services
 
 	AccountsApi *AccountsApiService
+
+	AlgorithmsApi *AlgorithmsApiService
 
 	AuthorizationApi *AuthorizationApiService
 
@@ -70,15 +72,29 @@ type APIClient struct {
 
 	ExecutionsApi *ExecutionsApiService
 
+	FeatureFlagApi *FeatureFlagApiService
+
 	GroupsApi *GroupsApiService
 
+	HyperscaleInstanceApi *HyperscaleInstanceApiService
+
+	HyperscaleObjectsApi *HyperscaleObjectsApiService
+
 	JobsApi *JobsApiService
+
+	KerberosConfigApi *KerberosConfigApiService
 
 	LoginApi *LoginApiService
 
 	ManagementApi *ManagementApiService
 
+	MaskingEnvironmentsApi *MaskingEnvironmentsApiService
+
+	MaskingFilesApi *MaskingFilesApiService
+
 	MaskingJobsApi *MaskingJobsApiService
+
+	PasswordVaultsApi *PasswordVaultsApiService
 
 	ReportingApi *ReportingApiService
 
@@ -118,6 +134,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AccountsApi = (*AccountsApiService)(&c.common)
+	c.AlgorithmsApi = (*AlgorithmsApiService)(&c.common)
 	c.AuthorizationApi = (*AuthorizationApiService)(&c.common)
 	c.BookmarksApi = (*BookmarksApiService)(&c.common)
 	c.CDBsApi = (*CDBsApiService)(&c.common)
@@ -127,11 +144,18 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DatabaseTemplatesApi = (*DatabaseTemplatesApiService)(&c.common)
 	c.EnvironmentsApi = (*EnvironmentsApiService)(&c.common)
 	c.ExecutionsApi = (*ExecutionsApiService)(&c.common)
+	c.FeatureFlagApi = (*FeatureFlagApiService)(&c.common)
 	c.GroupsApi = (*GroupsApiService)(&c.common)
+	c.HyperscaleInstanceApi = (*HyperscaleInstanceApiService)(&c.common)
+	c.HyperscaleObjectsApi = (*HyperscaleObjectsApiService)(&c.common)
 	c.JobsApi = (*JobsApiService)(&c.common)
+	c.KerberosConfigApi = (*KerberosConfigApiService)(&c.common)
 	c.LoginApi = (*LoginApiService)(&c.common)
 	c.ManagementApi = (*ManagementApiService)(&c.common)
+	c.MaskingEnvironmentsApi = (*MaskingEnvironmentsApiService)(&c.common)
+	c.MaskingFilesApi = (*MaskingFilesApiService)(&c.common)
 	c.MaskingJobsApi = (*MaskingJobsApiService)(&c.common)
+	c.PasswordVaultsApi = (*PasswordVaultsApiService)(&c.common)
 	c.ReportingApi = (*ReportingApiService)(&c.common)
 	c.SamlLoginApi = (*SamlLoginApiService)(&c.common)
 	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)

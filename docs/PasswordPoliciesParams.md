@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Enabled** | Pointer to **bool** | True if password policies are enforced/enabled. | [optional] 
-**MinLength** | Pointer to **int32** | Minimum length for password. | [optional] 
-**ReuseDisallowLimit** | Pointer to **int32** | The password can not be the same as any of the previous n passwords. | [optional] 
-**Digit** | Pointer to **bool** | Mandate at least one digit in password. | [optional] 
-**UppercaseLetter** | Pointer to **bool** | Mandate at least one uppercase letter in password. | [optional] 
-**LowercaseLetter** | Pointer to **bool** | Mandate at least one lower letter in password. | [optional] 
-**SpecialCharacter** | Pointer to **bool** | Mandate at least one special character in password. | [optional] 
-**DisallowUsernameAsPassword** | Pointer to **bool** | Disallows password containing case-insensitive user name or reversed user name. | [optional] 
-**MaximumPasswordAttempts** | Pointer to **int32** | The number of allowed attempts for incorrect password, after which the account gets locked. | [optional] [default to 0]
+**Enabled** | Pointer to **bool** | True if password policies are enforced/enabled. | [optional] [default to true]
+**MinLength** | Pointer to **int32** | Minimum length for password. | [optional] [default to 15]
+**ReuseDisallowLimit** | Pointer to **int32** | The password can not be the same as any of the previous n passwords. | [optional] [default to 2]
+**Digit** | Pointer to **bool** | Mandate at least one digit in password. | [optional] [default to true]
+**UppercaseLetter** | Pointer to **bool** | Mandate at least one uppercase letter in password. | [optional] [default to true]
+**LowercaseLetter** | Pointer to **bool** | Mandate at least one lower letter in password. | [optional] [default to true]
+**SpecialCharacter** | Pointer to **bool** | Mandate at least one special character in password. | [optional] [default to true]
+**DisallowUsernameAsPassword** | Pointer to **bool** | Disallows password containing case-insensitive user name or reversed user name. | [optional] [default to true]
+**MaximumPasswordAttempts** | Pointer to **int32** | The number of allowed attempts for incorrect password, after which the account gets locked. | [optional] [default to 5]
 
 ## Methods
 

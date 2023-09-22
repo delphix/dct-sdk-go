@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -25,10 +25,13 @@ type Execution struct {
 	Id *string `json:"id,omitempty"`
 	// The ID of the engine where this execution ran.
 	EngineId *string `json:"engine_id,omitempty"`
+	HyperscaleInstanceId *string `json:"hyperscale_instance_id,omitempty"`
 	// The name of the engine where this execution ran.
 	EngineName *string `json:"engine_name,omitempty"`
 	// The ID of the masking job that is being executed.
 	MaskingJobId *string `json:"masking_job_id,omitempty"`
+	// The name of the masking job that is being executed.
+	MaskingJobName *string `json:"masking_job_name,omitempty"`
 	// The ID of the source connector. This field is only used for multi-tenant jobs that are also on-the-fly.
 	SourceConnectorId *string `json:"source_connector_id,omitempty"`
 	// The ID of the target connector. This field is only used for multi-tenant jobs.
@@ -51,6 +54,9 @@ type Execution struct {
 	EndTime *time.Time `json:"end_time,omitempty"`
 	// The progression of steps or events performed by this execution. Only available for executions on masking engines that are version 6.0.14.0 and higher.
 	TaskEvents []TaskEvent `json:"task_events,omitempty"`
+	HyperscaleTaskEvents []HyperscaleTaskEvent `json:"hyperscale_task_events,omitempty"`
+	// Progress of the task (value between 0 and 1, Hyperscale executions only)
+	Progress *float32 `json:"progress,omitempty"`
 }
 
 // NewExecution instantiates a new Execution object
@@ -134,6 +140,38 @@ func (o *Execution) SetEngineId(v string) {
 	o.EngineId = &v
 }
 
+// GetHyperscaleInstanceId returns the HyperscaleInstanceId field value if set, zero value otherwise.
+func (o *Execution) GetHyperscaleInstanceId() string {
+	if o == nil || IsNil(o.HyperscaleInstanceId) {
+		var ret string
+		return ret
+	}
+	return *o.HyperscaleInstanceId
+}
+
+// GetHyperscaleInstanceIdOk returns a tuple with the HyperscaleInstanceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetHyperscaleInstanceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.HyperscaleInstanceId) {
+		return nil, false
+	}
+	return o.HyperscaleInstanceId, true
+}
+
+// HasHyperscaleInstanceId returns a boolean if a field has been set.
+func (o *Execution) HasHyperscaleInstanceId() bool {
+	if o != nil && !IsNil(o.HyperscaleInstanceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetHyperscaleInstanceId gets a reference to the given string and assigns it to the HyperscaleInstanceId field.
+func (o *Execution) SetHyperscaleInstanceId(v string) {
+	o.HyperscaleInstanceId = &v
+}
+
 // GetEngineName returns the EngineName field value if set, zero value otherwise.
 func (o *Execution) GetEngineName() string {
 	if o == nil || IsNil(o.EngineName) {
@@ -196,6 +234,38 @@ func (o *Execution) HasMaskingJobId() bool {
 // SetMaskingJobId gets a reference to the given string and assigns it to the MaskingJobId field.
 func (o *Execution) SetMaskingJobId(v string) {
 	o.MaskingJobId = &v
+}
+
+// GetMaskingJobName returns the MaskingJobName field value if set, zero value otherwise.
+func (o *Execution) GetMaskingJobName() string {
+	if o == nil || IsNil(o.MaskingJobName) {
+		var ret string
+		return ret
+	}
+	return *o.MaskingJobName
+}
+
+// GetMaskingJobNameOk returns a tuple with the MaskingJobName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetMaskingJobNameOk() (*string, bool) {
+	if o == nil || IsNil(o.MaskingJobName) {
+		return nil, false
+	}
+	return o.MaskingJobName, true
+}
+
+// HasMaskingJobName returns a boolean if a field has been set.
+func (o *Execution) HasMaskingJobName() bool {
+	if o != nil && !IsNil(o.MaskingJobName) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingJobName gets a reference to the given string and assigns it to the MaskingJobName field.
+func (o *Execution) SetMaskingJobName(v string) {
+	o.MaskingJobName = &v
 }
 
 // GetSourceConnectorId returns the SourceConnectorId field value if set, zero value otherwise.
@@ -550,6 +620,70 @@ func (o *Execution) SetTaskEvents(v []TaskEvent) {
 	o.TaskEvents = v
 }
 
+// GetHyperscaleTaskEvents returns the HyperscaleTaskEvents field value if set, zero value otherwise.
+func (o *Execution) GetHyperscaleTaskEvents() []HyperscaleTaskEvent {
+	if o == nil || IsNil(o.HyperscaleTaskEvents) {
+		var ret []HyperscaleTaskEvent
+		return ret
+	}
+	return o.HyperscaleTaskEvents
+}
+
+// GetHyperscaleTaskEventsOk returns a tuple with the HyperscaleTaskEvents field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetHyperscaleTaskEventsOk() ([]HyperscaleTaskEvent, bool) {
+	if o == nil || IsNil(o.HyperscaleTaskEvents) {
+		return nil, false
+	}
+	return o.HyperscaleTaskEvents, true
+}
+
+// HasHyperscaleTaskEvents returns a boolean if a field has been set.
+func (o *Execution) HasHyperscaleTaskEvents() bool {
+	if o != nil && !IsNil(o.HyperscaleTaskEvents) {
+		return true
+	}
+
+	return false
+}
+
+// SetHyperscaleTaskEvents gets a reference to the given []HyperscaleTaskEvent and assigns it to the HyperscaleTaskEvents field.
+func (o *Execution) SetHyperscaleTaskEvents(v []HyperscaleTaskEvent) {
+	o.HyperscaleTaskEvents = v
+}
+
+// GetProgress returns the Progress field value if set, zero value otherwise.
+func (o *Execution) GetProgress() float32 {
+	if o == nil || IsNil(o.Progress) {
+		var ret float32
+		return ret
+	}
+	return *o.Progress
+}
+
+// GetProgressOk returns a tuple with the Progress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetProgressOk() (*float32, bool) {
+	if o == nil || IsNil(o.Progress) {
+		return nil, false
+	}
+	return o.Progress, true
+}
+
+// HasProgress returns a boolean if a field has been set.
+func (o *Execution) HasProgress() bool {
+	if o != nil && !IsNil(o.Progress) {
+		return true
+	}
+
+	return false
+}
+
+// SetProgress gets a reference to the given float32 and assigns it to the Progress field.
+func (o *Execution) SetProgress(v float32) {
+	o.Progress = &v
+}
+
 func (o Execution) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -566,11 +700,17 @@ func (o Execution) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
+	if !IsNil(o.HyperscaleInstanceId) {
+		toSerialize["hyperscale_instance_id"] = o.HyperscaleInstanceId
+	}
 	if !IsNil(o.EngineName) {
 		toSerialize["engine_name"] = o.EngineName
 	}
 	if !IsNil(o.MaskingJobId) {
 		toSerialize["masking_job_id"] = o.MaskingJobId
+	}
+	if !IsNil(o.MaskingJobName) {
+		toSerialize["masking_job_name"] = o.MaskingJobName
 	}
 	if !IsNil(o.SourceConnectorId) {
 		toSerialize["source_connector_id"] = o.SourceConnectorId
@@ -604,6 +744,12 @@ func (o Execution) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TaskEvents) {
 		toSerialize["task_events"] = o.TaskEvents
+	}
+	if !IsNil(o.HyperscaleTaskEvents) {
+		toSerialize["hyperscale_task_events"] = o.HyperscaleTaskEvents
+	}
+	if !IsNil(o.Progress) {
+		toSerialize["progress"] = o.Progress
 	}
 	return toSerialize, nil
 }

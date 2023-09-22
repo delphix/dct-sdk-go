@@ -128,6 +128,20 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test VDBGroupsApiService LockVdbGroup", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vdbGroupId string
+
+		resp, httpRes, err := apiClient.VDBGroupsApi.LockVdbGroup(context.Background(), vdbGroupId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test VDBGroupsApiService ProvisionVdbGroupFromBookmark", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -168,11 +182,39 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test VDBGroupsApiService SearchBookmarksByVdbGroup", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vdbGroupId string
+
+		resp, httpRes, err := apiClient.VDBGroupsApi.SearchBookmarksByVdbGroup(context.Background(), vdbGroupId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test VDBGroupsApiService SearchVdbGroups", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.VDBGroupsApi.SearchVdbGroups(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test VDBGroupsApiService UnlockVdbGroup", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vdbGroupId string
+
+		resp, httpRes, err := apiClient.VDBGroupsApi.UnlockVdbGroup(context.Background(), vdbGroupId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

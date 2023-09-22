@@ -61,13 +61,11 @@ func Test_delphix_dct_api_DSourcesApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DSourcesApiService GetDsourceById", func(t *testing.T) {
+	t.Run("Test DSourcesApiService GetAppdataDsourceLinkingDefaults", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var dsourceId string
-
-		resp, httpRes, err := apiClient.DSourcesApi.GetDsourceById(context.Background(), dsourceId).Execute()
+		resp, httpRes, err := apiClient.DSourcesApi.GetAppdataDsourceLinkingDefaults(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -75,11 +73,25 @@ func Test_delphix_dct_api_DSourcesApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DSourcesApiService GetDsourceLinkingDefaults", func(t *testing.T) {
+	t.Run("Test DSourcesApiService GetAseDsourceLinkingDefaults", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DSourcesApi.GetDsourceLinkingDefaults(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DSourcesApi.GetAseDsourceLinkingDefaults(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DSourcesApiService GetDsourceById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var dsourceId string
+
+		resp, httpRes, err := apiClient.DSourcesApi.GetDsourceById(context.Background(), dsourceId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -113,6 +125,18 @@ func Test_delphix_dct_api_DSourcesApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test DSourcesApiService GetOracleDsourceLinkingDefaults", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DSourcesApi.GetOracleDsourceLinkingDefaults(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DSourcesApiService GetTagsDsource", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -127,11 +151,35 @@ func Test_delphix_dct_api_DSourcesApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DSourcesApiService LinkDatabase", func(t *testing.T) {
+	t.Run("Test DSourcesApiService LinkAppdataDatabase", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DSourcesApi.LinkDatabase(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DSourcesApi.LinkAppdataDatabase(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DSourcesApiService LinkAseDatabase", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DSourcesApi.LinkAseDatabase(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DSourcesApiService LinkOracleDatabase", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DSourcesApi.LinkOracleDatabase(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **MemorySize** | Pointer to **NullableInt64** | The total amount of memory on this engine, in bytes. | [optional] 
 **DataStorageCapacity** | Pointer to **NullableInt64** | The total amount of storage allocated for engine objects and system metadata, in bytes. | [optional] 
 **DataStorageUsed** | Pointer to **NullableInt64** | The amount of storage used by engine objects and system metadata, in bytes. | [optional] 
-**InsecureSsl** | Pointer to **bool** | Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the engine&#39;s certificate, and set the truststore_path propery.  | [optional] [default to false]
+**InsecureSsl** | Pointer to **bool** | Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the engine&#39;s certificate, and set the truststore_filename property.  | [optional] [default to false]
 **UnsafeSslHostnameCheck** | Pointer to **bool** | Ignore validation of the name associated to the TLS certificate when connecting to the engine over HTTPs. Setting this value must only be done if the TLS certificate of the engine does not match the hostname, and the TLS configuration of the engine cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set.  | [optional] [default to false]
 **TruststoreFilename** | Pointer to **NullableString** | File name of a truststore which can be used to validate the TLS certificate of the engine. The truststore must be available at /etc/config/certs/&lt;truststore_filename&gt;  | [optional] 
 **TruststorePassword** | Pointer to **NullableString** | Password to read the truststore.  | [optional] 
@@ -38,6 +38,9 @@ Name | Type | Description | Notes
 **MaskingJobsRunning** | Pointer to **NullableInt32** | The number of masking jobs currently running. | [optional] 
 **MaskingMaxConcurrentJobs** | Pointer to **NullableInt32** | The maximum number of masking jobs that can be running at the same time. | [optional] 
 **MaskingAvailableCores** | Pointer to **NullableInt32** | The number of CPU cores available to the masking engine. | [optional] 
+**HyperscaleInstanceIds** | Pointer to **[]string** | List of Hyperscale Instances that this engine is connected to. | [optional] 
+**HyperscaleTruststoreFilename** | Pointer to **NullableString** | File name of a truststore which can be used to validate the TLS certificate of the engine as expected by associated hyperscale instances.  | [optional] 
+**HyperscaleTruststorePassword** | Pointer to **NullableString** | Password to read the truststore as expected by associated hyperscale instances.  | [optional] 
 
 ## Methods
 
@@ -1168,6 +1171,111 @@ HasMaskingAvailableCores returns a boolean if a field has been set.
 `func (o *RegisteredEngine) UnsetMaskingAvailableCores()`
 
 UnsetMaskingAvailableCores ensures that no value is present for MaskingAvailableCores, not even an explicit nil
+### GetHyperscaleInstanceIds
+
+`func (o *RegisteredEngine) GetHyperscaleInstanceIds() []string`
+
+GetHyperscaleInstanceIds returns the HyperscaleInstanceIds field if non-nil, zero value otherwise.
+
+### GetHyperscaleInstanceIdsOk
+
+`func (o *RegisteredEngine) GetHyperscaleInstanceIdsOk() (*[]string, bool)`
+
+GetHyperscaleInstanceIdsOk returns a tuple with the HyperscaleInstanceIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHyperscaleInstanceIds
+
+`func (o *RegisteredEngine) SetHyperscaleInstanceIds(v []string)`
+
+SetHyperscaleInstanceIds sets HyperscaleInstanceIds field to given value.
+
+### HasHyperscaleInstanceIds
+
+`func (o *RegisteredEngine) HasHyperscaleInstanceIds() bool`
+
+HasHyperscaleInstanceIds returns a boolean if a field has been set.
+
+### SetHyperscaleInstanceIdsNil
+
+`func (o *RegisteredEngine) SetHyperscaleInstanceIdsNil(b bool)`
+
+ SetHyperscaleInstanceIdsNil sets the value for HyperscaleInstanceIds to be an explicit nil
+
+### UnsetHyperscaleInstanceIds
+`func (o *RegisteredEngine) UnsetHyperscaleInstanceIds()`
+
+UnsetHyperscaleInstanceIds ensures that no value is present for HyperscaleInstanceIds, not even an explicit nil
+### GetHyperscaleTruststoreFilename
+
+`func (o *RegisteredEngine) GetHyperscaleTruststoreFilename() string`
+
+GetHyperscaleTruststoreFilename returns the HyperscaleTruststoreFilename field if non-nil, zero value otherwise.
+
+### GetHyperscaleTruststoreFilenameOk
+
+`func (o *RegisteredEngine) GetHyperscaleTruststoreFilenameOk() (*string, bool)`
+
+GetHyperscaleTruststoreFilenameOk returns a tuple with the HyperscaleTruststoreFilename field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHyperscaleTruststoreFilename
+
+`func (o *RegisteredEngine) SetHyperscaleTruststoreFilename(v string)`
+
+SetHyperscaleTruststoreFilename sets HyperscaleTruststoreFilename field to given value.
+
+### HasHyperscaleTruststoreFilename
+
+`func (o *RegisteredEngine) HasHyperscaleTruststoreFilename() bool`
+
+HasHyperscaleTruststoreFilename returns a boolean if a field has been set.
+
+### SetHyperscaleTruststoreFilenameNil
+
+`func (o *RegisteredEngine) SetHyperscaleTruststoreFilenameNil(b bool)`
+
+ SetHyperscaleTruststoreFilenameNil sets the value for HyperscaleTruststoreFilename to be an explicit nil
+
+### UnsetHyperscaleTruststoreFilename
+`func (o *RegisteredEngine) UnsetHyperscaleTruststoreFilename()`
+
+UnsetHyperscaleTruststoreFilename ensures that no value is present for HyperscaleTruststoreFilename, not even an explicit nil
+### GetHyperscaleTruststorePassword
+
+`func (o *RegisteredEngine) GetHyperscaleTruststorePassword() string`
+
+GetHyperscaleTruststorePassword returns the HyperscaleTruststorePassword field if non-nil, zero value otherwise.
+
+### GetHyperscaleTruststorePasswordOk
+
+`func (o *RegisteredEngine) GetHyperscaleTruststorePasswordOk() (*string, bool)`
+
+GetHyperscaleTruststorePasswordOk returns a tuple with the HyperscaleTruststorePassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHyperscaleTruststorePassword
+
+`func (o *RegisteredEngine) SetHyperscaleTruststorePassword(v string)`
+
+SetHyperscaleTruststorePassword sets HyperscaleTruststorePassword field to given value.
+
+### HasHyperscaleTruststorePassword
+
+`func (o *RegisteredEngine) HasHyperscaleTruststorePassword() bool`
+
+HasHyperscaleTruststorePassword returns a boolean if a field has been set.
+
+### SetHyperscaleTruststorePasswordNil
+
+`func (o *RegisteredEngine) SetHyperscaleTruststorePasswordNil(b bool)`
+
+ SetHyperscaleTruststorePasswordNil sets the value for HyperscaleTruststorePassword to be an explicit nil
+
+### UnsetHyperscaleTruststorePassword
+`func (o *RegisteredEngine) UnsetHyperscaleTruststorePassword()`
+
+UnsetHyperscaleTruststorePassword ensures that no value is present for HyperscaleTruststorePassword, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

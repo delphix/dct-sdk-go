@@ -4,6 +4,10 @@ All URIs are relative to */v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CompatibleRepositoriesByLocation**](EnvironmentsApi.md#CompatibleRepositoriesByLocation) | **Post** /environments/compatible_repositories_by_location | Get compatible repositories corresponding to the location.
+[**CompatibleRepositoriesBySnapshot**](EnvironmentsApi.md#CompatibleRepositoriesBySnapshot) | **Post** /environments/compatible_repositories_by_snapshot | Get compatible repositories corresponding to the snapshot.
+[**CompatibleRepositoriesByTimestamp**](EnvironmentsApi.md#CompatibleRepositoriesByTimestamp) | **Post** /environments/compatible_repositories_by_timestamp | Get compatible repositories corresponding to the timestamp.
+[**CompatibleRepositoriesFromBookmark**](EnvironmentsApi.md#CompatibleRepositoriesFromBookmark) | **Post** /environments/compatible_repositories_from_bookmark | Get compatible repositories corresponding to the bookmark.
 [**CreateEnvironment**](EnvironmentsApi.md#CreateEnvironment) | **Post** /environments | Create an environment.
 [**CreateEnvironmentTags**](EnvironmentsApi.md#CreateEnvironmentTags) | **Post** /environments/{environmentId}/tags | Create tags for an Environment.
 [**CreateEnvironmentUser**](EnvironmentsApi.md#CreateEnvironmentUser) | **Post** /environments/{environmentId}/users | Create environment user.
@@ -21,11 +25,267 @@ Method | HTTP request | Description
 [**PrimaryEnvironmentUser**](EnvironmentsApi.md#PrimaryEnvironmentUser) | **Post** /environments/{environmentId}/users/{userRef}/primary | Set primary environment user.
 [**RefreshEnvironment**](EnvironmentsApi.md#RefreshEnvironment) | **Post** /environments/{environmentId}/refresh | Refresh environment.
 [**SearchEnvironments**](EnvironmentsApi.md#SearchEnvironments) | **Post** /environments/search | Search for environments.
-[**SnapshotCompatibleRepositories**](EnvironmentsApi.md#SnapshotCompatibleRepositories) | **Post** /environments/snapshot_compatible_repositories | Get compatible repositories corresponding to the snapshot.
 [**UpdateEnvironment**](EnvironmentsApi.md#UpdateEnvironment) | **Patch** /environments/{environmentId} | Update an environment by ID.
 [**UpdateEnvironmentUser**](EnvironmentsApi.md#UpdateEnvironmentUser) | **Put** /environments/{environmentId}/users/{userRef} | Update environment user.
 [**UpdateHost**](EnvironmentsApi.md#UpdateHost) | **Patch** /environments/{environmentId}/hosts/{hostId} | Update a Host.
+[**UpdateRepository**](EnvironmentsApi.md#UpdateRepository) | **Patch** /environments/{environmentId}/repository/{repositoryId} | Update a Repository.
 
+
+
+## CompatibleRepositoriesByLocation
+
+> LocationCompatibleEnvironmentsResponse CompatibleRepositoriesByLocation(ctx).LocationCompatibleRepositoryRequest(locationCompatibleRepositoryRequest).Execute()
+
+Get compatible repositories corresponding to the location.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    locationCompatibleRepositoryRequest := *openapiclient.NewLocationCompatibleRepositoryRequest() // LocationCompatibleRepositoryRequest | The request to get compatible repositories for provisioning a new VDB by location.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.CompatibleRepositoriesByLocation(context.Background()).LocationCompatibleRepositoryRequest(locationCompatibleRepositoryRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CompatibleRepositoriesByLocation``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CompatibleRepositoriesByLocation`: LocationCompatibleEnvironmentsResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CompatibleRepositoriesByLocation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompatibleRepositoriesByLocationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **locationCompatibleRepositoryRequest** | [**LocationCompatibleRepositoryRequest**](LocationCompatibleRepositoryRequest.md) | The request to get compatible repositories for provisioning a new VDB by location. | 
+
+### Return type
+
+[**LocationCompatibleEnvironmentsResponse**](LocationCompatibleEnvironmentsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompatibleRepositoriesBySnapshot
+
+> SnapshotCompatibleEnvironmentsResponse CompatibleRepositoriesBySnapshot(ctx).SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest).Execute()
+
+Get compatible repositories corresponding to the snapshot.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    snapshotCompatibleRepositoryRequest := *openapiclient.NewSnapshotCompatibleRepositoryRequest() // SnapshotCompatibleRepositoryRequest | The request to get compatible repositories for provisioning a new VDB by snapshot.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.CompatibleRepositoriesBySnapshot(context.Background()).SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CompatibleRepositoriesBySnapshot``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CompatibleRepositoriesBySnapshot`: SnapshotCompatibleEnvironmentsResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CompatibleRepositoriesBySnapshot`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompatibleRepositoriesBySnapshotRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **snapshotCompatibleRepositoryRequest** | [**SnapshotCompatibleRepositoryRequest**](SnapshotCompatibleRepositoryRequest.md) | The request to get compatible repositories for provisioning a new VDB by snapshot. | 
+
+### Return type
+
+[**SnapshotCompatibleEnvironmentsResponse**](SnapshotCompatibleEnvironmentsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompatibleRepositoriesByTimestamp
+
+> TimestampCompatibleEnvironmentsResponse CompatibleRepositoriesByTimestamp(ctx).TimestampCompatibleRepositoryRequest(timestampCompatibleRepositoryRequest).Execute()
+
+Get compatible repositories corresponding to the timestamp.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    timestampCompatibleRepositoryRequest := *openapiclient.NewTimestampCompatibleRepositoryRequest() // TimestampCompatibleRepositoryRequest | The request to get compatible repositories for provisioning a new VDB by timestamp.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.CompatibleRepositoriesByTimestamp(context.Background()).TimestampCompatibleRepositoryRequest(timestampCompatibleRepositoryRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CompatibleRepositoriesByTimestamp``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CompatibleRepositoriesByTimestamp`: TimestampCompatibleEnvironmentsResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CompatibleRepositoriesByTimestamp`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompatibleRepositoriesByTimestampRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **timestampCompatibleRepositoryRequest** | [**TimestampCompatibleRepositoryRequest**](TimestampCompatibleRepositoryRequest.md) | The request to get compatible repositories for provisioning a new VDB by timestamp. | 
+
+### Return type
+
+[**TimestampCompatibleEnvironmentsResponse**](TimestampCompatibleEnvironmentsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompatibleRepositoriesFromBookmark
+
+> BookmarkCompatibleEnvironmentsResponse CompatibleRepositoriesFromBookmark(ctx).BookmarkCompatibleRepositoryRequest(bookmarkCompatibleRepositoryRequest).Execute()
+
+Get compatible repositories corresponding to the bookmark.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    bookmarkCompatibleRepositoryRequest := *openapiclient.NewBookmarkCompatibleRepositoryRequest("BookmarkId_example") // BookmarkCompatibleRepositoryRequest | The request to get compatible repositories for provisioning a new VDB by bookmark.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.CompatibleRepositoriesFromBookmark(context.Background()).BookmarkCompatibleRepositoryRequest(bookmarkCompatibleRepositoryRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CompatibleRepositoriesFromBookmark``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CompatibleRepositoriesFromBookmark`: BookmarkCompatibleEnvironmentsResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CompatibleRepositoriesFromBookmark`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompatibleRepositoriesFromBookmarkRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bookmarkCompatibleRepositoryRequest** | [**BookmarkCompatibleRepositoryRequest**](BookmarkCompatibleRepositoryRequest.md) | The request to get compatible repositories for provisioning a new VDB by bookmark. | 
+
+### Return type
+
+[**BookmarkCompatibleEnvironmentsResponse**](BookmarkCompatibleEnvironmentsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateEnvironment
@@ -1197,70 +1457,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## SnapshotCompatibleRepositories
-
-> SnapshotCompatibleRepositories SnapshotCompatibleRepositories(ctx).SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest).Execute()
-
-Get compatible repositories corresponding to the snapshot.
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/delphix/dct-sdk-go"
-)
-
-func main() {
-    snapshotCompatibleRepositoryRequest := *openapiclient.NewSnapshotCompatibleRepositoryRequest() // SnapshotCompatibleRepositoryRequest | The request to get compatible repositories for provisioning a new VDB by snapshot.
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnvironmentsApi.SnapshotCompatibleRepositories(context.Background()).SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.SnapshotCompatibleRepositories``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SnapshotCompatibleRepositories`: SnapshotCompatibleRepositories
-    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.SnapshotCompatibleRepositories`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSnapshotCompatibleRepositoriesRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **snapshotCompatibleRepositoryRequest** | [**SnapshotCompatibleRepositoryRequest**](SnapshotCompatibleRepositoryRequest.md) | The request to get compatible repositories for provisioning a new VDB by snapshot. | 
-
-### Return type
-
-[**SnapshotCompatibleRepositories**](SnapshotCompatibleRepositories.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## UpdateEnvironment
 
 > UpdateEnvironmentResponse UpdateEnvironment(ctx, environmentId).EnvironmentUpdateParameters(environmentUpdateParameters).Execute()
@@ -1462,6 +1658,79 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdateHostResponse**](UpdateHostResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateRepository
+
+> UpdateRepositoryResponse UpdateRepository(ctx, environmentId, repositoryId).UpdateRepositoryParameters(updateRepositoryParameters).Execute()
+
+Update a Repository.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    repositoryId := "repositoryId_example" // string | The ID of the repository.
+    updateRepositoryParameters := *openapiclient.NewUpdateRepositoryParameters("DatabaseType_example") // UpdateRepositoryParameters | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.UpdateRepository(context.Background(), environmentId, repositoryId).UpdateRepositoryParameters(updateRepositoryParameters).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.UpdateRepository``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UpdateRepository`: UpdateRepositoryResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.UpdateRepository`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+**repositoryId** | **string** | The ID of the repository. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateRepositoryRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **updateRepositoryParameters** | [**UpdateRepositoryParameters**](UpdateRepositoryParameters.md) |  | 
+
+### Return type
+
+[**UpdateRepositoryResponse**](UpdateRepositoryResponse.md)
 
 ### Authorization
 

@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PreRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment before refreshing the VDB. | [optional] 
 **PostRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after refreshing the VDB. | [optional] 
+**PreSelfRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment before refreshing the VDB with data from itself. | [optional] 
+**PostSelfRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after refreshing the VDB with data from itself. | [optional] 
 **PreRollback** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment before rewinding the VDB. | [optional] 
 **PostRollback** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after rewinding the VDB. | [optional] 
 **ConfigureClone** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment when the VDB is created or refreshed. | [optional] 
@@ -84,6 +86,56 @@ SetPostRefresh sets PostRefresh field to given value.
 `func (o *VirtualDatasetHooks) HasPostRefresh() bool`
 
 HasPostRefresh returns a boolean if a field has been set.
+
+### GetPreSelfRefresh
+
+`func (o *VirtualDatasetHooks) GetPreSelfRefresh() []Hook`
+
+GetPreSelfRefresh returns the PreSelfRefresh field if non-nil, zero value otherwise.
+
+### GetPreSelfRefreshOk
+
+`func (o *VirtualDatasetHooks) GetPreSelfRefreshOk() (*[]Hook, bool)`
+
+GetPreSelfRefreshOk returns a tuple with the PreSelfRefresh field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreSelfRefresh
+
+`func (o *VirtualDatasetHooks) SetPreSelfRefresh(v []Hook)`
+
+SetPreSelfRefresh sets PreSelfRefresh field to given value.
+
+### HasPreSelfRefresh
+
+`func (o *VirtualDatasetHooks) HasPreSelfRefresh() bool`
+
+HasPreSelfRefresh returns a boolean if a field has been set.
+
+### GetPostSelfRefresh
+
+`func (o *VirtualDatasetHooks) GetPostSelfRefresh() []Hook`
+
+GetPostSelfRefresh returns the PostSelfRefresh field if non-nil, zero value otherwise.
+
+### GetPostSelfRefreshOk
+
+`func (o *VirtualDatasetHooks) GetPostSelfRefreshOk() (*[]Hook, bool)`
+
+GetPostSelfRefreshOk returns a tuple with the PostSelfRefresh field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostSelfRefresh
+
+`func (o *VirtualDatasetHooks) SetPostSelfRefresh(v []Hook)`
+
+SetPostSelfRefresh sets PostSelfRefresh field to given value.
+
+### HasPostSelfRefresh
+
+`func (o *VirtualDatasetHooks) HasPostSelfRefresh() bool`
+
+HasPostSelfRefresh returns a boolean if a field has been set.
 
 ### GetPreRollback
 

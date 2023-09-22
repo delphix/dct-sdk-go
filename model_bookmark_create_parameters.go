@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the BookmarkCreateParameters type satisfies the MappedNullable interface at compile time
@@ -22,10 +23,18 @@ var _ MappedNullable = &BookmarkCreateParameters{}
 type BookmarkCreateParameters struct {
 	// The user-defined name of this bookmark.
 	Name string `json:"name"`
-	// The IDs of the VDBs to create the Bookmark on. This parameter is mutually exclusive with snapshot_ids.
+	// The IDs of the VDBs to create the Bookmark on. This parameter is mutually exclusive with snapshot_ids and timeflow_ids.
 	VdbIds []string `json:"vdb_ids,omitempty"`
-	// The IDs of the snapshots that will be part of the Bookmark. This parameter is mutually exclusive with vdb_ids. 
+	// The IDs of the snapshots that will be part of the Bookmark. This parameter is mutually exclusive with vdb_ids, timestamp, timestamp_in_database_timezone, location and timeflow_ids. 
 	SnapshotIds []string `json:"snapshot_ids,omitempty"`
+	// The array of timeflow Id. Only allowed to set when timestamp, timestamp_in_database_timezone or location is provided.
+	TimeflowIds []string `json:"timeflow_ids,omitempty"`
+	// The point in time from which to execute the operation. Mutually exclusive with snapshot_ids, timestamp_in_database_timezone and location.
+	Timestamp *time.Time `json:"timestamp,omitempty"`
+	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with snapshot_ids, timestamp and location.
+	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
+	// The location to create bookmark from. Mutually exclusive with snapshot_ids, timestamp, and timestamp_in_database_timezone.
+	Location *string `json:"location,omitempty"`
 	// The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever. Deprecated in favor of expiration and retain_forever.
 	// Deprecated
 	Retention *int64 `json:"retention,omitempty"`
@@ -37,6 +46,8 @@ type BookmarkCreateParameters struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// Whether the account creating this bookmark must be configured as owner of the bookmark.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
+	// Whether this bookmark should inherit tags from the parent VDB.
+	InheritParentVdbTags *bool `json:"inherit_parent_vdb_tags,omitempty"`
 }
 
 // NewBookmarkCreateParameters instantiates a new BookmarkCreateParameters object
@@ -48,6 +59,8 @@ func NewBookmarkCreateParameters(name string) *BookmarkCreateParameters {
 	this.Name = name
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
+	var inheritParentVdbTags bool = false
+	this.InheritParentVdbTags = &inheritParentVdbTags
 	return &this
 }
 
@@ -58,6 +71,8 @@ func NewBookmarkCreateParametersWithDefaults() *BookmarkCreateParameters {
 	this := BookmarkCreateParameters{}
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
+	var inheritParentVdbTags bool = false
+	this.InheritParentVdbTags = &inheritParentVdbTags
 	return &this
 }
 
@@ -147,6 +162,134 @@ func (o *BookmarkCreateParameters) HasSnapshotIds() bool {
 // SetSnapshotIds gets a reference to the given []string and assigns it to the SnapshotIds field.
 func (o *BookmarkCreateParameters) SetSnapshotIds(v []string) {
 	o.SnapshotIds = v
+}
+
+// GetTimeflowIds returns the TimeflowIds field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetTimeflowIds() []string {
+	if o == nil || IsNil(o.TimeflowIds) {
+		var ret []string
+		return ret
+	}
+	return o.TimeflowIds
+}
+
+// GetTimeflowIdsOk returns a tuple with the TimeflowIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetTimeflowIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TimeflowIds) {
+		return nil, false
+	}
+	return o.TimeflowIds, true
+}
+
+// HasTimeflowIds returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasTimeflowIds() bool {
+	if o != nil && !IsNil(o.TimeflowIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowIds gets a reference to the given []string and assigns it to the TimeflowIds field.
+func (o *BookmarkCreateParameters) SetTimeflowIds(v []string) {
+	o.TimeflowIds = v
+}
+
+// GetTimestamp returns the Timestamp field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetTimestamp() time.Time {
+	if o == nil || IsNil(o.Timestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.Timestamp
+}
+
+// GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.Timestamp) {
+		return nil, false
+	}
+	return o.Timestamp, true
+}
+
+// HasTimestamp returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasTimestamp() bool {
+	if o != nil && !IsNil(o.Timestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimestamp gets a reference to the given time.Time and assigns it to the Timestamp field.
+func (o *BookmarkCreateParameters) SetTimestamp(v time.Time) {
+	o.Timestamp = &v
+}
+
+// GetTimestampInDatabaseTimezone returns the TimestampInDatabaseTimezone field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetTimestampInDatabaseTimezone() string {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
+		var ret string
+		return ret
+	}
+	return *o.TimestampInDatabaseTimezone
+}
+
+// GetTimestampInDatabaseTimezoneOk returns a tuple with the TimestampInDatabaseTimezone field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetTimestampInDatabaseTimezoneOk() (*string, bool) {
+	if o == nil || IsNil(o.TimestampInDatabaseTimezone) {
+		return nil, false
+	}
+	return o.TimestampInDatabaseTimezone, true
+}
+
+// HasTimestampInDatabaseTimezone returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasTimestampInDatabaseTimezone() bool {
+	if o != nil && !IsNil(o.TimestampInDatabaseTimezone) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimestampInDatabaseTimezone gets a reference to the given string and assigns it to the TimestampInDatabaseTimezone field.
+func (o *BookmarkCreateParameters) SetTimestampInDatabaseTimezone(v string) {
+	o.TimestampInDatabaseTimezone = &v
+}
+
+// GetLocation returns the Location field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetLocation() string {
+	if o == nil || IsNil(o.Location) {
+		var ret string
+		return ret
+	}
+	return *o.Location
+}
+
+// GetLocationOk returns a tuple with the Location field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.Location) {
+		return nil, false
+	}
+	return o.Location, true
+}
+
+// HasLocation returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasLocation() bool {
+	if o != nil && !IsNil(o.Location) {
+		return true
+	}
+
+	return false
+}
+
+// SetLocation gets a reference to the given string and assigns it to the Location field.
+func (o *BookmarkCreateParameters) SetLocation(v string) {
+	o.Location = &v
 }
 
 // GetRetention returns the Retention field value if set, zero value otherwise.
@@ -312,6 +455,38 @@ func (o *BookmarkCreateParameters) SetMakeCurrentAccountOwner(v bool) {
 	o.MakeCurrentAccountOwner = &v
 }
 
+// GetInheritParentVdbTags returns the InheritParentVdbTags field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetInheritParentVdbTags() bool {
+	if o == nil || IsNil(o.InheritParentVdbTags) {
+		var ret bool
+		return ret
+	}
+	return *o.InheritParentVdbTags
+}
+
+// GetInheritParentVdbTagsOk returns a tuple with the InheritParentVdbTags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetInheritParentVdbTagsOk() (*bool, bool) {
+	if o == nil || IsNil(o.InheritParentVdbTags) {
+		return nil, false
+	}
+	return o.InheritParentVdbTags, true
+}
+
+// HasInheritParentVdbTags returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasInheritParentVdbTags() bool {
+	if o != nil && !IsNil(o.InheritParentVdbTags) {
+		return true
+	}
+
+	return false
+}
+
+// SetInheritParentVdbTags gets a reference to the given bool and assigns it to the InheritParentVdbTags field.
+func (o *BookmarkCreateParameters) SetInheritParentVdbTags(v bool) {
+	o.InheritParentVdbTags = &v
+}
+
 func (o BookmarkCreateParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -329,6 +504,18 @@ func (o BookmarkCreateParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SnapshotIds) {
 		toSerialize["snapshot_ids"] = o.SnapshotIds
 	}
+	if !IsNil(o.TimeflowIds) {
+		toSerialize["timeflow_ids"] = o.TimeflowIds
+	}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.TimestampInDatabaseTimezone) {
+		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
+	}
+	if !IsNil(o.Location) {
+		toSerialize["location"] = o.Location
+	}
 	if !IsNil(o.Retention) {
 		toSerialize["retention"] = o.Retention
 	}
@@ -343,6 +530,9 @@ func (o BookmarkCreateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MakeCurrentAccountOwner) {
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
+	}
+	if !IsNil(o.InheritParentVdbTags) {
+		toSerialize["inherit_parent_vdb_tags"] = o.InheritParentVdbTags
 	}
 	return toSerialize, nil
 }
