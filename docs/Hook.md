@@ -6,7 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** |  | [optional] 
 **Command** | **string** |  | 
-**Shell** | Pointer to **string** |  | [optional] [default to "bash"]
+**Shell** | Pointer to **string** |  | [optional] 
+**ElementId** | Pointer to **string** |  | [optional] 
+**HasCredentials** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -96,6 +98,56 @@ SetShell sets Shell field to given value.
 `func (o *Hook) HasShell() bool`
 
 HasShell returns a boolean if a field has been set.
+
+### GetElementId
+
+`func (o *Hook) GetElementId() string`
+
+GetElementId returns the ElementId field if non-nil, zero value otherwise.
+
+### GetElementIdOk
+
+`func (o *Hook) GetElementIdOk() (*string, bool)`
+
+GetElementIdOk returns a tuple with the ElementId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementId
+
+`func (o *Hook) SetElementId(v string)`
+
+SetElementId sets ElementId field to given value.
+
+### HasElementId
+
+`func (o *Hook) HasElementId() bool`
+
+HasElementId returns a boolean if a field has been set.
+
+### GetHasCredentials
+
+`func (o *Hook) GetHasCredentials() bool`
+
+GetHasCredentials returns the HasCredentials field if non-nil, zero value otherwise.
+
+### GetHasCredentialsOk
+
+`func (o *Hook) GetHasCredentialsOk() (*bool, bool)`
+
+GetHasCredentialsOk returns a tuple with the HasCredentials field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasCredentials
+
+`func (o *Hook) SetHasCredentials(v bool)`
+
+SetHasCredentials sets HasCredentials field to given value.
+
+### HasHasCredentials
+
+`func (o *Hook) HasHasCredentials() bool`
+
+HasHasCredentials returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

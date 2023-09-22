@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DatasetId** | Pointer to **string** | ID of the dataset to refresh to | [optional] 
+**DatasetId** | Pointer to **string** | ID of the dataset to refresh to, mutually exclusive with timeflow_id. | [optional] 
+**TimeflowId** | Pointer to **string** | ID of the timeflow to refresh to, mutually exclusive with dataset_id. | [optional] 
 
 ## Methods
 
@@ -49,6 +50,31 @@ SetDatasetId sets DatasetId field to given value.
 `func (o *RefreshVDBByTimestampParametersAllOf) HasDatasetId() bool`
 
 HasDatasetId returns a boolean if a field has been set.
+
+### GetTimeflowId
+
+`func (o *RefreshVDBByTimestampParametersAllOf) GetTimeflowId() string`
+
+GetTimeflowId returns the TimeflowId field if non-nil, zero value otherwise.
+
+### GetTimeflowIdOk
+
+`func (o *RefreshVDBByTimestampParametersAllOf) GetTimeflowIdOk() (*string, bool)`
+
+GetTimeflowIdOk returns a tuple with the TimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeflowId
+
+`func (o *RefreshVDBByTimestampParametersAllOf) SetTimeflowId(v string)`
+
+SetTimeflowId sets TimeflowId field to given value.
+
+### HasTimeflowId
+
+`func (o *RefreshVDBByTimestampParametersAllOf) HasTimeflowId() bool`
+
+HasTimeflowId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

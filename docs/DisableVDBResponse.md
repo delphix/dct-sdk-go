@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**JobId** | Pointer to **string** | The initiated job id. | [optional] 
+**Job** | Pointer to [**Job**](Job.md) |  | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewDisableVDBResponseWithDefaults instantiates a new DisableVDBResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetJobId
+### GetJob
 
-`func (o *DisableVDBResponse) GetJobId() string`
+`func (o *DisableVDBResponse) GetJob() Job`
 
-GetJobId returns the JobId field if non-nil, zero value otherwise.
+GetJob returns the Job field if non-nil, zero value otherwise.
 
-### GetJobIdOk
+### GetJobOk
 
-`func (o *DisableVDBResponse) GetJobIdOk() (*string, bool)`
+`func (o *DisableVDBResponse) GetJobOk() (*Job, bool)`
 
-GetJobIdOk returns a tuple with the JobId field if it's non-nil, zero value otherwise
+GetJobOk returns a tuple with the Job field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetJobId
+### SetJob
 
-`func (o *DisableVDBResponse) SetJobId(v string)`
+`func (o *DisableVDBResponse) SetJob(v Job)`
 
-SetJobId sets JobId field to given value.
+SetJob sets Job field to given value.
 
-### HasJobId
+### HasJob
 
-`func (o *DisableVDBResponse) HasJobId() bool`
+`func (o *DisableVDBResponse) HasJob() bool`
 
-HasJobId returns a boolean if a field has been set.
+HasJob returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -1,21 +1,95 @@
 # \EnvironmentsApi
 
-All URIs are relative to */v1*
+All URIs are relative to */v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateEnvironment**](EnvironmentsApi.md#CreateEnvironment) | **Post** /environments | Create an environment.
 [**CreateEnvironmentTags**](EnvironmentsApi.md#CreateEnvironmentTags) | **Post** /environments/{environmentId}/tags | Create tags for an Environment.
-[**CreateEnvironments**](EnvironmentsApi.md#CreateEnvironments) | **Post** /environments | Create an environment.
+[**CreateEnvironmentUser**](EnvironmentsApi.md#CreateEnvironmentUser) | **Post** /environments/{environmentId}/users | Create environment user.
+[**CreateHost**](EnvironmentsApi.md#CreateHost) | **Post** /environments/{environmentId}/hosts | Create a new Host.
 [**DeleteEnvironment**](EnvironmentsApi.md#DeleteEnvironment) | **Delete** /environments/{environmentId} | Delete an environment by ID.
-[**DisableEnvironment**](EnvironmentsApi.md#DisableEnvironment) | **Put** /environments/{environmentId}/disable | Disable environment.
-[**EnableEnvironment**](EnvironmentsApi.md#EnableEnvironment) | **Put** /environments/{environmentId}/enable | Enable a disabled environment.
+[**DeleteEnvironmentTags**](EnvironmentsApi.md#DeleteEnvironmentTags) | **Post** /environments/{environmentId}/tags/delete | Delete tags for an Environment.
+[**DeleteEnvironmentUser**](EnvironmentsApi.md#DeleteEnvironmentUser) | **Delete** /environments/{environmentId}/users/{userRef} | Delete environment user.
+[**DeleteHost**](EnvironmentsApi.md#DeleteHost) | **Delete** /environments/{environmentId}/hosts/{hostId} | Delete a Host.
+[**DisableEnvironment**](EnvironmentsApi.md#DisableEnvironment) | **Post** /environments/{environmentId}/disable | Disable environment.
+[**EnableEnvironment**](EnvironmentsApi.md#EnableEnvironment) | **Post** /environments/{environmentId}/enable | Enable a disabled environment.
 [**GetEnvironmentById**](EnvironmentsApi.md#GetEnvironmentById) | **Get** /environments/{environmentId} | Returns an environment by ID.
 [**GetEnvironments**](EnvironmentsApi.md#GetEnvironments) | **Get** /environments | List all environments.
 [**GetTagsEnvironment**](EnvironmentsApi.md#GetTagsEnvironment) | **Get** /environments/{environmentId}/tags | Get tags for an Environment.
 [**ListEnvironmentUsers**](EnvironmentsApi.md#ListEnvironmentUsers) | **Get** /environments/{environmentId}/users | List environment users.
-[**RefreshEnvironment**](EnvironmentsApi.md#RefreshEnvironment) | **Put** /environments/{environmentId}/refresh | Refresh environment.
-[**UpdateEnvironment**](EnvironmentsApi.md#UpdateEnvironment) | **Put** /environments/{environmentId} | Update an environment by ID.
+[**PrimaryEnvironmentUser**](EnvironmentsApi.md#PrimaryEnvironmentUser) | **Post** /environments/{environmentId}/users/{userRef}/primary | Set primary environment user.
+[**RefreshEnvironment**](EnvironmentsApi.md#RefreshEnvironment) | **Post** /environments/{environmentId}/refresh | Refresh environment.
+[**SearchEnvironments**](EnvironmentsApi.md#SearchEnvironments) | **Post** /environments/search | Search for environments.
+[**SnapshotCompatibleRepositories**](EnvironmentsApi.md#SnapshotCompatibleRepositories) | **Post** /environments/snapshot_compatible_repositories | Get compatible repositories corresponding to the snapshot.
+[**UpdateEnvironment**](EnvironmentsApi.md#UpdateEnvironment) | **Patch** /environments/{environmentId} | Update an environment by ID.
+[**UpdateEnvironmentUser**](EnvironmentsApi.md#UpdateEnvironmentUser) | **Put** /environments/{environmentId}/users/{userRef} | Update environment user.
+[**UpdateHost**](EnvironmentsApi.md#UpdateHost) | **Patch** /environments/{environmentId}/hosts/{hostId} | Update a Host.
 
+
+
+## CreateEnvironment
+
+> CreateEnvironmentResponse CreateEnvironment(ctx).EnvironmentCreateParameters(environmentCreateParameters).Execute()
+
+Create an environment.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentCreateParameters := *openapiclient.NewEnvironmentCreateParameters("12", "UNIX", "db.host.com") // EnvironmentCreateParameters | The parameters to create an environment.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.CreateEnvironment(context.Background()).EnvironmentCreateParameters(environmentCreateParameters).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CreateEnvironment``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateEnvironment`: CreateEnvironmentResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CreateEnvironment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateEnvironmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **environmentCreateParameters** | [**EnvironmentCreateParameters**](EnvironmentCreateParameters.md) | The parameters to create an environment. | 
+
+### Return type
+
+[**CreateEnvironmentResponse**](CreateEnvironmentResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateEnvironmentTags
@@ -33,12 +107,12 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
     environmentId := "environmentId_example" // string | The ID of the environment.
-    tagsRequest := *openapiclient.NewTagsRequest() // TagsRequest | Tags information for Environment.
+    tagsRequest := *openapiclient.NewTagsRequest([]openapiclient.Tag{*openapiclient.NewTag("key-1", "value-1")}) // TagsRequest | Tags information for Environment.
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -88,11 +162,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## CreateEnvironments
+## CreateEnvironmentUser
 
-> CreateEnvironmentResponse CreateEnvironments(ctx).EnvironmentCreateParameters(environmentCreateParameters).Execute()
+> CreateEnvironmentUserResponse CreateEnvironmentUser(ctx, environmentId).EnvironmentUserParams(environmentUserParams).Execute()
 
-Create an environment.
+Create environment user.
 
 ### Example
 
@@ -103,40 +177,116 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
-    environmentCreateParameters := *openapiclient.NewEnvironmentCreateParameters(int64(12), "UNIX", "db.host.com") // EnvironmentCreateParameters | The parameters to create an environment.
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    environmentUserParams := *openapiclient.NewEnvironmentUserParams() // EnvironmentUserParams | The parameters to create an environment user. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnvironmentsApi.CreateEnvironments(context.Background()).EnvironmentCreateParameters(environmentCreateParameters).Execute()
+    resp, r, err := apiClient.EnvironmentsApi.CreateEnvironmentUser(context.Background(), environmentId).EnvironmentUserParams(environmentUserParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CreateEnvironments``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CreateEnvironmentUser``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `CreateEnvironments`: CreateEnvironmentResponse
-    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CreateEnvironments`: %v\n", resp)
+    // response from `CreateEnvironmentUser`: CreateEnvironmentUserResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CreateEnvironmentUser`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiCreateEnvironmentsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiCreateEnvironmentUserRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **environmentCreateParameters** | [**EnvironmentCreateParameters**](EnvironmentCreateParameters.md) | The parameters to create an environment. | 
+
+ **environmentUserParams** | [**EnvironmentUserParams**](EnvironmentUserParams.md) | The parameters to create an environment user. | 
 
 ### Return type
 
-[**CreateEnvironmentResponse**](CreateEnvironmentResponse.md)
+[**CreateEnvironmentUserResponse**](CreateEnvironmentUserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateHost
+
+> CreateHostResponse CreateHost(ctx, environmentId).HostCreateParameters(hostCreateParameters).Execute()
+
+Create a new Host.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    hostCreateParameters := *openapiclient.NewHostCreateParameters() // HostCreateParameters | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.CreateHost(context.Background(), environmentId).HostCreateParameters(hostCreateParameters).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.CreateHost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateHost`: CreateHostResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.CreateHost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateHostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **hostCreateParameters** | [**HostCreateParameters**](HostCreateParameters.md) |  | 
+
+### Return type
+
+[**CreateHostResponse**](CreateHostResponse.md)
 
 ### Authorization
 
@@ -167,7 +317,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
@@ -220,6 +370,216 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteEnvironmentTags
+
+> DeleteEnvironmentTags(ctx, environmentId).DeleteTag(deleteTag).Execute()
+
+Delete tags for an Environment.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    deleteTag := *openapiclient.NewDeleteTag() // DeleteTag | The parameters to delete tags (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.EnvironmentsApi.DeleteEnvironmentTags(context.Background(), environmentId).DeleteTag(deleteTag).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.DeleteEnvironmentTags``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteEnvironmentTagsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **deleteTag** | [**DeleteTag**](DeleteTag.md) | The parameters to delete tags | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteEnvironmentUser
+
+> DeleteEnvironmentUserResponse DeleteEnvironmentUser(ctx, environmentId, userRef).Execute()
+
+Delete environment user.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    userRef := "userRef_example" // string | Environment user reference.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.DeleteEnvironmentUser(context.Background(), environmentId, userRef).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.DeleteEnvironmentUser``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `DeleteEnvironmentUser`: DeleteEnvironmentUserResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.DeleteEnvironmentUser`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+**userRef** | **string** | Environment user reference. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteEnvironmentUserRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**DeleteEnvironmentUserResponse**](DeleteEnvironmentUserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteHost
+
+> DeleteHostResponse DeleteHost(ctx, environmentId, hostId).Execute()
+
+Delete a Host.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    hostId := "hostId_example" // string | The ID of the host.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.DeleteHost(context.Background(), environmentId, hostId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.DeleteHost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `DeleteHost`: DeleteHostResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.DeleteHost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+**hostId** | **string** | The ID of the host. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteHostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**DeleteHostResponse**](DeleteHostResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DisableEnvironment
 
 > DisableEnvironmentResponse DisableEnvironment(ctx, environmentId).Execute()
@@ -235,7 +595,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
@@ -303,7 +663,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
@@ -371,7 +731,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
@@ -426,7 +786,7 @@ Name | Type | Description  | Notes
 
 ## GetEnvironments
 
-> ListEnvironmentsResponse GetEnvironments(ctx).Limit(limit).Cursor(cursor).Execute()
+> ListEnvironmentsResponse GetEnvironments(ctx).Limit(limit).Cursor(cursor).Sort(sort).Execute()
 
 List all environments.
 
@@ -439,16 +799,17 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
     limit := int32(50) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. (optional) (default to 100)
-    cursor := "RXlhbCBpcyBncmVhdAo=" // string | Cursor to fetch the next or previous page of results. (optional)
+    cursor := "cursor_example" // string | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the 'prev_cursor' or 'next_cursor' property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. (optional)
+    sort := "id" // string | The field to sort results by. A property name with a prepended '-' signifies descending order. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnvironmentsApi.GetEnvironments(context.Background()).Limit(limit).Cursor(cursor).Execute()
+    resp, r, err := apiClient.EnvironmentsApi.GetEnvironments(context.Background()).Limit(limit).Cursor(cursor).Sort(sort).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.GetEnvironments``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -470,7 +831,8 @@ Other parameters are passed through a pointer to a apiGetEnvironmentsRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. | [default to 100]
- **cursor** | **string** | Cursor to fetch the next or previous page of results. | 
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. | 
+ **sort** | **string** | The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order. | 
 
 ### Return type
 
@@ -505,7 +867,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
@@ -573,11 +935,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
-    environmentId := "environmentId_example" // string | List environment users.
+    environmentId := "environmentId_example" // string | The ID of the environment.
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -597,7 +959,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**environmentId** | **string** | List environment users. | 
+**environmentId** | **string** | The ID of the environment. | 
 
 ### Other Parameters
 
@@ -611,6 +973,77 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListEnvironmentUsers**](ListEnvironmentUsers.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PrimaryEnvironmentUser
+
+> PrimaryEnvironmentUserResponse PrimaryEnvironmentUser(ctx, environmentId, userRef).Execute()
+
+Set primary environment user.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    userRef := "userRef_example" // string | Environment user reference.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.PrimaryEnvironmentUser(context.Background(), environmentId, userRef).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.PrimaryEnvironmentUser``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PrimaryEnvironmentUser`: PrimaryEnvironmentUserResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.PrimaryEnvironmentUser`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+**userRef** | **string** | Environment user reference. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPrimaryEnvironmentUserRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**PrimaryEnvironmentUserResponse**](PrimaryEnvironmentUserResponse.md)
 
 ### Authorization
 
@@ -641,7 +1074,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
@@ -694,6 +1127,140 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## SearchEnvironments
+
+> SearchEnvironmentsResponse SearchEnvironments(ctx).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+
+Search for environments.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    limit := int32(50) // int32 | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. (optional) (default to 100)
+    cursor := "cursor_example" // string | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the 'prev_cursor' or 'next_cursor' property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. (optional)
+    sort := "id" // string | The field to sort results by. A property name with a prepended '-' signifies descending order. (optional)
+    searchBody := *openapiclient.NewSearchBody() // SearchBody | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS 'foobar', field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN ['Goku', 'Vegeta'] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically `SEARCH '12'` would match an item with an attribute with an integer value of `123`.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ 'Goku' | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ 'Goku' |  ## Grouping Parenthesis `()` can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS 'foo')  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \"foo\", \"bar\", \"foo bar\", 'foo', 'bar', 'foo bar' | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], ['foo', \"bar\"] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.SearchEnvironments(context.Background()).Limit(limit).Cursor(cursor).Sort(sort).SearchBody(searchBody).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.SearchEnvironments``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SearchEnvironments`: SearchEnvironmentsResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.SearchEnvironments`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSearchEnvironmentsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100. | [default to 100]
+ **cursor** | **string** | Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints. | 
+ **sort** | **string** | The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order. | 
+ **searchBody** | [**SearchBody**](SearchBody.md) | A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression.  | 
+
+### Return type
+
+[**SearchEnvironmentsResponse**](SearchEnvironmentsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SnapshotCompatibleRepositories
+
+> SnapshotCompatibleRepositories SnapshotCompatibleRepositories(ctx).SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest).Execute()
+
+Get compatible repositories corresponding to the snapshot.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    snapshotCompatibleRepositoryRequest := *openapiclient.NewSnapshotCompatibleRepositoryRequest() // SnapshotCompatibleRepositoryRequest | The request to get compatible repositories for provisioning a new VDB by snapshot.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.SnapshotCompatibleRepositories(context.Background()).SnapshotCompatibleRepositoryRequest(snapshotCompatibleRepositoryRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.SnapshotCompatibleRepositories``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SnapshotCompatibleRepositories`: SnapshotCompatibleRepositories
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.SnapshotCompatibleRepositories`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSnapshotCompatibleRepositoriesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **snapshotCompatibleRepositoryRequest** | [**SnapshotCompatibleRepositoryRequest**](SnapshotCompatibleRepositoryRequest.md) | The request to get compatible repositories for provisioning a new VDB by snapshot. | 
+
+### Return type
+
+[**SnapshotCompatibleRepositories**](SnapshotCompatibleRepositories.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateEnvironment
 
 > UpdateEnvironmentResponse UpdateEnvironment(ctx, environmentId).EnvironmentUpdateParameters(environmentUpdateParameters).Execute()
@@ -709,7 +1276,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func main() {
@@ -749,6 +1316,152 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdateEnvironmentResponse**](UpdateEnvironmentResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateEnvironmentUser
+
+> UpdateEnvironmentUserResponse UpdateEnvironmentUser(ctx, environmentId, userRef).EnvironmentUserParams(environmentUserParams).Execute()
+
+Update environment user.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    userRef := "userRef_example" // string | Environment user reference.
+    environmentUserParams := *openapiclient.NewEnvironmentUserParams() // EnvironmentUserParams | The parameters to create an environment user. (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.UpdateEnvironmentUser(context.Background(), environmentId, userRef).EnvironmentUserParams(environmentUserParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.UpdateEnvironmentUser``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UpdateEnvironmentUser`: UpdateEnvironmentUserResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.UpdateEnvironmentUser`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+**userRef** | **string** | Environment user reference. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateEnvironmentUserRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **environmentUserParams** | [**EnvironmentUserParams**](EnvironmentUserParams.md) | The parameters to create an environment user. | 
+
+### Return type
+
+[**UpdateEnvironmentUserResponse**](UpdateEnvironmentUserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateHost
+
+> UpdateHostResponse UpdateHost(ctx, environmentId, hostId).HostUpdateParameters(hostUpdateParameters).Execute()
+
+Update a Host.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/delphix/dct-sdk-go"
+)
+
+func main() {
+    environmentId := "environmentId_example" // string | The ID of the environment.
+    hostId := "hostId_example" // string | The ID of the host.
+    hostUpdateParameters := *openapiclient.NewHostUpdateParameters() // HostUpdateParameters | the parameters to update a host.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.EnvironmentsApi.UpdateHost(context.Background(), environmentId, hostId).HostUpdateParameters(hostUpdateParameters).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `EnvironmentsApi.UpdateHost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UpdateHost`: UpdateHostResponse
+    fmt.Fprintf(os.Stdout, "Response from `EnvironmentsApi.UpdateHost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**environmentId** | **string** | The ID of the environment. | 
+**hostId** | **string** | The ID of the host. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateHostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **hostUpdateParameters** | [**HostUpdateParameters**](HostUpdateParameters.md) | the parameters to update a host. | 
+
+### Return type
+
+[**UpdateHostResponse**](UpdateHostResponse.md)
 
 ### Authorization
 

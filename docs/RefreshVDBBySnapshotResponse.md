@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**JobId** | Pointer to **string** | The initiated job id. | [optional] 
+**Job** | Pointer to [**Job**](Job.md) |  | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewRefreshVDBBySnapshotResponseWithDefaults instantiates a new RefreshVDBBySnaps
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetJobId
+### GetJob
 
-`func (o *RefreshVDBBySnapshotResponse) GetJobId() string`
+`func (o *RefreshVDBBySnapshotResponse) GetJob() Job`
 
-GetJobId returns the JobId field if non-nil, zero value otherwise.
+GetJob returns the Job field if non-nil, zero value otherwise.
 
-### GetJobIdOk
+### GetJobOk
 
-`func (o *RefreshVDBBySnapshotResponse) GetJobIdOk() (*string, bool)`
+`func (o *RefreshVDBBySnapshotResponse) GetJobOk() (*Job, bool)`
 
-GetJobIdOk returns a tuple with the JobId field if it's non-nil, zero value otherwise
+GetJobOk returns a tuple with the Job field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetJobId
+### SetJob
 
-`func (o *RefreshVDBBySnapshotResponse) SetJobId(v string)`
+`func (o *RefreshVDBBySnapshotResponse) SetJob(v Job)`
 
-SetJobId sets JobId field to given value.
+SetJob sets Job field to given value.
 
-### HasJobId
+### HasJob
 
-`func (o *RefreshVDBBySnapshotResponse) HasJobId() bool`
+`func (o *RefreshVDBBySnapshotResponse) HasJob() bool`
 
-HasJobId returns a boolean if a field has been set.
+HasJob returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

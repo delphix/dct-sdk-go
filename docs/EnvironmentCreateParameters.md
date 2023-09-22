@@ -5,13 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | The name of the environment. | [optional] 
-**EngineId** | **int64** | The ID of the Engine onto which to create the environment. | 
+**EngineId** | **string** | The ID of the Engine onto which to create the environment. | 
 **OsName** | **string** | Operating system type of the environment. | 
 **IsCluster** | Pointer to **bool** | Whether the environment to be created is a cluster. | [optional] [default to false]
 **ClusterHome** | Pointer to **string** | Absolute path to cluster home drectory. This parameter is mandatory for UNIX cluster environments. | [optional] 
 **Hostname** | **string** | host address of the machine. | 
 **StagingEnvironment** | Pointer to **string** | Id of the connector environment which is used to connect to this source environment. This is mandatory parameter when creating Windows source environments. | [optional] 
 **ConnectorPort** | Pointer to **int32** | Specify port on which Delphix connector will run. This is mandatory parameter when creating Windows target environments. | [optional] 
+**ConnectorAuthenticationKey** | Pointer to **string** | Unique per Delphix key used to authenticate with the remote Delphix Connector. | [optional] 
 **IsTarget** | Pointer to **bool** | Whether the environment to be created is a target cluster environment. This property is used only when creating Windows cluster environments. | [optional] 
 **SshPort** | Pointer to **int64** | ssh port of the host. | [optional] [default to 22]
 **ToolkitPath** | Pointer to **string** | The path for the toolkit that resides on the host. | [optional] 
@@ -23,6 +24,8 @@ Name | Type | Description | Notes
 **HashicorpVaultUsernameKey** | Pointer to **string** | Key for the username in the key-value store. | [optional] 
 **HashicorpVaultSecretKey** | Pointer to **string** | Key for the password in the key-value store. | [optional] 
 **CyberarkVaultQueryString** | Pointer to **string** | Query to find a credential in the CyberArk vault. | [optional] 
+**UseKerberosAuthentication** | Pointer to **bool** | Whether to use kerberos authentication. | [optional] 
+**UseEnginePublicKey** | Pointer to **bool** | Whether to use public key authentication. | [optional] 
 **NfsAddresses** | Pointer to **[]string** | array of ip address or hostnames | [optional] 
 **AseDbUsername** | Pointer to **string** | username of the SAP ASE database. | [optional] 
 **AseDbPassword** | Pointer to **string** | password of the SAP ASE database. | [optional] 
@@ -32,6 +35,7 @@ Name | Type | Description | Notes
 **AseDbHashicorpVaultUsernameKey** | Pointer to **string** | Key for the username in the key-value store. | [optional] 
 **AseDbHashicorpVaultSecretKey** | Pointer to **string** | Key for the password in the key-value store. | [optional] 
 **AseDbCyberarkVaultQueryString** | Pointer to **string** | Query to find a credential in the CyberArk vault. | [optional] 
+**AseDbUseKerberosAuthentication** | Pointer to **bool** | Whether to use kerberos authentication for ASE DB discovery. | [optional] 
 **JavaHome** | Pointer to **string** | The path to the user managed Java Development Kit (JDK). If not specified, then the OpenJDK will be used. | [optional] 
 **DspKeystorePath** | Pointer to **string** | DSP keystore path. | [optional] 
 **DspKeystorePassword** | Pointer to **string** | DSP keystore password. | [optional] 
@@ -39,12 +43,14 @@ Name | Type | Description | Notes
 **DspTruststorePath** | Pointer to **string** | DSP truststore path. | [optional] 
 **DspTruststorePassword** | Pointer to **string** | DSP truststore password. | [optional] 
 **Description** | Pointer to **string** | The environment description. | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for this environment. | [optional] 
+**MakeCurrentAccountOwner** | Pointer to **bool** | Whether the account creating this environment must be configured as owner of the environment. | [optional] [default to true]
 
 ## Methods
 
 ### NewEnvironmentCreateParameters
 
-`func NewEnvironmentCreateParameters(engineId int64, osName string, hostname string, ) *EnvironmentCreateParameters`
+`func NewEnvironmentCreateParameters(engineId string, osName string, hostname string, ) *EnvironmentCreateParameters`
 
 NewEnvironmentCreateParameters instantiates a new EnvironmentCreateParameters object
 This constructor will assign default values to properties that have it defined,
@@ -86,20 +92,20 @@ HasName returns a boolean if a field has been set.
 
 ### GetEngineId
 
-`func (o *EnvironmentCreateParameters) GetEngineId() int64`
+`func (o *EnvironmentCreateParameters) GetEngineId() string`
 
 GetEngineId returns the EngineId field if non-nil, zero value otherwise.
 
 ### GetEngineIdOk
 
-`func (o *EnvironmentCreateParameters) GetEngineIdOk() (*int64, bool)`
+`func (o *EnvironmentCreateParameters) GetEngineIdOk() (*string, bool)`
 
 GetEngineIdOk returns a tuple with the EngineId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEngineId
 
-`func (o *EnvironmentCreateParameters) SetEngineId(v int64)`
+`func (o *EnvironmentCreateParameters) SetEngineId(v string)`
 
 SetEngineId sets EngineId field to given value.
 
@@ -243,6 +249,31 @@ SetConnectorPort sets ConnectorPort field to given value.
 `func (o *EnvironmentCreateParameters) HasConnectorPort() bool`
 
 HasConnectorPort returns a boolean if a field has been set.
+
+### GetConnectorAuthenticationKey
+
+`func (o *EnvironmentCreateParameters) GetConnectorAuthenticationKey() string`
+
+GetConnectorAuthenticationKey returns the ConnectorAuthenticationKey field if non-nil, zero value otherwise.
+
+### GetConnectorAuthenticationKeyOk
+
+`func (o *EnvironmentCreateParameters) GetConnectorAuthenticationKeyOk() (*string, bool)`
+
+GetConnectorAuthenticationKeyOk returns a tuple with the ConnectorAuthenticationKey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConnectorAuthenticationKey
+
+`func (o *EnvironmentCreateParameters) SetConnectorAuthenticationKey(v string)`
+
+SetConnectorAuthenticationKey sets ConnectorAuthenticationKey field to given value.
+
+### HasConnectorAuthenticationKey
+
+`func (o *EnvironmentCreateParameters) HasConnectorAuthenticationKey() bool`
+
+HasConnectorAuthenticationKey returns a boolean if a field has been set.
 
 ### GetIsTarget
 
@@ -519,6 +550,56 @@ SetCyberarkVaultQueryString sets CyberarkVaultQueryString field to given value.
 
 HasCyberarkVaultQueryString returns a boolean if a field has been set.
 
+### GetUseKerberosAuthentication
+
+`func (o *EnvironmentCreateParameters) GetUseKerberosAuthentication() bool`
+
+GetUseKerberosAuthentication returns the UseKerberosAuthentication field if non-nil, zero value otherwise.
+
+### GetUseKerberosAuthenticationOk
+
+`func (o *EnvironmentCreateParameters) GetUseKerberosAuthenticationOk() (*bool, bool)`
+
+GetUseKerberosAuthenticationOk returns a tuple with the UseKerberosAuthentication field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUseKerberosAuthentication
+
+`func (o *EnvironmentCreateParameters) SetUseKerberosAuthentication(v bool)`
+
+SetUseKerberosAuthentication sets UseKerberosAuthentication field to given value.
+
+### HasUseKerberosAuthentication
+
+`func (o *EnvironmentCreateParameters) HasUseKerberosAuthentication() bool`
+
+HasUseKerberosAuthentication returns a boolean if a field has been set.
+
+### GetUseEnginePublicKey
+
+`func (o *EnvironmentCreateParameters) GetUseEnginePublicKey() bool`
+
+GetUseEnginePublicKey returns the UseEnginePublicKey field if non-nil, zero value otherwise.
+
+### GetUseEnginePublicKeyOk
+
+`func (o *EnvironmentCreateParameters) GetUseEnginePublicKeyOk() (*bool, bool)`
+
+GetUseEnginePublicKeyOk returns a tuple with the UseEnginePublicKey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUseEnginePublicKey
+
+`func (o *EnvironmentCreateParameters) SetUseEnginePublicKey(v bool)`
+
+SetUseEnginePublicKey sets UseEnginePublicKey field to given value.
+
+### HasUseEnginePublicKey
+
+`func (o *EnvironmentCreateParameters) HasUseEnginePublicKey() bool`
+
+HasUseEnginePublicKey returns a boolean if a field has been set.
+
 ### GetNfsAddresses
 
 `func (o *EnvironmentCreateParameters) GetNfsAddresses() []string`
@@ -744,6 +825,31 @@ SetAseDbCyberarkVaultQueryString sets AseDbCyberarkVaultQueryString field to giv
 
 HasAseDbCyberarkVaultQueryString returns a boolean if a field has been set.
 
+### GetAseDbUseKerberosAuthentication
+
+`func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthentication() bool`
+
+GetAseDbUseKerberosAuthentication returns the AseDbUseKerberosAuthentication field if non-nil, zero value otherwise.
+
+### GetAseDbUseKerberosAuthenticationOk
+
+`func (o *EnvironmentCreateParameters) GetAseDbUseKerberosAuthenticationOk() (*bool, bool)`
+
+GetAseDbUseKerberosAuthenticationOk returns a tuple with the AseDbUseKerberosAuthentication field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAseDbUseKerberosAuthentication
+
+`func (o *EnvironmentCreateParameters) SetAseDbUseKerberosAuthentication(v bool)`
+
+SetAseDbUseKerberosAuthentication sets AseDbUseKerberosAuthentication field to given value.
+
+### HasAseDbUseKerberosAuthentication
+
+`func (o *EnvironmentCreateParameters) HasAseDbUseKerberosAuthentication() bool`
+
+HasAseDbUseKerberosAuthentication returns a boolean if a field has been set.
+
 ### GetJavaHome
 
 `func (o *EnvironmentCreateParameters) GetJavaHome() string`
@@ -918,6 +1024,56 @@ SetDescription sets Description field to given value.
 `func (o *EnvironmentCreateParameters) HasDescription() bool`
 
 HasDescription returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *EnvironmentCreateParameters) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *EnvironmentCreateParameters) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *EnvironmentCreateParameters) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *EnvironmentCreateParameters) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
+### GetMakeCurrentAccountOwner
+
+`func (o *EnvironmentCreateParameters) GetMakeCurrentAccountOwner() bool`
+
+GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field if non-nil, zero value otherwise.
+
+### GetMakeCurrentAccountOwnerOk
+
+`func (o *EnvironmentCreateParameters) GetMakeCurrentAccountOwnerOk() (*bool, bool)`
+
+GetMakeCurrentAccountOwnerOk returns a tuple with the MakeCurrentAccountOwner field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMakeCurrentAccountOwner
+
+`func (o *EnvironmentCreateParameters) SetMakeCurrentAccountOwner(v bool)`
+
+SetMakeCurrentAccountOwner sets MakeCurrentAccountOwner field to given value.
+
+### HasMakeCurrentAccountOwner
+
+`func (o *EnvironmentCreateParameters) HasMakeCurrentAccountOwner() bool`
+
+HasMakeCurrentAccountOwner returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

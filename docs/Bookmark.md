@@ -5,17 +5,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The Bookmark object entity ID. | [optional] [readonly] 
-**Name** | **string** | The user-defined name of this bookmark. | 
+**Name** | Pointer to **string** | The user-defined name of this bookmark. | [optional] 
 **CreationDate** | Pointer to **time.Time** | The date and time that this bookmark was created. | [optional] [readonly] 
-**VdbIds** | **[]string** | The list of VDB IDs associated with this bookmark. | 
-**Retention** | Pointer to **int64** | The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever. | [optional] 
+**VdbIds** | Pointer to **[]string** | The list of VDB IDs associated with this bookmark. | [optional] 
+**Retention** | Pointer to **int64** | The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever. Deprecated in favor of expiration. | [optional] 
+**Expiration** | Pointer to **string** | The expiration for this bookmark. When unset, indicates the bookmark is kept forever. | [optional] 
 **Status** | Pointer to **NullableString** | A message with details about operation progress or state of this bookmark. | [optional] [readonly] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for this Bookmark. | [optional] 
 
 ## Methods
 
 ### NewBookmark
 
-`func NewBookmark(name string, vdbIds []string, ) *Bookmark`
+`func NewBookmark() *Bookmark`
 
 NewBookmark instantiates a new Bookmark object
 This constructor will assign default values to properties that have it defined,
@@ -74,6 +76,11 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+### HasName
+
+`func (o *Bookmark) HasName() bool`
+
+HasName returns a boolean if a field has been set.
 
 ### GetCreationDate
 
@@ -119,6 +126,11 @@ and a boolean to check if the value has been set.
 
 SetVdbIds sets VdbIds field to given value.
 
+### HasVdbIds
+
+`func (o *Bookmark) HasVdbIds() bool`
+
+HasVdbIds returns a boolean if a field has been set.
 
 ### GetRetention
 
@@ -144,6 +156,31 @@ SetRetention sets Retention field to given value.
 `func (o *Bookmark) HasRetention() bool`
 
 HasRetention returns a boolean if a field has been set.
+
+### GetExpiration
+
+`func (o *Bookmark) GetExpiration() string`
+
+GetExpiration returns the Expiration field if non-nil, zero value otherwise.
+
+### GetExpirationOk
+
+`func (o *Bookmark) GetExpirationOk() (*string, bool)`
+
+GetExpirationOk returns a tuple with the Expiration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExpiration
+
+`func (o *Bookmark) SetExpiration(v string)`
+
+SetExpiration sets Expiration field to given value.
+
+### HasExpiration
+
+`func (o *Bookmark) HasExpiration() bool`
+
+HasExpiration returns a boolean if a field has been set.
 
 ### GetStatus
 
@@ -180,6 +217,31 @@ HasStatus returns a boolean if a field has been set.
 `func (o *Bookmark) UnsetStatus()`
 
 UnsetStatus ensures that no value is present for Status, not even an explicit nil
+### GetTags
+
+`func (o *Bookmark) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *Bookmark) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *Bookmark) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *Bookmark) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

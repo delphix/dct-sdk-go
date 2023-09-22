@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | **string** | A unique identifier for the entity. | [readonly] 
 **Name** | **string** | A unique name for the entity. | 
 **VdbIds** | **[]string** | The list of VDB IDs in this VDBGroup. | 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetVdbIds sets VdbIds field to given value.
 
+
+### GetTags
+
+`func (o *VDBGroup) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *VDBGroup) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *VDBGroup) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *VDBGroup) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

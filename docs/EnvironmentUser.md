@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **UserRef** | Pointer to **string** | Environment user reference | [optional] 
 **Username** | Pointer to **string** | Username of environment user | [optional] 
 **PrimaryUser** | Pointer to **bool** | This indicates if this user is primary or not | [optional] 
+**AuthType** | Pointer to **string** | Authentication type of this user. PasswordCredential indicates username and password are used, SystemKeyCredential indicates public key based security credential, KeyPairCredential indicates public key based security credential consisting of a user specified key pair, KerberosCredential indicates Kerberos authentication, CyberArkVaultCredential indicates CyberArk Vault is used and HashiCorpVaultCredential indicates that Hashicorp vault is used for authentication | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetPrimaryUser sets PrimaryUser field to given value.
 `func (o *EnvironmentUser) HasPrimaryUser() bool`
 
 HasPrimaryUser returns a boolean if a field has been set.
+
+### GetAuthType
+
+`func (o *EnvironmentUser) GetAuthType() string`
+
+GetAuthType returns the AuthType field if non-nil, zero value otherwise.
+
+### GetAuthTypeOk
+
+`func (o *EnvironmentUser) GetAuthTypeOk() (*string, bool)`
+
+GetAuthTypeOk returns a tuple with the AuthType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAuthType
+
+`func (o *EnvironmentUser) SetAuthType(v string)`
+
+SetAuthType sets AuthType field to given value.
+
+### HasAuthType
+
+`func (o *EnvironmentUser) HasAuthType() bool`
+
+HasAuthType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

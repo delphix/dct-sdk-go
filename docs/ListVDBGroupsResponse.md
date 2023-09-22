@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Items** | Pointer to [**[]VDBGroup**](VDBGroup.md) |  | [optional] 
-**Errors** | Pointer to [**[]Error**](Error.md) | Sadly, sometimes requests to the API are not successful. Failures can occur for a wide range of reasons. The Errors object contains information about full or partial failures which might have occurred during the request. | [optional] 
+**ResponseMetadata** | Pointer to [**PaginatedResponseMetadata**](PaginatedResponseMetadata.md) |  | [optional] 
 
 ## Methods
 
@@ -51,30 +51,30 @@ SetItems sets Items field to given value.
 
 HasItems returns a boolean if a field has been set.
 
-### GetErrors
+### GetResponseMetadata
 
-`func (o *ListVDBGroupsResponse) GetErrors() []Error`
+`func (o *ListVDBGroupsResponse) GetResponseMetadata() PaginatedResponseMetadata`
 
-GetErrors returns the Errors field if non-nil, zero value otherwise.
+GetResponseMetadata returns the ResponseMetadata field if non-nil, zero value otherwise.
 
-### GetErrorsOk
+### GetResponseMetadataOk
 
-`func (o *ListVDBGroupsResponse) GetErrorsOk() (*[]Error, bool)`
+`func (o *ListVDBGroupsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool)`
 
-GetErrorsOk returns a tuple with the Errors field if it's non-nil, zero value otherwise
+GetResponseMetadataOk returns a tuple with the ResponseMetadata field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetErrors
+### SetResponseMetadata
 
-`func (o *ListVDBGroupsResponse) SetErrors(v []Error)`
+`func (o *ListVDBGroupsResponse) SetResponseMetadata(v PaginatedResponseMetadata)`
 
-SetErrors sets Errors field to given value.
+SetResponseMetadata sets ResponseMetadata field to given value.
 
-### HasErrors
+### HasResponseMetadata
 
-`func (o *ListVDBGroupsResponse) HasErrors() bool`
+`func (o *ListVDBGroupsResponse) HasResponseMetadata() bool`
 
-HasErrors returns a boolean if a field has been set.
+HasResponseMetadata returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**JobId** | Pointer to **string** | The ID of the provisioning job. | [optional] 
-**Vdb** | Pointer to [**VDB**](VDB.md) |  | [optional] 
+**Job** | Pointer to [**Job**](Job.md) |  | [optional] 
+**VdbId** | Pointer to **string** | The ID of the provisioned vdb. | [optional] 
 
 ## Methods
 
@@ -26,55 +26,55 @@ NewProvisionVDBResponseWithDefaults instantiates a new ProvisionVDBResponse obje
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetJobId
+### GetJob
 
-`func (o *ProvisionVDBResponse) GetJobId() string`
+`func (o *ProvisionVDBResponse) GetJob() Job`
 
-GetJobId returns the JobId field if non-nil, zero value otherwise.
+GetJob returns the Job field if non-nil, zero value otherwise.
 
-### GetJobIdOk
+### GetJobOk
 
-`func (o *ProvisionVDBResponse) GetJobIdOk() (*string, bool)`
+`func (o *ProvisionVDBResponse) GetJobOk() (*Job, bool)`
 
-GetJobIdOk returns a tuple with the JobId field if it's non-nil, zero value otherwise
+GetJobOk returns a tuple with the Job field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetJobId
+### SetJob
 
-`func (o *ProvisionVDBResponse) SetJobId(v string)`
+`func (o *ProvisionVDBResponse) SetJob(v Job)`
 
-SetJobId sets JobId field to given value.
+SetJob sets Job field to given value.
 
-### HasJobId
+### HasJob
 
-`func (o *ProvisionVDBResponse) HasJobId() bool`
+`func (o *ProvisionVDBResponse) HasJob() bool`
 
-HasJobId returns a boolean if a field has been set.
+HasJob returns a boolean if a field has been set.
 
-### GetVdb
+### GetVdbId
 
-`func (o *ProvisionVDBResponse) GetVdb() VDB`
+`func (o *ProvisionVDBResponse) GetVdbId() string`
 
-GetVdb returns the Vdb field if non-nil, zero value otherwise.
+GetVdbId returns the VdbId field if non-nil, zero value otherwise.
 
-### GetVdbOk
+### GetVdbIdOk
 
-`func (o *ProvisionVDBResponse) GetVdbOk() (*VDB, bool)`
+`func (o *ProvisionVDBResponse) GetVdbIdOk() (*string, bool)`
 
-GetVdbOk returns a tuple with the Vdb field if it's non-nil, zero value otherwise
+GetVdbIdOk returns a tuple with the VdbId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVdb
+### SetVdbId
 
-`func (o *ProvisionVDBResponse) SetVdb(v VDB)`
+`func (o *ProvisionVDBResponse) SetVdbId(v string)`
 
-SetVdb sets Vdb field to given value.
+SetVdbId sets VdbId field to given value.
 
-### HasVdb
+### HasVdbId
 
-`func (o *ProvisionVDBResponse) HasVdb() bool`
+`func (o *ProvisionVDBResponse) HasVdbId() bool`
 
-HasVdb returns a boolean if a field has been set.
+HasVdbId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

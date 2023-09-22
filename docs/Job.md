@@ -8,9 +8,12 @@ Name | Type | Description | Notes
 **Status** | Pointer to **string** | The status of the job. | [optional] 
 **Type** | Pointer to **string** | The type of job being done. | [optional] 
 **ErrorDetails** | Pointer to **string** | Details about the failure for FAILED jobs. | [optional] 
+**WarningMessage** | Pointer to **string** | Warnings for the job. | [optional] 
 **TargetId** | Pointer to **string** | A reference to the job&#39;s target. | [optional] 
 **StartTime** | Pointer to **time.Time** | The time the job started executing. | [optional] 
 **UpdateTime** | Pointer to **time.Time** | The time the job was last updated. | [optional] 
+**TraceId** | Pointer to **string** | traceId of the request which created this Job | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -131,6 +134,31 @@ SetErrorDetails sets ErrorDetails field to given value.
 
 HasErrorDetails returns a boolean if a field has been set.
 
+### GetWarningMessage
+
+`func (o *Job) GetWarningMessage() string`
+
+GetWarningMessage returns the WarningMessage field if non-nil, zero value otherwise.
+
+### GetWarningMessageOk
+
+`func (o *Job) GetWarningMessageOk() (*string, bool)`
+
+GetWarningMessageOk returns a tuple with the WarningMessage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWarningMessage
+
+`func (o *Job) SetWarningMessage(v string)`
+
+SetWarningMessage sets WarningMessage field to given value.
+
+### HasWarningMessage
+
+`func (o *Job) HasWarningMessage() bool`
+
+HasWarningMessage returns a boolean if a field has been set.
+
 ### GetTargetId
 
 `func (o *Job) GetTargetId() string`
@@ -205,6 +233,56 @@ SetUpdateTime sets UpdateTime field to given value.
 `func (o *Job) HasUpdateTime() bool`
 
 HasUpdateTime returns a boolean if a field has been set.
+
+### GetTraceId
+
+`func (o *Job) GetTraceId() string`
+
+GetTraceId returns the TraceId field if non-nil, zero value otherwise.
+
+### GetTraceIdOk
+
+`func (o *Job) GetTraceIdOk() (*string, bool)`
+
+GetTraceIdOk returns a tuple with the TraceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTraceId
+
+`func (o *Job) SetTraceId(v string)`
+
+SetTraceId sets TraceId field to given value.
+
+### HasTraceId
+
+`func (o *Job) HasTraceId() bool`
+
+HasTraceId returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *Job) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *Job) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *Job) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *Job) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

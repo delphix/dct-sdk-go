@@ -11,13 +11,28 @@ Name | Type | Description | Notes
 **Size** | Pointer to **NullableInt64** | The total size of this VDB, in bytes. | [optional] 
 **EngineId** | Pointer to **string** | A reference to the Engine that this VDB belongs to. | [optional] 
 **Status** | Pointer to **NullableString** | The runtime status of the VDB. &#39;Unknown&#39; if all attempts to connect to the dataset failed. | [optional] 
+**Masked** | Pointer to **NullableBool** | The VDB is masked or not. | [optional] 
+**ParentTimeflowTimestamp** | Pointer to **NullableTime** | The timestamp for parent timeflow. | [optional] 
+**ParentTimeflowTimezone** | Pointer to **NullableString** | The timezone for parent timeflow. | [optional] 
 **EnvironmentId** | Pointer to **NullableString** | A reference to the Environment that hosts this VDB. | [optional] 
 **IpAddress** | Pointer to **NullableString** | The IP address of the VDB&#39;s host. | [optional] 
 **Fqdn** | Pointer to **NullableString** | The FQDN of the VDB&#39;s host. | [optional] 
 **ParentId** | Pointer to **NullableString** | A reference to the parent dataset of this VDB. | [optional] 
+**ParentDsourceId** | Pointer to **NullableString** | A reference to the parent dSource of this VDB. | [optional] 
 **GroupName** | Pointer to **NullableString** | The name of the group containing this VDB. | [optional] 
+**EngineName** | Pointer to **NullableString** | Name of the Engine where this VDB is hosted | [optional] 
+**CdbId** | Pointer to **NullableString** | A reference to the CDB or VCDB associated with this VDB. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 **CreationDate** | Pointer to **NullableTime** | The date this VDB was created. | [optional] 
+**Hooks** | Pointer to [**VirtualDatasetHooks**](VirtualDatasetHooks.md) |  | [optional] 
+**AppdataSourceParams** | Pointer to **map[string]interface{}** | The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated. | [optional] 
+**TemplateId** | Pointer to **NullableString** | A reference to the Database Template. | [optional] 
+**ConfigParams** | Pointer to **map[string]interface{}** | Database configuration parameter overrides. | [optional] 
+**AdditionalMountPoints** | Pointer to [**[]AdditionalMountPoint**](AdditionalMountPoint.md) | Specifies additional locations on which to mount a subdirectory of an AppData container. Can only be updated while the VDB is disabled. | [optional] 
+**AppdataConfigParams** | Pointer to **map[string]interface{}** | The parameters specified by the source config schema in the toolkit | [optional] 
+**MountPoint** | Pointer to **string** | Mount point for the VDB (Oracle, ASE, AppData). | [optional] 
+**CurrentTimeflowId** | Pointer to **string** | A reference to the currently active timeflow for this VDB. | [optional] 
+**PreviousTimeflowId** | Pointer to **string** | A reference to the previous timeflow for this VDB. | [optional] 
 
 ## Methods
 
@@ -263,6 +278,111 @@ HasStatus returns a boolean if a field has been set.
 `func (o *VDB) UnsetStatus()`
 
 UnsetStatus ensures that no value is present for Status, not even an explicit nil
+### GetMasked
+
+`func (o *VDB) GetMasked() bool`
+
+GetMasked returns the Masked field if non-nil, zero value otherwise.
+
+### GetMaskedOk
+
+`func (o *VDB) GetMaskedOk() (*bool, bool)`
+
+GetMaskedOk returns a tuple with the Masked field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMasked
+
+`func (o *VDB) SetMasked(v bool)`
+
+SetMasked sets Masked field to given value.
+
+### HasMasked
+
+`func (o *VDB) HasMasked() bool`
+
+HasMasked returns a boolean if a field has been set.
+
+### SetMaskedNil
+
+`func (o *VDB) SetMaskedNil(b bool)`
+
+ SetMaskedNil sets the value for Masked to be an explicit nil
+
+### UnsetMasked
+`func (o *VDB) UnsetMasked()`
+
+UnsetMasked ensures that no value is present for Masked, not even an explicit nil
+### GetParentTimeflowTimestamp
+
+`func (o *VDB) GetParentTimeflowTimestamp() time.Time`
+
+GetParentTimeflowTimestamp returns the ParentTimeflowTimestamp field if non-nil, zero value otherwise.
+
+### GetParentTimeflowTimestampOk
+
+`func (o *VDB) GetParentTimeflowTimestampOk() (*time.Time, bool)`
+
+GetParentTimeflowTimestampOk returns a tuple with the ParentTimeflowTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentTimeflowTimestamp
+
+`func (o *VDB) SetParentTimeflowTimestamp(v time.Time)`
+
+SetParentTimeflowTimestamp sets ParentTimeflowTimestamp field to given value.
+
+### HasParentTimeflowTimestamp
+
+`func (o *VDB) HasParentTimeflowTimestamp() bool`
+
+HasParentTimeflowTimestamp returns a boolean if a field has been set.
+
+### SetParentTimeflowTimestampNil
+
+`func (o *VDB) SetParentTimeflowTimestampNil(b bool)`
+
+ SetParentTimeflowTimestampNil sets the value for ParentTimeflowTimestamp to be an explicit nil
+
+### UnsetParentTimeflowTimestamp
+`func (o *VDB) UnsetParentTimeflowTimestamp()`
+
+UnsetParentTimeflowTimestamp ensures that no value is present for ParentTimeflowTimestamp, not even an explicit nil
+### GetParentTimeflowTimezone
+
+`func (o *VDB) GetParentTimeflowTimezone() string`
+
+GetParentTimeflowTimezone returns the ParentTimeflowTimezone field if non-nil, zero value otherwise.
+
+### GetParentTimeflowTimezoneOk
+
+`func (o *VDB) GetParentTimeflowTimezoneOk() (*string, bool)`
+
+GetParentTimeflowTimezoneOk returns a tuple with the ParentTimeflowTimezone field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentTimeflowTimezone
+
+`func (o *VDB) SetParentTimeflowTimezone(v string)`
+
+SetParentTimeflowTimezone sets ParentTimeflowTimezone field to given value.
+
+### HasParentTimeflowTimezone
+
+`func (o *VDB) HasParentTimeflowTimezone() bool`
+
+HasParentTimeflowTimezone returns a boolean if a field has been set.
+
+### SetParentTimeflowTimezoneNil
+
+`func (o *VDB) SetParentTimeflowTimezoneNil(b bool)`
+
+ SetParentTimeflowTimezoneNil sets the value for ParentTimeflowTimezone to be an explicit nil
+
+### UnsetParentTimeflowTimezone
+`func (o *VDB) UnsetParentTimeflowTimezone()`
+
+UnsetParentTimeflowTimezone ensures that no value is present for ParentTimeflowTimezone, not even an explicit nil
 ### GetEnvironmentId
 
 `func (o *VDB) GetEnvironmentId() string`
@@ -403,6 +523,41 @@ HasParentId returns a boolean if a field has been set.
 `func (o *VDB) UnsetParentId()`
 
 UnsetParentId ensures that no value is present for ParentId, not even an explicit nil
+### GetParentDsourceId
+
+`func (o *VDB) GetParentDsourceId() string`
+
+GetParentDsourceId returns the ParentDsourceId field if non-nil, zero value otherwise.
+
+### GetParentDsourceIdOk
+
+`func (o *VDB) GetParentDsourceIdOk() (*string, bool)`
+
+GetParentDsourceIdOk returns a tuple with the ParentDsourceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentDsourceId
+
+`func (o *VDB) SetParentDsourceId(v string)`
+
+SetParentDsourceId sets ParentDsourceId field to given value.
+
+### HasParentDsourceId
+
+`func (o *VDB) HasParentDsourceId() bool`
+
+HasParentDsourceId returns a boolean if a field has been set.
+
+### SetParentDsourceIdNil
+
+`func (o *VDB) SetParentDsourceIdNil(b bool)`
+
+ SetParentDsourceIdNil sets the value for ParentDsourceId to be an explicit nil
+
+### UnsetParentDsourceId
+`func (o *VDB) UnsetParentDsourceId()`
+
+UnsetParentDsourceId ensures that no value is present for ParentDsourceId, not even an explicit nil
 ### GetGroupName
 
 `func (o *VDB) GetGroupName() string`
@@ -438,6 +593,76 @@ HasGroupName returns a boolean if a field has been set.
 `func (o *VDB) UnsetGroupName()`
 
 UnsetGroupName ensures that no value is present for GroupName, not even an explicit nil
+### GetEngineName
+
+`func (o *VDB) GetEngineName() string`
+
+GetEngineName returns the EngineName field if non-nil, zero value otherwise.
+
+### GetEngineNameOk
+
+`func (o *VDB) GetEngineNameOk() (*string, bool)`
+
+GetEngineNameOk returns a tuple with the EngineName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEngineName
+
+`func (o *VDB) SetEngineName(v string)`
+
+SetEngineName sets EngineName field to given value.
+
+### HasEngineName
+
+`func (o *VDB) HasEngineName() bool`
+
+HasEngineName returns a boolean if a field has been set.
+
+### SetEngineNameNil
+
+`func (o *VDB) SetEngineNameNil(b bool)`
+
+ SetEngineNameNil sets the value for EngineName to be an explicit nil
+
+### UnsetEngineName
+`func (o *VDB) UnsetEngineName()`
+
+UnsetEngineName ensures that no value is present for EngineName, not even an explicit nil
+### GetCdbId
+
+`func (o *VDB) GetCdbId() string`
+
+GetCdbId returns the CdbId field if non-nil, zero value otherwise.
+
+### GetCdbIdOk
+
+`func (o *VDB) GetCdbIdOk() (*string, bool)`
+
+GetCdbIdOk returns a tuple with the CdbId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCdbId
+
+`func (o *VDB) SetCdbId(v string)`
+
+SetCdbId sets CdbId field to given value.
+
+### HasCdbId
+
+`func (o *VDB) HasCdbId() bool`
+
+HasCdbId returns a boolean if a field has been set.
+
+### SetCdbIdNil
+
+`func (o *VDB) SetCdbIdNil(b bool)`
+
+ SetCdbIdNil sets the value for CdbId to be an explicit nil
+
+### UnsetCdbId
+`func (o *VDB) UnsetCdbId()`
+
+UnsetCdbId ensures that no value is present for CdbId, not even an explicit nil
 ### GetTags
 
 `func (o *VDB) GetTags() []Tag`
@@ -498,6 +723,281 @@ HasCreationDate returns a boolean if a field has been set.
 `func (o *VDB) UnsetCreationDate()`
 
 UnsetCreationDate ensures that no value is present for CreationDate, not even an explicit nil
+### GetHooks
+
+`func (o *VDB) GetHooks() VirtualDatasetHooks`
+
+GetHooks returns the Hooks field if non-nil, zero value otherwise.
+
+### GetHooksOk
+
+`func (o *VDB) GetHooksOk() (*VirtualDatasetHooks, bool)`
+
+GetHooksOk returns a tuple with the Hooks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHooks
+
+`func (o *VDB) SetHooks(v VirtualDatasetHooks)`
+
+SetHooks sets Hooks field to given value.
+
+### HasHooks
+
+`func (o *VDB) HasHooks() bool`
+
+HasHooks returns a boolean if a field has been set.
+
+### GetAppdataSourceParams
+
+`func (o *VDB) GetAppdataSourceParams() map[string]interface{}`
+
+GetAppdataSourceParams returns the AppdataSourceParams field if non-nil, zero value otherwise.
+
+### GetAppdataSourceParamsOk
+
+`func (o *VDB) GetAppdataSourceParamsOk() (*map[string]interface{}, bool)`
+
+GetAppdataSourceParamsOk returns a tuple with the AppdataSourceParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppdataSourceParams
+
+`func (o *VDB) SetAppdataSourceParams(v map[string]interface{})`
+
+SetAppdataSourceParams sets AppdataSourceParams field to given value.
+
+### HasAppdataSourceParams
+
+`func (o *VDB) HasAppdataSourceParams() bool`
+
+HasAppdataSourceParams returns a boolean if a field has been set.
+
+### SetAppdataSourceParamsNil
+
+`func (o *VDB) SetAppdataSourceParamsNil(b bool)`
+
+ SetAppdataSourceParamsNil sets the value for AppdataSourceParams to be an explicit nil
+
+### UnsetAppdataSourceParams
+`func (o *VDB) UnsetAppdataSourceParams()`
+
+UnsetAppdataSourceParams ensures that no value is present for AppdataSourceParams, not even an explicit nil
+### GetTemplateId
+
+`func (o *VDB) GetTemplateId() string`
+
+GetTemplateId returns the TemplateId field if non-nil, zero value otherwise.
+
+### GetTemplateIdOk
+
+`func (o *VDB) GetTemplateIdOk() (*string, bool)`
+
+GetTemplateIdOk returns a tuple with the TemplateId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTemplateId
+
+`func (o *VDB) SetTemplateId(v string)`
+
+SetTemplateId sets TemplateId field to given value.
+
+### HasTemplateId
+
+`func (o *VDB) HasTemplateId() bool`
+
+HasTemplateId returns a boolean if a field has been set.
+
+### SetTemplateIdNil
+
+`func (o *VDB) SetTemplateIdNil(b bool)`
+
+ SetTemplateIdNil sets the value for TemplateId to be an explicit nil
+
+### UnsetTemplateId
+`func (o *VDB) UnsetTemplateId()`
+
+UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
+### GetConfigParams
+
+`func (o *VDB) GetConfigParams() map[string]interface{}`
+
+GetConfigParams returns the ConfigParams field if non-nil, zero value otherwise.
+
+### GetConfigParamsOk
+
+`func (o *VDB) GetConfigParamsOk() (*map[string]interface{}, bool)`
+
+GetConfigParamsOk returns a tuple with the ConfigParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfigParams
+
+`func (o *VDB) SetConfigParams(v map[string]interface{})`
+
+SetConfigParams sets ConfigParams field to given value.
+
+### HasConfigParams
+
+`func (o *VDB) HasConfigParams() bool`
+
+HasConfigParams returns a boolean if a field has been set.
+
+### SetConfigParamsNil
+
+`func (o *VDB) SetConfigParamsNil(b bool)`
+
+ SetConfigParamsNil sets the value for ConfigParams to be an explicit nil
+
+### UnsetConfigParams
+`func (o *VDB) UnsetConfigParams()`
+
+UnsetConfigParams ensures that no value is present for ConfigParams, not even an explicit nil
+### GetAdditionalMountPoints
+
+`func (o *VDB) GetAdditionalMountPoints() []AdditionalMountPoint`
+
+GetAdditionalMountPoints returns the AdditionalMountPoints field if non-nil, zero value otherwise.
+
+### GetAdditionalMountPointsOk
+
+`func (o *VDB) GetAdditionalMountPointsOk() (*[]AdditionalMountPoint, bool)`
+
+GetAdditionalMountPointsOk returns a tuple with the AdditionalMountPoints field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAdditionalMountPoints
+
+`func (o *VDB) SetAdditionalMountPoints(v []AdditionalMountPoint)`
+
+SetAdditionalMountPoints sets AdditionalMountPoints field to given value.
+
+### HasAdditionalMountPoints
+
+`func (o *VDB) HasAdditionalMountPoints() bool`
+
+HasAdditionalMountPoints returns a boolean if a field has been set.
+
+### SetAdditionalMountPointsNil
+
+`func (o *VDB) SetAdditionalMountPointsNil(b bool)`
+
+ SetAdditionalMountPointsNil sets the value for AdditionalMountPoints to be an explicit nil
+
+### UnsetAdditionalMountPoints
+`func (o *VDB) UnsetAdditionalMountPoints()`
+
+UnsetAdditionalMountPoints ensures that no value is present for AdditionalMountPoints, not even an explicit nil
+### GetAppdataConfigParams
+
+`func (o *VDB) GetAppdataConfigParams() map[string]interface{}`
+
+GetAppdataConfigParams returns the AppdataConfigParams field if non-nil, zero value otherwise.
+
+### GetAppdataConfigParamsOk
+
+`func (o *VDB) GetAppdataConfigParamsOk() (*map[string]interface{}, bool)`
+
+GetAppdataConfigParamsOk returns a tuple with the AppdataConfigParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppdataConfigParams
+
+`func (o *VDB) SetAppdataConfigParams(v map[string]interface{})`
+
+SetAppdataConfigParams sets AppdataConfigParams field to given value.
+
+### HasAppdataConfigParams
+
+`func (o *VDB) HasAppdataConfigParams() bool`
+
+HasAppdataConfigParams returns a boolean if a field has been set.
+
+### SetAppdataConfigParamsNil
+
+`func (o *VDB) SetAppdataConfigParamsNil(b bool)`
+
+ SetAppdataConfigParamsNil sets the value for AppdataConfigParams to be an explicit nil
+
+### UnsetAppdataConfigParams
+`func (o *VDB) UnsetAppdataConfigParams()`
+
+UnsetAppdataConfigParams ensures that no value is present for AppdataConfigParams, not even an explicit nil
+### GetMountPoint
+
+`func (o *VDB) GetMountPoint() string`
+
+GetMountPoint returns the MountPoint field if non-nil, zero value otherwise.
+
+### GetMountPointOk
+
+`func (o *VDB) GetMountPointOk() (*string, bool)`
+
+GetMountPointOk returns a tuple with the MountPoint field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMountPoint
+
+`func (o *VDB) SetMountPoint(v string)`
+
+SetMountPoint sets MountPoint field to given value.
+
+### HasMountPoint
+
+`func (o *VDB) HasMountPoint() bool`
+
+HasMountPoint returns a boolean if a field has been set.
+
+### GetCurrentTimeflowId
+
+`func (o *VDB) GetCurrentTimeflowId() string`
+
+GetCurrentTimeflowId returns the CurrentTimeflowId field if non-nil, zero value otherwise.
+
+### GetCurrentTimeflowIdOk
+
+`func (o *VDB) GetCurrentTimeflowIdOk() (*string, bool)`
+
+GetCurrentTimeflowIdOk returns a tuple with the CurrentTimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrentTimeflowId
+
+`func (o *VDB) SetCurrentTimeflowId(v string)`
+
+SetCurrentTimeflowId sets CurrentTimeflowId field to given value.
+
+### HasCurrentTimeflowId
+
+`func (o *VDB) HasCurrentTimeflowId() bool`
+
+HasCurrentTimeflowId returns a boolean if a field has been set.
+
+### GetPreviousTimeflowId
+
+`func (o *VDB) GetPreviousTimeflowId() string`
+
+GetPreviousTimeflowId returns the PreviousTimeflowId field if non-nil, zero value otherwise.
+
+### GetPreviousTimeflowIdOk
+
+`func (o *VDB) GetPreviousTimeflowIdOk() (*string, bool)`
+
+GetPreviousTimeflowIdOk returns a tuple with the PreviousTimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviousTimeflowId
+
+`func (o *VDB) SetPreviousTimeflowId(v string)`
+
+SetPreviousTimeflowId sets PreviousTimeflowId field to given value.
+
+### HasPreviousTimeflowId
+
+`func (o *VDB) HasPreviousTimeflowId() bool`
+
+HasPreviousTimeflowId returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **Size** | Pointer to **NullableInt64** | The total size of this source database, in bytes. | [optional] 
 **JdbcConnectionString** | Pointer to **NullableString** | The JDBC connection URL for this source database. | [optional] 
 **PluginVersion** | Pointer to **NullableString** | The version of the plugin associated with this source database. | [optional] 
+**IsDsource** | Pointer to **bool** |  | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -410,6 +412,56 @@ HasPluginVersion returns a boolean if a field has been set.
 `func (o *Source) UnsetPluginVersion()`
 
 UnsetPluginVersion ensures that no value is present for PluginVersion, not even an explicit nil
+### GetIsDsource
+
+`func (o *Source) GetIsDsource() bool`
+
+GetIsDsource returns the IsDsource field if non-nil, zero value otherwise.
+
+### GetIsDsourceOk
+
+`func (o *Source) GetIsDsourceOk() (*bool, bool)`
+
+GetIsDsourceOk returns a tuple with the IsDsource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsDsource
+
+`func (o *Source) SetIsDsource(v bool)`
+
+SetIsDsource sets IsDsource field to given value.
+
+### HasIsDsource
+
+`func (o *Source) HasIsDsource() bool`
+
+HasIsDsource returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *Source) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *Source) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *Source) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *Source) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

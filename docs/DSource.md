@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **DatabaseType** | Pointer to **NullableString** | The database type of this dSource. | [optional] 
 **Name** | Pointer to **NullableString** | The container name of this dSource. | [optional] 
 **DatabaseVersion** | Pointer to **NullableString** | The database version of this dSource. | [optional] 
+**ContentType** | Pointer to **NullableString** | The content type of the dSource. | [optional] 
 **DataUuid** | Pointer to **NullableString** | A universal ID that uniquely identifies the dSource database. | [optional] 
 **StorageSize** | Pointer to **NullableInt64** | The actual space used by this dSource, in bytes. | [optional] 
 **PluginVersion** | Pointer to **NullableString** | The version of the plugin associated with this source database. | [optional] 
@@ -17,6 +18,10 @@ Name | Type | Description | Notes
 **EngineId** | Pointer to **string** | A reference to the Engine that this dSource belongs to. | [optional] 
 **SourceId** | Pointer to **NullableString** | A reference to the Source associated with this dSource. | [optional] 
 **Status** | Pointer to **NullableString** | The runtime status of the dSource. &#39;Unknown&#39; if all attempts to connect to the source failed. | [optional] 
+**EngineName** | Pointer to **NullableString** | Name of the Engine where this DSource is hosted | [optional] 
+**CdbId** | Pointer to **NullableString** | A reference to the CDB associated with this dSource. | [optional] 
+**CurrentTimeflowId** | Pointer to **string** | A reference to the currently active timeflow for this dSource. | [optional] 
+**PreviousTimeflowId** | Pointer to **string** | A reference to the previous timeflow for this dSource. | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
@@ -168,6 +173,41 @@ HasDatabaseVersion returns a boolean if a field has been set.
 `func (o *DSource) UnsetDatabaseVersion()`
 
 UnsetDatabaseVersion ensures that no value is present for DatabaseVersion, not even an explicit nil
+### GetContentType
+
+`func (o *DSource) GetContentType() string`
+
+GetContentType returns the ContentType field if non-nil, zero value otherwise.
+
+### GetContentTypeOk
+
+`func (o *DSource) GetContentTypeOk() (*string, bool)`
+
+GetContentTypeOk returns a tuple with the ContentType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContentType
+
+`func (o *DSource) SetContentType(v string)`
+
+SetContentType sets ContentType field to given value.
+
+### HasContentType
+
+`func (o *DSource) HasContentType() bool`
+
+HasContentType returns a boolean if a field has been set.
+
+### SetContentTypeNil
+
+`func (o *DSource) SetContentTypeNil(b bool)`
+
+ SetContentTypeNil sets the value for ContentType to be an explicit nil
+
+### UnsetContentType
+`func (o *DSource) UnsetContentType()`
+
+UnsetContentType ensures that no value is present for ContentType, not even an explicit nil
 ### GetDataUuid
 
 `func (o *DSource) GetDataUuid() string`
@@ -473,6 +513,126 @@ HasStatus returns a boolean if a field has been set.
 `func (o *DSource) UnsetStatus()`
 
 UnsetStatus ensures that no value is present for Status, not even an explicit nil
+### GetEngineName
+
+`func (o *DSource) GetEngineName() string`
+
+GetEngineName returns the EngineName field if non-nil, zero value otherwise.
+
+### GetEngineNameOk
+
+`func (o *DSource) GetEngineNameOk() (*string, bool)`
+
+GetEngineNameOk returns a tuple with the EngineName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEngineName
+
+`func (o *DSource) SetEngineName(v string)`
+
+SetEngineName sets EngineName field to given value.
+
+### HasEngineName
+
+`func (o *DSource) HasEngineName() bool`
+
+HasEngineName returns a boolean if a field has been set.
+
+### SetEngineNameNil
+
+`func (o *DSource) SetEngineNameNil(b bool)`
+
+ SetEngineNameNil sets the value for EngineName to be an explicit nil
+
+### UnsetEngineName
+`func (o *DSource) UnsetEngineName()`
+
+UnsetEngineName ensures that no value is present for EngineName, not even an explicit nil
+### GetCdbId
+
+`func (o *DSource) GetCdbId() string`
+
+GetCdbId returns the CdbId field if non-nil, zero value otherwise.
+
+### GetCdbIdOk
+
+`func (o *DSource) GetCdbIdOk() (*string, bool)`
+
+GetCdbIdOk returns a tuple with the CdbId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCdbId
+
+`func (o *DSource) SetCdbId(v string)`
+
+SetCdbId sets CdbId field to given value.
+
+### HasCdbId
+
+`func (o *DSource) HasCdbId() bool`
+
+HasCdbId returns a boolean if a field has been set.
+
+### SetCdbIdNil
+
+`func (o *DSource) SetCdbIdNil(b bool)`
+
+ SetCdbIdNil sets the value for CdbId to be an explicit nil
+
+### UnsetCdbId
+`func (o *DSource) UnsetCdbId()`
+
+UnsetCdbId ensures that no value is present for CdbId, not even an explicit nil
+### GetCurrentTimeflowId
+
+`func (o *DSource) GetCurrentTimeflowId() string`
+
+GetCurrentTimeflowId returns the CurrentTimeflowId field if non-nil, zero value otherwise.
+
+### GetCurrentTimeflowIdOk
+
+`func (o *DSource) GetCurrentTimeflowIdOk() (*string, bool)`
+
+GetCurrentTimeflowIdOk returns a tuple with the CurrentTimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrentTimeflowId
+
+`func (o *DSource) SetCurrentTimeflowId(v string)`
+
+SetCurrentTimeflowId sets CurrentTimeflowId field to given value.
+
+### HasCurrentTimeflowId
+
+`func (o *DSource) HasCurrentTimeflowId() bool`
+
+HasCurrentTimeflowId returns a boolean if a field has been set.
+
+### GetPreviousTimeflowId
+
+`func (o *DSource) GetPreviousTimeflowId() string`
+
+GetPreviousTimeflowId returns the PreviousTimeflowId field if non-nil, zero value otherwise.
+
+### GetPreviousTimeflowIdOk
+
+`func (o *DSource) GetPreviousTimeflowIdOk() (*string, bool)`
+
+GetPreviousTimeflowIdOk returns a tuple with the PreviousTimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviousTimeflowId
+
+`func (o *DSource) SetPreviousTimeflowId(v string)`
+
+SetPreviousTimeflowId sets PreviousTimeflowId field to given value.
+
+### HasPreviousTimeflowId
+
+`func (o *DSource) HasPreviousTimeflowId() bool`
+
+HasPreviousTimeflowId returns a boolean if a field has been set.
+
 ### GetTags
 
 `func (o *DSource) GetTags() []Tag`
