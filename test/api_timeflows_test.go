@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService CreateTimeflowTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var timeflowId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService DeleteTimeflow", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var timeflowId string
 
@@ -52,7 +53,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService DeleteTimeflowTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var timeflowId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService GetTimeflowById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var timeflowId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService GetTimeflowSnapshotDayRange", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var timeflowId string
 
@@ -93,7 +94,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService GetTimeflowTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var timeflowId string
 
@@ -107,7 +108,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService GetTimeflows", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.TimeflowsApi.GetTimeflows(context.Background()).Execute()
 
@@ -119,7 +120,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService SearchTimeflows", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.TimeflowsApi.SearchTimeflows(context.Background()).Execute()
 
@@ -131,7 +132,7 @@ func Test_delphix_dct_api_TimeflowsApiService(t *testing.T) {
 
 	t.Run("Test TimeflowsApiService UpdateTimeflow", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var timeflowId string
 

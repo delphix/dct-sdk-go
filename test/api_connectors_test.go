@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService ConnectorsTest", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var connectorId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService CreateConnectorTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var connectorId string
 
@@ -52,7 +53,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService DeleteConnectorTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var connectorId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService GetConnectorById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var connectorId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService GetConnectorTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var connectorId string
 
@@ -93,7 +94,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService GetConnectors", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ConnectorsApi.GetConnectors(context.Background()).Execute()
 
@@ -105,7 +106,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService SearchConnectors", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ConnectorsApi.SearchConnectors(context.Background()).Execute()
 
@@ -117,7 +118,7 @@ func Test_delphix_dct_api_ConnectorsApiService(t *testing.T) {
 
 	t.Run("Test ConnectorsApiService UpdateConnectorById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var connectorId string
 

@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_CDBsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_CDBsApiService(t *testing.T) {
 
 	t.Run("Test CDBsApiService CreateCdbTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var cdbId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_CDBsApiService(t *testing.T) {
 
 	t.Run("Test CDBsApiService DeleteCdbTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var cdbId string
 
@@ -51,7 +52,7 @@ func Test_delphix_dct_api_CDBsApiService(t *testing.T) {
 
 	t.Run("Test CDBsApiService GetCdbById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var cdbId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_CDBsApiService(t *testing.T) {
 
 	t.Run("Test CDBsApiService GetCdbs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.CDBsApi.GetCdbs(context.Background()).Execute()
 
@@ -77,7 +78,7 @@ func Test_delphix_dct_api_CDBsApiService(t *testing.T) {
 
 	t.Run("Test CDBsApiService GetTagsCdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var cdbId string
 
@@ -91,7 +92,7 @@ func Test_delphix_dct_api_CDBsApiService(t *testing.T) {
 
 	t.Run("Test CDBsApiService SearchCdbs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.CDBsApi.SearchCdbs(context.Background()).Execute()
 

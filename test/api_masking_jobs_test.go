@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService CopyMaskingJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService CreateMaskingJobTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -52,7 +53,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService DeleteMaskingJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -66,7 +67,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService DeleteMaskingJobTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService ExecuteMaskingJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -93,7 +94,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService GetMaskingJobById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -107,7 +108,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService GetMaskingJobConnectors", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -121,7 +122,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService GetMaskingJobSourceEngines", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.MaskingJobsApi.GetMaskingJobSourceEngines(context.Background()).Execute()
 
@@ -133,7 +134,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService GetMaskingJobTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -147,7 +148,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService GetMaskingJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.MaskingJobsApi.GetMaskingJobs(context.Background()).Execute()
 
@@ -159,7 +160,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService MigrateMaskingJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 
@@ -173,7 +174,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService SearchMaskingJobSourceEngines", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.MaskingJobsApi.SearchMaskingJobSourceEngines(context.Background()).Execute()
 
@@ -185,7 +186,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService SearchMaskingJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.MaskingJobsApi.SearchMaskingJobs(context.Background()).Execute()
 
@@ -197,7 +198,7 @@ func Test_delphix_dct_api_MaskingJobsApiService(t *testing.T) {
 
 	t.Run("Test MaskingJobsApiService UpdateMaskingJobById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var maskingJobId string
 

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	openapi "github.com/delphix/dct-sdk-go"
+	openapi "github.com/delphix/dct-sdk-go/v2"
 )
 
 func main() {
@@ -50,16 +50,16 @@ func main() {
 
 	req_vdb := client.VDBsApi.GetVdbs(ctx)
 
-    vdbs, _, err := client.VDBsApi.GetVdbsExecute(req_vdb)
+	vdbs, _, err := client.VDBsApi.GetVdbsExecute(req_vdb)
 
-    if err != nil {
-        fmt.Print("Error while retrieving Delphix Vdb. \n")
-        fmt.Print(err)
-        os.Exit(1)
-    }
+	if err != nil {
+		fmt.Print("Error while retrieving Delphix Vdb. \n")
+		fmt.Print(err)
+		os.Exit(1)
+	}
 
-    fmt.Printf("Retrieved list of VDBs: \n")
-    for _, vdbs := range vdbs.GetItems() {
-        fmt.Printf("%s \n", vdbs.GetName())
-    }
+	fmt.Printf("Retrieved list of VDBs: \n")
+	for _, vdbs := range vdbs.GetItems() {
+		fmt.Printf("%s \n", vdbs.GetName())
+	}
 }

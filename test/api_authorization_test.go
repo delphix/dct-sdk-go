@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService AddAccessGroupAccountIds", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService AddAccessGroupAccountTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 
@@ -52,7 +53,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService AddAccessGroupScopes", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 
@@ -66,7 +67,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService AddAlwaysAllowedPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -81,7 +82,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService AddObjectsToAccessGroupScope", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -96,7 +97,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService AddRolePermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 
@@ -110,7 +111,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService AddTagsToScope", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -125,7 +126,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService CreateAccessGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AuthorizationApi.CreateAccessGroup(context.Background()).Execute()
 
@@ -137,7 +138,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService CreateRole", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AuthorizationApi.CreateRole(context.Background()).Execute()
 
@@ -149,7 +150,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService CreateRoleTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 
@@ -163,7 +164,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService DeleteAccessGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 
@@ -176,7 +177,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService DeleteAccessGroupScopeObjectTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -191,7 +192,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService DeleteAccessGroupScopeObjects", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -206,7 +207,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService DeleteRole", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 
@@ -219,7 +220,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService DeleteRoleTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 
@@ -232,7 +233,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetAccessGroupById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 
@@ -246,7 +247,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetAccessGroupScope", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -261,7 +262,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetAccessGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AuthorizationApi.GetAccessGroups(context.Background()).Execute()
 
@@ -273,7 +274,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetAllObjectPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AuthorizationApi.GetAllObjectPermissions(context.Background()).Execute()
 
@@ -285,7 +286,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetObjectPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var objectType string
 		var objectId string
@@ -300,7 +301,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetRoleById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 
@@ -314,7 +315,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetRoleTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 
@@ -328,7 +329,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService GetRoles", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AuthorizationApi.GetRoles(context.Background()).Execute()
 
@@ -340,7 +341,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService RemoveAccessGroupAccountId", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var accountId int64
@@ -355,7 +356,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService RemoveAccessGroupAccountTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 
@@ -369,7 +370,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService RemoveAccessGroupScope", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -384,7 +385,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService RemoveAlwaysAllowedPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -399,7 +400,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService RemoveRolePermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 
@@ -413,7 +414,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService SearchAccessGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AuthorizationApi.SearchAccessGroups(context.Background()).Execute()
 
@@ -425,7 +426,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService SearchRoles", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AuthorizationApi.SearchRoles(context.Background()).Execute()
 
@@ -437,7 +438,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService UpdateAccessGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 
@@ -451,7 +452,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService UpdateAccessGroupScope", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accessGroupId string
 		var scopeId string
@@ -466,7 +467,7 @@ func Test_delphix_dct_api_AuthorizationApiService(t *testing.T) {
 
 	t.Run("Test AuthorizationApiService UpdateRole", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var roleId string
 

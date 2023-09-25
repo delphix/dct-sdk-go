@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService CreateDatabaseTemplate", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DatabaseTemplatesApi.CreateDatabaseTemplate(context.Background()).Execute()
 
@@ -36,7 +37,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService CreateDatabaseTemplateTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var databaseTemplateId string
 
@@ -50,7 +51,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService DeleteDatabaseTemplate", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var databaseTemplateId string
 
@@ -64,7 +65,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService DeleteDatabaseTemplateTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var databaseTemplateId string
 
@@ -77,7 +78,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService GetDatabaseTemplateById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var databaseTemplateId string
 
@@ -91,7 +92,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService GetDatabaseTemplateTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var databaseTemplateId string
 
@@ -105,7 +106,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService GetDatabaseTemplates", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DatabaseTemplatesApi.GetDatabaseTemplates(context.Background()).Execute()
 
@@ -117,7 +118,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService ImportDatabaseTemplates", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DatabaseTemplatesApi.ImportDatabaseTemplates(context.Background()).Execute()
 
@@ -128,7 +129,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService SearchDatabaseTemplates", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DatabaseTemplatesApi.SearchDatabaseTemplates(context.Background()).Execute()
 
@@ -140,7 +141,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService UndoImportDatabaseTemplates", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DatabaseTemplatesApi.UndoImportDatabaseTemplates(context.Background()).Execute()
 
@@ -151,7 +152,7 @@ func Test_delphix_dct_api_DatabaseTemplatesApiService(t *testing.T) {
 
 	t.Run("Test DatabaseTemplatesApiService UpdateDatabaseTemplate", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var databaseTemplateId string
 

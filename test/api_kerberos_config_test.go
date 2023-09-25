@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_KerberosConfigApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_KerberosConfigApiService(t *testing.T) {
 
 	t.Run("Test KerberosConfigApiService GetKerberosConfigById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var kerberosConfigId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_KerberosConfigApiService(t *testing.T) {
 
 	t.Run("Test KerberosConfigApiService ListKerberosConfigs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.KerberosConfigApi.ListKerberosConfigs(context.Background()).Execute()
 
@@ -50,7 +51,7 @@ func Test_delphix_dct_api_KerberosConfigApiService(t *testing.T) {
 
 	t.Run("Test KerberosConfigApiService SearchKerberosConfigs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.KerberosConfigApi.SearchKerberosConfigs(context.Background()).Execute()
 

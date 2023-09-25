@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService CreateHyperscaleInstanceTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var hyperscaleInstanceId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService DeleteHyperscaleInstanceTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var hyperscaleInstanceId string
 
@@ -51,7 +52,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService GetHyperscaleInstanceById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var hyperscaleInstanceId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService GetHyperscaleInstanceTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var hyperscaleInstanceId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService GetHyperscaleInstances", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.HyperscaleInstanceApi.GetHyperscaleInstances(context.Background()).Execute()
 
@@ -91,7 +92,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService RegisterHyperscaleInstance", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.HyperscaleInstanceApi.RegisterHyperscaleInstance(context.Background()).Execute()
 
@@ -103,7 +104,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService SearchHyperscaleInstances", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.HyperscaleInstanceApi.SearchHyperscaleInstances(context.Background()).Execute()
 
@@ -115,7 +116,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService UnregisterHyperscaleInstance", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var hyperscaleInstanceId string
 
@@ -129,7 +130,7 @@ func Test_delphix_dct_api_HyperscaleInstanceApiService(t *testing.T) {
 
 	t.Run("Test HyperscaleInstanceApiService UpdateHyperscaleInstance", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var hyperscaleInstanceId string
 
