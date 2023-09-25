@@ -115,6 +115,20 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test SnapshotsApiService GetSnapshotTimeflowRange", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var snapshotId string
+
+		resp, httpRes, err := apiClient.SnapshotsApi.GetSnapshotTimeflowRange(context.Background(), snapshotId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test SnapshotsApiService GetSnapshots", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

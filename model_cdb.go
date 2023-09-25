@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,12 @@ type CDB struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this CDB.
 	Name NullableString `json:"name,omitempty"`
+	// The namespace id of this CDB.
+	NamespaceId *string `json:"namespace_id,omitempty"`
+	// The namespace name of this CDB.
+	NamespaceName *string `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica *bool `json:"is_replica,omitempty"`
 	// The version of this CDB.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
 	// A reference to the Environment that hosts this CDB.
@@ -126,6 +132,102 @@ func (o *CDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *CDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
+func (o *CDB) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetNamespaceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceId) {
+		return nil, false
+	}
+	return o.NamespaceId, true
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *CDB) HasNamespaceId() bool {
+	if o != nil && !IsNil(o.NamespaceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given string and assigns it to the NamespaceId field.
+func (o *CDB) SetNamespaceId(v string) {
+	o.NamespaceId = &v
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise.
+func (o *CDB) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetNamespaceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceName) {
+		return nil, false
+	}
+	return o.NamespaceName, true
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *CDB) HasNamespaceName() bool {
+	if o != nil && !IsNil(o.NamespaceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given string and assigns it to the NamespaceName field.
+func (o *CDB) SetNamespaceName(v string) {
+	o.NamespaceName = &v
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *CDB) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *CDB) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *CDB) SetIsReplica(v bool) {
+	o.IsReplica = &v
 }
 
 // GetDatabaseVersion returns the DatabaseVersion field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -375,6 +477,15 @@ func (o CDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.NamespaceId) {
+		toSerialize["namespace_id"] = o.NamespaceId
+	}
+	if !IsNil(o.NamespaceName) {
+		toSerialize["namespace_name"] = o.NamespaceName
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
 	}
 	if o.DatabaseVersion.IsSet() {
 		toSerialize["database_version"] = o.DatabaseVersion.Get()

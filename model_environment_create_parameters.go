@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -50,6 +50,8 @@ type EnvironmentCreateParameters struct {
 	Password *string `json:"password,omitempty"`
 	// The name or reference of the vault from which to read the host credentials.
 	Vault *string `json:"vault,omitempty"`
+	// Delphix display name for the vault user
+	VaultUsername *string `json:"vault_username,omitempty"`
 	// Vault engine name where the credential is stored.
 	HashicorpVaultEngine *string `json:"hashicorp_vault_engine,omitempty"`
 	// Path in the vault engine where the credential is stored.
@@ -66,6 +68,8 @@ type EnvironmentCreateParameters struct {
 	UseEnginePublicKey *bool `json:"use_engine_public_key,omitempty"`
 	// array of ip address or hostnames
 	NfsAddresses []string `json:"nfs_addresses,omitempty"`
+	// Delphix display name for the vault user
+	AseDbVaultUsername *string `json:"ase_db_vault_username,omitempty"`
 	// username of the SAP ASE database.
 	AseDbUsername *string `json:"ase_db_username,omitempty"`
 	// password of the SAP ASE database.
@@ -592,6 +596,38 @@ func (o *EnvironmentCreateParameters) SetVault(v string) {
 	o.Vault = &v
 }
 
+// GetVaultUsername returns the VaultUsername field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetVaultUsername() string {
+	if o == nil || IsNil(o.VaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.VaultUsername
+}
+
+// GetVaultUsernameOk returns a tuple with the VaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.VaultUsername) {
+		return nil, false
+	}
+	return o.VaultUsername, true
+}
+
+// HasVaultUsername returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasVaultUsername() bool {
+	if o != nil && !IsNil(o.VaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetVaultUsername gets a reference to the given string and assigns it to the VaultUsername field.
+func (o *EnvironmentCreateParameters) SetVaultUsername(v string) {
+	o.VaultUsername = &v
+}
+
 // GetHashicorpVaultEngine returns the HashicorpVaultEngine field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetHashicorpVaultEngine() string {
 	if o == nil || IsNil(o.HashicorpVaultEngine) {
@@ -846,6 +882,38 @@ func (o *EnvironmentCreateParameters) HasNfsAddresses() bool {
 // SetNfsAddresses gets a reference to the given []string and assigns it to the NfsAddresses field.
 func (o *EnvironmentCreateParameters) SetNfsAddresses(v []string) {
 	o.NfsAddresses = v
+}
+
+// GetAseDbVaultUsername returns the AseDbVaultUsername field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbVaultUsername() string {
+	if o == nil || IsNil(o.AseDbVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.AseDbVaultUsername
+}
+
+// GetAseDbVaultUsernameOk returns a tuple with the AseDbVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.AseDbVaultUsername) {
+		return nil, false
+	}
+	return o.AseDbVaultUsername, true
+}
+
+// HasAseDbVaultUsername returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbVaultUsername() bool {
+	if o != nil && !IsNil(o.AseDbVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbVaultUsername gets a reference to the given string and assigns it to the AseDbVaultUsername field.
+func (o *EnvironmentCreateParameters) SetAseDbVaultUsername(v string) {
+	o.AseDbVaultUsername = &v
 }
 
 // GetAseDbUsername returns the AseDbUsername field value if set, zero value otherwise.
@@ -1473,6 +1541,9 @@ func (o EnvironmentCreateParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Vault) {
 		toSerialize["vault"] = o.Vault
 	}
+	if !IsNil(o.VaultUsername) {
+		toSerialize["vault_username"] = o.VaultUsername
+	}
 	if !IsNil(o.HashicorpVaultEngine) {
 		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
 	}
@@ -1496,6 +1567,9 @@ func (o EnvironmentCreateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NfsAddresses) {
 		toSerialize["nfs_addresses"] = o.NfsAddresses
+	}
+	if !IsNil(o.AseDbVaultUsername) {
+		toSerialize["ase_db_vault_username"] = o.AseDbVaultUsername
 	}
 	if !IsNil(o.AseDbUsername) {
 		toSerialize["ase_db_username"] = o.AseDbUsername

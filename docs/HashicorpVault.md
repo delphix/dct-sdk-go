@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | Pointer to **int64** |  | [optional] [readonly] 
 **EnvVariables** | Pointer to **map[string]string** | Environment variables to set when invoking the Vault CLI tool. The environment variables will be used both to login to the vault (if this step is required) and to retrieve engine username and passwords.  | [optional] 
 **LoginCommandArgs** | Pointer to **[]string** | Arguments to the \&quot;vault\&quot; CLI tool to be used to fetch a client token (or \&quot;login\&quot;). If supporting files, such as TLS certificates, must be used to authenticate, they can be mounted to the /etc/config directory. This property must not be set when using the TOKEN authentication method as login is not required.  | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetLoginCommandArgs sets LoginCommandArgs field to given value.
 `func (o *HashicorpVault) HasLoginCommandArgs() bool`
 
 HasLoginCommandArgs returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *HashicorpVault) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *HashicorpVault) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *HashicorpVault) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *HashicorpVault) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

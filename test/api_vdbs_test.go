@@ -91,6 +91,20 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test VDBsApiService GetBookmarksByVdb", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vdbId string
+
+		resp, httpRes, err := apiClient.VDBsApi.GetBookmarksByVdb(context.Background(), vdbId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test VDBsApiService GetTagsVdb", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -138,6 +152,44 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.GetVdbs(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test VDBsApiService LockVdb", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vdbId string
+
+		resp, httpRes, err := apiClient.VDBsApi.LockVdb(context.Background(), vdbId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test VDBsApiService ProvisionVdbByLocation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbByLocation(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test VDBsApiService ProvisionVdbByLocationDefaults", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbByLocationDefaults(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -315,6 +367,20 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test VDBsApiService SearchBookmarksByVdb", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vdbId string
+
+		resp, httpRes, err := apiClient.VDBsApi.SearchBookmarksByVdb(context.Background(), vdbId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test VDBsApiService SearchVdbs", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -376,6 +442,20 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 		var vdbId string
 
 		resp, httpRes, err := apiClient.VDBsApi.SwitchTimeflow(context.Background(), vdbId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test VDBsApiService UnlockVdb", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vdbId string
+
+		resp, httpRes, err := apiClient.VDBsApi.UnlockVdb(context.Background(), vdbId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

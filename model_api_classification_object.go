@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -19,7 +19,7 @@ import (
 // checks if the ApiClassificationObject type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApiClassificationObject{}
 
-// ApiClassificationObject An API classification object which classifies APIs as automation or management.
+// ApiClassificationObject An API classification object which classifies APIs as automation or governance.
 type ApiClassificationObject struct {
 	// HTTP method of the API.
 	ApiMethod *string `json:"api_method,omitempty"`

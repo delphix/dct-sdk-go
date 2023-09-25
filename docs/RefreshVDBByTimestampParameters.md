@@ -6,7 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Timestamp** | Pointer to **time.Time** | The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point. | [optional] 
 **TimestampInDatabaseTimezone** | Pointer to **string** | The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp. | [optional] 
-**DatasetId** | Pointer to **string** | ID of the dataset to refresh to | [optional] 
+**TimeflowId** | Pointer to **string** | ID of the timeflow to refresh to, mutually exclusive with dataset_id. | [optional] 
+**DatasetId** | Pointer to **string** | ID of the dataset to refresh to, mutually exclusive with timeflow_id. | [optional] 
 
 ## Methods
 
@@ -76,6 +77,31 @@ SetTimestampInDatabaseTimezone sets TimestampInDatabaseTimezone field to given v
 `func (o *RefreshVDBByTimestampParameters) HasTimestampInDatabaseTimezone() bool`
 
 HasTimestampInDatabaseTimezone returns a boolean if a field has been set.
+
+### GetTimeflowId
+
+`func (o *RefreshVDBByTimestampParameters) GetTimeflowId() string`
+
+GetTimeflowId returns the TimeflowId field if non-nil, zero value otherwise.
+
+### GetTimeflowIdOk
+
+`func (o *RefreshVDBByTimestampParameters) GetTimeflowIdOk() (*string, bool)`
+
+GetTimeflowIdOk returns a tuple with the TimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeflowId
+
+`func (o *RefreshVDBByTimestampParameters) SetTimeflowId(v string)`
+
+SetTimeflowId sets TimeflowId field to given value.
+
+### HasTimeflowId
+
+`func (o *RefreshVDBByTimestampParameters) HasTimeflowId() bool`
+
+HasTimeflowId returns a boolean if a field has been set.
 
 ### GetDatasetId
 

@@ -22,6 +22,54 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test EnvironmentsApiService CompatibleRepositoriesByLocation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesByLocation(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test EnvironmentsApiService CompatibleRepositoriesBySnapshot", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesBySnapshot(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test EnvironmentsApiService CompatibleRepositoriesByTimestamp", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesByTimestamp(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test EnvironmentsApiService CompatibleRepositoriesFromBookmark", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesFromBookmark(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test EnvironmentsApiService CreateEnvironment", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -256,18 +304,6 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test EnvironmentsApiService SnapshotCompatibleRepositories", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.EnvironmentsApi.SnapshotCompatibleRepositories(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test EnvironmentsApiService UpdateEnvironment", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -305,6 +341,21 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 		var hostId string
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.UpdateHost(context.Background(), environmentId, hostId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test EnvironmentsApiService UpdateRepository", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var environmentId string
+		var repositoryId string
+
+		resp, httpRes, err := apiClient.EnvironmentsApi.UpdateRepository(context.Background(), environmentId, repositoryId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

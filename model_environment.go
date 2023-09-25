@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,12 @@ type Environment struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this environment.
 	Name *string `json:"name,omitempty"`
+	// The namespace id of this environment.
+	NamespaceId *string `json:"namespace_id,omitempty"`
+	// The namespace name of this environment.
+	NamespaceName *string `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica *bool `json:"is_replica,omitempty"`
 	// The namespace of this environment for replicated and restored objects.
 	Namespace NullableString `json:"namespace,omitempty"`
 	// A reference to the Engine that this Environment connection is associated with.
@@ -36,6 +42,8 @@ type Environment struct {
 	ClusterHome *string `json:"cluster_home,omitempty"`
 	// True if this windows environment is a target environment.
 	IsWindowsTarget *bool `json:"is_windows_target,omitempty"`
+	// ID of the staging environment.
+	StagingEnvironment *string `json:"staging_environment,omitempty"`
 	// The hosts that are part of this environment.
 	Hosts []Host `json:"hosts,omitempty"`
 	// The tags to be created for this environment.
@@ -125,6 +133,102 @@ func (o *Environment) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Environment) SetName(v string) {
 	o.Name = &v
+}
+
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
+func (o *Environment) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetNamespaceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceId) {
+		return nil, false
+	}
+	return o.NamespaceId, true
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *Environment) HasNamespaceId() bool {
+	if o != nil && !IsNil(o.NamespaceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given string and assigns it to the NamespaceId field.
+func (o *Environment) SetNamespaceId(v string) {
+	o.NamespaceId = &v
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise.
+func (o *Environment) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetNamespaceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceName) {
+		return nil, false
+	}
+	return o.NamespaceName, true
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *Environment) HasNamespaceName() bool {
+	if o != nil && !IsNil(o.NamespaceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given string and assigns it to the NamespaceName field.
+func (o *Environment) SetNamespaceName(v string) {
+	o.NamespaceName = &v
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *Environment) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *Environment) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *Environment) SetIsReplica(v bool) {
+	o.IsReplica = &v
 }
 
 // GetNamespace returns the Namespace field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -329,6 +433,38 @@ func (o *Environment) SetIsWindowsTarget(v bool) {
 	o.IsWindowsTarget = &v
 }
 
+// GetStagingEnvironment returns the StagingEnvironment field value if set, zero value otherwise.
+func (o *Environment) GetStagingEnvironment() string {
+	if o == nil || IsNil(o.StagingEnvironment) {
+		var ret string
+		return ret
+	}
+	return *o.StagingEnvironment
+}
+
+// GetStagingEnvironmentOk returns a tuple with the StagingEnvironment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetStagingEnvironmentOk() (*string, bool) {
+	if o == nil || IsNil(o.StagingEnvironment) {
+		return nil, false
+	}
+	return o.StagingEnvironment, true
+}
+
+// HasStagingEnvironment returns a boolean if a field has been set.
+func (o *Environment) HasStagingEnvironment() bool {
+	if o != nil && !IsNil(o.StagingEnvironment) {
+		return true
+	}
+
+	return false
+}
+
+// SetStagingEnvironment gets a reference to the given string and assigns it to the StagingEnvironment field.
+func (o *Environment) SetStagingEnvironment(v string) {
+	o.StagingEnvironment = &v
+}
+
 // GetHosts returns the Hosts field value if set, zero value otherwise.
 func (o *Environment) GetHosts() []Host {
 	if o == nil || IsNil(o.Hosts) {
@@ -473,6 +609,15 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.NamespaceId) {
+		toSerialize["namespace_id"] = o.NamespaceId
+	}
+	if !IsNil(o.NamespaceName) {
+		toSerialize["namespace_name"] = o.NamespaceName
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
+	}
 	if o.Namespace.IsSet() {
 		toSerialize["namespace"] = o.Namespace.Get()
 	}
@@ -490,6 +635,9 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsWindowsTarget) {
 		toSerialize["is_windows_target"] = o.IsWindowsTarget
+	}
+	if !IsNil(o.StagingEnvironment) {
+		toSerialize["staging_environment"] = o.StagingEnvironment
 	}
 	if !IsNil(o.Hosts) {
 		toSerialize["hosts"] = o.Hosts

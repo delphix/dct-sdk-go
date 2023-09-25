@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -20,9 +20,9 @@ var _ MappedNullable = &SnapshotCompatibleRepositoryRequest{}
 
 // SnapshotCompatibleRepositoryRequest struct for SnapshotCompatibleRepositoryRequest
 type SnapshotCompatibleRepositoryRequest struct {
-	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
+	// The ID of the source object (dSource or VDB) to get the compatible repos. All other objects referenced by the parameters must live on the same engine as the source.
 	SourceDataId *string `json:"source_data_id,omitempty"`
-	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
+	// The ID of the Engine from where to get the compatible repos. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the snapshot from which to execute the operation.
 	SnapshotId *string `json:"snapshot_id,omitempty"`

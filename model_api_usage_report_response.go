@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -23,8 +23,8 @@ type ApiUsageReportResponse struct {
 	Items []ApiUsageData `json:"items,omitempty"`
 	// Total count of automation API calls over the requested timeframe.
 	TotalAutomationApiCount *int64 `json:"total_automation_api_count,omitempty"`
-	// Total count of management API calls over the requested timeframe.
-	TotalManagementApiCount *int64 `json:"total_management_api_count,omitempty"`
+	// Total count of governance API calls over the requested timeframe.
+	TotalGovernanceApiCount *int64 `json:"total_governance_api_count,omitempty"`
 }
 
 // NewApiUsageReportResponse instantiates a new ApiUsageReportResponse object
@@ -108,36 +108,36 @@ func (o *ApiUsageReportResponse) SetTotalAutomationApiCount(v int64) {
 	o.TotalAutomationApiCount = &v
 }
 
-// GetTotalManagementApiCount returns the TotalManagementApiCount field value if set, zero value otherwise.
-func (o *ApiUsageReportResponse) GetTotalManagementApiCount() int64 {
-	if o == nil || IsNil(o.TotalManagementApiCount) {
+// GetTotalGovernanceApiCount returns the TotalGovernanceApiCount field value if set, zero value otherwise.
+func (o *ApiUsageReportResponse) GetTotalGovernanceApiCount() int64 {
+	if o == nil || IsNil(o.TotalGovernanceApiCount) {
 		var ret int64
 		return ret
 	}
-	return *o.TotalManagementApiCount
+	return *o.TotalGovernanceApiCount
 }
 
-// GetTotalManagementApiCountOk returns a tuple with the TotalManagementApiCount field value if set, nil otherwise
+// GetTotalGovernanceApiCountOk returns a tuple with the TotalGovernanceApiCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApiUsageReportResponse) GetTotalManagementApiCountOk() (*int64, bool) {
-	if o == nil || IsNil(o.TotalManagementApiCount) {
+func (o *ApiUsageReportResponse) GetTotalGovernanceApiCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalGovernanceApiCount) {
 		return nil, false
 	}
-	return o.TotalManagementApiCount, true
+	return o.TotalGovernanceApiCount, true
 }
 
-// HasTotalManagementApiCount returns a boolean if a field has been set.
-func (o *ApiUsageReportResponse) HasTotalManagementApiCount() bool {
-	if o != nil && !IsNil(o.TotalManagementApiCount) {
+// HasTotalGovernanceApiCount returns a boolean if a field has been set.
+func (o *ApiUsageReportResponse) HasTotalGovernanceApiCount() bool {
+	if o != nil && !IsNil(o.TotalGovernanceApiCount) {
 		return true
 	}
 
 	return false
 }
 
-// SetTotalManagementApiCount gets a reference to the given int64 and assigns it to the TotalManagementApiCount field.
-func (o *ApiUsageReportResponse) SetTotalManagementApiCount(v int64) {
-	o.TotalManagementApiCount = &v
+// SetTotalGovernanceApiCount gets a reference to the given int64 and assigns it to the TotalGovernanceApiCount field.
+func (o *ApiUsageReportResponse) SetTotalGovernanceApiCount(v int64) {
+	o.TotalGovernanceApiCount = &v
 }
 
 func (o ApiUsageReportResponse) MarshalJSON() ([]byte, error) {
@@ -156,8 +156,8 @@ func (o ApiUsageReportResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TotalAutomationApiCount) {
 		toSerialize["total_automation_api_count"] = o.TotalAutomationApiCount
 	}
-	if !IsNil(o.TotalManagementApiCount) {
-		toSerialize["total_management_api_count"] = o.TotalManagementApiCount
+	if !IsNil(o.TotalGovernanceApiCount) {
+		toSerialize["total_governance_api_count"] = o.TotalGovernanceApiCount
 	}
 	return toSerialize, nil
 }

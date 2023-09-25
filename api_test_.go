@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -23,50 +23,48 @@ import (
 // TestApiService TestApi service
 type TestApiService service
 
-type ApiTimeToUpdateSourcesRequest struct {
+type ApiEnableScaleTestingRequest struct {
 	ctx context.Context
 	ApiService *TestApiService
-	timeToUpdateSourcesRequest *TimeToUpdateSourcesRequest
+	enableScaleTestingRequest *EnableScaleTestingRequest
 }
 
-func (r ApiTimeToUpdateSourcesRequest) TimeToUpdateSourcesRequest(timeToUpdateSourcesRequest TimeToUpdateSourcesRequest) ApiTimeToUpdateSourcesRequest {
-	r.timeToUpdateSourcesRequest = &timeToUpdateSourcesRequest
+func (r ApiEnableScaleTestingRequest) EnableScaleTestingRequest(enableScaleTestingRequest EnableScaleTestingRequest) ApiEnableScaleTestingRequest {
+	r.enableScaleTestingRequest = &enableScaleTestingRequest
 	return r
 }
 
-func (r ApiTimeToUpdateSourcesRequest) Execute() (*TimeToUpdateSourcesResponse, *http.Response, error) {
-	return r.ApiService.TimeToUpdateSourcesExecute(r)
+func (r ApiEnableScaleTestingRequest) Execute() (*http.Response, error) {
+	return r.ApiService.EnableScaleTestingExecute(r)
 }
 
 /*
-TimeToUpdateSources set sources loop count variable - this is being used during performance testing.
+EnableScaleTesting This is used for performance testing to enable engine and object duplication.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTimeToUpdateSourcesRequest
+ @return ApiEnableScaleTestingRequest
 */
-func (a *TestApiService) TimeToUpdateSources(ctx context.Context) ApiTimeToUpdateSourcesRequest {
-	return ApiTimeToUpdateSourcesRequest{
+func (a *TestApiService) EnableScaleTesting(ctx context.Context) ApiEnableScaleTestingRequest {
+	return ApiEnableScaleTestingRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return TimeToUpdateSourcesResponse
-func (a *TestApiService) TimeToUpdateSourcesExecute(r ApiTimeToUpdateSourcesRequest) (*TimeToUpdateSourcesResponse, *http.Response, error) {
+func (a *TestApiService) EnableScaleTestingExecute(r ApiEnableScaleTestingRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *TimeToUpdateSourcesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TestApiService.TimeToUpdateSources")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TestApiService.EnableScaleTesting")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/time-to-update-sources"
+	localVarPath := localBasePath + "/enable-scale-testing"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -82,7 +80,7 @@ func (a *TestApiService) TimeToUpdateSourcesExecute(r ApiTimeToUpdateSourcesRequ
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -90,7 +88,7 @@ func (a *TestApiService) TimeToUpdateSourcesExecute(r ApiTimeToUpdateSourcesRequ
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.timeToUpdateSourcesRequest
+	localVarPostBody = r.enableScaleTestingRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -107,19 +105,19 @@ func (a *TestApiService) TimeToUpdateSourcesExecute(r ApiTimeToUpdateSourcesRequ
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -127,17 +125,8 @@ func (a *TestApiService) TimeToUpdateSourcesExecute(r ApiTimeToUpdateSourcesRequ
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
+		return localVarHTTPResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
+	return localVarHTTPResponse, nil
 }

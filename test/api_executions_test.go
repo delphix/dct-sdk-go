@@ -63,6 +63,20 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test ExecutionsApiService GetExecutionLog", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var executionId string
+
+		resp, httpRes, err := apiClient.ExecutionsApi.GetExecutionLog(context.Background(), executionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ExecutionsApiService GetExecutions", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

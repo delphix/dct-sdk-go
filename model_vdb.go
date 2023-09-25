@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -27,16 +27,32 @@ type VDB struct {
 	DatabaseType NullableString `json:"database_type,omitempty"`
 	// The container name of this VDB.
 	Name NullableString `json:"name,omitempty"`
+	// The namespace id of this VDB.
+	NamespaceId *string `json:"namespace_id,omitempty"`
+	// The namespace name of this VDB.
+	NamespaceName *string `json:"namespace_name,omitempty"`
+	// Is this a replicated object.
+	IsReplica *bool `json:"is_replica,omitempty"`
+	// Is this VDB locked.
+	IsLocked *bool `json:"is_locked,omitempty"`
+	// The ID of the account that locked this VDB.
+	LockedBy *int64 `json:"locked_by,omitempty"`
+	// The name of the account that locked this VDB.
+	LockedByName *string `json:"locked_by_name,omitempty"`
 	// The database version of this VDB.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
 	// The total size of this VDB, in bytes.
 	Size NullableInt64 `json:"size,omitempty"`
+	// The actual space used by this VDB, in bytes.
+	StorageSize NullableInt64 `json:"storage_size,omitempty"`
 	// A reference to the Engine that this VDB belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The runtime status of the VDB. 'Unknown' if all attempts to connect to the dataset failed.
 	Status NullableString `json:"status,omitempty"`
 	// The VDB is masked or not.
 	Masked NullableBool `json:"masked,omitempty"`
+	// The content type of the vdb.
+	ContentType NullableString `json:"content_type,omitempty"`
 	// The timestamp for parent timeflow.
 	ParentTimeflowTimestamp NullableTime `json:"parent_timeflow_timestamp,omitempty"`
 	// The timezone for parent timeflow.
@@ -77,6 +93,14 @@ type VDB struct {
 	CurrentTimeflowId *string `json:"current_timeflow_id,omitempty"`
 	// A reference to the previous timeflow for this VDB.
 	PreviousTimeflowId *string `json:"previous_timeflow_id,omitempty"`
+	// The date this VDB was last refreshed.
+	LastRefreshedDate NullableTime `json:"last_refreshed_date,omitempty"`
+	// Indicates whether the Engine should automatically restart this vdb when target host reboot is detected.
+	VdbRestart *bool `json:"vdb_restart,omitempty"`
+	// Indicates whether this VDB has an AppData database.
+	IsAppdata *bool `json:"is_appdata,omitempty"`
+	// The version of the plugin associated with this VDB.
+	PluginVersion NullableString `json:"plugin_version,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -212,6 +236,198 @@ func (o *VDB) UnsetName() {
 	o.Name.Unset()
 }
 
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
+func (o *VDB) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNamespaceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceId) {
+		return nil, false
+	}
+	return o.NamespaceId, true
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *VDB) HasNamespaceId() bool {
+	if o != nil && !IsNil(o.NamespaceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given string and assigns it to the NamespaceId field.
+func (o *VDB) SetNamespaceId(v string) {
+	o.NamespaceId = &v
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise.
+func (o *VDB) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNamespaceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceName) {
+		return nil, false
+	}
+	return o.NamespaceName, true
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *VDB) HasNamespaceName() bool {
+	if o != nil && !IsNil(o.NamespaceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given string and assigns it to the NamespaceName field.
+func (o *VDB) SetNamespaceName(v string) {
+	o.NamespaceName = &v
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *VDB) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *VDB) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *VDB) SetIsReplica(v bool) {
+	o.IsReplica = &v
+}
+
+// GetIsLocked returns the IsLocked field value if set, zero value otherwise.
+func (o *VDB) GetIsLocked() bool {
+	if o == nil || IsNil(o.IsLocked) {
+		var ret bool
+		return ret
+	}
+	return *o.IsLocked
+}
+
+// GetIsLockedOk returns a tuple with the IsLocked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetIsLockedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsLocked) {
+		return nil, false
+	}
+	return o.IsLocked, true
+}
+
+// HasIsLocked returns a boolean if a field has been set.
+func (o *VDB) HasIsLocked() bool {
+	if o != nil && !IsNil(o.IsLocked) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsLocked gets a reference to the given bool and assigns it to the IsLocked field.
+func (o *VDB) SetIsLocked(v bool) {
+	o.IsLocked = &v
+}
+
+// GetLockedBy returns the LockedBy field value if set, zero value otherwise.
+func (o *VDB) GetLockedBy() int64 {
+	if o == nil || IsNil(o.LockedBy) {
+		var ret int64
+		return ret
+	}
+	return *o.LockedBy
+}
+
+// GetLockedByOk returns a tuple with the LockedBy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetLockedByOk() (*int64, bool) {
+	if o == nil || IsNil(o.LockedBy) {
+		return nil, false
+	}
+	return o.LockedBy, true
+}
+
+// HasLockedBy returns a boolean if a field has been set.
+func (o *VDB) HasLockedBy() bool {
+	if o != nil && !IsNil(o.LockedBy) {
+		return true
+	}
+
+	return false
+}
+
+// SetLockedBy gets a reference to the given int64 and assigns it to the LockedBy field.
+func (o *VDB) SetLockedBy(v int64) {
+	o.LockedBy = &v
+}
+
+// GetLockedByName returns the LockedByName field value if set, zero value otherwise.
+func (o *VDB) GetLockedByName() string {
+	if o == nil || IsNil(o.LockedByName) {
+		var ret string
+		return ret
+	}
+	return *o.LockedByName
+}
+
+// GetLockedByNameOk returns a tuple with the LockedByName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetLockedByNameOk() (*string, bool) {
+	if o == nil || IsNil(o.LockedByName) {
+		return nil, false
+	}
+	return o.LockedByName, true
+}
+
+// HasLockedByName returns a boolean if a field has been set.
+func (o *VDB) HasLockedByName() bool {
+	if o != nil && !IsNil(o.LockedByName) {
+		return true
+	}
+
+	return false
+}
+
+// SetLockedByName gets a reference to the given string and assigns it to the LockedByName field.
+func (o *VDB) SetLockedByName(v string) {
+	o.LockedByName = &v
+}
+
 // GetDatabaseVersion returns the DatabaseVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetDatabaseVersion() string {
 	if o == nil || IsNil(o.DatabaseVersion.Get()) {
@@ -294,6 +510,48 @@ func (o *VDB) SetSizeNil() {
 // UnsetSize ensures that no value is present for Size, not even an explicit nil
 func (o *VDB) UnsetSize() {
 	o.Size.Unset()
+}
+
+// GetStorageSize returns the StorageSize field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetStorageSize() int64 {
+	if o == nil || IsNil(o.StorageSize.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.StorageSize.Get()
+}
+
+// GetStorageSizeOk returns a tuple with the StorageSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetStorageSizeOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StorageSize.Get(), o.StorageSize.IsSet()
+}
+
+// HasStorageSize returns a boolean if a field has been set.
+func (o *VDB) HasStorageSize() bool {
+	if o != nil && o.StorageSize.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageSize gets a reference to the given NullableInt64 and assigns it to the StorageSize field.
+func (o *VDB) SetStorageSize(v int64) {
+	o.StorageSize.Set(&v)
+}
+// SetStorageSizeNil sets the value for StorageSize to be an explicit nil
+func (o *VDB) SetStorageSizeNil() {
+	o.StorageSize.Set(nil)
+}
+
+// UnsetStorageSize ensures that no value is present for StorageSize, not even an explicit nil
+func (o *VDB) UnsetStorageSize() {
+	o.StorageSize.Unset()
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -410,6 +668,48 @@ func (o *VDB) SetMaskedNil() {
 // UnsetMasked ensures that no value is present for Masked, not even an explicit nil
 func (o *VDB) UnsetMasked() {
 	o.Masked.Unset()
+}
+
+// GetContentType returns the ContentType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetContentType() string {
+	if o == nil || IsNil(o.ContentType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ContentType.Get()
+}
+
+// GetContentTypeOk returns a tuple with the ContentType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetContentTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ContentType.Get(), o.ContentType.IsSet()
+}
+
+// HasContentType returns a boolean if a field has been set.
+func (o *VDB) HasContentType() bool {
+	if o != nil && o.ContentType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetContentType gets a reference to the given NullableString and assigns it to the ContentType field.
+func (o *VDB) SetContentType(v string) {
+	o.ContentType.Set(&v)
+}
+// SetContentTypeNil sets the value for ContentType to be an explicit nil
+func (o *VDB) SetContentTypeNil() {
+	o.ContentType.Set(nil)
+}
+
+// UnsetContentType ensures that no value is present for ContentType, not even an explicit nil
+func (o *VDB) UnsetContentType() {
+	o.ContentType.Unset()
 }
 
 // GetParentTimeflowTimestamp returns the ParentTimeflowTimestamp field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1208,6 +1508,154 @@ func (o *VDB) SetPreviousTimeflowId(v string) {
 	o.PreviousTimeflowId = &v
 }
 
+// GetLastRefreshedDate returns the LastRefreshedDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetLastRefreshedDate() time.Time {
+	if o == nil || IsNil(o.LastRefreshedDate.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastRefreshedDate.Get()
+}
+
+// GetLastRefreshedDateOk returns a tuple with the LastRefreshedDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetLastRefreshedDateOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastRefreshedDate.Get(), o.LastRefreshedDate.IsSet()
+}
+
+// HasLastRefreshedDate returns a boolean if a field has been set.
+func (o *VDB) HasLastRefreshedDate() bool {
+	if o != nil && o.LastRefreshedDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastRefreshedDate gets a reference to the given NullableTime and assigns it to the LastRefreshedDate field.
+func (o *VDB) SetLastRefreshedDate(v time.Time) {
+	o.LastRefreshedDate.Set(&v)
+}
+// SetLastRefreshedDateNil sets the value for LastRefreshedDate to be an explicit nil
+func (o *VDB) SetLastRefreshedDateNil() {
+	o.LastRefreshedDate.Set(nil)
+}
+
+// UnsetLastRefreshedDate ensures that no value is present for LastRefreshedDate, not even an explicit nil
+func (o *VDB) UnsetLastRefreshedDate() {
+	o.LastRefreshedDate.Unset()
+}
+
+// GetVdbRestart returns the VdbRestart field value if set, zero value otherwise.
+func (o *VDB) GetVdbRestart() bool {
+	if o == nil || IsNil(o.VdbRestart) {
+		var ret bool
+		return ret
+	}
+	return *o.VdbRestart
+}
+
+// GetVdbRestartOk returns a tuple with the VdbRestart field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetVdbRestartOk() (*bool, bool) {
+	if o == nil || IsNil(o.VdbRestart) {
+		return nil, false
+	}
+	return o.VdbRestart, true
+}
+
+// HasVdbRestart returns a boolean if a field has been set.
+func (o *VDB) HasVdbRestart() bool {
+	if o != nil && !IsNil(o.VdbRestart) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbRestart gets a reference to the given bool and assigns it to the VdbRestart field.
+func (o *VDB) SetVdbRestart(v bool) {
+	o.VdbRestart = &v
+}
+
+// GetIsAppdata returns the IsAppdata field value if set, zero value otherwise.
+func (o *VDB) GetIsAppdata() bool {
+	if o == nil || IsNil(o.IsAppdata) {
+		var ret bool
+		return ret
+	}
+	return *o.IsAppdata
+}
+
+// GetIsAppdataOk returns a tuple with the IsAppdata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetIsAppdataOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsAppdata) {
+		return nil, false
+	}
+	return o.IsAppdata, true
+}
+
+// HasIsAppdata returns a boolean if a field has been set.
+func (o *VDB) HasIsAppdata() bool {
+	if o != nil && !IsNil(o.IsAppdata) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsAppdata gets a reference to the given bool and assigns it to the IsAppdata field.
+func (o *VDB) SetIsAppdata(v bool) {
+	o.IsAppdata = &v
+}
+
+// GetPluginVersion returns the PluginVersion field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetPluginVersion() string {
+	if o == nil || IsNil(o.PluginVersion.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PluginVersion.Get()
+}
+
+// GetPluginVersionOk returns a tuple with the PluginVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetPluginVersionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PluginVersion.Get(), o.PluginVersion.IsSet()
+}
+
+// HasPluginVersion returns a boolean if a field has been set.
+func (o *VDB) HasPluginVersion() bool {
+	if o != nil && o.PluginVersion.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPluginVersion gets a reference to the given NullableString and assigns it to the PluginVersion field.
+func (o *VDB) SetPluginVersion(v string) {
+	o.PluginVersion.Set(&v)
+}
+// SetPluginVersionNil sets the value for PluginVersion to be an explicit nil
+func (o *VDB) SetPluginVersionNil() {
+	o.PluginVersion.Set(nil)
+}
+
+// UnsetPluginVersion ensures that no value is present for PluginVersion, not even an explicit nil
+func (o *VDB) UnsetPluginVersion() {
+	o.PluginVersion.Unset()
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1227,11 +1675,32 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
 	}
+	if !IsNil(o.NamespaceId) {
+		toSerialize["namespace_id"] = o.NamespaceId
+	}
+	if !IsNil(o.NamespaceName) {
+		toSerialize["namespace_name"] = o.NamespaceName
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
+	}
+	if !IsNil(o.IsLocked) {
+		toSerialize["is_locked"] = o.IsLocked
+	}
+	if !IsNil(o.LockedBy) {
+		toSerialize["locked_by"] = o.LockedBy
+	}
+	if !IsNil(o.LockedByName) {
+		toSerialize["locked_by_name"] = o.LockedByName
+	}
 	if o.DatabaseVersion.IsSet() {
 		toSerialize["database_version"] = o.DatabaseVersion.Get()
 	}
 	if o.Size.IsSet() {
 		toSerialize["size"] = o.Size.Get()
+	}
+	if o.StorageSize.IsSet() {
+		toSerialize["storage_size"] = o.StorageSize.Get()
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
@@ -1241,6 +1710,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Masked.IsSet() {
 		toSerialize["masked"] = o.Masked.Get()
+	}
+	if o.ContentType.IsSet() {
+		toSerialize["content_type"] = o.ContentType.Get()
 	}
 	if o.ParentTimeflowTimestamp.IsSet() {
 		toSerialize["parent_timeflow_timestamp"] = o.ParentTimeflowTimestamp.Get()
@@ -1304,6 +1776,18 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PreviousTimeflowId) {
 		toSerialize["previous_timeflow_id"] = o.PreviousTimeflowId
+	}
+	if o.LastRefreshedDate.IsSet() {
+		toSerialize["last_refreshed_date"] = o.LastRefreshedDate.Get()
+	}
+	if !IsNil(o.VdbRestart) {
+		toSerialize["vdb_restart"] = o.VdbRestart
+	}
+	if !IsNil(o.IsAppdata) {
+		toSerialize["is_appdata"] = o.IsAppdata
+	}
+	if o.PluginVersion.IsSet() {
+		toSerialize["plugin_version"] = o.PluginVersion.Get()
 	}
 	return toSerialize, nil
 }

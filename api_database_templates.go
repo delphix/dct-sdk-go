@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -1167,7 +1167,7 @@ func (r ApiUndoImportDatabaseTemplatesRequest) Execute() (*http.Response, error)
 }
 
 /*
-UndoImportDatabaseTemplates Undo an import of DatabaseTemplates on a engine.
+UndoImportDatabaseTemplates Undo an import of DatabaseTemplates on an Engine.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUndoImportDatabaseTemplatesRequest

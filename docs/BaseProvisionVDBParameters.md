@@ -4,20 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SourceDataId** | Pointer to **string** | The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source. | [optional] 
-**EngineId** | Pointer to **int64** | The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored. | [optional] 
-**TargetGroupId** | Pointer to **string** | The ID of the group into which the VDB will be provisioned. If unset, a group is selected randomly on the Engine. | [optional] 
-**VdbName** | Pointer to **string** | The unique name of the provisioned VDB within a group. If unset, a name is randomly generated. | [optional] 
-**DatabaseName** | Pointer to **string** | The name of the database on the target environment. Defaults to vdb_name. | [optional] 
-**TruncateLogOnCheckpoint** | Pointer to **bool** | Whether to truncate log on checkpoint (ASE only). | [optional] 
-**Username** | Pointer to **string** | The name of the privileged user to run the provision operation (Oracle Only). | [optional] 
-**Password** | Pointer to **string** | The password of the privileged user to run the provision operation (Oracle Only). | [optional] 
-**EnvironmentId** | Pointer to **string** | The ID of the target environment where to provision the VDB. If repository_id unambigously identifies a repository, this is unnecessary and ignored. Otherwise, a compatible repository is randomly selected on the environment. | [optional] 
-**EnvironmentUserId** | Pointer to **string** | The environment user ID to use to connect to the target environment. | [optional] 
-**RepositoryId** | Pointer to **string** | The ID of the target repository where to provision the VDB. A repository typically corresponds to a database installation (Oracle home, database instance, ...). Setting this attribute implicitly determines the environment where to provision the VDB. | [optional] 
-**AutoSelectRepository** | Pointer to **bool** | Option to automatically select a compatible environment and repository. Mutually exclusive with repository_id. | [optional] 
 **PreRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment before refreshing the VDB. | [optional] 
 **PostRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after refreshing the VDB. | [optional] 
+**PreSelfRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment before refreshing the VDB with data from itself. | [optional] 
+**PostSelfRefresh** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after refreshing the VDB with data from itself. | [optional] 
 **PreRollback** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment before rewinding the VDB. | [optional] 
 **PostRollback** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after rewinding the VDB. | [optional] 
 **ConfigureClone** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment when the VDB is created or refreshed. | [optional] 
@@ -27,12 +17,28 @@ Name | Type | Description | Notes
 **PostStart** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after starting a virtual source. | [optional] 
 **PreStop** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment before stopping a virtual source. | [optional] 
 **PostStop** | Pointer to [**[]Hook**](Hook.md) | The commands to execute on the target environment after stopping a virtual source. | [optional] 
+**TargetGroupId** | Pointer to **string** | The ID of the group into which the VDB will be provisioned. If unset, a group is selected randomly on the Engine. | [optional] 
+**Name** | Pointer to **string** | The unique name of the provisioned VDB within a group. If unset, a name is randomly generated. | [optional] 
+**DatabaseName** | Pointer to **string** | The name of the database on the target environment. Defaults to the value of the name property. | [optional] 
+**CdbId** | Pointer to **string** | The ID of the container database (CDB) to provision an Oracle Multitenant database into. This corresponds to a CDB or VCDB API object. When this is not set, a new vCDB will be provisioned. | [optional] 
+**ClusterNodeIds** | Pointer to **[]string** | The cluster node ids, name or addresses for this provision operation (Oracle RAC Only). | [optional] 
+**ClusterNodeInstances** | Pointer to [**[]ClusterNodeInstance**](ClusterNodeInstance.md) | The cluster node instances details for this provision operation(Oracle RAC Only).This property is mutually exclusive with cluster_node_ids. | [optional] 
+**TruncateLogOnCheckpoint** | Pointer to **bool** | Whether to truncate log on checkpoint (ASE only). | [optional] 
+**OsUsername** | Pointer to **string** | The name of the privileged user to run the provision operation (Oracle Only). | [optional] 
+**OsPassword** | Pointer to **string** | The password of the privileged user to run the provision operation (Oracle Only). | [optional] 
+**EnvironmentId** | Pointer to **string** | The ID of the target environment where to provision the VDB. If repository_id unambigously identifies a repository, this is unnecessary and ignored. Otherwise, a compatible repository is randomly selected on the environment. | [optional] 
+**EnvironmentUserId** | Pointer to **string** | The environment user ID to use to connect to the target environment. | [optional] 
+**RepositoryId** | Pointer to **string** | The ID of the target repository where to provision the VDB. A repository typically corresponds to a database installation (Oracle home, database instance, ...). Setting this attribute implicitly determines the environment where to provision the VDB. | [optional] 
+**AutoSelectRepository** | Pointer to **bool** | Option to automatically select a compatible environment and repository. Mutually exclusive with repository_id. | [optional] 
 **VdbRestart** | Pointer to **bool** | Indicates whether the Engine should automatically restart this virtual source when target host reboot is detected. | [optional] 
 **TemplateId** | Pointer to **string** | The ID of the target VDB Template (Oracle Only). | [optional] 
+**AuxiliaryTemplateId** | Pointer to **string** | The ID of the configuration template to apply to the auxiliary container database. This is only relevant when provisioning a Multitenant pluggable database into an existing CDB, i.e when the cdb_id property is set.(Oracle Only) | [optional] 
 **FileMappingRules** | Pointer to **string** | Target VDB file mapping rules (Oracle Only). Rules must be line separated (\\n or \\r) and each line must have the format \&quot;pattern:replacement\&quot;. Lines are applied in order. | [optional] 
 **OracleInstanceName** | Pointer to **string** | Target VDB SID name (Oracle Only). | [optional] 
 **UniqueName** | Pointer to **string** | Target VDB db_unique_name (Oracle Only). | [optional] 
-**MountPoint** | Pointer to **string** | Mount point for the VDB (Oracle, ASE Only). | [optional] 
+**VcdbName** | Pointer to **string** | When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the name of the provisioned vCDB (Oracle Multitenant Only). | [optional] 
+**VcdbDatabaseName** | Pointer to **string** | When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the database name of the provisioned vCDB. Defaults to the value of the vcdb_name property. (Oracle Multitenant Only). | [optional] 
+**MountPoint** | Pointer to **string** | Mount point for the VDB (Oracle, ASE, AppData). | [optional] 
 **OpenResetLogs** | Pointer to **bool** | Whether to open the database after provision (Oracle Only). | [optional] 
 **SnapshotPolicyId** | Pointer to **string** | The ID of the snapshot policy for the VDB. | [optional] 
 **RetentionPolicyId** | Pointer to **string** | The ID of the retention policy for the VDB. | [optional] 
@@ -47,6 +53,24 @@ Name | Type | Description | Notes
 **ListenerIds** | Pointer to **[]string** | The listener IDs for this provision operation (Oracle Only). | [optional] 
 **CustomEnvVars** | Pointer to **map[string]string** | Environment variable to be set when the engine creates a VDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution. | [optional] 
 **CustomEnvFiles** | Pointer to **[]string** | Environment files to be sourced when the Engine creates a VDB. This path can be followed by parameters. Paths and parameters are separated by spaces. | [optional] 
+**OracleRacCustomEnvFiles** | Pointer to [**[]OracleRacCustomEnvFile**](OracleRacCustomEnvFile.md) | Environment files to be sourced when the Engine creates an Oracle RAC VDB. This path can be followed by parameters. Paths and parameters are separated by spaces. | [optional] 
+**OracleRacCustomEnvVars** | Pointer to [**[]OracleRacCustomEnvVar**](OracleRacCustomEnvVar.md) | Environment variable to be set when the engine creates an Oracle RAC VDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution. | [optional] 
+**ParentTdeKeystorePath** | Pointer to **string** | Path to a copy of the parent&#39;s Oracle transparent data encryption keystore on the target host. Required to provision from snapshots containing encrypted database files. (Oracle Multitenant Only) | [optional] 
+**ParentTdeKeystorePassword** | Pointer to **string** | The password of the keystore specified in parentTdeKeystorePath. (Oracle Multitenant Only) | [optional] 
+**TdeExportedKeyFileSecret** | Pointer to **string** | Secret to be used while exporting and importing vPDB encryption keys if Transparent Data Encryption is enabled on the vPDB. (Oracle Multitenant Only) | [optional] 
+**TdeKeyIdentifier** | Pointer to **string** | ID of the key created by Delphix. (Oracle Multitenant Only) | [optional] 
+**TargetVcdbTdeKeystorePath** | Pointer to **string** | Path to the keystore of the target vCDB. (Oracle Multitenant Only) | [optional] 
+**CdbTdeKeystorePassword** | Pointer to **string** | The password for the Transparent Data Encryption keystore associated with the CDB. (Oracle Multitenant Only) | [optional] 
+**VcdbTdeKeyIdentifier** | Pointer to **string** | ID of the key created by Delphix. (Oracle Multitenant Only) | [optional] 
+**AppdataSourceParams** | Pointer to **map[string]interface{}** | The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated. | [optional] 
+**AdditionalMountPoints** | Pointer to [**[]AdditionalMountPoint**](AdditionalMountPoint.md) | Specifies additional locations on which to mount a subdirectory of an AppData container. | [optional] 
+**AppdataConfigParams** | Pointer to **map[string]interface{}** | The list of parameters specified by the source config schema in the toolkit | [optional] 
+**ConfigParams** | Pointer to **map[string]interface{}** | Database configuration parameter overrides. | [optional] 
+**PrivilegedOsUser** | Pointer to **string** | This privileged unix username will be used to create the VDB. Leave this field blank if you do not want to use privilege elevation. The unix privileged username should begin with a letter or an underscore, followed by letters, digits, underscores, or dashes. They can end with a dollar sign (postgres only). | [optional] 
+**PostgresPort** | Pointer to **int32** | Port number for Postgres target database (postgres only). | [optional] 
+**ConfigSettingsStg** | Pointer to [**[]ConfigSettingsStg**](ConfigSettingsStg.md) | Custom Database-Level config settings (postgres only). | [optional] 
+**VcdbRestart** | Pointer to **bool** | Indicates whether the Engine should automatically restart this vCDB when target host reboot is detected. If vdb_restart property value is not explicitly set and vcdb_restart is set as false - the vdb_restart property is defaulted to false. | [optional] 
+**MssqlFailoverDriveLetter** | Pointer to **string** | Base drive letter location for mount points. (MSSql Only). | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for VDB. | [optional] 
 
 ## Methods
@@ -67,306 +91,6 @@ will change when the set of required properties is changed
 NewBaseProvisionVDBParametersWithDefaults instantiates a new BaseProvisionVDBParameters object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetSourceDataId
-
-`func (o *BaseProvisionVDBParameters) GetSourceDataId() string`
-
-GetSourceDataId returns the SourceDataId field if non-nil, zero value otherwise.
-
-### GetSourceDataIdOk
-
-`func (o *BaseProvisionVDBParameters) GetSourceDataIdOk() (*string, bool)`
-
-GetSourceDataIdOk returns a tuple with the SourceDataId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSourceDataId
-
-`func (o *BaseProvisionVDBParameters) SetSourceDataId(v string)`
-
-SetSourceDataId sets SourceDataId field to given value.
-
-### HasSourceDataId
-
-`func (o *BaseProvisionVDBParameters) HasSourceDataId() bool`
-
-HasSourceDataId returns a boolean if a field has been set.
-
-### GetEngineId
-
-`func (o *BaseProvisionVDBParameters) GetEngineId() int64`
-
-GetEngineId returns the EngineId field if non-nil, zero value otherwise.
-
-### GetEngineIdOk
-
-`func (o *BaseProvisionVDBParameters) GetEngineIdOk() (*int64, bool)`
-
-GetEngineIdOk returns a tuple with the EngineId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEngineId
-
-`func (o *BaseProvisionVDBParameters) SetEngineId(v int64)`
-
-SetEngineId sets EngineId field to given value.
-
-### HasEngineId
-
-`func (o *BaseProvisionVDBParameters) HasEngineId() bool`
-
-HasEngineId returns a boolean if a field has been set.
-
-### GetTargetGroupId
-
-`func (o *BaseProvisionVDBParameters) GetTargetGroupId() string`
-
-GetTargetGroupId returns the TargetGroupId field if non-nil, zero value otherwise.
-
-### GetTargetGroupIdOk
-
-`func (o *BaseProvisionVDBParameters) GetTargetGroupIdOk() (*string, bool)`
-
-GetTargetGroupIdOk returns a tuple with the TargetGroupId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTargetGroupId
-
-`func (o *BaseProvisionVDBParameters) SetTargetGroupId(v string)`
-
-SetTargetGroupId sets TargetGroupId field to given value.
-
-### HasTargetGroupId
-
-`func (o *BaseProvisionVDBParameters) HasTargetGroupId() bool`
-
-HasTargetGroupId returns a boolean if a field has been set.
-
-### GetVdbName
-
-`func (o *BaseProvisionVDBParameters) GetVdbName() string`
-
-GetVdbName returns the VdbName field if non-nil, zero value otherwise.
-
-### GetVdbNameOk
-
-`func (o *BaseProvisionVDBParameters) GetVdbNameOk() (*string, bool)`
-
-GetVdbNameOk returns a tuple with the VdbName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVdbName
-
-`func (o *BaseProvisionVDBParameters) SetVdbName(v string)`
-
-SetVdbName sets VdbName field to given value.
-
-### HasVdbName
-
-`func (o *BaseProvisionVDBParameters) HasVdbName() bool`
-
-HasVdbName returns a boolean if a field has been set.
-
-### GetDatabaseName
-
-`func (o *BaseProvisionVDBParameters) GetDatabaseName() string`
-
-GetDatabaseName returns the DatabaseName field if non-nil, zero value otherwise.
-
-### GetDatabaseNameOk
-
-`func (o *BaseProvisionVDBParameters) GetDatabaseNameOk() (*string, bool)`
-
-GetDatabaseNameOk returns a tuple with the DatabaseName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDatabaseName
-
-`func (o *BaseProvisionVDBParameters) SetDatabaseName(v string)`
-
-SetDatabaseName sets DatabaseName field to given value.
-
-### HasDatabaseName
-
-`func (o *BaseProvisionVDBParameters) HasDatabaseName() bool`
-
-HasDatabaseName returns a boolean if a field has been set.
-
-### GetTruncateLogOnCheckpoint
-
-`func (o *BaseProvisionVDBParameters) GetTruncateLogOnCheckpoint() bool`
-
-GetTruncateLogOnCheckpoint returns the TruncateLogOnCheckpoint field if non-nil, zero value otherwise.
-
-### GetTruncateLogOnCheckpointOk
-
-`func (o *BaseProvisionVDBParameters) GetTruncateLogOnCheckpointOk() (*bool, bool)`
-
-GetTruncateLogOnCheckpointOk returns a tuple with the TruncateLogOnCheckpoint field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTruncateLogOnCheckpoint
-
-`func (o *BaseProvisionVDBParameters) SetTruncateLogOnCheckpoint(v bool)`
-
-SetTruncateLogOnCheckpoint sets TruncateLogOnCheckpoint field to given value.
-
-### HasTruncateLogOnCheckpoint
-
-`func (o *BaseProvisionVDBParameters) HasTruncateLogOnCheckpoint() bool`
-
-HasTruncateLogOnCheckpoint returns a boolean if a field has been set.
-
-### GetUsername
-
-`func (o *BaseProvisionVDBParameters) GetUsername() string`
-
-GetUsername returns the Username field if non-nil, zero value otherwise.
-
-### GetUsernameOk
-
-`func (o *BaseProvisionVDBParameters) GetUsernameOk() (*string, bool)`
-
-GetUsernameOk returns a tuple with the Username field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUsername
-
-`func (o *BaseProvisionVDBParameters) SetUsername(v string)`
-
-SetUsername sets Username field to given value.
-
-### HasUsername
-
-`func (o *BaseProvisionVDBParameters) HasUsername() bool`
-
-HasUsername returns a boolean if a field has been set.
-
-### GetPassword
-
-`func (o *BaseProvisionVDBParameters) GetPassword() string`
-
-GetPassword returns the Password field if non-nil, zero value otherwise.
-
-### GetPasswordOk
-
-`func (o *BaseProvisionVDBParameters) GetPasswordOk() (*string, bool)`
-
-GetPasswordOk returns a tuple with the Password field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPassword
-
-`func (o *BaseProvisionVDBParameters) SetPassword(v string)`
-
-SetPassword sets Password field to given value.
-
-### HasPassword
-
-`func (o *BaseProvisionVDBParameters) HasPassword() bool`
-
-HasPassword returns a boolean if a field has been set.
-
-### GetEnvironmentId
-
-`func (o *BaseProvisionVDBParameters) GetEnvironmentId() string`
-
-GetEnvironmentId returns the EnvironmentId field if non-nil, zero value otherwise.
-
-### GetEnvironmentIdOk
-
-`func (o *BaseProvisionVDBParameters) GetEnvironmentIdOk() (*string, bool)`
-
-GetEnvironmentIdOk returns a tuple with the EnvironmentId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEnvironmentId
-
-`func (o *BaseProvisionVDBParameters) SetEnvironmentId(v string)`
-
-SetEnvironmentId sets EnvironmentId field to given value.
-
-### HasEnvironmentId
-
-`func (o *BaseProvisionVDBParameters) HasEnvironmentId() bool`
-
-HasEnvironmentId returns a boolean if a field has been set.
-
-### GetEnvironmentUserId
-
-`func (o *BaseProvisionVDBParameters) GetEnvironmentUserId() string`
-
-GetEnvironmentUserId returns the EnvironmentUserId field if non-nil, zero value otherwise.
-
-### GetEnvironmentUserIdOk
-
-`func (o *BaseProvisionVDBParameters) GetEnvironmentUserIdOk() (*string, bool)`
-
-GetEnvironmentUserIdOk returns a tuple with the EnvironmentUserId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEnvironmentUserId
-
-`func (o *BaseProvisionVDBParameters) SetEnvironmentUserId(v string)`
-
-SetEnvironmentUserId sets EnvironmentUserId field to given value.
-
-### HasEnvironmentUserId
-
-`func (o *BaseProvisionVDBParameters) HasEnvironmentUserId() bool`
-
-HasEnvironmentUserId returns a boolean if a field has been set.
-
-### GetRepositoryId
-
-`func (o *BaseProvisionVDBParameters) GetRepositoryId() string`
-
-GetRepositoryId returns the RepositoryId field if non-nil, zero value otherwise.
-
-### GetRepositoryIdOk
-
-`func (o *BaseProvisionVDBParameters) GetRepositoryIdOk() (*string, bool)`
-
-GetRepositoryIdOk returns a tuple with the RepositoryId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRepositoryId
-
-`func (o *BaseProvisionVDBParameters) SetRepositoryId(v string)`
-
-SetRepositoryId sets RepositoryId field to given value.
-
-### HasRepositoryId
-
-`func (o *BaseProvisionVDBParameters) HasRepositoryId() bool`
-
-HasRepositoryId returns a boolean if a field has been set.
-
-### GetAutoSelectRepository
-
-`func (o *BaseProvisionVDBParameters) GetAutoSelectRepository() bool`
-
-GetAutoSelectRepository returns the AutoSelectRepository field if non-nil, zero value otherwise.
-
-### GetAutoSelectRepositoryOk
-
-`func (o *BaseProvisionVDBParameters) GetAutoSelectRepositoryOk() (*bool, bool)`
-
-GetAutoSelectRepositoryOk returns a tuple with the AutoSelectRepository field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAutoSelectRepository
-
-`func (o *BaseProvisionVDBParameters) SetAutoSelectRepository(v bool)`
-
-SetAutoSelectRepository sets AutoSelectRepository field to given value.
-
-### HasAutoSelectRepository
-
-`func (o *BaseProvisionVDBParameters) HasAutoSelectRepository() bool`
-
-HasAutoSelectRepository returns a boolean if a field has been set.
 
 ### GetPreRefresh
 
@@ -417,6 +141,56 @@ SetPostRefresh sets PostRefresh field to given value.
 `func (o *BaseProvisionVDBParameters) HasPostRefresh() bool`
 
 HasPostRefresh returns a boolean if a field has been set.
+
+### GetPreSelfRefresh
+
+`func (o *BaseProvisionVDBParameters) GetPreSelfRefresh() []Hook`
+
+GetPreSelfRefresh returns the PreSelfRefresh field if non-nil, zero value otherwise.
+
+### GetPreSelfRefreshOk
+
+`func (o *BaseProvisionVDBParameters) GetPreSelfRefreshOk() (*[]Hook, bool)`
+
+GetPreSelfRefreshOk returns a tuple with the PreSelfRefresh field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreSelfRefresh
+
+`func (o *BaseProvisionVDBParameters) SetPreSelfRefresh(v []Hook)`
+
+SetPreSelfRefresh sets PreSelfRefresh field to given value.
+
+### HasPreSelfRefresh
+
+`func (o *BaseProvisionVDBParameters) HasPreSelfRefresh() bool`
+
+HasPreSelfRefresh returns a boolean if a field has been set.
+
+### GetPostSelfRefresh
+
+`func (o *BaseProvisionVDBParameters) GetPostSelfRefresh() []Hook`
+
+GetPostSelfRefresh returns the PostSelfRefresh field if non-nil, zero value otherwise.
+
+### GetPostSelfRefreshOk
+
+`func (o *BaseProvisionVDBParameters) GetPostSelfRefreshOk() (*[]Hook, bool)`
+
+GetPostSelfRefreshOk returns a tuple with the PostSelfRefresh field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostSelfRefresh
+
+`func (o *BaseProvisionVDBParameters) SetPostSelfRefresh(v []Hook)`
+
+SetPostSelfRefresh sets PostSelfRefresh field to given value.
+
+### HasPostSelfRefresh
+
+`func (o *BaseProvisionVDBParameters) HasPostSelfRefresh() bool`
+
+HasPostSelfRefresh returns a boolean if a field has been set.
 
 ### GetPreRollback
 
@@ -643,6 +417,331 @@ SetPostStop sets PostStop field to given value.
 
 HasPostStop returns a boolean if a field has been set.
 
+### GetTargetGroupId
+
+`func (o *BaseProvisionVDBParameters) GetTargetGroupId() string`
+
+GetTargetGroupId returns the TargetGroupId field if non-nil, zero value otherwise.
+
+### GetTargetGroupIdOk
+
+`func (o *BaseProvisionVDBParameters) GetTargetGroupIdOk() (*string, bool)`
+
+GetTargetGroupIdOk returns a tuple with the TargetGroupId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetGroupId
+
+`func (o *BaseProvisionVDBParameters) SetTargetGroupId(v string)`
+
+SetTargetGroupId sets TargetGroupId field to given value.
+
+### HasTargetGroupId
+
+`func (o *BaseProvisionVDBParameters) HasTargetGroupId() bool`
+
+HasTargetGroupId returns a boolean if a field has been set.
+
+### GetName
+
+`func (o *BaseProvisionVDBParameters) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *BaseProvisionVDBParameters) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *BaseProvisionVDBParameters) SetName(v string)`
+
+SetName sets Name field to given value.
+
+### HasName
+
+`func (o *BaseProvisionVDBParameters) HasName() bool`
+
+HasName returns a boolean if a field has been set.
+
+### GetDatabaseName
+
+`func (o *BaseProvisionVDBParameters) GetDatabaseName() string`
+
+GetDatabaseName returns the DatabaseName field if non-nil, zero value otherwise.
+
+### GetDatabaseNameOk
+
+`func (o *BaseProvisionVDBParameters) GetDatabaseNameOk() (*string, bool)`
+
+GetDatabaseNameOk returns a tuple with the DatabaseName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatabaseName
+
+`func (o *BaseProvisionVDBParameters) SetDatabaseName(v string)`
+
+SetDatabaseName sets DatabaseName field to given value.
+
+### HasDatabaseName
+
+`func (o *BaseProvisionVDBParameters) HasDatabaseName() bool`
+
+HasDatabaseName returns a boolean if a field has been set.
+
+### GetCdbId
+
+`func (o *BaseProvisionVDBParameters) GetCdbId() string`
+
+GetCdbId returns the CdbId field if non-nil, zero value otherwise.
+
+### GetCdbIdOk
+
+`func (o *BaseProvisionVDBParameters) GetCdbIdOk() (*string, bool)`
+
+GetCdbIdOk returns a tuple with the CdbId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCdbId
+
+`func (o *BaseProvisionVDBParameters) SetCdbId(v string)`
+
+SetCdbId sets CdbId field to given value.
+
+### HasCdbId
+
+`func (o *BaseProvisionVDBParameters) HasCdbId() bool`
+
+HasCdbId returns a boolean if a field has been set.
+
+### GetClusterNodeIds
+
+`func (o *BaseProvisionVDBParameters) GetClusterNodeIds() []string`
+
+GetClusterNodeIds returns the ClusterNodeIds field if non-nil, zero value otherwise.
+
+### GetClusterNodeIdsOk
+
+`func (o *BaseProvisionVDBParameters) GetClusterNodeIdsOk() (*[]string, bool)`
+
+GetClusterNodeIdsOk returns a tuple with the ClusterNodeIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClusterNodeIds
+
+`func (o *BaseProvisionVDBParameters) SetClusterNodeIds(v []string)`
+
+SetClusterNodeIds sets ClusterNodeIds field to given value.
+
+### HasClusterNodeIds
+
+`func (o *BaseProvisionVDBParameters) HasClusterNodeIds() bool`
+
+HasClusterNodeIds returns a boolean if a field has been set.
+
+### GetClusterNodeInstances
+
+`func (o *BaseProvisionVDBParameters) GetClusterNodeInstances() []ClusterNodeInstance`
+
+GetClusterNodeInstances returns the ClusterNodeInstances field if non-nil, zero value otherwise.
+
+### GetClusterNodeInstancesOk
+
+`func (o *BaseProvisionVDBParameters) GetClusterNodeInstancesOk() (*[]ClusterNodeInstance, bool)`
+
+GetClusterNodeInstancesOk returns a tuple with the ClusterNodeInstances field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClusterNodeInstances
+
+`func (o *BaseProvisionVDBParameters) SetClusterNodeInstances(v []ClusterNodeInstance)`
+
+SetClusterNodeInstances sets ClusterNodeInstances field to given value.
+
+### HasClusterNodeInstances
+
+`func (o *BaseProvisionVDBParameters) HasClusterNodeInstances() bool`
+
+HasClusterNodeInstances returns a boolean if a field has been set.
+
+### GetTruncateLogOnCheckpoint
+
+`func (o *BaseProvisionVDBParameters) GetTruncateLogOnCheckpoint() bool`
+
+GetTruncateLogOnCheckpoint returns the TruncateLogOnCheckpoint field if non-nil, zero value otherwise.
+
+### GetTruncateLogOnCheckpointOk
+
+`func (o *BaseProvisionVDBParameters) GetTruncateLogOnCheckpointOk() (*bool, bool)`
+
+GetTruncateLogOnCheckpointOk returns a tuple with the TruncateLogOnCheckpoint field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTruncateLogOnCheckpoint
+
+`func (o *BaseProvisionVDBParameters) SetTruncateLogOnCheckpoint(v bool)`
+
+SetTruncateLogOnCheckpoint sets TruncateLogOnCheckpoint field to given value.
+
+### HasTruncateLogOnCheckpoint
+
+`func (o *BaseProvisionVDBParameters) HasTruncateLogOnCheckpoint() bool`
+
+HasTruncateLogOnCheckpoint returns a boolean if a field has been set.
+
+### GetOsUsername
+
+`func (o *BaseProvisionVDBParameters) GetOsUsername() string`
+
+GetOsUsername returns the OsUsername field if non-nil, zero value otherwise.
+
+### GetOsUsernameOk
+
+`func (o *BaseProvisionVDBParameters) GetOsUsernameOk() (*string, bool)`
+
+GetOsUsernameOk returns a tuple with the OsUsername field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOsUsername
+
+`func (o *BaseProvisionVDBParameters) SetOsUsername(v string)`
+
+SetOsUsername sets OsUsername field to given value.
+
+### HasOsUsername
+
+`func (o *BaseProvisionVDBParameters) HasOsUsername() bool`
+
+HasOsUsername returns a boolean if a field has been set.
+
+### GetOsPassword
+
+`func (o *BaseProvisionVDBParameters) GetOsPassword() string`
+
+GetOsPassword returns the OsPassword field if non-nil, zero value otherwise.
+
+### GetOsPasswordOk
+
+`func (o *BaseProvisionVDBParameters) GetOsPasswordOk() (*string, bool)`
+
+GetOsPasswordOk returns a tuple with the OsPassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOsPassword
+
+`func (o *BaseProvisionVDBParameters) SetOsPassword(v string)`
+
+SetOsPassword sets OsPassword field to given value.
+
+### HasOsPassword
+
+`func (o *BaseProvisionVDBParameters) HasOsPassword() bool`
+
+HasOsPassword returns a boolean if a field has been set.
+
+### GetEnvironmentId
+
+`func (o *BaseProvisionVDBParameters) GetEnvironmentId() string`
+
+GetEnvironmentId returns the EnvironmentId field if non-nil, zero value otherwise.
+
+### GetEnvironmentIdOk
+
+`func (o *BaseProvisionVDBParameters) GetEnvironmentIdOk() (*string, bool)`
+
+GetEnvironmentIdOk returns a tuple with the EnvironmentId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvironmentId
+
+`func (o *BaseProvisionVDBParameters) SetEnvironmentId(v string)`
+
+SetEnvironmentId sets EnvironmentId field to given value.
+
+### HasEnvironmentId
+
+`func (o *BaseProvisionVDBParameters) HasEnvironmentId() bool`
+
+HasEnvironmentId returns a boolean if a field has been set.
+
+### GetEnvironmentUserId
+
+`func (o *BaseProvisionVDBParameters) GetEnvironmentUserId() string`
+
+GetEnvironmentUserId returns the EnvironmentUserId field if non-nil, zero value otherwise.
+
+### GetEnvironmentUserIdOk
+
+`func (o *BaseProvisionVDBParameters) GetEnvironmentUserIdOk() (*string, bool)`
+
+GetEnvironmentUserIdOk returns a tuple with the EnvironmentUserId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvironmentUserId
+
+`func (o *BaseProvisionVDBParameters) SetEnvironmentUserId(v string)`
+
+SetEnvironmentUserId sets EnvironmentUserId field to given value.
+
+### HasEnvironmentUserId
+
+`func (o *BaseProvisionVDBParameters) HasEnvironmentUserId() bool`
+
+HasEnvironmentUserId returns a boolean if a field has been set.
+
+### GetRepositoryId
+
+`func (o *BaseProvisionVDBParameters) GetRepositoryId() string`
+
+GetRepositoryId returns the RepositoryId field if non-nil, zero value otherwise.
+
+### GetRepositoryIdOk
+
+`func (o *BaseProvisionVDBParameters) GetRepositoryIdOk() (*string, bool)`
+
+GetRepositoryIdOk returns a tuple with the RepositoryId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRepositoryId
+
+`func (o *BaseProvisionVDBParameters) SetRepositoryId(v string)`
+
+SetRepositoryId sets RepositoryId field to given value.
+
+### HasRepositoryId
+
+`func (o *BaseProvisionVDBParameters) HasRepositoryId() bool`
+
+HasRepositoryId returns a boolean if a field has been set.
+
+### GetAutoSelectRepository
+
+`func (o *BaseProvisionVDBParameters) GetAutoSelectRepository() bool`
+
+GetAutoSelectRepository returns the AutoSelectRepository field if non-nil, zero value otherwise.
+
+### GetAutoSelectRepositoryOk
+
+`func (o *BaseProvisionVDBParameters) GetAutoSelectRepositoryOk() (*bool, bool)`
+
+GetAutoSelectRepositoryOk returns a tuple with the AutoSelectRepository field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoSelectRepository
+
+`func (o *BaseProvisionVDBParameters) SetAutoSelectRepository(v bool)`
+
+SetAutoSelectRepository sets AutoSelectRepository field to given value.
+
+### HasAutoSelectRepository
+
+`func (o *BaseProvisionVDBParameters) HasAutoSelectRepository() bool`
+
+HasAutoSelectRepository returns a boolean if a field has been set.
+
 ### GetVdbRestart
 
 `func (o *BaseProvisionVDBParameters) GetVdbRestart() bool`
@@ -692,6 +791,31 @@ SetTemplateId sets TemplateId field to given value.
 `func (o *BaseProvisionVDBParameters) HasTemplateId() bool`
 
 HasTemplateId returns a boolean if a field has been set.
+
+### GetAuxiliaryTemplateId
+
+`func (o *BaseProvisionVDBParameters) GetAuxiliaryTemplateId() string`
+
+GetAuxiliaryTemplateId returns the AuxiliaryTemplateId field if non-nil, zero value otherwise.
+
+### GetAuxiliaryTemplateIdOk
+
+`func (o *BaseProvisionVDBParameters) GetAuxiliaryTemplateIdOk() (*string, bool)`
+
+GetAuxiliaryTemplateIdOk returns a tuple with the AuxiliaryTemplateId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAuxiliaryTemplateId
+
+`func (o *BaseProvisionVDBParameters) SetAuxiliaryTemplateId(v string)`
+
+SetAuxiliaryTemplateId sets AuxiliaryTemplateId field to given value.
+
+### HasAuxiliaryTemplateId
+
+`func (o *BaseProvisionVDBParameters) HasAuxiliaryTemplateId() bool`
+
+HasAuxiliaryTemplateId returns a boolean if a field has been set.
 
 ### GetFileMappingRules
 
@@ -767,6 +891,56 @@ SetUniqueName sets UniqueName field to given value.
 `func (o *BaseProvisionVDBParameters) HasUniqueName() bool`
 
 HasUniqueName returns a boolean if a field has been set.
+
+### GetVcdbName
+
+`func (o *BaseProvisionVDBParameters) GetVcdbName() string`
+
+GetVcdbName returns the VcdbName field if non-nil, zero value otherwise.
+
+### GetVcdbNameOk
+
+`func (o *BaseProvisionVDBParameters) GetVcdbNameOk() (*string, bool)`
+
+GetVcdbNameOk returns a tuple with the VcdbName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVcdbName
+
+`func (o *BaseProvisionVDBParameters) SetVcdbName(v string)`
+
+SetVcdbName sets VcdbName field to given value.
+
+### HasVcdbName
+
+`func (o *BaseProvisionVDBParameters) HasVcdbName() bool`
+
+HasVcdbName returns a boolean if a field has been set.
+
+### GetVcdbDatabaseName
+
+`func (o *BaseProvisionVDBParameters) GetVcdbDatabaseName() string`
+
+GetVcdbDatabaseName returns the VcdbDatabaseName field if non-nil, zero value otherwise.
+
+### GetVcdbDatabaseNameOk
+
+`func (o *BaseProvisionVDBParameters) GetVcdbDatabaseNameOk() (*string, bool)`
+
+GetVcdbDatabaseNameOk returns a tuple with the VcdbDatabaseName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVcdbDatabaseName
+
+`func (o *BaseProvisionVDBParameters) SetVcdbDatabaseName(v string)`
+
+SetVcdbDatabaseName sets VcdbDatabaseName field to given value.
+
+### HasVcdbDatabaseName
+
+`func (o *BaseProvisionVDBParameters) HasVcdbDatabaseName() bool`
+
+HasVcdbDatabaseName returns a boolean if a field has been set.
 
 ### GetMountPoint
 
@@ -1142,6 +1316,486 @@ SetCustomEnvFiles sets CustomEnvFiles field to given value.
 `func (o *BaseProvisionVDBParameters) HasCustomEnvFiles() bool`
 
 HasCustomEnvFiles returns a boolean if a field has been set.
+
+### GetOracleRacCustomEnvFiles
+
+`func (o *BaseProvisionVDBParameters) GetOracleRacCustomEnvFiles() []OracleRacCustomEnvFile`
+
+GetOracleRacCustomEnvFiles returns the OracleRacCustomEnvFiles field if non-nil, zero value otherwise.
+
+### GetOracleRacCustomEnvFilesOk
+
+`func (o *BaseProvisionVDBParameters) GetOracleRacCustomEnvFilesOk() (*[]OracleRacCustomEnvFile, bool)`
+
+GetOracleRacCustomEnvFilesOk returns a tuple with the OracleRacCustomEnvFiles field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOracleRacCustomEnvFiles
+
+`func (o *BaseProvisionVDBParameters) SetOracleRacCustomEnvFiles(v []OracleRacCustomEnvFile)`
+
+SetOracleRacCustomEnvFiles sets OracleRacCustomEnvFiles field to given value.
+
+### HasOracleRacCustomEnvFiles
+
+`func (o *BaseProvisionVDBParameters) HasOracleRacCustomEnvFiles() bool`
+
+HasOracleRacCustomEnvFiles returns a boolean if a field has been set.
+
+### GetOracleRacCustomEnvVars
+
+`func (o *BaseProvisionVDBParameters) GetOracleRacCustomEnvVars() []OracleRacCustomEnvVar`
+
+GetOracleRacCustomEnvVars returns the OracleRacCustomEnvVars field if non-nil, zero value otherwise.
+
+### GetOracleRacCustomEnvVarsOk
+
+`func (o *BaseProvisionVDBParameters) GetOracleRacCustomEnvVarsOk() (*[]OracleRacCustomEnvVar, bool)`
+
+GetOracleRacCustomEnvVarsOk returns a tuple with the OracleRacCustomEnvVars field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOracleRacCustomEnvVars
+
+`func (o *BaseProvisionVDBParameters) SetOracleRacCustomEnvVars(v []OracleRacCustomEnvVar)`
+
+SetOracleRacCustomEnvVars sets OracleRacCustomEnvVars field to given value.
+
+### HasOracleRacCustomEnvVars
+
+`func (o *BaseProvisionVDBParameters) HasOracleRacCustomEnvVars() bool`
+
+HasOracleRacCustomEnvVars returns a boolean if a field has been set.
+
+### GetParentTdeKeystorePath
+
+`func (o *BaseProvisionVDBParameters) GetParentTdeKeystorePath() string`
+
+GetParentTdeKeystorePath returns the ParentTdeKeystorePath field if non-nil, zero value otherwise.
+
+### GetParentTdeKeystorePathOk
+
+`func (o *BaseProvisionVDBParameters) GetParentTdeKeystorePathOk() (*string, bool)`
+
+GetParentTdeKeystorePathOk returns a tuple with the ParentTdeKeystorePath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentTdeKeystorePath
+
+`func (o *BaseProvisionVDBParameters) SetParentTdeKeystorePath(v string)`
+
+SetParentTdeKeystorePath sets ParentTdeKeystorePath field to given value.
+
+### HasParentTdeKeystorePath
+
+`func (o *BaseProvisionVDBParameters) HasParentTdeKeystorePath() bool`
+
+HasParentTdeKeystorePath returns a boolean if a field has been set.
+
+### GetParentTdeKeystorePassword
+
+`func (o *BaseProvisionVDBParameters) GetParentTdeKeystorePassword() string`
+
+GetParentTdeKeystorePassword returns the ParentTdeKeystorePassword field if non-nil, zero value otherwise.
+
+### GetParentTdeKeystorePasswordOk
+
+`func (o *BaseProvisionVDBParameters) GetParentTdeKeystorePasswordOk() (*string, bool)`
+
+GetParentTdeKeystorePasswordOk returns a tuple with the ParentTdeKeystorePassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentTdeKeystorePassword
+
+`func (o *BaseProvisionVDBParameters) SetParentTdeKeystorePassword(v string)`
+
+SetParentTdeKeystorePassword sets ParentTdeKeystorePassword field to given value.
+
+### HasParentTdeKeystorePassword
+
+`func (o *BaseProvisionVDBParameters) HasParentTdeKeystorePassword() bool`
+
+HasParentTdeKeystorePassword returns a boolean if a field has been set.
+
+### GetTdeExportedKeyFileSecret
+
+`func (o *BaseProvisionVDBParameters) GetTdeExportedKeyFileSecret() string`
+
+GetTdeExportedKeyFileSecret returns the TdeExportedKeyFileSecret field if non-nil, zero value otherwise.
+
+### GetTdeExportedKeyFileSecretOk
+
+`func (o *BaseProvisionVDBParameters) GetTdeExportedKeyFileSecretOk() (*string, bool)`
+
+GetTdeExportedKeyFileSecretOk returns a tuple with the TdeExportedKeyFileSecret field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTdeExportedKeyFileSecret
+
+`func (o *BaseProvisionVDBParameters) SetTdeExportedKeyFileSecret(v string)`
+
+SetTdeExportedKeyFileSecret sets TdeExportedKeyFileSecret field to given value.
+
+### HasTdeExportedKeyFileSecret
+
+`func (o *BaseProvisionVDBParameters) HasTdeExportedKeyFileSecret() bool`
+
+HasTdeExportedKeyFileSecret returns a boolean if a field has been set.
+
+### GetTdeKeyIdentifier
+
+`func (o *BaseProvisionVDBParameters) GetTdeKeyIdentifier() string`
+
+GetTdeKeyIdentifier returns the TdeKeyIdentifier field if non-nil, zero value otherwise.
+
+### GetTdeKeyIdentifierOk
+
+`func (o *BaseProvisionVDBParameters) GetTdeKeyIdentifierOk() (*string, bool)`
+
+GetTdeKeyIdentifierOk returns a tuple with the TdeKeyIdentifier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTdeKeyIdentifier
+
+`func (o *BaseProvisionVDBParameters) SetTdeKeyIdentifier(v string)`
+
+SetTdeKeyIdentifier sets TdeKeyIdentifier field to given value.
+
+### HasTdeKeyIdentifier
+
+`func (o *BaseProvisionVDBParameters) HasTdeKeyIdentifier() bool`
+
+HasTdeKeyIdentifier returns a boolean if a field has been set.
+
+### GetTargetVcdbTdeKeystorePath
+
+`func (o *BaseProvisionVDBParameters) GetTargetVcdbTdeKeystorePath() string`
+
+GetTargetVcdbTdeKeystorePath returns the TargetVcdbTdeKeystorePath field if non-nil, zero value otherwise.
+
+### GetTargetVcdbTdeKeystorePathOk
+
+`func (o *BaseProvisionVDBParameters) GetTargetVcdbTdeKeystorePathOk() (*string, bool)`
+
+GetTargetVcdbTdeKeystorePathOk returns a tuple with the TargetVcdbTdeKeystorePath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetVcdbTdeKeystorePath
+
+`func (o *BaseProvisionVDBParameters) SetTargetVcdbTdeKeystorePath(v string)`
+
+SetTargetVcdbTdeKeystorePath sets TargetVcdbTdeKeystorePath field to given value.
+
+### HasTargetVcdbTdeKeystorePath
+
+`func (o *BaseProvisionVDBParameters) HasTargetVcdbTdeKeystorePath() bool`
+
+HasTargetVcdbTdeKeystorePath returns a boolean if a field has been set.
+
+### GetCdbTdeKeystorePassword
+
+`func (o *BaseProvisionVDBParameters) GetCdbTdeKeystorePassword() string`
+
+GetCdbTdeKeystorePassword returns the CdbTdeKeystorePassword field if non-nil, zero value otherwise.
+
+### GetCdbTdeKeystorePasswordOk
+
+`func (o *BaseProvisionVDBParameters) GetCdbTdeKeystorePasswordOk() (*string, bool)`
+
+GetCdbTdeKeystorePasswordOk returns a tuple with the CdbTdeKeystorePassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCdbTdeKeystorePassword
+
+`func (o *BaseProvisionVDBParameters) SetCdbTdeKeystorePassword(v string)`
+
+SetCdbTdeKeystorePassword sets CdbTdeKeystorePassword field to given value.
+
+### HasCdbTdeKeystorePassword
+
+`func (o *BaseProvisionVDBParameters) HasCdbTdeKeystorePassword() bool`
+
+HasCdbTdeKeystorePassword returns a boolean if a field has been set.
+
+### GetVcdbTdeKeyIdentifier
+
+`func (o *BaseProvisionVDBParameters) GetVcdbTdeKeyIdentifier() string`
+
+GetVcdbTdeKeyIdentifier returns the VcdbTdeKeyIdentifier field if non-nil, zero value otherwise.
+
+### GetVcdbTdeKeyIdentifierOk
+
+`func (o *BaseProvisionVDBParameters) GetVcdbTdeKeyIdentifierOk() (*string, bool)`
+
+GetVcdbTdeKeyIdentifierOk returns a tuple with the VcdbTdeKeyIdentifier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVcdbTdeKeyIdentifier
+
+`func (o *BaseProvisionVDBParameters) SetVcdbTdeKeyIdentifier(v string)`
+
+SetVcdbTdeKeyIdentifier sets VcdbTdeKeyIdentifier field to given value.
+
+### HasVcdbTdeKeyIdentifier
+
+`func (o *BaseProvisionVDBParameters) HasVcdbTdeKeyIdentifier() bool`
+
+HasVcdbTdeKeyIdentifier returns a boolean if a field has been set.
+
+### GetAppdataSourceParams
+
+`func (o *BaseProvisionVDBParameters) GetAppdataSourceParams() map[string]interface{}`
+
+GetAppdataSourceParams returns the AppdataSourceParams field if non-nil, zero value otherwise.
+
+### GetAppdataSourceParamsOk
+
+`func (o *BaseProvisionVDBParameters) GetAppdataSourceParamsOk() (*map[string]interface{}, bool)`
+
+GetAppdataSourceParamsOk returns a tuple with the AppdataSourceParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppdataSourceParams
+
+`func (o *BaseProvisionVDBParameters) SetAppdataSourceParams(v map[string]interface{})`
+
+SetAppdataSourceParams sets AppdataSourceParams field to given value.
+
+### HasAppdataSourceParams
+
+`func (o *BaseProvisionVDBParameters) HasAppdataSourceParams() bool`
+
+HasAppdataSourceParams returns a boolean if a field has been set.
+
+### GetAdditionalMountPoints
+
+`func (o *BaseProvisionVDBParameters) GetAdditionalMountPoints() []AdditionalMountPoint`
+
+GetAdditionalMountPoints returns the AdditionalMountPoints field if non-nil, zero value otherwise.
+
+### GetAdditionalMountPointsOk
+
+`func (o *BaseProvisionVDBParameters) GetAdditionalMountPointsOk() (*[]AdditionalMountPoint, bool)`
+
+GetAdditionalMountPointsOk returns a tuple with the AdditionalMountPoints field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAdditionalMountPoints
+
+`func (o *BaseProvisionVDBParameters) SetAdditionalMountPoints(v []AdditionalMountPoint)`
+
+SetAdditionalMountPoints sets AdditionalMountPoints field to given value.
+
+### HasAdditionalMountPoints
+
+`func (o *BaseProvisionVDBParameters) HasAdditionalMountPoints() bool`
+
+HasAdditionalMountPoints returns a boolean if a field has been set.
+
+### SetAdditionalMountPointsNil
+
+`func (o *BaseProvisionVDBParameters) SetAdditionalMountPointsNil(b bool)`
+
+ SetAdditionalMountPointsNil sets the value for AdditionalMountPoints to be an explicit nil
+
+### UnsetAdditionalMountPoints
+`func (o *BaseProvisionVDBParameters) UnsetAdditionalMountPoints()`
+
+UnsetAdditionalMountPoints ensures that no value is present for AdditionalMountPoints, not even an explicit nil
+### GetAppdataConfigParams
+
+`func (o *BaseProvisionVDBParameters) GetAppdataConfigParams() map[string]interface{}`
+
+GetAppdataConfigParams returns the AppdataConfigParams field if non-nil, zero value otherwise.
+
+### GetAppdataConfigParamsOk
+
+`func (o *BaseProvisionVDBParameters) GetAppdataConfigParamsOk() (*map[string]interface{}, bool)`
+
+GetAppdataConfigParamsOk returns a tuple with the AppdataConfigParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppdataConfigParams
+
+`func (o *BaseProvisionVDBParameters) SetAppdataConfigParams(v map[string]interface{})`
+
+SetAppdataConfigParams sets AppdataConfigParams field to given value.
+
+### HasAppdataConfigParams
+
+`func (o *BaseProvisionVDBParameters) HasAppdataConfigParams() bool`
+
+HasAppdataConfigParams returns a boolean if a field has been set.
+
+### SetAppdataConfigParamsNil
+
+`func (o *BaseProvisionVDBParameters) SetAppdataConfigParamsNil(b bool)`
+
+ SetAppdataConfigParamsNil sets the value for AppdataConfigParams to be an explicit nil
+
+### UnsetAppdataConfigParams
+`func (o *BaseProvisionVDBParameters) UnsetAppdataConfigParams()`
+
+UnsetAppdataConfigParams ensures that no value is present for AppdataConfigParams, not even an explicit nil
+### GetConfigParams
+
+`func (o *BaseProvisionVDBParameters) GetConfigParams() map[string]interface{}`
+
+GetConfigParams returns the ConfigParams field if non-nil, zero value otherwise.
+
+### GetConfigParamsOk
+
+`func (o *BaseProvisionVDBParameters) GetConfigParamsOk() (*map[string]interface{}, bool)`
+
+GetConfigParamsOk returns a tuple with the ConfigParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfigParams
+
+`func (o *BaseProvisionVDBParameters) SetConfigParams(v map[string]interface{})`
+
+SetConfigParams sets ConfigParams field to given value.
+
+### HasConfigParams
+
+`func (o *BaseProvisionVDBParameters) HasConfigParams() bool`
+
+HasConfigParams returns a boolean if a field has been set.
+
+### SetConfigParamsNil
+
+`func (o *BaseProvisionVDBParameters) SetConfigParamsNil(b bool)`
+
+ SetConfigParamsNil sets the value for ConfigParams to be an explicit nil
+
+### UnsetConfigParams
+`func (o *BaseProvisionVDBParameters) UnsetConfigParams()`
+
+UnsetConfigParams ensures that no value is present for ConfigParams, not even an explicit nil
+### GetPrivilegedOsUser
+
+`func (o *BaseProvisionVDBParameters) GetPrivilegedOsUser() string`
+
+GetPrivilegedOsUser returns the PrivilegedOsUser field if non-nil, zero value otherwise.
+
+### GetPrivilegedOsUserOk
+
+`func (o *BaseProvisionVDBParameters) GetPrivilegedOsUserOk() (*string, bool)`
+
+GetPrivilegedOsUserOk returns a tuple with the PrivilegedOsUser field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPrivilegedOsUser
+
+`func (o *BaseProvisionVDBParameters) SetPrivilegedOsUser(v string)`
+
+SetPrivilegedOsUser sets PrivilegedOsUser field to given value.
+
+### HasPrivilegedOsUser
+
+`func (o *BaseProvisionVDBParameters) HasPrivilegedOsUser() bool`
+
+HasPrivilegedOsUser returns a boolean if a field has been set.
+
+### GetPostgresPort
+
+`func (o *BaseProvisionVDBParameters) GetPostgresPort() int32`
+
+GetPostgresPort returns the PostgresPort field if non-nil, zero value otherwise.
+
+### GetPostgresPortOk
+
+`func (o *BaseProvisionVDBParameters) GetPostgresPortOk() (*int32, bool)`
+
+GetPostgresPortOk returns a tuple with the PostgresPort field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPostgresPort
+
+`func (o *BaseProvisionVDBParameters) SetPostgresPort(v int32)`
+
+SetPostgresPort sets PostgresPort field to given value.
+
+### HasPostgresPort
+
+`func (o *BaseProvisionVDBParameters) HasPostgresPort() bool`
+
+HasPostgresPort returns a boolean if a field has been set.
+
+### GetConfigSettingsStg
+
+`func (o *BaseProvisionVDBParameters) GetConfigSettingsStg() []ConfigSettingsStg`
+
+GetConfigSettingsStg returns the ConfigSettingsStg field if non-nil, zero value otherwise.
+
+### GetConfigSettingsStgOk
+
+`func (o *BaseProvisionVDBParameters) GetConfigSettingsStgOk() (*[]ConfigSettingsStg, bool)`
+
+GetConfigSettingsStgOk returns a tuple with the ConfigSettingsStg field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfigSettingsStg
+
+`func (o *BaseProvisionVDBParameters) SetConfigSettingsStg(v []ConfigSettingsStg)`
+
+SetConfigSettingsStg sets ConfigSettingsStg field to given value.
+
+### HasConfigSettingsStg
+
+`func (o *BaseProvisionVDBParameters) HasConfigSettingsStg() bool`
+
+HasConfigSettingsStg returns a boolean if a field has been set.
+
+### GetVcdbRestart
+
+`func (o *BaseProvisionVDBParameters) GetVcdbRestart() bool`
+
+GetVcdbRestart returns the VcdbRestart field if non-nil, zero value otherwise.
+
+### GetVcdbRestartOk
+
+`func (o *BaseProvisionVDBParameters) GetVcdbRestartOk() (*bool, bool)`
+
+GetVcdbRestartOk returns a tuple with the VcdbRestart field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVcdbRestart
+
+`func (o *BaseProvisionVDBParameters) SetVcdbRestart(v bool)`
+
+SetVcdbRestart sets VcdbRestart field to given value.
+
+### HasVcdbRestart
+
+`func (o *BaseProvisionVDBParameters) HasVcdbRestart() bool`
+
+HasVcdbRestart returns a boolean if a field has been set.
+
+### GetMssqlFailoverDriveLetter
+
+`func (o *BaseProvisionVDBParameters) GetMssqlFailoverDriveLetter() string`
+
+GetMssqlFailoverDriveLetter returns the MssqlFailoverDriveLetter field if non-nil, zero value otherwise.
+
+### GetMssqlFailoverDriveLetterOk
+
+`func (o *BaseProvisionVDBParameters) GetMssqlFailoverDriveLetterOk() (*string, bool)`
+
+GetMssqlFailoverDriveLetterOk returns a tuple with the MssqlFailoverDriveLetter field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMssqlFailoverDriveLetter
+
+`func (o *BaseProvisionVDBParameters) SetMssqlFailoverDriveLetter(v string)`
+
+SetMssqlFailoverDriveLetter sets MssqlFailoverDriveLetter field to given value.
+
+### HasMssqlFailoverDriveLetter
+
+`func (o *BaseProvisionVDBParameters) HasMssqlFailoverDriveLetter() bool`
+
+HasMssqlFailoverDriveLetter returns a boolean if a field has been set.
 
 ### GetTags
 

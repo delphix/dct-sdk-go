@@ -6,11 +6,20 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** | The Environment object entity ID. | [optional] 
 **Name** | Pointer to **string** | The name of this environment. | [optional] 
+**NamespaceId** | Pointer to **string** | The namespace id of this environment. | [optional] 
+**NamespaceName** | Pointer to **string** | The namespace name of this environment. | [optional] 
+**IsReplica** | Pointer to **bool** | Is this a replicated object. | [optional] 
 **Namespace** | Pointer to **NullableString** | The namespace of this environment for replicated and restored objects. | [optional] 
-**EngineId** | Pointer to **int64** | A reference to the Engine that this Environment connection is associated with. | [optional] 
+**EngineId** | Pointer to **string** | A reference to the Engine that this Environment connection is associated with. | [optional] 
 **Enabled** | Pointer to **bool** | True if this environment is enabled. | [optional] 
 **IsCluster** | Pointer to **bool** | True if this environment is a cluster of hosts. | [optional] 
+**ClusterHome** | Pointer to **string** | Cluster home for RAC environment. | [optional] 
+**IsWindowsTarget** | Pointer to **bool** | True if this windows environment is a target environment. | [optional] 
+**StagingEnvironment** | Pointer to **string** | ID of the staging environment. | [optional] 
 **Hosts** | Pointer to [**[]Host**](Host.md) | The hosts that are part of this environment. | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) | The tags to be created for this environment. | [optional] 
+**Repositories** | Pointer to [**[]Repository**](Repository.md) | Repositories associated with this environment. A Repository typically corresponds to a database installation. | [optional] 
+**Listeners** | Pointer to [**[]OracleListener**](OracleListener.md) | Oracle listeners associated with this environment. | [optional] 
 
 ## Methods
 
@@ -81,6 +90,81 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
+### GetNamespaceId
+
+`func (o *Environment) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *Environment) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *Environment) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *Environment) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### GetNamespaceName
+
+`func (o *Environment) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *Environment) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *Environment) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *Environment) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### GetIsReplica
+
+`func (o *Environment) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *Environment) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *Environment) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *Environment) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
+
 ### GetNamespace
 
 `func (o *Environment) GetNamespace() string`
@@ -118,20 +202,20 @@ HasNamespace returns a boolean if a field has been set.
 UnsetNamespace ensures that no value is present for Namespace, not even an explicit nil
 ### GetEngineId
 
-`func (o *Environment) GetEngineId() int64`
+`func (o *Environment) GetEngineId() string`
 
 GetEngineId returns the EngineId field if non-nil, zero value otherwise.
 
 ### GetEngineIdOk
 
-`func (o *Environment) GetEngineIdOk() (*int64, bool)`
+`func (o *Environment) GetEngineIdOk() (*string, bool)`
 
 GetEngineIdOk returns a tuple with the EngineId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEngineId
 
-`func (o *Environment) SetEngineId(v int64)`
+`func (o *Environment) SetEngineId(v string)`
 
 SetEngineId sets EngineId field to given value.
 
@@ -191,6 +275,81 @@ SetIsCluster sets IsCluster field to given value.
 
 HasIsCluster returns a boolean if a field has been set.
 
+### GetClusterHome
+
+`func (o *Environment) GetClusterHome() string`
+
+GetClusterHome returns the ClusterHome field if non-nil, zero value otherwise.
+
+### GetClusterHomeOk
+
+`func (o *Environment) GetClusterHomeOk() (*string, bool)`
+
+GetClusterHomeOk returns a tuple with the ClusterHome field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClusterHome
+
+`func (o *Environment) SetClusterHome(v string)`
+
+SetClusterHome sets ClusterHome field to given value.
+
+### HasClusterHome
+
+`func (o *Environment) HasClusterHome() bool`
+
+HasClusterHome returns a boolean if a field has been set.
+
+### GetIsWindowsTarget
+
+`func (o *Environment) GetIsWindowsTarget() bool`
+
+GetIsWindowsTarget returns the IsWindowsTarget field if non-nil, zero value otherwise.
+
+### GetIsWindowsTargetOk
+
+`func (o *Environment) GetIsWindowsTargetOk() (*bool, bool)`
+
+GetIsWindowsTargetOk returns a tuple with the IsWindowsTarget field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsWindowsTarget
+
+`func (o *Environment) SetIsWindowsTarget(v bool)`
+
+SetIsWindowsTarget sets IsWindowsTarget field to given value.
+
+### HasIsWindowsTarget
+
+`func (o *Environment) HasIsWindowsTarget() bool`
+
+HasIsWindowsTarget returns a boolean if a field has been set.
+
+### GetStagingEnvironment
+
+`func (o *Environment) GetStagingEnvironment() string`
+
+GetStagingEnvironment returns the StagingEnvironment field if non-nil, zero value otherwise.
+
+### GetStagingEnvironmentOk
+
+`func (o *Environment) GetStagingEnvironmentOk() (*string, bool)`
+
+GetStagingEnvironmentOk returns a tuple with the StagingEnvironment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStagingEnvironment
+
+`func (o *Environment) SetStagingEnvironment(v string)`
+
+SetStagingEnvironment sets StagingEnvironment field to given value.
+
+### HasStagingEnvironment
+
+`func (o *Environment) HasStagingEnvironment() bool`
+
+HasStagingEnvironment returns a boolean if a field has been set.
+
 ### GetHosts
 
 `func (o *Environment) GetHosts() []Host`
@@ -215,6 +374,81 @@ SetHosts sets Hosts field to given value.
 `func (o *Environment) HasHosts() bool`
 
 HasHosts returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *Environment) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *Environment) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *Environment) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *Environment) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
+### GetRepositories
+
+`func (o *Environment) GetRepositories() []Repository`
+
+GetRepositories returns the Repositories field if non-nil, zero value otherwise.
+
+### GetRepositoriesOk
+
+`func (o *Environment) GetRepositoriesOk() (*[]Repository, bool)`
+
+GetRepositoriesOk returns a tuple with the Repositories field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRepositories
+
+`func (o *Environment) SetRepositories(v []Repository)`
+
+SetRepositories sets Repositories field to given value.
+
+### HasRepositories
+
+`func (o *Environment) HasRepositories() bool`
+
+HasRepositories returns a boolean if a field has been set.
+
+### GetListeners
+
+`func (o *Environment) GetListeners() []OracleListener`
+
+GetListeners returns the Listeners field if non-nil, zero value otherwise.
+
+### GetListenersOk
+
+`func (o *Environment) GetListenersOk() (*[]OracleListener, bool)`
+
+GetListenersOk returns a tuple with the Listeners field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetListeners
+
+`func (o *Environment) SetListeners(v []OracleListener)`
+
+SetListeners sets Listeners field to given value.
+
+### HasListeners
+
+`func (o *Environment) HasListeners() bool`
+
+HasListeners returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

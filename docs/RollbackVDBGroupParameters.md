@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BookmarkId** | Pointer to **string** | ID of a bookmark to rollback this VDB Group to. | [optional] 
+**BookmarkId** | **string** | ID of a bookmark to rollback this VDB Group to. | 
 
 ## Methods
 
 ### NewRollbackVDBGroupParameters
 
-`func NewRollbackVDBGroupParameters() *RollbackVDBGroupParameters`
+`func NewRollbackVDBGroupParameters(bookmarkId string, ) *RollbackVDBGroupParameters`
 
 NewRollbackVDBGroupParameters instantiates a new RollbackVDBGroupParameters object
 This constructor will assign default values to properties that have it defined,
@@ -44,11 +44,6 @@ and a boolean to check if the value has been set.
 
 SetBookmarkId sets BookmarkId field to given value.
 
-### HasBookmarkId
-
-`func (o *RollbackVDBGroupParameters) HasBookmarkId() bool`
-
-HasBookmarkId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

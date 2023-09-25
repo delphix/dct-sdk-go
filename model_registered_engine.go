@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ type RegisteredEngine struct {
 	DataStorageCapacity NullableInt64 `json:"data_storage_capacity,omitempty"`
 	// The amount of storage used by engine objects and system metadata, in bytes.
 	DataStorageUsed NullableInt64 `json:"data_storage_used,omitempty"`
-	// Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the engine's certificate, and set the truststore_path propery. 
+	// Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the engine's certificate, and set the truststore_filename property. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the engine over HTTPs. Setting this value must only be done if the TLS certificate of the engine does not match the hostname, and the TLS configuration of the engine cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
@@ -88,6 +88,12 @@ type RegisteredEngine struct {
 	MaskingMaxConcurrentJobs NullableInt32 `json:"masking_max_concurrent_jobs,omitempty"`
 	// The number of CPU cores available to the masking engine.
 	MaskingAvailableCores NullableInt32 `json:"masking_available_cores,omitempty"`
+	// List of Hyperscale Instances that this engine is connected to.
+	HyperscaleInstanceIds []string `json:"hyperscale_instance_ids,omitempty"`
+	// File name of a truststore which can be used to validate the TLS certificate of the engine as expected by associated hyperscale instances. 
+	HyperscaleTruststoreFilename NullableString `json:"hyperscale_truststore_filename,omitempty"`
+	// Password to read the truststore as expected by associated hyperscale instances. 
+	HyperscaleTruststorePassword NullableString `json:"hyperscale_truststore_password,omitempty"`
 }
 
 // NewRegisteredEngine instantiates a new RegisteredEngine object
@@ -1423,6 +1429,123 @@ func (o *RegisteredEngine) UnsetMaskingAvailableCores() {
 	o.MaskingAvailableCores.Unset()
 }
 
+// GetHyperscaleInstanceIds returns the HyperscaleInstanceIds field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetHyperscaleInstanceIds() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.HyperscaleInstanceIds
+}
+
+// GetHyperscaleInstanceIdsOk returns a tuple with the HyperscaleInstanceIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetHyperscaleInstanceIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.HyperscaleInstanceIds) {
+		return nil, false
+	}
+	return o.HyperscaleInstanceIds, true
+}
+
+// HasHyperscaleInstanceIds returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasHyperscaleInstanceIds() bool {
+	if o != nil && IsNil(o.HyperscaleInstanceIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetHyperscaleInstanceIds gets a reference to the given []string and assigns it to the HyperscaleInstanceIds field.
+func (o *RegisteredEngine) SetHyperscaleInstanceIds(v []string) {
+	o.HyperscaleInstanceIds = v
+}
+
+// GetHyperscaleTruststoreFilename returns the HyperscaleTruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetHyperscaleTruststoreFilename() string {
+	if o == nil || IsNil(o.HyperscaleTruststoreFilename.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HyperscaleTruststoreFilename.Get()
+}
+
+// GetHyperscaleTruststoreFilenameOk returns a tuple with the HyperscaleTruststoreFilename field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetHyperscaleTruststoreFilenameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HyperscaleTruststoreFilename.Get(), o.HyperscaleTruststoreFilename.IsSet()
+}
+
+// HasHyperscaleTruststoreFilename returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasHyperscaleTruststoreFilename() bool {
+	if o != nil && o.HyperscaleTruststoreFilename.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHyperscaleTruststoreFilename gets a reference to the given NullableString and assigns it to the HyperscaleTruststoreFilename field.
+func (o *RegisteredEngine) SetHyperscaleTruststoreFilename(v string) {
+	o.HyperscaleTruststoreFilename.Set(&v)
+}
+// SetHyperscaleTruststoreFilenameNil sets the value for HyperscaleTruststoreFilename to be an explicit nil
+func (o *RegisteredEngine) SetHyperscaleTruststoreFilenameNil() {
+	o.HyperscaleTruststoreFilename.Set(nil)
+}
+
+// UnsetHyperscaleTruststoreFilename ensures that no value is present for HyperscaleTruststoreFilename, not even an explicit nil
+func (o *RegisteredEngine) UnsetHyperscaleTruststoreFilename() {
+	o.HyperscaleTruststoreFilename.Unset()
+}
+
+// GetHyperscaleTruststorePassword returns the HyperscaleTruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetHyperscaleTruststorePassword() string {
+	if o == nil || IsNil(o.HyperscaleTruststorePassword.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HyperscaleTruststorePassword.Get()
+}
+
+// GetHyperscaleTruststorePasswordOk returns a tuple with the HyperscaleTruststorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetHyperscaleTruststorePasswordOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HyperscaleTruststorePassword.Get(), o.HyperscaleTruststorePassword.IsSet()
+}
+
+// HasHyperscaleTruststorePassword returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasHyperscaleTruststorePassword() bool {
+	if o != nil && o.HyperscaleTruststorePassword.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHyperscaleTruststorePassword gets a reference to the given NullableString and assigns it to the HyperscaleTruststorePassword field.
+func (o *RegisteredEngine) SetHyperscaleTruststorePassword(v string) {
+	o.HyperscaleTruststorePassword.Set(&v)
+}
+// SetHyperscaleTruststorePasswordNil sets the value for HyperscaleTruststorePassword to be an explicit nil
+func (o *RegisteredEngine) SetHyperscaleTruststorePasswordNil() {
+	o.HyperscaleTruststorePassword.Set(nil)
+}
+
+// UnsetHyperscaleTruststorePassword ensures that no value is present for HyperscaleTruststorePassword, not even an explicit nil
+func (o *RegisteredEngine) UnsetHyperscaleTruststorePassword() {
+	o.HyperscaleTruststorePassword.Unset()
+}
+
 func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1528,6 +1651,15 @@ func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	}
 	if o.MaskingAvailableCores.IsSet() {
 		toSerialize["masking_available_cores"] = o.MaskingAvailableCores.Get()
+	}
+	if o.HyperscaleInstanceIds != nil {
+		toSerialize["hyperscale_instance_ids"] = o.HyperscaleInstanceIds
+	}
+	if o.HyperscaleTruststoreFilename.IsSet() {
+		toSerialize["hyperscale_truststore_filename"] = o.HyperscaleTruststoreFilename.Get()
+	}
+	if o.HyperscaleTruststorePassword.IsSet() {
+		toSerialize["hyperscale_truststore_password"] = o.HyperscaleTruststorePassword.Get()
 	}
 	return toSerialize, nil
 }

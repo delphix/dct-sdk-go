@@ -63,6 +63,20 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test SourcesApiService GetSourceCompatibleRepo", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var sourceId string
+
+		resp, httpRes, err := apiClient.SourcesApi.GetSourceCompatibleRepo(context.Background(), sourceId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test SourcesApiService GetSourceTags", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

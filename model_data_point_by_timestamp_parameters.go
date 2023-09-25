@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,8 @@ type DataPointByTimestampParameters struct {
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
 	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
+	// The Timeflow ID.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
 }
 
 // NewDataPointByTimestampParameters instantiates a new DataPointByTimestampParameters object
@@ -108,6 +110,38 @@ func (o *DataPointByTimestampParameters) SetTimestampInDatabaseTimezone(v string
 	o.TimestampInDatabaseTimezone = &v
 }
 
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *DataPointByTimestampParameters) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataPointByTimestampParameters) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *DataPointByTimestampParameters) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *DataPointByTimestampParameters) SetTimeflowId(v string) {
+	o.TimeflowId = &v
+}
+
 func (o DataPointByTimestampParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -123,6 +157,9 @@ func (o DataPointByTimestampParameters) ToMap() (map[string]interface{}, error) 
 	}
 	if !IsNil(o.TimestampInDatabaseTimezone) {
 		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
+	}
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
 	}
 	return toSerialize, nil
 }

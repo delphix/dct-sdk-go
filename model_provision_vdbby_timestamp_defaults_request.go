@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -29,6 +29,8 @@ type ProvisionVDBByTimestampDefaultsRequest struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
 	SourceDataId string `json:"source_data_id"`
+	// The Timeflow ID.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
 }
 
 // NewProvisionVDBByTimestampDefaultsRequest instantiates a new ProvisionVDBByTimestampDefaultsRequest object
@@ -169,6 +171,38 @@ func (o *ProvisionVDBByTimestampDefaultsRequest) SetSourceDataId(v string) {
 	o.SourceDataId = v
 }
 
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampDefaultsRequest) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampDefaultsRequest) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampDefaultsRequest) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *ProvisionVDBByTimestampDefaultsRequest) SetTimeflowId(v string) {
+	o.TimeflowId = &v
+}
+
 func (o ProvisionVDBByTimestampDefaultsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -189,6 +223,9 @@ func (o ProvisionVDBByTimestampDefaultsRequest) ToMap() (map[string]interface{},
 		toSerialize["engine_id"] = o.EngineId
 	}
 	toSerialize["source_data_id"] = o.SourceDataId
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
+	}
 	return toSerialize, nil
 }
 

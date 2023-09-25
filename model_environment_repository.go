@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -62,6 +62,8 @@ type EnvironmentRepository struct {
 	MssqlClusterInstancesVersion []string `json:"mssql_cluster_instances_version,omitempty"`
 	// Directory where the installation home is located.
 	InstallationHome *string `json:"installation_home,omitempty"`
+	// MSSQL failover cluster drive letter.
+	DriveLetter []string `json:"drive_letter,omitempty"`
 	// The environment ID.
 	EnvironmentId *string `json:"environment_id,omitempty"`
 }
@@ -755,6 +757,38 @@ func (o *EnvironmentRepository) SetInstallationHome(v string) {
 	o.InstallationHome = &v
 }
 
+// GetDriveLetter returns the DriveLetter field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetDriveLetter() []string {
+	if o == nil || IsNil(o.DriveLetter) {
+		var ret []string
+		return ret
+	}
+	return o.DriveLetter
+}
+
+// GetDriveLetterOk returns a tuple with the DriveLetter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetDriveLetterOk() ([]string, bool) {
+	if o == nil || IsNil(o.DriveLetter) {
+		return nil, false
+	}
+	return o.DriveLetter, true
+}
+
+// HasDriveLetter returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasDriveLetter() bool {
+	if o != nil && !IsNil(o.DriveLetter) {
+		return true
+	}
+
+	return false
+}
+
+// SetDriveLetter gets a reference to the given []string and assigns it to the DriveLetter field.
+func (o *EnvironmentRepository) SetDriveLetter(v []string) {
+	o.DriveLetter = v
+}
+
 // GetEnvironmentId returns the EnvironmentId field value if set, zero value otherwise.
 func (o *EnvironmentRepository) GetEnvironmentId() string {
 	if o == nil || IsNil(o.EnvironmentId) {
@@ -859,6 +893,9 @@ func (o EnvironmentRepository) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.InstallationHome) {
 		toSerialize["installation_home"] = o.InstallationHome
+	}
+	if !IsNil(o.DriveLetter) {
+		toSerialize["drive_letter"] = o.DriveLetter
 	}
 	if !IsNil(o.EnvironmentId) {
 		toSerialize["environment_id"] = o.EnvironmentId

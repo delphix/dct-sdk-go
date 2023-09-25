@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -392,6 +392,250 @@ func (a *DSourcesApiService) DeleteTagsDsourceExecute(r ApiDeleteTagsDsourceRequ
 	return localVarHTTPResponse, nil
 }
 
+type ApiGetAppdataDsourceLinkingDefaultsRequest struct {
+	ctx context.Context
+	ApiService *DSourcesApiService
+	linkDSourceDefaultRequest *LinkDSourceDefaultRequest
+}
+
+func (r ApiGetAppdataDsourceLinkingDefaultsRequest) LinkDSourceDefaultRequest(linkDSourceDefaultRequest LinkDSourceDefaultRequest) ApiGetAppdataDsourceLinkingDefaultsRequest {
+	r.linkDSourceDefaultRequest = &linkDSourceDefaultRequest
+	return r
+}
+
+func (r ApiGetAppdataDsourceLinkingDefaultsRequest) Execute() (*AppDataDSourceLinkSourceParameters, *http.Response, error) {
+	return r.ApiService.GetAppdataDsourceLinkingDefaultsExecute(r)
+}
+
+/*
+GetAppdataDsourceLinkingDefaults Get defaults for an AppData dSource linking.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAppdataDsourceLinkingDefaultsRequest
+*/
+func (a *DSourcesApiService) GetAppdataDsourceLinkingDefaults(ctx context.Context) ApiGetAppdataDsourceLinkingDefaultsRequest {
+	return ApiGetAppdataDsourceLinkingDefaultsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return AppDataDSourceLinkSourceParameters
+func (a *DSourcesApiService) GetAppdataDsourceLinkingDefaultsExecute(r ApiGetAppdataDsourceLinkingDefaultsRequest) (*AppDataDSourceLinkSourceParameters, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AppDataDSourceLinkSourceParameters
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.GetAppdataDsourceLinkingDefaults")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/appdata/defaults"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.linkDSourceDefaultRequest == nil {
+		return localVarReturnValue, nil, reportError("linkDSourceDefaultRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.linkDSourceDefaultRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAseDsourceLinkingDefaultsRequest struct {
+	ctx context.Context
+	ApiService *DSourcesApiService
+	linkDSourceDefaultRequest *LinkDSourceDefaultRequest
+}
+
+func (r ApiGetAseDsourceLinkingDefaultsRequest) LinkDSourceDefaultRequest(linkDSourceDefaultRequest LinkDSourceDefaultRequest) ApiGetAseDsourceLinkingDefaultsRequest {
+	r.linkDSourceDefaultRequest = &linkDSourceDefaultRequest
+	return r
+}
+
+func (r ApiGetAseDsourceLinkingDefaultsRequest) Execute() (*ASEDSourceLinkSourceParameters, *http.Response, error) {
+	return r.ApiService.GetAseDsourceLinkingDefaultsExecute(r)
+}
+
+/*
+GetAseDsourceLinkingDefaults Get defaults for an ASE dSource linking.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAseDsourceLinkingDefaultsRequest
+*/
+func (a *DSourcesApiService) GetAseDsourceLinkingDefaults(ctx context.Context) ApiGetAseDsourceLinkingDefaultsRequest {
+	return ApiGetAseDsourceLinkingDefaultsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ASEDSourceLinkSourceParameters
+func (a *DSourcesApiService) GetAseDsourceLinkingDefaultsExecute(r ApiGetAseDsourceLinkingDefaultsRequest) (*ASEDSourceLinkSourceParameters, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ASEDSourceLinkSourceParameters
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.GetAseDsourceLinkingDefaults")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/ase/defaults"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.linkDSourceDefaultRequest == nil {
+		return localVarReturnValue, nil, reportError("linkDSourceDefaultRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.linkDSourceDefaultRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetDsourceByIdRequest struct {
 	ctx context.Context
 	ApiService *DSourcesApiService
@@ -459,128 +703,6 @@ func (a *DSourcesApiService) GetDsourceByIdExecute(r ApiGetDsourceByIdRequest) (
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetDsourceLinkingDefaultsRequest struct {
-	ctx context.Context
-	ApiService *DSourcesApiService
-	linkDSourceDefaultRequest *LinkDSourceDefaultRequest
-}
-
-func (r ApiGetDsourceLinkingDefaultsRequest) LinkDSourceDefaultRequest(linkDSourceDefaultRequest LinkDSourceDefaultRequest) ApiGetDsourceLinkingDefaultsRequest {
-	r.linkDSourceDefaultRequest = &linkDSourceDefaultRequest
-	return r
-}
-
-func (r ApiGetDsourceLinkingDefaultsRequest) Execute() (*LinkDSourceParameters, *http.Response, error) {
-	return r.ApiService.GetDsourceLinkingDefaultsExecute(r)
-}
-
-/*
-GetDsourceLinkingDefaults Get defaults for dSource linking.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDsourceLinkingDefaultsRequest
-*/
-func (a *DSourcesApiService) GetDsourceLinkingDefaults(ctx context.Context) ApiGetDsourceLinkingDefaultsRequest {
-	return ApiGetDsourceLinkingDefaultsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return LinkDSourceParameters
-func (a *DSourcesApiService) GetDsourceLinkingDefaultsExecute(r ApiGetDsourceLinkingDefaultsRequest) (*LinkDSourceParameters, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *LinkDSourceParameters
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.GetDsourceLinkingDefaults")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/dsources/defaults"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.linkDSourceDefaultRequest == nil {
-		return localVarReturnValue, nil, reportError("linkDSourceDefaultRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.linkDSourceDefaultRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -921,6 +1043,128 @@ func (a *DSourcesApiService) GetDsourcesExecute(r ApiGetDsourcesRequest) (*ListD
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetOracleDsourceLinkingDefaultsRequest struct {
+	ctx context.Context
+	ApiService *DSourcesApiService
+	linkDSourceDefaultRequest *LinkDSourceDefaultRequest
+}
+
+func (r ApiGetOracleDsourceLinkingDefaultsRequest) LinkDSourceDefaultRequest(linkDSourceDefaultRequest LinkDSourceDefaultRequest) ApiGetOracleDsourceLinkingDefaultsRequest {
+	r.linkDSourceDefaultRequest = &linkDSourceDefaultRequest
+	return r
+}
+
+func (r ApiGetOracleDsourceLinkingDefaultsRequest) Execute() (*OracleDSourceLinkSourceParameters, *http.Response, error) {
+	return r.ApiService.GetOracleDsourceLinkingDefaultsExecute(r)
+}
+
+/*
+GetOracleDsourceLinkingDefaults Get defaults for dSource linking.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetOracleDsourceLinkingDefaultsRequest
+*/
+func (a *DSourcesApiService) GetOracleDsourceLinkingDefaults(ctx context.Context) ApiGetOracleDsourceLinkingDefaultsRequest {
+	return ApiGetOracleDsourceLinkingDefaultsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return OracleDSourceLinkSourceParameters
+func (a *DSourcesApiService) GetOracleDsourceLinkingDefaultsExecute(r ApiGetOracleDsourceLinkingDefaultsRequest) (*OracleDSourceLinkSourceParameters, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OracleDSourceLinkSourceParameters
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.GetOracleDsourceLinkingDefaults")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/oracle/defaults"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.linkDSourceDefaultRequest == nil {
+		return localVarReturnValue, nil, reportError("linkDSourceDefaultRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.linkDSourceDefaultRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetTagsDsourceRequest struct {
 	ctx context.Context
 	ApiService *DSourcesApiService
@@ -1039,30 +1283,30 @@ func (a *DSourcesApiService) GetTagsDsourceExecute(r ApiGetTagsDsourceRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLinkDatabaseRequest struct {
+type ApiLinkAppdataDatabaseRequest struct {
 	ctx context.Context
 	ApiService *DSourcesApiService
-	linkDSourceParameters *LinkDSourceParameters
+	appDataDSourceLinkSourceParameters *AppDataDSourceLinkSourceParameters
 }
 
-// The parameters to link a dSource.
-func (r ApiLinkDatabaseRequest) LinkDSourceParameters(linkDSourceParameters LinkDSourceParameters) ApiLinkDatabaseRequest {
-	r.linkDSourceParameters = &linkDSourceParameters
+// The parameters to link an AppData dSource.
+func (r ApiLinkAppdataDatabaseRequest) AppDataDSourceLinkSourceParameters(appDataDSourceLinkSourceParameters AppDataDSourceLinkSourceParameters) ApiLinkAppdataDatabaseRequest {
+	r.appDataDSourceLinkSourceParameters = &appDataDSourceLinkSourceParameters
 	return r
 }
 
-func (r ApiLinkDatabaseRequest) Execute() (*LinkDSourceResponse, *http.Response, error) {
-	return r.ApiService.LinkDatabaseExecute(r)
+func (r ApiLinkAppdataDatabaseRequest) Execute() (*LinkDSourceResponse, *http.Response, error) {
+	return r.ApiService.LinkAppdataDatabaseExecute(r)
 }
 
 /*
-LinkDatabase Link a database to Delphix engine.
+LinkAppdataDatabase Link an AppData database as dSource.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLinkDatabaseRequest
+ @return ApiLinkAppdataDatabaseRequest
 */
-func (a *DSourcesApiService) LinkDatabase(ctx context.Context) ApiLinkDatabaseRequest {
-	return ApiLinkDatabaseRequest{
+func (a *DSourcesApiService) LinkAppdataDatabase(ctx context.Context) ApiLinkAppdataDatabaseRequest {
+	return ApiLinkAppdataDatabaseRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -1070,7 +1314,7 @@ func (a *DSourcesApiService) LinkDatabase(ctx context.Context) ApiLinkDatabaseRe
 
 // Execute executes the request
 //  @return LinkDSourceResponse
-func (a *DSourcesApiService) LinkDatabaseExecute(r ApiLinkDatabaseRequest) (*LinkDSourceResponse, *http.Response, error) {
+func (a *DSourcesApiService) LinkAppdataDatabaseExecute(r ApiLinkAppdataDatabaseRequest) (*LinkDSourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1078,18 +1322,18 @@ func (a *DSourcesApiService) LinkDatabaseExecute(r ApiLinkDatabaseRequest) (*Lin
 		localVarReturnValue  *LinkDSourceResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.LinkDatabase")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.LinkAppdataDatabase")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/dsources"
+	localVarPath := localBasePath + "/dsources/appdata"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.linkDSourceParameters == nil {
-		return localVarReturnValue, nil, reportError("linkDSourceParameters is required and must be specified")
+	if r.appDataDSourceLinkSourceParameters == nil {
+		return localVarReturnValue, nil, reportError("appDataDSourceLinkSourceParameters is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1110,7 +1354,253 @@ func (a *DSourcesApiService) LinkDatabaseExecute(r ApiLinkDatabaseRequest) (*Lin
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.linkDSourceParameters
+	localVarPostBody = r.appDataDSourceLinkSourceParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiLinkAseDatabaseRequest struct {
+	ctx context.Context
+	ApiService *DSourcesApiService
+	aSEDSourceLinkSourceParameters *ASEDSourceLinkSourceParameters
+}
+
+// The parameters to link an ASE dSource.
+func (r ApiLinkAseDatabaseRequest) ASEDSourceLinkSourceParameters(aSEDSourceLinkSourceParameters ASEDSourceLinkSourceParameters) ApiLinkAseDatabaseRequest {
+	r.aSEDSourceLinkSourceParameters = &aSEDSourceLinkSourceParameters
+	return r
+}
+
+func (r ApiLinkAseDatabaseRequest) Execute() (*LinkDSourceResponse, *http.Response, error) {
+	return r.ApiService.LinkAseDatabaseExecute(r)
+}
+
+/*
+LinkAseDatabase Link an ASE database as dSource.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiLinkAseDatabaseRequest
+*/
+func (a *DSourcesApiService) LinkAseDatabase(ctx context.Context) ApiLinkAseDatabaseRequest {
+	return ApiLinkAseDatabaseRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return LinkDSourceResponse
+func (a *DSourcesApiService) LinkAseDatabaseExecute(r ApiLinkAseDatabaseRequest) (*LinkDSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *LinkDSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.LinkAseDatabase")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/ase"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.aSEDSourceLinkSourceParameters == nil {
+		return localVarReturnValue, nil, reportError("aSEDSourceLinkSourceParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.aSEDSourceLinkSourceParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiLinkOracleDatabaseRequest struct {
+	ctx context.Context
+	ApiService *DSourcesApiService
+	oracleDSourceLinkSourceParameters *OracleDSourceLinkSourceParameters
+}
+
+// The parameters to link an Oracle dSource.
+func (r ApiLinkOracleDatabaseRequest) OracleDSourceLinkSourceParameters(oracleDSourceLinkSourceParameters OracleDSourceLinkSourceParameters) ApiLinkOracleDatabaseRequest {
+	r.oracleDSourceLinkSourceParameters = &oracleDSourceLinkSourceParameters
+	return r
+}
+
+func (r ApiLinkOracleDatabaseRequest) Execute() (*LinkDSourceResponse, *http.Response, error) {
+	return r.ApiService.LinkOracleDatabaseExecute(r)
+}
+
+/*
+LinkOracleDatabase Link Oracle database as dSource.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiLinkOracleDatabaseRequest
+*/
+func (a *DSourcesApiService) LinkOracleDatabase(ctx context.Context) ApiLinkOracleDatabaseRequest {
+	return ApiLinkOracleDatabaseRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return LinkDSourceResponse
+func (a *DSourcesApiService) LinkOracleDatabaseExecute(r ApiLinkOracleDatabaseRequest) (*LinkDSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *LinkDSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesApiService.LinkOracleDatabase")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/oracle"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.oracleDSourceLinkSourceParameters == nil {
+		return localVarReturnValue, nil, reportError("oracleDSourceLinkSourceParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleDSourceLinkSourceParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -25,9 +25,15 @@ type ProvisionVDBByTimestampParameters struct {
 	PreRefresh []Hook `json:"pre_refresh,omitempty"`
 	// The commands to execute on the target environment after refreshing the VDB.
 	PostRefresh []Hook `json:"post_refresh,omitempty"`
+	// The commands to execute on the target environment before refreshing the VDB with data from itself.
+	PreSelfRefresh []Hook `json:"pre_self_refresh,omitempty"`
+	// The commands to execute on the target environment after refreshing the VDB with data from itself.
+	PostSelfRefresh []Hook `json:"post_self_refresh,omitempty"`
 	// The commands to execute on the target environment before rewinding the VDB.
+	// Deprecated
 	PreRollback []Hook `json:"pre_rollback,omitempty"`
 	// The commands to execute on the target environment after rewinding the VDB.
+	// Deprecated
 	PostRollback []Hook `json:"post_rollback,omitempty"`
 	// The commands to execute on the target environment when the VDB is created or refreshed.
 	ConfigureClone []Hook `json:"configure_clone,omitempty"`
@@ -53,6 +59,8 @@ type ProvisionVDBByTimestampParameters struct {
 	CdbId *string `json:"cdb_id,omitempty"`
 	// The cluster node ids, name or addresses for this provision operation (Oracle RAC Only).
 	ClusterNodeIds []string `json:"cluster_node_ids,omitempty"`
+	// The cluster node instances details for this provision operation(Oracle RAC Only).This property is mutually exclusive with cluster_node_ids.
+	ClusterNodeInstances []ClusterNodeInstance `json:"cluster_node_instances,omitempty"`
 	// Whether to truncate log on checkpoint (ASE only).
 	TruncateLogOnCheckpoint *bool `json:"truncate_log_on_checkpoint,omitempty"`
 	// The name of the privileged user to run the provision operation (Oracle Only).
@@ -139,12 +147,24 @@ type ProvisionVDBByTimestampParameters struct {
 	AppdataConfigParams map[string]interface{} `json:"appdata_config_params,omitempty"`
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
+	// This privileged unix username will be used to create the VDB. Leave this field blank if you do not want to use privilege elevation. The unix privileged username should begin with a letter or an underscore, followed by letters, digits, underscores, or dashes. They can end with a dollar sign (postgres only).
+	PrivilegedOsUser *string `json:"privileged_os_user,omitempty"`
+	// Port number for Postgres target database (postgres only).
+	PostgresPort *int32 `json:"postgres_port,omitempty"`
+	// Custom Database-Level config settings (postgres only).
+	ConfigSettingsStg []ConfigSettingsStg `json:"config_settings_stg,omitempty"`
+	// Indicates whether the Engine should automatically restart this vCDB when target host reboot is detected. If vdb_restart property value is not explicitly set and vcdb_restart is set as false - the vdb_restart property is defaulted to false.
+	VcdbRestart *bool `json:"vcdb_restart,omitempty"`
+	// Base drive letter location for mount points. (MSSql Only).
+	MssqlFailoverDriveLetter *string `json:"mssql_failover_drive_letter,omitempty"`
 	// The tags to be created for VDB.
 	Tags []Tag `json:"tags,omitempty"`
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
 	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
+	// The Timeflow ID.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
@@ -239,7 +259,72 @@ func (o *ProvisionVDBByTimestampParameters) SetPostRefresh(v []Hook) {
 	o.PostRefresh = v
 }
 
+// GetPreSelfRefresh returns the PreSelfRefresh field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetPreSelfRefresh() []Hook {
+	if o == nil || IsNil(o.PreSelfRefresh) {
+		var ret []Hook
+		return ret
+	}
+	return o.PreSelfRefresh
+}
+
+// GetPreSelfRefreshOk returns a tuple with the PreSelfRefresh field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetPreSelfRefreshOk() ([]Hook, bool) {
+	if o == nil || IsNil(o.PreSelfRefresh) {
+		return nil, false
+	}
+	return o.PreSelfRefresh, true
+}
+
+// HasPreSelfRefresh returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasPreSelfRefresh() bool {
+	if o != nil && !IsNil(o.PreSelfRefresh) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreSelfRefresh gets a reference to the given []Hook and assigns it to the PreSelfRefresh field.
+func (o *ProvisionVDBByTimestampParameters) SetPreSelfRefresh(v []Hook) {
+	o.PreSelfRefresh = v
+}
+
+// GetPostSelfRefresh returns the PostSelfRefresh field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetPostSelfRefresh() []Hook {
+	if o == nil || IsNil(o.PostSelfRefresh) {
+		var ret []Hook
+		return ret
+	}
+	return o.PostSelfRefresh
+}
+
+// GetPostSelfRefreshOk returns a tuple with the PostSelfRefresh field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetPostSelfRefreshOk() ([]Hook, bool) {
+	if o == nil || IsNil(o.PostSelfRefresh) {
+		return nil, false
+	}
+	return o.PostSelfRefresh, true
+}
+
+// HasPostSelfRefresh returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasPostSelfRefresh() bool {
+	if o != nil && !IsNil(o.PostSelfRefresh) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostSelfRefresh gets a reference to the given []Hook and assigns it to the PostSelfRefresh field.
+func (o *ProvisionVDBByTimestampParameters) SetPostSelfRefresh(v []Hook) {
+	o.PostSelfRefresh = v
+}
+
 // GetPreRollback returns the PreRollback field value if set, zero value otherwise.
+// Deprecated
 func (o *ProvisionVDBByTimestampParameters) GetPreRollback() []Hook {
 	if o == nil || IsNil(o.PreRollback) {
 		var ret []Hook
@@ -250,6 +335,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPreRollback() []Hook {
 
 // GetPreRollbackOk returns a tuple with the PreRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *ProvisionVDBByTimestampParameters) GetPreRollbackOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.PreRollback) {
 		return nil, false
@@ -267,11 +353,13 @@ func (o *ProvisionVDBByTimestampParameters) HasPreRollback() bool {
 }
 
 // SetPreRollback gets a reference to the given []Hook and assigns it to the PreRollback field.
+// Deprecated
 func (o *ProvisionVDBByTimestampParameters) SetPreRollback(v []Hook) {
 	o.PreRollback = v
 }
 
 // GetPostRollback returns the PostRollback field value if set, zero value otherwise.
+// Deprecated
 func (o *ProvisionVDBByTimestampParameters) GetPostRollback() []Hook {
 	if o == nil || IsNil(o.PostRollback) {
 		var ret []Hook
@@ -282,6 +370,7 @@ func (o *ProvisionVDBByTimestampParameters) GetPostRollback() []Hook {
 
 // GetPostRollbackOk returns a tuple with the PostRollback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *ProvisionVDBByTimestampParameters) GetPostRollbackOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.PostRollback) {
 		return nil, false
@@ -299,6 +388,7 @@ func (o *ProvisionVDBByTimestampParameters) HasPostRollback() bool {
 }
 
 // SetPostRollback gets a reference to the given []Hook and assigns it to the PostRollback field.
+// Deprecated
 func (o *ProvisionVDBByTimestampParameters) SetPostRollback(v []Hook) {
 	o.PostRollback = v
 }
@@ -685,6 +775,38 @@ func (o *ProvisionVDBByTimestampParameters) HasClusterNodeIds() bool {
 // SetClusterNodeIds gets a reference to the given []string and assigns it to the ClusterNodeIds field.
 func (o *ProvisionVDBByTimestampParameters) SetClusterNodeIds(v []string) {
 	o.ClusterNodeIds = v
+}
+
+// GetClusterNodeInstances returns the ClusterNodeInstances field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetClusterNodeInstances() []ClusterNodeInstance {
+	if o == nil || IsNil(o.ClusterNodeInstances) {
+		var ret []ClusterNodeInstance
+		return ret
+	}
+	return o.ClusterNodeInstances
+}
+
+// GetClusterNodeInstancesOk returns a tuple with the ClusterNodeInstances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetClusterNodeInstancesOk() ([]ClusterNodeInstance, bool) {
+	if o == nil || IsNil(o.ClusterNodeInstances) {
+		return nil, false
+	}
+	return o.ClusterNodeInstances, true
+}
+
+// HasClusterNodeInstances returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasClusterNodeInstances() bool {
+	if o != nil && !IsNil(o.ClusterNodeInstances) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterNodeInstances gets a reference to the given []ClusterNodeInstance and assigns it to the ClusterNodeInstances field.
+func (o *ProvisionVDBByTimestampParameters) SetClusterNodeInstances(v []ClusterNodeInstance) {
+	o.ClusterNodeInstances = v
 }
 
 // GetTruncateLogOnCheckpoint returns the TruncateLogOnCheckpoint field value if set, zero value otherwise.
@@ -2066,6 +2188,166 @@ func (o *ProvisionVDBByTimestampParameters) SetConfigParams(v map[string]interfa
 	o.ConfigParams = v
 }
 
+// GetPrivilegedOsUser returns the PrivilegedOsUser field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetPrivilegedOsUser() string {
+	if o == nil || IsNil(o.PrivilegedOsUser) {
+		var ret string
+		return ret
+	}
+	return *o.PrivilegedOsUser
+}
+
+// GetPrivilegedOsUserOk returns a tuple with the PrivilegedOsUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetPrivilegedOsUserOk() (*string, bool) {
+	if o == nil || IsNil(o.PrivilegedOsUser) {
+		return nil, false
+	}
+	return o.PrivilegedOsUser, true
+}
+
+// HasPrivilegedOsUser returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasPrivilegedOsUser() bool {
+	if o != nil && !IsNil(o.PrivilegedOsUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrivilegedOsUser gets a reference to the given string and assigns it to the PrivilegedOsUser field.
+func (o *ProvisionVDBByTimestampParameters) SetPrivilegedOsUser(v string) {
+	o.PrivilegedOsUser = &v
+}
+
+// GetPostgresPort returns the PostgresPort field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetPostgresPort() int32 {
+	if o == nil || IsNil(o.PostgresPort) {
+		var ret int32
+		return ret
+	}
+	return *o.PostgresPort
+}
+
+// GetPostgresPortOk returns a tuple with the PostgresPort field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetPostgresPortOk() (*int32, bool) {
+	if o == nil || IsNil(o.PostgresPort) {
+		return nil, false
+	}
+	return o.PostgresPort, true
+}
+
+// HasPostgresPort returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasPostgresPort() bool {
+	if o != nil && !IsNil(o.PostgresPort) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostgresPort gets a reference to the given int32 and assigns it to the PostgresPort field.
+func (o *ProvisionVDBByTimestampParameters) SetPostgresPort(v int32) {
+	o.PostgresPort = &v
+}
+
+// GetConfigSettingsStg returns the ConfigSettingsStg field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetConfigSettingsStg() []ConfigSettingsStg {
+	if o == nil || IsNil(o.ConfigSettingsStg) {
+		var ret []ConfigSettingsStg
+		return ret
+	}
+	return o.ConfigSettingsStg
+}
+
+// GetConfigSettingsStgOk returns a tuple with the ConfigSettingsStg field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetConfigSettingsStgOk() ([]ConfigSettingsStg, bool) {
+	if o == nil || IsNil(o.ConfigSettingsStg) {
+		return nil, false
+	}
+	return o.ConfigSettingsStg, true
+}
+
+// HasConfigSettingsStg returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasConfigSettingsStg() bool {
+	if o != nil && !IsNil(o.ConfigSettingsStg) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfigSettingsStg gets a reference to the given []ConfigSettingsStg and assigns it to the ConfigSettingsStg field.
+func (o *ProvisionVDBByTimestampParameters) SetConfigSettingsStg(v []ConfigSettingsStg) {
+	o.ConfigSettingsStg = v
+}
+
+// GetVcdbRestart returns the VcdbRestart field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetVcdbRestart() bool {
+	if o == nil || IsNil(o.VcdbRestart) {
+		var ret bool
+		return ret
+	}
+	return *o.VcdbRestart
+}
+
+// GetVcdbRestartOk returns a tuple with the VcdbRestart field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetVcdbRestartOk() (*bool, bool) {
+	if o == nil || IsNil(o.VcdbRestart) {
+		return nil, false
+	}
+	return o.VcdbRestart, true
+}
+
+// HasVcdbRestart returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasVcdbRestart() bool {
+	if o != nil && !IsNil(o.VcdbRestart) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbRestart gets a reference to the given bool and assigns it to the VcdbRestart field.
+func (o *ProvisionVDBByTimestampParameters) SetVcdbRestart(v bool) {
+	o.VcdbRestart = &v
+}
+
+// GetMssqlFailoverDriveLetter returns the MssqlFailoverDriveLetter field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetMssqlFailoverDriveLetter() string {
+	if o == nil || IsNil(o.MssqlFailoverDriveLetter) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlFailoverDriveLetter
+}
+
+// GetMssqlFailoverDriveLetterOk returns a tuple with the MssqlFailoverDriveLetter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetMssqlFailoverDriveLetterOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlFailoverDriveLetter) {
+		return nil, false
+	}
+	return o.MssqlFailoverDriveLetter, true
+}
+
+// HasMssqlFailoverDriveLetter returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasMssqlFailoverDriveLetter() bool {
+	if o != nil && !IsNil(o.MssqlFailoverDriveLetter) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlFailoverDriveLetter gets a reference to the given string and assigns it to the MssqlFailoverDriveLetter field.
+func (o *ProvisionVDBByTimestampParameters) SetMssqlFailoverDriveLetter(v string) {
+	o.MssqlFailoverDriveLetter = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -2160,6 +2442,38 @@ func (o *ProvisionVDBByTimestampParameters) HasTimestampInDatabaseTimezone() boo
 // SetTimestampInDatabaseTimezone gets a reference to the given string and assigns it to the TimestampInDatabaseTimezone field.
 func (o *ProvisionVDBByTimestampParameters) SetTimestampInDatabaseTimezone(v string) {
 	o.TimestampInDatabaseTimezone = &v
+}
+
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *ProvisionVDBByTimestampParameters) SetTimeflowId(v string) {
+	o.TimeflowId = &v
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -2266,6 +2580,12 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.PostRefresh) {
 		toSerialize["post_refresh"] = o.PostRefresh
 	}
+	if !IsNil(o.PreSelfRefresh) {
+		toSerialize["pre_self_refresh"] = o.PreSelfRefresh
+	}
+	if !IsNil(o.PostSelfRefresh) {
+		toSerialize["post_self_refresh"] = o.PostSelfRefresh
+	}
 	if !IsNil(o.PreRollback) {
 		toSerialize["pre_rollback"] = o.PreRollback
 	}
@@ -2307,6 +2627,9 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.ClusterNodeIds) {
 		toSerialize["cluster_node_ids"] = o.ClusterNodeIds
+	}
+	if !IsNil(o.ClusterNodeInstances) {
+		toSerialize["cluster_node_instances"] = o.ClusterNodeInstances
 	}
 	if !IsNil(o.TruncateLogOnCheckpoint) {
 		toSerialize["truncate_log_on_checkpoint"] = o.TruncateLogOnCheckpoint
@@ -2437,6 +2760,21 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	if o.ConfigParams != nil {
 		toSerialize["config_params"] = o.ConfigParams
 	}
+	if !IsNil(o.PrivilegedOsUser) {
+		toSerialize["privileged_os_user"] = o.PrivilegedOsUser
+	}
+	if !IsNil(o.PostgresPort) {
+		toSerialize["postgres_port"] = o.PostgresPort
+	}
+	if !IsNil(o.ConfigSettingsStg) {
+		toSerialize["config_settings_stg"] = o.ConfigSettingsStg
+	}
+	if !IsNil(o.VcdbRestart) {
+		toSerialize["vcdb_restart"] = o.VcdbRestart
+	}
+	if !IsNil(o.MssqlFailoverDriveLetter) {
+		toSerialize["mssql_failover_drive_letter"] = o.MssqlFailoverDriveLetter
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
@@ -2445,6 +2783,9 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.TimestampInDatabaseTimezone) {
 		toSerialize["timestamp_in_database_timezone"] = o.TimestampInDatabaseTimezone
+	}
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId

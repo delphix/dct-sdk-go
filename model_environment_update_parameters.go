@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -34,6 +34,8 @@ type EnvironmentUpdateParameters struct {
 	AseDbPassword *string `json:"ase_db_password,omitempty"`
 	// The name or reference of the vault from which to read the ASE database credentials.
 	AseDbVault *string `json:"ase_db_vault,omitempty"`
+	// Delphix display name for the vault user
+	AseDbVaultUsername *string `json:"ase_db_vault_username,omitempty"`
 	// Vault engine name where the credential is stored.
 	AseDbHashicorpVaultEngine *string `json:"ase_db_hashicorp_vault_engine,omitempty"`
 	// Path in the vault engine where the credential is stored.
@@ -291,6 +293,38 @@ func (o *EnvironmentUpdateParameters) SetAseDbVault(v string) {
 	o.AseDbVault = &v
 }
 
+// GetAseDbVaultUsername returns the AseDbVaultUsername field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbVaultUsername() string {
+	if o == nil || IsNil(o.AseDbVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.AseDbVaultUsername
+}
+
+// GetAseDbVaultUsernameOk returns a tuple with the AseDbVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.AseDbVaultUsername) {
+		return nil, false
+	}
+	return o.AseDbVaultUsername, true
+}
+
+// HasAseDbVaultUsername returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbVaultUsername() bool {
+	if o != nil && !IsNil(o.AseDbVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbVaultUsername gets a reference to the given string and assigns it to the AseDbVaultUsername field.
+func (o *EnvironmentUpdateParameters) SetAseDbVaultUsername(v string) {
+	o.AseDbVaultUsername = &v
+}
+
 // GetAseDbHashicorpVaultEngine returns the AseDbHashicorpVaultEngine field value if set, zero value otherwise.
 func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultEngine() string {
 	if o == nil || IsNil(o.AseDbHashicorpVaultEngine) {
@@ -545,6 +579,9 @@ func (o EnvironmentUpdateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AseDbVault) {
 		toSerialize["ase_db_vault"] = o.AseDbVault
+	}
+	if !IsNil(o.AseDbVaultUsername) {
+		toSerialize["ase_db_vault_username"] = o.AseDbVaultUsername
 	}
 	if !IsNil(o.AseDbHashicorpVaultEngine) {
 		toSerialize["ase_db_hashicorp_vault_engine"] = o.AseDbHashicorpVaultEngine

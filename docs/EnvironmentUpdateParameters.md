@@ -5,18 +5,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | The name of the environment. | [optional] 
-**Hostname** | Pointer to **string** | host address of the machine. | [optional] 
 **StagingEnvironment** | Pointer to **string** | Id of the connector environment which is used to connect to this source environment. | [optional] 
-**ConnectorPort** | Pointer to **int32** | Specify port on which Delphix connector will run. | [optional] 
-**NfsAddresses** | Pointer to **[]string** | array of ip addresses or hostnames | [optional] 
-**SshPort** | Pointer to **int64** | ssh port of the host. | [optional] 
-**ToolkitPath** | Pointer to **string** | The path for the toolkit that resides on the host. | [optional] 
-**JavaHome** | Pointer to **string** | The path to the user managed Java Development Kit (JDK). If not specified, then the OpenJDK will be used. | [optional] 
-**DspKeystorePath** | Pointer to **string** | DSP keystore path. | [optional] 
-**DspKeystorePassword** | Pointer to **string** | DSP keystore password. | [optional] 
-**DspKeystoreAlias** | Pointer to **string** | DSP keystore alias. | [optional] 
-**DspTruststorePath** | Pointer to **string** | DSP truststore path. | [optional] 
-**DspTruststorePassword** | Pointer to **string** | DSP truststore password. | [optional] 
+**ClusterAddress** | Pointer to **string** | Address of the cluster. This property can be modified for Windows cluster only. | [optional] 
+**ClusterHome** | Pointer to **string** | Absolute path to cluster home directory. This parameter is for UNIX cluster environments. | [optional] 
+**AseDbUsername** | Pointer to **string** | username of the SAP ASE database. | [optional] 
+**AseDbPassword** | Pointer to **string** | password of the SAP ASE database. | [optional] 
+**AseDbVault** | Pointer to **string** | The name or reference of the vault from which to read the ASE database credentials. | [optional] 
+**AseDbVaultUsername** | Pointer to **string** | Delphix display name for the vault user | [optional] 
+**AseDbHashicorpVaultEngine** | Pointer to **string** | Vault engine name where the credential is stored. | [optional] 
+**AseDbHashicorpVaultSecretPath** | Pointer to **string** | Path in the vault engine where the credential is stored. | [optional] 
+**AseDbHashicorpVaultUsernameKey** | Pointer to **string** | Key for the username in the key-value store. | [optional] 
+**AseDbHashicorpVaultSecretKey** | Pointer to **string** | Key for the password in the key-value store. | [optional] 
+**AseDbCyberarkVaultQueryString** | Pointer to **string** | Query to find a credential in the CyberArk vault. | [optional] 
+**AseDbUseKerberosAuthentication** | Pointer to **bool** | Whether to use kerberos authentication for ASE DB discovery. | [optional] 
 **Description** | Pointer to **string** | The environment description. | [optional] 
 
 ## Methods
@@ -63,31 +64,6 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
-### GetHostname
-
-`func (o *EnvironmentUpdateParameters) GetHostname() string`
-
-GetHostname returns the Hostname field if non-nil, zero value otherwise.
-
-### GetHostnameOk
-
-`func (o *EnvironmentUpdateParameters) GetHostnameOk() (*string, bool)`
-
-GetHostnameOk returns a tuple with the Hostname field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetHostname
-
-`func (o *EnvironmentUpdateParameters) SetHostname(v string)`
-
-SetHostname sets Hostname field to given value.
-
-### HasHostname
-
-`func (o *EnvironmentUpdateParameters) HasHostname() bool`
-
-HasHostname returns a boolean if a field has been set.
-
 ### GetStagingEnvironment
 
 `func (o *EnvironmentUpdateParameters) GetStagingEnvironment() string`
@@ -113,255 +89,305 @@ SetStagingEnvironment sets StagingEnvironment field to given value.
 
 HasStagingEnvironment returns a boolean if a field has been set.
 
-### GetConnectorPort
+### GetClusterAddress
 
-`func (o *EnvironmentUpdateParameters) GetConnectorPort() int32`
+`func (o *EnvironmentUpdateParameters) GetClusterAddress() string`
 
-GetConnectorPort returns the ConnectorPort field if non-nil, zero value otherwise.
+GetClusterAddress returns the ClusterAddress field if non-nil, zero value otherwise.
 
-### GetConnectorPortOk
+### GetClusterAddressOk
 
-`func (o *EnvironmentUpdateParameters) GetConnectorPortOk() (*int32, bool)`
+`func (o *EnvironmentUpdateParameters) GetClusterAddressOk() (*string, bool)`
 
-GetConnectorPortOk returns a tuple with the ConnectorPort field if it's non-nil, zero value otherwise
+GetClusterAddressOk returns a tuple with the ClusterAddress field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetConnectorPort
+### SetClusterAddress
 
-`func (o *EnvironmentUpdateParameters) SetConnectorPort(v int32)`
+`func (o *EnvironmentUpdateParameters) SetClusterAddress(v string)`
 
-SetConnectorPort sets ConnectorPort field to given value.
+SetClusterAddress sets ClusterAddress field to given value.
 
-### HasConnectorPort
+### HasClusterAddress
 
-`func (o *EnvironmentUpdateParameters) HasConnectorPort() bool`
+`func (o *EnvironmentUpdateParameters) HasClusterAddress() bool`
 
-HasConnectorPort returns a boolean if a field has been set.
+HasClusterAddress returns a boolean if a field has been set.
 
-### GetNfsAddresses
+### GetClusterHome
 
-`func (o *EnvironmentUpdateParameters) GetNfsAddresses() []string`
+`func (o *EnvironmentUpdateParameters) GetClusterHome() string`
 
-GetNfsAddresses returns the NfsAddresses field if non-nil, zero value otherwise.
+GetClusterHome returns the ClusterHome field if non-nil, zero value otherwise.
 
-### GetNfsAddressesOk
+### GetClusterHomeOk
 
-`func (o *EnvironmentUpdateParameters) GetNfsAddressesOk() (*[]string, bool)`
+`func (o *EnvironmentUpdateParameters) GetClusterHomeOk() (*string, bool)`
 
-GetNfsAddressesOk returns a tuple with the NfsAddresses field if it's non-nil, zero value otherwise
+GetClusterHomeOk returns a tuple with the ClusterHome field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNfsAddresses
+### SetClusterHome
 
-`func (o *EnvironmentUpdateParameters) SetNfsAddresses(v []string)`
+`func (o *EnvironmentUpdateParameters) SetClusterHome(v string)`
 
-SetNfsAddresses sets NfsAddresses field to given value.
+SetClusterHome sets ClusterHome field to given value.
 
-### HasNfsAddresses
+### HasClusterHome
 
-`func (o *EnvironmentUpdateParameters) HasNfsAddresses() bool`
+`func (o *EnvironmentUpdateParameters) HasClusterHome() bool`
 
-HasNfsAddresses returns a boolean if a field has been set.
+HasClusterHome returns a boolean if a field has been set.
 
-### GetSshPort
+### GetAseDbUsername
 
-`func (o *EnvironmentUpdateParameters) GetSshPort() int64`
+`func (o *EnvironmentUpdateParameters) GetAseDbUsername() string`
 
-GetSshPort returns the SshPort field if non-nil, zero value otherwise.
+GetAseDbUsername returns the AseDbUsername field if non-nil, zero value otherwise.
 
-### GetSshPortOk
+### GetAseDbUsernameOk
 
-`func (o *EnvironmentUpdateParameters) GetSshPortOk() (*int64, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbUsernameOk() (*string, bool)`
 
-GetSshPortOk returns a tuple with the SshPort field if it's non-nil, zero value otherwise
+GetAseDbUsernameOk returns a tuple with the AseDbUsername field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSshPort
+### SetAseDbUsername
 
-`func (o *EnvironmentUpdateParameters) SetSshPort(v int64)`
+`func (o *EnvironmentUpdateParameters) SetAseDbUsername(v string)`
 
-SetSshPort sets SshPort field to given value.
+SetAseDbUsername sets AseDbUsername field to given value.
 
-### HasSshPort
+### HasAseDbUsername
 
-`func (o *EnvironmentUpdateParameters) HasSshPort() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbUsername() bool`
 
-HasSshPort returns a boolean if a field has been set.
+HasAseDbUsername returns a boolean if a field has been set.
 
-### GetToolkitPath
+### GetAseDbPassword
 
-`func (o *EnvironmentUpdateParameters) GetToolkitPath() string`
+`func (o *EnvironmentUpdateParameters) GetAseDbPassword() string`
 
-GetToolkitPath returns the ToolkitPath field if non-nil, zero value otherwise.
+GetAseDbPassword returns the AseDbPassword field if non-nil, zero value otherwise.
 
-### GetToolkitPathOk
+### GetAseDbPasswordOk
 
-`func (o *EnvironmentUpdateParameters) GetToolkitPathOk() (*string, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbPasswordOk() (*string, bool)`
 
-GetToolkitPathOk returns a tuple with the ToolkitPath field if it's non-nil, zero value otherwise
+GetAseDbPasswordOk returns a tuple with the AseDbPassword field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetToolkitPath
+### SetAseDbPassword
 
-`func (o *EnvironmentUpdateParameters) SetToolkitPath(v string)`
+`func (o *EnvironmentUpdateParameters) SetAseDbPassword(v string)`
 
-SetToolkitPath sets ToolkitPath field to given value.
+SetAseDbPassword sets AseDbPassword field to given value.
 
-### HasToolkitPath
+### HasAseDbPassword
 
-`func (o *EnvironmentUpdateParameters) HasToolkitPath() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbPassword() bool`
 
-HasToolkitPath returns a boolean if a field has been set.
+HasAseDbPassword returns a boolean if a field has been set.
 
-### GetJavaHome
+### GetAseDbVault
 
-`func (o *EnvironmentUpdateParameters) GetJavaHome() string`
+`func (o *EnvironmentUpdateParameters) GetAseDbVault() string`
 
-GetJavaHome returns the JavaHome field if non-nil, zero value otherwise.
+GetAseDbVault returns the AseDbVault field if non-nil, zero value otherwise.
 
-### GetJavaHomeOk
+### GetAseDbVaultOk
 
-`func (o *EnvironmentUpdateParameters) GetJavaHomeOk() (*string, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbVaultOk() (*string, bool)`
 
-GetJavaHomeOk returns a tuple with the JavaHome field if it's non-nil, zero value otherwise
+GetAseDbVaultOk returns a tuple with the AseDbVault field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetJavaHome
+### SetAseDbVault
 
-`func (o *EnvironmentUpdateParameters) SetJavaHome(v string)`
+`func (o *EnvironmentUpdateParameters) SetAseDbVault(v string)`
 
-SetJavaHome sets JavaHome field to given value.
+SetAseDbVault sets AseDbVault field to given value.
 
-### HasJavaHome
+### HasAseDbVault
 
-`func (o *EnvironmentUpdateParameters) HasJavaHome() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbVault() bool`
 
-HasJavaHome returns a boolean if a field has been set.
+HasAseDbVault returns a boolean if a field has been set.
 
-### GetDspKeystorePath
+### GetAseDbVaultUsername
 
-`func (o *EnvironmentUpdateParameters) GetDspKeystorePath() string`
+`func (o *EnvironmentUpdateParameters) GetAseDbVaultUsername() string`
 
-GetDspKeystorePath returns the DspKeystorePath field if non-nil, zero value otherwise.
+GetAseDbVaultUsername returns the AseDbVaultUsername field if non-nil, zero value otherwise.
 
-### GetDspKeystorePathOk
+### GetAseDbVaultUsernameOk
 
-`func (o *EnvironmentUpdateParameters) GetDspKeystorePathOk() (*string, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbVaultUsernameOk() (*string, bool)`
 
-GetDspKeystorePathOk returns a tuple with the DspKeystorePath field if it's non-nil, zero value otherwise
+GetAseDbVaultUsernameOk returns a tuple with the AseDbVaultUsername field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDspKeystorePath
+### SetAseDbVaultUsername
 
-`func (o *EnvironmentUpdateParameters) SetDspKeystorePath(v string)`
+`func (o *EnvironmentUpdateParameters) SetAseDbVaultUsername(v string)`
 
-SetDspKeystorePath sets DspKeystorePath field to given value.
+SetAseDbVaultUsername sets AseDbVaultUsername field to given value.
 
-### HasDspKeystorePath
+### HasAseDbVaultUsername
 
-`func (o *EnvironmentUpdateParameters) HasDspKeystorePath() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbVaultUsername() bool`
 
-HasDspKeystorePath returns a boolean if a field has been set.
+HasAseDbVaultUsername returns a boolean if a field has been set.
 
-### GetDspKeystorePassword
+### GetAseDbHashicorpVaultEngine
 
-`func (o *EnvironmentUpdateParameters) GetDspKeystorePassword() string`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultEngine() string`
 
-GetDspKeystorePassword returns the DspKeystorePassword field if non-nil, zero value otherwise.
+GetAseDbHashicorpVaultEngine returns the AseDbHashicorpVaultEngine field if non-nil, zero value otherwise.
 
-### GetDspKeystorePasswordOk
+### GetAseDbHashicorpVaultEngineOk
 
-`func (o *EnvironmentUpdateParameters) GetDspKeystorePasswordOk() (*string, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultEngineOk() (*string, bool)`
 
-GetDspKeystorePasswordOk returns a tuple with the DspKeystorePassword field if it's non-nil, zero value otherwise
+GetAseDbHashicorpVaultEngineOk returns a tuple with the AseDbHashicorpVaultEngine field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDspKeystorePassword
+### SetAseDbHashicorpVaultEngine
 
-`func (o *EnvironmentUpdateParameters) SetDspKeystorePassword(v string)`
+`func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultEngine(v string)`
 
-SetDspKeystorePassword sets DspKeystorePassword field to given value.
+SetAseDbHashicorpVaultEngine sets AseDbHashicorpVaultEngine field to given value.
 
-### HasDspKeystorePassword
+### HasAseDbHashicorpVaultEngine
 
-`func (o *EnvironmentUpdateParameters) HasDspKeystorePassword() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultEngine() bool`
 
-HasDspKeystorePassword returns a boolean if a field has been set.
+HasAseDbHashicorpVaultEngine returns a boolean if a field has been set.
 
-### GetDspKeystoreAlias
+### GetAseDbHashicorpVaultSecretPath
 
-`func (o *EnvironmentUpdateParameters) GetDspKeystoreAlias() string`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretPath() string`
 
-GetDspKeystoreAlias returns the DspKeystoreAlias field if non-nil, zero value otherwise.
+GetAseDbHashicorpVaultSecretPath returns the AseDbHashicorpVaultSecretPath field if non-nil, zero value otherwise.
 
-### GetDspKeystoreAliasOk
+### GetAseDbHashicorpVaultSecretPathOk
 
-`func (o *EnvironmentUpdateParameters) GetDspKeystoreAliasOk() (*string, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretPathOk() (*string, bool)`
 
-GetDspKeystoreAliasOk returns a tuple with the DspKeystoreAlias field if it's non-nil, zero value otherwise
+GetAseDbHashicorpVaultSecretPathOk returns a tuple with the AseDbHashicorpVaultSecretPath field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDspKeystoreAlias
+### SetAseDbHashicorpVaultSecretPath
 
-`func (o *EnvironmentUpdateParameters) SetDspKeystoreAlias(v string)`
+`func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultSecretPath(v string)`
 
-SetDspKeystoreAlias sets DspKeystoreAlias field to given value.
+SetAseDbHashicorpVaultSecretPath sets AseDbHashicorpVaultSecretPath field to given value.
 
-### HasDspKeystoreAlias
+### HasAseDbHashicorpVaultSecretPath
 
-`func (o *EnvironmentUpdateParameters) HasDspKeystoreAlias() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultSecretPath() bool`
 
-HasDspKeystoreAlias returns a boolean if a field has been set.
+HasAseDbHashicorpVaultSecretPath returns a boolean if a field has been set.
 
-### GetDspTruststorePath
+### GetAseDbHashicorpVaultUsernameKey
 
-`func (o *EnvironmentUpdateParameters) GetDspTruststorePath() string`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultUsernameKey() string`
 
-GetDspTruststorePath returns the DspTruststorePath field if non-nil, zero value otherwise.
+GetAseDbHashicorpVaultUsernameKey returns the AseDbHashicorpVaultUsernameKey field if non-nil, zero value otherwise.
 
-### GetDspTruststorePathOk
+### GetAseDbHashicorpVaultUsernameKeyOk
 
-`func (o *EnvironmentUpdateParameters) GetDspTruststorePathOk() (*string, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultUsernameKeyOk() (*string, bool)`
 
-GetDspTruststorePathOk returns a tuple with the DspTruststorePath field if it's non-nil, zero value otherwise
+GetAseDbHashicorpVaultUsernameKeyOk returns a tuple with the AseDbHashicorpVaultUsernameKey field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDspTruststorePath
+### SetAseDbHashicorpVaultUsernameKey
 
-`func (o *EnvironmentUpdateParameters) SetDspTruststorePath(v string)`
+`func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultUsernameKey(v string)`
 
-SetDspTruststorePath sets DspTruststorePath field to given value.
+SetAseDbHashicorpVaultUsernameKey sets AseDbHashicorpVaultUsernameKey field to given value.
 
-### HasDspTruststorePath
+### HasAseDbHashicorpVaultUsernameKey
 
-`func (o *EnvironmentUpdateParameters) HasDspTruststorePath() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultUsernameKey() bool`
 
-HasDspTruststorePath returns a boolean if a field has been set.
+HasAseDbHashicorpVaultUsernameKey returns a boolean if a field has been set.
 
-### GetDspTruststorePassword
+### GetAseDbHashicorpVaultSecretKey
 
-`func (o *EnvironmentUpdateParameters) GetDspTruststorePassword() string`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretKey() string`
 
-GetDspTruststorePassword returns the DspTruststorePassword field if non-nil, zero value otherwise.
+GetAseDbHashicorpVaultSecretKey returns the AseDbHashicorpVaultSecretKey field if non-nil, zero value otherwise.
 
-### GetDspTruststorePasswordOk
+### GetAseDbHashicorpVaultSecretKeyOk
 
-`func (o *EnvironmentUpdateParameters) GetDspTruststorePasswordOk() (*string, bool)`
+`func (o *EnvironmentUpdateParameters) GetAseDbHashicorpVaultSecretKeyOk() (*string, bool)`
 
-GetDspTruststorePasswordOk returns a tuple with the DspTruststorePassword field if it's non-nil, zero value otherwise
+GetAseDbHashicorpVaultSecretKeyOk returns a tuple with the AseDbHashicorpVaultSecretKey field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDspTruststorePassword
+### SetAseDbHashicorpVaultSecretKey
 
-`func (o *EnvironmentUpdateParameters) SetDspTruststorePassword(v string)`
+`func (o *EnvironmentUpdateParameters) SetAseDbHashicorpVaultSecretKey(v string)`
 
-SetDspTruststorePassword sets DspTruststorePassword field to given value.
+SetAseDbHashicorpVaultSecretKey sets AseDbHashicorpVaultSecretKey field to given value.
 
-### HasDspTruststorePassword
+### HasAseDbHashicorpVaultSecretKey
 
-`func (o *EnvironmentUpdateParameters) HasDspTruststorePassword() bool`
+`func (o *EnvironmentUpdateParameters) HasAseDbHashicorpVaultSecretKey() bool`
 
-HasDspTruststorePassword returns a boolean if a field has been set.
+HasAseDbHashicorpVaultSecretKey returns a boolean if a field has been set.
+
+### GetAseDbCyberarkVaultQueryString
+
+`func (o *EnvironmentUpdateParameters) GetAseDbCyberarkVaultQueryString() string`
+
+GetAseDbCyberarkVaultQueryString returns the AseDbCyberarkVaultQueryString field if non-nil, zero value otherwise.
+
+### GetAseDbCyberarkVaultQueryStringOk
+
+`func (o *EnvironmentUpdateParameters) GetAseDbCyberarkVaultQueryStringOk() (*string, bool)`
+
+GetAseDbCyberarkVaultQueryStringOk returns a tuple with the AseDbCyberarkVaultQueryString field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAseDbCyberarkVaultQueryString
+
+`func (o *EnvironmentUpdateParameters) SetAseDbCyberarkVaultQueryString(v string)`
+
+SetAseDbCyberarkVaultQueryString sets AseDbCyberarkVaultQueryString field to given value.
+
+### HasAseDbCyberarkVaultQueryString
+
+`func (o *EnvironmentUpdateParameters) HasAseDbCyberarkVaultQueryString() bool`
+
+HasAseDbCyberarkVaultQueryString returns a boolean if a field has been set.
+
+### GetAseDbUseKerberosAuthentication
+
+`func (o *EnvironmentUpdateParameters) GetAseDbUseKerberosAuthentication() bool`
+
+GetAseDbUseKerberosAuthentication returns the AseDbUseKerberosAuthentication field if non-nil, zero value otherwise.
+
+### GetAseDbUseKerberosAuthenticationOk
+
+`func (o *EnvironmentUpdateParameters) GetAseDbUseKerberosAuthenticationOk() (*bool, bool)`
+
+GetAseDbUseKerberosAuthenticationOk returns a tuple with the AseDbUseKerberosAuthentication field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAseDbUseKerberosAuthentication
+
+`func (o *EnvironmentUpdateParameters) SetAseDbUseKerberosAuthentication(v bool)`
+
+SetAseDbUseKerberosAuthentication sets AseDbUseKerberosAuthentication field to given value.
+
+### HasAseDbUseKerberosAuthentication
+
+`func (o *EnvironmentUpdateParameters) HasAseDbUseKerberosAuthentication() bool`
+
+HasAseDbUseKerberosAuthentication returns a boolean if a field has been set.
 
 ### GetDescription
 

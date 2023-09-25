@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -22,14 +22,40 @@ var _ MappedNullable = &ConnectivityCheckParameters{}
 type ConnectivityCheckParameters struct {
 	// The ID of the engine to check.
 	EngineId string `json:"engine_id"`
+	// Whether to use public key authentication.
+	UseEnginePublicKey *bool `json:"use_engine_public_key,omitempty"`
+	// Operating system type of the environment.
+	OsName *string `json:"os_name,omitempty"`
+	// Id of the connector environment which is used to connect to this source environment.
+	StagingEnvironment *string `json:"staging_environment,omitempty"`
 	// The hostname of the remote host machine to check.
 	Host string `json:"host"`
-	// The port of the remote host machine to check.
+	// The port of the remote host machine to check. For Windows, port on which Delphix connector is running.
 	Port NullableInt32 `json:"port"`
-	// The username of the remote host machine to check.
+	// The username of the remote host machine to check. Username is mandatory input with password/use_engine_public_key/kerberos_authentication.
 	Username *string `json:"username,omitempty"`
 	// The password of the remote host machine to check.
 	Password *string `json:"password,omitempty"`
+	// The DCT id or name of the vault from which to read the host credentials.
+	VaultId *string `json:"vault_id,omitempty"`
+	// Vault engine name where the credential is stored.
+	HashicorpVaultEngine *string `json:"hashicorp_vault_engine,omitempty"`
+	// Path in the vault engine where the credential is stored.
+	HashicorpVaultSecretPath *string `json:"hashicorp_vault_secret_path,omitempty"`
+	// Key for the username in the key-value store.
+	HashicorpVaultUsernameKey *string `json:"hashicorp_vault_username_key,omitempty"`
+	// Key for the password in the key-value store.
+	HashicorpVaultSecretKey *string `json:"hashicorp_vault_secret_key,omitempty"`
+	// Azure key vault name (ORACLE, ASE and MSSQL_DOMAIN_USER only).
+	AzureVaultName *string `json:"azure_vault_name,omitempty"`
+	// Azure vault key for the username in the key-value store (ORACLE, ASE and MSSQL_DOMAIN_USER only).
+	AzureVaultUsernameKey *string `json:"azure_vault_username_key,omitempty"`
+	// Azure vault key for the password in the key-value store (ORACLE, ASE and MSSQL_DOMAIN_USER only).
+	AzureVaultSecretKey *string `json:"azure_vault_secret_key,omitempty"`
+	// Query to find a credential in the CyberArk vault.
+	CyberarkVaultQueryString *string `json:"cyberark_vault_query_string,omitempty"`
+	// Whether to use kerberos authentication.
+	UseKerberosAuthentication *bool `json:"use_kerberos_authentication,omitempty"`
 }
 
 // NewConnectivityCheckParameters instantiates a new ConnectivityCheckParameters object
@@ -74,6 +100,102 @@ func (o *ConnectivityCheckParameters) GetEngineIdOk() (*string, bool) {
 // SetEngineId sets field value
 func (o *ConnectivityCheckParameters) SetEngineId(v string) {
 	o.EngineId = v
+}
+
+// GetUseEnginePublicKey returns the UseEnginePublicKey field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetUseEnginePublicKey() bool {
+	if o == nil || IsNil(o.UseEnginePublicKey) {
+		var ret bool
+		return ret
+	}
+	return *o.UseEnginePublicKey
+}
+
+// GetUseEnginePublicKeyOk returns a tuple with the UseEnginePublicKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetUseEnginePublicKeyOk() (*bool, bool) {
+	if o == nil || IsNil(o.UseEnginePublicKey) {
+		return nil, false
+	}
+	return o.UseEnginePublicKey, true
+}
+
+// HasUseEnginePublicKey returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasUseEnginePublicKey() bool {
+	if o != nil && !IsNil(o.UseEnginePublicKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetUseEnginePublicKey gets a reference to the given bool and assigns it to the UseEnginePublicKey field.
+func (o *ConnectivityCheckParameters) SetUseEnginePublicKey(v bool) {
+	o.UseEnginePublicKey = &v
+}
+
+// GetOsName returns the OsName field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetOsName() string {
+	if o == nil || IsNil(o.OsName) {
+		var ret string
+		return ret
+	}
+	return *o.OsName
+}
+
+// GetOsNameOk returns a tuple with the OsName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetOsNameOk() (*string, bool) {
+	if o == nil || IsNil(o.OsName) {
+		return nil, false
+	}
+	return o.OsName, true
+}
+
+// HasOsName returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasOsName() bool {
+	if o != nil && !IsNil(o.OsName) {
+		return true
+	}
+
+	return false
+}
+
+// SetOsName gets a reference to the given string and assigns it to the OsName field.
+func (o *ConnectivityCheckParameters) SetOsName(v string) {
+	o.OsName = &v
+}
+
+// GetStagingEnvironment returns the StagingEnvironment field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetStagingEnvironment() string {
+	if o == nil || IsNil(o.StagingEnvironment) {
+		var ret string
+		return ret
+	}
+	return *o.StagingEnvironment
+}
+
+// GetStagingEnvironmentOk returns a tuple with the StagingEnvironment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetStagingEnvironmentOk() (*string, bool) {
+	if o == nil || IsNil(o.StagingEnvironment) {
+		return nil, false
+	}
+	return o.StagingEnvironment, true
+}
+
+// HasStagingEnvironment returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasStagingEnvironment() bool {
+	if o != nil && !IsNil(o.StagingEnvironment) {
+		return true
+	}
+
+	return false
+}
+
+// SetStagingEnvironment gets a reference to the given string and assigns it to the StagingEnvironment field.
+func (o *ConnectivityCheckParameters) SetStagingEnvironment(v string) {
+	o.StagingEnvironment = &v
 }
 
 // GetHost returns the Host field value
@@ -190,6 +312,326 @@ func (o *ConnectivityCheckParameters) SetPassword(v string) {
 	o.Password = &v
 }
 
+// GetVaultId returns the VaultId field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetVaultId() string {
+	if o == nil || IsNil(o.VaultId) {
+		var ret string
+		return ret
+	}
+	return *o.VaultId
+}
+
+// GetVaultIdOk returns a tuple with the VaultId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetVaultIdOk() (*string, bool) {
+	if o == nil || IsNil(o.VaultId) {
+		return nil, false
+	}
+	return o.VaultId, true
+}
+
+// HasVaultId returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasVaultId() bool {
+	if o != nil && !IsNil(o.VaultId) {
+		return true
+	}
+
+	return false
+}
+
+// SetVaultId gets a reference to the given string and assigns it to the VaultId field.
+func (o *ConnectivityCheckParameters) SetVaultId(v string) {
+	o.VaultId = &v
+}
+
+// GetHashicorpVaultEngine returns the HashicorpVaultEngine field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultEngine() string {
+	if o == nil || IsNil(o.HashicorpVaultEngine) {
+		var ret string
+		return ret
+	}
+	return *o.HashicorpVaultEngine
+}
+
+// GetHashicorpVaultEngineOk returns a tuple with the HashicorpVaultEngine field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultEngineOk() (*string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultEngine) {
+		return nil, false
+	}
+	return o.HashicorpVaultEngine, true
+}
+
+// HasHashicorpVaultEngine returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasHashicorpVaultEngine() bool {
+	if o != nil && !IsNil(o.HashicorpVaultEngine) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultEngine gets a reference to the given string and assigns it to the HashicorpVaultEngine field.
+func (o *ConnectivityCheckParameters) SetHashicorpVaultEngine(v string) {
+	o.HashicorpVaultEngine = &v
+}
+
+// GetHashicorpVaultSecretPath returns the HashicorpVaultSecretPath field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultSecretPath() string {
+	if o == nil || IsNil(o.HashicorpVaultSecretPath) {
+		var ret string
+		return ret
+	}
+	return *o.HashicorpVaultSecretPath
+}
+
+// GetHashicorpVaultSecretPathOk returns a tuple with the HashicorpVaultSecretPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultSecretPathOk() (*string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultSecretPath) {
+		return nil, false
+	}
+	return o.HashicorpVaultSecretPath, true
+}
+
+// HasHashicorpVaultSecretPath returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasHashicorpVaultSecretPath() bool {
+	if o != nil && !IsNil(o.HashicorpVaultSecretPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultSecretPath gets a reference to the given string and assigns it to the HashicorpVaultSecretPath field.
+func (o *ConnectivityCheckParameters) SetHashicorpVaultSecretPath(v string) {
+	o.HashicorpVaultSecretPath = &v
+}
+
+// GetHashicorpVaultUsernameKey returns the HashicorpVaultUsernameKey field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultUsernameKey() string {
+	if o == nil || IsNil(o.HashicorpVaultUsernameKey) {
+		var ret string
+		return ret
+	}
+	return *o.HashicorpVaultUsernameKey
+}
+
+// GetHashicorpVaultUsernameKeyOk returns a tuple with the HashicorpVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultUsernameKey) {
+		return nil, false
+	}
+	return o.HashicorpVaultUsernameKey, true
+}
+
+// HasHashicorpVaultUsernameKey returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasHashicorpVaultUsernameKey() bool {
+	if o != nil && !IsNil(o.HashicorpVaultUsernameKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultUsernameKey gets a reference to the given string and assigns it to the HashicorpVaultUsernameKey field.
+func (o *ConnectivityCheckParameters) SetHashicorpVaultUsernameKey(v string) {
+	o.HashicorpVaultUsernameKey = &v
+}
+
+// GetHashicorpVaultSecretKey returns the HashicorpVaultSecretKey field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultSecretKey() string {
+	if o == nil || IsNil(o.HashicorpVaultSecretKey) {
+		var ret string
+		return ret
+	}
+	return *o.HashicorpVaultSecretKey
+}
+
+// GetHashicorpVaultSecretKeyOk returns a tuple with the HashicorpVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetHashicorpVaultSecretKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.HashicorpVaultSecretKey) {
+		return nil, false
+	}
+	return o.HashicorpVaultSecretKey, true
+}
+
+// HasHashicorpVaultSecretKey returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasHashicorpVaultSecretKey() bool {
+	if o != nil && !IsNil(o.HashicorpVaultSecretKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetHashicorpVaultSecretKey gets a reference to the given string and assigns it to the HashicorpVaultSecretKey field.
+func (o *ConnectivityCheckParameters) SetHashicorpVaultSecretKey(v string) {
+	o.HashicorpVaultSecretKey = &v
+}
+
+// GetAzureVaultName returns the AzureVaultName field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetAzureVaultName() string {
+	if o == nil || IsNil(o.AzureVaultName) {
+		var ret string
+		return ret
+	}
+	return *o.AzureVaultName
+}
+
+// GetAzureVaultNameOk returns a tuple with the AzureVaultName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetAzureVaultNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AzureVaultName) {
+		return nil, false
+	}
+	return o.AzureVaultName, true
+}
+
+// HasAzureVaultName returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasAzureVaultName() bool {
+	if o != nil && !IsNil(o.AzureVaultName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAzureVaultName gets a reference to the given string and assigns it to the AzureVaultName field.
+func (o *ConnectivityCheckParameters) SetAzureVaultName(v string) {
+	o.AzureVaultName = &v
+}
+
+// GetAzureVaultUsernameKey returns the AzureVaultUsernameKey field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetAzureVaultUsernameKey() string {
+	if o == nil || IsNil(o.AzureVaultUsernameKey) {
+		var ret string
+		return ret
+	}
+	return *o.AzureVaultUsernameKey
+}
+
+// GetAzureVaultUsernameKeyOk returns a tuple with the AzureVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetAzureVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.AzureVaultUsernameKey) {
+		return nil, false
+	}
+	return o.AzureVaultUsernameKey, true
+}
+
+// HasAzureVaultUsernameKey returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasAzureVaultUsernameKey() bool {
+	if o != nil && !IsNil(o.AzureVaultUsernameKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetAzureVaultUsernameKey gets a reference to the given string and assigns it to the AzureVaultUsernameKey field.
+func (o *ConnectivityCheckParameters) SetAzureVaultUsernameKey(v string) {
+	o.AzureVaultUsernameKey = &v
+}
+
+// GetAzureVaultSecretKey returns the AzureVaultSecretKey field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetAzureVaultSecretKey() string {
+	if o == nil || IsNil(o.AzureVaultSecretKey) {
+		var ret string
+		return ret
+	}
+	return *o.AzureVaultSecretKey
+}
+
+// GetAzureVaultSecretKeyOk returns a tuple with the AzureVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetAzureVaultSecretKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.AzureVaultSecretKey) {
+		return nil, false
+	}
+	return o.AzureVaultSecretKey, true
+}
+
+// HasAzureVaultSecretKey returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasAzureVaultSecretKey() bool {
+	if o != nil && !IsNil(o.AzureVaultSecretKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetAzureVaultSecretKey gets a reference to the given string and assigns it to the AzureVaultSecretKey field.
+func (o *ConnectivityCheckParameters) SetAzureVaultSecretKey(v string) {
+	o.AzureVaultSecretKey = &v
+}
+
+// GetCyberarkVaultQueryString returns the CyberarkVaultQueryString field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetCyberarkVaultQueryString() string {
+	if o == nil || IsNil(o.CyberarkVaultQueryString) {
+		var ret string
+		return ret
+	}
+	return *o.CyberarkVaultQueryString
+}
+
+// GetCyberarkVaultQueryStringOk returns a tuple with the CyberarkVaultQueryString field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetCyberarkVaultQueryStringOk() (*string, bool) {
+	if o == nil || IsNil(o.CyberarkVaultQueryString) {
+		return nil, false
+	}
+	return o.CyberarkVaultQueryString, true
+}
+
+// HasCyberarkVaultQueryString returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasCyberarkVaultQueryString() bool {
+	if o != nil && !IsNil(o.CyberarkVaultQueryString) {
+		return true
+	}
+
+	return false
+}
+
+// SetCyberarkVaultQueryString gets a reference to the given string and assigns it to the CyberarkVaultQueryString field.
+func (o *ConnectivityCheckParameters) SetCyberarkVaultQueryString(v string) {
+	o.CyberarkVaultQueryString = &v
+}
+
+// GetUseKerberosAuthentication returns the UseKerberosAuthentication field value if set, zero value otherwise.
+func (o *ConnectivityCheckParameters) GetUseKerberosAuthentication() bool {
+	if o == nil || IsNil(o.UseKerberosAuthentication) {
+		var ret bool
+		return ret
+	}
+	return *o.UseKerberosAuthentication
+}
+
+// GetUseKerberosAuthenticationOk returns a tuple with the UseKerberosAuthentication field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectivityCheckParameters) GetUseKerberosAuthenticationOk() (*bool, bool) {
+	if o == nil || IsNil(o.UseKerberosAuthentication) {
+		return nil, false
+	}
+	return o.UseKerberosAuthentication, true
+}
+
+// HasUseKerberosAuthentication returns a boolean if a field has been set.
+func (o *ConnectivityCheckParameters) HasUseKerberosAuthentication() bool {
+	if o != nil && !IsNil(o.UseKerberosAuthentication) {
+		return true
+	}
+
+	return false
+}
+
+// SetUseKerberosAuthentication gets a reference to the given bool and assigns it to the UseKerberosAuthentication field.
+func (o *ConnectivityCheckParameters) SetUseKerberosAuthentication(v bool) {
+	o.UseKerberosAuthentication = &v
+}
+
 func (o ConnectivityCheckParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -201,6 +643,15 @@ func (o ConnectivityCheckParameters) MarshalJSON() ([]byte, error) {
 func (o ConnectivityCheckParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["engine_id"] = o.EngineId
+	if !IsNil(o.UseEnginePublicKey) {
+		toSerialize["use_engine_public_key"] = o.UseEnginePublicKey
+	}
+	if !IsNil(o.OsName) {
+		toSerialize["os_name"] = o.OsName
+	}
+	if !IsNil(o.StagingEnvironment) {
+		toSerialize["staging_environment"] = o.StagingEnvironment
+	}
 	toSerialize["host"] = o.Host
 	toSerialize["port"] = o.Port.Get()
 	if !IsNil(o.Username) {
@@ -208,6 +659,36 @@ func (o ConnectivityCheckParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Password) {
 		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.VaultId) {
+		toSerialize["vault_id"] = o.VaultId
+	}
+	if !IsNil(o.HashicorpVaultEngine) {
+		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
+	}
+	if !IsNil(o.HashicorpVaultSecretPath) {
+		toSerialize["hashicorp_vault_secret_path"] = o.HashicorpVaultSecretPath
+	}
+	if !IsNil(o.HashicorpVaultUsernameKey) {
+		toSerialize["hashicorp_vault_username_key"] = o.HashicorpVaultUsernameKey
+	}
+	if !IsNil(o.HashicorpVaultSecretKey) {
+		toSerialize["hashicorp_vault_secret_key"] = o.HashicorpVaultSecretKey
+	}
+	if !IsNil(o.AzureVaultName) {
+		toSerialize["azure_vault_name"] = o.AzureVaultName
+	}
+	if !IsNil(o.AzureVaultUsernameKey) {
+		toSerialize["azure_vault_username_key"] = o.AzureVaultUsernameKey
+	}
+	if !IsNil(o.AzureVaultSecretKey) {
+		toSerialize["azure_vault_secret_key"] = o.AzureVaultSecretKey
+	}
+	if !IsNil(o.CyberarkVaultQueryString) {
+		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
+	}
+	if !IsNil(o.UseKerberosAuthentication) {
+		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
 	}
 	return toSerialize, nil
 }

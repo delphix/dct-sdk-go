@@ -34,6 +34,17 @@ func Test_delphix_dct_api_LoginApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test LoginApiService AccountLogout", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.LoginApi.AccountLogout(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test LoginApiService TokenInfo", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Timestamp** | Pointer to **time.Time** | The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point. | [optional] 
 **TimestampInDatabaseTimezone** | Pointer to **string** | The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp. | [optional] 
+**TimeflowId** | Pointer to **string** | The Timeflow ID. | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetTimestampInDatabaseTimezone sets TimestampInDatabaseTimezone field to given v
 `func (o *RollbackVDBByTimestampParameters) HasTimestampInDatabaseTimezone() bool`
 
 HasTimestampInDatabaseTimezone returns a boolean if a field has been set.
+
+### GetTimeflowId
+
+`func (o *RollbackVDBByTimestampParameters) GetTimeflowId() string`
+
+GetTimeflowId returns the TimeflowId field if non-nil, zero value otherwise.
+
+### GetTimeflowIdOk
+
+`func (o *RollbackVDBByTimestampParameters) GetTimeflowIdOk() (*string, bool)`
+
+GetTimeflowIdOk returns a tuple with the TimeflowId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeflowId
+
+`func (o *RollbackVDBByTimestampParameters) SetTimeflowId(v string)`
+
+SetTimeflowId sets TimeflowId field to given value.
+
+### HasTimeflowId
+
+`func (o *RollbackVDBByTimestampParameters) HasTimeflowId() bool`
+
+HasTimeflowId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

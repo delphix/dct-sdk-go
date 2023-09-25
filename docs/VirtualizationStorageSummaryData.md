@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**EngineId** | **int64** | A reference to the engine. | 
+**EngineId** | **string** | A reference to the engine. | 
 **EngineName** | **string** | The engine name. | 
 **EngineHostname** | **string** | The engine hostname. | 
 **TotalCapacity** | Pointer to **int64** | The total amount of storage allocated for engine objects and system metadata, in bytes. | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewVirtualizationStorageSummaryData
 
-`func NewVirtualizationStorageSummaryData(engineId int64, engineName string, engineHostname string, ) *VirtualizationStorageSummaryData`
+`func NewVirtualizationStorageSummaryData(engineId string, engineName string, engineHostname string, ) *VirtualizationStorageSummaryData`
 
 NewVirtualizationStorageSummaryData instantiates a new VirtualizationStorageSummaryData object
 This constructor will assign default values to properties that have it defined,
@@ -36,20 +36,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetEngineId
 
-`func (o *VirtualizationStorageSummaryData) GetEngineId() int64`
+`func (o *VirtualizationStorageSummaryData) GetEngineId() string`
 
 GetEngineId returns the EngineId field if non-nil, zero value otherwise.
 
 ### GetEngineIdOk
 
-`func (o *VirtualizationStorageSummaryData) GetEngineIdOk() (*int64, bool)`
+`func (o *VirtualizationStorageSummaryData) GetEngineIdOk() (*string, bool)`
 
 GetEngineIdOk returns a tuple with the EngineId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEngineId
 
-`func (o *VirtualizationStorageSummaryData) SetEngineId(v int64)`
+`func (o *VirtualizationStorageSummaryData) SetEngineId(v string)`
 
 SetEngineId sets EngineId field to given value.
 

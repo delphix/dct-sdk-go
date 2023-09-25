@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BookmarkId** | Pointer to **string** | ID of a bookmark to refresh this VDB Group to. | [optional] 
+**BookmarkId** | **string** | ID of a bookmark to refresh this VDB Group to. | 
 
 ## Methods
 
 ### NewRefreshVDBGroupParameters
 
-`func NewRefreshVDBGroupParameters() *RefreshVDBGroupParameters`
+`func NewRefreshVDBGroupParameters(bookmarkId string, ) *RefreshVDBGroupParameters`
 
 NewRefreshVDBGroupParameters instantiates a new RefreshVDBGroupParameters object
 This constructor will assign default values to properties that have it defined,
@@ -44,11 +44,6 @@ and a boolean to check if the value has been set.
 
 SetBookmarkId sets BookmarkId field to given value.
 
-### HasBookmarkId
-
-`func (o *RefreshVDBGroupParameters) HasBookmarkId() bool`
-
-HasBookmarkId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Tags** | Pointer to [**[]Tag**](Tag.md) | Array of tags with key value pairs | [optional] 
+**Tags** | [**[]Tag**](Tag.md) | Array of tags with key value pairs | 
 
 ## Methods
 
 ### NewTagsRequest
 
-`func NewTagsRequest() *TagsRequest`
+`func NewTagsRequest(tags []Tag, ) *TagsRequest`
 
 NewTagsRequest instantiates a new TagsRequest object
 This constructor will assign default values to properties that have it defined,
@@ -44,11 +44,6 @@ and a boolean to check if the value has been set.
 
 SetTags sets Tags field to given value.
 
-### HasTags
-
-`func (o *TagsRequest) HasTags() bool`
-
-HasTags returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.1.0
+API version: 3.5.0
 Contact: support@delphix.com
 */
 
@@ -26,7 +26,7 @@ type ApiUsageData struct {
 	ApiMethod *string `json:"api_method,omitempty"`
 	// Count of API calls over the requested timeframe.
 	ApiCount int64 `json:"api_count"`
-	// Whether the API calls are of kind automation or management
+	// Whether the API calls are of kind automation or governance
 	Kind *string `json:"kind,omitempty"`
 	// Name of the api client that called the API endpoint
 	ClientName *string `json:"client_name,omitempty"`

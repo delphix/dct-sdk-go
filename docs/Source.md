@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **Id** | Pointer to **string** | The Source object entity ID. | [optional] 
 **DatabaseType** | Pointer to **NullableString** | The type of this source database. | [optional] 
 **Name** | Pointer to **NullableString** | The name of this source database. | [optional] 
+**NamespaceId** | Pointer to **NullableString** | The namespace id of this source database. | [optional] 
+**NamespaceName** | Pointer to **NullableString** | The namespace name of this source database. | [optional] 
+**IsReplica** | Pointer to **NullableBool** | Is this a replicated object. | [optional] 
 **DatabaseVersion** | Pointer to **NullableString** | The version of this source database. | [optional] 
 **EnvironmentId** | Pointer to **NullableString** | A reference to the Environment that hosts this source database. | [optional] 
 **DataUuid** | Pointer to **NullableString** | A universal ID that uniquely identifies this source database. | [optional] 
@@ -15,6 +18,9 @@ Name | Type | Description | Notes
 **Size** | Pointer to **NullableInt64** | The total size of this source database, in bytes. | [optional] 
 **JdbcConnectionString** | Pointer to **NullableString** | The JDBC connection URL for this source database. | [optional] 
 **PluginVersion** | Pointer to **NullableString** | The version of the plugin associated with this source database. | [optional] 
+**IsDsource** | Pointer to **bool** |  | [optional] 
+**Repository** | Pointer to **string** | The repository reference for this source | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -130,6 +136,111 @@ HasName returns a boolean if a field has been set.
 `func (o *Source) UnsetName()`
 
 UnsetName ensures that no value is present for Name, not even an explicit nil
+### GetNamespaceId
+
+`func (o *Source) GetNamespaceId() string`
+
+GetNamespaceId returns the NamespaceId field if non-nil, zero value otherwise.
+
+### GetNamespaceIdOk
+
+`func (o *Source) GetNamespaceIdOk() (*string, bool)`
+
+GetNamespaceIdOk returns a tuple with the NamespaceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceId
+
+`func (o *Source) SetNamespaceId(v string)`
+
+SetNamespaceId sets NamespaceId field to given value.
+
+### HasNamespaceId
+
+`func (o *Source) HasNamespaceId() bool`
+
+HasNamespaceId returns a boolean if a field has been set.
+
+### SetNamespaceIdNil
+
+`func (o *Source) SetNamespaceIdNil(b bool)`
+
+ SetNamespaceIdNil sets the value for NamespaceId to be an explicit nil
+
+### UnsetNamespaceId
+`func (o *Source) UnsetNamespaceId()`
+
+UnsetNamespaceId ensures that no value is present for NamespaceId, not even an explicit nil
+### GetNamespaceName
+
+`func (o *Source) GetNamespaceName() string`
+
+GetNamespaceName returns the NamespaceName field if non-nil, zero value otherwise.
+
+### GetNamespaceNameOk
+
+`func (o *Source) GetNamespaceNameOk() (*string, bool)`
+
+GetNamespaceNameOk returns a tuple with the NamespaceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNamespaceName
+
+`func (o *Source) SetNamespaceName(v string)`
+
+SetNamespaceName sets NamespaceName field to given value.
+
+### HasNamespaceName
+
+`func (o *Source) HasNamespaceName() bool`
+
+HasNamespaceName returns a boolean if a field has been set.
+
+### SetNamespaceNameNil
+
+`func (o *Source) SetNamespaceNameNil(b bool)`
+
+ SetNamespaceNameNil sets the value for NamespaceName to be an explicit nil
+
+### UnsetNamespaceName
+`func (o *Source) UnsetNamespaceName()`
+
+UnsetNamespaceName ensures that no value is present for NamespaceName, not even an explicit nil
+### GetIsReplica
+
+`func (o *Source) GetIsReplica() bool`
+
+GetIsReplica returns the IsReplica field if non-nil, zero value otherwise.
+
+### GetIsReplicaOk
+
+`func (o *Source) GetIsReplicaOk() (*bool, bool)`
+
+GetIsReplicaOk returns a tuple with the IsReplica field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsReplica
+
+`func (o *Source) SetIsReplica(v bool)`
+
+SetIsReplica sets IsReplica field to given value.
+
+### HasIsReplica
+
+`func (o *Source) HasIsReplica() bool`
+
+HasIsReplica returns a boolean if a field has been set.
+
+### SetIsReplicaNil
+
+`func (o *Source) SetIsReplicaNil(b bool)`
+
+ SetIsReplicaNil sets the value for IsReplica to be an explicit nil
+
+### UnsetIsReplica
+`func (o *Source) UnsetIsReplica()`
+
+UnsetIsReplica ensures that no value is present for IsReplica, not even an explicit nil
 ### GetDatabaseVersion
 
 `func (o *Source) GetDatabaseVersion() string`
@@ -410,6 +521,81 @@ HasPluginVersion returns a boolean if a field has been set.
 `func (o *Source) UnsetPluginVersion()`
 
 UnsetPluginVersion ensures that no value is present for PluginVersion, not even an explicit nil
+### GetIsDsource
+
+`func (o *Source) GetIsDsource() bool`
+
+GetIsDsource returns the IsDsource field if non-nil, zero value otherwise.
+
+### GetIsDsourceOk
+
+`func (o *Source) GetIsDsourceOk() (*bool, bool)`
+
+GetIsDsourceOk returns a tuple with the IsDsource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsDsource
+
+`func (o *Source) SetIsDsource(v bool)`
+
+SetIsDsource sets IsDsource field to given value.
+
+### HasIsDsource
+
+`func (o *Source) HasIsDsource() bool`
+
+HasIsDsource returns a boolean if a field has been set.
+
+### GetRepository
+
+`func (o *Source) GetRepository() string`
+
+GetRepository returns the Repository field if non-nil, zero value otherwise.
+
+### GetRepositoryOk
+
+`func (o *Source) GetRepositoryOk() (*string, bool)`
+
+GetRepositoryOk returns a tuple with the Repository field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRepository
+
+`func (o *Source) SetRepository(v string)`
+
+SetRepository sets Repository field to given value.
+
+### HasRepository
+
+`func (o *Source) HasRepository() bool`
+
+HasRepository returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *Source) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *Source) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *Source) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *Source) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
