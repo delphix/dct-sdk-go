@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_VCDBsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_VCDBsApiService(t *testing.T) {
 
 	t.Run("Test VCDBsApiService CreateVcdbTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vcdbId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_VCDBsApiService(t *testing.T) {
 
 	t.Run("Test VCDBsApiService DeleteVcdbTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vcdbId string
 
@@ -51,7 +52,7 @@ func Test_delphix_dct_api_VCDBsApiService(t *testing.T) {
 
 	t.Run("Test VCDBsApiService GetTagsVcdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vcdbId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_VCDBsApiService(t *testing.T) {
 
 	t.Run("Test VCDBsApiService GetVcdbById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vcdbId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_VCDBsApiService(t *testing.T) {
 
 	t.Run("Test VCDBsApiService GetVcdbs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VCDBsApi.GetVcdbs(context.Background()).Execute()
 
@@ -91,7 +92,7 @@ func Test_delphix_dct_api_VCDBsApiService(t *testing.T) {
 
 	t.Run("Test VCDBsApiService SearchVcdbs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VCDBsApi.SearchVcdbs(context.Background()).Execute()
 

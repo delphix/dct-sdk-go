@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService CreateVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBGroupsApi.CreateVdbGroup(context.Background()).Execute()
 
@@ -36,7 +37,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService CreateVdbGroupsTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -50,7 +51,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService DeleteVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -63,7 +64,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService DeleteVdbGroupTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -76,7 +77,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService GetBookmarksByVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -90,7 +91,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService GetVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -104,7 +105,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService GetVdbGroupTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -118,7 +119,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService GetVdbGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBGroupsApi.GetVdbGroups(context.Background()).Execute()
 
@@ -130,7 +131,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService LockVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -144,7 +145,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService ProvisionVdbGroupFromBookmark", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBGroupsApi.ProvisionVdbGroupFromBookmark(context.Background()).Execute()
 
@@ -156,7 +157,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService RefreshVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -170,7 +171,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService RollbackVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -184,7 +185,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService SearchBookmarksByVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -198,7 +199,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService SearchVdbGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBGroupsApi.SearchVdbGroups(context.Background()).Execute()
 
@@ -210,7 +211,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService UnlockVdbGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 
@@ -224,7 +225,7 @@ func Test_delphix_dct_api_VDBGroupsApiService(t *testing.T) {
 
 	t.Run("Test VDBGroupsApiService UpdateVdbGroupById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbGroupId string
 

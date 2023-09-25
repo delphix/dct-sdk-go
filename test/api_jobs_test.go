@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_JobsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_JobsApiService(t *testing.T) {
 
 	t.Run("Test JobsApiService AbandonJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var jobId string
 
@@ -37,7 +38,7 @@ func Test_delphix_dct_api_JobsApiService(t *testing.T) {
 
 	t.Run("Test JobsApiService CreateJobTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var jobId string
 
@@ -51,7 +52,7 @@ func Test_delphix_dct_api_JobsApiService(t *testing.T) {
 
 	t.Run("Test JobsApiService DeleteJobTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var jobId string
 
@@ -64,7 +65,7 @@ func Test_delphix_dct_api_JobsApiService(t *testing.T) {
 
 	t.Run("Test JobsApiService GetJobById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var jobId string
 
@@ -78,7 +79,7 @@ func Test_delphix_dct_api_JobsApiService(t *testing.T) {
 
 	t.Run("Test JobsApiService GetJobTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var jobId string
 
@@ -92,7 +93,7 @@ func Test_delphix_dct_api_JobsApiService(t *testing.T) {
 
 	t.Run("Test JobsApiService GetJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.JobsApi.GetJobs(context.Background()).Execute()
 
@@ -104,7 +105,7 @@ func Test_delphix_dct_api_JobsApiService(t *testing.T) {
 
 	t.Run("Test JobsApiService SearchJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.JobsApi.SearchJobs(context.Background()).Execute()
 

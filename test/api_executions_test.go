@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	t.Run("Test ExecutionsApiService CancelExecution", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var executionId string
 
@@ -37,7 +38,7 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	t.Run("Test ExecutionsApiService GetExecutionById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var executionId string
 
@@ -51,7 +52,7 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	t.Run("Test ExecutionsApiService GetExecutionEvents", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var executionId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	t.Run("Test ExecutionsApiService GetExecutionLog", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var executionId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	t.Run("Test ExecutionsApiService GetExecutions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ExecutionsApi.GetExecutions(context.Background()).Execute()
 
@@ -91,7 +92,7 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	t.Run("Test ExecutionsApiService SearchExecutionEvents", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var executionId string
 
@@ -105,7 +106,7 @@ func Test_delphix_dct_api_ExecutionsApiService(t *testing.T) {
 
 	t.Run("Test ExecutionsApiService SearchExecutions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ExecutionsApi.SearchExecutions(context.Background()).Execute()
 

@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService CreateReportingSchedule", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.CreateReportingSchedule(context.Background()).Execute()
 
@@ -36,7 +37,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService CreateReportingScheduleTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var reportId int32
 
@@ -50,7 +51,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService DeleteReportingSchedule", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var reportId int32
 
@@ -63,7 +64,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService DeleteReportingScheduleTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var reportId int32
 
@@ -76,7 +77,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetApiUsageReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetApiUsageReport(context.Background()).Execute()
 
@@ -88,7 +89,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetAuditLogsSummaryReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetAuditLogsSummaryReport(context.Background()).Execute()
 
@@ -100,7 +101,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetDsourceConsumptionReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetDsourceConsumptionReport(context.Background()).Execute()
 
@@ -112,7 +113,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetDsourceUsageReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetDsourceUsageReport(context.Background()).Execute()
 
@@ -124,7 +125,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetMaskingExecutionMetricsReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetMaskingExecutionMetricsReport(context.Background()).Execute()
 
@@ -136,7 +137,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetProductInfo", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetProductInfo(context.Background()).Execute()
 
@@ -148,7 +149,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetReportingScheduleById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var reportId int32
 
@@ -162,7 +163,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetReportingScheduleTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var reportId int32
 
@@ -176,7 +177,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetReportingSchedules", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetReportingSchedules(context.Background()).Execute()
 
@@ -188,7 +189,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetVdbInventoryReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetVdbInventoryReport(context.Background()).Execute()
 
@@ -200,7 +201,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService GetVirtualizationStorageSummaryReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.GetVirtualizationStorageSummaryReport(context.Background()).Execute()
 
@@ -212,7 +213,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService SearchDsourceConsumptionReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.SearchDsourceConsumptionReport(context.Background()).Execute()
 
@@ -224,7 +225,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService SearchDsourceUsageReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.SearchDsourceUsageReport(context.Background()).Execute()
 
@@ -236,7 +237,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService SearchMaskingExecutionMetricsReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.SearchMaskingExecutionMetricsReport(context.Background()).Execute()
 
@@ -248,7 +249,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService SearchReportingSchedules", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.SearchReportingSchedules(context.Background()).Execute()
 
@@ -260,7 +261,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService SearchVdbInventoryReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.SearchVdbInventoryReport(context.Background()).Execute()
 
@@ -272,7 +273,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService SearchVirtualizationStorageSummaryReport", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReportingApi.SearchVirtualizationStorageSummaryReport(context.Background()).Execute()
 
@@ -284,7 +285,7 @@ func Test_delphix_dct_api_ReportingApiService(t *testing.T) {
 
 	t.Run("Test ReportingApiService UpdateReportingSchedule", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var reportId int32
 

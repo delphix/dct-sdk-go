@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CompatibleRepositoriesByLocation", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesByLocation(context.Background()).Execute()
 
@@ -36,7 +37,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CompatibleRepositoriesBySnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesBySnapshot(context.Background()).Execute()
 
@@ -48,7 +49,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CompatibleRepositoriesByTimestamp", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesByTimestamp(context.Background()).Execute()
 
@@ -60,7 +61,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CompatibleRepositoriesFromBookmark", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.CompatibleRepositoriesFromBookmark(context.Background()).Execute()
 
@@ -72,7 +73,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CreateEnvironment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.CreateEnvironment(context.Background()).Execute()
 
@@ -84,7 +85,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CreateEnvironmentTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -98,7 +99,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CreateEnvironmentUser", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -112,7 +113,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService CreateHost", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -126,7 +127,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService DeleteEnvironment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -140,7 +141,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService DeleteEnvironmentTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -153,7 +154,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService DeleteEnvironmentUser", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 		var userRef string
@@ -168,7 +169,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService DeleteHost", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 		var hostId string
@@ -183,7 +184,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService DisableEnvironment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -197,7 +198,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService EnableEnvironment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -211,7 +212,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService GetEnvironmentById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -225,7 +226,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService GetEnvironments", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.GetEnvironments(context.Background()).Execute()
 
@@ -237,7 +238,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService GetTagsEnvironment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -251,7 +252,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService ListEnvironmentUsers", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -265,7 +266,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService PrimaryEnvironmentUser", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 		var userRef string
@@ -280,7 +281,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService RefreshEnvironment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -294,7 +295,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService SearchEnvironments", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.EnvironmentsApi.SearchEnvironments(context.Background()).Execute()
 
@@ -306,7 +307,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService UpdateEnvironment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 
@@ -320,7 +321,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService UpdateEnvironmentUser", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 		var userRef string
@@ -335,7 +336,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService UpdateHost", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 		var hostId string
@@ -350,7 +351,7 @@ func Test_delphix_dct_api_EnvironmentsApiService(t *testing.T) {
 
 	t.Run("Test EnvironmentsApiService UpdateRepository", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var environmentId string
 		var repositoryId string

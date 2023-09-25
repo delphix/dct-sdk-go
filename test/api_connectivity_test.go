@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_ConnectivityApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_ConnectivityApiService(t *testing.T) {
 
 	t.Run("Test ConnectivityApiService ConnectivityCheck", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ConnectivityApi.ConnectivityCheck(context.Background()).Execute()
 
@@ -36,7 +37,7 @@ func Test_delphix_dct_api_ConnectivityApiService(t *testing.T) {
 
 	t.Run("Test ConnectivityApiService DatabaseConnectivityCheck", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ConnectivityApi.DatabaseConnectivityCheck(context.Background()).Execute()
 

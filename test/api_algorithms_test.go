@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_AlgorithmsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_AlgorithmsApiService(t *testing.T) {
 
 	t.Run("Test AlgorithmsApiService CreateAlgorithm", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AlgorithmsApi.CreateAlgorithm(context.Background()).Execute()
 
@@ -36,7 +37,7 @@ func Test_delphix_dct_api_AlgorithmsApiService(t *testing.T) {
 
 	t.Run("Test AlgorithmsApiService DeleteAlgorithm", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var algorithmId string
 
@@ -49,7 +50,7 @@ func Test_delphix_dct_api_AlgorithmsApiService(t *testing.T) {
 
 	t.Run("Test AlgorithmsApiService GetAlgorithmById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var algorithmId string
 
@@ -63,7 +64,7 @@ func Test_delphix_dct_api_AlgorithmsApiService(t *testing.T) {
 
 	t.Run("Test AlgorithmsApiService GetAlgorithms", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AlgorithmsApi.GetAlgorithms(context.Background()).Execute()
 
@@ -75,7 +76,7 @@ func Test_delphix_dct_api_AlgorithmsApiService(t *testing.T) {
 
 	t.Run("Test AlgorithmsApiService SearchAlgorithms", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AlgorithmsApi.SearchAlgorithms(context.Background()).Execute()
 

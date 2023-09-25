@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService CreateEngineTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var engineId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService CreateHashicorpVault", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.CreateHashicorpVault(context.Background()).Execute()
 
@@ -50,7 +51,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService CreateHashicorpVaultTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vaultId int64
 
@@ -64,7 +65,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService DeleteEngineTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var engineId string
 
@@ -77,7 +78,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService DeleteHashicorpVault", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vaultId int64
 
@@ -90,7 +91,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService DeleteHashicorpVaultTag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vaultId int64
 
@@ -103,7 +104,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetApiClassification", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetApiClassification(context.Background()).Execute()
 
@@ -115,7 +116,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetEngineTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var engineId string
 
@@ -129,7 +130,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetHashicorpVault", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vaultId int64
 
@@ -143,7 +144,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetHashicorpVaultTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vaultId int64
 
@@ -157,7 +158,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetHashicorpVaults", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetHashicorpVaults(context.Background()).Execute()
 
@@ -169,7 +170,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetLdapConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetLdapConfig(context.Background()).Execute()
 
@@ -181,7 +182,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetMetadataDatabase", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetMetadataDatabase(context.Background()).Execute()
 
@@ -193,7 +194,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetProxyConfiguration", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetProxyConfiguration(context.Background()).Execute()
 
@@ -205,7 +206,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetRegisteredEngine", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var engineId string
 
@@ -219,7 +220,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetRegisteredEngines", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetRegisteredEngines(context.Background()).Execute()
 
@@ -231,7 +232,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetSamlConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetSamlConfig(context.Background()).Execute()
 
@@ -243,7 +244,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService GetSmtpConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.GetSmtpConfig(context.Background()).Execute()
 
@@ -255,7 +256,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService ListProperties", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.ListProperties(context.Background()).Execute()
 
@@ -267,7 +268,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService RegisterEngine", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.RegisterEngine(context.Background()).Execute()
 
@@ -279,7 +280,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService SearchEngines", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.SearchEngines(context.Background()).Execute()
 
@@ -291,7 +292,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService SearchHashicorpVaults", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.SearchHashicorpVaults(context.Background()).Execute()
 
@@ -303,7 +304,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UnregisterEngine", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var engineId string
 
@@ -317,7 +318,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UpdateApiClassification", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.UpdateApiClassification(context.Background()).Execute()
 
@@ -329,7 +330,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UpdateLdapConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.UpdateLdapConfig(context.Background()).Execute()
 
@@ -341,7 +342,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UpdateProperties", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.UpdateProperties(context.Background()).Execute()
 
@@ -353,7 +354,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UpdateProxyConfiguration", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.UpdateProxyConfiguration(context.Background()).Execute()
 
@@ -365,7 +366,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UpdateRegisteredEngine", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var engineId string
 
@@ -379,7 +380,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UpdateSamlConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.UpdateSamlConfig(context.Background()).Execute()
 
@@ -391,7 +392,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService UpdateSmtpConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.UpdateSmtpConfig(context.Background()).Execute()
 
@@ -403,7 +404,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService ValidateJavaPath", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var engineId string
 
@@ -416,7 +417,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService ValidateLdapConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ManagementApi.ValidateLdapConfig(context.Background()).Execute()
 
@@ -428,7 +429,7 @@ func Test_delphix_dct_api_ManagementApiService(t *testing.T) {
 
 	t.Run("Test ManagementApiService ValidateSmtpConfig", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.ManagementApi.ValidateSmtpConfig(context.Background()).Execute()
 

@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_FeatureFlagApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_FeatureFlagApiService(t *testing.T) {
 
 	t.Run("Test FeatureFlagApiService GetEnabledFeaturesFlag", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.FeatureFlagApi.GetEnabledFeaturesFlag(context.Background()).Execute()
 

@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService ChangeAccountPassword", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -37,7 +38,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService CreateAccount", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AccountsApi.CreateAccount(context.Background()).Execute()
 
@@ -49,7 +50,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService CreateAccountTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -63,7 +64,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService DeleteAccount", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -76,7 +77,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService DeleteAccountTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -89,7 +90,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService Disable", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -102,7 +103,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService EnableAccount", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -115,7 +116,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService GetAccount", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -129,7 +130,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService GetAccountTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -143,7 +144,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService GetAccounts", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AccountsApi.GetAccounts(context.Background()).Execute()
 
@@ -155,7 +156,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService GetPasswordPolicies", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AccountsApi.GetPasswordPolicies(context.Background()).Execute()
 
@@ -167,7 +168,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService ResetAccountPassword", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -180,7 +181,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService SearchAccounts", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AccountsApi.SearchAccounts(context.Background()).Execute()
 
@@ -192,7 +193,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService UpdateAccount", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var id int64
 
@@ -206,7 +207,7 @@ func Test_delphix_dct_api_AccountsApiService(t *testing.T) {
 
 	t.Run("Test AccountsApiService UpdatePasswordPolicies", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.AccountsApi.UpdatePasswordPolicies(context.Background()).Execute()
 

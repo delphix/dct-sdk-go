@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	t.Run("Test SourcesApiService CreateSourceTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var sourceId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	t.Run("Test SourcesApiService DeleteSourceTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var sourceId string
 
@@ -51,7 +52,7 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	t.Run("Test SourcesApiService GetSourceById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var sourceId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	t.Run("Test SourcesApiService GetSourceCompatibleRepo", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var sourceId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	t.Run("Test SourcesApiService GetSourceTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var sourceId string
 
@@ -93,7 +94,7 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	t.Run("Test SourcesApiService GetSources", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.SourcesApi.GetSources(context.Background()).Execute()
 
@@ -105,7 +106,7 @@ func Test_delphix_dct_api_SourcesApiService(t *testing.T) {
 
 	t.Run("Test SourcesApiService SearchSources", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.SourcesApi.SearchSources(context.Background()).Execute()
 

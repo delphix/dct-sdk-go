@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_VirtualizationPoliciesApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_VirtualizationPoliciesApiService(t *testing.T) {
 
 	t.Run("Test VirtualizationPoliciesApiService GetVirtualizationPolicyById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var policyId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_VirtualizationPoliciesApiService(t *testing.T) {
 
 	t.Run("Test VirtualizationPoliciesApiService ListVirtualizationPolicies", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VirtualizationPoliciesApi.ListVirtualizationPolicies(context.Background()).Execute()
 
@@ -50,7 +51,7 @@ func Test_delphix_dct_api_VirtualizationPoliciesApiService(t *testing.T) {
 
 	t.Run("Test VirtualizationPoliciesApiService SearchVirtualizationPolicies", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VirtualizationPoliciesApi.SearchVirtualizationPolicies(context.Background()).Execute()
 

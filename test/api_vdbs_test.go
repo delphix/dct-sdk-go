@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService CreateVdbTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService DeleteVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -52,7 +53,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService DeleteVdbTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService DisableVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -79,7 +80,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService EnableVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -93,7 +94,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService GetBookmarksByVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -107,7 +108,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService GetTagsVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -121,7 +122,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService GetVdbById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -135,7 +136,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService GetVdbSnapshots", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -149,7 +150,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService GetVdbs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.GetVdbs(context.Background()).Execute()
 
@@ -161,7 +162,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService LockVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -175,7 +176,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbByLocation", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbByLocation(context.Background()).Execute()
 
@@ -187,7 +188,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbByLocationDefaults", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbByLocationDefaults(context.Background()).Execute()
 
@@ -199,7 +200,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbBySnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbBySnapshot(context.Background()).Execute()
 
@@ -211,7 +212,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbBySnapshotDefaults", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbBySnapshotDefaults(context.Background()).Execute()
 
@@ -223,7 +224,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbByTimestamp", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbByTimestamp(context.Background()).Execute()
 
@@ -235,7 +236,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbByTimestampDefaults", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbByTimestampDefaults(context.Background()).Execute()
 
@@ -247,7 +248,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbFromBookmark", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbFromBookmark(context.Background()).Execute()
 
@@ -259,7 +260,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService ProvisionVdbFromBookmarkDefaults", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.ProvisionVdbFromBookmarkDefaults(context.Background()).Execute()
 
@@ -271,7 +272,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService RefreshVdbByLocation", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -285,7 +286,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService RefreshVdbBySnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -299,7 +300,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService RefreshVdbByTimestamp", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -313,7 +314,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService RefreshVdbFromBookmark", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -327,7 +328,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService RollbackVdbBySnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -341,7 +342,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService RollbackVdbByTimestamp", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -355,7 +356,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService RollbackVdbFromBookmark", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -369,7 +370,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService SearchBookmarksByVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -383,7 +384,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService SearchVdbs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.VDBsApi.SearchVdbs(context.Background()).Execute()
 
@@ -395,7 +396,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService SnapshotVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -409,7 +410,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService StartVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -423,7 +424,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService StopVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -437,7 +438,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService SwitchTimeflow", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -451,7 +452,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService UnlockVdb", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 
@@ -465,7 +466,7 @@ func Test_delphix_dct_api_VDBsApiService(t *testing.T) {
 
 	t.Run("Test VDBsApiService UpdateVdbById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var vdbId string
 

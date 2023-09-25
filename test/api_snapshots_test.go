@@ -11,10 +11,11 @@ package delphix_dct_api
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/delphix/dct-sdk-go/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/delphix/dct-sdk-go"
 )
 
 func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService CreateSnapshotTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
@@ -38,7 +39,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService DeleteSnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
@@ -52,7 +53,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService DeleteSnapshotTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
@@ -65,7 +66,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService FindByLocation", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.SnapshotsApi.FindByLocation(context.Background()).Execute()
 
@@ -77,7 +78,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService FindByTimestamp", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.SnapshotsApi.FindByTimestamp(context.Background()).Execute()
 
@@ -89,7 +90,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService GetSnapshotById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
@@ -103,7 +104,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService GetSnapshotTags", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
@@ -117,7 +118,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService GetSnapshotTimeflowRange", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
@@ -131,7 +132,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService GetSnapshots", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.SnapshotsApi.GetSnapshots(context.Background()).Execute()
 
@@ -143,7 +144,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService SearchSnapshots", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.SnapshotsApi.SearchSnapshots(context.Background()).Execute()
 
@@ -155,7 +156,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService UnsetSnapshotRetention", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
@@ -169,7 +170,7 @@ func Test_delphix_dct_api_SnapshotsApiService(t *testing.T) {
 
 	t.Run("Test SnapshotsApiService UpdateSnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var snapshotId string
 
