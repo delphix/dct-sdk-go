@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -41,6 +41,8 @@ type VDB struct {
 	LockedByName *string `json:"locked_by_name,omitempty"`
 	// The database version of this VDB.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
+	// The JDBC connection URL for this VDB.
+	JdbcConnectionString *string `json:"jdbc_connection_string,omitempty"`
 	// The total size of this VDB, in bytes.
 	Size NullableInt64 `json:"size,omitempty"`
 	// The actual space used by this VDB, in bytes.
@@ -99,8 +101,18 @@ type VDB struct {
 	VdbRestart *bool `json:"vdb_restart,omitempty"`
 	// Indicates whether this VDB has an AppData database.
 	IsAppdata *bool `json:"is_appdata,omitempty"`
+	// The ID of the toolkit associated with this VDB.
+	ToolkitId *string `json:"toolkit_id,omitempty"`
 	// The version of the plugin associated with this VDB.
 	PluginVersion NullableString `json:"plugin_version,omitempty"`
+	// The ID of the parent object from which replication was done.
+	PrimaryObjectId *string `json:"primary_object_id,omitempty"`
+	// The ID of the parent engine from which replication was done.
+	PrimaryEngineId *string `json:"primary_engine_id,omitempty"`
+	// The name of the parent engine from which replication was done.
+	PrimaryEngineName *string `json:"primary_engine_name,omitempty"`
+	// The list of replicas replicated from this object.
+	Replicas []Replica `json:"replicas,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -468,6 +480,38 @@ func (o *VDB) SetDatabaseVersionNil() {
 // UnsetDatabaseVersion ensures that no value is present for DatabaseVersion, not even an explicit nil
 func (o *VDB) UnsetDatabaseVersion() {
 	o.DatabaseVersion.Unset()
+}
+
+// GetJdbcConnectionString returns the JdbcConnectionString field value if set, zero value otherwise.
+func (o *VDB) GetJdbcConnectionString() string {
+	if o == nil || IsNil(o.JdbcConnectionString) {
+		var ret string
+		return ret
+	}
+	return *o.JdbcConnectionString
+}
+
+// GetJdbcConnectionStringOk returns a tuple with the JdbcConnectionString field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetJdbcConnectionStringOk() (*string, bool) {
+	if o == nil || IsNil(o.JdbcConnectionString) {
+		return nil, false
+	}
+	return o.JdbcConnectionString, true
+}
+
+// HasJdbcConnectionString returns a boolean if a field has been set.
+func (o *VDB) HasJdbcConnectionString() bool {
+	if o != nil && !IsNil(o.JdbcConnectionString) {
+		return true
+	}
+
+	return false
+}
+
+// SetJdbcConnectionString gets a reference to the given string and assigns it to the JdbcConnectionString field.
+func (o *VDB) SetJdbcConnectionString(v string) {
+	o.JdbcConnectionString = &v
 }
 
 // GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1614,6 +1658,38 @@ func (o *VDB) SetIsAppdata(v bool) {
 	o.IsAppdata = &v
 }
 
+// GetToolkitId returns the ToolkitId field value if set, zero value otherwise.
+func (o *VDB) GetToolkitId() string {
+	if o == nil || IsNil(o.ToolkitId) {
+		var ret string
+		return ret
+	}
+	return *o.ToolkitId
+}
+
+// GetToolkitIdOk returns a tuple with the ToolkitId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetToolkitIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ToolkitId) {
+		return nil, false
+	}
+	return o.ToolkitId, true
+}
+
+// HasToolkitId returns a boolean if a field has been set.
+func (o *VDB) HasToolkitId() bool {
+	if o != nil && !IsNil(o.ToolkitId) {
+		return true
+	}
+
+	return false
+}
+
+// SetToolkitId gets a reference to the given string and assigns it to the ToolkitId field.
+func (o *VDB) SetToolkitId(v string) {
+	o.ToolkitId = &v
+}
+
 // GetPluginVersion returns the PluginVersion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetPluginVersion() string {
 	if o == nil || IsNil(o.PluginVersion.Get()) {
@@ -1656,6 +1732,134 @@ func (o *VDB) UnsetPluginVersion() {
 	o.PluginVersion.Unset()
 }
 
+// GetPrimaryObjectId returns the PrimaryObjectId field value if set, zero value otherwise.
+func (o *VDB) GetPrimaryObjectId() string {
+	if o == nil || IsNil(o.PrimaryObjectId) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryObjectId
+}
+
+// GetPrimaryObjectIdOk returns a tuple with the PrimaryObjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetPrimaryObjectIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryObjectId) {
+		return nil, false
+	}
+	return o.PrimaryObjectId, true
+}
+
+// HasPrimaryObjectId returns a boolean if a field has been set.
+func (o *VDB) HasPrimaryObjectId() bool {
+	if o != nil && !IsNil(o.PrimaryObjectId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryObjectId gets a reference to the given string and assigns it to the PrimaryObjectId field.
+func (o *VDB) SetPrimaryObjectId(v string) {
+	o.PrimaryObjectId = &v
+}
+
+// GetPrimaryEngineId returns the PrimaryEngineId field value if set, zero value otherwise.
+func (o *VDB) GetPrimaryEngineId() string {
+	if o == nil || IsNil(o.PrimaryEngineId) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEngineId
+}
+
+// GetPrimaryEngineIdOk returns a tuple with the PrimaryEngineId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetPrimaryEngineIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryEngineId) {
+		return nil, false
+	}
+	return o.PrimaryEngineId, true
+}
+
+// HasPrimaryEngineId returns a boolean if a field has been set.
+func (o *VDB) HasPrimaryEngineId() bool {
+	if o != nil && !IsNil(o.PrimaryEngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEngineId gets a reference to the given string and assigns it to the PrimaryEngineId field.
+func (o *VDB) SetPrimaryEngineId(v string) {
+	o.PrimaryEngineId = &v
+}
+
+// GetPrimaryEngineName returns the PrimaryEngineName field value if set, zero value otherwise.
+func (o *VDB) GetPrimaryEngineName() string {
+	if o == nil || IsNil(o.PrimaryEngineName) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEngineName
+}
+
+// GetPrimaryEngineNameOk returns a tuple with the PrimaryEngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetPrimaryEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryEngineName) {
+		return nil, false
+	}
+	return o.PrimaryEngineName, true
+}
+
+// HasPrimaryEngineName returns a boolean if a field has been set.
+func (o *VDB) HasPrimaryEngineName() bool {
+	if o != nil && !IsNil(o.PrimaryEngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEngineName gets a reference to the given string and assigns it to the PrimaryEngineName field.
+func (o *VDB) SetPrimaryEngineName(v string) {
+	o.PrimaryEngineName = &v
+}
+
+// GetReplicas returns the Replicas field value if set, zero value otherwise.
+func (o *VDB) GetReplicas() []Replica {
+	if o == nil || IsNil(o.Replicas) {
+		var ret []Replica
+		return ret
+	}
+	return o.Replicas
+}
+
+// GetReplicasOk returns a tuple with the Replicas field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetReplicasOk() ([]Replica, bool) {
+	if o == nil || IsNil(o.Replicas) {
+		return nil, false
+	}
+	return o.Replicas, true
+}
+
+// HasReplicas returns a boolean if a field has been set.
+func (o *VDB) HasReplicas() bool {
+	if o != nil && !IsNil(o.Replicas) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicas gets a reference to the given []Replica and assigns it to the Replicas field.
+func (o *VDB) SetReplicas(v []Replica) {
+	o.Replicas = v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1695,6 +1899,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.DatabaseVersion.IsSet() {
 		toSerialize["database_version"] = o.DatabaseVersion.Get()
+	}
+	if !IsNil(o.JdbcConnectionString) {
+		toSerialize["jdbc_connection_string"] = o.JdbcConnectionString
 	}
 	if o.Size.IsSet() {
 		toSerialize["size"] = o.Size.Get()
@@ -1786,8 +1993,23 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsAppdata) {
 		toSerialize["is_appdata"] = o.IsAppdata
 	}
+	if !IsNil(o.ToolkitId) {
+		toSerialize["toolkit_id"] = o.ToolkitId
+	}
 	if o.PluginVersion.IsSet() {
 		toSerialize["plugin_version"] = o.PluginVersion.Get()
+	}
+	if !IsNil(o.PrimaryObjectId) {
+		toSerialize["primary_object_id"] = o.PrimaryObjectId
+	}
+	if !IsNil(o.PrimaryEngineId) {
+		toSerialize["primary_engine_id"] = o.PrimaryEngineId
+	}
+	if !IsNil(o.PrimaryEngineName) {
+		toSerialize["primary_engine_name"] = o.PrimaryEngineName
+	}
+	if !IsNil(o.Replicas) {
+		toSerialize["replicas"] = o.Replicas
 	}
 	return toSerialize, nil
 }

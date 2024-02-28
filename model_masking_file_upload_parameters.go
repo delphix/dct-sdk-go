@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -19,10 +19,8 @@ import (
 // checks if the MaskingFileUploadParameters type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MaskingFileUploadParameters{}
 
-// MaskingFileUploadParameters Parameters to upload a file to a masking engine.
+// MaskingFileUploadParameters Parameters to upload a file for masking.
 type MaskingFileUploadParameters struct {
-	// The id of the engine onto which the file will be uploaded.
-	EngineId string `json:"engine_id"`
 	// The file to upload.
 	File *os.File `json:"file"`
 }
@@ -31,9 +29,8 @@ type MaskingFileUploadParameters struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMaskingFileUploadParameters(engineId string, file *os.File) *MaskingFileUploadParameters {
+func NewMaskingFileUploadParameters(file *os.File) *MaskingFileUploadParameters {
 	this := MaskingFileUploadParameters{}
-	this.EngineId = engineId
 	this.File = file
 	return &this
 }
@@ -44,30 +41,6 @@ func NewMaskingFileUploadParameters(engineId string, file *os.File) *MaskingFile
 func NewMaskingFileUploadParametersWithDefaults() *MaskingFileUploadParameters {
 	this := MaskingFileUploadParameters{}
 	return &this
-}
-
-// GetEngineId returns the EngineId field value
-func (o *MaskingFileUploadParameters) GetEngineId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.EngineId
-}
-
-// GetEngineIdOk returns a tuple with the EngineId field value
-// and a boolean to check if the value has been set.
-func (o *MaskingFileUploadParameters) GetEngineIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.EngineId, true
-}
-
-// SetEngineId sets field value
-func (o *MaskingFileUploadParameters) SetEngineId(v string) {
-	o.EngineId = v
 }
 
 // GetFile returns the File field value
@@ -104,7 +77,6 @@ func (o MaskingFileUploadParameters) MarshalJSON() ([]byte, error) {
 
 func (o MaskingFileUploadParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["engine_id"] = o.EngineId
 	toSerialize["file"] = o.File
 	return toSerialize, nil
 }

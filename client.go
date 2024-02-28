@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.5.0
+// APIClient manages communication with the Delphix DCT API API v3.9.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -94,7 +94,11 @@ type APIClient struct {
 
 	MaskingJobsApi *MaskingJobsApiService
 
+	MaskingPluginsApi *MaskingPluginsApiService
+
 	PasswordVaultsApi *PasswordVaultsApiService
+
+	ReplicationApi *ReplicationApiService
 
 	ReportingApi *ReportingApiService
 
@@ -104,9 +108,13 @@ type APIClient struct {
 
 	SourcesApi *SourcesApiService
 
+	StagingSourcesApi *StagingSourcesApiService
+
 	TestApi *TestApiService
 
 	TimeflowsApi *TimeflowsApiService
+
+	ToolkitsApi *ToolkitsApiService
 
 	VCDBsApi *VCDBsApiService
 
@@ -155,13 +163,17 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.MaskingEnvironmentsApi = (*MaskingEnvironmentsApiService)(&c.common)
 	c.MaskingFilesApi = (*MaskingFilesApiService)(&c.common)
 	c.MaskingJobsApi = (*MaskingJobsApiService)(&c.common)
+	c.MaskingPluginsApi = (*MaskingPluginsApiService)(&c.common)
 	c.PasswordVaultsApi = (*PasswordVaultsApiService)(&c.common)
+	c.ReplicationApi = (*ReplicationApiService)(&c.common)
 	c.ReportingApi = (*ReportingApiService)(&c.common)
 	c.SamlLoginApi = (*SamlLoginApiService)(&c.common)
 	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)
 	c.SourcesApi = (*SourcesApiService)(&c.common)
+	c.StagingSourcesApi = (*StagingSourcesApiService)(&c.common)
 	c.TestApi = (*TestApiService)(&c.common)
 	c.TimeflowsApi = (*TimeflowsApiService)(&c.common)
+	c.ToolkitsApi = (*ToolkitsApiService)(&c.common)
 	c.VCDBsApi = (*VCDBsApiService)(&c.common)
 	c.VDBGroupsApi = (*VDBGroupsApiService)(&c.common)
 	c.VDBsApi = (*VDBsApiService)(&c.common)

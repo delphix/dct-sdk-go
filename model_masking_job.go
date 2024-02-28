@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -36,14 +36,8 @@ type MaskingJob struct {
 	LastCompletedExecutionDate *time.Time `json:"last_completed_execution_date,omitempty"`
 	// The status of this MaskingJob's last execution.
 	LastExecutionStatus *string `json:"last_execution_status,omitempty"`
-	// The number of rows masked by the last successful execution. This is not applicable for JSON file type.
-	LastExecutionRowsMasked *int64 `json:"last_execution_rows_masked,omitempty"`
-	// The total number of rows masked by the last successful execution. This is not applicable for JSON file type.
-	LastExecutionRowsTotal *int64 `json:"last_execution_rows_total,omitempty"`
-	// The number of bytes masked by the last successful execution. This is only applicable for JSON file type.
-	LastExecutionBytesMasked *int64 `json:"last_execution_bytes_masked,omitempty"`
-	// The total number of bytes masked by the last successful execution. This is only applicable for JSON file type.
-	LastExecutionBytesTotal *int64 `json:"last_execution_bytes_total,omitempty"`
+	// The ID of this MaskingJob's last execution.
+	LastExecutionId *string `json:"last_execution_id,omitempty"`
 	// The username of the Connector used by the MaskingJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
 	ConnectorUsername NullableString `json:"connector_username,omitempty"`
 	// The password of the Connector used by the MaskingJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
@@ -72,12 +66,16 @@ type MaskingJob struct {
 	StreamRowLimit *int32 `json:"stream_row_limit,omitempty"`
 	// Number of input streams to be configured for Masking Job (Hyperscale Job only).
 	NumInputStreams *int32 `json:"num_input_streams,omitempty"`
-	// Maximum number of parallel connection that the Hyperscale instance can have with the source datasource.
+	// Maximum number of parallel connection that the Hyperscale instance can have with the source datasource (Hyperscale Job only).
 	MaxConcurrentSourceConnections *int32 `json:"max_concurrent_source_connections,omitempty"`
-	// Maximum number of parallel connection that the Hyperscale instance can have with the target datasource.
+	// Maximum number of parallel connection that the Hyperscale instance can have with the target datasource (Hyperscale Job only).
 	MaxConcurrentTargetConnections *int32 `json:"max_concurrent_target_connections,omitempty"`
-	// The degree of parallelism (DOP) per Oracle job to recreate the index in the post-load process.
+	// The degree of parallelism (DOP) per Oracle job to recreate the index in the post-load process (Hyperscale Job only).
 	ParallelismDegree *int32 `json:"parallelism_degree,omitempty"`
+	// The ID of the MaskingJob that was used as the source to create this job (Hyperscale Job only).
+	SourceMaskingJobId *string `json:"source_masking_job_id,omitempty"`
+	// List of engines that this job can run on (Hyperscale Job only).
+	EngineIds []string `json:"engine_ids,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -354,132 +352,36 @@ func (o *MaskingJob) SetLastExecutionStatus(v string) {
 	o.LastExecutionStatus = &v
 }
 
-// GetLastExecutionRowsMasked returns the LastExecutionRowsMasked field value if set, zero value otherwise.
-func (o *MaskingJob) GetLastExecutionRowsMasked() int64 {
-	if o == nil || IsNil(o.LastExecutionRowsMasked) {
-		var ret int64
+// GetLastExecutionId returns the LastExecutionId field value if set, zero value otherwise.
+func (o *MaskingJob) GetLastExecutionId() string {
+	if o == nil || IsNil(o.LastExecutionId) {
+		var ret string
 		return ret
 	}
-	return *o.LastExecutionRowsMasked
+	return *o.LastExecutionId
 }
 
-// GetLastExecutionRowsMaskedOk returns a tuple with the LastExecutionRowsMasked field value if set, nil otherwise
+// GetLastExecutionIdOk returns a tuple with the LastExecutionId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MaskingJob) GetLastExecutionRowsMaskedOk() (*int64, bool) {
-	if o == nil || IsNil(o.LastExecutionRowsMasked) {
+func (o *MaskingJob) GetLastExecutionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.LastExecutionId) {
 		return nil, false
 	}
-	return o.LastExecutionRowsMasked, true
+	return o.LastExecutionId, true
 }
 
-// HasLastExecutionRowsMasked returns a boolean if a field has been set.
-func (o *MaskingJob) HasLastExecutionRowsMasked() bool {
-	if o != nil && !IsNil(o.LastExecutionRowsMasked) {
+// HasLastExecutionId returns a boolean if a field has been set.
+func (o *MaskingJob) HasLastExecutionId() bool {
+	if o != nil && !IsNil(o.LastExecutionId) {
 		return true
 	}
 
 	return false
 }
 
-// SetLastExecutionRowsMasked gets a reference to the given int64 and assigns it to the LastExecutionRowsMasked field.
-func (o *MaskingJob) SetLastExecutionRowsMasked(v int64) {
-	o.LastExecutionRowsMasked = &v
-}
-
-// GetLastExecutionRowsTotal returns the LastExecutionRowsTotal field value if set, zero value otherwise.
-func (o *MaskingJob) GetLastExecutionRowsTotal() int64 {
-	if o == nil || IsNil(o.LastExecutionRowsTotal) {
-		var ret int64
-		return ret
-	}
-	return *o.LastExecutionRowsTotal
-}
-
-// GetLastExecutionRowsTotalOk returns a tuple with the LastExecutionRowsTotal field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MaskingJob) GetLastExecutionRowsTotalOk() (*int64, bool) {
-	if o == nil || IsNil(o.LastExecutionRowsTotal) {
-		return nil, false
-	}
-	return o.LastExecutionRowsTotal, true
-}
-
-// HasLastExecutionRowsTotal returns a boolean if a field has been set.
-func (o *MaskingJob) HasLastExecutionRowsTotal() bool {
-	if o != nil && !IsNil(o.LastExecutionRowsTotal) {
-		return true
-	}
-
-	return false
-}
-
-// SetLastExecutionRowsTotal gets a reference to the given int64 and assigns it to the LastExecutionRowsTotal field.
-func (o *MaskingJob) SetLastExecutionRowsTotal(v int64) {
-	o.LastExecutionRowsTotal = &v
-}
-
-// GetLastExecutionBytesMasked returns the LastExecutionBytesMasked field value if set, zero value otherwise.
-func (o *MaskingJob) GetLastExecutionBytesMasked() int64 {
-	if o == nil || IsNil(o.LastExecutionBytesMasked) {
-		var ret int64
-		return ret
-	}
-	return *o.LastExecutionBytesMasked
-}
-
-// GetLastExecutionBytesMaskedOk returns a tuple with the LastExecutionBytesMasked field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MaskingJob) GetLastExecutionBytesMaskedOk() (*int64, bool) {
-	if o == nil || IsNil(o.LastExecutionBytesMasked) {
-		return nil, false
-	}
-	return o.LastExecutionBytesMasked, true
-}
-
-// HasLastExecutionBytesMasked returns a boolean if a field has been set.
-func (o *MaskingJob) HasLastExecutionBytesMasked() bool {
-	if o != nil && !IsNil(o.LastExecutionBytesMasked) {
-		return true
-	}
-
-	return false
-}
-
-// SetLastExecutionBytesMasked gets a reference to the given int64 and assigns it to the LastExecutionBytesMasked field.
-func (o *MaskingJob) SetLastExecutionBytesMasked(v int64) {
-	o.LastExecutionBytesMasked = &v
-}
-
-// GetLastExecutionBytesTotal returns the LastExecutionBytesTotal field value if set, zero value otherwise.
-func (o *MaskingJob) GetLastExecutionBytesTotal() int64 {
-	if o == nil || IsNil(o.LastExecutionBytesTotal) {
-		var ret int64
-		return ret
-	}
-	return *o.LastExecutionBytesTotal
-}
-
-// GetLastExecutionBytesTotalOk returns a tuple with the LastExecutionBytesTotal field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MaskingJob) GetLastExecutionBytesTotalOk() (*int64, bool) {
-	if o == nil || IsNil(o.LastExecutionBytesTotal) {
-		return nil, false
-	}
-	return o.LastExecutionBytesTotal, true
-}
-
-// HasLastExecutionBytesTotal returns a boolean if a field has been set.
-func (o *MaskingJob) HasLastExecutionBytesTotal() bool {
-	if o != nil && !IsNil(o.LastExecutionBytesTotal) {
-		return true
-	}
-
-	return false
-}
-
-// SetLastExecutionBytesTotal gets a reference to the given int64 and assigns it to the LastExecutionBytesTotal field.
-func (o *MaskingJob) SetLastExecutionBytesTotal(v int64) {
-	o.LastExecutionBytesTotal = &v
+// SetLastExecutionId gets a reference to the given string and assigns it to the LastExecutionId field.
+func (o *MaskingJob) SetLastExecutionId(v string) {
+	o.LastExecutionId = &v
 }
 
 // GetConnectorUsername returns the ConnectorUsername field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1066,6 +968,70 @@ func (o *MaskingJob) SetParallelismDegree(v int32) {
 	o.ParallelismDegree = &v
 }
 
+// GetSourceMaskingJobId returns the SourceMaskingJobId field value if set, zero value otherwise.
+func (o *MaskingJob) GetSourceMaskingJobId() string {
+	if o == nil || IsNil(o.SourceMaskingJobId) {
+		var ret string
+		return ret
+	}
+	return *o.SourceMaskingJobId
+}
+
+// GetSourceMaskingJobIdOk returns a tuple with the SourceMaskingJobId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingJob) GetSourceMaskingJobIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceMaskingJobId) {
+		return nil, false
+	}
+	return o.SourceMaskingJobId, true
+}
+
+// HasSourceMaskingJobId returns a boolean if a field has been set.
+func (o *MaskingJob) HasSourceMaskingJobId() bool {
+	if o != nil && !IsNil(o.SourceMaskingJobId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceMaskingJobId gets a reference to the given string and assigns it to the SourceMaskingJobId field.
+func (o *MaskingJob) SetSourceMaskingJobId(v string) {
+	o.SourceMaskingJobId = &v
+}
+
+// GetEngineIds returns the EngineIds field value if set, zero value otherwise.
+func (o *MaskingJob) GetEngineIds() []string {
+	if o == nil || IsNil(o.EngineIds) {
+		var ret []string
+		return ret
+	}
+	return o.EngineIds
+}
+
+// GetEngineIdsOk returns a tuple with the EngineIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingJob) GetEngineIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.EngineIds) {
+		return nil, false
+	}
+	return o.EngineIds, true
+}
+
+// HasEngineIds returns a boolean if a field has been set.
+func (o *MaskingJob) HasEngineIds() bool {
+	if o != nil && !IsNil(o.EngineIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineIds gets a reference to the given []string and assigns it to the EngineIds field.
+func (o *MaskingJob) SetEngineIds(v []string) {
+	o.EngineIds = v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *MaskingJob) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -1108,9 +1074,7 @@ func (o MaskingJob) MarshalJSON() ([]byte, error) {
 
 func (o MaskingJob) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	// skip: id is readOnly
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
@@ -1132,17 +1096,8 @@ func (o MaskingJob) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastExecutionStatus) {
 		toSerialize["last_execution_status"] = o.LastExecutionStatus
 	}
-	if !IsNil(o.LastExecutionRowsMasked) {
-		toSerialize["last_execution_rows_masked"] = o.LastExecutionRowsMasked
-	}
-	if !IsNil(o.LastExecutionRowsTotal) {
-		toSerialize["last_execution_rows_total"] = o.LastExecutionRowsTotal
-	}
-	if !IsNil(o.LastExecutionBytesMasked) {
-		toSerialize["last_execution_bytes_masked"] = o.LastExecutionBytesMasked
-	}
-	if !IsNil(o.LastExecutionBytesTotal) {
-		toSerialize["last_execution_bytes_total"] = o.LastExecutionBytesTotal
+	if !IsNil(o.LastExecutionId) {
+		toSerialize["last_execution_id"] = o.LastExecutionId
 	}
 	if o.ConnectorUsername.IsSet() {
 		toSerialize["connector_username"] = o.ConnectorUsername.Get()
@@ -1194,6 +1149,12 @@ func (o MaskingJob) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ParallelismDegree) {
 		toSerialize["parallelism_degree"] = o.ParallelismDegree
+	}
+	if !IsNil(o.SourceMaskingJobId) {
+		toSerialize["source_masking_job_id"] = o.SourceMaskingJobId
+	}
+	if !IsNil(o.EngineIds) {
+		toSerialize["engine_ids"] = o.EngineIds
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

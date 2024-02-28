@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,7 @@ type HyperscaleInstanceUpdateParams struct {
 	Hostname *string `json:"hostname,omitempty"`
 	// API key to connect to the Hyperscale instance.
 	ApiKey NullableString `json:"api_key,omitempty"`
+	DataType *HyperscaleDataTypeEnum `json:"data_type,omitempty"`
 	// Allow connections to the hyperscale instance over HTTPs without validating the TLS certificate. Even though the connection to the hyperscale instance might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the hyperscale instance's certificate, and set the truststore_filename property. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the hyperscale instance over HTTPs. Setting this value must only be done if the TLS certificate of the hyperscale instance does not match the hostname, and the TLS configuration of the hyperscale instance cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
@@ -157,6 +158,38 @@ func (o *HyperscaleInstanceUpdateParams) SetApiKeyNil() {
 // UnsetApiKey ensures that no value is present for ApiKey, not even an explicit nil
 func (o *HyperscaleInstanceUpdateParams) UnsetApiKey() {
 	o.ApiKey.Unset()
+}
+
+// GetDataType returns the DataType field value if set, zero value otherwise.
+func (o *HyperscaleInstanceUpdateParams) GetDataType() HyperscaleDataTypeEnum {
+	if o == nil || IsNil(o.DataType) {
+		var ret HyperscaleDataTypeEnum
+		return ret
+	}
+	return *o.DataType
+}
+
+// GetDataTypeOk returns a tuple with the DataType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleInstanceUpdateParams) GetDataTypeOk() (*HyperscaleDataTypeEnum, bool) {
+	if o == nil || IsNil(o.DataType) {
+		return nil, false
+	}
+	return o.DataType, true
+}
+
+// HasDataType returns a boolean if a field has been set.
+func (o *HyperscaleInstanceUpdateParams) HasDataType() bool {
+	if o != nil && !IsNil(o.DataType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataType gets a reference to the given HyperscaleDataTypeEnum and assigns it to the DataType field.
+func (o *HyperscaleInstanceUpdateParams) SetDataType(v HyperscaleDataTypeEnum) {
+	o.DataType = &v
 }
 
 // GetInsecureSsl returns the InsecureSsl field value if set, zero value otherwise.
@@ -325,6 +358,9 @@ func (o HyperscaleInstanceUpdateParams) ToMap() (map[string]interface{}, error) 
 	}
 	if o.ApiKey.IsSet() {
 		toSerialize["api_key"] = o.ApiKey.Get()
+	}
+	if !IsNil(o.DataType) {
+		toSerialize["data_type"] = o.DataType
 	}
 	if !IsNil(o.InsecureSsl) {
 		toSerialize["insecure_ssl"] = o.InsecureSsl

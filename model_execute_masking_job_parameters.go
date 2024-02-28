@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -20,17 +20,16 @@ var _ MappedNullable = &ExecuteMaskingJobParameters{}
 
 // ExecuteMaskingJobParameters Parameters to execute a MaskingJob.
 type ExecuteMaskingJobParameters struct {
-	// The ID of the Engine to execute this MaskingJob on.
-	EngineId string `json:"engine_id"`
+	// The ID of the Engine to execute this MaskingJob on (Standard job only).
+	EngineId *string `json:"engine_id,omitempty"`
 }
 
 // NewExecuteMaskingJobParameters instantiates a new ExecuteMaskingJobParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewExecuteMaskingJobParameters(engineId string) *ExecuteMaskingJobParameters {
+func NewExecuteMaskingJobParameters() *ExecuteMaskingJobParameters {
 	this := ExecuteMaskingJobParameters{}
-	this.EngineId = engineId
 	return &this
 }
 
@@ -42,28 +41,36 @@ func NewExecuteMaskingJobParametersWithDefaults() *ExecuteMaskingJobParameters {
 	return &this
 }
 
-// GetEngineId returns the EngineId field value
+// GetEngineId returns the EngineId field value if set, zero value otherwise.
 func (o *ExecuteMaskingJobParameters) GetEngineId() string {
-	if o == nil {
+	if o == nil || IsNil(o.EngineId) {
 		var ret string
 		return ret
 	}
-
-	return o.EngineId
+	return *o.EngineId
 }
 
-// GetEngineIdOk returns a tuple with the EngineId field value
+// GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExecuteMaskingJobParameters) GetEngineIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EngineId) {
 		return nil, false
 	}
-	return &o.EngineId, true
+	return o.EngineId, true
 }
 
-// SetEngineId sets field value
+// HasEngineId returns a boolean if a field has been set.
+func (o *ExecuteMaskingJobParameters) HasEngineId() bool {
+	if o != nil && !IsNil(o.EngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
 func (o *ExecuteMaskingJobParameters) SetEngineId(v string) {
-	o.EngineId = v
+	o.EngineId = &v
 }
 
 func (o ExecuteMaskingJobParameters) MarshalJSON() ([]byte, error) {
@@ -76,7 +83,9 @@ func (o ExecuteMaskingJobParameters) MarshalJSON() ([]byte, error) {
 
 func (o ExecuteMaskingJobParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["engine_id"] = o.EngineId
+	if !IsNil(o.EngineId) {
+		toSerialize["engine_id"] = o.EngineId
+	}
 	return toSerialize, nil
 }
 

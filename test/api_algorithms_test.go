@@ -13,7 +13,7 @@ import (
 	"context"
 	"testing"
 
-	openapiclient "github.com/delphix/dct-sdk-go/v2"
+	openapiclient "github.com/delphix/dct-sdk-go/v14"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -41,9 +41,10 @@ func Test_delphix_dct_api_AlgorithmsApiService(t *testing.T) {
 
 		var algorithmId string
 
-		httpRes, err := apiClient.AlgorithmsApi.DeleteAlgorithm(context.Background(), algorithmId).Execute()
+		resp, httpRes, err := apiClient.AlgorithmsApi.DeleteAlgorithm(context.Background(), algorithmId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

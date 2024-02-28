@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -29,11 +29,11 @@ type RegisteredEngine struct {
 	// The engine version.
 	Version NullableString `json:"version,omitempty"`
 	// The name of this engine.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The ssh public key of this engine.
 	SshPublicKey *string `json:"ssh_public_key,omitempty"`
 	// The hostname of this engine.
-	Hostname string `json:"hostname"`
+	Hostname *string `json:"hostname,omitempty"`
 	// The total number of CPU cores on this engine.
 	CpuCoreCount NullableInt32 `json:"cpu_core_count,omitempty"`
 	// The total amount of memory on this engine, in bytes.
@@ -52,10 +52,16 @@ type RegisteredEngine struct {
 	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	// the status of the engine 
 	Status NullableString `json:"status,omitempty"`
-	// The status of the connection to the engine.
+	// The status of the connection to the engine. Deprecated; use \"engine_connection_status\" instead.
+	// Deprecated
 	ConnectionStatus NullableString `json:"connection_status,omitempty"`
-	// If set, details about the status of the connection to the engine.
+	// The state of the connection to the engine.
+	EngineConnectionStatus *string `json:"engine_connection_status,omitempty"`
+	// If set, details about the status of the connection to the engine. Deprecated; use \"engine_connection_status_details\" instead.
+	// Deprecated
 	ConnectionStatusDetails NullableString `json:"connection_status_details,omitempty"`
+	// If set, details about the state of the connection to the engine.
+	EngineConnectionStatusDetails *string `json:"engine_connection_status_details,omitempty"`
 	// The virtualization domain admin username.
 	Username NullableString `json:"username,omitempty"`
 	// The virtualization domain admin password.
@@ -100,14 +106,8 @@ type RegisteredEngine struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRegisteredEngine(name string, hostname string) *RegisteredEngine {
+func NewRegisteredEngine() *RegisteredEngine {
 	this := RegisteredEngine{}
-	this.Name = name
-	this.Hostname = hostname
-	var insecureSsl bool = false
-	this.InsecureSsl = &insecureSsl
-	var unsafeSslHostnameCheck bool = false
-	this.UnsafeSslHostnameCheck = &unsafeSslHostnameCheck
 	return &this
 }
 
@@ -116,10 +116,6 @@ func NewRegisteredEngine(name string, hostname string) *RegisteredEngine {
 // but it doesn't guarantee that properties required by API are set
 func NewRegisteredEngineWithDefaults() *RegisteredEngine {
 	this := RegisteredEngine{}
-	var insecureSsl bool = false
-	this.InsecureSsl = &insecureSsl
-	var unsafeSslHostnameCheck bool = false
-	this.UnsafeSslHostnameCheck = &unsafeSslHostnameCheck
 	return &this
 }
 
@@ -281,28 +277,36 @@ func (o *RegisteredEngine) UnsetVersion() {
 	o.Version.Unset()
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *RegisteredEngine) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *RegisteredEngine) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
 // GetSshPublicKey returns the SshPublicKey field value if set, zero value otherwise.
@@ -337,28 +341,36 @@ func (o *RegisteredEngine) SetSshPublicKey(v string) {
 	o.SshPublicKey = &v
 }
 
-// GetHostname returns the Hostname field value
+// GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *RegisteredEngine) GetHostname() string {
-	if o == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
-
-	return o.Hostname
+	return *o.Hostname
 }
 
-// GetHostnameOk returns a tuple with the Hostname field value
+// GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RegisteredEngine) GetHostnameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
-	return &o.Hostname, true
+	return o.Hostname, true
 }
 
-// SetHostname sets field value
+// HasHostname returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasHostname() bool {
+	if o != nil && !IsNil(o.Hostname) {
+		return true
+	}
+
+	return false
+}
+
+// SetHostname gets a reference to the given string and assigns it to the Hostname field.
 func (o *RegisteredEngine) SetHostname(v string) {
-	o.Hostname = v
+	o.Hostname = &v
 }
 
 // GetCpuCoreCount returns the CpuCoreCount field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -720,6 +732,7 @@ func (o *RegisteredEngine) UnsetStatus() {
 }
 
 // GetConnectionStatus returns the ConnectionStatus field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *RegisteredEngine) GetConnectionStatus() string {
 	if o == nil || IsNil(o.ConnectionStatus.Get()) {
 		var ret string
@@ -731,6 +744,7 @@ func (o *RegisteredEngine) GetConnectionStatus() string {
 // GetConnectionStatusOk returns a tuple with the ConnectionStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *RegisteredEngine) GetConnectionStatusOk() (*string, bool) {
 	if o == nil {
 		return nil, false
@@ -748,6 +762,7 @@ func (o *RegisteredEngine) HasConnectionStatus() bool {
 }
 
 // SetConnectionStatus gets a reference to the given NullableString and assigns it to the ConnectionStatus field.
+// Deprecated
 func (o *RegisteredEngine) SetConnectionStatus(v string) {
 	o.ConnectionStatus.Set(&v)
 }
@@ -761,7 +776,40 @@ func (o *RegisteredEngine) UnsetConnectionStatus() {
 	o.ConnectionStatus.Unset()
 }
 
+// GetEngineConnectionStatus returns the EngineConnectionStatus field value if set, zero value otherwise.
+func (o *RegisteredEngine) GetEngineConnectionStatus() string {
+	if o == nil || IsNil(o.EngineConnectionStatus) {
+		var ret string
+		return ret
+	}
+	return *o.EngineConnectionStatus
+}
+
+// GetEngineConnectionStatusOk returns a tuple with the EngineConnectionStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RegisteredEngine) GetEngineConnectionStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineConnectionStatus) {
+		return nil, false
+	}
+	return o.EngineConnectionStatus, true
+}
+
+// HasEngineConnectionStatus returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasEngineConnectionStatus() bool {
+	if o != nil && !IsNil(o.EngineConnectionStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineConnectionStatus gets a reference to the given string and assigns it to the EngineConnectionStatus field.
+func (o *RegisteredEngine) SetEngineConnectionStatus(v string) {
+	o.EngineConnectionStatus = &v
+}
+
 // GetConnectionStatusDetails returns the ConnectionStatusDetails field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *RegisteredEngine) GetConnectionStatusDetails() string {
 	if o == nil || IsNil(o.ConnectionStatusDetails.Get()) {
 		var ret string
@@ -773,6 +821,7 @@ func (o *RegisteredEngine) GetConnectionStatusDetails() string {
 // GetConnectionStatusDetailsOk returns a tuple with the ConnectionStatusDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *RegisteredEngine) GetConnectionStatusDetailsOk() (*string, bool) {
 	if o == nil {
 		return nil, false
@@ -790,6 +839,7 @@ func (o *RegisteredEngine) HasConnectionStatusDetails() bool {
 }
 
 // SetConnectionStatusDetails gets a reference to the given NullableString and assigns it to the ConnectionStatusDetails field.
+// Deprecated
 func (o *RegisteredEngine) SetConnectionStatusDetails(v string) {
 	o.ConnectionStatusDetails.Set(&v)
 }
@@ -801,6 +851,38 @@ func (o *RegisteredEngine) SetConnectionStatusDetailsNil() {
 // UnsetConnectionStatusDetails ensures that no value is present for ConnectionStatusDetails, not even an explicit nil
 func (o *RegisteredEngine) UnsetConnectionStatusDetails() {
 	o.ConnectionStatusDetails.Unset()
+}
+
+// GetEngineConnectionStatusDetails returns the EngineConnectionStatusDetails field value if set, zero value otherwise.
+func (o *RegisteredEngine) GetEngineConnectionStatusDetails() string {
+	if o == nil || IsNil(o.EngineConnectionStatusDetails) {
+		var ret string
+		return ret
+	}
+	return *o.EngineConnectionStatusDetails
+}
+
+// GetEngineConnectionStatusDetailsOk returns a tuple with the EngineConnectionStatusDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RegisteredEngine) GetEngineConnectionStatusDetailsOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineConnectionStatusDetails) {
+		return nil, false
+	}
+	return o.EngineConnectionStatusDetails, true
+}
+
+// HasEngineConnectionStatusDetails returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasEngineConnectionStatusDetails() bool {
+	if o != nil && !IsNil(o.EngineConnectionStatusDetails) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineConnectionStatusDetails gets a reference to the given string and assigns it to the EngineConnectionStatusDetails field.
+func (o *RegisteredEngine) SetEngineConnectionStatusDetails(v string) {
+	o.EngineConnectionStatusDetails = &v
 }
 
 // GetUsername returns the Username field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1566,11 +1648,15 @@ func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	if o.Version.IsSet() {
 		toSerialize["version"] = o.Version.Get()
 	}
-	toSerialize["name"] = o.Name
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
 	if !IsNil(o.SshPublicKey) {
 		toSerialize["ssh_public_key"] = o.SshPublicKey
 	}
-	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
 	if o.CpuCoreCount.IsSet() {
 		toSerialize["cpu_core_count"] = o.CpuCoreCount.Get()
 	}
@@ -1601,9 +1687,11 @@ func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	if o.ConnectionStatus.IsSet() {
 		toSerialize["connection_status"] = o.ConnectionStatus.Get()
 	}
+	// skip: engine_connection_status is readOnly
 	if o.ConnectionStatusDetails.IsSet() {
 		toSerialize["connection_status_details"] = o.ConnectionStatusDetails.Get()
 	}
+	// skip: engine_connection_status_details is readOnly
 	if o.Username.IsSet() {
 		toSerialize["username"] = o.Username.Get()
 	}

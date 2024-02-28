@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -65,7 +65,28 @@ type DSource struct {
 	PreviousTimeflowId *string `json:"previous_timeflow_id,omitempty"`
 	// Indicates whether this dSource has an AppData database.
 	IsAppdata *bool `json:"is_appdata,omitempty"`
+	// The ID of the toolkit associated with this dSource(AppData only).
+	ToolkitId *string `json:"toolkit_id,omitempty"`
+	// This is the sum of unvirtualized space from the dependants VDBs of the dSource.
+	UnvirtualizedSpace *int64 `json:"unvirtualized_space,omitempty"`
+	// The number of VDBs that are dependant on this dSource. This includes all VDB descendants that have this dSource as an ancestor.
+	DependantVdbs *int32 `json:"dependant_vdbs,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// The ID of the parent object from which replication was done.
+	PrimaryObjectId *string `json:"primary_object_id,omitempty"`
+	// The ID of the parent engine from which replication was done.
+	PrimaryEngineId *string `json:"primary_engine_id,omitempty"`
+	// The name of the parent engine from which replication was done.
+	PrimaryEngineName *string `json:"primary_engine_name,omitempty"`
+	// The list of replicas replicated from this object.
+	Replicas []Replica `json:"replicas,omitempty"`
+	Hooks *DSourceHooks `json:"hooks,omitempty"`
+	// The id of the snapshot policy associated with this dSource.
+	SyncPolicyId *string `json:"sync_policy_id,omitempty"`
+	// The id of the retention policy associated with this dSource.
+	RetentionPolicyId *string `json:"retention_policy_id,omitempty"`
+	// The id of the quota policy associated with this dSource.
+	QuotaPolicyId *string `json:"quota_policy_id,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -959,6 +980,102 @@ func (o *DSource) SetIsAppdata(v bool) {
 	o.IsAppdata = &v
 }
 
+// GetToolkitId returns the ToolkitId field value if set, zero value otherwise.
+func (o *DSource) GetToolkitId() string {
+	if o == nil || IsNil(o.ToolkitId) {
+		var ret string
+		return ret
+	}
+	return *o.ToolkitId
+}
+
+// GetToolkitIdOk returns a tuple with the ToolkitId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetToolkitIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ToolkitId) {
+		return nil, false
+	}
+	return o.ToolkitId, true
+}
+
+// HasToolkitId returns a boolean if a field has been set.
+func (o *DSource) HasToolkitId() bool {
+	if o != nil && !IsNil(o.ToolkitId) {
+		return true
+	}
+
+	return false
+}
+
+// SetToolkitId gets a reference to the given string and assigns it to the ToolkitId field.
+func (o *DSource) SetToolkitId(v string) {
+	o.ToolkitId = &v
+}
+
+// GetUnvirtualizedSpace returns the UnvirtualizedSpace field value if set, zero value otherwise.
+func (o *DSource) GetUnvirtualizedSpace() int64 {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
+		var ret int64
+		return ret
+	}
+	return *o.UnvirtualizedSpace
+}
+
+// GetUnvirtualizedSpaceOk returns a tuple with the UnvirtualizedSpace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetUnvirtualizedSpaceOk() (*int64, bool) {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
+		return nil, false
+	}
+	return o.UnvirtualizedSpace, true
+}
+
+// HasUnvirtualizedSpace returns a boolean if a field has been set.
+func (o *DSource) HasUnvirtualizedSpace() bool {
+	if o != nil && !IsNil(o.UnvirtualizedSpace) {
+		return true
+	}
+
+	return false
+}
+
+// SetUnvirtualizedSpace gets a reference to the given int64 and assigns it to the UnvirtualizedSpace field.
+func (o *DSource) SetUnvirtualizedSpace(v int64) {
+	o.UnvirtualizedSpace = &v
+}
+
+// GetDependantVdbs returns the DependantVdbs field value if set, zero value otherwise.
+func (o *DSource) GetDependantVdbs() int32 {
+	if o == nil || IsNil(o.DependantVdbs) {
+		var ret int32
+		return ret
+	}
+	return *o.DependantVdbs
+}
+
+// GetDependantVdbsOk returns a tuple with the DependantVdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDependantVdbsOk() (*int32, bool) {
+	if o == nil || IsNil(o.DependantVdbs) {
+		return nil, false
+	}
+	return o.DependantVdbs, true
+}
+
+// HasDependantVdbs returns a boolean if a field has been set.
+func (o *DSource) HasDependantVdbs() bool {
+	if o != nil && !IsNil(o.DependantVdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetDependantVdbs gets a reference to the given int32 and assigns it to the DependantVdbs field.
+func (o *DSource) SetDependantVdbs(v int32) {
+	o.DependantVdbs = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *DSource) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -989,6 +1106,262 @@ func (o *DSource) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *DSource) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetPrimaryObjectId returns the PrimaryObjectId field value if set, zero value otherwise.
+func (o *DSource) GetPrimaryObjectId() string {
+	if o == nil || IsNil(o.PrimaryObjectId) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryObjectId
+}
+
+// GetPrimaryObjectIdOk returns a tuple with the PrimaryObjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPrimaryObjectIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryObjectId) {
+		return nil, false
+	}
+	return o.PrimaryObjectId, true
+}
+
+// HasPrimaryObjectId returns a boolean if a field has been set.
+func (o *DSource) HasPrimaryObjectId() bool {
+	if o != nil && !IsNil(o.PrimaryObjectId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryObjectId gets a reference to the given string and assigns it to the PrimaryObjectId field.
+func (o *DSource) SetPrimaryObjectId(v string) {
+	o.PrimaryObjectId = &v
+}
+
+// GetPrimaryEngineId returns the PrimaryEngineId field value if set, zero value otherwise.
+func (o *DSource) GetPrimaryEngineId() string {
+	if o == nil || IsNil(o.PrimaryEngineId) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEngineId
+}
+
+// GetPrimaryEngineIdOk returns a tuple with the PrimaryEngineId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPrimaryEngineIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryEngineId) {
+		return nil, false
+	}
+	return o.PrimaryEngineId, true
+}
+
+// HasPrimaryEngineId returns a boolean if a field has been set.
+func (o *DSource) HasPrimaryEngineId() bool {
+	if o != nil && !IsNil(o.PrimaryEngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEngineId gets a reference to the given string and assigns it to the PrimaryEngineId field.
+func (o *DSource) SetPrimaryEngineId(v string) {
+	o.PrimaryEngineId = &v
+}
+
+// GetPrimaryEngineName returns the PrimaryEngineName field value if set, zero value otherwise.
+func (o *DSource) GetPrimaryEngineName() string {
+	if o == nil || IsNil(o.PrimaryEngineName) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEngineName
+}
+
+// GetPrimaryEngineNameOk returns a tuple with the PrimaryEngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPrimaryEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryEngineName) {
+		return nil, false
+	}
+	return o.PrimaryEngineName, true
+}
+
+// HasPrimaryEngineName returns a boolean if a field has been set.
+func (o *DSource) HasPrimaryEngineName() bool {
+	if o != nil && !IsNil(o.PrimaryEngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEngineName gets a reference to the given string and assigns it to the PrimaryEngineName field.
+func (o *DSource) SetPrimaryEngineName(v string) {
+	o.PrimaryEngineName = &v
+}
+
+// GetReplicas returns the Replicas field value if set, zero value otherwise.
+func (o *DSource) GetReplicas() []Replica {
+	if o == nil || IsNil(o.Replicas) {
+		var ret []Replica
+		return ret
+	}
+	return o.Replicas
+}
+
+// GetReplicasOk returns a tuple with the Replicas field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetReplicasOk() ([]Replica, bool) {
+	if o == nil || IsNil(o.Replicas) {
+		return nil, false
+	}
+	return o.Replicas, true
+}
+
+// HasReplicas returns a boolean if a field has been set.
+func (o *DSource) HasReplicas() bool {
+	if o != nil && !IsNil(o.Replicas) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicas gets a reference to the given []Replica and assigns it to the Replicas field.
+func (o *DSource) SetReplicas(v []Replica) {
+	o.Replicas = v
+}
+
+// GetHooks returns the Hooks field value if set, zero value otherwise.
+func (o *DSource) GetHooks() DSourceHooks {
+	if o == nil || IsNil(o.Hooks) {
+		var ret DSourceHooks
+		return ret
+	}
+	return *o.Hooks
+}
+
+// GetHooksOk returns a tuple with the Hooks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetHooksOk() (*DSourceHooks, bool) {
+	if o == nil || IsNil(o.Hooks) {
+		return nil, false
+	}
+	return o.Hooks, true
+}
+
+// HasHooks returns a boolean if a field has been set.
+func (o *DSource) HasHooks() bool {
+	if o != nil && !IsNil(o.Hooks) {
+		return true
+	}
+
+	return false
+}
+
+// SetHooks gets a reference to the given DSourceHooks and assigns it to the Hooks field.
+func (o *DSource) SetHooks(v DSourceHooks) {
+	o.Hooks = &v
+}
+
+// GetSyncPolicyId returns the SyncPolicyId field value if set, zero value otherwise.
+func (o *DSource) GetSyncPolicyId() string {
+	if o == nil || IsNil(o.SyncPolicyId) {
+		var ret string
+		return ret
+	}
+	return *o.SyncPolicyId
+}
+
+// GetSyncPolicyIdOk returns a tuple with the SyncPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetSyncPolicyIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SyncPolicyId) {
+		return nil, false
+	}
+	return o.SyncPolicyId, true
+}
+
+// HasSyncPolicyId returns a boolean if a field has been set.
+func (o *DSource) HasSyncPolicyId() bool {
+	if o != nil && !IsNil(o.SyncPolicyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSyncPolicyId gets a reference to the given string and assigns it to the SyncPolicyId field.
+func (o *DSource) SetSyncPolicyId(v string) {
+	o.SyncPolicyId = &v
+}
+
+// GetRetentionPolicyId returns the RetentionPolicyId field value if set, zero value otherwise.
+func (o *DSource) GetRetentionPolicyId() string {
+	if o == nil || IsNil(o.RetentionPolicyId) {
+		var ret string
+		return ret
+	}
+	return *o.RetentionPolicyId
+}
+
+// GetRetentionPolicyIdOk returns a tuple with the RetentionPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetRetentionPolicyIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RetentionPolicyId) {
+		return nil, false
+	}
+	return o.RetentionPolicyId, true
+}
+
+// HasRetentionPolicyId returns a boolean if a field has been set.
+func (o *DSource) HasRetentionPolicyId() bool {
+	if o != nil && !IsNil(o.RetentionPolicyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRetentionPolicyId gets a reference to the given string and assigns it to the RetentionPolicyId field.
+func (o *DSource) SetRetentionPolicyId(v string) {
+	o.RetentionPolicyId = &v
+}
+
+// GetQuotaPolicyId returns the QuotaPolicyId field value if set, zero value otherwise.
+func (o *DSource) GetQuotaPolicyId() string {
+	if o == nil || IsNil(o.QuotaPolicyId) {
+		var ret string
+		return ret
+	}
+	return *o.QuotaPolicyId
+}
+
+// GetQuotaPolicyIdOk returns a tuple with the QuotaPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetQuotaPolicyIdOk() (*string, bool) {
+	if o == nil || IsNil(o.QuotaPolicyId) {
+		return nil, false
+	}
+	return o.QuotaPolicyId, true
+}
+
+// HasQuotaPolicyId returns a boolean if a field has been set.
+func (o *DSource) HasQuotaPolicyId() bool {
+	if o != nil && !IsNil(o.QuotaPolicyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetQuotaPolicyId gets a reference to the given string and assigns it to the QuotaPolicyId field.
+func (o *DSource) SetQuotaPolicyId(v string) {
+	o.QuotaPolicyId = &v
 }
 
 func (o DSource) MarshalJSON() ([]byte, error) {
@@ -1067,8 +1440,41 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsAppdata) {
 		toSerialize["is_appdata"] = o.IsAppdata
 	}
+	if !IsNil(o.ToolkitId) {
+		toSerialize["toolkit_id"] = o.ToolkitId
+	}
+	if !IsNil(o.UnvirtualizedSpace) {
+		toSerialize["unvirtualized_space"] = o.UnvirtualizedSpace
+	}
+	if !IsNil(o.DependantVdbs) {
+		toSerialize["dependant_vdbs"] = o.DependantVdbs
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.PrimaryObjectId) {
+		toSerialize["primary_object_id"] = o.PrimaryObjectId
+	}
+	if !IsNil(o.PrimaryEngineId) {
+		toSerialize["primary_engine_id"] = o.PrimaryEngineId
+	}
+	if !IsNil(o.PrimaryEngineName) {
+		toSerialize["primary_engine_name"] = o.PrimaryEngineName
+	}
+	if !IsNil(o.Replicas) {
+		toSerialize["replicas"] = o.Replicas
+	}
+	if !IsNil(o.Hooks) {
+		toSerialize["hooks"] = o.Hooks
+	}
+	if !IsNil(o.SyncPolicyId) {
+		toSerialize["sync_policy_id"] = o.SyncPolicyId
+	}
+	if !IsNil(o.RetentionPolicyId) {
+		toSerialize["retention_policy_id"] = o.RetentionPolicyId
+	}
+	if !IsNil(o.QuotaPolicyId) {
+		toSerialize["quota_policy_id"] = o.QuotaPolicyId
 	}
 	return toSerialize, nil
 }

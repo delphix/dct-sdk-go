@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -48,9 +48,17 @@ type Source struct {
 	JdbcConnectionString NullableString `json:"jdbc_connection_string,omitempty"`
 	// The version of the plugin associated with this source database.
 	PluginVersion NullableString `json:"plugin_version,omitempty"`
+	// The ID of the toolkit associated with this source database(AppData only).
+	ToolkitId *string `json:"toolkit_id,omitempty"`
 	IsDsource *bool `json:"is_dsource,omitempty"`
-	// The repository reference for this source
+	// The repository id for this source
 	Repository *string `json:"repository,omitempty"`
+	// Recovery model of the source database (MSSql Only).
+	RecoveryModel NullableString `json:"recovery_model,omitempty"`
+	// The type of this mssql source database (MSSql Only).
+	MssqlSourceType NullableString `json:"mssql_source_type,omitempty"`
+	// The type of this appdata source database (Appdata Only).
+	AppdataSourceType NullableString `json:"appdata_source_type,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -649,6 +657,38 @@ func (o *Source) UnsetPluginVersion() {
 	o.PluginVersion.Unset()
 }
 
+// GetToolkitId returns the ToolkitId field value if set, zero value otherwise.
+func (o *Source) GetToolkitId() string {
+	if o == nil || IsNil(o.ToolkitId) {
+		var ret string
+		return ret
+	}
+	return *o.ToolkitId
+}
+
+// GetToolkitIdOk returns a tuple with the ToolkitId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetToolkitIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ToolkitId) {
+		return nil, false
+	}
+	return o.ToolkitId, true
+}
+
+// HasToolkitId returns a boolean if a field has been set.
+func (o *Source) HasToolkitId() bool {
+	if o != nil && !IsNil(o.ToolkitId) {
+		return true
+	}
+
+	return false
+}
+
+// SetToolkitId gets a reference to the given string and assigns it to the ToolkitId field.
+func (o *Source) SetToolkitId(v string) {
+	o.ToolkitId = &v
+}
+
 // GetIsDsource returns the IsDsource field value if set, zero value otherwise.
 func (o *Source) GetIsDsource() bool {
 	if o == nil || IsNil(o.IsDsource) {
@@ -711,6 +751,132 @@ func (o *Source) HasRepository() bool {
 // SetRepository gets a reference to the given string and assigns it to the Repository field.
 func (o *Source) SetRepository(v string) {
 	o.Repository = &v
+}
+
+// GetRecoveryModel returns the RecoveryModel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Source) GetRecoveryModel() string {
+	if o == nil || IsNil(o.RecoveryModel.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RecoveryModel.Get()
+}
+
+// GetRecoveryModelOk returns a tuple with the RecoveryModel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Source) GetRecoveryModelOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RecoveryModel.Get(), o.RecoveryModel.IsSet()
+}
+
+// HasRecoveryModel returns a boolean if a field has been set.
+func (o *Source) HasRecoveryModel() bool {
+	if o != nil && o.RecoveryModel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoveryModel gets a reference to the given NullableString and assigns it to the RecoveryModel field.
+func (o *Source) SetRecoveryModel(v string) {
+	o.RecoveryModel.Set(&v)
+}
+// SetRecoveryModelNil sets the value for RecoveryModel to be an explicit nil
+func (o *Source) SetRecoveryModelNil() {
+	o.RecoveryModel.Set(nil)
+}
+
+// UnsetRecoveryModel ensures that no value is present for RecoveryModel, not even an explicit nil
+func (o *Source) UnsetRecoveryModel() {
+	o.RecoveryModel.Unset()
+}
+
+// GetMssqlSourceType returns the MssqlSourceType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Source) GetMssqlSourceType() string {
+	if o == nil || IsNil(o.MssqlSourceType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlSourceType.Get()
+}
+
+// GetMssqlSourceTypeOk returns a tuple with the MssqlSourceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Source) GetMssqlSourceTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MssqlSourceType.Get(), o.MssqlSourceType.IsSet()
+}
+
+// HasMssqlSourceType returns a boolean if a field has been set.
+func (o *Source) HasMssqlSourceType() bool {
+	if o != nil && o.MssqlSourceType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlSourceType gets a reference to the given NullableString and assigns it to the MssqlSourceType field.
+func (o *Source) SetMssqlSourceType(v string) {
+	o.MssqlSourceType.Set(&v)
+}
+// SetMssqlSourceTypeNil sets the value for MssqlSourceType to be an explicit nil
+func (o *Source) SetMssqlSourceTypeNil() {
+	o.MssqlSourceType.Set(nil)
+}
+
+// UnsetMssqlSourceType ensures that no value is present for MssqlSourceType, not even an explicit nil
+func (o *Source) UnsetMssqlSourceType() {
+	o.MssqlSourceType.Unset()
+}
+
+// GetAppdataSourceType returns the AppdataSourceType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Source) GetAppdataSourceType() string {
+	if o == nil || IsNil(o.AppdataSourceType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AppdataSourceType.Get()
+}
+
+// GetAppdataSourceTypeOk returns a tuple with the AppdataSourceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Source) GetAppdataSourceTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AppdataSourceType.Get(), o.AppdataSourceType.IsSet()
+}
+
+// HasAppdataSourceType returns a boolean if a field has been set.
+func (o *Source) HasAppdataSourceType() bool {
+	if o != nil && o.AppdataSourceType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataSourceType gets a reference to the given NullableString and assigns it to the AppdataSourceType field.
+func (o *Source) SetAppdataSourceType(v string) {
+	o.AppdataSourceType.Set(&v)
+}
+// SetAppdataSourceTypeNil sets the value for AppdataSourceType to be an explicit nil
+func (o *Source) SetAppdataSourceTypeNil() {
+	o.AppdataSourceType.Set(nil)
+}
+
+// UnsetAppdataSourceType ensures that no value is present for AppdataSourceType, not even an explicit nil
+func (o *Source) UnsetAppdataSourceType() {
+	o.AppdataSourceType.Unset()
 }
 
 // GetTags returns the Tags field value if set, zero value otherwise.
@@ -797,11 +963,23 @@ func (o Source) ToMap() (map[string]interface{}, error) {
 	if o.PluginVersion.IsSet() {
 		toSerialize["plugin_version"] = o.PluginVersion.Get()
 	}
+	if !IsNil(o.ToolkitId) {
+		toSerialize["toolkit_id"] = o.ToolkitId
+	}
 	if !IsNil(o.IsDsource) {
 		toSerialize["is_dsource"] = o.IsDsource
 	}
 	if !IsNil(o.Repository) {
 		toSerialize["repository"] = o.Repository
+	}
+	if o.RecoveryModel.IsSet() {
+		toSerialize["recovery_model"] = o.RecoveryModel.Get()
+	}
+	if o.MssqlSourceType.IsSet() {
+		toSerialize["mssql_source_type"] = o.MssqlSourceType.Get()
+	}
+	if o.AppdataSourceType.IsSet() {
+		toSerialize["appdata_source_type"] = o.AppdataSourceType.Get()
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,136 @@ import (
 
 // MaskingJobsApiService MaskingJobsApi service
 type MaskingJobsApiService service
+
+type ApiAddEngineToMaskingJobRequest struct {
+	ctx context.Context
+	ApiService *MaskingJobsApiService
+	maskingJobId string
+	engineIdBody *EngineIdBody
+}
+
+// Body containing the ID of the registered engine.
+func (r ApiAddEngineToMaskingJobRequest) EngineIdBody(engineIdBody EngineIdBody) ApiAddEngineToMaskingJobRequest {
+	r.engineIdBody = &engineIdBody
+	return r
+}
+
+func (r ApiAddEngineToMaskingJobRequest) Execute() (*AddEngineToJobResponse, *http.Response, error) {
+	return r.ApiService.AddEngineToMaskingJobExecute(r)
+}
+
+/*
+AddEngineToMaskingJob Add an engine to a Masking Job (Hyperscale Job only).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param maskingJobId The ID of the Masking Job.
+ @return ApiAddEngineToMaskingJobRequest
+*/
+func (a *MaskingJobsApiService) AddEngineToMaskingJob(ctx context.Context, maskingJobId string) ApiAddEngineToMaskingJobRequest {
+	return ApiAddEngineToMaskingJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		maskingJobId: maskingJobId,
+	}
+}
+
+// Execute executes the request
+//  @return AddEngineToJobResponse
+func (a *MaskingJobsApiService) AddEngineToMaskingJobExecute(r ApiAddEngineToMaskingJobRequest) (*AddEngineToJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AddEngineToJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.AddEngineToMaskingJob")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/masking-jobs/{maskingJobId}/add-engine"
+	localVarPath = strings.Replace(localVarPath, "{"+"maskingJobId"+"}", url.PathEscape(parameterValueToString(r.maskingJobId, "maskingJobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.maskingJobId) < 1 {
+		return localVarReturnValue, nil, reportError("maskingJobId must have at least 1 elements")
+	}
+	if r.engineIdBody == nil {
+		return localVarReturnValue, nil, reportError("engineIdBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.engineIdBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCopyMaskingJobRequest struct {
 	ctx context.Context
@@ -99,6 +229,129 @@ func (a *MaskingJobsApiService) CopyMaskingJobExecute(r ApiCopyMaskingJobRequest
 	}
 	// body params
 	localVarPostBody = r.copyMaskingJobParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateMaskingJobRequest struct {
+	ctx context.Context
+	ApiService *MaskingJobsApiService
+	createMaskingJobRequest *CreateMaskingJobRequest
+}
+
+// Input params to create a masking job.
+func (r ApiCreateMaskingJobRequest) CreateMaskingJobRequest(createMaskingJobRequest CreateMaskingJobRequest) ApiCreateMaskingJobRequest {
+	r.createMaskingJobRequest = &createMaskingJobRequest
+	return r
+}
+
+func (r ApiCreateMaskingJobRequest) Execute() (*CreateMaskingJobResponse, *http.Response, error) {
+	return r.ApiService.CreateMaskingJobExecute(r)
+}
+
+/*
+CreateMaskingJob Create a Masking Job.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateMaskingJobRequest
+*/
+func (a *MaskingJobsApiService) CreateMaskingJob(ctx context.Context) ApiCreateMaskingJobRequest {
+	return ApiCreateMaskingJobRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateMaskingJobResponse
+func (a *MaskingJobsApiService) CreateMaskingJobExecute(r ApiCreateMaskingJobRequest) (*CreateMaskingJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateMaskingJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.CreateMaskingJob")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/masking-jobs"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createMaskingJobRequest == nil {
+		return localVarReturnValue, nil, reportError("createMaskingJobRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createMaskingJobRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1361,6 +1614,254 @@ func (a *MaskingJobsApiService) MigrateMaskingJobExecute(r ApiMigrateMaskingJobR
 	}
 	// body params
 	localVarPostBody = r.migrateMaskingJobParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiReImportMaskingJobRequest struct {
+	ctx context.Context
+	ApiService *MaskingJobsApiService
+	maskingJobId string
+}
+
+func (r ApiReImportMaskingJobRequest) Execute() (*ReImportMaskingJobResponse, *http.Response, error) {
+	return r.ApiService.ReImportMaskingJobExecute(r)
+}
+
+/*
+ReImportMaskingJob Re-import the dataset from the source MaskingJob (Hyperscale Job only).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param maskingJobId The ID of the Masking Job.
+ @return ApiReImportMaskingJobRequest
+*/
+func (a *MaskingJobsApiService) ReImportMaskingJob(ctx context.Context, maskingJobId string) ApiReImportMaskingJobRequest {
+	return ApiReImportMaskingJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		maskingJobId: maskingJobId,
+	}
+}
+
+// Execute executes the request
+//  @return ReImportMaskingJobResponse
+func (a *MaskingJobsApiService) ReImportMaskingJobExecute(r ApiReImportMaskingJobRequest) (*ReImportMaskingJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ReImportMaskingJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.ReImportMaskingJob")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/masking-jobs/{maskingJobId}/re-import"
+	localVarPath = strings.Replace(localVarPath, "{"+"maskingJobId"+"}", url.PathEscape(parameterValueToString(r.maskingJobId, "maskingJobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.maskingJobId) < 1 {
+		return localVarReturnValue, nil, reportError("maskingJobId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRemoveEngineFromMaskingJobRequest struct {
+	ctx context.Context
+	ApiService *MaskingJobsApiService
+	maskingJobId string
+	engineIdBody *EngineIdBody
+}
+
+// Body containing the ID of the registered engine.
+func (r ApiRemoveEngineFromMaskingJobRequest) EngineIdBody(engineIdBody EngineIdBody) ApiRemoveEngineFromMaskingJobRequest {
+	r.engineIdBody = &engineIdBody
+	return r
+}
+
+func (r ApiRemoveEngineFromMaskingJobRequest) Execute() (*RemoveEngineFromJobResponse, *http.Response, error) {
+	return r.ApiService.RemoveEngineFromMaskingJobExecute(r)
+}
+
+/*
+RemoveEngineFromMaskingJob Remove an engine from a Masking Job (Hyperscale Job only).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param maskingJobId The ID of the Masking Job.
+ @return ApiRemoveEngineFromMaskingJobRequest
+*/
+func (a *MaskingJobsApiService) RemoveEngineFromMaskingJob(ctx context.Context, maskingJobId string) ApiRemoveEngineFromMaskingJobRequest {
+	return ApiRemoveEngineFromMaskingJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		maskingJobId: maskingJobId,
+	}
+}
+
+// Execute executes the request
+//  @return RemoveEngineFromJobResponse
+func (a *MaskingJobsApiService) RemoveEngineFromMaskingJobExecute(r ApiRemoveEngineFromMaskingJobRequest) (*RemoveEngineFromJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RemoveEngineFromJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.RemoveEngineFromMaskingJob")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/masking-jobs/{maskingJobId}/remove-engine"
+	localVarPath = strings.Replace(localVarPath, "{"+"maskingJobId"+"}", url.PathEscape(parameterValueToString(r.maskingJobId, "maskingJobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.maskingJobId) < 1 {
+		return localVarReturnValue, nil, reportError("maskingJobId must have at least 1 elements")
+	}
+	if r.engineIdBody == nil {
+		return localVarReturnValue, nil, reportError("engineIdBody is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.engineIdBody
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

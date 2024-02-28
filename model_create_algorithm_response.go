@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ var _ MappedNullable = &CreateAlgorithmResponse{}
 
 // CreateAlgorithmResponse struct for CreateAlgorithmResponse
 type CreateAlgorithmResponse struct {
+	// The created algorithm's ID.
+	Id *string `json:"id,omitempty"`
 	Job *Job `json:"job,omitempty"`
 }
 
@@ -38,6 +40,38 @@ func NewCreateAlgorithmResponse() *CreateAlgorithmResponse {
 func NewCreateAlgorithmResponseWithDefaults() *CreateAlgorithmResponse {
 	this := CreateAlgorithmResponse{}
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *CreateAlgorithmResponse) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateAlgorithmResponse) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *CreateAlgorithmResponse) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *CreateAlgorithmResponse) SetId(v string) {
+	o.Id = &v
 }
 
 // GetJob returns the Job field value if set, zero value otherwise.
@@ -82,6 +116,9 @@ func (o CreateAlgorithmResponse) MarshalJSON() ([]byte, error) {
 
 func (o CreateAlgorithmResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.Job) {
 		toSerialize["job"] = o.Job
 	}

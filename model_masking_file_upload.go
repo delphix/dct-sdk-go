@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -20,8 +20,6 @@ var _ MappedNullable = &MaskingFileUpload{}
 
 // MaskingFileUpload An uploaded file.
 type MaskingFileUpload struct {
-	// The id of the engine onto which the file was uploaded.
-	EngineId *string `json:"engine_id,omitempty"`
 	// Name of this file.
 	Filename *string `json:"filename,omitempty"`
 	// An reference to this file.
@@ -45,38 +43,6 @@ func NewMaskingFileUpload() *MaskingFileUpload {
 func NewMaskingFileUploadWithDefaults() *MaskingFileUpload {
 	this := MaskingFileUpload{}
 	return &this
-}
-
-// GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *MaskingFileUpload) GetEngineId() string {
-	if o == nil || IsNil(o.EngineId) {
-		var ret string
-		return ret
-	}
-	return *o.EngineId
-}
-
-// GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MaskingFileUpload) GetEngineIdOk() (*string, bool) {
-	if o == nil || IsNil(o.EngineId) {
-		return nil, false
-	}
-	return o.EngineId, true
-}
-
-// HasEngineId returns a boolean if a field has been set.
-func (o *MaskingFileUpload) HasEngineId() bool {
-	if o != nil && !IsNil(o.EngineId) {
-		return true
-	}
-
-	return false
-}
-
-// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
-func (o *MaskingFileUpload) SetEngineId(v string) {
-	o.EngineId = &v
 }
 
 // GetFilename returns the Filename field value if set, zero value otherwise.
@@ -185,9 +151,6 @@ func (o MaskingFileUpload) MarshalJSON() ([]byte, error) {
 
 func (o MaskingFileUpload) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.EngineId) {
-		toSerialize["engine_id"] = o.EngineId
-	}
 	if !IsNil(o.Filename) {
 		toSerialize["filename"] = o.Filename
 	}

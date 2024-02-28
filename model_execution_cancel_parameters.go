@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -20,7 +20,7 @@ var _ MappedNullable = &ExecutionCancelParameters{}
 
 // ExecutionCancelParameters Parameters to cancel an execution.
 type ExecutionCancelParameters struct {
-	// The expected status of the execution to cancel to prevent cancelling a queued job that has transitioned to a running state since the request was issued.
+	// The expected status of the execution to cancel to prevent cancelling a queued job that has transitioned to a running state since the request was issued (Standard Job only).
 	ExpectedStatus *string `json:"expected_status,omitempty"`
 }
 

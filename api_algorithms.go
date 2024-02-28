@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -147,13 +147,410 @@ func (a *AlgorithmsApiService) CreateAlgorithmExecute(r ApiCreateAlgorithmReques
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateAlgorithmRevisionRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	algorithmRevisionCreateParameters *AlgorithmRevisionCreateParameters
+}
+
+// The parameters to create an algorithm revision.
+func (r ApiCreateAlgorithmRevisionRequest) AlgorithmRevisionCreateParameters(algorithmRevisionCreateParameters AlgorithmRevisionCreateParameters) ApiCreateAlgorithmRevisionRequest {
+	r.algorithmRevisionCreateParameters = &algorithmRevisionCreateParameters
+	return r
+}
+
+func (r ApiCreateAlgorithmRevisionRequest) Execute() (*CreateAlgorithmRevisionResponse, *http.Response, error) {
+	return r.ApiService.CreateAlgorithmRevisionExecute(r)
+}
+
+/*
+CreateAlgorithmRevision Create a new algorithm revision.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @return ApiCreateAlgorithmRevisionRequest
+*/
+func (a *AlgorithmsApiService) CreateAlgorithmRevision(ctx context.Context, algorithmId string) ApiCreateAlgorithmRevisionRequest {
+	return ApiCreateAlgorithmRevisionRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+	}
+}
+
+// Execute executes the request
+//  @return CreateAlgorithmRevisionResponse
+func (a *AlgorithmsApiService) CreateAlgorithmRevisionExecute(r ApiCreateAlgorithmRevisionRequest) (*CreateAlgorithmRevisionResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateAlgorithmRevisionResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.CreateAlgorithmRevision")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if r.algorithmRevisionCreateParameters == nil {
+		return localVarReturnValue, nil, reportError("algorithmRevisionCreateParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.algorithmRevisionCreateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateAlgorithmRevisionTagsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	revisionId string
+	tagsRequest *TagsRequest
+}
+
+// Tags information for AlgorithmRevision.
+func (r ApiCreateAlgorithmRevisionTagsRequest) TagsRequest(tagsRequest TagsRequest) ApiCreateAlgorithmRevisionTagsRequest {
+	r.tagsRequest = &tagsRequest
+	return r
+}
+
+func (r ApiCreateAlgorithmRevisionTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.CreateAlgorithmRevisionTagsExecute(r)
+}
+
+/*
+CreateAlgorithmRevisionTags Create tags for an AlgorithmRevision.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @param revisionId The ID of the Algorithm revision.
+ @return ApiCreateAlgorithmRevisionTagsRequest
+*/
+func (a *AlgorithmsApiService) CreateAlgorithmRevisionTags(ctx context.Context, algorithmId string, revisionId string) ApiCreateAlgorithmRevisionTagsRequest {
+	return ApiCreateAlgorithmRevisionTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+		revisionId: revisionId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *AlgorithmsApiService) CreateAlgorithmRevisionTagsExecute(r ApiCreateAlgorithmRevisionTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.CreateAlgorithmRevisionTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/{revisionId}/tags"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"revisionId"+"}", url.PathEscape(parameterValueToString(r.revisionId, "revisionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if strlen(r.revisionId) < 1 {
+		return localVarReturnValue, nil, reportError("revisionId must have at least 1 elements")
+	}
+	if r.tagsRequest == nil {
+		return localVarReturnValue, nil, reportError("tagsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tagsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateAlgorithmTagsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	tagsRequest *TagsRequest
+}
+
+// Tags information for Algorithm.
+func (r ApiCreateAlgorithmTagsRequest) TagsRequest(tagsRequest TagsRequest) ApiCreateAlgorithmTagsRequest {
+	r.tagsRequest = &tagsRequest
+	return r
+}
+
+func (r ApiCreateAlgorithmTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.CreateAlgorithmTagsExecute(r)
+}
+
+/*
+CreateAlgorithmTags Create tags for an Algorithm.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @return ApiCreateAlgorithmTagsRequest
+*/
+func (a *AlgorithmsApiService) CreateAlgorithmTags(ctx context.Context, algorithmId string) ApiCreateAlgorithmTagsRequest {
+	return ApiCreateAlgorithmTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *AlgorithmsApiService) CreateAlgorithmTagsExecute(r ApiCreateAlgorithmTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.CreateAlgorithmTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/tags"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if r.tagsRequest == nil {
+		return localVarReturnValue, nil, reportError("tagsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tagsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiDeleteAlgorithmRequest struct {
 	ctx context.Context
 	ApiService *AlgorithmsApiService
 	algorithmId string
 }
 
-func (r ApiDeleteAlgorithmRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteAlgorithmRequest) Execute() (*DeleteAlgorithmResponse, *http.Response, error) {
 	return r.ApiService.DeleteAlgorithmExecute(r)
 }
 
@@ -173,16 +570,18 @@ func (a *AlgorithmsApiService) DeleteAlgorithm(ctx context.Context, algorithmId 
 }
 
 // Execute executes the request
-func (a *AlgorithmsApiService) DeleteAlgorithmExecute(r ApiDeleteAlgorithmRequest) (*http.Response, error) {
+//  @return DeleteAlgorithmResponse
+func (a *AlgorithmsApiService) DeleteAlgorithmExecute(r ApiDeleteAlgorithmRequest) (*DeleteAlgorithmResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *DeleteAlgorithmResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.DeleteAlgorithm")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/algorithms/{algorithmId}"
@@ -192,11 +591,266 @@ func (a *AlgorithmsApiService) DeleteAlgorithmExecute(r ApiDeleteAlgorithmReques
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	if strlen(r.algorithmId) < 1 {
-		return nil, reportError("algorithmId must have at least 1 elements")
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
 	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteAlgorithmRevisionRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	revisionId string
+}
+
+func (r ApiDeleteAlgorithmRevisionRequest) Execute() (*DeleteAlgorithmRevisionResponse, *http.Response, error) {
+	return r.ApiService.DeleteAlgorithmRevisionExecute(r)
+}
+
+/*
+DeleteAlgorithmRevision Delete an algorithm revision.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @param revisionId The ID of the Algorithm revision.
+ @return ApiDeleteAlgorithmRevisionRequest
+*/
+func (a *AlgorithmsApiService) DeleteAlgorithmRevision(ctx context.Context, algorithmId string, revisionId string) ApiDeleteAlgorithmRevisionRequest {
+	return ApiDeleteAlgorithmRevisionRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+		revisionId: revisionId,
+	}
+}
+
+// Execute executes the request
+//  @return DeleteAlgorithmRevisionResponse
+func (a *AlgorithmsApiService) DeleteAlgorithmRevisionExecute(r ApiDeleteAlgorithmRevisionRequest) (*DeleteAlgorithmRevisionResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeleteAlgorithmRevisionResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.DeleteAlgorithmRevision")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/{revisionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"revisionId"+"}", url.PathEscape(parameterValueToString(r.revisionId, "revisionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if strlen(r.revisionId) < 1 {
+		return localVarReturnValue, nil, reportError("revisionId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteAlgorithmRevisionTagsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	revisionId string
+	deleteTag *DeleteTag
+}
+
+// The parameters to delete tags
+func (r ApiDeleteAlgorithmRevisionTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteAlgorithmRevisionTagsRequest {
+	r.deleteTag = &deleteTag
+	return r
+}
+
+func (r ApiDeleteAlgorithmRevisionTagsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAlgorithmRevisionTagsExecute(r)
+}
+
+/*
+DeleteAlgorithmRevisionTags Delete tags for an AlgorithmRevision.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @param revisionId The ID of the Algorithm revision.
+ @return ApiDeleteAlgorithmRevisionTagsRequest
+*/
+func (a *AlgorithmsApiService) DeleteAlgorithmRevisionTags(ctx context.Context, algorithmId string, revisionId string) ApiDeleteAlgorithmRevisionTagsRequest {
+	return ApiDeleteAlgorithmRevisionTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+		revisionId: revisionId,
+	}
+}
+
+// Execute executes the request
+func (a *AlgorithmsApiService) DeleteAlgorithmRevisionTagsExecute(r ApiDeleteAlgorithmRevisionTagsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.DeleteAlgorithmRevisionTags")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/{revisionId}/tags/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"revisionId"+"}", url.PathEscape(parameterValueToString(r.revisionId, "revisionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if strlen(r.revisionId) < 1 {
+		return nil, reportError("revisionId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -212,6 +866,124 @@ func (a *AlgorithmsApiService) DeleteAlgorithmExecute(r ApiDeleteAlgorithmReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.deleteTag
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteAlgorithmTagsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	deleteTag *DeleteTag
+}
+
+// The parameters to delete tags
+func (r ApiDeleteAlgorithmTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteAlgorithmTagsRequest {
+	r.deleteTag = &deleteTag
+	return r
+}
+
+func (r ApiDeleteAlgorithmTagsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAlgorithmTagsExecute(r)
+}
+
+/*
+DeleteAlgorithmTags Delete tags for an Algorithm.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @return ApiDeleteAlgorithmTagsRequest
+*/
+func (a *AlgorithmsApiService) DeleteAlgorithmTags(ctx context.Context, algorithmId string) ApiDeleteAlgorithmTagsRequest {
+	return ApiDeleteAlgorithmTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+	}
+}
+
+// Execute executes the request
+func (a *AlgorithmsApiService) DeleteAlgorithmTagsExecute(r ApiDeleteAlgorithmTagsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.DeleteAlgorithmTags")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/tags/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return nil, reportError("algorithmId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.deleteTag
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -295,6 +1067,522 @@ func (a *AlgorithmsApiService) GetAlgorithmByIdExecute(r ApiGetAlgorithmByIdRequ
 	}
 
 	localVarPath := localBasePath + "/algorithms/{algorithmId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAlgorithmRevisionByIdRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	revisionId string
+}
+
+func (r ApiGetAlgorithmRevisionByIdRequest) Execute() (*AlgorithmRevision, *http.Response, error) {
+	return r.ApiService.GetAlgorithmRevisionByIdExecute(r)
+}
+
+/*
+GetAlgorithmRevisionById Retrieve a specific revision of an algorithm.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @param revisionId The ID of the Algorithm revision.
+ @return ApiGetAlgorithmRevisionByIdRequest
+*/
+func (a *AlgorithmsApiService) GetAlgorithmRevisionById(ctx context.Context, algorithmId string, revisionId string) ApiGetAlgorithmRevisionByIdRequest {
+	return ApiGetAlgorithmRevisionByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+		revisionId: revisionId,
+	}
+}
+
+// Execute executes the request
+//  @return AlgorithmRevision
+func (a *AlgorithmsApiService) GetAlgorithmRevisionByIdExecute(r ApiGetAlgorithmRevisionByIdRequest) (*AlgorithmRevision, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AlgorithmRevision
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.GetAlgorithmRevisionById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/{revisionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"revisionId"+"}", url.PathEscape(parameterValueToString(r.revisionId, "revisionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if strlen(r.revisionId) < 1 {
+		return localVarReturnValue, nil, reportError("revisionId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAlgorithmRevisionTagsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	revisionId string
+}
+
+func (r ApiGetAlgorithmRevisionTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.GetAlgorithmRevisionTagsExecute(r)
+}
+
+/*
+GetAlgorithmRevisionTags Get tags for an AlgorithmRevision.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @param revisionId The ID of the Algorithm revision.
+ @return ApiGetAlgorithmRevisionTagsRequest
+*/
+func (a *AlgorithmsApiService) GetAlgorithmRevisionTags(ctx context.Context, algorithmId string, revisionId string) ApiGetAlgorithmRevisionTagsRequest {
+	return ApiGetAlgorithmRevisionTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+		revisionId: revisionId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *AlgorithmsApiService) GetAlgorithmRevisionTagsExecute(r ApiGetAlgorithmRevisionTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.GetAlgorithmRevisionTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/{revisionId}/tags"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"revisionId"+"}", url.PathEscape(parameterValueToString(r.revisionId, "revisionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if strlen(r.revisionId) < 1 {
+		return localVarReturnValue, nil, reportError("revisionId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAlgorithmRevisionsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	limit *int32
+	cursor *string
+	sort *string
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetAlgorithmRevisionsRequest) Limit(limit int32) ApiGetAlgorithmRevisionsRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetAlgorithmRevisionsRequest) Cursor(cursor string) ApiGetAlgorithmRevisionsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies a descending order.
+func (r ApiGetAlgorithmRevisionsRequest) Sort(sort string) ApiGetAlgorithmRevisionsRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiGetAlgorithmRevisionsRequest) Execute() (*ListAlgorithmRevisionsResponse, *http.Response, error) {
+	return r.ApiService.GetAlgorithmRevisionsExecute(r)
+}
+
+/*
+GetAlgorithmRevisions Retrieve the list of algorithm revisions for the algorithm.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @return ApiGetAlgorithmRevisionsRequest
+*/
+func (a *AlgorithmsApiService) GetAlgorithmRevisions(ctx context.Context, algorithmId string) ApiGetAlgorithmRevisionsRequest {
+	return ApiGetAlgorithmRevisionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+	}
+}
+
+// Execute executes the request
+//  @return ListAlgorithmRevisionsResponse
+func (a *AlgorithmsApiService) GetAlgorithmRevisionsExecute(r ApiGetAlgorithmRevisionsRequest) (*ListAlgorithmRevisionsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListAlgorithmRevisionsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.GetAlgorithmRevisions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAlgorithmTagsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+}
+
+func (r ApiGetAlgorithmTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.GetAlgorithmTagsExecute(r)
+}
+
+/*
+GetAlgorithmTags Get tags for an Algorithm.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @return ApiGetAlgorithmTagsRequest
+*/
+func (a *AlgorithmsApiService) GetAlgorithmTags(ctx context.Context, algorithmId string) ApiGetAlgorithmTagsRequest {
+	return ApiGetAlgorithmTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *AlgorithmsApiService) GetAlgorithmTagsExecute(r ApiGetAlgorithmTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.GetAlgorithmTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/tags"
 	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -513,6 +1801,163 @@ func (a *AlgorithmsApiService) GetAlgorithmsExecute(r ApiGetAlgorithmsRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiSearchAlgorithmRevisionsRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	limit *int32
+	cursor *string
+	sort *string
+	searchBody *SearchBody
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiSearchAlgorithmRevisionsRequest) Limit(limit int32) ApiSearchAlgorithmRevisionsRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiSearchAlgorithmRevisionsRequest) Cursor(cursor string) ApiSearchAlgorithmRevisionsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies a descending order.
+func (r ApiSearchAlgorithmRevisionsRequest) Sort(sort string) ApiSearchAlgorithmRevisionsRequest {
+	r.sort = &sort
+	return r
+}
+
+// A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression. 
+func (r ApiSearchAlgorithmRevisionsRequest) SearchBody(searchBody SearchBody) ApiSearchAlgorithmRevisionsRequest {
+	r.searchBody = &searchBody
+	return r
+}
+
+func (r ApiSearchAlgorithmRevisionsRequest) Execute() (*SearchAlgorithmRevisionsResponse, *http.Response, error) {
+	return r.ApiService.SearchAlgorithmRevisionsExecute(r)
+}
+
+/*
+SearchAlgorithmRevisions Search for algorithm revisions.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @return ApiSearchAlgorithmRevisionsRequest
+*/
+func (a *AlgorithmsApiService) SearchAlgorithmRevisions(ctx context.Context, algorithmId string) ApiSearchAlgorithmRevisionsRequest {
+	return ApiSearchAlgorithmRevisionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+	}
+}
+
+// Execute executes the request
+//  @return SearchAlgorithmRevisionsResponse
+func (a *AlgorithmsApiService) SearchAlgorithmRevisionsExecute(r ApiSearchAlgorithmRevisionsRequest) (*SearchAlgorithmRevisionsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SearchAlgorithmRevisionsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.SearchAlgorithmRevisions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/search"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiSearchAlgorithmsRequest struct {
 	ctx context.Context
 	ApiService *AlgorithmsApiService
@@ -612,6 +2057,268 @@ func (a *AlgorithmsApiService) SearchAlgorithmsExecute(r ApiSearchAlgorithmsRequ
 	}
 	// body params
 	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSetAlgorithmPrimaryRevisionRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	revisionId string
+}
+
+func (r ApiSetAlgorithmPrimaryRevisionRequest) Execute() (*SetAlgorithmPrimaryRevisionResponse, *http.Response, error) {
+	return r.ApiService.SetAlgorithmPrimaryRevisionExecute(r)
+}
+
+/*
+SetAlgorithmPrimaryRevision Set an algorithm revision to be the primary revision for the algorithm.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @param revisionId The ID of the Algorithm revision.
+ @return ApiSetAlgorithmPrimaryRevisionRequest
+*/
+func (a *AlgorithmsApiService) SetAlgorithmPrimaryRevision(ctx context.Context, algorithmId string, revisionId string) ApiSetAlgorithmPrimaryRevisionRequest {
+	return ApiSetAlgorithmPrimaryRevisionRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+		revisionId: revisionId,
+	}
+}
+
+// Execute executes the request
+//  @return SetAlgorithmPrimaryRevisionResponse
+func (a *AlgorithmsApiService) SetAlgorithmPrimaryRevisionExecute(r ApiSetAlgorithmPrimaryRevisionRequest) (*SetAlgorithmPrimaryRevisionResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SetAlgorithmPrimaryRevisionResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.SetAlgorithmPrimaryRevision")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/{revisionId}/make-primary"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"revisionId"+"}", url.PathEscape(parameterValueToString(r.revisionId, "revisionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if strlen(r.revisionId) < 1 {
+		return localVarReturnValue, nil, reportError("revisionId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateAlgorithmRevisionRequest struct {
+	ctx context.Context
+	ApiService *AlgorithmsApiService
+	algorithmId string
+	revisionId string
+	updateAlgorithmRevisionParameters *UpdateAlgorithmRevisionParameters
+}
+
+// The new data to update an algorithm revision.
+func (r ApiUpdateAlgorithmRevisionRequest) UpdateAlgorithmRevisionParameters(updateAlgorithmRevisionParameters UpdateAlgorithmRevisionParameters) ApiUpdateAlgorithmRevisionRequest {
+	r.updateAlgorithmRevisionParameters = &updateAlgorithmRevisionParameters
+	return r
+}
+
+func (r ApiUpdateAlgorithmRevisionRequest) Execute() (*UpdateAlgorithmRevisionResponse, *http.Response, error) {
+	return r.ApiService.UpdateAlgorithmRevisionExecute(r)
+}
+
+/*
+UpdateAlgorithmRevision Update an algorithm revision
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param algorithmId The ID of the Algorithm.
+ @param revisionId The ID of the Algorithm revision.
+ @return ApiUpdateAlgorithmRevisionRequest
+*/
+func (a *AlgorithmsApiService) UpdateAlgorithmRevision(ctx context.Context, algorithmId string, revisionId string) ApiUpdateAlgorithmRevisionRequest {
+	return ApiUpdateAlgorithmRevisionRequest{
+		ApiService: a,
+		ctx: ctx,
+		algorithmId: algorithmId,
+		revisionId: revisionId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateAlgorithmRevisionResponse
+func (a *AlgorithmsApiService) UpdateAlgorithmRevisionExecute(r ApiUpdateAlgorithmRevisionRequest) (*UpdateAlgorithmRevisionResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateAlgorithmRevisionResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AlgorithmsApiService.UpdateAlgorithmRevision")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/algorithms/{algorithmId}/revisions/{revisionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"algorithmId"+"}", url.PathEscape(parameterValueToString(r.algorithmId, "algorithmId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"revisionId"+"}", url.PathEscape(parameterValueToString(r.revisionId, "revisionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.algorithmId) < 1 {
+		return localVarReturnValue, nil, reportError("algorithmId must have at least 1 elements")
+	}
+	if strlen(r.revisionId) < 1 {
+		return localVarReturnValue, nil, reportError("revisionId must have at least 1 elements")
+	}
+	if r.updateAlgorithmRevisionParameters == nil {
+		return localVarReturnValue, nil, reportError("updateAlgorithmRevisionParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateAlgorithmRevisionParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

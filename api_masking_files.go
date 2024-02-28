@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -29,7 +29,7 @@ type ApiUploadMaskingFileRequest struct {
 	maskingFileUploadParameters *MaskingFileUploadParameters
 }
 
-// The parameters to upload a file to a masking engine.
+// The parameters to upload a file for masking.
 func (r ApiUploadMaskingFileRequest) MaskingFileUploadParameters(maskingFileUploadParameters MaskingFileUploadParameters) ApiUploadMaskingFileRequest {
 	r.maskingFileUploadParameters = &maskingFileUploadParameters
 	return r
@@ -40,7 +40,7 @@ func (r ApiUploadMaskingFileRequest) Execute() (*MaskingFileUploadResponse, *htt
 }
 
 /*
-UploadMaskingFile Upload a file to a masking engine.
+UploadMaskingFile Upload a file for masking.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUploadMaskingFileRequest

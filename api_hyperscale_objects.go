@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,979 @@ import (
 
 // HyperscaleObjectsApiService HyperscaleObjectsApi service
 type HyperscaleObjectsApiService service
+
+type ApiCreateHyperscaleConnectorRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleConnector *HyperscaleConnector
+}
+
+func (r ApiCreateHyperscaleConnectorRequest) HyperscaleConnector(hyperscaleConnector HyperscaleConnector) ApiCreateHyperscaleConnectorRequest {
+	r.hyperscaleConnector = &hyperscaleConnector
+	return r
+}
+
+func (r ApiCreateHyperscaleConnectorRequest) Execute() (*CreateHyperscaleConnectorResponse, *http.Response, error) {
+	return r.ApiService.CreateHyperscaleConnectorExecute(r)
+}
+
+/*
+CreateHyperscaleConnector Create a Hyperscale Connector.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateHyperscaleConnectorRequest
+*/
+func (a *HyperscaleObjectsApiService) CreateHyperscaleConnector(ctx context.Context) ApiCreateHyperscaleConnectorRequest {
+	return ApiCreateHyperscaleConnectorRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateHyperscaleConnectorResponse
+func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorExecute(r ApiCreateHyperscaleConnectorRequest) (*CreateHyperscaleConnectorResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateHyperscaleConnectorResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleConnector")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-connectors"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.hyperscaleConnector == nil {
+		return localVarReturnValue, nil, reportError("hyperscaleConnector is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.hyperscaleConnector
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateHyperscaleConnectorTagsRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleConnectorId string
+	tagsRequest *TagsRequest
+}
+
+// Tag information for a Hyperscale Connector.
+func (r ApiCreateHyperscaleConnectorTagsRequest) TagsRequest(tagsRequest TagsRequest) ApiCreateHyperscaleConnectorTagsRequest {
+	r.tagsRequest = &tagsRequest
+	return r
+}
+
+func (r ApiCreateHyperscaleConnectorTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.CreateHyperscaleConnectorTagsExecute(r)
+}
+
+/*
+CreateHyperscaleConnectorTags Create tags for a Hyperscale Connector.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleConnectorId The ID of the Hyperscale Connector.
+ @return ApiCreateHyperscaleConnectorTagsRequest
+*/
+func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiCreateHyperscaleConnectorTagsRequest {
+	return ApiCreateHyperscaleConnectorTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleConnectorId: hyperscaleConnectorId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorTagsExecute(r ApiCreateHyperscaleConnectorTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleConnectorTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-connectors/{hyperscaleConnectorId}/tags"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleConnectorId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleConnectorId, "hyperscaleConnectorId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleConnectorId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleConnectorId must have at least 1 elements")
+	}
+	if r.tagsRequest == nil {
+		return localVarReturnValue, nil, reportError("tagsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tagsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateHyperscaleDatasetTagsRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleDatasetId string
+	tagsRequest *TagsRequest
+}
+
+// Tag information for a Hyperscale Dataset.
+func (r ApiCreateHyperscaleDatasetTagsRequest) TagsRequest(tagsRequest TagsRequest) ApiCreateHyperscaleDatasetTagsRequest {
+	r.tagsRequest = &tagsRequest
+	return r
+}
+
+func (r ApiCreateHyperscaleDatasetTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.CreateHyperscaleDatasetTagsExecute(r)
+}
+
+/*
+CreateHyperscaleDatasetTags Create tags for a Hyperscale Dataset.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
+ @return ApiCreateHyperscaleDatasetTagsRequest
+*/
+func (a *HyperscaleObjectsApiService) CreateHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiCreateHyperscaleDatasetTagsRequest {
+	return ApiCreateHyperscaleDatasetTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleDatasetId: hyperscaleDatasetId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *HyperscaleObjectsApiService) CreateHyperscaleDatasetTagsExecute(r ApiCreateHyperscaleDatasetTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleDatasetTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-datasets/{hyperscaleDatasetId}/tags"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetId, "hyperscaleDatasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleDatasetId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleDatasetId must have at least 1 elements")
+	}
+	if r.tagsRequest == nil {
+		return localVarReturnValue, nil, reportError("tagsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tagsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateHyperscaleMountPointRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleMountPoint *HyperscaleMountPoint
+}
+
+// Request to create a Hyperscale Mount Point.
+func (r ApiCreateHyperscaleMountPointRequest) HyperscaleMountPoint(hyperscaleMountPoint HyperscaleMountPoint) ApiCreateHyperscaleMountPointRequest {
+	r.hyperscaleMountPoint = &hyperscaleMountPoint
+	return r
+}
+
+func (r ApiCreateHyperscaleMountPointRequest) Execute() (*CreateHyperscaleMountPointResponse, *http.Response, error) {
+	return r.ApiService.CreateHyperscaleMountPointExecute(r)
+}
+
+/*
+CreateHyperscaleMountPoint Create a Hyperscale Mount Point
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateHyperscaleMountPointRequest
+*/
+func (a *HyperscaleObjectsApiService) CreateHyperscaleMountPoint(ctx context.Context) ApiCreateHyperscaleMountPointRequest {
+	return ApiCreateHyperscaleMountPointRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateHyperscaleMountPointResponse
+func (a *HyperscaleObjectsApiService) CreateHyperscaleMountPointExecute(r ApiCreateHyperscaleMountPointRequest) (*CreateHyperscaleMountPointResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateHyperscaleMountPointResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleMountPoint")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-mount-points"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.hyperscaleMountPoint == nil {
+		return localVarReturnValue, nil, reportError("hyperscaleMountPoint is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.hyperscaleMountPoint
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteHyperscaleConnectorRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleConnectorId string
+}
+
+func (r ApiDeleteHyperscaleConnectorRequest) Execute() (*DeleteHyperscaleConnectorResponse, *http.Response, error) {
+	return r.ApiService.DeleteHyperscaleConnectorExecute(r)
+}
+
+/*
+DeleteHyperscaleConnector Delete a Hyperscale Connector.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleConnectorId The ID of the Hyperscale Connector.
+ @return ApiDeleteHyperscaleConnectorRequest
+*/
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnector(ctx context.Context, hyperscaleConnectorId string) ApiDeleteHyperscaleConnectorRequest {
+	return ApiDeleteHyperscaleConnectorRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleConnectorId: hyperscaleConnectorId,
+	}
+}
+
+// Execute executes the request
+//  @return DeleteHyperscaleConnectorResponse
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorExecute(r ApiDeleteHyperscaleConnectorRequest) (*DeleteHyperscaleConnectorResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeleteHyperscaleConnectorResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleConnector")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-connectors/{hyperscaleConnectorId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleConnectorId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleConnectorId, "hyperscaleConnectorId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleConnectorId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleConnectorId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteHyperscaleConnectorTagsRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleConnectorId string
+	deleteTag *DeleteTag
+}
+
+// The parameters to delete tags
+func (r ApiDeleteHyperscaleConnectorTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteHyperscaleConnectorTagsRequest {
+	r.deleteTag = &deleteTag
+	return r
+}
+
+func (r ApiDeleteHyperscaleConnectorTagsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteHyperscaleConnectorTagsExecute(r)
+}
+
+/*
+DeleteHyperscaleConnectorTags Delete tags for a Hyperscale Connector.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleConnectorId The ID of the Hyperscale Connector.
+ @return ApiDeleteHyperscaleConnectorTagsRequest
+*/
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiDeleteHyperscaleConnectorTagsRequest {
+	return ApiDeleteHyperscaleConnectorTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleConnectorId: hyperscaleConnectorId,
+	}
+}
+
+// Execute executes the request
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorTagsExecute(r ApiDeleteHyperscaleConnectorTagsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleConnectorTags")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-connectors/{hyperscaleConnectorId}/tags/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleConnectorId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleConnectorId, "hyperscaleConnectorId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleConnectorId) < 1 {
+		return nil, reportError("hyperscaleConnectorId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.deleteTag
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteHyperscaleDatasetTagsRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleDatasetId string
+	deleteTag *DeleteTag
+}
+
+// The parameters to delete tags
+func (r ApiDeleteHyperscaleDatasetTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteHyperscaleDatasetTagsRequest {
+	r.deleteTag = &deleteTag
+	return r
+}
+
+func (r ApiDeleteHyperscaleDatasetTagsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteHyperscaleDatasetTagsExecute(r)
+}
+
+/*
+DeleteHyperscaleDatasetTags Delete tags for a Hyperscale Dataset.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
+ @return ApiDeleteHyperscaleDatasetTagsRequest
+*/
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiDeleteHyperscaleDatasetTagsRequest {
+	return ApiDeleteHyperscaleDatasetTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleDatasetId: hyperscaleDatasetId,
+	}
+}
+
+// Execute executes the request
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleDatasetTagsExecute(r ApiDeleteHyperscaleDatasetTagsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleDatasetTags")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-datasets/{hyperscaleDatasetId}/tags/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetId, "hyperscaleDatasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleDatasetId) < 1 {
+		return nil, reportError("hyperscaleDatasetId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.deleteTag
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteHyperscaleMountPointRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleMountPointId string
+}
+
+func (r ApiDeleteHyperscaleMountPointRequest) Execute() (*DeleteHyperscaleMountPointResponse, *http.Response, error) {
+	return r.ApiService.DeleteHyperscaleMountPointExecute(r)
+}
+
+/*
+DeleteHyperscaleMountPoint Delete a Hyperscale Mount Point.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleMountPointId The ID of the Hyperscale Mount Point.
+ @return ApiDeleteHyperscaleMountPointRequest
+*/
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleMountPoint(ctx context.Context, hyperscaleMountPointId string) ApiDeleteHyperscaleMountPointRequest {
+	return ApiDeleteHyperscaleMountPointRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleMountPointId: hyperscaleMountPointId,
+	}
+}
+
+// Execute executes the request
+//  @return DeleteHyperscaleMountPointResponse
+func (a *HyperscaleObjectsApiService) DeleteHyperscaleMountPointExecute(r ApiDeleteHyperscaleMountPointRequest) (*DeleteHyperscaleMountPointResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeleteHyperscaleMountPointResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleMountPoint")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-mount-points/{hyperscaleMountPointId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleMountPointId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleMountPointId, "hyperscaleMountPointId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleMountPointId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleMountPointId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiGetHyperscaleConnectorByIdRequest struct {
 	ctx context.Context
@@ -65,6 +1038,124 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorByIdExecute(r ApiGet
 	}
 
 	localVarPath := localBasePath + "/hyperscale-connectors/{hyperscaleConnectorId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleConnectorId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleConnectorId, "hyperscaleConnectorId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleConnectorId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleConnectorId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetHyperscaleConnectorTagsRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleConnectorId string
+}
+
+func (r ApiGetHyperscaleConnectorTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.GetHyperscaleConnectorTagsExecute(r)
+}
+
+/*
+GetHyperscaleConnectorTags Get tags for a Hyperscale Connector.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleConnectorId The ID of the Hyperscale Connector.
+ @return ApiGetHyperscaleConnectorTagsRequest
+*/
+func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiGetHyperscaleConnectorTagsRequest {
+	return ApiGetHyperscaleConnectorTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleConnectorId: hyperscaleConnectorId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorTagsExecute(r ApiGetHyperscaleConnectorTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleConnectorTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-connectors/{hyperscaleConnectorId}/tags"
 	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleConnectorId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleConnectorId, "hyperscaleConnectorId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -294,7 +1385,7 @@ func (r ApiGetHyperscaleDatasetByIdRequest) Execute() (*HyperscaleDataset, *http
 }
 
 /*
-GetHyperscaleDatasetById Get a Hyperscale Connector.
+GetHyperscaleDatasetById Get a Hyperscale Dataset.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
@@ -331,6 +1422,131 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetByIdExecute(r ApiGetHy
 	localVarFormParams := url.Values{}
 	if strlen(r.hyperscaleDatasetId) < 1 {
 		return localVarReturnValue, nil, reportError("hyperscaleDatasetId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetHyperscaleDatasetTableOrFileByIdRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleDatasetId string
+	hyperscaleDatasetTableOrFileId string
+}
+
+func (r ApiGetHyperscaleDatasetTableOrFileByIdRequest) Execute() (*HyperscaleDatasetTableOrFile, *http.Response, error) {
+	return r.ApiService.GetHyperscaleDatasetTableOrFileByIdExecute(r)
+}
+
+/*
+GetHyperscaleDatasetTableOrFileById Get a Hyperscale Dataset table or file by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
+ @param hyperscaleDatasetTableOrFileId The ID of the Hyperscale Dataset table or file.
+ @return ApiGetHyperscaleDatasetTableOrFileByIdRequest
+*/
+func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTableOrFileById(ctx context.Context, hyperscaleDatasetId string, hyperscaleDatasetTableOrFileId string) ApiGetHyperscaleDatasetTableOrFileByIdRequest {
+	return ApiGetHyperscaleDatasetTableOrFileByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleDatasetId: hyperscaleDatasetId,
+		hyperscaleDatasetTableOrFileId: hyperscaleDatasetTableOrFileId,
+	}
+}
+
+// Execute executes the request
+//  @return HyperscaleDatasetTableOrFile
+func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTableOrFileByIdExecute(r ApiGetHyperscaleDatasetTableOrFileByIdRequest) (*HyperscaleDatasetTableOrFile, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *HyperscaleDatasetTableOrFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleDatasetTableOrFileById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-datasets/{hyperscaleDatasetId}/tables-or-files/{hyperscaleDatasetTableOrFileId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetId, "hyperscaleDatasetId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetTableOrFileId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetTableOrFileId, "hyperscaleDatasetTableOrFileId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleDatasetId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleDatasetId must have at least 1 elements")
+	}
+	if strlen(r.hyperscaleDatasetTableOrFileId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleDatasetTableOrFileId must have at least 1 elements")
 	}
 
 	// to determine the Content-Type header
@@ -481,6 +1697,124 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTablesOrFilesExecute(r
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
 	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetHyperscaleDatasetTagsRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleDatasetId string
+}
+
+func (r ApiGetHyperscaleDatasetTagsRequest) Execute() (*TagsResponse, *http.Response, error) {
+	return r.ApiService.GetHyperscaleDatasetTagsExecute(r)
+}
+
+/*
+GetHyperscaleDatasetTags Get tags for a Hyperscale Dataset.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
+ @return ApiGetHyperscaleDatasetTagsRequest
+*/
+func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiGetHyperscaleDatasetTagsRequest {
+	return ApiGetHyperscaleDatasetTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleDatasetId: hyperscaleDatasetId,
+	}
+}
+
+// Execute executes the request
+//  @return TagsResponse
+func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTagsExecute(r ApiGetHyperscaleDatasetTagsRequest) (*TagsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TagsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleDatasetTags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-datasets/{hyperscaleDatasetId}/tags"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetId, "hyperscaleDatasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleDatasetId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleDatasetId must have at least 1 elements")
+	}
+
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1505,6 +2839,521 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleMountPointsExecute(r ApiSe
 	}
 	// body params
 	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateHyperscaleConnectorByIdRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleConnectorId string
+	hyperscaleConnectorUpdateParameters *HyperscaleConnectorUpdateParameters
+}
+
+// The new data to update a Hyperscale Connector.
+func (r ApiUpdateHyperscaleConnectorByIdRequest) HyperscaleConnectorUpdateParameters(hyperscaleConnectorUpdateParameters HyperscaleConnectorUpdateParameters) ApiUpdateHyperscaleConnectorByIdRequest {
+	r.hyperscaleConnectorUpdateParameters = &hyperscaleConnectorUpdateParameters
+	return r
+}
+
+func (r ApiUpdateHyperscaleConnectorByIdRequest) Execute() (*UpdateHyperscaleConnectorResponse, *http.Response, error) {
+	return r.ApiService.UpdateHyperscaleConnectorByIdExecute(r)
+}
+
+/*
+UpdateHyperscaleConnectorById Update a Hyperscale Connector by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleConnectorId The ID of the Hyperscale Connector.
+ @return ApiUpdateHyperscaleConnectorByIdRequest
+*/
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleConnectorById(ctx context.Context, hyperscaleConnectorId string) ApiUpdateHyperscaleConnectorByIdRequest {
+	return ApiUpdateHyperscaleConnectorByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleConnectorId: hyperscaleConnectorId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateHyperscaleConnectorResponse
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleConnectorByIdExecute(r ApiUpdateHyperscaleConnectorByIdRequest) (*UpdateHyperscaleConnectorResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateHyperscaleConnectorResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleConnectorById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-connectors/{hyperscaleConnectorId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleConnectorId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleConnectorId, "hyperscaleConnectorId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleConnectorId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleConnectorId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.hyperscaleConnectorUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateHyperscaleDatasetByIdRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleDatasetId string
+	hyperscaleDatasetUpdateParameters *HyperscaleDatasetUpdateParameters
+}
+
+// The new data to update a Hyperscale Dataset.
+func (r ApiUpdateHyperscaleDatasetByIdRequest) HyperscaleDatasetUpdateParameters(hyperscaleDatasetUpdateParameters HyperscaleDatasetUpdateParameters) ApiUpdateHyperscaleDatasetByIdRequest {
+	r.hyperscaleDatasetUpdateParameters = &hyperscaleDatasetUpdateParameters
+	return r
+}
+
+func (r ApiUpdateHyperscaleDatasetByIdRequest) Execute() (*UpdateHyperscaleDatasetResponse, *http.Response, error) {
+	return r.ApiService.UpdateHyperscaleDatasetByIdExecute(r)
+}
+
+/*
+UpdateHyperscaleDatasetById Update a Hyperscale Dataset by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
+ @return ApiUpdateHyperscaleDatasetByIdRequest
+*/
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetById(ctx context.Context, hyperscaleDatasetId string) ApiUpdateHyperscaleDatasetByIdRequest {
+	return ApiUpdateHyperscaleDatasetByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleDatasetId: hyperscaleDatasetId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateHyperscaleDatasetResponse
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetByIdExecute(r ApiUpdateHyperscaleDatasetByIdRequest) (*UpdateHyperscaleDatasetResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateHyperscaleDatasetResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleDatasetById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-datasets/{hyperscaleDatasetId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetId, "hyperscaleDatasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleDatasetId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleDatasetId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.hyperscaleDatasetUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateHyperscaleDatasetTableOrFileByIdRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleDatasetId string
+	hyperscaleDatasetTableOrFileId string
+	hyperscaleDatasetTableOrFileUpdateParameters *HyperscaleDatasetTableOrFileUpdateParameters
+}
+
+// The new data to update a Hyperscale Dataset table or file.
+func (r ApiUpdateHyperscaleDatasetTableOrFileByIdRequest) HyperscaleDatasetTableOrFileUpdateParameters(hyperscaleDatasetTableOrFileUpdateParameters HyperscaleDatasetTableOrFileUpdateParameters) ApiUpdateHyperscaleDatasetTableOrFileByIdRequest {
+	r.hyperscaleDatasetTableOrFileUpdateParameters = &hyperscaleDatasetTableOrFileUpdateParameters
+	return r
+}
+
+func (r ApiUpdateHyperscaleDatasetTableOrFileByIdRequest) Execute() (*UpdateHyperscaleDatasetTableOrFileResponse, *http.Response, error) {
+	return r.ApiService.UpdateHyperscaleDatasetTableOrFileByIdExecute(r)
+}
+
+/*
+UpdateHyperscaleDatasetTableOrFileById Update a Hyperscale Dataset table or file by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
+ @param hyperscaleDatasetTableOrFileId The ID of the Hyperscale Dataset table or file.
+ @return ApiUpdateHyperscaleDatasetTableOrFileByIdRequest
+*/
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetTableOrFileById(ctx context.Context, hyperscaleDatasetId string, hyperscaleDatasetTableOrFileId string) ApiUpdateHyperscaleDatasetTableOrFileByIdRequest {
+	return ApiUpdateHyperscaleDatasetTableOrFileByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleDatasetId: hyperscaleDatasetId,
+		hyperscaleDatasetTableOrFileId: hyperscaleDatasetTableOrFileId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateHyperscaleDatasetTableOrFileResponse
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetTableOrFileByIdExecute(r ApiUpdateHyperscaleDatasetTableOrFileByIdRequest) (*UpdateHyperscaleDatasetTableOrFileResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateHyperscaleDatasetTableOrFileResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleDatasetTableOrFileById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-datasets/{hyperscaleDatasetId}/tables-or-files/{hyperscaleDatasetTableOrFileId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetId, "hyperscaleDatasetId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleDatasetTableOrFileId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleDatasetTableOrFileId, "hyperscaleDatasetTableOrFileId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleDatasetId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleDatasetId must have at least 1 elements")
+	}
+	if strlen(r.hyperscaleDatasetTableOrFileId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleDatasetTableOrFileId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.hyperscaleDatasetTableOrFileUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateHyperscaleMountPointByIdRequest struct {
+	ctx context.Context
+	ApiService *HyperscaleObjectsApiService
+	hyperscaleMountPointId string
+	hyperscaleMountPointUpdateParameters *HyperscaleMountPointUpdateParameters
+}
+
+// The new data to update a Hyperscale Mount Point.
+func (r ApiUpdateHyperscaleMountPointByIdRequest) HyperscaleMountPointUpdateParameters(hyperscaleMountPointUpdateParameters HyperscaleMountPointUpdateParameters) ApiUpdateHyperscaleMountPointByIdRequest {
+	r.hyperscaleMountPointUpdateParameters = &hyperscaleMountPointUpdateParameters
+	return r
+}
+
+func (r ApiUpdateHyperscaleMountPointByIdRequest) Execute() (*UpdateHyperscaleMountPointResponse, *http.Response, error) {
+	return r.ApiService.UpdateHyperscaleMountPointByIdExecute(r)
+}
+
+/*
+UpdateHyperscaleMountPointById Update a Hyperscale Mount Point by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param hyperscaleMountPointId The ID of the Hyperscale Mount Point.
+ @return ApiUpdateHyperscaleMountPointByIdRequest
+*/
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleMountPointById(ctx context.Context, hyperscaleMountPointId string) ApiUpdateHyperscaleMountPointByIdRequest {
+	return ApiUpdateHyperscaleMountPointByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		hyperscaleMountPointId: hyperscaleMountPointId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateHyperscaleMountPointResponse
+func (a *HyperscaleObjectsApiService) UpdateHyperscaleMountPointByIdExecute(r ApiUpdateHyperscaleMountPointByIdRequest) (*UpdateHyperscaleMountPointResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateHyperscaleMountPointResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleMountPointById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/hyperscale-mount-points/{hyperscaleMountPointId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"hyperscaleMountPointId"+"}", url.PathEscape(parameterValueToString(r.hyperscaleMountPointId, "hyperscaleMountPointId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.hyperscaleMountPointId) < 1 {
+		return localVarReturnValue, nil, reportError("hyperscaleMountPointId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.hyperscaleMountPointUpdateParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

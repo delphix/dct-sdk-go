@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -38,6 +38,8 @@ type Job struct {
 	WarningMessage *string `json:"warning_message,omitempty"`
 	// A reference to the job's target.
 	TargetId *string `json:"target_id,omitempty"`
+	// A reference to the job's target name.
+	TargetName *string `json:"target_name,omitempty"`
 	// The time the job started executing.
 	StartTime *time.Time `json:"start_time,omitempty"`
 	// The time the job was last updated.
@@ -53,6 +55,9 @@ type Job struct {
 	AccountId *int32 `json:"account_id,omitempty"`
 	// The account name which initiated this job. It can be either firstname and lastname combination or firstname or lastname or username or email address or Account-<id>.
 	AccountName *string `json:"account_name,omitempty"`
+	// Completion percentage of the Job.
+	PercentComplete *int32 `json:"percent_complete,omitempty"`
+	VirtualizationTasks []VirtualizationTask `json:"virtualization_tasks,omitempty"`
 }
 
 // NewJob instantiates a new Job object
@@ -331,6 +336,38 @@ func (o *Job) SetTargetId(v string) {
 	o.TargetId = &v
 }
 
+// GetTargetName returns the TargetName field value if set, zero value otherwise.
+func (o *Job) GetTargetName() string {
+	if o == nil || IsNil(o.TargetName) {
+		var ret string
+		return ret
+	}
+	return *o.TargetName
+}
+
+// GetTargetNameOk returns a tuple with the TargetName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetTargetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetName) {
+		return nil, false
+	}
+	return o.TargetName, true
+}
+
+// HasTargetName returns a boolean if a field has been set.
+func (o *Job) HasTargetName() bool {
+	if o != nil && !IsNil(o.TargetName) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetName gets a reference to the given string and assigns it to the TargetName field.
+func (o *Job) SetTargetName(v string) {
+	o.TargetName = &v
+}
+
 // GetStartTime returns the StartTime field value if set, zero value otherwise.
 func (o *Job) GetStartTime() time.Time {
 	if o == nil || IsNil(o.StartTime) {
@@ -590,6 +627,70 @@ func (o *Job) SetAccountName(v string) {
 	o.AccountName = &v
 }
 
+// GetPercentComplete returns the PercentComplete field value if set, zero value otherwise.
+func (o *Job) GetPercentComplete() int32 {
+	if o == nil || IsNil(o.PercentComplete) {
+		var ret int32
+		return ret
+	}
+	return *o.PercentComplete
+}
+
+// GetPercentCompleteOk returns a tuple with the PercentComplete field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetPercentCompleteOk() (*int32, bool) {
+	if o == nil || IsNil(o.PercentComplete) {
+		return nil, false
+	}
+	return o.PercentComplete, true
+}
+
+// HasPercentComplete returns a boolean if a field has been set.
+func (o *Job) HasPercentComplete() bool {
+	if o != nil && !IsNil(o.PercentComplete) {
+		return true
+	}
+
+	return false
+}
+
+// SetPercentComplete gets a reference to the given int32 and assigns it to the PercentComplete field.
+func (o *Job) SetPercentComplete(v int32) {
+	o.PercentComplete = &v
+}
+
+// GetVirtualizationTasks returns the VirtualizationTasks field value if set, zero value otherwise.
+func (o *Job) GetVirtualizationTasks() []VirtualizationTask {
+	if o == nil || IsNil(o.VirtualizationTasks) {
+		var ret []VirtualizationTask
+		return ret
+	}
+	return o.VirtualizationTasks
+}
+
+// GetVirtualizationTasksOk returns a tuple with the VirtualizationTasks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetVirtualizationTasksOk() ([]VirtualizationTask, bool) {
+	if o == nil || IsNil(o.VirtualizationTasks) {
+		return nil, false
+	}
+	return o.VirtualizationTasks, true
+}
+
+// HasVirtualizationTasks returns a boolean if a field has been set.
+func (o *Job) HasVirtualizationTasks() bool {
+	if o != nil && !IsNil(o.VirtualizationTasks) {
+		return true
+	}
+
+	return false
+}
+
+// SetVirtualizationTasks gets a reference to the given []VirtualizationTask and assigns it to the VirtualizationTasks field.
+func (o *Job) SetVirtualizationTasks(v []VirtualizationTask) {
+	o.VirtualizationTasks = v
+}
+
 func (o Job) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -624,6 +725,9 @@ func (o Job) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TargetId) {
 		toSerialize["target_id"] = o.TargetId
 	}
+	if !IsNil(o.TargetName) {
+		toSerialize["target_name"] = o.TargetName
+	}
 	if !IsNil(o.StartTime) {
 		toSerialize["start_time"] = o.StartTime
 	}
@@ -647,6 +751,12 @@ func (o Job) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AccountName) {
 		toSerialize["account_name"] = o.AccountName
+	}
+	if !IsNil(o.PercentComplete) {
+		toSerialize["percent_complete"] = o.PercentComplete
+	}
+	if !IsNil(o.VirtualizationTasks) {
+		toSerialize["virtualization_tasks"] = o.VirtualizationTasks
 	}
 	return toSerialize, nil
 }
