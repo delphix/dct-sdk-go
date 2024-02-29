@@ -45,7 +45,7 @@ func main() {
 	}
 	fmt.Printf("Retrieved list of Delphix Engines: \n")
 	for _, engine := range engines.GetItems() {
-		fmt.Printf("%s \n", engine.Hostname)
+		fmt.Printf("%s \n", *engine.Hostname)
 	}
 
 	req_vdb := client.VDBsApi.GetVdbs(ctx)
