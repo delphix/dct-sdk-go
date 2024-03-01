@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -23,15 +23,15 @@ type HyperscaleMountPoint struct {
 	// The ID of the Hyperscale Mount Point.
 	Id *string `json:"id,omitempty"`
 	// The ID of the Hyperscale instance of this Mount Point.
-	HyperscaleInstanceId *string `json:"hyperscale_instance_id,omitempty"`
+	HyperscaleInstanceId string `json:"hyperscale_instance_id"`
 	// Name of the mount, unique for a hyperscale instance. This name will be used as a directory name by the Hyperscale instance.
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// The host name of the server.
-	Hostname *string `json:"hostname,omitempty"`
+	Hostname string `json:"hostname"`
 	// The path to the directory on the filesystem to mount.
-	MountPath *string `json:"mount_path,omitempty"`
+	MountPath string `json:"mount_path"`
 	// The type of filesystem. Enum having values- CIFS, NFS3, NFS4.
-	MountType *string `json:"mount_type,omitempty"`
+	MountType string `json:"mount_type"`
 	// The options for mount. The endpoint will return all default options and user specified options.
 	Options *string `json:"options,omitempty"`
 }
@@ -40,8 +40,13 @@ type HyperscaleMountPoint struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewHyperscaleMountPoint() *HyperscaleMountPoint {
+func NewHyperscaleMountPoint(hyperscaleInstanceId string, name string, hostname string, mountPath string, mountType string) *HyperscaleMountPoint {
 	this := HyperscaleMountPoint{}
+	this.HyperscaleInstanceId = hyperscaleInstanceId
+	this.Name = name
+	this.Hostname = hostname
+	this.MountPath = mountPath
+	this.MountType = mountType
 	return &this
 }
 
@@ -85,164 +90,124 @@ func (o *HyperscaleMountPoint) SetId(v string) {
 	o.Id = &v
 }
 
-// GetHyperscaleInstanceId returns the HyperscaleInstanceId field value if set, zero value otherwise.
+// GetHyperscaleInstanceId returns the HyperscaleInstanceId field value
 func (o *HyperscaleMountPoint) GetHyperscaleInstanceId() string {
-	if o == nil || IsNil(o.HyperscaleInstanceId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.HyperscaleInstanceId
+
+	return o.HyperscaleInstanceId
 }
 
-// GetHyperscaleInstanceIdOk returns a tuple with the HyperscaleInstanceId field value if set, nil otherwise
+// GetHyperscaleInstanceIdOk returns a tuple with the HyperscaleInstanceId field value
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetHyperscaleInstanceIdOk() (*string, bool) {
-	if o == nil || IsNil(o.HyperscaleInstanceId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.HyperscaleInstanceId, true
+	return &o.HyperscaleInstanceId, true
 }
 
-// HasHyperscaleInstanceId returns a boolean if a field has been set.
-func (o *HyperscaleMountPoint) HasHyperscaleInstanceId() bool {
-	if o != nil && !IsNil(o.HyperscaleInstanceId) {
-		return true
-	}
-
-	return false
-}
-
-// SetHyperscaleInstanceId gets a reference to the given string and assigns it to the HyperscaleInstanceId field.
+// SetHyperscaleInstanceId sets field value
 func (o *HyperscaleMountPoint) SetHyperscaleInstanceId(v string) {
-	o.HyperscaleInstanceId = &v
+	o.HyperscaleInstanceId = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *HyperscaleMountPoint) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *HyperscaleMountPoint) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *HyperscaleMountPoint) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
-// GetHostname returns the Hostname field value if set, zero value otherwise.
+// GetHostname returns the Hostname field value
 func (o *HyperscaleMountPoint) GetHostname() string {
-	if o == nil || IsNil(o.Hostname) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Hostname
+
+	return o.Hostname
 }
 
-// GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
+// GetHostnameOk returns a tuple with the Hostname field value
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetHostnameOk() (*string, bool) {
-	if o == nil || IsNil(o.Hostname) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Hostname, true
+	return &o.Hostname, true
 }
 
-// HasHostname returns a boolean if a field has been set.
-func (o *HyperscaleMountPoint) HasHostname() bool {
-	if o != nil && !IsNil(o.Hostname) {
-		return true
-	}
-
-	return false
-}
-
-// SetHostname gets a reference to the given string and assigns it to the Hostname field.
+// SetHostname sets field value
 func (o *HyperscaleMountPoint) SetHostname(v string) {
-	o.Hostname = &v
+	o.Hostname = v
 }
 
-// GetMountPath returns the MountPath field value if set, zero value otherwise.
+// GetMountPath returns the MountPath field value
 func (o *HyperscaleMountPoint) GetMountPath() string {
-	if o == nil || IsNil(o.MountPath) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.MountPath
+
+	return o.MountPath
 }
 
-// GetMountPathOk returns a tuple with the MountPath field value if set, nil otherwise
+// GetMountPathOk returns a tuple with the MountPath field value
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetMountPathOk() (*string, bool) {
-	if o == nil || IsNil(o.MountPath) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MountPath, true
+	return &o.MountPath, true
 }
 
-// HasMountPath returns a boolean if a field has been set.
-func (o *HyperscaleMountPoint) HasMountPath() bool {
-	if o != nil && !IsNil(o.MountPath) {
-		return true
-	}
-
-	return false
-}
-
-// SetMountPath gets a reference to the given string and assigns it to the MountPath field.
+// SetMountPath sets field value
 func (o *HyperscaleMountPoint) SetMountPath(v string) {
-	o.MountPath = &v
+	o.MountPath = v
 }
 
-// GetMountType returns the MountType field value if set, zero value otherwise.
+// GetMountType returns the MountType field value
 func (o *HyperscaleMountPoint) GetMountType() string {
-	if o == nil || IsNil(o.MountType) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.MountType
+
+	return o.MountType
 }
 
-// GetMountTypeOk returns a tuple with the MountType field value if set, nil otherwise
+// GetMountTypeOk returns a tuple with the MountType field value
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetMountTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.MountType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MountType, true
+	return &o.MountType, true
 }
 
-// HasMountType returns a boolean if a field has been set.
-func (o *HyperscaleMountPoint) HasMountType() bool {
-	if o != nil && !IsNil(o.MountType) {
-		return true
-	}
-
-	return false
-}
-
-// SetMountType gets a reference to the given string and assigns it to the MountType field.
+// SetMountType sets field value
 func (o *HyperscaleMountPoint) SetMountType(v string) {
-	o.MountType = &v
+	o.MountType = v
 }
 
 // GetOptions returns the Options field value if set, zero value otherwise.
@@ -287,24 +252,12 @@ func (o HyperscaleMountPoint) MarshalJSON() ([]byte, error) {
 
 func (o HyperscaleMountPoint) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.HyperscaleInstanceId) {
-		toSerialize["hyperscale_instance_id"] = o.HyperscaleInstanceId
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.Hostname) {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if !IsNil(o.MountPath) {
-		toSerialize["mount_path"] = o.MountPath
-	}
-	if !IsNil(o.MountType) {
-		toSerialize["mount_type"] = o.MountType
-	}
+	// skip: id is readOnly
+	toSerialize["hyperscale_instance_id"] = o.HyperscaleInstanceId
+	toSerialize["name"] = o.Name
+	toSerialize["hostname"] = o.Hostname
+	toSerialize["mount_path"] = o.MountPath
+	toSerialize["mount_type"] = o.MountType
 	if !IsNil(o.Options) {
 		toSerialize["options"] = o.Options
 	}

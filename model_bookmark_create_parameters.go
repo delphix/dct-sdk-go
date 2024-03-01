@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -46,8 +46,11 @@ type BookmarkCreateParameters struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// Whether the account creating this bookmark must be configured as owner of the bookmark.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
-	// Whether this bookmark should inherit tags from the parent VDB.
+	// This field has been deprecated in favour of new field 'inherit_parent_tags'.
+	// Deprecated
 	InheritParentVdbTags *bool `json:"inherit_parent_vdb_tags,omitempty"`
+	// Whether this bookmark should inherit tags from the parent dataset.
+	InheritParentTags *bool `json:"inherit_parent_tags,omitempty"`
 }
 
 // NewBookmarkCreateParameters instantiates a new BookmarkCreateParameters object
@@ -61,6 +64,8 @@ func NewBookmarkCreateParameters(name string) *BookmarkCreateParameters {
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	var inheritParentVdbTags bool = false
 	this.InheritParentVdbTags = &inheritParentVdbTags
+	var inheritParentTags bool = false
+	this.InheritParentTags = &inheritParentTags
 	return &this
 }
 
@@ -73,6 +78,8 @@ func NewBookmarkCreateParametersWithDefaults() *BookmarkCreateParameters {
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	var inheritParentVdbTags bool = false
 	this.InheritParentVdbTags = &inheritParentVdbTags
+	var inheritParentTags bool = false
+	this.InheritParentTags = &inheritParentTags
 	return &this
 }
 
@@ -456,6 +463,7 @@ func (o *BookmarkCreateParameters) SetMakeCurrentAccountOwner(v bool) {
 }
 
 // GetInheritParentVdbTags returns the InheritParentVdbTags field value if set, zero value otherwise.
+// Deprecated
 func (o *BookmarkCreateParameters) GetInheritParentVdbTags() bool {
 	if o == nil || IsNil(o.InheritParentVdbTags) {
 		var ret bool
@@ -466,6 +474,7 @@ func (o *BookmarkCreateParameters) GetInheritParentVdbTags() bool {
 
 // GetInheritParentVdbTagsOk returns a tuple with the InheritParentVdbTags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *BookmarkCreateParameters) GetInheritParentVdbTagsOk() (*bool, bool) {
 	if o == nil || IsNil(o.InheritParentVdbTags) {
 		return nil, false
@@ -483,8 +492,41 @@ func (o *BookmarkCreateParameters) HasInheritParentVdbTags() bool {
 }
 
 // SetInheritParentVdbTags gets a reference to the given bool and assigns it to the InheritParentVdbTags field.
+// Deprecated
 func (o *BookmarkCreateParameters) SetInheritParentVdbTags(v bool) {
 	o.InheritParentVdbTags = &v
+}
+
+// GetInheritParentTags returns the InheritParentTags field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetInheritParentTags() bool {
+	if o == nil || IsNil(o.InheritParentTags) {
+		var ret bool
+		return ret
+	}
+	return *o.InheritParentTags
+}
+
+// GetInheritParentTagsOk returns a tuple with the InheritParentTags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetInheritParentTagsOk() (*bool, bool) {
+	if o == nil || IsNil(o.InheritParentTags) {
+		return nil, false
+	}
+	return o.InheritParentTags, true
+}
+
+// HasInheritParentTags returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasInheritParentTags() bool {
+	if o != nil && !IsNil(o.InheritParentTags) {
+		return true
+	}
+
+	return false
+}
+
+// SetInheritParentTags gets a reference to the given bool and assigns it to the InheritParentTags field.
+func (o *BookmarkCreateParameters) SetInheritParentTags(v bool) {
+	o.InheritParentTags = &v
 }
 
 func (o BookmarkCreateParameters) MarshalJSON() ([]byte, error) {
@@ -533,6 +575,9 @@ func (o BookmarkCreateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.InheritParentVdbTags) {
 		toSerialize["inherit_parent_vdb_tags"] = o.InheritParentVdbTags
+	}
+	if !IsNil(o.InheritParentTags) {
+		toSerialize["inherit_parent_tags"] = o.InheritParentTags
 	}
 	return toSerialize, nil
 }

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	openapi "github.com/delphix/dct-sdk-go/v2"
+	openapi "github.com/delphix/dct-sdk-go/v14"
 )
 
 func main() {
@@ -45,7 +45,7 @@ func main() {
 	}
 	fmt.Printf("Retrieved list of Delphix Engines: \n")
 	for _, engine := range engines.GetItems() {
-		fmt.Printf("%s \n", engine.Hostname)
+		fmt.Printf("%s \n", *engine.Hostname)
 	}
 
 	req_vdb := client.VDBsApi.GetVdbs(ctx)

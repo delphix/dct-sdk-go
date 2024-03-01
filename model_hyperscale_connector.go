@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -20,16 +20,23 @@ var _ MappedNullable = &HyperscaleConnector{}
 
 // HyperscaleConnector A Hyperscale connector to read/write data from/to a datasource.
 type HyperscaleConnector struct {
+	DatabaseType *string `json:"database_type,omitempty"`
 	// The ID of the Hyperscale Connector.
 	Id *string `json:"id,omitempty"`
 	// The ID of the Hyperscale instance of this Dataset.
 	HyperscaleInstanceId *string `json:"hyperscale_instance_id,omitempty"`
+	DataType *HyperscaleDataTypeEnum `json:"data_type,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// The username this Connector will use to connect to the source database.
 	SourceUsername *string `json:"source_username,omitempty"`
 	// The password this Connector will use to connect to the source database.
 	SourcePassword *string `json:"source_password,omitempty"`
 	// The JDBC URL used to connect to the source database.
 	SourceJdbcUrl *string `json:"source_jdbc_url,omitempty"`
+	// The MongoDB URL used to connect to the source database.
+	SourceMongoUrl *string `json:"source_mongo_url,omitempty"`
+	// The path on the filesystem where source files must be read (Delimited files Only).
+	SourceFilesystemPath *string `json:"source_filesystem_path,omitempty"`
 	SourceConnectionProperties *map[string]string `json:"source_connection_properties,omitempty"`
 	// The username this Connector will use to connect to the target database.
 	TargetUsername *string `json:"target_username,omitempty"`
@@ -37,7 +44,12 @@ type HyperscaleConnector struct {
 	TargetPassword *string `json:"target_password,omitempty"`
 	// The JDBC URL used to connect to the target database.
 	TargetJdbcUrl *string `json:"target_jdbc_url,omitempty"`
+	// The MongoDB URL used to connect to the target database.
+	TargetMongoUrl *string `json:"target_mongo_url,omitempty"`
+	// The path on the filesystem where target files must be written (Delimited files Only).
+	TargetFilesystemPath *string `json:"target_filesystem_path,omitempty"`
 	TargetConnectionProperties *map[string]string `json:"target_connection_properties,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewHyperscaleConnector instantiates a new HyperscaleConnector object
@@ -55,6 +67,38 @@ func NewHyperscaleConnector() *HyperscaleConnector {
 func NewHyperscaleConnectorWithDefaults() *HyperscaleConnector {
 	this := HyperscaleConnector{}
 	return &this
+}
+
+// GetDatabaseType returns the DatabaseType field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetDatabaseType() string {
+	if o == nil || IsNil(o.DatabaseType) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseType
+}
+
+// GetDatabaseTypeOk returns a tuple with the DatabaseType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetDatabaseTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseType) {
+		return nil, false
+	}
+	return o.DatabaseType, true
+}
+
+// HasDatabaseType returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasDatabaseType() bool {
+	if o != nil && !IsNil(o.DatabaseType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseType gets a reference to the given string and assigns it to the DatabaseType field.
+func (o *HyperscaleConnector) SetDatabaseType(v string) {
+	o.DatabaseType = &v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -119,6 +163,70 @@ func (o *HyperscaleConnector) HasHyperscaleInstanceId() bool {
 // SetHyperscaleInstanceId gets a reference to the given string and assigns it to the HyperscaleInstanceId field.
 func (o *HyperscaleConnector) SetHyperscaleInstanceId(v string) {
 	o.HyperscaleInstanceId = &v
+}
+
+// GetDataType returns the DataType field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetDataType() HyperscaleDataTypeEnum {
+	if o == nil || IsNil(o.DataType) {
+		var ret HyperscaleDataTypeEnum
+		return ret
+	}
+	return *o.DataType
+}
+
+// GetDataTypeOk returns a tuple with the DataType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetDataTypeOk() (*HyperscaleDataTypeEnum, bool) {
+	if o == nil || IsNil(o.DataType) {
+		return nil, false
+	}
+	return o.DataType, true
+}
+
+// HasDataType returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasDataType() bool {
+	if o != nil && !IsNil(o.DataType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataType gets a reference to the given HyperscaleDataTypeEnum and assigns it to the DataType field.
+func (o *HyperscaleConnector) SetDataType(v HyperscaleDataTypeEnum) {
+	o.DataType = &v
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *HyperscaleConnector) SetName(v string) {
+	o.Name = &v
 }
 
 // GetSourceUsername returns the SourceUsername field value if set, zero value otherwise.
@@ -215,6 +323,70 @@ func (o *HyperscaleConnector) HasSourceJdbcUrl() bool {
 // SetSourceJdbcUrl gets a reference to the given string and assigns it to the SourceJdbcUrl field.
 func (o *HyperscaleConnector) SetSourceJdbcUrl(v string) {
 	o.SourceJdbcUrl = &v
+}
+
+// GetSourceMongoUrl returns the SourceMongoUrl field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetSourceMongoUrl() string {
+	if o == nil || IsNil(o.SourceMongoUrl) {
+		var ret string
+		return ret
+	}
+	return *o.SourceMongoUrl
+}
+
+// GetSourceMongoUrlOk returns a tuple with the SourceMongoUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetSourceMongoUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceMongoUrl) {
+		return nil, false
+	}
+	return o.SourceMongoUrl, true
+}
+
+// HasSourceMongoUrl returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasSourceMongoUrl() bool {
+	if o != nil && !IsNil(o.SourceMongoUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceMongoUrl gets a reference to the given string and assigns it to the SourceMongoUrl field.
+func (o *HyperscaleConnector) SetSourceMongoUrl(v string) {
+	o.SourceMongoUrl = &v
+}
+
+// GetSourceFilesystemPath returns the SourceFilesystemPath field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetSourceFilesystemPath() string {
+	if o == nil || IsNil(o.SourceFilesystemPath) {
+		var ret string
+		return ret
+	}
+	return *o.SourceFilesystemPath
+}
+
+// GetSourceFilesystemPathOk returns a tuple with the SourceFilesystemPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetSourceFilesystemPathOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceFilesystemPath) {
+		return nil, false
+	}
+	return o.SourceFilesystemPath, true
+}
+
+// HasSourceFilesystemPath returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasSourceFilesystemPath() bool {
+	if o != nil && !IsNil(o.SourceFilesystemPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceFilesystemPath gets a reference to the given string and assigns it to the SourceFilesystemPath field.
+func (o *HyperscaleConnector) SetSourceFilesystemPath(v string) {
+	o.SourceFilesystemPath = &v
 }
 
 // GetSourceConnectionProperties returns the SourceConnectionProperties field value if set, zero value otherwise.
@@ -345,6 +517,70 @@ func (o *HyperscaleConnector) SetTargetJdbcUrl(v string) {
 	o.TargetJdbcUrl = &v
 }
 
+// GetTargetMongoUrl returns the TargetMongoUrl field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetTargetMongoUrl() string {
+	if o == nil || IsNil(o.TargetMongoUrl) {
+		var ret string
+		return ret
+	}
+	return *o.TargetMongoUrl
+}
+
+// GetTargetMongoUrlOk returns a tuple with the TargetMongoUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetTargetMongoUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetMongoUrl) {
+		return nil, false
+	}
+	return o.TargetMongoUrl, true
+}
+
+// HasTargetMongoUrl returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasTargetMongoUrl() bool {
+	if o != nil && !IsNil(o.TargetMongoUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetMongoUrl gets a reference to the given string and assigns it to the TargetMongoUrl field.
+func (o *HyperscaleConnector) SetTargetMongoUrl(v string) {
+	o.TargetMongoUrl = &v
+}
+
+// GetTargetFilesystemPath returns the TargetFilesystemPath field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetTargetFilesystemPath() string {
+	if o == nil || IsNil(o.TargetFilesystemPath) {
+		var ret string
+		return ret
+	}
+	return *o.TargetFilesystemPath
+}
+
+// GetTargetFilesystemPathOk returns a tuple with the TargetFilesystemPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetTargetFilesystemPathOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetFilesystemPath) {
+		return nil, false
+	}
+	return o.TargetFilesystemPath, true
+}
+
+// HasTargetFilesystemPath returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasTargetFilesystemPath() bool {
+	if o != nil && !IsNil(o.TargetFilesystemPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetFilesystemPath gets a reference to the given string and assigns it to the TargetFilesystemPath field.
+func (o *HyperscaleConnector) SetTargetFilesystemPath(v string) {
+	o.TargetFilesystemPath = &v
+}
+
 // GetTargetConnectionProperties returns the TargetConnectionProperties field value if set, zero value otherwise.
 func (o *HyperscaleConnector) GetTargetConnectionProperties() map[string]string {
 	if o == nil || IsNil(o.TargetConnectionProperties) {
@@ -377,6 +613,38 @@ func (o *HyperscaleConnector) SetTargetConnectionProperties(v map[string]string)
 	o.TargetConnectionProperties = &v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *HyperscaleConnector) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleConnector) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *HyperscaleConnector) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *HyperscaleConnector) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o HyperscaleConnector) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -387,11 +655,18 @@ func (o HyperscaleConnector) MarshalJSON() ([]byte, error) {
 
 func (o HyperscaleConnector) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
+	if !IsNil(o.DatabaseType) {
+		toSerialize["database_type"] = o.DatabaseType
 	}
+	// skip: id is readOnly
 	if !IsNil(o.HyperscaleInstanceId) {
 		toSerialize["hyperscale_instance_id"] = o.HyperscaleInstanceId
+	}
+	if !IsNil(o.DataType) {
+		toSerialize["data_type"] = o.DataType
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
 	if !IsNil(o.SourceUsername) {
 		toSerialize["source_username"] = o.SourceUsername
@@ -401,6 +676,12 @@ func (o HyperscaleConnector) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SourceJdbcUrl) {
 		toSerialize["source_jdbc_url"] = o.SourceJdbcUrl
+	}
+	if !IsNil(o.SourceMongoUrl) {
+		toSerialize["source_mongo_url"] = o.SourceMongoUrl
+	}
+	if !IsNil(o.SourceFilesystemPath) {
+		toSerialize["source_filesystem_path"] = o.SourceFilesystemPath
 	}
 	if !IsNil(o.SourceConnectionProperties) {
 		toSerialize["source_connection_properties"] = o.SourceConnectionProperties
@@ -414,8 +695,17 @@ func (o HyperscaleConnector) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TargetJdbcUrl) {
 		toSerialize["target_jdbc_url"] = o.TargetJdbcUrl
 	}
+	if !IsNil(o.TargetMongoUrl) {
+		toSerialize["target_mongo_url"] = o.TargetMongoUrl
+	}
+	if !IsNil(o.TargetFilesystemPath) {
+		toSerialize["target_filesystem_path"] = o.TargetFilesystemPath
+	}
 	if !IsNil(o.TargetConnectionProperties) {
 		toSerialize["target_connection_properties"] = o.TargetConnectionProperties
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -46,6 +46,12 @@ type SMTPConfigParams struct {
 // will change when the set of required properties is changed
 func NewSMTPConfigParams() *SMTPConfigParams {
 	this := SMTPConfigParams{}
+	var enabled bool = false
+	this.Enabled = &enabled
+	var authenticationEnabled bool = false
+	this.AuthenticationEnabled = &authenticationEnabled
+	var tlsEnabled bool = false
+	this.TlsEnabled = &tlsEnabled
 	return &this
 }
 
@@ -54,6 +60,12 @@ func NewSMTPConfigParams() *SMTPConfigParams {
 // but it doesn't guarantee that properties required by API are set
 func NewSMTPConfigParamsWithDefaults() *SMTPConfigParams {
 	this := SMTPConfigParams{}
+	var enabled bool = false
+	this.Enabled = &enabled
+	var authenticationEnabled bool = false
+	this.AuthenticationEnabled = &authenticationEnabled
+	var tlsEnabled bool = false
+	this.TlsEnabled = &tlsEnabled
 	return &this
 }
 

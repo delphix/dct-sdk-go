@@ -1,6 +1,6 @@
-module github.com/delphix/dct-sdk-go/v2
+module github.com/delphix/dct-sdk-go/v14
 
-go 1.21.1
+go 1.22.0
 
 require github.com/stretchr/testify v1.8.4
 

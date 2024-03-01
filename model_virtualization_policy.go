@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -32,7 +32,35 @@ type VirtualizationPolicy struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	PolicyType *string `json:"policy_type,omitempty"`
 	TimezoneId *string `json:"timezone_id,omitempty"`
+	// True if this is the default policy created when the system is setup.
+	DefaultPolicy *bool `json:"default_policy,omitempty"`
+	// Whether this policy has been directly applied or inherited. See the effectivePolicies parameter of the list call for details.
+	EffectiveType *string `json:"effective_type,omitempty"`
+	// Amount of time to keep source data [Retention Policy].
+	DataDuration *int32 `json:"data_duration,omitempty"`
+	// Time unit for data_duration [Retention Policy].
+	DataUnit *string `json:"data_unit,omitempty"`
+	// Amount of time to keep log data [Retention Policy].
+	LogDuration *int32 `json:"log_duration,omitempty"`
+	// Time unit for log_duration [Retention Policy].
+	LogUnit *string `json:"log_unit,omitempty"`
+	// Number of daily snapshots to keep [Retention Policy].
+	NumOfDaily *int32 `json:"num_of_daily,omitempty"`
+	// Number of weekly snapshots to keep [Retention Policy].
+	NumOfWeekly *int32 `json:"num_of_weekly,omitempty"`
+	// Day of week upon which to enforce weekly snapshot retention [Retention Policy].
+	DayOfWeek *string `json:"day_of_week,omitempty"`
+	// Number of monthly snapshots to keep [Retention Policy].
+	NumOfMonthly *int32 `json:"num_of_monthly,omitempty"`
+	// Day of month upon which to enforce monthly snapshot retention [Retention Policy].
+	DayOfMonth *int32 `json:"day_of_month,omitempty"`
+	// Number of yearly snapshots to keep [Retention Policy].
+	NumOfYearly *int32 `json:"num_of_yearly,omitempty"`
+	// Day of year upon which to enforce yearly snapshot retention, expressed a month / day string (e.g., \"Jan 1\") [Retention Policy].
+	DayOfYear *string `json:"day_of_year,omitempty"`
 	Schedules []VirtualizationSchedule `json:"schedules,omitempty"`
+	// Size of the quota, in bytes. (QUOTA_POLICY only).
+	Size NullableInt64 `json:"size,omitempty"`
 }
 
 // NewVirtualizationPolicy instantiates a new VirtualizationPolicy object
@@ -340,6 +368,422 @@ func (o *VirtualizationPolicy) SetTimezoneId(v string) {
 	o.TimezoneId = &v
 }
 
+// GetDefaultPolicy returns the DefaultPolicy field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDefaultPolicy() bool {
+	if o == nil || IsNil(o.DefaultPolicy) {
+		var ret bool
+		return ret
+	}
+	return *o.DefaultPolicy
+}
+
+// GetDefaultPolicyOk returns a tuple with the DefaultPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDefaultPolicyOk() (*bool, bool) {
+	if o == nil || IsNil(o.DefaultPolicy) {
+		return nil, false
+	}
+	return o.DefaultPolicy, true
+}
+
+// HasDefaultPolicy returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDefaultPolicy() bool {
+	if o != nil && !IsNil(o.DefaultPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultPolicy gets a reference to the given bool and assigns it to the DefaultPolicy field.
+func (o *VirtualizationPolicy) SetDefaultPolicy(v bool) {
+	o.DefaultPolicy = &v
+}
+
+// GetEffectiveType returns the EffectiveType field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetEffectiveType() string {
+	if o == nil || IsNil(o.EffectiveType) {
+		var ret string
+		return ret
+	}
+	return *o.EffectiveType
+}
+
+// GetEffectiveTypeOk returns a tuple with the EffectiveType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetEffectiveTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.EffectiveType) {
+		return nil, false
+	}
+	return o.EffectiveType, true
+}
+
+// HasEffectiveType returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasEffectiveType() bool {
+	if o != nil && !IsNil(o.EffectiveType) {
+		return true
+	}
+
+	return false
+}
+
+// SetEffectiveType gets a reference to the given string and assigns it to the EffectiveType field.
+func (o *VirtualizationPolicy) SetEffectiveType(v string) {
+	o.EffectiveType = &v
+}
+
+// GetDataDuration returns the DataDuration field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDataDuration() int32 {
+	if o == nil || IsNil(o.DataDuration) {
+		var ret int32
+		return ret
+	}
+	return *o.DataDuration
+}
+
+// GetDataDurationOk returns a tuple with the DataDuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDataDurationOk() (*int32, bool) {
+	if o == nil || IsNil(o.DataDuration) {
+		return nil, false
+	}
+	return o.DataDuration, true
+}
+
+// HasDataDuration returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDataDuration() bool {
+	if o != nil && !IsNil(o.DataDuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataDuration gets a reference to the given int32 and assigns it to the DataDuration field.
+func (o *VirtualizationPolicy) SetDataDuration(v int32) {
+	o.DataDuration = &v
+}
+
+// GetDataUnit returns the DataUnit field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDataUnit() string {
+	if o == nil || IsNil(o.DataUnit) {
+		var ret string
+		return ret
+	}
+	return *o.DataUnit
+}
+
+// GetDataUnitOk returns a tuple with the DataUnit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDataUnitOk() (*string, bool) {
+	if o == nil || IsNil(o.DataUnit) {
+		return nil, false
+	}
+	return o.DataUnit, true
+}
+
+// HasDataUnit returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDataUnit() bool {
+	if o != nil && !IsNil(o.DataUnit) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataUnit gets a reference to the given string and assigns it to the DataUnit field.
+func (o *VirtualizationPolicy) SetDataUnit(v string) {
+	o.DataUnit = &v
+}
+
+// GetLogDuration returns the LogDuration field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetLogDuration() int32 {
+	if o == nil || IsNil(o.LogDuration) {
+		var ret int32
+		return ret
+	}
+	return *o.LogDuration
+}
+
+// GetLogDurationOk returns a tuple with the LogDuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetLogDurationOk() (*int32, bool) {
+	if o == nil || IsNil(o.LogDuration) {
+		return nil, false
+	}
+	return o.LogDuration, true
+}
+
+// HasLogDuration returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasLogDuration() bool {
+	if o != nil && !IsNil(o.LogDuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogDuration gets a reference to the given int32 and assigns it to the LogDuration field.
+func (o *VirtualizationPolicy) SetLogDuration(v int32) {
+	o.LogDuration = &v
+}
+
+// GetLogUnit returns the LogUnit field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetLogUnit() string {
+	if o == nil || IsNil(o.LogUnit) {
+		var ret string
+		return ret
+	}
+	return *o.LogUnit
+}
+
+// GetLogUnitOk returns a tuple with the LogUnit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetLogUnitOk() (*string, bool) {
+	if o == nil || IsNil(o.LogUnit) {
+		return nil, false
+	}
+	return o.LogUnit, true
+}
+
+// HasLogUnit returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasLogUnit() bool {
+	if o != nil && !IsNil(o.LogUnit) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogUnit gets a reference to the given string and assigns it to the LogUnit field.
+func (o *VirtualizationPolicy) SetLogUnit(v string) {
+	o.LogUnit = &v
+}
+
+// GetNumOfDaily returns the NumOfDaily field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetNumOfDaily() int32 {
+	if o == nil || IsNil(o.NumOfDaily) {
+		var ret int32
+		return ret
+	}
+	return *o.NumOfDaily
+}
+
+// GetNumOfDailyOk returns a tuple with the NumOfDaily field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetNumOfDailyOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumOfDaily) {
+		return nil, false
+	}
+	return o.NumOfDaily, true
+}
+
+// HasNumOfDaily returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasNumOfDaily() bool {
+	if o != nil && !IsNil(o.NumOfDaily) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumOfDaily gets a reference to the given int32 and assigns it to the NumOfDaily field.
+func (o *VirtualizationPolicy) SetNumOfDaily(v int32) {
+	o.NumOfDaily = &v
+}
+
+// GetNumOfWeekly returns the NumOfWeekly field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetNumOfWeekly() int32 {
+	if o == nil || IsNil(o.NumOfWeekly) {
+		var ret int32
+		return ret
+	}
+	return *o.NumOfWeekly
+}
+
+// GetNumOfWeeklyOk returns a tuple with the NumOfWeekly field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetNumOfWeeklyOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumOfWeekly) {
+		return nil, false
+	}
+	return o.NumOfWeekly, true
+}
+
+// HasNumOfWeekly returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasNumOfWeekly() bool {
+	if o != nil && !IsNil(o.NumOfWeekly) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumOfWeekly gets a reference to the given int32 and assigns it to the NumOfWeekly field.
+func (o *VirtualizationPolicy) SetNumOfWeekly(v int32) {
+	o.NumOfWeekly = &v
+}
+
+// GetDayOfWeek returns the DayOfWeek field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDayOfWeek() string {
+	if o == nil || IsNil(o.DayOfWeek) {
+		var ret string
+		return ret
+	}
+	return *o.DayOfWeek
+}
+
+// GetDayOfWeekOk returns a tuple with the DayOfWeek field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDayOfWeekOk() (*string, bool) {
+	if o == nil || IsNil(o.DayOfWeek) {
+		return nil, false
+	}
+	return o.DayOfWeek, true
+}
+
+// HasDayOfWeek returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDayOfWeek() bool {
+	if o != nil && !IsNil(o.DayOfWeek) {
+		return true
+	}
+
+	return false
+}
+
+// SetDayOfWeek gets a reference to the given string and assigns it to the DayOfWeek field.
+func (o *VirtualizationPolicy) SetDayOfWeek(v string) {
+	o.DayOfWeek = &v
+}
+
+// GetNumOfMonthly returns the NumOfMonthly field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetNumOfMonthly() int32 {
+	if o == nil || IsNil(o.NumOfMonthly) {
+		var ret int32
+		return ret
+	}
+	return *o.NumOfMonthly
+}
+
+// GetNumOfMonthlyOk returns a tuple with the NumOfMonthly field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetNumOfMonthlyOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumOfMonthly) {
+		return nil, false
+	}
+	return o.NumOfMonthly, true
+}
+
+// HasNumOfMonthly returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasNumOfMonthly() bool {
+	if o != nil && !IsNil(o.NumOfMonthly) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumOfMonthly gets a reference to the given int32 and assigns it to the NumOfMonthly field.
+func (o *VirtualizationPolicy) SetNumOfMonthly(v int32) {
+	o.NumOfMonthly = &v
+}
+
+// GetDayOfMonth returns the DayOfMonth field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDayOfMonth() int32 {
+	if o == nil || IsNil(o.DayOfMonth) {
+		var ret int32
+		return ret
+	}
+	return *o.DayOfMonth
+}
+
+// GetDayOfMonthOk returns a tuple with the DayOfMonth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDayOfMonthOk() (*int32, bool) {
+	if o == nil || IsNil(o.DayOfMonth) {
+		return nil, false
+	}
+	return o.DayOfMonth, true
+}
+
+// HasDayOfMonth returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDayOfMonth() bool {
+	if o != nil && !IsNil(o.DayOfMonth) {
+		return true
+	}
+
+	return false
+}
+
+// SetDayOfMonth gets a reference to the given int32 and assigns it to the DayOfMonth field.
+func (o *VirtualizationPolicy) SetDayOfMonth(v int32) {
+	o.DayOfMonth = &v
+}
+
+// GetNumOfYearly returns the NumOfYearly field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetNumOfYearly() int32 {
+	if o == nil || IsNil(o.NumOfYearly) {
+		var ret int32
+		return ret
+	}
+	return *o.NumOfYearly
+}
+
+// GetNumOfYearlyOk returns a tuple with the NumOfYearly field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetNumOfYearlyOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumOfYearly) {
+		return nil, false
+	}
+	return o.NumOfYearly, true
+}
+
+// HasNumOfYearly returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasNumOfYearly() bool {
+	if o != nil && !IsNil(o.NumOfYearly) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumOfYearly gets a reference to the given int32 and assigns it to the NumOfYearly field.
+func (o *VirtualizationPolicy) SetNumOfYearly(v int32) {
+	o.NumOfYearly = &v
+}
+
+// GetDayOfYear returns the DayOfYear field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDayOfYear() string {
+	if o == nil || IsNil(o.DayOfYear) {
+		var ret string
+		return ret
+	}
+	return *o.DayOfYear
+}
+
+// GetDayOfYearOk returns a tuple with the DayOfYear field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDayOfYearOk() (*string, bool) {
+	if o == nil || IsNil(o.DayOfYear) {
+		return nil, false
+	}
+	return o.DayOfYear, true
+}
+
+// HasDayOfYear returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDayOfYear() bool {
+	if o != nil && !IsNil(o.DayOfYear) {
+		return true
+	}
+
+	return false
+}
+
+// SetDayOfYear gets a reference to the given string and assigns it to the DayOfYear field.
+func (o *VirtualizationPolicy) SetDayOfYear(v string) {
+	o.DayOfYear = &v
+}
+
 // GetSchedules returns the Schedules field value if set, zero value otherwise.
 func (o *VirtualizationPolicy) GetSchedules() []VirtualizationSchedule {
 	if o == nil || IsNil(o.Schedules) {
@@ -370,6 +814,48 @@ func (o *VirtualizationPolicy) HasSchedules() bool {
 // SetSchedules gets a reference to the given []VirtualizationSchedule and assigns it to the Schedules field.
 func (o *VirtualizationPolicy) SetSchedules(v []VirtualizationSchedule) {
 	o.Schedules = v
+}
+
+// GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VirtualizationPolicy) GetSize() int64 {
+	if o == nil || IsNil(o.Size.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.Size.Get()
+}
+
+// GetSizeOk returns a tuple with the Size field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VirtualizationPolicy) GetSizeOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Size.Get(), o.Size.IsSet()
+}
+
+// HasSize returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasSize() bool {
+	if o != nil && o.Size.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSize gets a reference to the given NullableInt64 and assigns it to the Size field.
+func (o *VirtualizationPolicy) SetSize(v int64) {
+	o.Size.Set(&v)
+}
+// SetSizeNil sets the value for Size to be an explicit nil
+func (o *VirtualizationPolicy) SetSizeNil() {
+	o.Size.Set(nil)
+}
+
+// UnsetSize ensures that no value is present for Size, not even an explicit nil
+func (o *VirtualizationPolicy) UnsetSize() {
+	o.Size.Unset()
 }
 
 func (o VirtualizationPolicy) MarshalJSON() ([]byte, error) {
@@ -409,8 +895,50 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TimezoneId) {
 		toSerialize["timezone_id"] = o.TimezoneId
 	}
+	if !IsNil(o.DefaultPolicy) {
+		toSerialize["default_policy"] = o.DefaultPolicy
+	}
+	if !IsNil(o.EffectiveType) {
+		toSerialize["effective_type"] = o.EffectiveType
+	}
+	if !IsNil(o.DataDuration) {
+		toSerialize["data_duration"] = o.DataDuration
+	}
+	if !IsNil(o.DataUnit) {
+		toSerialize["data_unit"] = o.DataUnit
+	}
+	if !IsNil(o.LogDuration) {
+		toSerialize["log_duration"] = o.LogDuration
+	}
+	if !IsNil(o.LogUnit) {
+		toSerialize["log_unit"] = o.LogUnit
+	}
+	if !IsNil(o.NumOfDaily) {
+		toSerialize["num_of_daily"] = o.NumOfDaily
+	}
+	if !IsNil(o.NumOfWeekly) {
+		toSerialize["num_of_weekly"] = o.NumOfWeekly
+	}
+	if !IsNil(o.DayOfWeek) {
+		toSerialize["day_of_week"] = o.DayOfWeek
+	}
+	if !IsNil(o.NumOfMonthly) {
+		toSerialize["num_of_monthly"] = o.NumOfMonthly
+	}
+	if !IsNil(o.DayOfMonth) {
+		toSerialize["day_of_month"] = o.DayOfMonth
+	}
+	if !IsNil(o.NumOfYearly) {
+		toSerialize["num_of_yearly"] = o.NumOfYearly
+	}
+	if !IsNil(o.DayOfYear) {
+		toSerialize["day_of_year"] = o.DayOfYear
+	}
 	if !IsNil(o.Schedules) {
 		toSerialize["schedules"] = o.Schedules
+	}
+	if o.Size.IsSet() {
+		toSerialize["size"] = o.Size.Get()
 	}
 	return toSerialize, nil
 }

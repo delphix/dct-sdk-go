@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -24,24 +24,26 @@ type AlgorithmCreateParameters struct {
 	Name string `json:"name"`
 	// A description of this algorithm.
 	Description *string `json:"description,omitempty"`
-	// The id of the engine onto which this algorithm will be created.
-	EngineId string `json:"engine_id"`
+	// The id of the plugin which this algorithm will use.
+	PluginId string `json:"plugin_id"`
 	// The configuration of this algorithm.
 	Config map[string]interface{} `json:"config"`
-	// Entity ID for the framework of this algorithm.
-	FrameworkId int32 `json:"framework_id"`
+	// Name for the framework of this algorithm.
+	FrameworkName string `json:"framework_name"`
+	// The tags of this algorithm.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewAlgorithmCreateParameters instantiates a new AlgorithmCreateParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAlgorithmCreateParameters(name string, engineId string, config map[string]interface{}, frameworkId int32) *AlgorithmCreateParameters {
+func NewAlgorithmCreateParameters(name string, pluginId string, config map[string]interface{}, frameworkName string) *AlgorithmCreateParameters {
 	this := AlgorithmCreateParameters{}
 	this.Name = name
-	this.EngineId = engineId
+	this.PluginId = pluginId
 	this.Config = config
-	this.FrameworkId = frameworkId
+	this.FrameworkName = frameworkName
 	return &this
 }
 
@@ -109,28 +111,28 @@ func (o *AlgorithmCreateParameters) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetEngineId returns the EngineId field value
-func (o *AlgorithmCreateParameters) GetEngineId() string {
+// GetPluginId returns the PluginId field value
+func (o *AlgorithmCreateParameters) GetPluginId() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.EngineId
+	return o.PluginId
 }
 
-// GetEngineIdOk returns a tuple with the EngineId field value
+// GetPluginIdOk returns a tuple with the PluginId field value
 // and a boolean to check if the value has been set.
-func (o *AlgorithmCreateParameters) GetEngineIdOk() (*string, bool) {
+func (o *AlgorithmCreateParameters) GetPluginIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.EngineId, true
+	return &o.PluginId, true
 }
 
-// SetEngineId sets field value
-func (o *AlgorithmCreateParameters) SetEngineId(v string) {
-	o.EngineId = v
+// SetPluginId sets field value
+func (o *AlgorithmCreateParameters) SetPluginId(v string) {
+	o.PluginId = v
 }
 
 // GetConfig returns the Config field value
@@ -157,28 +159,60 @@ func (o *AlgorithmCreateParameters) SetConfig(v map[string]interface{}) {
 	o.Config = v
 }
 
-// GetFrameworkId returns the FrameworkId field value
-func (o *AlgorithmCreateParameters) GetFrameworkId() int32 {
+// GetFrameworkName returns the FrameworkName field value
+func (o *AlgorithmCreateParameters) GetFrameworkName() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
-	return o.FrameworkId
+	return o.FrameworkName
 }
 
-// GetFrameworkIdOk returns a tuple with the FrameworkId field value
+// GetFrameworkNameOk returns a tuple with the FrameworkName field value
 // and a boolean to check if the value has been set.
-func (o *AlgorithmCreateParameters) GetFrameworkIdOk() (*int32, bool) {
+func (o *AlgorithmCreateParameters) GetFrameworkNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.FrameworkId, true
+	return &o.FrameworkName, true
 }
 
-// SetFrameworkId sets field value
-func (o *AlgorithmCreateParameters) SetFrameworkId(v int32) {
-	o.FrameworkId = v
+// SetFrameworkName sets field value
+func (o *AlgorithmCreateParameters) SetFrameworkName(v string) {
+	o.FrameworkName = v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *AlgorithmCreateParameters) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AlgorithmCreateParameters) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *AlgorithmCreateParameters) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *AlgorithmCreateParameters) SetTags(v []Tag) {
+	o.Tags = v
 }
 
 func (o AlgorithmCreateParameters) MarshalJSON() ([]byte, error) {
@@ -195,9 +229,12 @@ func (o AlgorithmCreateParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["engine_id"] = o.EngineId
+	toSerialize["plugin_id"] = o.PluginId
 	toSerialize["config"] = o.Config
-	toSerialize["framework_id"] = o.FrameworkId
+	toSerialize["framework_name"] = o.FrameworkName
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
 	return toSerialize, nil
 }
 

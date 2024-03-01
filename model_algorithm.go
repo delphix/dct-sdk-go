@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the Algorithm type satisfies the MappedNullable interface at compile time
@@ -20,32 +21,32 @@ var _ MappedNullable = &Algorithm{}
 
 // Algorithm A masking algorithm.
 type Algorithm struct {
-	// The Algorithm entity ID.
-	Id *string `json:"id,omitempty"`
-	// The name of this Algorithm.
-	Name *string `json:"name,omitempty"`
-	// The algorithm type.
-	Type *string `json:"type,omitempty"`
+	// The algorithm entity ID.
+	Id string `json:"id"`
+	// The name of this algorithm.
+	Name string `json:"name"`
 	// A description of this algorithm.
 	Description NullableString `json:"description,omitempty"`
-	// A reference to the Engine that this algorithm belongs to.
-	EngineId *string `json:"engine_id,omitempty"`
-	// Whether tokenization is supported on this algorithm.
-	IsTokenizationSupported *bool `json:"is_tokenization_supported,omitempty"`
-	// The configuration of this algorithm.
-	Config map[string]interface{} `json:"config,omitempty"`
-	// Entity ID for the plugin that provides this algorithm.
-	PluginId NullableInt32 `json:"plugin_id,omitempty"`
-	// Entity ID for the framework of this algorithm.
-	FrameworkId NullableInt32 `json:"framework_id,omitempty"`
+	// The name of the plugin that this algorithm belongs to.
+	PluginName string `json:"plugin_name"`
+	// The name of the framework that this algorithm belongs to.
+	FrameworkName string `json:"framework_name"`
+	// The date and time this algorithm was created.
+	CreateDate *time.Time `json:"create_date,omitempty"`
+	// The tags of this algorithm.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewAlgorithm instantiates a new Algorithm object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAlgorithm() *Algorithm {
+func NewAlgorithm(id string, name string, pluginName string, frameworkName string) *Algorithm {
 	this := Algorithm{}
+	this.Id = id
+	this.Name = name
+	this.PluginName = pluginName
+	this.FrameworkName = frameworkName
 	return &this
 }
 
@@ -57,100 +58,52 @@ func NewAlgorithmWithDefaults() *Algorithm {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *Algorithm) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *Algorithm) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *Algorithm) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *Algorithm) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *Algorithm) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *Algorithm) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *Algorithm) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *Algorithm) SetName(v string) {
-	o.Name = &v
-}
-
-// GetType returns the Type field value if set, zero value otherwise.
-func (o *Algorithm) GetType() string {
-	if o == nil || IsNil(o.Type) {
-		var ret string
-		return ret
-	}
-	return *o.Type
-}
-
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Algorithm) GetTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.Type) {
-		return nil, false
-	}
-	return o.Type, true
-}
-
-// HasType returns a boolean if a field has been set.
-func (o *Algorithm) HasType() bool {
-	if o != nil && !IsNil(o.Type) {
-		return true
-	}
-
-	return false
-}
-
-// SetType gets a reference to the given string and assigns it to the Type field.
-func (o *Algorithm) SetType(v string) {
-	o.Type = &v
+	o.Name = v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -195,185 +148,116 @@ func (o *Algorithm) UnsetDescription() {
 	o.Description.Unset()
 }
 
-// GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *Algorithm) GetEngineId() string {
-	if o == nil || IsNil(o.EngineId) {
+// GetPluginName returns the PluginName field value
+func (o *Algorithm) GetPluginName() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.EngineId
+
+	return o.PluginName
 }
 
-// GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
+// GetPluginNameOk returns a tuple with the PluginName field value
 // and a boolean to check if the value has been set.
-func (o *Algorithm) GetEngineIdOk() (*string, bool) {
-	if o == nil || IsNil(o.EngineId) {
-		return nil, false
-	}
-	return o.EngineId, true
-}
-
-// HasEngineId returns a boolean if a field has been set.
-func (o *Algorithm) HasEngineId() bool {
-	if o != nil && !IsNil(o.EngineId) {
-		return true
-	}
-
-	return false
-}
-
-// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
-func (o *Algorithm) SetEngineId(v string) {
-	o.EngineId = &v
-}
-
-// GetIsTokenizationSupported returns the IsTokenizationSupported field value if set, zero value otherwise.
-func (o *Algorithm) GetIsTokenizationSupported() bool {
-	if o == nil || IsNil(o.IsTokenizationSupported) {
-		var ret bool
-		return ret
-	}
-	return *o.IsTokenizationSupported
-}
-
-// GetIsTokenizationSupportedOk returns a tuple with the IsTokenizationSupported field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Algorithm) GetIsTokenizationSupportedOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsTokenizationSupported) {
-		return nil, false
-	}
-	return o.IsTokenizationSupported, true
-}
-
-// HasIsTokenizationSupported returns a boolean if a field has been set.
-func (o *Algorithm) HasIsTokenizationSupported() bool {
-	if o != nil && !IsNil(o.IsTokenizationSupported) {
-		return true
-	}
-
-	return false
-}
-
-// SetIsTokenizationSupported gets a reference to the given bool and assigns it to the IsTokenizationSupported field.
-func (o *Algorithm) SetIsTokenizationSupported(v bool) {
-	o.IsTokenizationSupported = &v
-}
-
-// GetConfig returns the Config field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Algorithm) GetConfig() map[string]interface{} {
-	if o == nil {
-		var ret map[string]interface{}
-		return ret
-	}
-	return o.Config
-}
-
-// GetConfigOk returns a tuple with the Config field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Algorithm) GetConfigOk() (map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Config) {
-		return map[string]interface{}{}, false
-	}
-	return o.Config, true
-}
-
-// HasConfig returns a boolean if a field has been set.
-func (o *Algorithm) HasConfig() bool {
-	if o != nil && IsNil(o.Config) {
-		return true
-	}
-
-	return false
-}
-
-// SetConfig gets a reference to the given map[string]interface{} and assigns it to the Config field.
-func (o *Algorithm) SetConfig(v map[string]interface{}) {
-	o.Config = v
-}
-
-// GetPluginId returns the PluginId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Algorithm) GetPluginId() int32 {
-	if o == nil || IsNil(o.PluginId.Get()) {
-		var ret int32
-		return ret
-	}
-	return *o.PluginId.Get()
-}
-
-// GetPluginIdOk returns a tuple with the PluginId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Algorithm) GetPluginIdOk() (*int32, bool) {
+func (o *Algorithm) GetPluginNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.PluginId.Get(), o.PluginId.IsSet()
+	return &o.PluginName, true
 }
 
-// HasPluginId returns a boolean if a field has been set.
-func (o *Algorithm) HasPluginId() bool {
-	if o != nil && o.PluginId.IsSet() {
-		return true
-	}
-
-	return false
+// SetPluginName sets field value
+func (o *Algorithm) SetPluginName(v string) {
+	o.PluginName = v
 }
 
-// SetPluginId gets a reference to the given NullableInt32 and assigns it to the PluginId field.
-func (o *Algorithm) SetPluginId(v int32) {
-	o.PluginId.Set(&v)
-}
-// SetPluginIdNil sets the value for PluginId to be an explicit nil
-func (o *Algorithm) SetPluginIdNil() {
-	o.PluginId.Set(nil)
-}
-
-// UnsetPluginId ensures that no value is present for PluginId, not even an explicit nil
-func (o *Algorithm) UnsetPluginId() {
-	o.PluginId.Unset()
-}
-
-// GetFrameworkId returns the FrameworkId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Algorithm) GetFrameworkId() int32 {
-	if o == nil || IsNil(o.FrameworkId.Get()) {
-		var ret int32
+// GetFrameworkName returns the FrameworkName field value
+func (o *Algorithm) GetFrameworkName() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return *o.FrameworkId.Get()
+
+	return o.FrameworkName
 }
 
-// GetFrameworkIdOk returns a tuple with the FrameworkId field value if set, nil otherwise
+// GetFrameworkNameOk returns a tuple with the FrameworkName field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Algorithm) GetFrameworkIdOk() (*int32, bool) {
+func (o *Algorithm) GetFrameworkNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.FrameworkId.Get(), o.FrameworkId.IsSet()
+	return &o.FrameworkName, true
 }
 
-// HasFrameworkId returns a boolean if a field has been set.
-func (o *Algorithm) HasFrameworkId() bool {
-	if o != nil && o.FrameworkId.IsSet() {
+// SetFrameworkName sets field value
+func (o *Algorithm) SetFrameworkName(v string) {
+	o.FrameworkName = v
+}
+
+// GetCreateDate returns the CreateDate field value if set, zero value otherwise.
+func (o *Algorithm) GetCreateDate() time.Time {
+	if o == nil || IsNil(o.CreateDate) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreateDate
+}
+
+// GetCreateDateOk returns a tuple with the CreateDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Algorithm) GetCreateDateOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreateDate) {
+		return nil, false
+	}
+	return o.CreateDate, true
+}
+
+// HasCreateDate returns a boolean if a field has been set.
+func (o *Algorithm) HasCreateDate() bool {
+	if o != nil && !IsNil(o.CreateDate) {
 		return true
 	}
 
 	return false
 }
 
-// SetFrameworkId gets a reference to the given NullableInt32 and assigns it to the FrameworkId field.
-func (o *Algorithm) SetFrameworkId(v int32) {
-	o.FrameworkId.Set(&v)
-}
-// SetFrameworkIdNil sets the value for FrameworkId to be an explicit nil
-func (o *Algorithm) SetFrameworkIdNil() {
-	o.FrameworkId.Set(nil)
+// SetCreateDate gets a reference to the given time.Time and assigns it to the CreateDate field.
+func (o *Algorithm) SetCreateDate(v time.Time) {
+	o.CreateDate = &v
 }
 
-// UnsetFrameworkId ensures that no value is present for FrameworkId, not even an explicit nil
-func (o *Algorithm) UnsetFrameworkId() {
-	o.FrameworkId.Unset()
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *Algorithm) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Algorithm) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Algorithm) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Algorithm) SetTags(v []Tag) {
+	o.Tags = v
 }
 
 func (o Algorithm) MarshalJSON() ([]byte, error) {
@@ -386,32 +270,18 @@ func (o Algorithm) MarshalJSON() ([]byte, error) {
 
 func (o Algorithm) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.Type) {
-		toSerialize["type"] = o.Type
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["name"] = o.Name
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
 	}
-	if !IsNil(o.EngineId) {
-		toSerialize["engine_id"] = o.EngineId
+	toSerialize["plugin_name"] = o.PluginName
+	toSerialize["framework_name"] = o.FrameworkName
+	if !IsNil(o.CreateDate) {
+		toSerialize["create_date"] = o.CreateDate
 	}
-	if !IsNil(o.IsTokenizationSupported) {
-		toSerialize["is_tokenization_supported"] = o.IsTokenizationSupported
-	}
-	if o.Config != nil {
-		toSerialize["config"] = o.Config
-	}
-	if o.PluginId.IsSet() {
-		toSerialize["plugin_id"] = o.PluginId.Get()
-	}
-	if o.FrameworkId.IsSet() {
-		toSerialize["framework_id"] = o.FrameworkId.Get()
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

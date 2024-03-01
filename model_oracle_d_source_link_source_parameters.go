@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -30,6 +30,10 @@ type OracleDSourceLinkSourceParameters struct {
 	Description *string `json:"description,omitempty"`
 	// True if LogSync should run for this database.
 	LogSyncEnabled *bool `json:"log_sync_enabled,omitempty"`
+	// The ID of the SnapSync policy for the dSource.
+	SyncPolicyId *string `json:"sync_policy_id,omitempty"`
+	// The ID of the Retention policy for the dSource.
+	RetentionPolicyId *string `json:"retention_policy_id,omitempty"`
 	// Whether the account creating this reporting schedule must be configured as owner of the reporting schedule.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 	// The tags to be created for dSource.
@@ -366,6 +370,70 @@ func (o *OracleDSourceLinkSourceParameters) HasLogSyncEnabled() bool {
 // SetLogSyncEnabled gets a reference to the given bool and assigns it to the LogSyncEnabled field.
 func (o *OracleDSourceLinkSourceParameters) SetLogSyncEnabled(v bool) {
 	o.LogSyncEnabled = &v
+}
+
+// GetSyncPolicyId returns the SyncPolicyId field value if set, zero value otherwise.
+func (o *OracleDSourceLinkSourceParameters) GetSyncPolicyId() string {
+	if o == nil || IsNil(o.SyncPolicyId) {
+		var ret string
+		return ret
+	}
+	return *o.SyncPolicyId
+}
+
+// GetSyncPolicyIdOk returns a tuple with the SyncPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleDSourceLinkSourceParameters) GetSyncPolicyIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SyncPolicyId) {
+		return nil, false
+	}
+	return o.SyncPolicyId, true
+}
+
+// HasSyncPolicyId returns a boolean if a field has been set.
+func (o *OracleDSourceLinkSourceParameters) HasSyncPolicyId() bool {
+	if o != nil && !IsNil(o.SyncPolicyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSyncPolicyId gets a reference to the given string and assigns it to the SyncPolicyId field.
+func (o *OracleDSourceLinkSourceParameters) SetSyncPolicyId(v string) {
+	o.SyncPolicyId = &v
+}
+
+// GetRetentionPolicyId returns the RetentionPolicyId field value if set, zero value otherwise.
+func (o *OracleDSourceLinkSourceParameters) GetRetentionPolicyId() string {
+	if o == nil || IsNil(o.RetentionPolicyId) {
+		var ret string
+		return ret
+	}
+	return *o.RetentionPolicyId
+}
+
+// GetRetentionPolicyIdOk returns a tuple with the RetentionPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleDSourceLinkSourceParameters) GetRetentionPolicyIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RetentionPolicyId) {
+		return nil, false
+	}
+	return o.RetentionPolicyId, true
+}
+
+// HasRetentionPolicyId returns a boolean if a field has been set.
+func (o *OracleDSourceLinkSourceParameters) HasRetentionPolicyId() bool {
+	if o != nil && !IsNil(o.RetentionPolicyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRetentionPolicyId gets a reference to the given string and assigns it to the RetentionPolicyId field.
+func (o *OracleDSourceLinkSourceParameters) SetRetentionPolicyId(v string) {
+	o.RetentionPolicyId = &v
 }
 
 // GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field value if set, zero value otherwise.
@@ -1894,6 +1962,12 @@ func (o OracleDSourceLinkSourceParameters) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.LogSyncEnabled) {
 		toSerialize["log_sync_enabled"] = o.LogSyncEnabled
+	}
+	if !IsNil(o.SyncPolicyId) {
+		toSerialize["sync_policy_id"] = o.SyncPolicyId
+	}
+	if !IsNil(o.RetentionPolicyId) {
+		toSerialize["retention_policy_id"] = o.RetentionPolicyId
 	}
 	if !IsNil(o.MakeCurrentAccountOwner) {
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner

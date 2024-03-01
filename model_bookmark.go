@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -29,13 +29,17 @@ type Bookmark struct {
 	CreationDate *time.Time `json:"creation_date,omitempty"`
 	// The list of VDB IDs associated with this bookmark.
 	VdbIds []string `json:"vdb_ids,omitempty"`
+	// The list of dSource IDs associated with this bookmark.
+	DsourceIds []string `json:"dsource_ids,omitempty"`
 	// The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever. Deprecated in favor of expiration.
 	// Deprecated
 	Retention *int64 `json:"retention,omitempty"`
-	// The expiration for this bookmark. When unset, indicates the bookmark is kept forever.
+	// The expiration for this bookmark. When unset, indicates the bookmark is kept forever except for bookmarks of replicated datasets. Expiration cannot be set for bookmarks of replicated datasets.
 	Expiration *string `json:"expiration,omitempty"`
 	// A message with details about operation progress or state of this bookmark.
 	Status NullableString `json:"status,omitempty"`
+	// Whether this bookmark is created from a replicated dataset or not.
+	ReplicatedDataset *bool `json:"replicated_dataset,omitempty"`
 	// The tags to be created for this Bookmark.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -185,6 +189,38 @@ func (o *Bookmark) SetVdbIds(v []string) {
 	o.VdbIds = v
 }
 
+// GetDsourceIds returns the DsourceIds field value if set, zero value otherwise.
+func (o *Bookmark) GetDsourceIds() []string {
+	if o == nil || IsNil(o.DsourceIds) {
+		var ret []string
+		return ret
+	}
+	return o.DsourceIds
+}
+
+// GetDsourceIdsOk returns a tuple with the DsourceIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetDsourceIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.DsourceIds) {
+		return nil, false
+	}
+	return o.DsourceIds, true
+}
+
+// HasDsourceIds returns a boolean if a field has been set.
+func (o *Bookmark) HasDsourceIds() bool {
+	if o != nil && !IsNil(o.DsourceIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceIds gets a reference to the given []string and assigns it to the DsourceIds field.
+func (o *Bookmark) SetDsourceIds(v []string) {
+	o.DsourceIds = v
+}
+
 // GetRetention returns the Retention field value if set, zero value otherwise.
 // Deprecated
 func (o *Bookmark) GetRetention() int64 {
@@ -294,6 +330,38 @@ func (o *Bookmark) UnsetStatus() {
 	o.Status.Unset()
 }
 
+// GetReplicatedDataset returns the ReplicatedDataset field value if set, zero value otherwise.
+func (o *Bookmark) GetReplicatedDataset() bool {
+	if o == nil || IsNil(o.ReplicatedDataset) {
+		var ret bool
+		return ret
+	}
+	return *o.ReplicatedDataset
+}
+
+// GetReplicatedDatasetOk returns a tuple with the ReplicatedDataset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetReplicatedDatasetOk() (*bool, bool) {
+	if o == nil || IsNil(o.ReplicatedDataset) {
+		return nil, false
+	}
+	return o.ReplicatedDataset, true
+}
+
+// HasReplicatedDataset returns a boolean if a field has been set.
+func (o *Bookmark) HasReplicatedDataset() bool {
+	if o != nil && !IsNil(o.ReplicatedDataset) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicatedDataset gets a reference to the given bool and assigns it to the ReplicatedDataset field.
+func (o *Bookmark) SetReplicatedDataset(v bool) {
+	o.ReplicatedDataset = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Bookmark) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -344,6 +412,9 @@ func (o Bookmark) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.VdbIds) {
 		toSerialize["vdb_ids"] = o.VdbIds
 	}
+	if !IsNil(o.DsourceIds) {
+		toSerialize["dsource_ids"] = o.DsourceIds
+	}
 	if !IsNil(o.Retention) {
 		toSerialize["retention"] = o.Retention
 	}
@@ -352,6 +423,9 @@ func (o Bookmark) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
+	}
+	if !IsNil(o.ReplicatedDataset) {
+		toSerialize["replicated_dataset"] = o.ReplicatedDataset
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

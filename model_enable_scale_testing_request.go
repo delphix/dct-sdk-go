@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -22,24 +22,25 @@ var _ MappedNullable = &EnableScaleTestingRequest{}
 type EnableScaleTestingRequest struct {
 	// no. of times same engine needs to be registered
 	EnginesCount int32 `json:"engines_count"`
-	// list of engine hostnames to be registered engines_count times
-	EnginesList []string `json:"engines_list"`
+	// list of virt engine hostnames to be registered engines_count times
+	VirtEnginesList []string `json:"virt_engines_list,omitempty"`
+	// list of masking engine hostnames to be registered engines_count times
+	MaskingEnginesList []string `json:"masking_engines_list,omitempty"`
 	// no. of times to duplicate sources, containers, and timeflows
-	VirtObjectsCount int32 `json:"virt_objects_count"`
+	VirtObjectsCount *int32 `json:"virt_objects_count,omitempty"`
 	// no. of times to duplicate snapshots
-	SnapshotsCount int32 `json:"snapshots_count"`
+	SnapshotsCount *int32 `json:"snapshots_count,omitempty"`
+	// no. of times to duplicate jobs, rulesets, and connectors
+	MaskingObjectsCount *int32 `json:"masking_objects_count,omitempty"`
 }
 
 // NewEnableScaleTestingRequest instantiates a new EnableScaleTestingRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEnableScaleTestingRequest(enginesCount int32, enginesList []string, virtObjectsCount int32, snapshotsCount int32) *EnableScaleTestingRequest {
+func NewEnableScaleTestingRequest(enginesCount int32) *EnableScaleTestingRequest {
 	this := EnableScaleTestingRequest{}
 	this.EnginesCount = enginesCount
-	this.EnginesList = enginesList
-	this.VirtObjectsCount = virtObjectsCount
-	this.SnapshotsCount = snapshotsCount
 	return &this
 }
 
@@ -75,76 +76,164 @@ func (o *EnableScaleTestingRequest) SetEnginesCount(v int32) {
 	o.EnginesCount = v
 }
 
-// GetEnginesList returns the EnginesList field value
-func (o *EnableScaleTestingRequest) GetEnginesList() []string {
-	if o == nil {
+// GetVirtEnginesList returns the VirtEnginesList field value if set, zero value otherwise.
+func (o *EnableScaleTestingRequest) GetVirtEnginesList() []string {
+	if o == nil || IsNil(o.VirtEnginesList) {
 		var ret []string
 		return ret
 	}
-
-	return o.EnginesList
+	return o.VirtEnginesList
 }
 
-// GetEnginesListOk returns a tuple with the EnginesList field value
+// GetVirtEnginesListOk returns a tuple with the VirtEnginesList field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EnableScaleTestingRequest) GetEnginesListOk() ([]string, bool) {
-	if o == nil {
+func (o *EnableScaleTestingRequest) GetVirtEnginesListOk() ([]string, bool) {
+	if o == nil || IsNil(o.VirtEnginesList) {
 		return nil, false
 	}
-	return o.EnginesList, true
+	return o.VirtEnginesList, true
 }
 
-// SetEnginesList sets field value
-func (o *EnableScaleTestingRequest) SetEnginesList(v []string) {
-	o.EnginesList = v
+// HasVirtEnginesList returns a boolean if a field has been set.
+func (o *EnableScaleTestingRequest) HasVirtEnginesList() bool {
+	if o != nil && !IsNil(o.VirtEnginesList) {
+		return true
+	}
+
+	return false
 }
 
-// GetVirtObjectsCount returns the VirtObjectsCount field value
+// SetVirtEnginesList gets a reference to the given []string and assigns it to the VirtEnginesList field.
+func (o *EnableScaleTestingRequest) SetVirtEnginesList(v []string) {
+	o.VirtEnginesList = v
+}
+
+// GetMaskingEnginesList returns the MaskingEnginesList field value if set, zero value otherwise.
+func (o *EnableScaleTestingRequest) GetMaskingEnginesList() []string {
+	if o == nil || IsNil(o.MaskingEnginesList) {
+		var ret []string
+		return ret
+	}
+	return o.MaskingEnginesList
+}
+
+// GetMaskingEnginesListOk returns a tuple with the MaskingEnginesList field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnableScaleTestingRequest) GetMaskingEnginesListOk() ([]string, bool) {
+	if o == nil || IsNil(o.MaskingEnginesList) {
+		return nil, false
+	}
+	return o.MaskingEnginesList, true
+}
+
+// HasMaskingEnginesList returns a boolean if a field has been set.
+func (o *EnableScaleTestingRequest) HasMaskingEnginesList() bool {
+	if o != nil && !IsNil(o.MaskingEnginesList) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingEnginesList gets a reference to the given []string and assigns it to the MaskingEnginesList field.
+func (o *EnableScaleTestingRequest) SetMaskingEnginesList(v []string) {
+	o.MaskingEnginesList = v
+}
+
+// GetVirtObjectsCount returns the VirtObjectsCount field value if set, zero value otherwise.
 func (o *EnableScaleTestingRequest) GetVirtObjectsCount() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.VirtObjectsCount) {
 		var ret int32
 		return ret
 	}
-
-	return o.VirtObjectsCount
+	return *o.VirtObjectsCount
 }
 
-// GetVirtObjectsCountOk returns a tuple with the VirtObjectsCount field value
+// GetVirtObjectsCountOk returns a tuple with the VirtObjectsCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnableScaleTestingRequest) GetVirtObjectsCountOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.VirtObjectsCount) {
 		return nil, false
 	}
-	return &o.VirtObjectsCount, true
+	return o.VirtObjectsCount, true
 }
 
-// SetVirtObjectsCount sets field value
+// HasVirtObjectsCount returns a boolean if a field has been set.
+func (o *EnableScaleTestingRequest) HasVirtObjectsCount() bool {
+	if o != nil && !IsNil(o.VirtObjectsCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetVirtObjectsCount gets a reference to the given int32 and assigns it to the VirtObjectsCount field.
 func (o *EnableScaleTestingRequest) SetVirtObjectsCount(v int32) {
-	o.VirtObjectsCount = v
+	o.VirtObjectsCount = &v
 }
 
-// GetSnapshotsCount returns the SnapshotsCount field value
+// GetSnapshotsCount returns the SnapshotsCount field value if set, zero value otherwise.
 func (o *EnableScaleTestingRequest) GetSnapshotsCount() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.SnapshotsCount) {
 		var ret int32
 		return ret
 	}
-
-	return o.SnapshotsCount
+	return *o.SnapshotsCount
 }
 
-// GetSnapshotsCountOk returns a tuple with the SnapshotsCount field value
+// GetSnapshotsCountOk returns a tuple with the SnapshotsCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EnableScaleTestingRequest) GetSnapshotsCountOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SnapshotsCount) {
 		return nil, false
 	}
-	return &o.SnapshotsCount, true
+	return o.SnapshotsCount, true
 }
 
-// SetSnapshotsCount sets field value
+// HasSnapshotsCount returns a boolean if a field has been set.
+func (o *EnableScaleTestingRequest) HasSnapshotsCount() bool {
+	if o != nil && !IsNil(o.SnapshotsCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetSnapshotsCount gets a reference to the given int32 and assigns it to the SnapshotsCount field.
 func (o *EnableScaleTestingRequest) SetSnapshotsCount(v int32) {
-	o.SnapshotsCount = v
+	o.SnapshotsCount = &v
+}
+
+// GetMaskingObjectsCount returns the MaskingObjectsCount field value if set, zero value otherwise.
+func (o *EnableScaleTestingRequest) GetMaskingObjectsCount() int32 {
+	if o == nil || IsNil(o.MaskingObjectsCount) {
+		var ret int32
+		return ret
+	}
+	return *o.MaskingObjectsCount
+}
+
+// GetMaskingObjectsCountOk returns a tuple with the MaskingObjectsCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnableScaleTestingRequest) GetMaskingObjectsCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.MaskingObjectsCount) {
+		return nil, false
+	}
+	return o.MaskingObjectsCount, true
+}
+
+// HasMaskingObjectsCount returns a boolean if a field has been set.
+func (o *EnableScaleTestingRequest) HasMaskingObjectsCount() bool {
+	if o != nil && !IsNil(o.MaskingObjectsCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingObjectsCount gets a reference to the given int32 and assigns it to the MaskingObjectsCount field.
+func (o *EnableScaleTestingRequest) SetMaskingObjectsCount(v int32) {
+	o.MaskingObjectsCount = &v
 }
 
 func (o EnableScaleTestingRequest) MarshalJSON() ([]byte, error) {
@@ -158,9 +247,21 @@ func (o EnableScaleTestingRequest) MarshalJSON() ([]byte, error) {
 func (o EnableScaleTestingRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["engines_count"] = o.EnginesCount
-	toSerialize["engines_list"] = o.EnginesList
-	toSerialize["virt_objects_count"] = o.VirtObjectsCount
-	toSerialize["snapshots_count"] = o.SnapshotsCount
+	if !IsNil(o.VirtEnginesList) {
+		toSerialize["virt_engines_list"] = o.VirtEnginesList
+	}
+	if !IsNil(o.MaskingEnginesList) {
+		toSerialize["masking_engines_list"] = o.MaskingEnginesList
+	}
+	if !IsNil(o.VirtObjectsCount) {
+		toSerialize["virt_objects_count"] = o.VirtObjectsCount
+	}
+	if !IsNil(o.SnapshotsCount) {
+		toSerialize["snapshots_count"] = o.SnapshotsCount
+	}
+	if !IsNil(o.MaskingObjectsCount) {
+		toSerialize["masking_objects_count"] = o.MaskingObjectsCount
+	}
 	return toSerialize, nil
 }
 

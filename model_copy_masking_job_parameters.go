@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,8 @@ type CopyMaskingJobParameters struct {
 	SourceEnvironmentId *string `json:"source_environment_id,omitempty"`
 	// The ID or name of the target environment to copy the job into.
 	TargetEnvironmentId *string `json:"target_environment_id,omitempty"`
+	// Whether to overwrite objects that already exist on the target engine.
+	ForceOverwrite *bool `json:"force_overwrite,omitempty"`
 }
 
 // NewCopyMaskingJobParameters instantiates a new CopyMaskingJobParameters object
@@ -35,6 +37,8 @@ type CopyMaskingJobParameters struct {
 func NewCopyMaskingJobParameters(targetEngineId string) *CopyMaskingJobParameters {
 	this := CopyMaskingJobParameters{}
 	this.TargetEngineId = targetEngineId
+	var forceOverwrite bool = false
+	this.ForceOverwrite = &forceOverwrite
 	return &this
 }
 
@@ -43,6 +47,8 @@ func NewCopyMaskingJobParameters(targetEngineId string) *CopyMaskingJobParameter
 // but it doesn't guarantee that properties required by API are set
 func NewCopyMaskingJobParametersWithDefaults() *CopyMaskingJobParameters {
 	this := CopyMaskingJobParameters{}
+	var forceOverwrite bool = false
+	this.ForceOverwrite = &forceOverwrite
 	return &this
 }
 
@@ -134,6 +140,38 @@ func (o *CopyMaskingJobParameters) SetTargetEnvironmentId(v string) {
 	o.TargetEnvironmentId = &v
 }
 
+// GetForceOverwrite returns the ForceOverwrite field value if set, zero value otherwise.
+func (o *CopyMaskingJobParameters) GetForceOverwrite() bool {
+	if o == nil || IsNil(o.ForceOverwrite) {
+		var ret bool
+		return ret
+	}
+	return *o.ForceOverwrite
+}
+
+// GetForceOverwriteOk returns a tuple with the ForceOverwrite field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CopyMaskingJobParameters) GetForceOverwriteOk() (*bool, bool) {
+	if o == nil || IsNil(o.ForceOverwrite) {
+		return nil, false
+	}
+	return o.ForceOverwrite, true
+}
+
+// HasForceOverwrite returns a boolean if a field has been set.
+func (o *CopyMaskingJobParameters) HasForceOverwrite() bool {
+	if o != nil && !IsNil(o.ForceOverwrite) {
+		return true
+	}
+
+	return false
+}
+
+// SetForceOverwrite gets a reference to the given bool and assigns it to the ForceOverwrite field.
+func (o *CopyMaskingJobParameters) SetForceOverwrite(v bool) {
+	o.ForceOverwrite = &v
+}
+
 func (o CopyMaskingJobParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -150,6 +188,9 @@ func (o CopyMaskingJobParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TargetEnvironmentId) {
 		toSerialize["target_environment_id"] = o.TargetEnvironmentId
+	}
+	if !IsNil(o.ForceOverwrite) {
+		toSerialize["force_overwrite"] = o.ForceOverwrite
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -27,6 +27,7 @@ type HyperscaleInstance struct {
 	Name string `json:"name"`
 	// The hostname of this hyperscale instance.
 	Hostname string `json:"hostname"`
+	DataType *HyperscaleDataTypeEnum `json:"data_type,omitempty"`
 	// The date this hyperscale instance was registered.
 	CreationDate *time.Time `json:"creation_date,omitempty"`
 	// The tags to be created for this hyperscale instance.
@@ -151,6 +152,38 @@ func (o *HyperscaleInstance) GetHostnameOk() (*string, bool) {
 // SetHostname sets field value
 func (o *HyperscaleInstance) SetHostname(v string) {
 	o.Hostname = v
+}
+
+// GetDataType returns the DataType field value if set, zero value otherwise.
+func (o *HyperscaleInstance) GetDataType() HyperscaleDataTypeEnum {
+	if o == nil || IsNil(o.DataType) {
+		var ret HyperscaleDataTypeEnum
+		return ret
+	}
+	return *o.DataType
+}
+
+// GetDataTypeOk returns a tuple with the DataType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleInstance) GetDataTypeOk() (*HyperscaleDataTypeEnum, bool) {
+	if o == nil || IsNil(o.DataType) {
+		return nil, false
+	}
+	return o.DataType, true
+}
+
+// HasDataType returns a boolean if a field has been set.
+func (o *HyperscaleInstance) HasDataType() bool {
+	if o != nil && !IsNil(o.DataType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataType gets a reference to the given HyperscaleDataTypeEnum and assigns it to the DataType field.
+func (o *HyperscaleInstance) SetDataType(v HyperscaleDataTypeEnum) {
+	o.DataType = &v
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
@@ -444,6 +477,9 @@ func (o HyperscaleInstance) ToMap() (map[string]interface{}, error) {
 	// skip: id is readOnly
 	toSerialize["name"] = o.Name
 	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.DataType) {
+		toSerialize["data_type"] = o.DataType
+	}
 	if !IsNil(o.CreationDate) {
 		toSerialize["creation_date"] = o.CreationDate
 	}

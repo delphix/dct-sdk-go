@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -20,7 +20,7 @@ var _ MappedNullable = &AppDataDSourceLinkSourceParametersAllOf{}
 
 // AppDataDSourceLinkSourceParametersAllOf struct for AppDataDSourceLinkSourceParametersAllOf
 type AppDataDSourceLinkSourceParametersAllOf struct {
-	// The type of link to create. Default is AppDataDirect.  * `AppDataDirect` - Represents the AppData specific parameters of a link request for a source directly replicated into the Delphix Engine. * `AppDataStaged` - Represents the AppData specific parameters of a link request for a source with a staging source. 
+	// The type of link to create. Default is AppDataDirect. * `AppDataDirect` - Represents the AppData specific parameters of a link request for a source directly replicated into the Delphix Engine. * `AppDataStaged` - Represents the AppData specific parameters of a link request for a source with a staging source. 
 	LinkType *string `json:"link_type,omitempty"`
 	// The base mount point for the NFS mount on the staging environment [AppDataStaged only].
 	StagingMountBase *string `json:"staging_mount_base,omitempty"`

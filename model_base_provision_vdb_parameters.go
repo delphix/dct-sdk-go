@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.5.0
+API version: 3.9.0
 Contact: support@delphix.com
 */
 
@@ -114,6 +114,8 @@ type BaseProvisionVDBParameters struct {
 	ArchiveLog *bool `json:"archive_log,omitempty"`
 	// Option to generate a new DB ID for the created VDB (Oracle Only).
 	NewDbid *bool `json:"new_dbid,omitempty"`
+	// Indicates whether to mark this VDB as a masked VDB.
+	Masked *bool `json:"masked,omitempty"`
 	// The listener IDs for this provision operation (Oracle Only).
 	ListenerIds []string `json:"listener_ids,omitempty"`
 	// Environment variable to be set when the engine creates a VDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution.
@@ -1655,6 +1657,38 @@ func (o *BaseProvisionVDBParameters) SetNewDbid(v bool) {
 	o.NewDbid = &v
 }
 
+// GetMasked returns the Masked field value if set, zero value otherwise.
+func (o *BaseProvisionVDBParameters) GetMasked() bool {
+	if o == nil || IsNil(o.Masked) {
+		var ret bool
+		return ret
+	}
+	return *o.Masked
+}
+
+// GetMaskedOk returns a tuple with the Masked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseProvisionVDBParameters) GetMaskedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Masked) {
+		return nil, false
+	}
+	return o.Masked, true
+}
+
+// HasMasked returns a boolean if a field has been set.
+func (o *BaseProvisionVDBParameters) HasMasked() bool {
+	if o != nil && !IsNil(o.Masked) {
+		return true
+	}
+
+	return false
+}
+
+// SetMasked gets a reference to the given bool and assigns it to the Masked field.
+func (o *BaseProvisionVDBParameters) SetMasked(v bool) {
+	o.Masked = &v
+}
+
 // GetListenerIds returns the ListenerIds field value if set, zero value otherwise.
 func (o *BaseProvisionVDBParameters) GetListenerIds() []string {
 	if o == nil || IsNil(o.ListenerIds) {
@@ -2509,6 +2543,9 @@ func (o BaseProvisionVDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NewDbid) {
 		toSerialize["new_dbid"] = o.NewDbid
+	}
+	if !IsNil(o.Masked) {
+		toSerialize["masked"] = o.Masked
 	}
 	if !IsNil(o.ListenerIds) {
 		toSerialize["listener_ids"] = o.ListenerIds
