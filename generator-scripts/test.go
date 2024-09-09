@@ -36,8 +36,8 @@ func main() {
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}}
 	client := openapi.NewAPIClient(cfg)
-	req := client.ManagementApi.GetRegisteredEngines(ctx)
-	engines, _, err := client.ManagementApi.GetRegisteredEnginesExecute(req)
+	req := client.ManagementAPI.GetRegisteredEngines(ctx)
+	engines, _, err := client.ManagementAPI.GetRegisteredEnginesExecute(req)
 	if err != nil {
 		fmt.Print("Error while retrieving Delphix Engines.")
 		fmt.Print(err)
@@ -48,9 +48,9 @@ func main() {
 		fmt.Printf("%s \n", *engine.Hostname)
 	}
 
-	req_vdb := client.VDBsApi.GetVdbs(ctx)
+	req_vdb := client.VDBsAPI.GetVdbs(ctx)
 
-	vdbs, _, err := client.VDBsApi.GetVdbsExecute(req_vdb)
+	vdbs, _, err := client.VDBsAPI.GetVdbsExecute(req_vdb)
 
 	if err != nil {
 		fmt.Print("Error while retrieving Delphix Vdb. \n")

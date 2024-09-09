@@ -31,7 +31,7 @@ script_base_dir=$(dirname $0)
 rm -rf $script_base_dir/../../test/*
 
 java -jar openapi-generator-cli.jar generate \
-    -i $1 -g go --global-property=skipFormModel=false -p enumClassPrefix=true -o tmp/ --git-host github.com --git-user-id delphix --git-repo-id dct-sdk-go --package-name delphix_dct_api  || die "failed to generate code"
+    -i $1 -g go --global-property=skipFormModel=false -p enumClassPrefix=true -o tmp/ --git-host github.com --git-user-id delphix --git-repo-id dct-sdk-go --package-name delphix_dct_api --global-property=apiTests=false || die "failed to generate code"
 
 
 # navigating back to the sdk directory
