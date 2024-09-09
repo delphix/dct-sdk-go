@@ -13,7 +13,7 @@ import (
 	"context"
 	"testing"
 
-	openapiclient "github.com/delphix/dct-sdk-go/v14"
+	openapiclient "github.com/delphix/dct-sdk-go/v21"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -1,6 +1,6 @@
 module github.com/delphix/dct-sdk-go
 
-go 1.22.6
+go 1.22
 
 require (
 	github.com/delphix/dct-sdk-go/v21 v21.0.0

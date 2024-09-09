@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	openapi "github.com/delphix/dct-sdk-go/v14"
+	openapi "github.com/delphix/dct-sdk-go/v21"
 )
 
 func main() {
