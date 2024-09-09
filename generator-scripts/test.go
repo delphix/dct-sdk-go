@@ -15,10 +15,10 @@ func main() {
 	var KEY string
 	var HOST string
 
-	fmt.Println("Enter Your KEY (excluding 'apk'): ")
+	fmt.Println("Enter Your DCT KEY (excluding 'apk'): ")
 	fmt.Scanln(&KEY)
 
-	fmt.Println("Enter Your HOST ('hostname.domain'): ")
+	fmt.Println("Enter Your DCT HOST ('hostname.domain'): ")
 	fmt.Scanln(&HOST)
 
 	apiKeyMap := make(map[string]openapi.APIKey)
