@@ -3,7 +3,7 @@ module github.com/delphix/dct-sdk-go
 go 1.22.6
 
 require (
-	github.com/delphix/dct-sdk-go/v14 v14.0.0
+	github.com/delphix/dct-sdk-go/v21 v21.0.0
 	github.com/stretchr/testify v1.9.0
 )
 
