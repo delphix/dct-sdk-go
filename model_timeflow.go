@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -47,6 +47,14 @@ type Timeflow struct {
 	ParentPointTimestamp *time.Time `json:"parent_point_timestamp,omitempty"`
 	// A reference to the parent timeflow from which this timeflow was provisioned. This will not be present for timeflows derived from linked sources.
 	ParentPointTimeflowId *string `json:"parent_point_timeflow_id,omitempty"`
+	// The ID of the parent VDB. This is mutually exclusive with parent_dsource_id.
+	ParentVdbId *string `json:"parent_vdb_id,omitempty"`
+	// The ID of the parent dSource. This is mutually exclusive with parent_vdb_id.
+	ParentDsourceId *string `json:"parent_dsource_id,omitempty"`
+	// The ID of the source VDB. This is mutually exclusive with source_dsource_id.
+	SourceVdbId *string `json:"source_vdb_id,omitempty"`
+	// The ID of the source dSource. This is mutually exclusive with source_vdb_id.
+	SourceDsourceId *string `json:"source_dsource_id,omitempty"`
 	// The timestamp on the root ancestor timeflow from which this timeflow originated. This logical time acts as reference to the origin source data.
 	SourceDataTimestamp *time.Time `json:"source_data_timestamp,omitempty"`
 	// Oracle-specific incarnation identifier for this timeflow.
@@ -57,6 +65,12 @@ type Timeflow struct {
 	OracleTdeUuid *string `json:"oracle_tde_uuid,omitempty"`
 	// MSSQL-specific recovery branch identifier for this timeflow.
 	MssqlDatabaseGuid *string `json:"mssql_database_guid,omitempty"`
+	// Whether this timeflow is currently active or not.
+	IsActive *bool `json:"is_active,omitempty"`
+	// The time when the timeflow was created.
+	CreationTimestamp *time.Time `json:"creation_timestamp,omitempty"`
+	// The time when this timeflow became active.
+	ActivationTimestamp *time.Time `json:"activation_timestamp,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -523,6 +537,134 @@ func (o *Timeflow) SetParentPointTimeflowId(v string) {
 	o.ParentPointTimeflowId = &v
 }
 
+// GetParentVdbId returns the ParentVdbId field value if set, zero value otherwise.
+func (o *Timeflow) GetParentVdbId() string {
+	if o == nil || IsNil(o.ParentVdbId) {
+		var ret string
+		return ret
+	}
+	return *o.ParentVdbId
+}
+
+// GetParentVdbIdOk returns a tuple with the ParentVdbId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetParentVdbIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentVdbId) {
+		return nil, false
+	}
+	return o.ParentVdbId, true
+}
+
+// HasParentVdbId returns a boolean if a field has been set.
+func (o *Timeflow) HasParentVdbId() bool {
+	if o != nil && !IsNil(o.ParentVdbId) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentVdbId gets a reference to the given string and assigns it to the ParentVdbId field.
+func (o *Timeflow) SetParentVdbId(v string) {
+	o.ParentVdbId = &v
+}
+
+// GetParentDsourceId returns the ParentDsourceId field value if set, zero value otherwise.
+func (o *Timeflow) GetParentDsourceId() string {
+	if o == nil || IsNil(o.ParentDsourceId) {
+		var ret string
+		return ret
+	}
+	return *o.ParentDsourceId
+}
+
+// GetParentDsourceIdOk returns a tuple with the ParentDsourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetParentDsourceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentDsourceId) {
+		return nil, false
+	}
+	return o.ParentDsourceId, true
+}
+
+// HasParentDsourceId returns a boolean if a field has been set.
+func (o *Timeflow) HasParentDsourceId() bool {
+	if o != nil && !IsNil(o.ParentDsourceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentDsourceId gets a reference to the given string and assigns it to the ParentDsourceId field.
+func (o *Timeflow) SetParentDsourceId(v string) {
+	o.ParentDsourceId = &v
+}
+
+// GetSourceVdbId returns the SourceVdbId field value if set, zero value otherwise.
+func (o *Timeflow) GetSourceVdbId() string {
+	if o == nil || IsNil(o.SourceVdbId) {
+		var ret string
+		return ret
+	}
+	return *o.SourceVdbId
+}
+
+// GetSourceVdbIdOk returns a tuple with the SourceVdbId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetSourceVdbIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceVdbId) {
+		return nil, false
+	}
+	return o.SourceVdbId, true
+}
+
+// HasSourceVdbId returns a boolean if a field has been set.
+func (o *Timeflow) HasSourceVdbId() bool {
+	if o != nil && !IsNil(o.SourceVdbId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceVdbId gets a reference to the given string and assigns it to the SourceVdbId field.
+func (o *Timeflow) SetSourceVdbId(v string) {
+	o.SourceVdbId = &v
+}
+
+// GetSourceDsourceId returns the SourceDsourceId field value if set, zero value otherwise.
+func (o *Timeflow) GetSourceDsourceId() string {
+	if o == nil || IsNil(o.SourceDsourceId) {
+		var ret string
+		return ret
+	}
+	return *o.SourceDsourceId
+}
+
+// GetSourceDsourceIdOk returns a tuple with the SourceDsourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetSourceDsourceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceDsourceId) {
+		return nil, false
+	}
+	return o.SourceDsourceId, true
+}
+
+// HasSourceDsourceId returns a boolean if a field has been set.
+func (o *Timeflow) HasSourceDsourceId() bool {
+	if o != nil && !IsNil(o.SourceDsourceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceDsourceId gets a reference to the given string and assigns it to the SourceDsourceId field.
+func (o *Timeflow) SetSourceDsourceId(v string) {
+	o.SourceDsourceId = &v
+}
+
 // GetSourceDataTimestamp returns the SourceDataTimestamp field value if set, zero value otherwise.
 func (o *Timeflow) GetSourceDataTimestamp() time.Time {
 	if o == nil || IsNil(o.SourceDataTimestamp) {
@@ -683,6 +825,102 @@ func (o *Timeflow) SetMssqlDatabaseGuid(v string) {
 	o.MssqlDatabaseGuid = &v
 }
 
+// GetIsActive returns the IsActive field value if set, zero value otherwise.
+func (o *Timeflow) GetIsActive() bool {
+	if o == nil || IsNil(o.IsActive) {
+		var ret bool
+		return ret
+	}
+	return *o.IsActive
+}
+
+// GetIsActiveOk returns a tuple with the IsActive field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetIsActiveOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsActive) {
+		return nil, false
+	}
+	return o.IsActive, true
+}
+
+// HasIsActive returns a boolean if a field has been set.
+func (o *Timeflow) HasIsActive() bool {
+	if o != nil && !IsNil(o.IsActive) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsActive gets a reference to the given bool and assigns it to the IsActive field.
+func (o *Timeflow) SetIsActive(v bool) {
+	o.IsActive = &v
+}
+
+// GetCreationTimestamp returns the CreationTimestamp field value if set, zero value otherwise.
+func (o *Timeflow) GetCreationTimestamp() time.Time {
+	if o == nil || IsNil(o.CreationTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreationTimestamp
+}
+
+// GetCreationTimestampOk returns a tuple with the CreationTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetCreationTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreationTimestamp) {
+		return nil, false
+	}
+	return o.CreationTimestamp, true
+}
+
+// HasCreationTimestamp returns a boolean if a field has been set.
+func (o *Timeflow) HasCreationTimestamp() bool {
+	if o != nil && !IsNil(o.CreationTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreationTimestamp gets a reference to the given time.Time and assigns it to the CreationTimestamp field.
+func (o *Timeflow) SetCreationTimestamp(v time.Time) {
+	o.CreationTimestamp = &v
+}
+
+// GetActivationTimestamp returns the ActivationTimestamp field value if set, zero value otherwise.
+func (o *Timeflow) GetActivationTimestamp() time.Time {
+	if o == nil || IsNil(o.ActivationTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ActivationTimestamp
+}
+
+// GetActivationTimestampOk returns a tuple with the ActivationTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Timeflow) GetActivationTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.ActivationTimestamp) {
+		return nil, false
+	}
+	return o.ActivationTimestamp, true
+}
+
+// HasActivationTimestamp returns a boolean if a field has been set.
+func (o *Timeflow) HasActivationTimestamp() bool {
+	if o != nil && !IsNil(o.ActivationTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetActivationTimestamp gets a reference to the given time.Time and assigns it to the ActivationTimestamp field.
+func (o *Timeflow) SetActivationTimestamp(v time.Time) {
+	o.ActivationTimestamp = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Timeflow) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -764,6 +1002,18 @@ func (o Timeflow) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ParentPointTimeflowId) {
 		toSerialize["parent_point_timeflow_id"] = o.ParentPointTimeflowId
 	}
+	if !IsNil(o.ParentVdbId) {
+		toSerialize["parent_vdb_id"] = o.ParentVdbId
+	}
+	if !IsNil(o.ParentDsourceId) {
+		toSerialize["parent_dsource_id"] = o.ParentDsourceId
+	}
+	if !IsNil(o.SourceVdbId) {
+		toSerialize["source_vdb_id"] = o.SourceVdbId
+	}
+	if !IsNil(o.SourceDsourceId) {
+		toSerialize["source_dsource_id"] = o.SourceDsourceId
+	}
 	if !IsNil(o.SourceDataTimestamp) {
 		toSerialize["source_data_timestamp"] = o.SourceDataTimestamp
 	}
@@ -778,6 +1028,15 @@ func (o Timeflow) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MssqlDatabaseGuid) {
 		toSerialize["mssql_database_guid"] = o.MssqlDatabaseGuid
+	}
+	if !IsNil(o.IsActive) {
+		toSerialize["is_active"] = o.IsActive
+	}
+	if !IsNil(o.CreationTimestamp) {
+		toSerialize["creation_timestamp"] = o.CreationTimestamp
+	}
+	if !IsNil(o.ActivationTimestamp) {
+		toSerialize["activation_timestamp"] = o.ActivationTimestamp
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the EngineRegistrationParameter type satisfies the MappedNullable interface at compile time
@@ -47,12 +49,15 @@ type EngineRegistrationParameter struct {
 	// Ignore validation of the name associated to the TLS certificate when connecting to the engine over HTTPs. Setting this value must only be done if the TLS certificate of the engine does not match the hostname, and the TLS configuration of the engine cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
 	// File name of a truststore which can be used to validate the TLS certificate of the engine. The truststore must be available at /etc/config/certs/<truststore_filename> 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
+	TruststoreFilename NullableString `json:"truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.\\\\-]+$"`
 	// Password to read the truststore. 
 	TruststorePassword NullableString `json:"truststore_password,omitempty"`
+	AutoTaggingConfig *AutoTaggingConfig `json:"auto_tagging_config,omitempty"`
 	// The tags to be created for this engine.
 	Tags []Tag `json:"tags,omitempty"`
 }
+
+type _EngineRegistrationParameter EngineRegistrationParameter
 
 // NewEngineRegistrationParameter instantiates a new EngineRegistrationParameter object
 // This constructor will assign default values to properties that have it defined,
@@ -318,7 +323,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultUsernameCommandArgsOk() (
 
 // HasHashicorpVaultUsernameCommandArgs returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasHashicorpVaultUsernameCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultUsernameCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultUsernameCommandArgs) {
 		return true
 	}
 
@@ -351,7 +356,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultMaskingUsernameCommandArg
 
 // HasHashicorpVaultMaskingUsernameCommandArgs returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasHashicorpVaultMaskingUsernameCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
 		return true
 	}
 
@@ -384,7 +389,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultPasswordCommandArgsOk() (
 
 // HasHashicorpVaultPasswordCommandArgs returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasHashicorpVaultPasswordCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultPasswordCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultPasswordCommandArgs) {
 		return true
 	}
 
@@ -417,7 +422,7 @@ func (o *EngineRegistrationParameter) GetHashicorpVaultMaskingPasswordCommandArg
 
 // HasHashicorpVaultMaskingPasswordCommandArgs returns a boolean if a field has been set.
 func (o *EngineRegistrationParameter) HasHashicorpVaultMaskingPasswordCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
 		return true
 	}
 
@@ -661,6 +666,38 @@ func (o *EngineRegistrationParameter) UnsetTruststorePassword() {
 	o.TruststorePassword.Unset()
 }
 
+// GetAutoTaggingConfig returns the AutoTaggingConfig field value if set, zero value otherwise.
+func (o *EngineRegistrationParameter) GetAutoTaggingConfig() AutoTaggingConfig {
+	if o == nil || IsNil(o.AutoTaggingConfig) {
+		var ret AutoTaggingConfig
+		return ret
+	}
+	return *o.AutoTaggingConfig
+}
+
+// GetAutoTaggingConfigOk returns a tuple with the AutoTaggingConfig field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EngineRegistrationParameter) GetAutoTaggingConfigOk() (*AutoTaggingConfig, bool) {
+	if o == nil || IsNil(o.AutoTaggingConfig) {
+		return nil, false
+	}
+	return o.AutoTaggingConfig, true
+}
+
+// HasAutoTaggingConfig returns a boolean if a field has been set.
+func (o *EngineRegistrationParameter) HasAutoTaggingConfig() bool {
+	if o != nil && !IsNil(o.AutoTaggingConfig) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoTaggingConfig gets a reference to the given AutoTaggingConfig and assigns it to the AutoTaggingConfig field.
+func (o *EngineRegistrationParameter) SetAutoTaggingConfig(v AutoTaggingConfig) {
+	o.AutoTaggingConfig = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *EngineRegistrationParameter) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -747,10 +784,51 @@ func (o EngineRegistrationParameter) ToMap() (map[string]interface{}, error) {
 	if o.TruststorePassword.IsSet() {
 		toSerialize["truststore_password"] = o.TruststorePassword.Get()
 	}
+	if !IsNil(o.AutoTaggingConfig) {
+		toSerialize["auto_tagging_config"] = o.AutoTaggingConfig
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
+}
+
+func (o *EngineRegistrationParameter) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"hostname",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varEngineRegistrationParameter := _EngineRegistrationParameter{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varEngineRegistrationParameter)
+
+	if err != nil {
+		return err
+	}
+
+	*o = EngineRegistrationParameter(varEngineRegistrationParameter)
+
+	return err
 }
 
 type NullableEngineRegistrationParameter struct {

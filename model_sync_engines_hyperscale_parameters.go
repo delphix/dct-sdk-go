@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the SyncEnginesHyperscaleParameters type satisfies the MappedNullable interface at compile time
@@ -25,6 +27,8 @@ type SyncEnginesHyperscaleParameters struct {
 	// The IDs of the target engines to copy the data into.
 	TargetEngineIds []string `json:"target_engine_ids"`
 }
+
+type _SyncEnginesHyperscaleParameters SyncEnginesHyperscaleParameters
 
 // NewSyncEnginesHyperscaleParameters instantiates a new SyncEnginesHyperscaleParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -106,6 +110,44 @@ func (o SyncEnginesHyperscaleParameters) ToMap() (map[string]interface{}, error)
 	toSerialize["source_engine_id"] = o.SourceEngineId
 	toSerialize["target_engine_ids"] = o.TargetEngineIds
 	return toSerialize, nil
+}
+
+func (o *SyncEnginesHyperscaleParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_engine_id",
+		"target_engine_ids",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSyncEnginesHyperscaleParameters := _SyncEnginesHyperscaleParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSyncEnginesHyperscaleParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SyncEnginesHyperscaleParameters(varSyncEnginesHyperscaleParameters)
+
+	return err
 }
 
 type NullableSyncEnginesHyperscaleParameters struct {

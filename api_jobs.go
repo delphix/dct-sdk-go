@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// JobsApiService JobsApi service
-type JobsApiService service
+// JobsAPIService JobsAPI service
+type JobsAPIService service
 
 type ApiAbandonJobRequest struct {
 	ctx context.Context
-	ApiService *JobsApiService
+	ApiService *JobsAPIService
 	jobId string
 }
 
@@ -44,7 +44,7 @@ Abandoning a job means that the system will no longer track ongoing progress. Th
  @param jobId The ID of the job.
  @return ApiAbandonJobRequest
 */
-func (a *JobsApiService) AbandonJob(ctx context.Context, jobId string) ApiAbandonJobRequest {
+func (a *JobsAPIService) AbandonJob(ctx context.Context, jobId string) ApiAbandonJobRequest {
 	return ApiAbandonJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -53,14 +53,14 @@ func (a *JobsApiService) AbandonJob(ctx context.Context, jobId string) ApiAbando
 }
 
 // Execute executes the request
-func (a *JobsApiService) AbandonJobExecute(r ApiAbandonJobRequest) (*http.Response, error) {
+func (a *JobsAPIService) AbandonJobExecute(r ApiAbandonJobRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsApiService.AbandonJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsAPIService.AbandonJob")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -136,7 +136,7 @@ func (a *JobsApiService) AbandonJobExecute(r ApiAbandonJobRequest) (*http.Respon
 
 type ApiCreateJobTagsRequest struct {
 	ctx context.Context
-	ApiService *JobsApiService
+	ApiService *JobsAPIService
 	jobId string
 	tagsRequest *TagsRequest
 }
@@ -158,7 +158,7 @@ CreateJobTags Create tags for a Job.
  @param jobId The ID of the job.
  @return ApiCreateJobTagsRequest
 */
-func (a *JobsApiService) CreateJobTags(ctx context.Context, jobId string) ApiCreateJobTagsRequest {
+func (a *JobsAPIService) CreateJobTags(ctx context.Context, jobId string) ApiCreateJobTagsRequest {
 	return ApiCreateJobTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -168,7 +168,7 @@ func (a *JobsApiService) CreateJobTags(ctx context.Context, jobId string) ApiCre
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *JobsApiService) CreateJobTagsExecute(r ApiCreateJobTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *JobsAPIService) CreateJobTagsExecute(r ApiCreateJobTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -176,7 +176,7 @@ func (a *JobsApiService) CreateJobTagsExecute(r ApiCreateJobTagsRequest) (*TagsR
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsApiService.CreateJobTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsAPIService.CreateJobTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,7 +266,7 @@ func (a *JobsApiService) CreateJobTagsExecute(r ApiCreateJobTagsRequest) (*TagsR
 
 type ApiDeleteJobTagRequest struct {
 	ctx context.Context
-	ApiService *JobsApiService
+	ApiService *JobsAPIService
 	jobId string
 	deleteTag *DeleteTag
 }
@@ -288,7 +288,7 @@ DeleteJobTag Delete tags for a Job.
  @param jobId The ID of the job.
  @return ApiDeleteJobTagRequest
 */
-func (a *JobsApiService) DeleteJobTag(ctx context.Context, jobId string) ApiDeleteJobTagRequest {
+func (a *JobsAPIService) DeleteJobTag(ctx context.Context, jobId string) ApiDeleteJobTagRequest {
 	return ApiDeleteJobTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -297,14 +297,14 @@ func (a *JobsApiService) DeleteJobTag(ctx context.Context, jobId string) ApiDele
 }
 
 // Execute executes the request
-func (a *JobsApiService) DeleteJobTagExecute(r ApiDeleteJobTagRequest) (*http.Response, error) {
+func (a *JobsAPIService) DeleteJobTagExecute(r ApiDeleteJobTagRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsApiService.DeleteJobTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsAPIService.DeleteJobTag")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -382,7 +382,7 @@ func (a *JobsApiService) DeleteJobTagExecute(r ApiDeleteJobTagRequest) (*http.Re
 
 type ApiGetJobByIdRequest struct {
 	ctx context.Context
-	ApiService *JobsApiService
+	ApiService *JobsAPIService
 	jobId string
 }
 
@@ -397,7 +397,7 @@ GetJobById Returns a job by ID.
  @param jobId The ID of the job.
  @return ApiGetJobByIdRequest
 */
-func (a *JobsApiService) GetJobById(ctx context.Context, jobId string) ApiGetJobByIdRequest {
+func (a *JobsAPIService) GetJobById(ctx context.Context, jobId string) ApiGetJobByIdRequest {
 	return ApiGetJobByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -407,7 +407,7 @@ func (a *JobsApiService) GetJobById(ctx context.Context, jobId string) ApiGetJob
 
 // Execute executes the request
 //  @return Job
-func (a *JobsApiService) GetJobByIdExecute(r ApiGetJobByIdRequest) (*Job, *http.Response, error) {
+func (a *JobsAPIService) GetJobByIdExecute(r ApiGetJobByIdRequest) (*Job, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -415,7 +415,7 @@ func (a *JobsApiService) GetJobByIdExecute(r ApiGetJobByIdRequest) (*Job, *http.
 		localVarReturnValue  *Job
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsApiService.GetJobById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsAPIService.GetJobById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -500,7 +500,7 @@ func (a *JobsApiService) GetJobByIdExecute(r ApiGetJobByIdRequest) (*Job, *http.
 
 type ApiGetJobTagsRequest struct {
 	ctx context.Context
-	ApiService *JobsApiService
+	ApiService *JobsAPIService
 	jobId string
 }
 
@@ -515,7 +515,7 @@ GetJobTags Get tags for a Job.
  @param jobId The ID of the job.
  @return ApiGetJobTagsRequest
 */
-func (a *JobsApiService) GetJobTags(ctx context.Context, jobId string) ApiGetJobTagsRequest {
+func (a *JobsAPIService) GetJobTags(ctx context.Context, jobId string) ApiGetJobTagsRequest {
 	return ApiGetJobTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -525,7 +525,7 @@ func (a *JobsApiService) GetJobTags(ctx context.Context, jobId string) ApiGetJob
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *JobsApiService) GetJobTagsExecute(r ApiGetJobTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *JobsAPIService) GetJobTagsExecute(r ApiGetJobTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -533,7 +533,7 @@ func (a *JobsApiService) GetJobTagsExecute(r ApiGetJobTagsRequest) (*TagsRespons
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsApiService.GetJobTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsAPIService.GetJobTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -618,7 +618,7 @@ func (a *JobsApiService) GetJobTagsExecute(r ApiGetJobTagsRequest) (*TagsRespons
 
 type ApiGetJobsRequest struct {
 	ctx context.Context
-	ApiService *JobsApiService
+	ApiService *JobsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -652,7 +652,7 @@ GetJobs List all jobs.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetJobsRequest
 */
-func (a *JobsApiService) GetJobs(ctx context.Context) ApiGetJobsRequest {
+func (a *JobsAPIService) GetJobs(ctx context.Context) ApiGetJobsRequest {
 	return ApiGetJobsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -661,7 +661,7 @@ func (a *JobsApiService) GetJobs(ctx context.Context) ApiGetJobsRequest {
 
 // Execute executes the request
 //  @return ListJobsResponse
-func (a *JobsApiService) GetJobsExecute(r ApiGetJobsRequest) (*ListJobsResponse, *http.Response, error) {
+func (a *JobsAPIService) GetJobsExecute(r ApiGetJobsRequest) (*ListJobsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -669,7 +669,7 @@ func (a *JobsApiService) GetJobsExecute(r ApiGetJobsRequest) (*ListJobsResponse,
 		localVarReturnValue  *ListJobsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsApiService.GetJobs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsAPIService.GetJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -681,13 +681,19 @@ func (a *JobsApiService) GetJobsExecute(r ApiGetJobsRequest) (*ListJobsResponse,
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "-start_time"
+		r.sort = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -759,7 +765,7 @@ func (a *JobsApiService) GetJobsExecute(r ApiGetJobsRequest) (*ListJobsResponse,
 
 type ApiSearchJobsRequest struct {
 	ctx context.Context
-	ApiService *JobsApiService
+	ApiService *JobsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -800,7 +806,7 @@ SearchJobs Search for jobs.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchJobsRequest
 */
-func (a *JobsApiService) SearchJobs(ctx context.Context) ApiSearchJobsRequest {
+func (a *JobsAPIService) SearchJobs(ctx context.Context) ApiSearchJobsRequest {
 	return ApiSearchJobsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -809,7 +815,7 @@ func (a *JobsApiService) SearchJobs(ctx context.Context) ApiSearchJobsRequest {
 
 // Execute executes the request
 //  @return SearchJobsResponse
-func (a *JobsApiService) SearchJobsExecute(r ApiSearchJobsRequest) (*SearchJobsResponse, *http.Response, error) {
+func (a *JobsAPIService) SearchJobsExecute(r ApiSearchJobsRequest) (*SearchJobsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -817,7 +823,7 @@ func (a *JobsApiService) SearchJobsExecute(r ApiSearchJobsRequest) (*SearchJobsR
 		localVarReturnValue  *SearchJobsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsApiService.SearchJobs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "JobsAPIService.SearchJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -829,13 +835,19 @@ func (a *JobsApiService) SearchJobsExecute(r ApiSearchJobsRequest) (*SearchJobsR
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "-start_time"
+		r.sort = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

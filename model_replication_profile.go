@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the ReplicationProfile type satisfies the MappedNullable interface at compile time
@@ -24,18 +25,60 @@ type ReplicationProfile struct {
 	Id *string `json:"id,omitempty"`
 	// The ReplicationProfile name.
 	Name *string `json:"name,omitempty"`
-	// The ReplicationProfile type.
-	Type *string `json:"type,omitempty"`
+	// The ReplicationProfile mode.
+	ReplicationMode *string `json:"replication_mode,omitempty"`
 	// The ID of the engine that the ReplicationProfile belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
+	// The ID of the replication target engine.
+	TargetEngineId *string `json:"target_engine_id,omitempty"`
+	// Hostname of the replication target engine.
+	TargetHost *string `json:"target_host,omitempty"`
+	// Target TCP port number for the Delphix Session Protocol.
+	TargetPort *int32 `json:"target_port,omitempty"`
+	// The ReplicationProfile type.
+	// Deprecated
+	Type *string `json:"type,omitempty"`
+	// The ReplicationProfile description.
+	Description *string `json:"description,omitempty"`
+	// The status of the last execution of the ReplicationProfile.
+	LastExecutionStatus *string `json:"last_execution_status,omitempty"`
+	// The timestamp of the last execution status.
+	LastExecutionStatusTimestamp *time.Time `json:"last_execution_status_timestamp,omitempty"`
+	// Replication schedule in the form of a quartz-formatted string.
+	Schedule *string `json:"schedule,omitempty"`
 	// Globally unique identifier for this ReplicationProfile.
 	ReplicationTag *string `json:"replication_tag,omitempty"`
 	// The objects that are replicated by this ReplicationProfile.
+	// Deprecated
 	ReplicationObjects []string `json:"replication_objects,omitempty"`
 	// The tags that are applied to this ReplicationProfile.
 	Tags []Tag `json:"tags,omitempty"`
-	// Indicates whether tag replication from primary object to replica object is enable or disabled for this ReplicationProfile.
+	// Indicates whether tag replication from primary object to replica object is enabled or disabled for this ReplicationProfile.
 	EnableTagReplication *bool `json:"enable_tag_replication,omitempty"`
+	// Bandwidth limit (MB/s) for replication network traffic. A value of 0 means no limit.
+	BandwidthLimit *int32 `json:"bandwidth_limit,omitempty"`
+	// Total number of transport connections to use.
+	NumberOfConnections *int32 `json:"number_of_connections,omitempty"`
+	// Encrypt replication network traffic.
+	Encrypted *bool `json:"encrypted,omitempty"`
+	// Indication whether the replication spec schedule is enabled or not.
+	AutomaticReplication *bool `json:"automatic_replication,omitempty"`
+	// Connect to the replication target host via the system-wide SOCKS proxy.
+	UseSystemSocksSetting *bool `json:"use_system_socks_setting,omitempty"`
+	// The VDBs that are replicated by this ReplicationProfile.
+	VdbIds []string `json:"vdb_ids,omitempty"`
+	// The dSources that are replicated by this ReplicationProfile.
+	DsourceIds []string `json:"dsource_ids,omitempty"`
+	// The CDBs that are replicated by this ReplicationProfile.
+	CdbIds []string `json:"cdb_ids,omitempty"`
+	// The vCDBs that are replicated by this ReplicationProfile.
+	VcdbIds []string `json:"vcdb_ids,omitempty"`
+	// The groups that are replicated by this ReplicationProfile.
+	GroupIds []string `json:"group_ids,omitempty"`
+	// Whether to replicate the entire engine. This is mutually exclusive with the vdb_ids, dsource_ids, cdb_ids, vcdb_ids, and group_ids properties.
+	ReplicateEntireEngine *bool `json:"replicate_entire_engine,omitempty"`
+	// The data-layouts that are replicated by this ReplicationProfile.
+	DataLayoutIds []string `json:"data_layout_ids,omitempty"`
 }
 
 // NewReplicationProfile instantiates a new ReplicationProfile object
@@ -44,6 +87,18 @@ type ReplicationProfile struct {
 // will change when the set of required properties is changed
 func NewReplicationProfile() *ReplicationProfile {
 	this := ReplicationProfile{}
+	var targetPort int32 = 8415
+	this.TargetPort = &targetPort
+	var bandwidthLimit int32 = 0
+	this.BandwidthLimit = &bandwidthLimit
+	var numberOfConnections int32 = 1
+	this.NumberOfConnections = &numberOfConnections
+	var encrypted bool = false
+	this.Encrypted = &encrypted
+	var automaticReplication bool = false
+	this.AutomaticReplication = &automaticReplication
+	var useSystemSocksSetting bool = false
+	this.UseSystemSocksSetting = &useSystemSocksSetting
 	return &this
 }
 
@@ -52,6 +107,18 @@ func NewReplicationProfile() *ReplicationProfile {
 // but it doesn't guarantee that properties required by API are set
 func NewReplicationProfileWithDefaults() *ReplicationProfile {
 	this := ReplicationProfile{}
+	var targetPort int32 = 8415
+	this.TargetPort = &targetPort
+	var bandwidthLimit int32 = 0
+	this.BandwidthLimit = &bandwidthLimit
+	var numberOfConnections int32 = 1
+	this.NumberOfConnections = &numberOfConnections
+	var encrypted bool = false
+	this.Encrypted = &encrypted
+	var automaticReplication bool = false
+	this.AutomaticReplication = &automaticReplication
+	var useSystemSocksSetting bool = false
+	this.UseSystemSocksSetting = &useSystemSocksSetting
 	return &this
 }
 
@@ -119,36 +186,36 @@ func (o *ReplicationProfile) SetName(v string) {
 	o.Name = &v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
-func (o *ReplicationProfile) GetType() string {
-	if o == nil || IsNil(o.Type) {
+// GetReplicationMode returns the ReplicationMode field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetReplicationMode() string {
+	if o == nil || IsNil(o.ReplicationMode) {
 		var ret string
 		return ret
 	}
-	return *o.Type
+	return *o.ReplicationMode
 }
 
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// GetReplicationModeOk returns a tuple with the ReplicationMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ReplicationProfile) GetTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.Type) {
+func (o *ReplicationProfile) GetReplicationModeOk() (*string, bool) {
+	if o == nil || IsNil(o.ReplicationMode) {
 		return nil, false
 	}
-	return o.Type, true
+	return o.ReplicationMode, true
 }
 
-// HasType returns a boolean if a field has been set.
-func (o *ReplicationProfile) HasType() bool {
-	if o != nil && !IsNil(o.Type) {
+// HasReplicationMode returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasReplicationMode() bool {
+	if o != nil && !IsNil(o.ReplicationMode) {
 		return true
 	}
 
 	return false
 }
 
-// SetType gets a reference to the given string and assigns it to the Type field.
-func (o *ReplicationProfile) SetType(v string) {
-	o.Type = &v
+// SetReplicationMode gets a reference to the given string and assigns it to the ReplicationMode field.
+func (o *ReplicationProfile) SetReplicationMode(v string) {
+	o.ReplicationMode = &v
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -181,6 +248,265 @@ func (o *ReplicationProfile) HasEngineId() bool {
 // SetEngineId gets a reference to the given string and assigns it to the EngineId field.
 func (o *ReplicationProfile) SetEngineId(v string) {
 	o.EngineId = &v
+}
+
+// GetTargetEngineId returns the TargetEngineId field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetTargetEngineId() string {
+	if o == nil || IsNil(o.TargetEngineId) {
+		var ret string
+		return ret
+	}
+	return *o.TargetEngineId
+}
+
+// GetTargetEngineIdOk returns a tuple with the TargetEngineId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetTargetEngineIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetEngineId) {
+		return nil, false
+	}
+	return o.TargetEngineId, true
+}
+
+// HasTargetEngineId returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasTargetEngineId() bool {
+	if o != nil && !IsNil(o.TargetEngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetEngineId gets a reference to the given string and assigns it to the TargetEngineId field.
+func (o *ReplicationProfile) SetTargetEngineId(v string) {
+	o.TargetEngineId = &v
+}
+
+// GetTargetHost returns the TargetHost field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetTargetHost() string {
+	if o == nil || IsNil(o.TargetHost) {
+		var ret string
+		return ret
+	}
+	return *o.TargetHost
+}
+
+// GetTargetHostOk returns a tuple with the TargetHost field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetTargetHostOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetHost) {
+		return nil, false
+	}
+	return o.TargetHost, true
+}
+
+// HasTargetHost returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasTargetHost() bool {
+	if o != nil && !IsNil(o.TargetHost) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetHost gets a reference to the given string and assigns it to the TargetHost field.
+func (o *ReplicationProfile) SetTargetHost(v string) {
+	o.TargetHost = &v
+}
+
+// GetTargetPort returns the TargetPort field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetTargetPort() int32 {
+	if o == nil || IsNil(o.TargetPort) {
+		var ret int32
+		return ret
+	}
+	return *o.TargetPort
+}
+
+// GetTargetPortOk returns a tuple with the TargetPort field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetTargetPortOk() (*int32, bool) {
+	if o == nil || IsNil(o.TargetPort) {
+		return nil, false
+	}
+	return o.TargetPort, true
+}
+
+// HasTargetPort returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasTargetPort() bool {
+	if o != nil && !IsNil(o.TargetPort) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetPort gets a reference to the given int32 and assigns it to the TargetPort field.
+func (o *ReplicationProfile) SetTargetPort(v int32) {
+	o.TargetPort = &v
+}
+
+// GetType returns the Type field value if set, zero value otherwise.
+// Deprecated
+func (o *ReplicationProfile) GetType() string {
+	if o == nil || IsNil(o.Type) {
+		var ret string
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *ReplicationProfile) GetTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
+// Deprecated
+func (o *ReplicationProfile) SetType(v string) {
+	o.Type = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *ReplicationProfile) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetLastExecutionStatus returns the LastExecutionStatus field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetLastExecutionStatus() string {
+	if o == nil || IsNil(o.LastExecutionStatus) {
+		var ret string
+		return ret
+	}
+	return *o.LastExecutionStatus
+}
+
+// GetLastExecutionStatusOk returns a tuple with the LastExecutionStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetLastExecutionStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.LastExecutionStatus) {
+		return nil, false
+	}
+	return o.LastExecutionStatus, true
+}
+
+// HasLastExecutionStatus returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasLastExecutionStatus() bool {
+	if o != nil && !IsNil(o.LastExecutionStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastExecutionStatus gets a reference to the given string and assigns it to the LastExecutionStatus field.
+func (o *ReplicationProfile) SetLastExecutionStatus(v string) {
+	o.LastExecutionStatus = &v
+}
+
+// GetLastExecutionStatusTimestamp returns the LastExecutionStatusTimestamp field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetLastExecutionStatusTimestamp() time.Time {
+	if o == nil || IsNil(o.LastExecutionStatusTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastExecutionStatusTimestamp
+}
+
+// GetLastExecutionStatusTimestampOk returns a tuple with the LastExecutionStatusTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetLastExecutionStatusTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastExecutionStatusTimestamp) {
+		return nil, false
+	}
+	return o.LastExecutionStatusTimestamp, true
+}
+
+// HasLastExecutionStatusTimestamp returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasLastExecutionStatusTimestamp() bool {
+	if o != nil && !IsNil(o.LastExecutionStatusTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastExecutionStatusTimestamp gets a reference to the given time.Time and assigns it to the LastExecutionStatusTimestamp field.
+func (o *ReplicationProfile) SetLastExecutionStatusTimestamp(v time.Time) {
+	o.LastExecutionStatusTimestamp = &v
+}
+
+// GetSchedule returns the Schedule field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetSchedule() string {
+	if o == nil || IsNil(o.Schedule) {
+		var ret string
+		return ret
+	}
+	return *o.Schedule
+}
+
+// GetScheduleOk returns a tuple with the Schedule field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetScheduleOk() (*string, bool) {
+	if o == nil || IsNil(o.Schedule) {
+		return nil, false
+	}
+	return o.Schedule, true
+}
+
+// HasSchedule returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasSchedule() bool {
+	if o != nil && !IsNil(o.Schedule) {
+		return true
+	}
+
+	return false
+}
+
+// SetSchedule gets a reference to the given string and assigns it to the Schedule field.
+func (o *ReplicationProfile) SetSchedule(v string) {
+	o.Schedule = &v
 }
 
 // GetReplicationTag returns the ReplicationTag field value if set, zero value otherwise.
@@ -216,6 +542,7 @@ func (o *ReplicationProfile) SetReplicationTag(v string) {
 }
 
 // GetReplicationObjects returns the ReplicationObjects field value if set, zero value otherwise.
+// Deprecated
 func (o *ReplicationProfile) GetReplicationObjects() []string {
 	if o == nil || IsNil(o.ReplicationObjects) {
 		var ret []string
@@ -226,6 +553,7 @@ func (o *ReplicationProfile) GetReplicationObjects() []string {
 
 // GetReplicationObjectsOk returns a tuple with the ReplicationObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *ReplicationProfile) GetReplicationObjectsOk() ([]string, bool) {
 	if o == nil || IsNil(o.ReplicationObjects) {
 		return nil, false
@@ -243,6 +571,7 @@ func (o *ReplicationProfile) HasReplicationObjects() bool {
 }
 
 // SetReplicationObjects gets a reference to the given []string and assigns it to the ReplicationObjects field.
+// Deprecated
 func (o *ReplicationProfile) SetReplicationObjects(v []string) {
 	o.ReplicationObjects = v
 }
@@ -311,6 +640,390 @@ func (o *ReplicationProfile) SetEnableTagReplication(v bool) {
 	o.EnableTagReplication = &v
 }
 
+// GetBandwidthLimit returns the BandwidthLimit field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetBandwidthLimit() int32 {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		var ret int32
+		return ret
+	}
+	return *o.BandwidthLimit
+}
+
+// GetBandwidthLimitOk returns a tuple with the BandwidthLimit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetBandwidthLimitOk() (*int32, bool) {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		return nil, false
+	}
+	return o.BandwidthLimit, true
+}
+
+// HasBandwidthLimit returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasBandwidthLimit() bool {
+	if o != nil && !IsNil(o.BandwidthLimit) {
+		return true
+	}
+
+	return false
+}
+
+// SetBandwidthLimit gets a reference to the given int32 and assigns it to the BandwidthLimit field.
+func (o *ReplicationProfile) SetBandwidthLimit(v int32) {
+	o.BandwidthLimit = &v
+}
+
+// GetNumberOfConnections returns the NumberOfConnections field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetNumberOfConnections() int32 {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		var ret int32
+		return ret
+	}
+	return *o.NumberOfConnections
+}
+
+// GetNumberOfConnectionsOk returns a tuple with the NumberOfConnections field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetNumberOfConnectionsOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		return nil, false
+	}
+	return o.NumberOfConnections, true
+}
+
+// HasNumberOfConnections returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasNumberOfConnections() bool {
+	if o != nil && !IsNil(o.NumberOfConnections) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumberOfConnections gets a reference to the given int32 and assigns it to the NumberOfConnections field.
+func (o *ReplicationProfile) SetNumberOfConnections(v int32) {
+	o.NumberOfConnections = &v
+}
+
+// GetEncrypted returns the Encrypted field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetEncrypted() bool {
+	if o == nil || IsNil(o.Encrypted) {
+		var ret bool
+		return ret
+	}
+	return *o.Encrypted
+}
+
+// GetEncryptedOk returns a tuple with the Encrypted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetEncryptedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Encrypted) {
+		return nil, false
+	}
+	return o.Encrypted, true
+}
+
+// HasEncrypted returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasEncrypted() bool {
+	if o != nil && !IsNil(o.Encrypted) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncrypted gets a reference to the given bool and assigns it to the Encrypted field.
+func (o *ReplicationProfile) SetEncrypted(v bool) {
+	o.Encrypted = &v
+}
+
+// GetAutomaticReplication returns the AutomaticReplication field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetAutomaticReplication() bool {
+	if o == nil || IsNil(o.AutomaticReplication) {
+		var ret bool
+		return ret
+	}
+	return *o.AutomaticReplication
+}
+
+// GetAutomaticReplicationOk returns a tuple with the AutomaticReplication field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetAutomaticReplicationOk() (*bool, bool) {
+	if o == nil || IsNil(o.AutomaticReplication) {
+		return nil, false
+	}
+	return o.AutomaticReplication, true
+}
+
+// HasAutomaticReplication returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasAutomaticReplication() bool {
+	if o != nil && !IsNil(o.AutomaticReplication) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutomaticReplication gets a reference to the given bool and assigns it to the AutomaticReplication field.
+func (o *ReplicationProfile) SetAutomaticReplication(v bool) {
+	o.AutomaticReplication = &v
+}
+
+// GetUseSystemSocksSetting returns the UseSystemSocksSetting field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetUseSystemSocksSetting() bool {
+	if o == nil || IsNil(o.UseSystemSocksSetting) {
+		var ret bool
+		return ret
+	}
+	return *o.UseSystemSocksSetting
+}
+
+// GetUseSystemSocksSettingOk returns a tuple with the UseSystemSocksSetting field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetUseSystemSocksSettingOk() (*bool, bool) {
+	if o == nil || IsNil(o.UseSystemSocksSetting) {
+		return nil, false
+	}
+	return o.UseSystemSocksSetting, true
+}
+
+// HasUseSystemSocksSetting returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasUseSystemSocksSetting() bool {
+	if o != nil && !IsNil(o.UseSystemSocksSetting) {
+		return true
+	}
+
+	return false
+}
+
+// SetUseSystemSocksSetting gets a reference to the given bool and assigns it to the UseSystemSocksSetting field.
+func (o *ReplicationProfile) SetUseSystemSocksSetting(v bool) {
+	o.UseSystemSocksSetting = &v
+}
+
+// GetVdbIds returns the VdbIds field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetVdbIds() []string {
+	if o == nil || IsNil(o.VdbIds) {
+		var ret []string
+		return ret
+	}
+	return o.VdbIds
+}
+
+// GetVdbIdsOk returns a tuple with the VdbIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetVdbIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.VdbIds) {
+		return nil, false
+	}
+	return o.VdbIds, true
+}
+
+// HasVdbIds returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasVdbIds() bool {
+	if o != nil && !IsNil(o.VdbIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbIds gets a reference to the given []string and assigns it to the VdbIds field.
+func (o *ReplicationProfile) SetVdbIds(v []string) {
+	o.VdbIds = v
+}
+
+// GetDsourceIds returns the DsourceIds field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetDsourceIds() []string {
+	if o == nil || IsNil(o.DsourceIds) {
+		var ret []string
+		return ret
+	}
+	return o.DsourceIds
+}
+
+// GetDsourceIdsOk returns a tuple with the DsourceIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetDsourceIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.DsourceIds) {
+		return nil, false
+	}
+	return o.DsourceIds, true
+}
+
+// HasDsourceIds returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasDsourceIds() bool {
+	if o != nil && !IsNil(o.DsourceIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceIds gets a reference to the given []string and assigns it to the DsourceIds field.
+func (o *ReplicationProfile) SetDsourceIds(v []string) {
+	o.DsourceIds = v
+}
+
+// GetCdbIds returns the CdbIds field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetCdbIds() []string {
+	if o == nil || IsNil(o.CdbIds) {
+		var ret []string
+		return ret
+	}
+	return o.CdbIds
+}
+
+// GetCdbIdsOk returns a tuple with the CdbIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetCdbIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.CdbIds) {
+		return nil, false
+	}
+	return o.CdbIds, true
+}
+
+// HasCdbIds returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasCdbIds() bool {
+	if o != nil && !IsNil(o.CdbIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbIds gets a reference to the given []string and assigns it to the CdbIds field.
+func (o *ReplicationProfile) SetCdbIds(v []string) {
+	o.CdbIds = v
+}
+
+// GetVcdbIds returns the VcdbIds field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetVcdbIds() []string {
+	if o == nil || IsNil(o.VcdbIds) {
+		var ret []string
+		return ret
+	}
+	return o.VcdbIds
+}
+
+// GetVcdbIdsOk returns a tuple with the VcdbIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetVcdbIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.VcdbIds) {
+		return nil, false
+	}
+	return o.VcdbIds, true
+}
+
+// HasVcdbIds returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasVcdbIds() bool {
+	if o != nil && !IsNil(o.VcdbIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbIds gets a reference to the given []string and assigns it to the VcdbIds field.
+func (o *ReplicationProfile) SetVcdbIds(v []string) {
+	o.VcdbIds = v
+}
+
+// GetGroupIds returns the GroupIds field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetGroupIds() []string {
+	if o == nil || IsNil(o.GroupIds) {
+		var ret []string
+		return ret
+	}
+	return o.GroupIds
+}
+
+// GetGroupIdsOk returns a tuple with the GroupIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetGroupIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.GroupIds) {
+		return nil, false
+	}
+	return o.GroupIds, true
+}
+
+// HasGroupIds returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasGroupIds() bool {
+	if o != nil && !IsNil(o.GroupIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetGroupIds gets a reference to the given []string and assigns it to the GroupIds field.
+func (o *ReplicationProfile) SetGroupIds(v []string) {
+	o.GroupIds = v
+}
+
+// GetReplicateEntireEngine returns the ReplicateEntireEngine field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetReplicateEntireEngine() bool {
+	if o == nil || IsNil(o.ReplicateEntireEngine) {
+		var ret bool
+		return ret
+	}
+	return *o.ReplicateEntireEngine
+}
+
+// GetReplicateEntireEngineOk returns a tuple with the ReplicateEntireEngine field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetReplicateEntireEngineOk() (*bool, bool) {
+	if o == nil || IsNil(o.ReplicateEntireEngine) {
+		return nil, false
+	}
+	return o.ReplicateEntireEngine, true
+}
+
+// HasReplicateEntireEngine returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasReplicateEntireEngine() bool {
+	if o != nil && !IsNil(o.ReplicateEntireEngine) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicateEntireEngine gets a reference to the given bool and assigns it to the ReplicateEntireEngine field.
+func (o *ReplicationProfile) SetReplicateEntireEngine(v bool) {
+	o.ReplicateEntireEngine = &v
+}
+
+// GetDataLayoutIds returns the DataLayoutIds field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetDataLayoutIds() []string {
+	if o == nil || IsNil(o.DataLayoutIds) {
+		var ret []string
+		return ret
+	}
+	return o.DataLayoutIds
+}
+
+// GetDataLayoutIdsOk returns a tuple with the DataLayoutIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetDataLayoutIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.DataLayoutIds) {
+		return nil, false
+	}
+	return o.DataLayoutIds, true
+}
+
+// HasDataLayoutIds returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasDataLayoutIds() bool {
+	if o != nil && !IsNil(o.DataLayoutIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataLayoutIds gets a reference to the given []string and assigns it to the DataLayoutIds field.
+func (o *ReplicationProfile) SetDataLayoutIds(v []string) {
+	o.DataLayoutIds = v
+}
+
 func (o ReplicationProfile) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -327,11 +1040,35 @@ func (o ReplicationProfile) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if !IsNil(o.Type) {
-		toSerialize["type"] = o.Type
+	if !IsNil(o.ReplicationMode) {
+		toSerialize["replication_mode"] = o.ReplicationMode
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
+	}
+	if !IsNil(o.TargetEngineId) {
+		toSerialize["target_engine_id"] = o.TargetEngineId
+	}
+	if !IsNil(o.TargetHost) {
+		toSerialize["target_host"] = o.TargetHost
+	}
+	if !IsNil(o.TargetPort) {
+		toSerialize["target_port"] = o.TargetPort
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.LastExecutionStatus) {
+		toSerialize["last_execution_status"] = o.LastExecutionStatus
+	}
+	if !IsNil(o.LastExecutionStatusTimestamp) {
+		toSerialize["last_execution_status_timestamp"] = o.LastExecutionStatusTimestamp
+	}
+	if !IsNil(o.Schedule) {
+		toSerialize["schedule"] = o.Schedule
 	}
 	if !IsNil(o.ReplicationTag) {
 		toSerialize["replication_tag"] = o.ReplicationTag
@@ -344,6 +1081,42 @@ func (o ReplicationProfile) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EnableTagReplication) {
 		toSerialize["enable_tag_replication"] = o.EnableTagReplication
+	}
+	if !IsNil(o.BandwidthLimit) {
+		toSerialize["bandwidth_limit"] = o.BandwidthLimit
+	}
+	if !IsNil(o.NumberOfConnections) {
+		toSerialize["number_of_connections"] = o.NumberOfConnections
+	}
+	if !IsNil(o.Encrypted) {
+		toSerialize["encrypted"] = o.Encrypted
+	}
+	if !IsNil(o.AutomaticReplication) {
+		toSerialize["automatic_replication"] = o.AutomaticReplication
+	}
+	if !IsNil(o.UseSystemSocksSetting) {
+		toSerialize["use_system_socks_setting"] = o.UseSystemSocksSetting
+	}
+	if !IsNil(o.VdbIds) {
+		toSerialize["vdb_ids"] = o.VdbIds
+	}
+	if !IsNil(o.DsourceIds) {
+		toSerialize["dsource_ids"] = o.DsourceIds
+	}
+	if !IsNil(o.CdbIds) {
+		toSerialize["cdb_ids"] = o.CdbIds
+	}
+	if !IsNil(o.VcdbIds) {
+		toSerialize["vcdb_ids"] = o.VcdbIds
+	}
+	if !IsNil(o.GroupIds) {
+		toSerialize["group_ids"] = o.GroupIds
+	}
+	if !IsNil(o.ReplicateEntireEngine) {
+		toSerialize["replicate_entire_engine"] = o.ReplicateEntireEngine
+	}
+	if !IsNil(o.DataLayoutIds) {
+		toSerialize["data_layout_ids"] = o.DataLayoutIds
 	}
 	return toSerialize, nil
 }

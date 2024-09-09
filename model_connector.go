@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -24,16 +24,51 @@ type Connector struct {
 	Id *string `json:"id,omitempty"`
 	// The Connector name.
 	Name *string `json:"name,omitempty"`
-	// A reference to the Engine that this Connector belongs to.
+	// The id of the Compliance Engine that this Connector belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
-	// The type of Connector. One of Database, File, or Mainframe.
-	Type *string `json:"type,omitempty"`
+	// The name of the Compliance Engine that this Connector belongs to.
+	EngineName *string `json:"engine_name,omitempty"`
+	Type *ConnectorTypeEnum `json:"type,omitempty"`
 	// The network hostname or IP address of the database server.
 	Hostname *string `json:"hostname,omitempty"`
 	// The TCP port of the server.
 	Port *int32 `json:"port,omitempty"`
 	// The username this Connector will use to connect to the database.
 	Username *string `json:"username,omitempty"`
+	// Whether this connector has authentication credentials set
+	AuthPresent *bool `json:"auth_present,omitempty"`
+	// The database variant, such as Oracle or MSSQL Server
+	DatabaseType *string `json:"database_type,omitempty"`
+	// The name of the custom JDBC driver for this connector
+	CustomDriverName *string `json:"custom_driver_name,omitempty"`
+	// The database name for this connector
+	DatabaseName *string `json:"database_name,omitempty"`
+	// The instance name for this connector
+	InstanceName *string `json:"instance_name,omitempty"`
+	// The jdbc URL for this connector
+	Jdbc *string `json:"jdbc,omitempty"`
+	// The schema name for this connector
+	SchemaName *string `json:"schema_name,omitempty"`
+	// The SID value for this connector. This field is specific to Oracle database connectors
+	Sid *string `json:"sid,omitempty"`
+	// Whether kerberos authentication is enabled for this connector
+	KerberosAuth *bool `json:"kerberos_auth,omitempty"`
+	// The service principal to use for kerberos authentication
+	ServicePrincipal *string `json:"service_principal,omitempty"`
+	// Whether the logger is enable for this connector
+	EnableLogger *bool `json:"enable_logger,omitempty"`
+	// The type of file this connector is configured to access
+	FileType *string `json:"file_type,omitempty"`
+	// The connection mode for file connectors
+	ConnectionMode *string `json:"connection_mode,omitempty"`
+	// The path on the remote server for file connections
+	Path *string `json:"path,omitempty"`
+	// The name of the ssh key for SFTP mode file connectors
+	SshKey *string `json:"ssh_key,omitempty"`
+	// For FTP and SFTP connections, whether the user dir is set to root
+	UserDirIsRoot *bool `json:"user_dir_is_root,omitempty"`
+	// This database or file connection type associated with the connector
+	Platform *string `json:"platform,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -150,10 +185,42 @@ func (o *Connector) SetEngineId(v string) {
 	o.EngineId = &v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
-func (o *Connector) GetType() string {
-	if o == nil || IsNil(o.Type) {
+// GetEngineName returns the EngineName field value if set, zero value otherwise.
+func (o *Connector) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName) {
 		var ret string
+		return ret
+	}
+	return *o.EngineName
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineName) {
+		return nil, false
+	}
+	return o.EngineName, true
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *Connector) HasEngineName() bool {
+	if o != nil && !IsNil(o.EngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given string and assigns it to the EngineName field.
+func (o *Connector) SetEngineName(v string) {
+	o.EngineName = &v
+}
+
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *Connector) GetType() ConnectorTypeEnum {
+	if o == nil || IsNil(o.Type) {
+		var ret ConnectorTypeEnum
 		return ret
 	}
 	return *o.Type
@@ -161,7 +228,7 @@ func (o *Connector) GetType() string {
 
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Connector) GetTypeOk() (*string, bool) {
+func (o *Connector) GetTypeOk() (*ConnectorTypeEnum, bool) {
 	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
@@ -177,8 +244,8 @@ func (o *Connector) HasType() bool {
 	return false
 }
 
-// SetType gets a reference to the given string and assigns it to the Type field.
-func (o *Connector) SetType(v string) {
+// SetType gets a reference to the given ConnectorTypeEnum and assigns it to the Type field.
+func (o *Connector) SetType(v ConnectorTypeEnum) {
 	o.Type = &v
 }
 
@@ -278,6 +345,550 @@ func (o *Connector) SetUsername(v string) {
 	o.Username = &v
 }
 
+// GetAuthPresent returns the AuthPresent field value if set, zero value otherwise.
+func (o *Connector) GetAuthPresent() bool {
+	if o == nil || IsNil(o.AuthPresent) {
+		var ret bool
+		return ret
+	}
+	return *o.AuthPresent
+}
+
+// GetAuthPresentOk returns a tuple with the AuthPresent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetAuthPresentOk() (*bool, bool) {
+	if o == nil || IsNil(o.AuthPresent) {
+		return nil, false
+	}
+	return o.AuthPresent, true
+}
+
+// HasAuthPresent returns a boolean if a field has been set.
+func (o *Connector) HasAuthPresent() bool {
+	if o != nil && !IsNil(o.AuthPresent) {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthPresent gets a reference to the given bool and assigns it to the AuthPresent field.
+func (o *Connector) SetAuthPresent(v bool) {
+	o.AuthPresent = &v
+}
+
+// GetDatabaseType returns the DatabaseType field value if set, zero value otherwise.
+func (o *Connector) GetDatabaseType() string {
+	if o == nil || IsNil(o.DatabaseType) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseType
+}
+
+// GetDatabaseTypeOk returns a tuple with the DatabaseType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetDatabaseTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseType) {
+		return nil, false
+	}
+	return o.DatabaseType, true
+}
+
+// HasDatabaseType returns a boolean if a field has been set.
+func (o *Connector) HasDatabaseType() bool {
+	if o != nil && !IsNil(o.DatabaseType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseType gets a reference to the given string and assigns it to the DatabaseType field.
+func (o *Connector) SetDatabaseType(v string) {
+	o.DatabaseType = &v
+}
+
+// GetCustomDriverName returns the CustomDriverName field value if set, zero value otherwise.
+func (o *Connector) GetCustomDriverName() string {
+	if o == nil || IsNil(o.CustomDriverName) {
+		var ret string
+		return ret
+	}
+	return *o.CustomDriverName
+}
+
+// GetCustomDriverNameOk returns a tuple with the CustomDriverName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetCustomDriverNameOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomDriverName) {
+		return nil, false
+	}
+	return o.CustomDriverName, true
+}
+
+// HasCustomDriverName returns a boolean if a field has been set.
+func (o *Connector) HasCustomDriverName() bool {
+	if o != nil && !IsNil(o.CustomDriverName) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomDriverName gets a reference to the given string and assigns it to the CustomDriverName field.
+func (o *Connector) SetCustomDriverName(v string) {
+	o.CustomDriverName = &v
+}
+
+// GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
+func (o *Connector) GetDatabaseName() string {
+	if o == nil || IsNil(o.DatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseName
+}
+
+// GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseName) {
+		return nil, false
+	}
+	return o.DatabaseName, true
+}
+
+// HasDatabaseName returns a boolean if a field has been set.
+func (o *Connector) HasDatabaseName() bool {
+	if o != nil && !IsNil(o.DatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
+func (o *Connector) SetDatabaseName(v string) {
+	o.DatabaseName = &v
+}
+
+// GetInstanceName returns the InstanceName field value if set, zero value otherwise.
+func (o *Connector) GetInstanceName() string {
+	if o == nil || IsNil(o.InstanceName) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceName
+}
+
+// GetInstanceNameOk returns a tuple with the InstanceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetInstanceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceName) {
+		return nil, false
+	}
+	return o.InstanceName, true
+}
+
+// HasInstanceName returns a boolean if a field has been set.
+func (o *Connector) HasInstanceName() bool {
+	if o != nil && !IsNil(o.InstanceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceName gets a reference to the given string and assigns it to the InstanceName field.
+func (o *Connector) SetInstanceName(v string) {
+	o.InstanceName = &v
+}
+
+// GetJdbc returns the Jdbc field value if set, zero value otherwise.
+func (o *Connector) GetJdbc() string {
+	if o == nil || IsNil(o.Jdbc) {
+		var ret string
+		return ret
+	}
+	return *o.Jdbc
+}
+
+// GetJdbcOk returns a tuple with the Jdbc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetJdbcOk() (*string, bool) {
+	if o == nil || IsNil(o.Jdbc) {
+		return nil, false
+	}
+	return o.Jdbc, true
+}
+
+// HasJdbc returns a boolean if a field has been set.
+func (o *Connector) HasJdbc() bool {
+	if o != nil && !IsNil(o.Jdbc) {
+		return true
+	}
+
+	return false
+}
+
+// SetJdbc gets a reference to the given string and assigns it to the Jdbc field.
+func (o *Connector) SetJdbc(v string) {
+	o.Jdbc = &v
+}
+
+// GetSchemaName returns the SchemaName field value if set, zero value otherwise.
+func (o *Connector) GetSchemaName() string {
+	if o == nil || IsNil(o.SchemaName) {
+		var ret string
+		return ret
+	}
+	return *o.SchemaName
+}
+
+// GetSchemaNameOk returns a tuple with the SchemaName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetSchemaNameOk() (*string, bool) {
+	if o == nil || IsNil(o.SchemaName) {
+		return nil, false
+	}
+	return o.SchemaName, true
+}
+
+// HasSchemaName returns a boolean if a field has been set.
+func (o *Connector) HasSchemaName() bool {
+	if o != nil && !IsNil(o.SchemaName) {
+		return true
+	}
+
+	return false
+}
+
+// SetSchemaName gets a reference to the given string and assigns it to the SchemaName field.
+func (o *Connector) SetSchemaName(v string) {
+	o.SchemaName = &v
+}
+
+// GetSid returns the Sid field value if set, zero value otherwise.
+func (o *Connector) GetSid() string {
+	if o == nil || IsNil(o.Sid) {
+		var ret string
+		return ret
+	}
+	return *o.Sid
+}
+
+// GetSidOk returns a tuple with the Sid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetSidOk() (*string, bool) {
+	if o == nil || IsNil(o.Sid) {
+		return nil, false
+	}
+	return o.Sid, true
+}
+
+// HasSid returns a boolean if a field has been set.
+func (o *Connector) HasSid() bool {
+	if o != nil && !IsNil(o.Sid) {
+		return true
+	}
+
+	return false
+}
+
+// SetSid gets a reference to the given string and assigns it to the Sid field.
+func (o *Connector) SetSid(v string) {
+	o.Sid = &v
+}
+
+// GetKerberosAuth returns the KerberosAuth field value if set, zero value otherwise.
+func (o *Connector) GetKerberosAuth() bool {
+	if o == nil || IsNil(o.KerberosAuth) {
+		var ret bool
+		return ret
+	}
+	return *o.KerberosAuth
+}
+
+// GetKerberosAuthOk returns a tuple with the KerberosAuth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetKerberosAuthOk() (*bool, bool) {
+	if o == nil || IsNil(o.KerberosAuth) {
+		return nil, false
+	}
+	return o.KerberosAuth, true
+}
+
+// HasKerberosAuth returns a boolean if a field has been set.
+func (o *Connector) HasKerberosAuth() bool {
+	if o != nil && !IsNil(o.KerberosAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetKerberosAuth gets a reference to the given bool and assigns it to the KerberosAuth field.
+func (o *Connector) SetKerberosAuth(v bool) {
+	o.KerberosAuth = &v
+}
+
+// GetServicePrincipal returns the ServicePrincipal field value if set, zero value otherwise.
+func (o *Connector) GetServicePrincipal() string {
+	if o == nil || IsNil(o.ServicePrincipal) {
+		var ret string
+		return ret
+	}
+	return *o.ServicePrincipal
+}
+
+// GetServicePrincipalOk returns a tuple with the ServicePrincipal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetServicePrincipalOk() (*string, bool) {
+	if o == nil || IsNil(o.ServicePrincipal) {
+		return nil, false
+	}
+	return o.ServicePrincipal, true
+}
+
+// HasServicePrincipal returns a boolean if a field has been set.
+func (o *Connector) HasServicePrincipal() bool {
+	if o != nil && !IsNil(o.ServicePrincipal) {
+		return true
+	}
+
+	return false
+}
+
+// SetServicePrincipal gets a reference to the given string and assigns it to the ServicePrincipal field.
+func (o *Connector) SetServicePrincipal(v string) {
+	o.ServicePrincipal = &v
+}
+
+// GetEnableLogger returns the EnableLogger field value if set, zero value otherwise.
+func (o *Connector) GetEnableLogger() bool {
+	if o == nil || IsNil(o.EnableLogger) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableLogger
+}
+
+// GetEnableLoggerOk returns a tuple with the EnableLogger field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetEnableLoggerOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableLogger) {
+		return nil, false
+	}
+	return o.EnableLogger, true
+}
+
+// HasEnableLogger returns a boolean if a field has been set.
+func (o *Connector) HasEnableLogger() bool {
+	if o != nil && !IsNil(o.EnableLogger) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableLogger gets a reference to the given bool and assigns it to the EnableLogger field.
+func (o *Connector) SetEnableLogger(v bool) {
+	o.EnableLogger = &v
+}
+
+// GetFileType returns the FileType field value if set, zero value otherwise.
+func (o *Connector) GetFileType() string {
+	if o == nil || IsNil(o.FileType) {
+		var ret string
+		return ret
+	}
+	return *o.FileType
+}
+
+// GetFileTypeOk returns a tuple with the FileType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetFileTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.FileType) {
+		return nil, false
+	}
+	return o.FileType, true
+}
+
+// HasFileType returns a boolean if a field has been set.
+func (o *Connector) HasFileType() bool {
+	if o != nil && !IsNil(o.FileType) {
+		return true
+	}
+
+	return false
+}
+
+// SetFileType gets a reference to the given string and assigns it to the FileType field.
+func (o *Connector) SetFileType(v string) {
+	o.FileType = &v
+}
+
+// GetConnectionMode returns the ConnectionMode field value if set, zero value otherwise.
+func (o *Connector) GetConnectionMode() string {
+	if o == nil || IsNil(o.ConnectionMode) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectionMode
+}
+
+// GetConnectionModeOk returns a tuple with the ConnectionMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetConnectionModeOk() (*string, bool) {
+	if o == nil || IsNil(o.ConnectionMode) {
+		return nil, false
+	}
+	return o.ConnectionMode, true
+}
+
+// HasConnectionMode returns a boolean if a field has been set.
+func (o *Connector) HasConnectionMode() bool {
+	if o != nil && !IsNil(o.ConnectionMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionMode gets a reference to the given string and assigns it to the ConnectionMode field.
+func (o *Connector) SetConnectionMode(v string) {
+	o.ConnectionMode = &v
+}
+
+// GetPath returns the Path field value if set, zero value otherwise.
+func (o *Connector) GetPath() string {
+	if o == nil || IsNil(o.Path) {
+		var ret string
+		return ret
+	}
+	return *o.Path
+}
+
+// GetPathOk returns a tuple with the Path field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetPathOk() (*string, bool) {
+	if o == nil || IsNil(o.Path) {
+		return nil, false
+	}
+	return o.Path, true
+}
+
+// HasPath returns a boolean if a field has been set.
+func (o *Connector) HasPath() bool {
+	if o != nil && !IsNil(o.Path) {
+		return true
+	}
+
+	return false
+}
+
+// SetPath gets a reference to the given string and assigns it to the Path field.
+func (o *Connector) SetPath(v string) {
+	o.Path = &v
+}
+
+// GetSshKey returns the SshKey field value if set, zero value otherwise.
+func (o *Connector) GetSshKey() string {
+	if o == nil || IsNil(o.SshKey) {
+		var ret string
+		return ret
+	}
+	return *o.SshKey
+}
+
+// GetSshKeyOk returns a tuple with the SshKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetSshKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.SshKey) {
+		return nil, false
+	}
+	return o.SshKey, true
+}
+
+// HasSshKey returns a boolean if a field has been set.
+func (o *Connector) HasSshKey() bool {
+	if o != nil && !IsNil(o.SshKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetSshKey gets a reference to the given string and assigns it to the SshKey field.
+func (o *Connector) SetSshKey(v string) {
+	o.SshKey = &v
+}
+
+// GetUserDirIsRoot returns the UserDirIsRoot field value if set, zero value otherwise.
+func (o *Connector) GetUserDirIsRoot() bool {
+	if o == nil || IsNil(o.UserDirIsRoot) {
+		var ret bool
+		return ret
+	}
+	return *o.UserDirIsRoot
+}
+
+// GetUserDirIsRootOk returns a tuple with the UserDirIsRoot field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetUserDirIsRootOk() (*bool, bool) {
+	if o == nil || IsNil(o.UserDirIsRoot) {
+		return nil, false
+	}
+	return o.UserDirIsRoot, true
+}
+
+// HasUserDirIsRoot returns a boolean if a field has been set.
+func (o *Connector) HasUserDirIsRoot() bool {
+	if o != nil && !IsNil(o.UserDirIsRoot) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserDirIsRoot gets a reference to the given bool and assigns it to the UserDirIsRoot field.
+func (o *Connector) SetUserDirIsRoot(v bool) {
+	o.UserDirIsRoot = &v
+}
+
+// GetPlatform returns the Platform field value if set, zero value otherwise.
+func (o *Connector) GetPlatform() string {
+	if o == nil || IsNil(o.Platform) {
+		var ret string
+		return ret
+	}
+	return *o.Platform
+}
+
+// GetPlatformOk returns a tuple with the Platform field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetPlatformOk() (*string, bool) {
+	if o == nil || IsNil(o.Platform) {
+		return nil, false
+	}
+	return o.Platform, true
+}
+
+// HasPlatform returns a boolean if a field has been set.
+func (o *Connector) HasPlatform() bool {
+	if o != nil && !IsNil(o.Platform) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlatform gets a reference to the given string and assigns it to the Platform field.
+func (o *Connector) SetPlatform(v string) {
+	o.Platform = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Connector) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -329,6 +940,9 @@ func (o Connector) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
+	}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
 	}
@@ -340,6 +954,57 @@ func (o Connector) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Username) {
 		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.AuthPresent) {
+		toSerialize["auth_present"] = o.AuthPresent
+	}
+	if !IsNil(o.DatabaseType) {
+		toSerialize["database_type"] = o.DatabaseType
+	}
+	if !IsNil(o.CustomDriverName) {
+		toSerialize["custom_driver_name"] = o.CustomDriverName
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
+	}
+	if !IsNil(o.InstanceName) {
+		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.Jdbc) {
+		toSerialize["jdbc"] = o.Jdbc
+	}
+	if !IsNil(o.SchemaName) {
+		toSerialize["schema_name"] = o.SchemaName
+	}
+	if !IsNil(o.Sid) {
+		toSerialize["sid"] = o.Sid
+	}
+	if !IsNil(o.KerberosAuth) {
+		toSerialize["kerberos_auth"] = o.KerberosAuth
+	}
+	if !IsNil(o.ServicePrincipal) {
+		toSerialize["service_principal"] = o.ServicePrincipal
+	}
+	if !IsNil(o.EnableLogger) {
+		toSerialize["enable_logger"] = o.EnableLogger
+	}
+	if !IsNil(o.FileType) {
+		toSerialize["file_type"] = o.FileType
+	}
+	if !IsNil(o.ConnectionMode) {
+		toSerialize["connection_mode"] = o.ConnectionMode
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
+	if !IsNil(o.SshKey) {
+		toSerialize["ssh_key"] = o.SshKey
+	}
+	if !IsNil(o.UserDirIsRoot) {
+		toSerialize["user_dir_is_root"] = o.UserDirIsRoot
+	}
+	if !IsNil(o.Platform) {
+		toSerialize["platform"] = o.Platform
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

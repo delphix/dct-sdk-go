@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -12,7 +12,9 @@ Contact: support@delphix.com
 package delphix_dct_api
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"reflect"
 	"time"
 )
@@ -321,7 +323,7 @@ func NewNullableTime(val *time.Time) *NullableTime {
 }
 
 func (v NullableTime) MarshalJSON() ([]byte, error) {
-	return v.value.MarshalJSON()
+	return json.Marshal(v.value)
 }
 
 func (v *NullableTime) UnmarshalJSON(src []byte) error {
@@ -345,4 +347,16 @@ func IsNil(i interface{}) bool {
 
 type MappedNullable interface {
 	ToMap() (map[string]interface{}, error)
+}
+
+// A wrapper for strict JSON decoding
+func newStrictDecoder(data []byte) *json.Decoder {
+	dec := json.NewDecoder(bytes.NewBuffer(data))
+	dec.DisallowUnknownFields()
+	return dec
+}
+
+// Prevent trying to import "fmt"
+func reportError(format string, a ...interface{}) error {
+	return fmt.Errorf(format, a...)
 }

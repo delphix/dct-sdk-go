@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AccessGroup type satisfies the MappedNullable interface at compile time
@@ -35,6 +37,8 @@ type AccessGroup struct {
 	// The Access group scopes.
 	Scopes []AccessGroupScope `json:"scopes,omitempty"`
 }
+
+type _AccessGroup AccessGroup
 
 // NewAccessGroup instantiates a new AccessGroup object
 // This constructor will assign default values to properties that have it defined,
@@ -280,7 +284,9 @@ func (o AccessGroup) MarshalJSON() ([]byte, error) {
 
 func (o AccessGroup) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	toSerialize["name"] = o.Name
 	if !IsNil(o.SingleAccount) {
 		toSerialize["single_account"] = o.SingleAccount
@@ -288,7 +294,9 @@ func (o AccessGroup) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AccountIds) {
 		toSerialize["account_ids"] = o.AccountIds
 	}
-	// skip: tagged_account_ids is readOnly
+	if !IsNil(o.TaggedAccountIds) {
+		toSerialize["tagged_account_ids"] = o.TaggedAccountIds
+	}
 	if !IsNil(o.AccountTags) {
 		toSerialize["account_tags"] = o.AccountTags
 	}
@@ -296,6 +304,43 @@ func (o AccessGroup) ToMap() (map[string]interface{}, error) {
 		toSerialize["scopes"] = o.Scopes
 	}
 	return toSerialize, nil
+}
+
+func (o *AccessGroup) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAccessGroup := _AccessGroup{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAccessGroup)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AccessGroup(varAccessGroup)
+
+	return err
 }
 
 type NullableAccessGroup struct {

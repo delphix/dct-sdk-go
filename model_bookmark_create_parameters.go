@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,8 @@ package delphix_dct_api
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the BookmarkCreateParameters type satisfies the MappedNullable interface at compile time
@@ -25,6 +27,8 @@ type BookmarkCreateParameters struct {
 	Name string `json:"name"`
 	// The IDs of the VDBs to create the Bookmark on. This parameter is mutually exclusive with snapshot_ids and timeflow_ids.
 	VdbIds []string `json:"vdb_ids,omitempty"`
+	// The ID of the VDB group to create the Bookmark on. This parameter is mutually exclusive with vdb_ids.
+	VdbGroupId *string `json:"vdb_group_id,omitempty"`
 	// The IDs of the snapshots that will be part of the Bookmark. This parameter is mutually exclusive with vdb_ids, timestamp, timestamp_in_database_timezone, location and timeflow_ids. 
 	SnapshotIds []string `json:"snapshot_ids,omitempty"`
 	// The array of timeflow Id. Only allowed to set when timestamp, timestamp_in_database_timezone or location is provided.
@@ -32,7 +36,7 @@ type BookmarkCreateParameters struct {
 	// The point in time from which to execute the operation. Mutually exclusive with snapshot_ids, timestamp_in_database_timezone and location.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with snapshot_ids, timestamp and location.
-	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
+	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty" validate:"regexp=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{0,3})?"`
 	// The location to create bookmark from. Mutually exclusive with snapshot_ids, timestamp, and timestamp_in_database_timezone.
 	Location *string `json:"location,omitempty"`
 	// The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever. Deprecated in favor of expiration and retain_forever.
@@ -44,6 +48,8 @@ type BookmarkCreateParameters struct {
 	RetainForever *bool `json:"retain_forever,omitempty"`
 	// The tags to be created for this Bookmark.
 	Tags []Tag `json:"tags,omitempty"`
+	// Type of the bookmark, either PUBLIC or PRIVATE.
+	BookmarkType *string `json:"bookmark_type,omitempty"`
 	// Whether the account creating this bookmark must be configured as owner of the bookmark.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 	// This field has been deprecated in favour of new field 'inherit_parent_tags'.
@@ -53,6 +59,8 @@ type BookmarkCreateParameters struct {
 	InheritParentTags *bool `json:"inherit_parent_tags,omitempty"`
 }
 
+type _BookmarkCreateParameters BookmarkCreateParameters
+
 // NewBookmarkCreateParameters instantiates a new BookmarkCreateParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
@@ -60,6 +68,8 @@ type BookmarkCreateParameters struct {
 func NewBookmarkCreateParameters(name string) *BookmarkCreateParameters {
 	this := BookmarkCreateParameters{}
 	this.Name = name
+	var bookmarkType string = "PRIVATE"
+	this.BookmarkType = &bookmarkType
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	var inheritParentVdbTags bool = false
@@ -74,6 +84,8 @@ func NewBookmarkCreateParameters(name string) *BookmarkCreateParameters {
 // but it doesn't guarantee that properties required by API are set
 func NewBookmarkCreateParametersWithDefaults() *BookmarkCreateParameters {
 	this := BookmarkCreateParameters{}
+	var bookmarkType string = "PRIVATE"
+	this.BookmarkType = &bookmarkType
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	var inheritParentVdbTags bool = false
@@ -137,6 +149,38 @@ func (o *BookmarkCreateParameters) HasVdbIds() bool {
 // SetVdbIds gets a reference to the given []string and assigns it to the VdbIds field.
 func (o *BookmarkCreateParameters) SetVdbIds(v []string) {
 	o.VdbIds = v
+}
+
+// GetVdbGroupId returns the VdbGroupId field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetVdbGroupId() string {
+	if o == nil || IsNil(o.VdbGroupId) {
+		var ret string
+		return ret
+	}
+	return *o.VdbGroupId
+}
+
+// GetVdbGroupIdOk returns a tuple with the VdbGroupId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetVdbGroupIdOk() (*string, bool) {
+	if o == nil || IsNil(o.VdbGroupId) {
+		return nil, false
+	}
+	return o.VdbGroupId, true
+}
+
+// HasVdbGroupId returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasVdbGroupId() bool {
+	if o != nil && !IsNil(o.VdbGroupId) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbGroupId gets a reference to the given string and assigns it to the VdbGroupId field.
+func (o *BookmarkCreateParameters) SetVdbGroupId(v string) {
+	o.VdbGroupId = &v
 }
 
 // GetSnapshotIds returns the SnapshotIds field value if set, zero value otherwise.
@@ -430,6 +474,38 @@ func (o *BookmarkCreateParameters) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetBookmarkType returns the BookmarkType field value if set, zero value otherwise.
+func (o *BookmarkCreateParameters) GetBookmarkType() string {
+	if o == nil || IsNil(o.BookmarkType) {
+		var ret string
+		return ret
+	}
+	return *o.BookmarkType
+}
+
+// GetBookmarkTypeOk returns a tuple with the BookmarkType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkCreateParameters) GetBookmarkTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.BookmarkType) {
+		return nil, false
+	}
+	return o.BookmarkType, true
+}
+
+// HasBookmarkType returns a boolean if a field has been set.
+func (o *BookmarkCreateParameters) HasBookmarkType() bool {
+	if o != nil && !IsNil(o.BookmarkType) {
+		return true
+	}
+
+	return false
+}
+
+// SetBookmarkType gets a reference to the given string and assigns it to the BookmarkType field.
+func (o *BookmarkCreateParameters) SetBookmarkType(v string) {
+	o.BookmarkType = &v
+}
+
 // GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field value if set, zero value otherwise.
 func (o *BookmarkCreateParameters) GetMakeCurrentAccountOwner() bool {
 	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
@@ -543,6 +619,9 @@ func (o BookmarkCreateParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.VdbIds) {
 		toSerialize["vdb_ids"] = o.VdbIds
 	}
+	if !IsNil(o.VdbGroupId) {
+		toSerialize["vdb_group_id"] = o.VdbGroupId
+	}
 	if !IsNil(o.SnapshotIds) {
 		toSerialize["snapshot_ids"] = o.SnapshotIds
 	}
@@ -570,6 +649,9 @@ func (o BookmarkCreateParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
+	if !IsNil(o.BookmarkType) {
+		toSerialize["bookmark_type"] = o.BookmarkType
+	}
 	if !IsNil(o.MakeCurrentAccountOwner) {
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
 	}
@@ -580,6 +662,43 @@ func (o BookmarkCreateParameters) ToMap() (map[string]interface{}, error) {
 		toSerialize["inherit_parent_tags"] = o.InheritParentTags
 	}
 	return toSerialize, nil
+}
+
+func (o *BookmarkCreateParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBookmarkCreateParameters := _BookmarkCreateParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBookmarkCreateParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BookmarkCreateParameters(varBookmarkCreateParameters)
+
+	return err
 }
 
 type NullableBookmarkCreateParameters struct {

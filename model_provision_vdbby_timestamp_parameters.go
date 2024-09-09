@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,8 @@ package delphix_dct_api
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ProvisionVDBByTimestampParameters type satisfies the MappedNullable interface at compile time
@@ -77,18 +79,18 @@ type ProvisionVDBByTimestampParameters struct {
 	AutoSelectRepository *bool `json:"auto_select_repository,omitempty"`
 	// Indicates whether the Engine should automatically restart this virtual source when target host reboot is detected.
 	VdbRestart *bool `json:"vdb_restart,omitempty"`
-	// The ID of the target VDB Template (Oracle Only).
+	// The ID of the target VDB Template (Oracle and MSSql Only).
 	TemplateId *string `json:"template_id,omitempty"`
 	// The ID of the configuration template to apply to the auxiliary container database. This is only relevant when provisioning a Multitenant pluggable database into an existing CDB, i.e when the cdb_id property is set.(Oracle Only)
 	AuxiliaryTemplateId *string `json:"auxiliary_template_id,omitempty"`
 	// Target VDB file mapping rules (Oracle Only). Rules must be line separated (\\n or \\r) and each line must have the format \"pattern:replacement\". Lines are applied in order.
 	FileMappingRules *string `json:"file_mapping_rules,omitempty"`
 	// Target VDB SID name (Oracle Only).
-	OracleInstanceName *string `json:"oracle_instance_name,omitempty"`
+	OracleInstanceName *string `json:"oracle_instance_name,omitempty" validate:"regexp=^[a-zA-Z0-9_]+$"`
 	// Target VDB db_unique_name (Oracle Only).
-	UniqueName *string `json:"unique_name,omitempty"`
+	UniqueName *string `json:"unique_name,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\$#]+$"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the name of the provisioned vCDB (Oracle Multitenant Only).
-	VcdbName *string `json:"vcdb_name,omitempty"`
+	VcdbName *string `json:"vcdb_name,omitempty" validate:"regexp=^[a-zA-Z0-9_]+$"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the database name of the provisioned vCDB. Defaults to the value of the vcdb_name property. (Oracle Multitenant Only).
 	VcdbDatabaseName *string `json:"vcdb_database_name,omitempty"`
 	// Mount point for the VDB (Oracle, ASE, AppData).
@@ -150,7 +152,7 @@ type ProvisionVDBByTimestampParameters struct {
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	// This privileged unix username will be used to create the VDB. Leave this field blank if you do not want to use privilege elevation. The unix privileged username should begin with a letter or an underscore, followed by letters, digits, underscores, or dashes. They can end with a dollar sign (postgres only).
-	PrivilegedOsUser *string `json:"privileged_os_user,omitempty"`
+	PrivilegedOsUser *string `json:"privileged_os_user,omitempty" validate:"regexp=^$|^[a-zA-Z_][a-zA-Z0-9_\\\\-]+[$]?$"`
 	// Port number for Postgres target database (postgres only).
 	PostgresPort *int32 `json:"postgres_port,omitempty"`
 	// Custom Database-Level config settings (postgres only).
@@ -161,10 +163,12 @@ type ProvisionVDBByTimestampParameters struct {
 	MssqlFailoverDriveLetter *string `json:"mssql_failover_drive_letter,omitempty"`
 	// The tags to be created for VDB.
 	Tags []Tag `json:"tags,omitempty"`
+	// Whether to invoke datapatch during provisioning (Oracle Only).
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
-	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
+	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty" validate:"regexp=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{0,3})?"`
 	// The Timeflow ID.
 	TimeflowId *string `json:"timeflow_id,omitempty"`
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
@@ -174,6 +178,8 @@ type ProvisionVDBByTimestampParameters struct {
 	// Whether the account provisioning this VDB must be configured as owner of the VDB.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
+
+type _ProvisionVDBByTimestampParameters ProvisionVDBByTimestampParameters
 
 // NewProvisionVDBByTimestampParameters instantiates a new ProvisionVDBByTimestampParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -2144,7 +2150,7 @@ func (o *ProvisionVDBByTimestampParameters) GetAdditionalMountPointsOk() ([]Addi
 
 // HasAdditionalMountPoints returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasAdditionalMountPoints() bool {
-	if o != nil && IsNil(o.AdditionalMountPoints) {
+	if o != nil && !IsNil(o.AdditionalMountPoints) {
 		return true
 	}
 
@@ -2177,7 +2183,7 @@ func (o *ProvisionVDBByTimestampParameters) GetAppdataConfigParamsOk() (map[stri
 
 // HasAppdataConfigParams returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasAppdataConfigParams() bool {
-	if o != nil && IsNil(o.AppdataConfigParams) {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
 		return true
 	}
 
@@ -2210,7 +2216,7 @@ func (o *ProvisionVDBByTimestampParameters) GetConfigParamsOk() (map[string]inte
 
 // HasConfigParams returns a boolean if a field has been set.
 func (o *ProvisionVDBByTimestampParameters) HasConfigParams() bool {
-	if o != nil && IsNil(o.ConfigParams) {
+	if o != nil && !IsNil(o.ConfigParams) {
 		return true
 	}
 
@@ -2412,6 +2418,38 @@ func (o *ProvisionVDBByTimestampParameters) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *ProvisionVDBByTimestampParameters) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *ProvisionVDBByTimestampParameters) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
 }
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
@@ -2815,6 +2853,9 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
 	if !IsNil(o.Timestamp) {
 		toSerialize["timestamp"] = o.Timestamp
 	}
@@ -2832,6 +2873,43 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
 	}
 	return toSerialize, nil
+}
+
+func (o *ProvisionVDBByTimestampParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_data_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProvisionVDBByTimestampParameters := _ProvisionVDBByTimestampParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProvisionVDBByTimestampParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProvisionVDBByTimestampParameters(varProvisionVDBByTimestampParameters)
+
+	return err
 }
 
 type NullableProvisionVDBByTimestampParameters struct {

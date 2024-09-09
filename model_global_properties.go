@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,10 @@ var _ MappedNullable = &GlobalProperties{}
 type GlobalProperties struct {
 	// Property to define either username & password based authentication disabled or not.
 	DisableUsernamePassword *bool `json:"disable_username_password,omitempty"`
+	// Property to define the phonehome bundle upload cadence, in days, if Delphix services are reachable.
+	PhonehomeUploadCadence *int32 `json:"phonehome_upload_cadence,omitempty"`
+	// Property to define the maximum uncompressed bundle transfer size, in bytes, for phonehome.
+	PhonehomeMaximumTransferSize *int32 `json:"phonehome_maximum_transfer_size,omitempty"`
 }
 
 // NewGlobalProperties instantiates a new GlobalProperties object
@@ -73,6 +77,70 @@ func (o *GlobalProperties) SetDisableUsernamePassword(v bool) {
 	o.DisableUsernamePassword = &v
 }
 
+// GetPhonehomeUploadCadence returns the PhonehomeUploadCadence field value if set, zero value otherwise.
+func (o *GlobalProperties) GetPhonehomeUploadCadence() int32 {
+	if o == nil || IsNil(o.PhonehomeUploadCadence) {
+		var ret int32
+		return ret
+	}
+	return *o.PhonehomeUploadCadence
+}
+
+// GetPhonehomeUploadCadenceOk returns a tuple with the PhonehomeUploadCadence field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetPhonehomeUploadCadenceOk() (*int32, bool) {
+	if o == nil || IsNil(o.PhonehomeUploadCadence) {
+		return nil, false
+	}
+	return o.PhonehomeUploadCadence, true
+}
+
+// HasPhonehomeUploadCadence returns a boolean if a field has been set.
+func (o *GlobalProperties) HasPhonehomeUploadCadence() bool {
+	if o != nil && !IsNil(o.PhonehomeUploadCadence) {
+		return true
+	}
+
+	return false
+}
+
+// SetPhonehomeUploadCadence gets a reference to the given int32 and assigns it to the PhonehomeUploadCadence field.
+func (o *GlobalProperties) SetPhonehomeUploadCadence(v int32) {
+	o.PhonehomeUploadCadence = &v
+}
+
+// GetPhonehomeMaximumTransferSize returns the PhonehomeMaximumTransferSize field value if set, zero value otherwise.
+func (o *GlobalProperties) GetPhonehomeMaximumTransferSize() int32 {
+	if o == nil || IsNil(o.PhonehomeMaximumTransferSize) {
+		var ret int32
+		return ret
+	}
+	return *o.PhonehomeMaximumTransferSize
+}
+
+// GetPhonehomeMaximumTransferSizeOk returns a tuple with the PhonehomeMaximumTransferSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetPhonehomeMaximumTransferSizeOk() (*int32, bool) {
+	if o == nil || IsNil(o.PhonehomeMaximumTransferSize) {
+		return nil, false
+	}
+	return o.PhonehomeMaximumTransferSize, true
+}
+
+// HasPhonehomeMaximumTransferSize returns a boolean if a field has been set.
+func (o *GlobalProperties) HasPhonehomeMaximumTransferSize() bool {
+	if o != nil && !IsNil(o.PhonehomeMaximumTransferSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetPhonehomeMaximumTransferSize gets a reference to the given int32 and assigns it to the PhonehomeMaximumTransferSize field.
+func (o *GlobalProperties) SetPhonehomeMaximumTransferSize(v int32) {
+	o.PhonehomeMaximumTransferSize = &v
+}
+
 func (o GlobalProperties) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -85,6 +153,12 @@ func (o GlobalProperties) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.DisableUsernamePassword) {
 		toSerialize["disable_username_password"] = o.DisableUsernamePassword
+	}
+	if !IsNil(o.PhonehomeUploadCadence) {
+		toSerialize["phonehome_upload_cadence"] = o.PhonehomeUploadCadence
+	}
+	if !IsNil(o.PhonehomeMaximumTransferSize) {
+		toSerialize["phonehome_maximum_transfer_size"] = o.PhonehomeMaximumTransferSize
 	}
 	return toSerialize, nil
 }

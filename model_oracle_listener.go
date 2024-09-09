@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -24,8 +24,7 @@ type OracleListener struct {
 	Id *string `json:"id,omitempty"`
 	// Name of this listener.
 	Name *string `json:"name,omitempty"`
-	// Type of this listener.
-	Type *string `json:"type,omitempty"`
+	Type *OracleListenerTypeEnum `json:"type,omitempty"`
 	// The list of protocol addresses for this listener.
 	ProtocolAddresses []string `json:"protocol_addresses,omitempty"`
 	// The list of client endpoints for this listener.
@@ -118,9 +117,9 @@ func (o *OracleListener) SetName(v string) {
 }
 
 // GetType returns the Type field value if set, zero value otherwise.
-func (o *OracleListener) GetType() string {
+func (o *OracleListener) GetType() OracleListenerTypeEnum {
 	if o == nil || IsNil(o.Type) {
-		var ret string
+		var ret OracleListenerTypeEnum
 		return ret
 	}
 	return *o.Type
@@ -128,7 +127,7 @@ func (o *OracleListener) GetType() string {
 
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OracleListener) GetTypeOk() (*string, bool) {
+func (o *OracleListener) GetTypeOk() (*OracleListenerTypeEnum, bool) {
 	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
@@ -144,8 +143,8 @@ func (o *OracleListener) HasType() bool {
 	return false
 }
 
-// SetType gets a reference to the given string and assigns it to the Type field.
-func (o *OracleListener) SetType(v string) {
+// SetType gets a reference to the given OracleListenerTypeEnum and assigns it to the Type field.
+func (o *OracleListener) SetType(v OracleListenerTypeEnum) {
 	o.Type = &v
 }
 

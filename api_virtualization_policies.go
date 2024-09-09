@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// VirtualizationPoliciesApiService VirtualizationPoliciesApi service
-type VirtualizationPoliciesApiService service
+// VirtualizationPoliciesAPIService VirtualizationPoliciesAPI service
+type VirtualizationPoliciesAPIService service
 
 type ApiGetVirtualizationPolicyByIdRequest struct {
 	ctx context.Context
-	ApiService *VirtualizationPoliciesApiService
+	ApiService *VirtualizationPoliciesAPIService
 	policyId string
 }
 
@@ -41,7 +41,7 @@ GetVirtualizationPolicyById Fetch a virtualization policy by Id.
  @param policyId The ID of the Virtualization Policy.
  @return ApiGetVirtualizationPolicyByIdRequest
 */
-func (a *VirtualizationPoliciesApiService) GetVirtualizationPolicyById(ctx context.Context, policyId string) ApiGetVirtualizationPolicyByIdRequest {
+func (a *VirtualizationPoliciesAPIService) GetVirtualizationPolicyById(ctx context.Context, policyId string) ApiGetVirtualizationPolicyByIdRequest {
 	return ApiGetVirtualizationPolicyByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -51,7 +51,7 @@ func (a *VirtualizationPoliciesApiService) GetVirtualizationPolicyById(ctx conte
 
 // Execute executes the request
 //  @return VirtualizationPolicy
-func (a *VirtualizationPoliciesApiService) GetVirtualizationPolicyByIdExecute(r ApiGetVirtualizationPolicyByIdRequest) (*VirtualizationPolicy, *http.Response, error) {
+func (a *VirtualizationPoliciesAPIService) GetVirtualizationPolicyByIdExecute(r ApiGetVirtualizationPolicyByIdRequest) (*VirtualizationPolicy, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -59,7 +59,7 @@ func (a *VirtualizationPoliciesApiService) GetVirtualizationPolicyByIdExecute(r 
 		localVarReturnValue  *VirtualizationPolicy
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualizationPoliciesApiService.GetVirtualizationPolicyById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualizationPoliciesAPIService.GetVirtualizationPolicyById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -144,7 +144,7 @@ func (a *VirtualizationPoliciesApiService) GetVirtualizationPolicyByIdExecute(r 
 
 type ApiListVirtualizationPoliciesRequest struct {
 	ctx context.Context
-	ApiService *VirtualizationPoliciesApiService
+	ApiService *VirtualizationPoliciesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -178,7 +178,7 @@ ListVirtualizationPolicies Fetch a list of all virtualization policies
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListVirtualizationPoliciesRequest
 */
-func (a *VirtualizationPoliciesApiService) ListVirtualizationPolicies(ctx context.Context) ApiListVirtualizationPoliciesRequest {
+func (a *VirtualizationPoliciesAPIService) ListVirtualizationPolicies(ctx context.Context) ApiListVirtualizationPoliciesRequest {
 	return ApiListVirtualizationPoliciesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,7 +187,7 @@ func (a *VirtualizationPoliciesApiService) ListVirtualizationPolicies(ctx contex
 
 // Execute executes the request
 //  @return ListVirtualizationPoliciesResponse
-func (a *VirtualizationPoliciesApiService) ListVirtualizationPoliciesExecute(r ApiListVirtualizationPoliciesRequest) (*ListVirtualizationPoliciesResponse, *http.Response, error) {
+func (a *VirtualizationPoliciesAPIService) ListVirtualizationPoliciesExecute(r ApiListVirtualizationPoliciesRequest) (*ListVirtualizationPoliciesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -195,7 +195,7 @@ func (a *VirtualizationPoliciesApiService) ListVirtualizationPoliciesExecute(r A
 		localVarReturnValue  *ListVirtualizationPoliciesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualizationPoliciesApiService.ListVirtualizationPolicies")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualizationPoliciesAPIService.ListVirtualizationPolicies")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -207,13 +207,16 @@ func (a *VirtualizationPoliciesApiService) ListVirtualizationPoliciesExecute(r A
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -285,7 +288,7 @@ func (a *VirtualizationPoliciesApiService) ListVirtualizationPoliciesExecute(r A
 
 type ApiSearchVirtualizationPoliciesRequest struct {
 	ctx context.Context
-	ApiService *VirtualizationPoliciesApiService
+	ApiService *VirtualizationPoliciesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -326,7 +329,7 @@ SearchVirtualizationPolicies Search Virtualization Policies.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchVirtualizationPoliciesRequest
 */
-func (a *VirtualizationPoliciesApiService) SearchVirtualizationPolicies(ctx context.Context) ApiSearchVirtualizationPoliciesRequest {
+func (a *VirtualizationPoliciesAPIService) SearchVirtualizationPolicies(ctx context.Context) ApiSearchVirtualizationPoliciesRequest {
 	return ApiSearchVirtualizationPoliciesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -335,7 +338,7 @@ func (a *VirtualizationPoliciesApiService) SearchVirtualizationPolicies(ctx cont
 
 // Execute executes the request
 //  @return SearchVirtualizationPoliciesResponse
-func (a *VirtualizationPoliciesApiService) SearchVirtualizationPoliciesExecute(r ApiSearchVirtualizationPoliciesRequest) (*SearchVirtualizationPoliciesResponse, *http.Response, error) {
+func (a *VirtualizationPoliciesAPIService) SearchVirtualizationPoliciesExecute(r ApiSearchVirtualizationPoliciesRequest) (*SearchVirtualizationPoliciesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -343,7 +346,7 @@ func (a *VirtualizationPoliciesApiService) SearchVirtualizationPoliciesExecute(r
 		localVarReturnValue  *SearchVirtualizationPoliciesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualizationPoliciesApiService.SearchVirtualizationPolicies")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualizationPoliciesAPIService.SearchVirtualizationPolicies")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -355,13 +358,16 @@ func (a *VirtualizationPoliciesApiService) SearchVirtualizationPoliciesExecute(r
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

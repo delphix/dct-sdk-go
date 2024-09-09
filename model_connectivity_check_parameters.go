@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ConnectivityCheckParameters type satisfies the MappedNullable interface at compile time
@@ -57,6 +59,8 @@ type ConnectivityCheckParameters struct {
 	// Whether to use kerberos authentication.
 	UseKerberosAuthentication *bool `json:"use_kerberos_authentication,omitempty"`
 }
+
+type _ConnectivityCheckParameters ConnectivityCheckParameters
 
 // NewConnectivityCheckParameters instantiates a new ConnectivityCheckParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -691,6 +695,45 @@ func (o ConnectivityCheckParameters) ToMap() (map[string]interface{}, error) {
 		toSerialize["use_kerberos_authentication"] = o.UseKerberosAuthentication
 	}
 	return toSerialize, nil
+}
+
+func (o *ConnectivityCheckParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"engine_id",
+		"host",
+		"port",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConnectivityCheckParameters := _ConnectivityCheckParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varConnectivityCheckParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConnectivityCheckParameters(varConnectivityCheckParameters)
+
+	return err
 }
 
 type NullableConnectivityCheckParameters struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ProvisionVDBGroupFromBookmarkParameters type satisfies the MappedNullable interface at compile time
@@ -31,6 +33,8 @@ type ProvisionVDBGroupFromBookmarkParameters struct {
 	// Whether the account provisioning this VDB group must be configured as owner of the VDB group.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
+
+type _ProvisionVDBGroupFromBookmarkParameters ProvisionVDBGroupFromBookmarkParameters
 
 // NewProvisionVDBGroupFromBookmarkParameters instantiates a new ProvisionVDBGroupFromBookmarkParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -212,6 +216,45 @@ func (o ProvisionVDBGroupFromBookmarkParameters) ToMap() (map[string]interface{}
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
 	}
 	return toSerialize, nil
+}
+
+func (o *ProvisionVDBGroupFromBookmarkParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"bookmark_id",
+		"provision_parameters",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProvisionVDBGroupFromBookmarkParameters := _ProvisionVDBGroupFromBookmarkParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProvisionVDBGroupFromBookmarkParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProvisionVDBGroupFromBookmarkParameters(varProvisionVDBGroupFromBookmarkParameters)
+
+	return err
 }
 
 type NullableProvisionVDBGroupFromBookmarkParameters struct {

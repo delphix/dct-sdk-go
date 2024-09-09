@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -40,8 +40,7 @@ type StagingSource struct {
 	Fqdn NullableString `json:"fqdn,omitempty"`
 	// The repository id for this staging source.
 	Repository *string `json:"repository,omitempty"`
-	// The type of oracle source configuration for this staging source. (Oracle only)
-	OracleConfigType *string `json:"oracle_config_type,omitempty"`
+	OracleConfigType *OracleConfigTypeEnum `json:"oracle_config_type,omitempty"`
 	// The cdb type for this staging source. (Oracle only)
 	CdbType *string `json:"cdb_type,omitempty"`
 	// The dsource_id associated with this staging source.
@@ -467,9 +466,9 @@ func (o *StagingSource) SetRepository(v string) {
 }
 
 // GetOracleConfigType returns the OracleConfigType field value if set, zero value otherwise.
-func (o *StagingSource) GetOracleConfigType() string {
+func (o *StagingSource) GetOracleConfigType() OracleConfigTypeEnum {
 	if o == nil || IsNil(o.OracleConfigType) {
-		var ret string
+		var ret OracleConfigTypeEnum
 		return ret
 	}
 	return *o.OracleConfigType
@@ -477,7 +476,7 @@ func (o *StagingSource) GetOracleConfigType() string {
 
 // GetOracleConfigTypeOk returns a tuple with the OracleConfigType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StagingSource) GetOracleConfigTypeOk() (*string, bool) {
+func (o *StagingSource) GetOracleConfigTypeOk() (*OracleConfigTypeEnum, bool) {
 	if o == nil || IsNil(o.OracleConfigType) {
 		return nil, false
 	}
@@ -493,8 +492,8 @@ func (o *StagingSource) HasOracleConfigType() bool {
 	return false
 }
 
-// SetOracleConfigType gets a reference to the given string and assigns it to the OracleConfigType field.
-func (o *StagingSource) SetOracleConfigType(v string) {
+// SetOracleConfigType gets a reference to the given OracleConfigTypeEnum and assigns it to the OracleConfigType field.
+func (o *StagingSource) SetOracleConfigType(v OracleConfigTypeEnum) {
 	o.OracleConfigType = &v
 }
 

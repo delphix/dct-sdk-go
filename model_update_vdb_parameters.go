@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -32,7 +32,7 @@ type UpdateVDBParameters struct {
 	AutoRestart *bool `json:"auto_restart,omitempty"`
 	// The environment user ID to use to connect to the target environment.
 	EnvironmentUserId *string `json:"environment_user_id,omitempty"`
-	// The ID of the target VDB Template (Oracle Only).
+	// The ID of the target VDB Template (Oracle and MSSql Only).
 	TemplateId *string `json:"template_id,omitempty"`
 	// The listener IDs for this provision operation (Oracle Only).
 	ListenerIds []string `json:"listener_ids,omitempty"`
@@ -853,7 +853,7 @@ func (o *UpdateVDBParameters) GetAdditionalMountPointsOk() ([]AdditionalMountPoi
 
 // HasAdditionalMountPoints returns a boolean if a field has been set.
 func (o *UpdateVDBParameters) HasAdditionalMountPoints() bool {
-	if o != nil && IsNil(o.AdditionalMountPoints) {
+	if o != nil && !IsNil(o.AdditionalMountPoints) {
 		return true
 	}
 
@@ -886,7 +886,7 @@ func (o *UpdateVDBParameters) GetAppdataConfigParamsOk() (map[string]interface{}
 
 // HasAppdataConfigParams returns a boolean if a field has been set.
 func (o *UpdateVDBParameters) HasAppdataConfigParams() bool {
-	if o != nil && IsNil(o.AppdataConfigParams) {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
 		return true
 	}
 
@@ -919,7 +919,7 @@ func (o *UpdateVDBParameters) GetConfigParamsOk() (map[string]interface{}, bool)
 
 // HasConfigParams returns a boolean if a field has been set.
 func (o *UpdateVDBParameters) HasConfigParams() bool {
-	if o != nil && IsNil(o.ConfigParams) {
+	if o != nil && !IsNil(o.ConfigParams) {
 		return true
 	}
 

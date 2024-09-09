@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// DatabaseTemplatesApiService DatabaseTemplatesApi service
-type DatabaseTemplatesApiService service
+// DatabaseTemplatesAPIService DatabaseTemplatesAPI service
+type DatabaseTemplatesAPIService service
 
 type ApiCreateDatabaseTemplateRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	databaseTemplateCreateParameters *DatabaseTemplateCreateParameters
 }
 
@@ -46,7 +46,7 @@ CreateDatabaseTemplate Create a database template.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateDatabaseTemplateRequest
 */
-func (a *DatabaseTemplatesApiService) CreateDatabaseTemplate(ctx context.Context) ApiCreateDatabaseTemplateRequest {
+func (a *DatabaseTemplatesAPIService) CreateDatabaseTemplate(ctx context.Context) ApiCreateDatabaseTemplateRequest {
 	return ApiCreateDatabaseTemplateRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -55,7 +55,7 @@ func (a *DatabaseTemplatesApiService) CreateDatabaseTemplate(ctx context.Context
 
 // Execute executes the request
 //  @return CreateDatabaseTemplateResponse
-func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateExecute(r ApiCreateDatabaseTemplateRequest) (*CreateDatabaseTemplateResponse, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) CreateDatabaseTemplateExecute(r ApiCreateDatabaseTemplateRequest) (*CreateDatabaseTemplateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -63,7 +63,7 @@ func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateExecute(r ApiCreateD
 		localVarReturnValue  *CreateDatabaseTemplateResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.CreateDatabaseTemplate")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.CreateDatabaseTemplate")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -149,7 +149,7 @@ func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateExecute(r ApiCreateD
 
 type ApiCreateDatabaseTemplateTagsRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	databaseTemplateId string
 	tagsRequest *TagsRequest
 }
@@ -171,7 +171,7 @@ CreateDatabaseTemplateTags Create tags for a DatabaseTemplate.
  @param databaseTemplateId The ID of the Database Template.
  @return ApiCreateDatabaseTemplateTagsRequest
 */
-func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateTags(ctx context.Context, databaseTemplateId string) ApiCreateDatabaseTemplateTagsRequest {
+func (a *DatabaseTemplatesAPIService) CreateDatabaseTemplateTags(ctx context.Context, databaseTemplateId string) ApiCreateDatabaseTemplateTagsRequest {
 	return ApiCreateDatabaseTemplateTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -181,7 +181,7 @@ func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateTags(ctx context.Con
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateTagsExecute(r ApiCreateDatabaseTemplateTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) CreateDatabaseTemplateTagsExecute(r ApiCreateDatabaseTemplateTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -189,7 +189,7 @@ func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateTagsExecute(r ApiCre
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.CreateDatabaseTemplateTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.CreateDatabaseTemplateTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -279,7 +279,7 @@ func (a *DatabaseTemplatesApiService) CreateDatabaseTemplateTagsExecute(r ApiCre
 
 type ApiDeleteDatabaseTemplateRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	databaseTemplateId string
 }
 
@@ -294,7 +294,7 @@ DeleteDatabaseTemplate Delete a DatabaseTemplate by ID.
  @param databaseTemplateId The ID of the Database Template.
  @return ApiDeleteDatabaseTemplateRequest
 */
-func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplate(ctx context.Context, databaseTemplateId string) ApiDeleteDatabaseTemplateRequest {
+func (a *DatabaseTemplatesAPIService) DeleteDatabaseTemplate(ctx context.Context, databaseTemplateId string) ApiDeleteDatabaseTemplateRequest {
 	return ApiDeleteDatabaseTemplateRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -304,7 +304,7 @@ func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplate(ctx context.Context
 
 // Execute executes the request
 //  @return DeleteDatabaseTemplateResponse
-func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplateExecute(r ApiDeleteDatabaseTemplateRequest) (*DeleteDatabaseTemplateResponse, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) DeleteDatabaseTemplateExecute(r ApiDeleteDatabaseTemplateRequest) (*DeleteDatabaseTemplateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -312,7 +312,7 @@ func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplateExecute(r ApiDeleteD
 		localVarReturnValue  *DeleteDatabaseTemplateResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.DeleteDatabaseTemplate")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.DeleteDatabaseTemplate")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -397,7 +397,7 @@ func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplateExecute(r ApiDeleteD
 
 type ApiDeleteDatabaseTemplateTagRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	databaseTemplateId string
 	deleteTag *DeleteTag
 }
@@ -419,7 +419,7 @@ DeleteDatabaseTemplateTag Delete tags for a DatabaseTemplate.
  @param databaseTemplateId The ID of the Database Template.
  @return ApiDeleteDatabaseTemplateTagRequest
 */
-func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplateTag(ctx context.Context, databaseTemplateId string) ApiDeleteDatabaseTemplateTagRequest {
+func (a *DatabaseTemplatesAPIService) DeleteDatabaseTemplateTag(ctx context.Context, databaseTemplateId string) ApiDeleteDatabaseTemplateTagRequest {
 	return ApiDeleteDatabaseTemplateTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -428,14 +428,14 @@ func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplateTag(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplateTagExecute(r ApiDeleteDatabaseTemplateTagRequest) (*http.Response, error) {
+func (a *DatabaseTemplatesAPIService) DeleteDatabaseTemplateTagExecute(r ApiDeleteDatabaseTemplateTagRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.DeleteDatabaseTemplateTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.DeleteDatabaseTemplateTag")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -513,7 +513,7 @@ func (a *DatabaseTemplatesApiService) DeleteDatabaseTemplateTagExecute(r ApiDele
 
 type ApiGetDatabaseTemplateByIdRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	databaseTemplateId string
 }
 
@@ -528,7 +528,7 @@ GetDatabaseTemplateById Retrieve a DatabaseTemplate by ID.
  @param databaseTemplateId The ID of the Database Template.
  @return ApiGetDatabaseTemplateByIdRequest
 */
-func (a *DatabaseTemplatesApiService) GetDatabaseTemplateById(ctx context.Context, databaseTemplateId string) ApiGetDatabaseTemplateByIdRequest {
+func (a *DatabaseTemplatesAPIService) GetDatabaseTemplateById(ctx context.Context, databaseTemplateId string) ApiGetDatabaseTemplateByIdRequest {
 	return ApiGetDatabaseTemplateByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -538,7 +538,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplateById(ctx context.Contex
 
 // Execute executes the request
 //  @return DatabaseTemplate
-func (a *DatabaseTemplatesApiService) GetDatabaseTemplateByIdExecute(r ApiGetDatabaseTemplateByIdRequest) (*DatabaseTemplate, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) GetDatabaseTemplateByIdExecute(r ApiGetDatabaseTemplateByIdRequest) (*DatabaseTemplate, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -546,7 +546,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplateByIdExecute(r ApiGetDat
 		localVarReturnValue  *DatabaseTemplate
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.GetDatabaseTemplateById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.GetDatabaseTemplateById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -631,7 +631,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplateByIdExecute(r ApiGetDat
 
 type ApiGetDatabaseTemplateTagsRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	databaseTemplateId string
 }
 
@@ -646,7 +646,7 @@ GetDatabaseTemplateTags Get tags for a DatabaseTemplate.
  @param databaseTemplateId The ID of the Database Template.
  @return ApiGetDatabaseTemplateTagsRequest
 */
-func (a *DatabaseTemplatesApiService) GetDatabaseTemplateTags(ctx context.Context, databaseTemplateId string) ApiGetDatabaseTemplateTagsRequest {
+func (a *DatabaseTemplatesAPIService) GetDatabaseTemplateTags(ctx context.Context, databaseTemplateId string) ApiGetDatabaseTemplateTagsRequest {
 	return ApiGetDatabaseTemplateTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -656,7 +656,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplateTags(ctx context.Contex
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *DatabaseTemplatesApiService) GetDatabaseTemplateTagsExecute(r ApiGetDatabaseTemplateTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) GetDatabaseTemplateTagsExecute(r ApiGetDatabaseTemplateTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -664,7 +664,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplateTagsExecute(r ApiGetDat
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.GetDatabaseTemplateTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.GetDatabaseTemplateTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -749,7 +749,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplateTagsExecute(r ApiGetDat
 
 type ApiGetDatabaseTemplatesRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -783,7 +783,7 @@ GetDatabaseTemplates Retrieve the list of database templates.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetDatabaseTemplatesRequest
 */
-func (a *DatabaseTemplatesApiService) GetDatabaseTemplates(ctx context.Context) ApiGetDatabaseTemplatesRequest {
+func (a *DatabaseTemplatesAPIService) GetDatabaseTemplates(ctx context.Context) ApiGetDatabaseTemplatesRequest {
 	return ApiGetDatabaseTemplatesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -792,7 +792,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplates(ctx context.Context) 
 
 // Execute executes the request
 //  @return ListDatabaseTemplatesResponse
-func (a *DatabaseTemplatesApiService) GetDatabaseTemplatesExecute(r ApiGetDatabaseTemplatesRequest) (*ListDatabaseTemplatesResponse, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) GetDatabaseTemplatesExecute(r ApiGetDatabaseTemplatesRequest) (*ListDatabaseTemplatesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -800,7 +800,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplatesExecute(r ApiGetDataba
 		localVarReturnValue  *ListDatabaseTemplatesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.GetDatabaseTemplates")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.GetDatabaseTemplates")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -812,13 +812,16 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplatesExecute(r ApiGetDataba
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -890,7 +893,7 @@ func (a *DatabaseTemplatesApiService) GetDatabaseTemplatesExecute(r ApiGetDataba
 
 type ApiImportDatabaseTemplatesRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	engineIdBody *EngineIdBody
 }
 
@@ -910,7 +913,7 @@ ImportDatabaseTemplates Imports the database templates from an an engine.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiImportDatabaseTemplatesRequest
 */
-func (a *DatabaseTemplatesApiService) ImportDatabaseTemplates(ctx context.Context) ApiImportDatabaseTemplatesRequest {
+func (a *DatabaseTemplatesAPIService) ImportDatabaseTemplates(ctx context.Context) ApiImportDatabaseTemplatesRequest {
 	return ApiImportDatabaseTemplatesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -918,14 +921,14 @@ func (a *DatabaseTemplatesApiService) ImportDatabaseTemplates(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *DatabaseTemplatesApiService) ImportDatabaseTemplatesExecute(r ApiImportDatabaseTemplatesRequest) (*http.Response, error) {
+func (a *DatabaseTemplatesAPIService) ImportDatabaseTemplatesExecute(r ApiImportDatabaseTemplatesRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.ImportDatabaseTemplates")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.ImportDatabaseTemplates")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1002,7 +1005,7 @@ func (a *DatabaseTemplatesApiService) ImportDatabaseTemplatesExecute(r ApiImport
 
 type ApiSearchDatabaseTemplatesRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1043,7 +1046,7 @@ SearchDatabaseTemplates Search DatabaseTemplates.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchDatabaseTemplatesRequest
 */
-func (a *DatabaseTemplatesApiService) SearchDatabaseTemplates(ctx context.Context) ApiSearchDatabaseTemplatesRequest {
+func (a *DatabaseTemplatesAPIService) SearchDatabaseTemplates(ctx context.Context) ApiSearchDatabaseTemplatesRequest {
 	return ApiSearchDatabaseTemplatesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1052,7 +1055,7 @@ func (a *DatabaseTemplatesApiService) SearchDatabaseTemplates(ctx context.Contex
 
 // Execute executes the request
 //  @return SearchDatabaseTemplatesResponse
-func (a *DatabaseTemplatesApiService) SearchDatabaseTemplatesExecute(r ApiSearchDatabaseTemplatesRequest) (*SearchDatabaseTemplatesResponse, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) SearchDatabaseTemplatesExecute(r ApiSearchDatabaseTemplatesRequest) (*SearchDatabaseTemplatesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1060,7 +1063,7 @@ func (a *DatabaseTemplatesApiService) SearchDatabaseTemplatesExecute(r ApiSearch
 		localVarReturnValue  *SearchDatabaseTemplatesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.SearchDatabaseTemplates")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.SearchDatabaseTemplates")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1072,13 +1075,16 @@ func (a *DatabaseTemplatesApiService) SearchDatabaseTemplatesExecute(r ApiSearch
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1152,7 +1158,7 @@ func (a *DatabaseTemplatesApiService) SearchDatabaseTemplatesExecute(r ApiSearch
 
 type ApiUndoImportDatabaseTemplatesRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	engineIdBody *EngineIdBody
 }
 
@@ -1172,7 +1178,7 @@ UndoImportDatabaseTemplates Undo an import of DatabaseTemplates on an Engine.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUndoImportDatabaseTemplatesRequest
 */
-func (a *DatabaseTemplatesApiService) UndoImportDatabaseTemplates(ctx context.Context) ApiUndoImportDatabaseTemplatesRequest {
+func (a *DatabaseTemplatesAPIService) UndoImportDatabaseTemplates(ctx context.Context) ApiUndoImportDatabaseTemplatesRequest {
 	return ApiUndoImportDatabaseTemplatesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1180,14 +1186,14 @@ func (a *DatabaseTemplatesApiService) UndoImportDatabaseTemplates(ctx context.Co
 }
 
 // Execute executes the request
-func (a *DatabaseTemplatesApiService) UndoImportDatabaseTemplatesExecute(r ApiUndoImportDatabaseTemplatesRequest) (*http.Response, error) {
+func (a *DatabaseTemplatesAPIService) UndoImportDatabaseTemplatesExecute(r ApiUndoImportDatabaseTemplatesRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.UndoImportDatabaseTemplates")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.UndoImportDatabaseTemplates")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1264,7 +1270,7 @@ func (a *DatabaseTemplatesApiService) UndoImportDatabaseTemplatesExecute(r ApiUn
 
 type ApiUpdateDatabaseTemplateRequest struct {
 	ctx context.Context
-	ApiService *DatabaseTemplatesApiService
+	ApiService *DatabaseTemplatesAPIService
 	databaseTemplateId string
 	updateDatabaseTemplateParameters *UpdateDatabaseTemplateParameters
 }
@@ -1286,7 +1292,7 @@ UpdateDatabaseTemplate Updates a DatabaseTemplate by ID
  @param databaseTemplateId The ID of the Database Template.
  @return ApiUpdateDatabaseTemplateRequest
 */
-func (a *DatabaseTemplatesApiService) UpdateDatabaseTemplate(ctx context.Context, databaseTemplateId string) ApiUpdateDatabaseTemplateRequest {
+func (a *DatabaseTemplatesAPIService) UpdateDatabaseTemplate(ctx context.Context, databaseTemplateId string) ApiUpdateDatabaseTemplateRequest {
 	return ApiUpdateDatabaseTemplateRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1296,7 +1302,7 @@ func (a *DatabaseTemplatesApiService) UpdateDatabaseTemplate(ctx context.Context
 
 // Execute executes the request
 //  @return UpdateDatabaseTemplateResponse
-func (a *DatabaseTemplatesApiService) UpdateDatabaseTemplateExecute(r ApiUpdateDatabaseTemplateRequest) (*UpdateDatabaseTemplateResponse, *http.Response, error) {
+func (a *DatabaseTemplatesAPIService) UpdateDatabaseTemplateExecute(r ApiUpdateDatabaseTemplateRequest) (*UpdateDatabaseTemplateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -1304,7 +1310,7 @@ func (a *DatabaseTemplatesApiService) UpdateDatabaseTemplateExecute(r ApiUpdateD
 		localVarReturnValue  *UpdateDatabaseTemplateResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesApiService.UpdateDatabaseTemplate")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DatabaseTemplatesAPIService.UpdateDatabaseTemplate")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

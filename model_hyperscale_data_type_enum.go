@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -23,12 +23,16 @@ type HyperscaleDataTypeEnum string
 const (
 	HYPERSCALEDATATYPEENUM_ORACLE HyperscaleDataTypeEnum = "ORACLE"
 	HYPERSCALEDATATYPEENUM_MSSQL HyperscaleDataTypeEnum = "MSSQL"
+	HYPERSCALEDATATYPEENUM_DELIMITED_FILES HyperscaleDataTypeEnum = "DELIMITED_FILES"
+	HYPERSCALEDATATYPEENUM_MONGO_DB HyperscaleDataTypeEnum = "MONGO_DB"
 )
 
 // All allowed values of HyperscaleDataTypeEnum enum
 var AllowedHyperscaleDataTypeEnumEnumValues = []HyperscaleDataTypeEnum{
 	"ORACLE",
 	"MSSQL",
+	"DELIMITED_FILES",
+	"MONGO_DB",
 }
 
 func (v *HyperscaleDataTypeEnum) UnmarshalJSON(src []byte) error {

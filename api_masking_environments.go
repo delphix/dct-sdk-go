@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// MaskingEnvironmentsApiService MaskingEnvironmentsApi service
-type MaskingEnvironmentsApiService service
+// MaskingEnvironmentsAPIService MaskingEnvironmentsAPI service
+type MaskingEnvironmentsAPIService service
 
 type ApiGetMaskingEnvironmentByIdRequest struct {
 	ctx context.Context
-	ApiService *MaskingEnvironmentsApiService
+	ApiService *MaskingEnvironmentsAPIService
 	maskingEnvironmentId string
 }
 
@@ -41,7 +41,7 @@ GetMaskingEnvironmentById Retrieve a MaskingEnvironment by ID.
  @param maskingEnvironmentId The ID of the Masking Environment.
  @return ApiGetMaskingEnvironmentByIdRequest
 */
-func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentById(ctx context.Context, maskingEnvironmentId string) ApiGetMaskingEnvironmentByIdRequest {
+func (a *MaskingEnvironmentsAPIService) GetMaskingEnvironmentById(ctx context.Context, maskingEnvironmentId string) ApiGetMaskingEnvironmentByIdRequest {
 	return ApiGetMaskingEnvironmentByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -51,7 +51,7 @@ func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentById(ctx context.Co
 
 // Execute executes the request
 //  @return MaskingEnvironment
-func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentByIdExecute(r ApiGetMaskingEnvironmentByIdRequest) (*MaskingEnvironment, *http.Response, error) {
+func (a *MaskingEnvironmentsAPIService) GetMaskingEnvironmentByIdExecute(r ApiGetMaskingEnvironmentByIdRequest) (*MaskingEnvironment, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -59,7 +59,7 @@ func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentByIdExecute(r ApiGe
 		localVarReturnValue  *MaskingEnvironment
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingEnvironmentsApiService.GetMaskingEnvironmentById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingEnvironmentsAPIService.GetMaskingEnvironmentById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -144,7 +144,7 @@ func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentByIdExecute(r ApiGe
 
 type ApiGetMaskingEnvironmentsRequest struct {
 	ctx context.Context
-	ApiService *MaskingEnvironmentsApiService
+	ApiService *MaskingEnvironmentsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -178,7 +178,7 @@ GetMaskingEnvironments Retrieve the list of masking environments.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetMaskingEnvironmentsRequest
 */
-func (a *MaskingEnvironmentsApiService) GetMaskingEnvironments(ctx context.Context) ApiGetMaskingEnvironmentsRequest {
+func (a *MaskingEnvironmentsAPIService) GetMaskingEnvironments(ctx context.Context) ApiGetMaskingEnvironmentsRequest {
 	return ApiGetMaskingEnvironmentsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,7 +187,7 @@ func (a *MaskingEnvironmentsApiService) GetMaskingEnvironments(ctx context.Conte
 
 // Execute executes the request
 //  @return ListMaskingEnvironmentsResponse
-func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentsExecute(r ApiGetMaskingEnvironmentsRequest) (*ListMaskingEnvironmentsResponse, *http.Response, error) {
+func (a *MaskingEnvironmentsAPIService) GetMaskingEnvironmentsExecute(r ApiGetMaskingEnvironmentsRequest) (*ListMaskingEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -195,7 +195,7 @@ func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentsExecute(r ApiGetMa
 		localVarReturnValue  *ListMaskingEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingEnvironmentsApiService.GetMaskingEnvironments")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingEnvironmentsAPIService.GetMaskingEnvironments")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -207,13 +207,16 @@ func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentsExecute(r ApiGetMa
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -285,7 +288,7 @@ func (a *MaskingEnvironmentsApiService) GetMaskingEnvironmentsExecute(r ApiGetMa
 
 type ApiSearchMaskingEnvironmentsRequest struct {
 	ctx context.Context
-	ApiService *MaskingEnvironmentsApiService
+	ApiService *MaskingEnvironmentsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -326,7 +329,7 @@ SearchMaskingEnvironments Search masking environments.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchMaskingEnvironmentsRequest
 */
-func (a *MaskingEnvironmentsApiService) SearchMaskingEnvironments(ctx context.Context) ApiSearchMaskingEnvironmentsRequest {
+func (a *MaskingEnvironmentsAPIService) SearchMaskingEnvironments(ctx context.Context) ApiSearchMaskingEnvironmentsRequest {
 	return ApiSearchMaskingEnvironmentsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -335,7 +338,7 @@ func (a *MaskingEnvironmentsApiService) SearchMaskingEnvironments(ctx context.Co
 
 // Execute executes the request
 //  @return SearchMaskingEnvironmentsResponse
-func (a *MaskingEnvironmentsApiService) SearchMaskingEnvironmentsExecute(r ApiSearchMaskingEnvironmentsRequest) (*SearchMaskingEnvironmentsResponse, *http.Response, error) {
+func (a *MaskingEnvironmentsAPIService) SearchMaskingEnvironmentsExecute(r ApiSearchMaskingEnvironmentsRequest) (*SearchMaskingEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -343,7 +346,7 @@ func (a *MaskingEnvironmentsApiService) SearchMaskingEnvironmentsExecute(r ApiSe
 		localVarReturnValue  *SearchMaskingEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingEnvironmentsApiService.SearchMaskingEnvironments")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingEnvironmentsAPIService.SearchMaskingEnvironments")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -355,13 +358,16 @@ func (a *MaskingEnvironmentsApiService) SearchMaskingEnvironmentsExecute(r ApiSe
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

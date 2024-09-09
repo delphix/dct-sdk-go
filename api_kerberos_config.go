@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// KerberosConfigApiService KerberosConfigApi service
-type KerberosConfigApiService service
+// KerberosConfigAPIService KerberosConfigAPI service
+type KerberosConfigAPIService service
 
 type ApiGetKerberosConfigByIdRequest struct {
 	ctx context.Context
-	ApiService *KerberosConfigApiService
+	ApiService *KerberosConfigAPIService
 	kerberosConfigId string
 }
 
@@ -41,7 +41,7 @@ GetKerberosConfigById Get a kerberos config by ID or Name.
  @param kerberosConfigId The ID of the kerberos config.
  @return ApiGetKerberosConfigByIdRequest
 */
-func (a *KerberosConfigApiService) GetKerberosConfigById(ctx context.Context, kerberosConfigId string) ApiGetKerberosConfigByIdRequest {
+func (a *KerberosConfigAPIService) GetKerberosConfigById(ctx context.Context, kerberosConfigId string) ApiGetKerberosConfigByIdRequest {
 	return ApiGetKerberosConfigByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -51,7 +51,7 @@ func (a *KerberosConfigApiService) GetKerberosConfigById(ctx context.Context, ke
 
 // Execute executes the request
 //  @return KerberosConfig
-func (a *KerberosConfigApiService) GetKerberosConfigByIdExecute(r ApiGetKerberosConfigByIdRequest) (*KerberosConfig, *http.Response, error) {
+func (a *KerberosConfigAPIService) GetKerberosConfigByIdExecute(r ApiGetKerberosConfigByIdRequest) (*KerberosConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -59,7 +59,7 @@ func (a *KerberosConfigApiService) GetKerberosConfigByIdExecute(r ApiGetKerberos
 		localVarReturnValue  *KerberosConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KerberosConfigApiService.GetKerberosConfigById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KerberosConfigAPIService.GetKerberosConfigById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -144,7 +144,7 @@ func (a *KerberosConfigApiService) GetKerberosConfigByIdExecute(r ApiGetKerberos
 
 type ApiListKerberosConfigsRequest struct {
 	ctx context.Context
-	ApiService *KerberosConfigApiService
+	ApiService *KerberosConfigAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -178,7 +178,7 @@ ListKerberosConfigs List all kerberos configs.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListKerberosConfigsRequest
 */
-func (a *KerberosConfigApiService) ListKerberosConfigs(ctx context.Context) ApiListKerberosConfigsRequest {
+func (a *KerberosConfigAPIService) ListKerberosConfigs(ctx context.Context) ApiListKerberosConfigsRequest {
 	return ApiListKerberosConfigsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,7 +187,7 @@ func (a *KerberosConfigApiService) ListKerberosConfigs(ctx context.Context) ApiL
 
 // Execute executes the request
 //  @return ListKerberosConfigsResponse
-func (a *KerberosConfigApiService) ListKerberosConfigsExecute(r ApiListKerberosConfigsRequest) (*ListKerberosConfigsResponse, *http.Response, error) {
+func (a *KerberosConfigAPIService) ListKerberosConfigsExecute(r ApiListKerberosConfigsRequest) (*ListKerberosConfigsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -195,7 +195,7 @@ func (a *KerberosConfigApiService) ListKerberosConfigsExecute(r ApiListKerberosC
 		localVarReturnValue  *ListKerberosConfigsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KerberosConfigApiService.ListKerberosConfigs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KerberosConfigAPIService.ListKerberosConfigs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -207,13 +207,16 @@ func (a *KerberosConfigApiService) ListKerberosConfigsExecute(r ApiListKerberosC
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -285,7 +288,7 @@ func (a *KerberosConfigApiService) ListKerberosConfigsExecute(r ApiListKerberosC
 
 type ApiSearchKerberosConfigsRequest struct {
 	ctx context.Context
-	ApiService *KerberosConfigApiService
+	ApiService *KerberosConfigAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -326,7 +329,7 @@ SearchKerberosConfigs Search for Kerberos Configs.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchKerberosConfigsRequest
 */
-func (a *KerberosConfigApiService) SearchKerberosConfigs(ctx context.Context) ApiSearchKerberosConfigsRequest {
+func (a *KerberosConfigAPIService) SearchKerberosConfigs(ctx context.Context) ApiSearchKerberosConfigsRequest {
 	return ApiSearchKerberosConfigsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -335,7 +338,7 @@ func (a *KerberosConfigApiService) SearchKerberosConfigs(ctx context.Context) Ap
 
 // Execute executes the request
 //  @return SearchKerberosConfigsResponse
-func (a *KerberosConfigApiService) SearchKerberosConfigsExecute(r ApiSearchKerberosConfigsRequest) (*SearchKerberosConfigsResponse, *http.Response, error) {
+func (a *KerberosConfigAPIService) SearchKerberosConfigsExecute(r ApiSearchKerberosConfigsRequest) (*SearchKerberosConfigsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -343,7 +346,7 @@ func (a *KerberosConfigApiService) SearchKerberosConfigsExecute(r ApiSearchKerbe
 		localVarReturnValue  *SearchKerberosConfigsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KerberosConfigApiService.SearchKerberosConfigs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KerberosConfigAPIService.SearchKerberosConfigs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -355,13 +358,16 @@ func (a *KerberosConfigApiService) SearchKerberosConfigsExecute(r ApiSearchKerbe
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

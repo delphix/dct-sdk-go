@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -32,7 +32,7 @@ type HyperscaleInstanceUpdateParams struct {
 	// Ignore validation of the name associated to the TLS certificate when connecting to the hyperscale instance over HTTPs. Setting this value must only be done if the TLS certificate of the hyperscale instance does not match the hostname, and the TLS configuration of the hyperscale instance cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
 	// File name of a truststore which can be used to validate the TLS certificate of the hyperscale instance. The truststore must be available at /etc/config/certs/<truststore_filename>. Set this property to an empty string to clear the value. 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
+	TruststoreFilename NullableString `json:"truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.]*$"`
 	// Password to read the truststore. Set this property to an empty string to clear the value. 
 	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 }

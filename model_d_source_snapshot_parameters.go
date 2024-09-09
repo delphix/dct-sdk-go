@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -42,6 +42,8 @@ type DSourceSnapshotParameters struct {
 	SkipSpaceCheck *bool `json:"skip_space_check,omitempty"`
 	// List of datafiles to take a full backup of. This would be useful in situations where certain datafiles could not be backed up during previous SnapSync due to corruption or because they went offline. (Oracle only) 
 	FilesForPartialFullBackup []int64 `json:"files_for_partial_full_backup,omitempty"`
+	// The list of parameters specified by the snapshotParametersDefinition schema in the toolkit (AppData only).
+	AppdataParameters map[string]interface{} `json:"appdata_parameters,omitempty"`
 }
 
 // NewDSourceSnapshotParameters instantiates a new DSourceSnapshotParameters object
@@ -413,6 +415,39 @@ func (o *DSourceSnapshotParameters) SetFilesForPartialFullBackup(v []int64) {
 	o.FilesForPartialFullBackup = v
 }
 
+// GetAppdataParameters returns the AppdataParameters field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSourceSnapshotParameters) GetAppdataParameters() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AppdataParameters
+}
+
+// GetAppdataParametersOk returns a tuple with the AppdataParameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSourceSnapshotParameters) GetAppdataParametersOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AppdataParameters) {
+		return map[string]interface{}{}, false
+	}
+	return o.AppdataParameters, true
+}
+
+// HasAppdataParameters returns a boolean if a field has been set.
+func (o *DSourceSnapshotParameters) HasAppdataParameters() bool {
+	if o != nil && !IsNil(o.AppdataParameters) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataParameters gets a reference to the given map[string]interface{} and assigns it to the AppdataParameters field.
+func (o *DSourceSnapshotParameters) SetAppdataParameters(v map[string]interface{}) {
+	o.AppdataParameters = v
+}
+
 func (o DSourceSnapshotParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -455,6 +490,9 @@ func (o DSourceSnapshotParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.FilesForPartialFullBackup) {
 		toSerialize["files_for_partial_full_backup"] = o.FilesForPartialFullBackup
+	}
+	if o.AppdataParameters != nil {
+		toSerialize["appdata_parameters"] = o.AppdataParameters
 	}
 	return toSerialize, nil
 }

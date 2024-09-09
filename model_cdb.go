@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -40,7 +40,15 @@ type CDB struct {
 	JdbcConnectionString NullableString `json:"jdbc_connection_string,omitempty"`
 	// A reference to the Engine that this CDB belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
+	// Whether this CDB is linked or not.
+	IsLinked *bool `json:"is_linked,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// The name of the group containing this CDB.
+	GroupName NullableString `json:"group_name,omitempty"`
+	// The runtime status of the vCDB.
+	Status NullableString `json:"status,omitempty"`
+	// Whether the CDB is enabled or not.
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 // NewCDB instantiates a new CDB object
@@ -430,6 +438,38 @@ func (o *CDB) SetEngineId(v string) {
 	o.EngineId = &v
 }
 
+// GetIsLinked returns the IsLinked field value if set, zero value otherwise.
+func (o *CDB) GetIsLinked() bool {
+	if o == nil || IsNil(o.IsLinked) {
+		var ret bool
+		return ret
+	}
+	return *o.IsLinked
+}
+
+// GetIsLinkedOk returns a tuple with the IsLinked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetIsLinkedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsLinked) {
+		return nil, false
+	}
+	return o.IsLinked, true
+}
+
+// HasIsLinked returns a boolean if a field has been set.
+func (o *CDB) HasIsLinked() bool {
+	if o != nil && !IsNil(o.IsLinked) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsLinked gets a reference to the given bool and assigns it to the IsLinked field.
+func (o *CDB) SetIsLinked(v bool) {
+	o.IsLinked = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *CDB) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -460,6 +500,122 @@ func (o *CDB) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *CDB) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetGroupName returns the GroupName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CDB) GetGroupName() string {
+	if o == nil || IsNil(o.GroupName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.GroupName.Get()
+}
+
+// GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CDB) GetGroupNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GroupName.Get(), o.GroupName.IsSet()
+}
+
+// HasGroupName returns a boolean if a field has been set.
+func (o *CDB) HasGroupName() bool {
+	if o != nil && o.GroupName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGroupName gets a reference to the given NullableString and assigns it to the GroupName field.
+func (o *CDB) SetGroupName(v string) {
+	o.GroupName.Set(&v)
+}
+// SetGroupNameNil sets the value for GroupName to be an explicit nil
+func (o *CDB) SetGroupNameNil() {
+	o.GroupName.Set(nil)
+}
+
+// UnsetGroupName ensures that no value is present for GroupName, not even an explicit nil
+func (o *CDB) UnsetGroupName() {
+	o.GroupName.Unset()
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CDB) GetStatus() string {
+	if o == nil || IsNil(o.Status.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Status.Get()
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CDB) GetStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Status.Get(), o.Status.IsSet()
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *CDB) HasStatus() bool {
+	if o != nil && o.Status.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given NullableString and assigns it to the Status field.
+func (o *CDB) SetStatus(v string) {
+	o.Status.Set(&v)
+}
+// SetStatusNil sets the value for Status to be an explicit nil
+func (o *CDB) SetStatusNil() {
+	o.Status.Set(nil)
+}
+
+// UnsetStatus ensures that no value is present for Status, not even an explicit nil
+func (o *CDB) UnsetStatus() {
+	o.Status.Unset()
+}
+
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
+func (o *CDB) GetEnabled() bool {
+	if o == nil || IsNil(o.Enabled) {
+		var ret bool
+		return ret
+	}
+	return *o.Enabled
+}
+
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.Enabled) {
+		return nil, false
+	}
+	return o.Enabled, true
+}
+
+// HasEnabled returns a boolean if a field has been set.
+func (o *CDB) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
+func (o *CDB) SetEnabled(v bool) {
+	o.Enabled = &v
 }
 
 func (o CDB) MarshalJSON() ([]byte, error) {
@@ -502,8 +658,20 @@ func (o CDB) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
+	if !IsNil(o.IsLinked) {
+		toSerialize["is_linked"] = o.IsLinked
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if o.GroupName.IsSet() {
+		toSerialize["group_name"] = o.GroupName.Get()
+	}
+	if o.Status.IsSet() {
+		toSerialize["status"] = o.Status.Get()
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the DatabaseConnectivityCheckParameters type satisfies the MappedNullable interface at compile time
@@ -51,6 +53,8 @@ type DatabaseConnectivityCheckParameters struct {
 	// Reference to the environment user (MSSQL_ENVIRONMENT_USER only).
 	EnvironmentUser *string `json:"environment_user,omitempty"`
 }
+
+type _DatabaseConnectivityCheckParameters DatabaseConnectivityCheckParameters
 
 // NewDatabaseConnectivityCheckParameters instantiates a new DatabaseConnectivityCheckParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -587,6 +591,44 @@ func (o DatabaseConnectivityCheckParameters) ToMap() (map[string]interface{}, er
 		toSerialize["environment_user"] = o.EnvironmentUser
 	}
 	return toSerialize, nil
+}
+
+func (o *DatabaseConnectivityCheckParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"credentials_type",
+		"source_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDatabaseConnectivityCheckParameters := _DatabaseConnectivityCheckParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDatabaseConnectivityCheckParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DatabaseConnectivityCheckParameters(varDatabaseConnectivityCheckParameters)
+
+	return err
 }
 
 type NullableDatabaseConnectivityCheckParameters struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the BookmarkCompatibleRepositoryRequest type satisfies the MappedNullable interface at compile time
@@ -25,6 +27,8 @@ type BookmarkCompatibleRepositoryRequest struct {
 	// The ID or name of the target environment.
 	EnvironmentId *string `json:"environment_id,omitempty"`
 }
+
+type _BookmarkCompatibleRepositoryRequest BookmarkCompatibleRepositoryRequest
 
 // NewBookmarkCompatibleRepositoryRequest instantiates a new BookmarkCompatibleRepositoryRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -115,6 +119,43 @@ func (o BookmarkCompatibleRepositoryRequest) ToMap() (map[string]interface{}, er
 		toSerialize["environment_id"] = o.EnvironmentId
 	}
 	return toSerialize, nil
+}
+
+func (o *BookmarkCompatibleRepositoryRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"bookmark_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBookmarkCompatibleRepositoryRequest := _BookmarkCompatibleRepositoryRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBookmarkCompatibleRepositoryRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BookmarkCompatibleRepositoryRequest(varBookmarkCompatibleRepositoryRequest)
+
+	return err
 }
 
 type NullableBookmarkCompatibleRepositoryRequest struct {

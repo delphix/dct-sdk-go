@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,15 +21,15 @@ var _ MappedNullable = &DSourceHooks{}
 // DSourceHooks DSource operation hooks.
 type DSourceHooks struct {
 	// The commands to execute before syncing with external data.
-	OpsPreSync []DSourceHooksOpsPreSyncInner `json:"ops_pre_sync,omitempty"`
+	OpsPreSync []Hook `json:"ops_pre_sync,omitempty"`
 	// The commands to execute after syncing with external data and before running the LogSync.
-	OpsPreLogSync []DSourceHooksOpsPreSyncInner `json:"ops_pre_log_sync,omitempty"`
+	OpsPreLogSync []Hook `json:"ops_pre_log_sync,omitempty"`
 	// The commands to execute after syncing a linked source.
-	OpsPostSync []DSourceHooksOpsPreSyncInner `json:"ops_post_sync,omitempty"`
+	OpsPostSync []Hook `json:"ops_post_sync,omitempty"`
 	// The commands to execute on the staging source before performing a validated sync.
-	PreValidatedSync []DSourceHooksOpsPreSyncInner `json:"pre_validated_sync,omitempty"`
+	PreValidatedSync []Hook `json:"pre_validated_sync,omitempty"`
 	// The commands to execute on the staging source after performing a validated sync.
-	PostValidatedSync []DSourceHooksOpsPreSyncInner `json:"post_validated_sync,omitempty"`
+	PostValidatedSync []Hook `json:"post_validated_sync,omitempty"`
 }
 
 // NewDSourceHooks instantiates a new DSourceHooks object
@@ -50,9 +50,9 @@ func NewDSourceHooksWithDefaults() *DSourceHooks {
 }
 
 // GetOpsPreSync returns the OpsPreSync field value if set, zero value otherwise.
-func (o *DSourceHooks) GetOpsPreSync() []DSourceHooksOpsPreSyncInner {
+func (o *DSourceHooks) GetOpsPreSync() []Hook {
 	if o == nil || IsNil(o.OpsPreSync) {
-		var ret []DSourceHooksOpsPreSyncInner
+		var ret []Hook
 		return ret
 	}
 	return o.OpsPreSync
@@ -60,7 +60,7 @@ func (o *DSourceHooks) GetOpsPreSync() []DSourceHooksOpsPreSyncInner {
 
 // GetOpsPreSyncOk returns a tuple with the OpsPreSync field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DSourceHooks) GetOpsPreSyncOk() ([]DSourceHooksOpsPreSyncInner, bool) {
+func (o *DSourceHooks) GetOpsPreSyncOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.OpsPreSync) {
 		return nil, false
 	}
@@ -76,15 +76,15 @@ func (o *DSourceHooks) HasOpsPreSync() bool {
 	return false
 }
 
-// SetOpsPreSync gets a reference to the given []DSourceHooksOpsPreSyncInner and assigns it to the OpsPreSync field.
-func (o *DSourceHooks) SetOpsPreSync(v []DSourceHooksOpsPreSyncInner) {
+// SetOpsPreSync gets a reference to the given []Hook and assigns it to the OpsPreSync field.
+func (o *DSourceHooks) SetOpsPreSync(v []Hook) {
 	o.OpsPreSync = v
 }
 
 // GetOpsPreLogSync returns the OpsPreLogSync field value if set, zero value otherwise.
-func (o *DSourceHooks) GetOpsPreLogSync() []DSourceHooksOpsPreSyncInner {
+func (o *DSourceHooks) GetOpsPreLogSync() []Hook {
 	if o == nil || IsNil(o.OpsPreLogSync) {
-		var ret []DSourceHooksOpsPreSyncInner
+		var ret []Hook
 		return ret
 	}
 	return o.OpsPreLogSync
@@ -92,7 +92,7 @@ func (o *DSourceHooks) GetOpsPreLogSync() []DSourceHooksOpsPreSyncInner {
 
 // GetOpsPreLogSyncOk returns a tuple with the OpsPreLogSync field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DSourceHooks) GetOpsPreLogSyncOk() ([]DSourceHooksOpsPreSyncInner, bool) {
+func (o *DSourceHooks) GetOpsPreLogSyncOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.OpsPreLogSync) {
 		return nil, false
 	}
@@ -108,15 +108,15 @@ func (o *DSourceHooks) HasOpsPreLogSync() bool {
 	return false
 }
 
-// SetOpsPreLogSync gets a reference to the given []DSourceHooksOpsPreSyncInner and assigns it to the OpsPreLogSync field.
-func (o *DSourceHooks) SetOpsPreLogSync(v []DSourceHooksOpsPreSyncInner) {
+// SetOpsPreLogSync gets a reference to the given []Hook and assigns it to the OpsPreLogSync field.
+func (o *DSourceHooks) SetOpsPreLogSync(v []Hook) {
 	o.OpsPreLogSync = v
 }
 
 // GetOpsPostSync returns the OpsPostSync field value if set, zero value otherwise.
-func (o *DSourceHooks) GetOpsPostSync() []DSourceHooksOpsPreSyncInner {
+func (o *DSourceHooks) GetOpsPostSync() []Hook {
 	if o == nil || IsNil(o.OpsPostSync) {
-		var ret []DSourceHooksOpsPreSyncInner
+		var ret []Hook
 		return ret
 	}
 	return o.OpsPostSync
@@ -124,7 +124,7 @@ func (o *DSourceHooks) GetOpsPostSync() []DSourceHooksOpsPreSyncInner {
 
 // GetOpsPostSyncOk returns a tuple with the OpsPostSync field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DSourceHooks) GetOpsPostSyncOk() ([]DSourceHooksOpsPreSyncInner, bool) {
+func (o *DSourceHooks) GetOpsPostSyncOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.OpsPostSync) {
 		return nil, false
 	}
@@ -140,15 +140,15 @@ func (o *DSourceHooks) HasOpsPostSync() bool {
 	return false
 }
 
-// SetOpsPostSync gets a reference to the given []DSourceHooksOpsPreSyncInner and assigns it to the OpsPostSync field.
-func (o *DSourceHooks) SetOpsPostSync(v []DSourceHooksOpsPreSyncInner) {
+// SetOpsPostSync gets a reference to the given []Hook and assigns it to the OpsPostSync field.
+func (o *DSourceHooks) SetOpsPostSync(v []Hook) {
 	o.OpsPostSync = v
 }
 
 // GetPreValidatedSync returns the PreValidatedSync field value if set, zero value otherwise.
-func (o *DSourceHooks) GetPreValidatedSync() []DSourceHooksOpsPreSyncInner {
+func (o *DSourceHooks) GetPreValidatedSync() []Hook {
 	if o == nil || IsNil(o.PreValidatedSync) {
-		var ret []DSourceHooksOpsPreSyncInner
+		var ret []Hook
 		return ret
 	}
 	return o.PreValidatedSync
@@ -156,7 +156,7 @@ func (o *DSourceHooks) GetPreValidatedSync() []DSourceHooksOpsPreSyncInner {
 
 // GetPreValidatedSyncOk returns a tuple with the PreValidatedSync field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DSourceHooks) GetPreValidatedSyncOk() ([]DSourceHooksOpsPreSyncInner, bool) {
+func (o *DSourceHooks) GetPreValidatedSyncOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.PreValidatedSync) {
 		return nil, false
 	}
@@ -172,15 +172,15 @@ func (o *DSourceHooks) HasPreValidatedSync() bool {
 	return false
 }
 
-// SetPreValidatedSync gets a reference to the given []DSourceHooksOpsPreSyncInner and assigns it to the PreValidatedSync field.
-func (o *DSourceHooks) SetPreValidatedSync(v []DSourceHooksOpsPreSyncInner) {
+// SetPreValidatedSync gets a reference to the given []Hook and assigns it to the PreValidatedSync field.
+func (o *DSourceHooks) SetPreValidatedSync(v []Hook) {
 	o.PreValidatedSync = v
 }
 
 // GetPostValidatedSync returns the PostValidatedSync field value if set, zero value otherwise.
-func (o *DSourceHooks) GetPostValidatedSync() []DSourceHooksOpsPreSyncInner {
+func (o *DSourceHooks) GetPostValidatedSync() []Hook {
 	if o == nil || IsNil(o.PostValidatedSync) {
-		var ret []DSourceHooksOpsPreSyncInner
+		var ret []Hook
 		return ret
 	}
 	return o.PostValidatedSync
@@ -188,7 +188,7 @@ func (o *DSourceHooks) GetPostValidatedSync() []DSourceHooksOpsPreSyncInner {
 
 // GetPostValidatedSyncOk returns a tuple with the PostValidatedSync field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DSourceHooks) GetPostValidatedSyncOk() ([]DSourceHooksOpsPreSyncInner, bool) {
+func (o *DSourceHooks) GetPostValidatedSyncOk() ([]Hook, bool) {
 	if o == nil || IsNil(o.PostValidatedSync) {
 		return nil, false
 	}
@@ -204,8 +204,8 @@ func (o *DSourceHooks) HasPostValidatedSync() bool {
 	return false
 }
 
-// SetPostValidatedSync gets a reference to the given []DSourceHooksOpsPreSyncInner and assigns it to the PostValidatedSync field.
-func (o *DSourceHooks) SetPostValidatedSync(v []DSourceHooksOpsPreSyncInner) {
+// SetPostValidatedSync gets a reference to the given []Hook and assigns it to the PostValidatedSync field.
+func (o *DSourceHooks) SetPostValidatedSync(v []Hook) {
 	o.PostValidatedSync = v
 }
 

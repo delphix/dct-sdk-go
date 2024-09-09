@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ASEDSourceLinkSourceParameters type satisfies the MappedNullable interface at compile time
@@ -62,6 +64,8 @@ type ASEDSourceLinkSourceParameters struct {
 	DbUser *string `json:"db_user,omitempty"`
 	// Password for the database user.
 	DbPassword *string `json:"db_password,omitempty"`
+	// Delphix display name for the vault user.
+	DbVaultUsername *string `json:"db_vault_username,omitempty"`
 	// The name or reference of the vault from which to read the database credentials.
 	DbVault *string `json:"db_vault,omitempty"`
 	// Vault engine name where the credential is stored.
@@ -99,6 +103,8 @@ type ASEDSourceLinkSourceParameters struct {
 	// Operations to perform on the staging source after performing a validated sync.
 	PostValidatedSync []SourceOperation `json:"post_validated_sync,omitempty"`
 }
+
+type _ASEDSourceLinkSourceParameters ASEDSourceLinkSourceParameters
 
 // NewASEDSourceLinkSourceParameters instantiates a new ASEDSourceLinkSourceParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -799,6 +805,38 @@ func (o *ASEDSourceLinkSourceParameters) SetDbPassword(v string) {
 	o.DbPassword = &v
 }
 
+// GetDbVaultUsername returns the DbVaultUsername field value if set, zero value otherwise.
+func (o *ASEDSourceLinkSourceParameters) GetDbVaultUsername() string {
+	if o == nil || IsNil(o.DbVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DbVaultUsername
+}
+
+// GetDbVaultUsernameOk returns a tuple with the DbVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ASEDSourceLinkSourceParameters) GetDbVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DbVaultUsername) {
+		return nil, false
+	}
+	return o.DbVaultUsername, true
+}
+
+// HasDbVaultUsername returns a boolean if a field has been set.
+func (o *ASEDSourceLinkSourceParameters) HasDbVaultUsername() bool {
+	if o != nil && !IsNil(o.DbVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbVaultUsername gets a reference to the given string and assigns it to the DbVaultUsername field.
+func (o *ASEDSourceLinkSourceParameters) SetDbVaultUsername(v string) {
+	o.DbVaultUsername = &v
+}
+
 // GetDbVault returns the DbVault field value if set, zero value otherwise.
 func (o *ASEDSourceLinkSourceParameters) GetDbVault() string {
 	if o == nil || IsNil(o.DbVault) {
@@ -1444,6 +1482,9 @@ func (o ASEDSourceLinkSourceParameters) ToMap() (map[string]interface{}, error) 
 	if !IsNil(o.DbPassword) {
 		toSerialize["db_password"] = o.DbPassword
 	}
+	if !IsNil(o.DbVaultUsername) {
+		toSerialize["db_vault_username"] = o.DbVaultUsername
+	}
 	if !IsNil(o.DbVault) {
 		toSerialize["db_vault"] = o.DbVault
 	}
@@ -1499,6 +1540,44 @@ func (o ASEDSourceLinkSourceParameters) ToMap() (map[string]interface{}, error) 
 		toSerialize["post_validated_sync"] = o.PostValidatedSync
 	}
 	return toSerialize, nil
+}
+
+func (o *ASEDSourceLinkSourceParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_id",
+		"load_backup_path",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varASEDSourceLinkSourceParameters := _ASEDSourceLinkSourceParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varASEDSourceLinkSourceParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ASEDSourceLinkSourceParameters(varASEDSourceLinkSourceParameters)
+
+	return err
 }
 
 type NullableASEDSourceLinkSourceParameters struct {

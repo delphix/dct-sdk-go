@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// StagingSourcesApiService StagingSourcesApi service
-type StagingSourcesApiService service
+// StagingSourcesAPIService StagingSourcesAPI service
+type StagingSourcesAPIService service
 
 type ApiCreateStagingSourceTagsRequest struct {
 	ctx context.Context
-	ApiService *StagingSourcesApiService
+	ApiService *StagingSourcesAPIService
 	stagingSourceId string
 	tagsRequest *TagsRequest
 }
@@ -48,7 +48,7 @@ CreateStagingSourceTags Create tags for a Staging Source.
  @param stagingSourceId The ID of the staging Source.
  @return ApiCreateStagingSourceTagsRequest
 */
-func (a *StagingSourcesApiService) CreateStagingSourceTags(ctx context.Context, stagingSourceId string) ApiCreateStagingSourceTagsRequest {
+func (a *StagingSourcesAPIService) CreateStagingSourceTags(ctx context.Context, stagingSourceId string) ApiCreateStagingSourceTagsRequest {
 	return ApiCreateStagingSourceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +58,7 @@ func (a *StagingSourcesApiService) CreateStagingSourceTags(ctx context.Context, 
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *StagingSourcesApiService) CreateStagingSourceTagsExecute(r ApiCreateStagingSourceTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *StagingSourcesAPIService) CreateStagingSourceTagsExecute(r ApiCreateStagingSourceTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +66,7 @@ func (a *StagingSourcesApiService) CreateStagingSourceTagsExecute(r ApiCreateSta
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesApiService.CreateStagingSourceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesAPIService.CreateStagingSourceTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -156,7 +156,7 @@ func (a *StagingSourcesApiService) CreateStagingSourceTagsExecute(r ApiCreateSta
 
 type ApiDeleteStagingSourceTagsRequest struct {
 	ctx context.Context
-	ApiService *StagingSourcesApiService
+	ApiService *StagingSourcesAPIService
 	stagingSourceId string
 	deleteTag *DeleteTag
 }
@@ -178,7 +178,7 @@ DeleteStagingSourceTags Delete tags for a Staging Source.
  @param stagingSourceId The ID of the staging Source.
  @return ApiDeleteStagingSourceTagsRequest
 */
-func (a *StagingSourcesApiService) DeleteStagingSourceTags(ctx context.Context, stagingSourceId string) ApiDeleteStagingSourceTagsRequest {
+func (a *StagingSourcesAPIService) DeleteStagingSourceTags(ctx context.Context, stagingSourceId string) ApiDeleteStagingSourceTagsRequest {
 	return ApiDeleteStagingSourceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,14 +187,14 @@ func (a *StagingSourcesApiService) DeleteStagingSourceTags(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *StagingSourcesApiService) DeleteStagingSourceTagsExecute(r ApiDeleteStagingSourceTagsRequest) (*http.Response, error) {
+func (a *StagingSourcesAPIService) DeleteStagingSourceTagsExecute(r ApiDeleteStagingSourceTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesApiService.DeleteStagingSourceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesAPIService.DeleteStagingSourceTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -272,7 +272,7 @@ func (a *StagingSourcesApiService) DeleteStagingSourceTagsExecute(r ApiDeleteSta
 
 type ApiGetStagingSourceByIdRequest struct {
 	ctx context.Context
-	ApiService *StagingSourcesApiService
+	ApiService *StagingSourcesAPIService
 	stagingSourceId string
 }
 
@@ -287,7 +287,7 @@ GetStagingSourceById Get a staging source by ID.
  @param stagingSourceId The ID of the staging Source.
  @return ApiGetStagingSourceByIdRequest
 */
-func (a *StagingSourcesApiService) GetStagingSourceById(ctx context.Context, stagingSourceId string) ApiGetStagingSourceByIdRequest {
+func (a *StagingSourcesAPIService) GetStagingSourceById(ctx context.Context, stagingSourceId string) ApiGetStagingSourceByIdRequest {
 	return ApiGetStagingSourceByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -297,7 +297,7 @@ func (a *StagingSourcesApiService) GetStagingSourceById(ctx context.Context, sta
 
 // Execute executes the request
 //  @return StagingSource
-func (a *StagingSourcesApiService) GetStagingSourceByIdExecute(r ApiGetStagingSourceByIdRequest) (*StagingSource, *http.Response, error) {
+func (a *StagingSourcesAPIService) GetStagingSourceByIdExecute(r ApiGetStagingSourceByIdRequest) (*StagingSource, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -305,7 +305,7 @@ func (a *StagingSourcesApiService) GetStagingSourceByIdExecute(r ApiGetStagingSo
 		localVarReturnValue  *StagingSource
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesApiService.GetStagingSourceById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesAPIService.GetStagingSourceById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -390,7 +390,7 @@ func (a *StagingSourcesApiService) GetStagingSourceByIdExecute(r ApiGetStagingSo
 
 type ApiGetStagingSourceTagsRequest struct {
 	ctx context.Context
-	ApiService *StagingSourcesApiService
+	ApiService *StagingSourcesAPIService
 	stagingSourceId string
 }
 
@@ -405,7 +405,7 @@ GetStagingSourceTags Get tags for a Staging Source.
  @param stagingSourceId The ID of the staging Source.
  @return ApiGetStagingSourceTagsRequest
 */
-func (a *StagingSourcesApiService) GetStagingSourceTags(ctx context.Context, stagingSourceId string) ApiGetStagingSourceTagsRequest {
+func (a *StagingSourcesAPIService) GetStagingSourceTags(ctx context.Context, stagingSourceId string) ApiGetStagingSourceTagsRequest {
 	return ApiGetStagingSourceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -415,7 +415,7 @@ func (a *StagingSourcesApiService) GetStagingSourceTags(ctx context.Context, sta
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *StagingSourcesApiService) GetStagingSourceTagsExecute(r ApiGetStagingSourceTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *StagingSourcesAPIService) GetStagingSourceTagsExecute(r ApiGetStagingSourceTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -423,7 +423,7 @@ func (a *StagingSourcesApiService) GetStagingSourceTagsExecute(r ApiGetStagingSo
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesApiService.GetStagingSourceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesAPIService.GetStagingSourceTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -508,7 +508,7 @@ func (a *StagingSourcesApiService) GetStagingSourceTagsExecute(r ApiGetStagingSo
 
 type ApiGetStagingSourcesRequest struct {
 	ctx context.Context
-	ApiService *StagingSourcesApiService
+	ApiService *StagingSourcesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -542,7 +542,7 @@ GetStagingSources List all staging sources.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetStagingSourcesRequest
 */
-func (a *StagingSourcesApiService) GetStagingSources(ctx context.Context) ApiGetStagingSourcesRequest {
+func (a *StagingSourcesAPIService) GetStagingSources(ctx context.Context) ApiGetStagingSourcesRequest {
 	return ApiGetStagingSourcesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -551,7 +551,7 @@ func (a *StagingSourcesApiService) GetStagingSources(ctx context.Context) ApiGet
 
 // Execute executes the request
 //  @return ListStagingSourcesResponse
-func (a *StagingSourcesApiService) GetStagingSourcesExecute(r ApiGetStagingSourcesRequest) (*ListStagingSourcesResponse, *http.Response, error) {
+func (a *StagingSourcesAPIService) GetStagingSourcesExecute(r ApiGetStagingSourcesRequest) (*ListStagingSourcesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -559,7 +559,7 @@ func (a *StagingSourcesApiService) GetStagingSourcesExecute(r ApiGetStagingSourc
 		localVarReturnValue  *ListStagingSourcesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesApiService.GetStagingSources")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesAPIService.GetStagingSources")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -571,13 +571,16 @@ func (a *StagingSourcesApiService) GetStagingSourcesExecute(r ApiGetStagingSourc
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -649,7 +652,7 @@ func (a *StagingSourcesApiService) GetStagingSourcesExecute(r ApiGetStagingSourc
 
 type ApiSearchStagingSourcesRequest struct {
 	ctx context.Context
-	ApiService *StagingSourcesApiService
+	ApiService *StagingSourcesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -690,7 +693,7 @@ SearchStagingSources Search for Staging Sources.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchStagingSourcesRequest
 */
-func (a *StagingSourcesApiService) SearchStagingSources(ctx context.Context) ApiSearchStagingSourcesRequest {
+func (a *StagingSourcesAPIService) SearchStagingSources(ctx context.Context) ApiSearchStagingSourcesRequest {
 	return ApiSearchStagingSourcesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -699,7 +702,7 @@ func (a *StagingSourcesApiService) SearchStagingSources(ctx context.Context) Api
 
 // Execute executes the request
 //  @return SearchStagingSourcesResponse
-func (a *StagingSourcesApiService) SearchStagingSourcesExecute(r ApiSearchStagingSourcesRequest) (*SearchStagingSourcesResponse, *http.Response, error) {
+func (a *StagingSourcesAPIService) SearchStagingSourcesExecute(r ApiSearchStagingSourcesRequest) (*SearchStagingSourcesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -707,7 +710,7 @@ func (a *StagingSourcesApiService) SearchStagingSourcesExecute(r ApiSearchStagin
 		localVarReturnValue  *SearchStagingSourcesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesApiService.SearchStagingSources")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StagingSourcesAPIService.SearchStagingSources")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -719,13 +722,16 @@ func (a *StagingSourcesApiService) SearchStagingSourcesExecute(r ApiSearchStagin
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

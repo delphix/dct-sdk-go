@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,8 @@ type OracleClusterNodeInstance struct {
 	InstanceName *string `json:"instance_name,omitempty"`
 	// The number of this instance.
 	InstanceNumber *int32 `json:"instance_number,omitempty"`
+	// The id of Source this instance belongs to.
+	SourceId *string `json:"source_id,omitempty"`
 }
 
 // NewOracleClusterNodeInstance instantiates a new OracleClusterNodeInstance object
@@ -107,6 +109,38 @@ func (o *OracleClusterNodeInstance) SetInstanceNumber(v int32) {
 	o.InstanceNumber = &v
 }
 
+// GetSourceId returns the SourceId field value if set, zero value otherwise.
+func (o *OracleClusterNodeInstance) GetSourceId() string {
+	if o == nil || IsNil(o.SourceId) {
+		var ret string
+		return ret
+	}
+	return *o.SourceId
+}
+
+// GetSourceIdOk returns a tuple with the SourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleClusterNodeInstance) GetSourceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceId) {
+		return nil, false
+	}
+	return o.SourceId, true
+}
+
+// HasSourceId returns a boolean if a field has been set.
+func (o *OracleClusterNodeInstance) HasSourceId() bool {
+	if o != nil && !IsNil(o.SourceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceId gets a reference to the given string and assigns it to the SourceId field.
+func (o *OracleClusterNodeInstance) SetSourceId(v string) {
+	o.SourceId = &v
+}
+
 func (o OracleClusterNodeInstance) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +156,9 @@ func (o OracleClusterNodeInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.InstanceNumber) {
 		toSerialize["instance_number"] = o.InstanceNumber
+	}
+	if !IsNil(o.SourceId) {
+		toSerialize["source_id"] = o.SourceId
 	}
 	return toSerialize, nil
 }

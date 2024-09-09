@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// ToolkitsApiService ToolkitsApi service
-type ToolkitsApiService service
+// ToolkitsAPIService ToolkitsAPI service
+type ToolkitsAPIService service
 
 type ApiCreateToolkitTagsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	toolkitId string
 	tagsRequest *TagsRequest
 }
@@ -48,7 +48,7 @@ CreateToolkitTags Create tags for a toolkit.
  @param toolkitId The ID of the toolkit.
  @return ApiCreateToolkitTagsRequest
 */
-func (a *ToolkitsApiService) CreateToolkitTags(ctx context.Context, toolkitId string) ApiCreateToolkitTagsRequest {
+func (a *ToolkitsAPIService) CreateToolkitTags(ctx context.Context, toolkitId string) ApiCreateToolkitTagsRequest {
 	return ApiCreateToolkitTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +58,7 @@ func (a *ToolkitsApiService) CreateToolkitTags(ctx context.Context, toolkitId st
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ToolkitsApiService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +66,7 @@ func (a *ToolkitsApiService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequ
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.CreateToolkitTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.CreateToolkitTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -156,7 +156,7 @@ func (a *ToolkitsApiService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequ
 
 type ApiDeleteToolkitTagsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	toolkitId string
 	deleteTag *DeleteTag
 }
@@ -178,7 +178,7 @@ DeleteToolkitTags Delete tags for a Toolkit.
  @param toolkitId The ID of the toolkit.
  @return ApiDeleteToolkitTagsRequest
 */
-func (a *ToolkitsApiService) DeleteToolkitTags(ctx context.Context, toolkitId string) ApiDeleteToolkitTagsRequest {
+func (a *ToolkitsAPIService) DeleteToolkitTags(ctx context.Context, toolkitId string) ApiDeleteToolkitTagsRequest {
 	return ApiDeleteToolkitTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,14 +187,14 @@ func (a *ToolkitsApiService) DeleteToolkitTags(ctx context.Context, toolkitId st
 }
 
 // Execute executes the request
-func (a *ToolkitsApiService) DeleteToolkitTagsExecute(r ApiDeleteToolkitTagsRequest) (*http.Response, error) {
+func (a *ToolkitsAPIService) DeleteToolkitTagsExecute(r ApiDeleteToolkitTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.DeleteToolkitTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.DeleteToolkitTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -272,7 +272,7 @@ func (a *ToolkitsApiService) DeleteToolkitTagsExecute(r ApiDeleteToolkitTagsRequ
 
 type ApiGetToolkitByIdRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	toolkitId string
 }
 
@@ -287,7 +287,7 @@ GetToolkitById Get Toolkit by ID.
  @param toolkitId The ID of the toolkit.
  @return ApiGetToolkitByIdRequest
 */
-func (a *ToolkitsApiService) GetToolkitById(ctx context.Context, toolkitId string) ApiGetToolkitByIdRequest {
+func (a *ToolkitsAPIService) GetToolkitById(ctx context.Context, toolkitId string) ApiGetToolkitByIdRequest {
 	return ApiGetToolkitByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -297,7 +297,7 @@ func (a *ToolkitsApiService) GetToolkitById(ctx context.Context, toolkitId strin
 
 // Execute executes the request
 //  @return Toolkit
-func (a *ToolkitsApiService) GetToolkitByIdExecute(r ApiGetToolkitByIdRequest) (*Toolkit, *http.Response, error) {
+func (a *ToolkitsAPIService) GetToolkitByIdExecute(r ApiGetToolkitByIdRequest) (*Toolkit, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -305,7 +305,7 @@ func (a *ToolkitsApiService) GetToolkitByIdExecute(r ApiGetToolkitByIdRequest) (
 		localVarReturnValue  *Toolkit
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.GetToolkitById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.GetToolkitById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -390,7 +390,7 @@ func (a *ToolkitsApiService) GetToolkitByIdExecute(r ApiGetToolkitByIdRequest) (
 
 type ApiGetToolkitTagsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	toolkitId string
 }
 
@@ -405,7 +405,7 @@ GetToolkitTags Get tags for a Toolkit.
  @param toolkitId The ID of the toolkit.
  @return ApiGetToolkitTagsRequest
 */
-func (a *ToolkitsApiService) GetToolkitTags(ctx context.Context, toolkitId string) ApiGetToolkitTagsRequest {
+func (a *ToolkitsAPIService) GetToolkitTags(ctx context.Context, toolkitId string) ApiGetToolkitTagsRequest {
 	return ApiGetToolkitTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -415,7 +415,7 @@ func (a *ToolkitsApiService) GetToolkitTags(ctx context.Context, toolkitId strin
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ToolkitsApiService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -423,7 +423,7 @@ func (a *ToolkitsApiService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.GetToolkitTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.GetToolkitTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -508,7 +508,7 @@ func (a *ToolkitsApiService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (
 
 type ApiGetToolkitsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -542,7 +542,7 @@ GetToolkits List all toolkits.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetToolkitsRequest
 */
-func (a *ToolkitsApiService) GetToolkits(ctx context.Context) ApiGetToolkitsRequest {
+func (a *ToolkitsAPIService) GetToolkits(ctx context.Context) ApiGetToolkitsRequest {
 	return ApiGetToolkitsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -551,7 +551,7 @@ func (a *ToolkitsApiService) GetToolkits(ctx context.Context) ApiGetToolkitsRequ
 
 // Execute executes the request
 //  @return ListToolkitResponse
-func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListToolkitResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListToolkitResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -559,7 +559,7 @@ func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListT
 		localVarReturnValue  *ListToolkitResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.GetToolkits")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.GetToolkits")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -571,13 +571,16 @@ func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListT
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -649,7 +652,7 @@ func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListT
 
 type ApiSearchToolkitsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -690,7 +693,7 @@ SearchToolkits Search for toolkits.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchToolkitsRequest
 */
-func (a *ToolkitsApiService) SearchToolkits(ctx context.Context) ApiSearchToolkitsRequest {
+func (a *ToolkitsAPIService) SearchToolkits(ctx context.Context) ApiSearchToolkitsRequest {
 	return ApiSearchToolkitsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -699,7 +702,7 @@ func (a *ToolkitsApiService) SearchToolkits(ctx context.Context) ApiSearchToolki
 
 // Execute executes the request
 //  @return SearchToolkitResponse
-func (a *ToolkitsApiService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (*SearchToolkitResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (*SearchToolkitResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -707,7 +710,7 @@ func (a *ToolkitsApiService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (
 		localVarReturnValue  *SearchToolkitResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.SearchToolkits")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.SearchToolkits")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -719,13 +722,16 @@ func (a *ToolkitsApiService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

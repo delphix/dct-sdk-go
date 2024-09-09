@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,8 @@ type UpdateVDBGroupParameters struct {
 	// The name of the VDB group.
 	Name *string `json:"name,omitempty"`
 	VdbIds []string `json:"vdb_ids,omitempty"`
+	// Dictates order of operations on VDBs. Operations can be performed in parallel <br> for all VDBs or sequentially. Below are possible valid and invalid orderings given an example <br> VDB group with 3 vdbs (A, B, and C).<br> Valid:<br> {\"vdb_id\":\"vdb-1\", \"order\":\"1\"} {\"vdb_id\":\"vdb-2\", order:\"1\"} {vdb_id:\"vdb-3\", order:\"1\"} (parallel)<br> {vdb_id:\"vdb-1\", order:\"1\"} {vdb_id:\"vdb-2\", order:\"2\"} {vdb_id:\"vdb-3\", order:\"3\"} (sequential)<br> Invalid:<br> {vdb_id:\"vdb-1\", order:\"A\"} {vdb_id:\"vdb-2\", order:\"B\"} {vdb_id:\"vdb-3\", order:\"C\"} (sequential)<br><br> In the sequential case the vdbs with priority 1 is the first to be started and the last to<br> be stopped. This value is set on creation of VDB groups.
+	Vdbs []CreateVDBGroupOrder `json:"vdbs,omitempty"`
 }
 
 // NewUpdateVDBGroupParameters instantiates a new UpdateVDBGroupParameters object
@@ -106,6 +108,38 @@ func (o *UpdateVDBGroupParameters) SetVdbIds(v []string) {
 	o.VdbIds = v
 }
 
+// GetVdbs returns the Vdbs field value if set, zero value otherwise.
+func (o *UpdateVDBGroupParameters) GetVdbs() []CreateVDBGroupOrder {
+	if o == nil || IsNil(o.Vdbs) {
+		var ret []CreateVDBGroupOrder
+		return ret
+	}
+	return o.Vdbs
+}
+
+// GetVdbsOk returns a tuple with the Vdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBGroupParameters) GetVdbsOk() ([]CreateVDBGroupOrder, bool) {
+	if o == nil || IsNil(o.Vdbs) {
+		return nil, false
+	}
+	return o.Vdbs, true
+}
+
+// HasVdbs returns a boolean if a field has been set.
+func (o *UpdateVDBGroupParameters) HasVdbs() bool {
+	if o != nil && !IsNil(o.Vdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbs gets a reference to the given []CreateVDBGroupOrder and assigns it to the Vdbs field.
+func (o *UpdateVDBGroupParameters) SetVdbs(v []CreateVDBGroupOrder) {
+	o.Vdbs = v
+}
+
 func (o UpdateVDBGroupParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -121,6 +155,9 @@ func (o UpdateVDBGroupParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.VdbIds) {
 		toSerialize["vdb_ids"] = o.VdbIds
+	}
+	if !IsNil(o.Vdbs) {
+		toSerialize["vdbs"] = o.Vdbs
 	}
 	return toSerialize, nil
 }

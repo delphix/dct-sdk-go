@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -49,6 +49,8 @@ type DSource struct {
 	GroupName NullableString `json:"group_name,omitempty"`
 	// A value indicating whether this dSource is enabled.
 	Enabled NullableBool `json:"enabled,omitempty"`
+	// A value indicating whether this dSource is detached.
+	IsDetached NullableBool `json:"is_detached,omitempty"`
 	// A reference to the Engine that this dSource belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
 	// A reference to the Source associated with this dSource.
@@ -87,6 +89,10 @@ type DSource struct {
 	RetentionPolicyId *string `json:"retention_policy_id,omitempty"`
 	// The id of the quota policy associated with this dSource.
 	QuotaPolicyId *string `json:"quota_policy_id,omitempty"`
+	// True if LogSync is enabled for this dSource.
+	LogsyncEnabled *bool `json:"logsync_enabled,omitempty"`
+	// ZFS exported data directory path.
+	ExportedDataDirectory *string `json:"exported_data_directory,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -682,6 +688,48 @@ func (o *DSource) SetEnabledNil() {
 // UnsetEnabled ensures that no value is present for Enabled, not even an explicit nil
 func (o *DSource) UnsetEnabled() {
 	o.Enabled.Unset()
+}
+
+// GetIsDetached returns the IsDetached field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetIsDetached() bool {
+	if o == nil || IsNil(o.IsDetached.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDetached.Get()
+}
+
+// GetIsDetachedOk returns a tuple with the IsDetached field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetIsDetachedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsDetached.Get(), o.IsDetached.IsSet()
+}
+
+// HasIsDetached returns a boolean if a field has been set.
+func (o *DSource) HasIsDetached() bool {
+	if o != nil && o.IsDetached.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDetached gets a reference to the given NullableBool and assigns it to the IsDetached field.
+func (o *DSource) SetIsDetached(v bool) {
+	o.IsDetached.Set(&v)
+}
+// SetIsDetachedNil sets the value for IsDetached to be an explicit nil
+func (o *DSource) SetIsDetachedNil() {
+	o.IsDetached.Set(nil)
+}
+
+// UnsetIsDetached ensures that no value is present for IsDetached, not even an explicit nil
+func (o *DSource) UnsetIsDetached() {
+	o.IsDetached.Unset()
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -1364,6 +1412,70 @@ func (o *DSource) SetQuotaPolicyId(v string) {
 	o.QuotaPolicyId = &v
 }
 
+// GetLogsyncEnabled returns the LogsyncEnabled field value if set, zero value otherwise.
+func (o *DSource) GetLogsyncEnabled() bool {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.LogsyncEnabled
+}
+
+// GetLogsyncEnabledOk returns a tuple with the LogsyncEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetLogsyncEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		return nil, false
+	}
+	return o.LogsyncEnabled, true
+}
+
+// HasLogsyncEnabled returns a boolean if a field has been set.
+func (o *DSource) HasLogsyncEnabled() bool {
+	if o != nil && !IsNil(o.LogsyncEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncEnabled gets a reference to the given bool and assigns it to the LogsyncEnabled field.
+func (o *DSource) SetLogsyncEnabled(v bool) {
+	o.LogsyncEnabled = &v
+}
+
+// GetExportedDataDirectory returns the ExportedDataDirectory field value if set, zero value otherwise.
+func (o *DSource) GetExportedDataDirectory() string {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		var ret string
+		return ret
+	}
+	return *o.ExportedDataDirectory
+}
+
+// GetExportedDataDirectoryOk returns a tuple with the ExportedDataDirectory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExportedDataDirectoryOk() (*string, bool) {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		return nil, false
+	}
+	return o.ExportedDataDirectory, true
+}
+
+// HasExportedDataDirectory returns a boolean if a field has been set.
+func (o *DSource) HasExportedDataDirectory() bool {
+	if o != nil && !IsNil(o.ExportedDataDirectory) {
+		return true
+	}
+
+	return false
+}
+
+// SetExportedDataDirectory gets a reference to the given string and assigns it to the ExportedDataDirectory field.
+func (o *DSource) SetExportedDataDirectory(v string) {
+	o.ExportedDataDirectory = &v
+}
+
 func (o DSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1415,6 +1527,9 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Enabled.IsSet() {
 		toSerialize["enabled"] = o.Enabled.Get()
+	}
+	if o.IsDetached.IsSet() {
+		toSerialize["is_detached"] = o.IsDetached.Get()
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
@@ -1475,6 +1590,12 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.QuotaPolicyId) {
 		toSerialize["quota_policy_id"] = o.QuotaPolicyId
+	}
+	if !IsNil(o.LogsyncEnabled) {
+		toSerialize["logsync_enabled"] = o.LogsyncEnabled
+	}
+	if !IsNil(o.ExportedDataDirectory) {
+		toSerialize["exported_data_directory"] = o.ExportedDataDirectory
 	}
 	return toSerialize, nil
 }

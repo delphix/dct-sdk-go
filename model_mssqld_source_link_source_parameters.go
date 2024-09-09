@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the MSSQLDSourceLinkSourceParameters type satisfies the MappedNullable interface at compile time
@@ -70,6 +72,8 @@ type MSSQLDSourceLinkSourceParameters struct {
 	MssqlUserDomainUsername *string `json:"mssql_user_domain_username,omitempty"`
 	// Password for the database user.
 	MssqlUserDomainPassword *string `json:"mssql_user_domain_password,omitempty"`
+	// Delphix display name for the vault user.
+	MssqlUserDomainVaultUsername *string `json:"mssql_user_domain_vault_username,omitempty"`
 	// The name or reference of the vault from which to read the database credentials.
 	MssqlUserDomainVault *string `json:"mssql_user_domain_vault,omitempty"`
 	// Vault engine name where the credential is stored.
@@ -119,6 +123,8 @@ type MSSQLDSourceLinkSourceParameters struct {
 	// Optional config template selection for Commvault configurations. If set, configParams will be ignored.
 	ExternalCommvaultConfigTemplates *string `json:"external_commvault_config_templates,omitempty"`
 }
+
+type _MSSQLDSourceLinkSourceParameters MSSQLDSourceLinkSourceParameters
 
 // NewMSSQLDSourceLinkSourceParameters instantiates a new MSSQLDSourceLinkSourceParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -964,6 +970,38 @@ func (o *MSSQLDSourceLinkSourceParameters) HasMssqlUserDomainPassword() bool {
 // SetMssqlUserDomainPassword gets a reference to the given string and assigns it to the MssqlUserDomainPassword field.
 func (o *MSSQLDSourceLinkSourceParameters) SetMssqlUserDomainPassword(v string) {
 	o.MssqlUserDomainPassword = &v
+}
+
+// GetMssqlUserDomainVaultUsername returns the MssqlUserDomainVaultUsername field value if set, zero value otherwise.
+func (o *MSSQLDSourceLinkSourceParameters) GetMssqlUserDomainVaultUsername() string {
+	if o == nil || IsNil(o.MssqlUserDomainVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainVaultUsername
+}
+
+// GetMssqlUserDomainVaultUsernameOk returns a tuple with the MssqlUserDomainVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MSSQLDSourceLinkSourceParameters) GetMssqlUserDomainVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainVaultUsername) {
+		return nil, false
+	}
+	return o.MssqlUserDomainVaultUsername, true
+}
+
+// HasMssqlUserDomainVaultUsername returns a boolean if a field has been set.
+func (o *MSSQLDSourceLinkSourceParameters) HasMssqlUserDomainVaultUsername() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainVaultUsername gets a reference to the given string and assigns it to the MssqlUserDomainVaultUsername field.
+func (o *MSSQLDSourceLinkSourceParameters) SetMssqlUserDomainVaultUsername(v string) {
+	o.MssqlUserDomainVaultUsername = &v
 }
 
 // GetMssqlUserDomainVault returns the MssqlUserDomainVault field value if set, zero value otherwise.
@@ -1817,6 +1855,9 @@ func (o MSSQLDSourceLinkSourceParameters) ToMap() (map[string]interface{}, error
 	if !IsNil(o.MssqlUserDomainPassword) {
 		toSerialize["mssql_user_domain_password"] = o.MssqlUserDomainPassword
 	}
+	if !IsNil(o.MssqlUserDomainVaultUsername) {
+		toSerialize["mssql_user_domain_vault_username"] = o.MssqlUserDomainVaultUsername
+	}
 	if !IsNil(o.MssqlUserDomainVault) {
 		toSerialize["mssql_user_domain_vault"] = o.MssqlUserDomainVault
 	}
@@ -1890,6 +1931,43 @@ func (o MSSQLDSourceLinkSourceParameters) ToMap() (map[string]interface{}, error
 		toSerialize["external_commvault_config_templates"] = o.ExternalCommvaultConfigTemplates
 	}
 	return toSerialize, nil
+}
+
+func (o *MSSQLDSourceLinkSourceParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varMSSQLDSourceLinkSourceParameters := _MSSQLDSourceLinkSourceParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varMSSQLDSourceLinkSourceParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = MSSQLDSourceLinkSourceParameters(varMSSQLDSourceLinkSourceParameters)
+
+	return err
 }
 
 type NullableMSSQLDSourceLinkSourceParameters struct {

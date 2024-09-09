@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// EnvironmentsApiService EnvironmentsApi service
-type EnvironmentsApiService service
+// EnvironmentsAPIService EnvironmentsAPI service
+type EnvironmentsAPIService service
 
 type ApiCompatibleRepositoriesByLocationRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	locationCompatibleRepositoryRequest *LocationCompatibleRepositoryRequest
 }
 
@@ -46,7 +46,7 @@ CompatibleRepositoriesByLocation Get compatible repositories corresponding to th
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCompatibleRepositoriesByLocationRequest
 */
-func (a *EnvironmentsApiService) CompatibleRepositoriesByLocation(ctx context.Context) ApiCompatibleRepositoriesByLocationRequest {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesByLocation(ctx context.Context) ApiCompatibleRepositoriesByLocationRequest {
 	return ApiCompatibleRepositoriesByLocationRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -55,7 +55,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesByLocation(ctx context.Co
 
 // Execute executes the request
 //  @return LocationCompatibleEnvironmentsResponse
-func (a *EnvironmentsApiService) CompatibleRepositoriesByLocationExecute(r ApiCompatibleRepositoriesByLocationRequest) (*LocationCompatibleEnvironmentsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesByLocationExecute(r ApiCompatibleRepositoriesByLocationRequest) (*LocationCompatibleEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -63,7 +63,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesByLocationExecute(r ApiCo
 		localVarReturnValue  *LocationCompatibleEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesByLocation")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CompatibleRepositoriesByLocation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -149,7 +149,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesByLocationExecute(r ApiCo
 
 type ApiCompatibleRepositoriesBySnapshotRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	snapshotCompatibleRepositoryRequest *SnapshotCompatibleRepositoryRequest
 }
 
@@ -169,7 +169,7 @@ CompatibleRepositoriesBySnapshot Get compatible repositories corresponding to th
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCompatibleRepositoriesBySnapshotRequest
 */
-func (a *EnvironmentsApiService) CompatibleRepositoriesBySnapshot(ctx context.Context) ApiCompatibleRepositoriesBySnapshotRequest {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesBySnapshot(ctx context.Context) ApiCompatibleRepositoriesBySnapshotRequest {
 	return ApiCompatibleRepositoriesBySnapshotRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -178,7 +178,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesBySnapshot(ctx context.Co
 
 // Execute executes the request
 //  @return SnapshotCompatibleEnvironmentsResponse
-func (a *EnvironmentsApiService) CompatibleRepositoriesBySnapshotExecute(r ApiCompatibleRepositoriesBySnapshotRequest) (*SnapshotCompatibleEnvironmentsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesBySnapshotExecute(r ApiCompatibleRepositoriesBySnapshotRequest) (*SnapshotCompatibleEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -186,7 +186,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesBySnapshotExecute(r ApiCo
 		localVarReturnValue  *SnapshotCompatibleEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesBySnapshot")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CompatibleRepositoriesBySnapshot")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -272,7 +272,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesBySnapshotExecute(r ApiCo
 
 type ApiCompatibleRepositoriesByTimestampRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	timestampCompatibleRepositoryRequest *TimestampCompatibleRepositoryRequest
 }
 
@@ -292,7 +292,7 @@ CompatibleRepositoriesByTimestamp Get compatible repositories corresponding to t
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCompatibleRepositoriesByTimestampRequest
 */
-func (a *EnvironmentsApiService) CompatibleRepositoriesByTimestamp(ctx context.Context) ApiCompatibleRepositoriesByTimestampRequest {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesByTimestamp(ctx context.Context) ApiCompatibleRepositoriesByTimestampRequest {
 	return ApiCompatibleRepositoriesByTimestampRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -301,7 +301,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesByTimestamp(ctx context.C
 
 // Execute executes the request
 //  @return TimestampCompatibleEnvironmentsResponse
-func (a *EnvironmentsApiService) CompatibleRepositoriesByTimestampExecute(r ApiCompatibleRepositoriesByTimestampRequest) (*TimestampCompatibleEnvironmentsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesByTimestampExecute(r ApiCompatibleRepositoriesByTimestampRequest) (*TimestampCompatibleEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -309,7 +309,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesByTimestampExecute(r ApiC
 		localVarReturnValue  *TimestampCompatibleEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesByTimestamp")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CompatibleRepositoriesByTimestamp")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -395,7 +395,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesByTimestampExecute(r ApiC
 
 type ApiCompatibleRepositoriesFromBookmarkRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	bookmarkCompatibleRepositoryRequest *BookmarkCompatibleRepositoryRequest
 }
 
@@ -415,7 +415,7 @@ CompatibleRepositoriesFromBookmark Get compatible repositories corresponding to 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCompatibleRepositoriesFromBookmarkRequest
 */
-func (a *EnvironmentsApiService) CompatibleRepositoriesFromBookmark(ctx context.Context) ApiCompatibleRepositoriesFromBookmarkRequest {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesFromBookmark(ctx context.Context) ApiCompatibleRepositoriesFromBookmarkRequest {
 	return ApiCompatibleRepositoriesFromBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -424,7 +424,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesFromBookmark(ctx context.
 
 // Execute executes the request
 //  @return BookmarkCompatibleEnvironmentsResponse
-func (a *EnvironmentsApiService) CompatibleRepositoriesFromBookmarkExecute(r ApiCompatibleRepositoriesFromBookmarkRequest) (*BookmarkCompatibleEnvironmentsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CompatibleRepositoriesFromBookmarkExecute(r ApiCompatibleRepositoriesFromBookmarkRequest) (*BookmarkCompatibleEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -432,7 +432,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesFromBookmarkExecute(r Api
 		localVarReturnValue  *BookmarkCompatibleEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CompatibleRepositoriesFromBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CompatibleRepositoriesFromBookmark")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -518,7 +518,7 @@ func (a *EnvironmentsApiService) CompatibleRepositoriesFromBookmarkExecute(r Api
 
 type ApiCreateEnvironmentRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentCreateParameters *EnvironmentCreateParameters
 }
 
@@ -538,7 +538,7 @@ CreateEnvironment Create an environment.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateEnvironmentRequest
 */
-func (a *EnvironmentsApiService) CreateEnvironment(ctx context.Context) ApiCreateEnvironmentRequest {
+func (a *EnvironmentsAPIService) CreateEnvironment(ctx context.Context) ApiCreateEnvironmentRequest {
 	return ApiCreateEnvironmentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -547,7 +547,7 @@ func (a *EnvironmentsApiService) CreateEnvironment(ctx context.Context) ApiCreat
 
 // Execute executes the request
 //  @return CreateEnvironmentResponse
-func (a *EnvironmentsApiService) CreateEnvironmentExecute(r ApiCreateEnvironmentRequest) (*CreateEnvironmentResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CreateEnvironmentExecute(r ApiCreateEnvironmentRequest) (*CreateEnvironmentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -555,7 +555,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentExecute(r ApiCreateEnvironment
 		localVarReturnValue  *CreateEnvironmentResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CreateEnvironment")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CreateEnvironment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -641,7 +641,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentExecute(r ApiCreateEnvironment
 
 type ApiCreateEnvironmentTagsRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	tagsRequest *TagsRequest
 }
@@ -663,7 +663,7 @@ CreateEnvironmentTags Create tags for an Environment.
  @param environmentId The ID of the environment.
  @return ApiCreateEnvironmentTagsRequest
 */
-func (a *EnvironmentsApiService) CreateEnvironmentTags(ctx context.Context, environmentId string) ApiCreateEnvironmentTagsRequest {
+func (a *EnvironmentsAPIService) CreateEnvironmentTags(ctx context.Context, environmentId string) ApiCreateEnvironmentTagsRequest {
 	return ApiCreateEnvironmentTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -673,7 +673,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentTags(ctx context.Context, envi
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *EnvironmentsApiService) CreateEnvironmentTagsExecute(r ApiCreateEnvironmentTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CreateEnvironmentTagsExecute(r ApiCreateEnvironmentTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -681,7 +681,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentTagsExecute(r ApiCreateEnviron
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CreateEnvironmentTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CreateEnvironmentTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -771,7 +771,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentTagsExecute(r ApiCreateEnviron
 
 type ApiCreateEnvironmentUserRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	environmentUserParams *EnvironmentUserParams
 }
@@ -793,7 +793,7 @@ CreateEnvironmentUser Create environment user.
  @param environmentId The ID of the environment.
  @return ApiCreateEnvironmentUserRequest
 */
-func (a *EnvironmentsApiService) CreateEnvironmentUser(ctx context.Context, environmentId string) ApiCreateEnvironmentUserRequest {
+func (a *EnvironmentsAPIService) CreateEnvironmentUser(ctx context.Context, environmentId string) ApiCreateEnvironmentUserRequest {
 	return ApiCreateEnvironmentUserRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -803,7 +803,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentUser(ctx context.Context, envi
 
 // Execute executes the request
 //  @return CreateEnvironmentUserResponse
-func (a *EnvironmentsApiService) CreateEnvironmentUserExecute(r ApiCreateEnvironmentUserRequest) (*CreateEnvironmentUserResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CreateEnvironmentUserExecute(r ApiCreateEnvironmentUserRequest) (*CreateEnvironmentUserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -811,7 +811,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentUserExecute(r ApiCreateEnviron
 		localVarReturnValue  *CreateEnvironmentUserResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CreateEnvironmentUser")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CreateEnvironmentUser")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -898,7 +898,7 @@ func (a *EnvironmentsApiService) CreateEnvironmentUserExecute(r ApiCreateEnviron
 
 type ApiCreateHostRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	hostCreateParameters *HostCreateParameters
 }
@@ -919,7 +919,7 @@ CreateHost Create a new Host.
  @param environmentId The ID of the environment.
  @return ApiCreateHostRequest
 */
-func (a *EnvironmentsApiService) CreateHost(ctx context.Context, environmentId string) ApiCreateHostRequest {
+func (a *EnvironmentsAPIService) CreateHost(ctx context.Context, environmentId string) ApiCreateHostRequest {
 	return ApiCreateHostRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -929,7 +929,7 @@ func (a *EnvironmentsApiService) CreateHost(ctx context.Context, environmentId s
 
 // Execute executes the request
 //  @return CreateHostResponse
-func (a *EnvironmentsApiService) CreateHostExecute(r ApiCreateHostRequest) (*CreateHostResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) CreateHostExecute(r ApiCreateHostRequest) (*CreateHostResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -937,7 +937,7 @@ func (a *EnvironmentsApiService) CreateHostExecute(r ApiCreateHostRequest) (*Cre
 		localVarReturnValue  *CreateHostResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.CreateHost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CreateHost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1025,9 +1025,265 @@ func (a *EnvironmentsApiService) CreateHostExecute(r ApiCreateHostRequest) (*Cre
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateOracleListenerRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsAPIService
+	environmentId string
+	createOracleListenerParams *CreateOracleListenerParams
+}
+
+// The parameters to create an Oracle listener.
+func (r ApiCreateOracleListenerRequest) CreateOracleListenerParams(createOracleListenerParams CreateOracleListenerParams) ApiCreateOracleListenerRequest {
+	r.createOracleListenerParams = &createOracleListenerParams
+	return r
+}
+
+func (r ApiCreateOracleListenerRequest) Execute() (*CreateOracleListenerResponse, *http.Response, error) {
+	return r.ApiService.CreateOracleListenerExecute(r)
+}
+
+/*
+CreateOracleListener Create Oracle listener.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param environmentId The ID of the environment.
+ @return ApiCreateOracleListenerRequest
+*/
+func (a *EnvironmentsAPIService) CreateOracleListener(ctx context.Context, environmentId string) ApiCreateOracleListenerRequest {
+	return ApiCreateOracleListenerRequest{
+		ApiService: a,
+		ctx: ctx,
+		environmentId: environmentId,
+	}
+}
+
+// Execute executes the request
+//  @return CreateOracleListenerResponse
+func (a *EnvironmentsAPIService) CreateOracleListenerExecute(r ApiCreateOracleListenerRequest) (*CreateOracleListenerResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateOracleListenerResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CreateOracleListener")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/{environmentId}/listeners"
+	localVarPath = strings.Replace(localVarPath, "{"+"environmentId"+"}", url.PathEscape(parameterValueToString(r.environmentId, "environmentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.environmentId) < 1 {
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOracleListenerParams
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateRepositoryRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsAPIService
+	environmentId string
+	createRepositoryParams *CreateRepositoryParams
+}
+
+func (r ApiCreateRepositoryRequest) CreateRepositoryParams(createRepositoryParams CreateRepositoryParams) ApiCreateRepositoryRequest {
+	r.createRepositoryParams = &createRepositoryParams
+	return r
+}
+
+func (r ApiCreateRepositoryRequest) Execute() (*CreateRepositoryResponse, *http.Response, error) {
+	return r.ApiService.CreateRepositoryExecute(r)
+}
+
+/*
+CreateRepository Create a repository.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param environmentId The ID of the environment.
+ @return ApiCreateRepositoryRequest
+*/
+func (a *EnvironmentsAPIService) CreateRepository(ctx context.Context, environmentId string) ApiCreateRepositoryRequest {
+	return ApiCreateRepositoryRequest{
+		ApiService: a,
+		ctx: ctx,
+		environmentId: environmentId,
+	}
+}
+
+// Execute executes the request
+//  @return CreateRepositoryResponse
+func (a *EnvironmentsAPIService) CreateRepositoryExecute(r ApiCreateRepositoryRequest) (*CreateRepositoryResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateRepositoryResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.CreateRepository")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/{environmentId}/repository"
+	localVarPath = strings.Replace(localVarPath, "{"+"environmentId"+"}", url.PathEscape(parameterValueToString(r.environmentId, "environmentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.environmentId) < 1 {
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
+	}
+	if r.createRepositoryParams == nil {
+		return localVarReturnValue, nil, reportError("createRepositoryParams is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createRepositoryParams
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiDeleteEnvironmentRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 }
 
@@ -1042,7 +1298,7 @@ DeleteEnvironment Delete an environment by ID.
  @param environmentId The ID of the environment.
  @return ApiDeleteEnvironmentRequest
 */
-func (a *EnvironmentsApiService) DeleteEnvironment(ctx context.Context, environmentId string) ApiDeleteEnvironmentRequest {
+func (a *EnvironmentsAPIService) DeleteEnvironment(ctx context.Context, environmentId string) ApiDeleteEnvironmentRequest {
 	return ApiDeleteEnvironmentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1052,7 +1308,7 @@ func (a *EnvironmentsApiService) DeleteEnvironment(ctx context.Context, environm
 
 // Execute executes the request
 //  @return DeleteEnvironmentResponse
-func (a *EnvironmentsApiService) DeleteEnvironmentExecute(r ApiDeleteEnvironmentRequest) (*DeleteEnvironmentResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) DeleteEnvironmentExecute(r ApiDeleteEnvironmentRequest) (*DeleteEnvironmentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -1060,7 +1316,7 @@ func (a *EnvironmentsApiService) DeleteEnvironmentExecute(r ApiDeleteEnvironment
 		localVarReturnValue  *DeleteEnvironmentResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.DeleteEnvironment")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.DeleteEnvironment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1145,7 +1401,7 @@ func (a *EnvironmentsApiService) DeleteEnvironmentExecute(r ApiDeleteEnvironment
 
 type ApiDeleteEnvironmentTagsRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	deleteTag *DeleteTag
 }
@@ -1167,7 +1423,7 @@ DeleteEnvironmentTags Delete tags for an Environment.
  @param environmentId The ID of the environment.
  @return ApiDeleteEnvironmentTagsRequest
 */
-func (a *EnvironmentsApiService) DeleteEnvironmentTags(ctx context.Context, environmentId string) ApiDeleteEnvironmentTagsRequest {
+func (a *EnvironmentsAPIService) DeleteEnvironmentTags(ctx context.Context, environmentId string) ApiDeleteEnvironmentTagsRequest {
 	return ApiDeleteEnvironmentTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1176,14 +1432,14 @@ func (a *EnvironmentsApiService) DeleteEnvironmentTags(ctx context.Context, envi
 }
 
 // Execute executes the request
-func (a *EnvironmentsApiService) DeleteEnvironmentTagsExecute(r ApiDeleteEnvironmentTagsRequest) (*http.Response, error) {
+func (a *EnvironmentsAPIService) DeleteEnvironmentTagsExecute(r ApiDeleteEnvironmentTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.DeleteEnvironmentTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.DeleteEnvironmentTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1261,7 +1517,7 @@ func (a *EnvironmentsApiService) DeleteEnvironmentTagsExecute(r ApiDeleteEnviron
 
 type ApiDeleteEnvironmentUserRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	userRef string
 }
@@ -1278,7 +1534,7 @@ DeleteEnvironmentUser Delete environment user.
  @param userRef Environment user reference.
  @return ApiDeleteEnvironmentUserRequest
 */
-func (a *EnvironmentsApiService) DeleteEnvironmentUser(ctx context.Context, environmentId string, userRef string) ApiDeleteEnvironmentUserRequest {
+func (a *EnvironmentsAPIService) DeleteEnvironmentUser(ctx context.Context, environmentId string, userRef string) ApiDeleteEnvironmentUserRequest {
 	return ApiDeleteEnvironmentUserRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1289,7 +1545,7 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUser(ctx context.Context, envi
 
 // Execute executes the request
 //  @return DeleteEnvironmentUserResponse
-func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnvironmentUserRequest) (*DeleteEnvironmentUserResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) DeleteEnvironmentUserExecute(r ApiDeleteEnvironmentUserRequest) (*DeleteEnvironmentUserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -1297,7 +1553,7 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnviron
 		localVarReturnValue  *DeleteEnvironmentUserResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.DeleteEnvironmentUser")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.DeleteEnvironmentUser")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1386,7 +1642,7 @@ func (a *EnvironmentsApiService) DeleteEnvironmentUserExecute(r ApiDeleteEnviron
 
 type ApiDeleteHostRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	hostId string
 }
@@ -1403,7 +1659,7 @@ DeleteHost Delete a Host.
  @param hostId The ID of the host.
  @return ApiDeleteHostRequest
 */
-func (a *EnvironmentsApiService) DeleteHost(ctx context.Context, environmentId string, hostId string) ApiDeleteHostRequest {
+func (a *EnvironmentsAPIService) DeleteHost(ctx context.Context, environmentId string, hostId string) ApiDeleteHostRequest {
 	return ApiDeleteHostRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1414,7 +1670,7 @@ func (a *EnvironmentsApiService) DeleteHost(ctx context.Context, environmentId s
 
 // Execute executes the request
 //  @return DeleteHostResponse
-func (a *EnvironmentsApiService) DeleteHostExecute(r ApiDeleteHostRequest) (*DeleteHostResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) DeleteHostExecute(r ApiDeleteHostRequest) (*DeleteHostResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -1422,7 +1678,7 @@ func (a *EnvironmentsApiService) DeleteHostExecute(r ApiDeleteHostRequest) (*Del
 		localVarReturnValue  *DeleteHostResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.DeleteHost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.DeleteHost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1512,9 +1768,262 @@ func (a *EnvironmentsApiService) DeleteHostExecute(r ApiDeleteHostRequest) (*Del
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiDeleteOracleListenerRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsAPIService
+	environmentId string
+	listenerId string
+}
+
+func (r ApiDeleteOracleListenerRequest) Execute() (*DeleteOracleListenerResponse, *http.Response, error) {
+	return r.ApiService.DeleteOracleListenerExecute(r)
+}
+
+/*
+DeleteOracleListener Delete an Oracle listener.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param environmentId The ID of the environment.
+ @param listenerId Oracle listener id.
+ @return ApiDeleteOracleListenerRequest
+*/
+func (a *EnvironmentsAPIService) DeleteOracleListener(ctx context.Context, environmentId string, listenerId string) ApiDeleteOracleListenerRequest {
+	return ApiDeleteOracleListenerRequest{
+		ApiService: a,
+		ctx: ctx,
+		environmentId: environmentId,
+		listenerId: listenerId,
+	}
+}
+
+// Execute executes the request
+//  @return DeleteOracleListenerResponse
+func (a *EnvironmentsAPIService) DeleteOracleListenerExecute(r ApiDeleteOracleListenerRequest) (*DeleteOracleListenerResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeleteOracleListenerResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.DeleteOracleListener")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/{environmentId}/listeners/{listenerId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"environmentId"+"}", url.PathEscape(parameterValueToString(r.environmentId, "environmentId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"listenerId"+"}", url.PathEscape(parameterValueToString(r.listenerId, "listenerId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.environmentId) < 1 {
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
+	}
+	if strlen(r.listenerId) < 1 {
+		return localVarReturnValue, nil, reportError("listenerId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteRepositoryRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsAPIService
+	environmentId string
+	repositoryId string
+}
+
+func (r ApiDeleteRepositoryRequest) Execute() (*RepositoryDeleteJobResponse, *http.Response, error) {
+	return r.ApiService.DeleteRepositoryExecute(r)
+}
+
+/*
+DeleteRepository Delete a repository.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param environmentId The ID of the environment.
+ @param repositoryId The ID of the repository.
+ @return ApiDeleteRepositoryRequest
+*/
+func (a *EnvironmentsAPIService) DeleteRepository(ctx context.Context, environmentId string, repositoryId string) ApiDeleteRepositoryRequest {
+	return ApiDeleteRepositoryRequest{
+		ApiService: a,
+		ctx: ctx,
+		environmentId: environmentId,
+		repositoryId: repositoryId,
+	}
+}
+
+// Execute executes the request
+//  @return RepositoryDeleteJobResponse
+func (a *EnvironmentsAPIService) DeleteRepositoryExecute(r ApiDeleteRepositoryRequest) (*RepositoryDeleteJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RepositoryDeleteJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.DeleteRepository")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/{environmentId}/repository/{repositoryId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"environmentId"+"}", url.PathEscape(parameterValueToString(r.environmentId, "environmentId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repositoryId"+"}", url.PathEscape(parameterValueToString(r.repositoryId, "repositoryId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.environmentId) < 1 {
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
+	}
+	if strlen(r.repositoryId) < 1 {
+		return localVarReturnValue, nil, reportError("repositoryId must have at least 1 elements")
+	}
+	if strlen(r.repositoryId) > 256 {
+		return localVarReturnValue, nil, reportError("repositoryId must have less than 256 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiDisableEnvironmentRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 }
 
@@ -1529,7 +2038,7 @@ DisableEnvironment Disable environment.
  @param environmentId The ID of the environment.
  @return ApiDisableEnvironmentRequest
 */
-func (a *EnvironmentsApiService) DisableEnvironment(ctx context.Context, environmentId string) ApiDisableEnvironmentRequest {
+func (a *EnvironmentsAPIService) DisableEnvironment(ctx context.Context, environmentId string) ApiDisableEnvironmentRequest {
 	return ApiDisableEnvironmentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1539,7 +2048,7 @@ func (a *EnvironmentsApiService) DisableEnvironment(ctx context.Context, environ
 
 // Execute executes the request
 //  @return DisableEnvironmentResponse
-func (a *EnvironmentsApiService) DisableEnvironmentExecute(r ApiDisableEnvironmentRequest) (*DisableEnvironmentResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) DisableEnvironmentExecute(r ApiDisableEnvironmentRequest) (*DisableEnvironmentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1547,7 +2056,7 @@ func (a *EnvironmentsApiService) DisableEnvironmentExecute(r ApiDisableEnvironme
 		localVarReturnValue  *DisableEnvironmentResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.DisableEnvironment")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.DisableEnvironment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1632,7 +2141,7 @@ func (a *EnvironmentsApiService) DisableEnvironmentExecute(r ApiDisableEnvironme
 
 type ApiEnableEnvironmentRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 }
 
@@ -1647,7 +2156,7 @@ EnableEnvironment Enable a disabled environment.
  @param environmentId The ID of the environment.
  @return ApiEnableEnvironmentRequest
 */
-func (a *EnvironmentsApiService) EnableEnvironment(ctx context.Context, environmentId string) ApiEnableEnvironmentRequest {
+func (a *EnvironmentsAPIService) EnableEnvironment(ctx context.Context, environmentId string) ApiEnableEnvironmentRequest {
 	return ApiEnableEnvironmentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1657,7 +2166,7 @@ func (a *EnvironmentsApiService) EnableEnvironment(ctx context.Context, environm
 
 // Execute executes the request
 //  @return EnableEnvironmentResponse
-func (a *EnvironmentsApiService) EnableEnvironmentExecute(r ApiEnableEnvironmentRequest) (*EnableEnvironmentResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) EnableEnvironmentExecute(r ApiEnableEnvironmentRequest) (*EnableEnvironmentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1665,7 +2174,7 @@ func (a *EnvironmentsApiService) EnableEnvironmentExecute(r ApiEnableEnvironment
 		localVarReturnValue  *EnableEnvironmentResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.EnableEnvironment")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.EnableEnvironment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1750,7 +2259,7 @@ func (a *EnvironmentsApiService) EnableEnvironmentExecute(r ApiEnableEnvironment
 
 type ApiGetEnvironmentByIdRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 }
 
@@ -1765,7 +2274,7 @@ GetEnvironmentById Returns an environment by ID.
  @param environmentId The ID of the environment.
  @return ApiGetEnvironmentByIdRequest
 */
-func (a *EnvironmentsApiService) GetEnvironmentById(ctx context.Context, environmentId string) ApiGetEnvironmentByIdRequest {
+func (a *EnvironmentsAPIService) GetEnvironmentById(ctx context.Context, environmentId string) ApiGetEnvironmentByIdRequest {
 	return ApiGetEnvironmentByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1775,7 +2284,7 @@ func (a *EnvironmentsApiService) GetEnvironmentById(ctx context.Context, environ
 
 // Execute executes the request
 //  @return Environment
-func (a *EnvironmentsApiService) GetEnvironmentByIdExecute(r ApiGetEnvironmentByIdRequest) (*Environment, *http.Response, error) {
+func (a *EnvironmentsAPIService) GetEnvironmentByIdExecute(r ApiGetEnvironmentByIdRequest) (*Environment, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1783,7 +2292,7 @@ func (a *EnvironmentsApiService) GetEnvironmentByIdExecute(r ApiGetEnvironmentBy
 		localVarReturnValue  *Environment
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.GetEnvironmentById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.GetEnvironmentById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1868,7 +2377,7 @@ func (a *EnvironmentsApiService) GetEnvironmentByIdExecute(r ApiGetEnvironmentBy
 
 type ApiGetEnvironmentsRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1902,7 +2411,7 @@ GetEnvironments List all environments.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetEnvironmentsRequest
 */
-func (a *EnvironmentsApiService) GetEnvironments(ctx context.Context) ApiGetEnvironmentsRequest {
+func (a *EnvironmentsAPIService) GetEnvironments(ctx context.Context) ApiGetEnvironmentsRequest {
 	return ApiGetEnvironmentsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1911,7 +2420,7 @@ func (a *EnvironmentsApiService) GetEnvironments(ctx context.Context) ApiGetEnvi
 
 // Execute executes the request
 //  @return ListEnvironmentsResponse
-func (a *EnvironmentsApiService) GetEnvironmentsExecute(r ApiGetEnvironmentsRequest) (*ListEnvironmentsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) GetEnvironmentsExecute(r ApiGetEnvironmentsRequest) (*ListEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1919,7 +2428,7 @@ func (a *EnvironmentsApiService) GetEnvironmentsExecute(r ApiGetEnvironmentsRequ
 		localVarReturnValue  *ListEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.GetEnvironments")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.GetEnvironments")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1931,13 +2440,16 @@ func (a *EnvironmentsApiService) GetEnvironmentsExecute(r ApiGetEnvironmentsRequ
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2009,7 +2521,7 @@ func (a *EnvironmentsApiService) GetEnvironmentsExecute(r ApiGetEnvironmentsRequ
 
 type ApiGetTagsEnvironmentRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 }
 
@@ -2024,7 +2536,7 @@ GetTagsEnvironment Get tags for an Environment.
  @param environmentId The ID of the environment.
  @return ApiGetTagsEnvironmentRequest
 */
-func (a *EnvironmentsApiService) GetTagsEnvironment(ctx context.Context, environmentId string) ApiGetTagsEnvironmentRequest {
+func (a *EnvironmentsAPIService) GetTagsEnvironment(ctx context.Context, environmentId string) ApiGetTagsEnvironmentRequest {
 	return ApiGetTagsEnvironmentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2034,7 +2546,7 @@ func (a *EnvironmentsApiService) GetTagsEnvironment(ctx context.Context, environ
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *EnvironmentsApiService) GetTagsEnvironmentExecute(r ApiGetTagsEnvironmentRequest) (*TagsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) GetTagsEnvironmentExecute(r ApiGetTagsEnvironmentRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2042,7 +2554,7 @@ func (a *EnvironmentsApiService) GetTagsEnvironmentExecute(r ApiGetTagsEnvironme
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.GetTagsEnvironment")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.GetTagsEnvironment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2127,7 +2639,7 @@ func (a *EnvironmentsApiService) GetTagsEnvironmentExecute(r ApiGetTagsEnvironme
 
 type ApiListEnvironmentUsersRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 }
 
@@ -2142,7 +2654,7 @@ ListEnvironmentUsers List environment users.
  @param environmentId The ID of the environment.
  @return ApiListEnvironmentUsersRequest
 */
-func (a *EnvironmentsApiService) ListEnvironmentUsers(ctx context.Context, environmentId string) ApiListEnvironmentUsersRequest {
+func (a *EnvironmentsAPIService) ListEnvironmentUsers(ctx context.Context, environmentId string) ApiListEnvironmentUsersRequest {
 	return ApiListEnvironmentUsersRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2152,7 +2664,7 @@ func (a *EnvironmentsApiService) ListEnvironmentUsers(ctx context.Context, envir
 
 // Execute executes the request
 //  @return ListEnvironmentUsers
-func (a *EnvironmentsApiService) ListEnvironmentUsersExecute(r ApiListEnvironmentUsersRequest) (*ListEnvironmentUsers, *http.Response, error) {
+func (a *EnvironmentsAPIService) ListEnvironmentUsersExecute(r ApiListEnvironmentUsersRequest) (*ListEnvironmentUsers, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2160,7 +2672,7 @@ func (a *EnvironmentsApiService) ListEnvironmentUsersExecute(r ApiListEnvironmen
 		localVarReturnValue  *ListEnvironmentUsers
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.ListEnvironmentUsers")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.ListEnvironmentUsers")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2245,7 +2757,7 @@ func (a *EnvironmentsApiService) ListEnvironmentUsersExecute(r ApiListEnvironmen
 
 type ApiPrimaryEnvironmentUserRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	userRef string
 }
@@ -2262,7 +2774,7 @@ PrimaryEnvironmentUser Set primary environment user.
  @param userRef Environment user reference.
  @return ApiPrimaryEnvironmentUserRequest
 */
-func (a *EnvironmentsApiService) PrimaryEnvironmentUser(ctx context.Context, environmentId string, userRef string) ApiPrimaryEnvironmentUserRequest {
+func (a *EnvironmentsAPIService) PrimaryEnvironmentUser(ctx context.Context, environmentId string, userRef string) ApiPrimaryEnvironmentUserRequest {
 	return ApiPrimaryEnvironmentUserRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2273,7 +2785,7 @@ func (a *EnvironmentsApiService) PrimaryEnvironmentUser(ctx context.Context, env
 
 // Execute executes the request
 //  @return PrimaryEnvironmentUserResponse
-func (a *EnvironmentsApiService) PrimaryEnvironmentUserExecute(r ApiPrimaryEnvironmentUserRequest) (*PrimaryEnvironmentUserResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) PrimaryEnvironmentUserExecute(r ApiPrimaryEnvironmentUserRequest) (*PrimaryEnvironmentUserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2281,7 +2793,7 @@ func (a *EnvironmentsApiService) PrimaryEnvironmentUserExecute(r ApiPrimaryEnvir
 		localVarReturnValue  *PrimaryEnvironmentUserResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.PrimaryEnvironmentUser")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.PrimaryEnvironmentUser")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2370,7 +2882,7 @@ func (a *EnvironmentsApiService) PrimaryEnvironmentUserExecute(r ApiPrimaryEnvir
 
 type ApiRefreshEnvironmentRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 }
 
@@ -2385,7 +2897,7 @@ RefreshEnvironment Refresh environment.
  @param environmentId The ID of the environment.
  @return ApiRefreshEnvironmentRequest
 */
-func (a *EnvironmentsApiService) RefreshEnvironment(ctx context.Context, environmentId string) ApiRefreshEnvironmentRequest {
+func (a *EnvironmentsAPIService) RefreshEnvironment(ctx context.Context, environmentId string) ApiRefreshEnvironmentRequest {
 	return ApiRefreshEnvironmentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2395,7 +2907,7 @@ func (a *EnvironmentsApiService) RefreshEnvironment(ctx context.Context, environ
 
 // Execute executes the request
 //  @return RefreshEnvironmentResponse
-func (a *EnvironmentsApiService) RefreshEnvironmentExecute(r ApiRefreshEnvironmentRequest) (*RefreshEnvironmentResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) RefreshEnvironmentExecute(r ApiRefreshEnvironmentRequest) (*RefreshEnvironmentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2403,7 +2915,7 @@ func (a *EnvironmentsApiService) RefreshEnvironmentExecute(r ApiRefreshEnvironme
 		localVarReturnValue  *RefreshEnvironmentResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.RefreshEnvironment")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.RefreshEnvironment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2488,7 +3000,7 @@ func (a *EnvironmentsApiService) RefreshEnvironmentExecute(r ApiRefreshEnvironme
 
 type ApiSearchEnvironmentsRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2529,7 +3041,7 @@ SearchEnvironments Search for environments.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchEnvironmentsRequest
 */
-func (a *EnvironmentsApiService) SearchEnvironments(ctx context.Context) ApiSearchEnvironmentsRequest {
+func (a *EnvironmentsAPIService) SearchEnvironments(ctx context.Context) ApiSearchEnvironmentsRequest {
 	return ApiSearchEnvironmentsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2538,7 +3050,7 @@ func (a *EnvironmentsApiService) SearchEnvironments(ctx context.Context) ApiSear
 
 // Execute executes the request
 //  @return SearchEnvironmentsResponse
-func (a *EnvironmentsApiService) SearchEnvironmentsExecute(r ApiSearchEnvironmentsRequest) (*SearchEnvironmentsResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) SearchEnvironmentsExecute(r ApiSearchEnvironmentsRequest) (*SearchEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2546,7 +3058,7 @@ func (a *EnvironmentsApiService) SearchEnvironmentsExecute(r ApiSearchEnvironmen
 		localVarReturnValue  *SearchEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.SearchEnvironments")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.SearchEnvironments")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2558,13 +3070,16 @@ func (a *EnvironmentsApiService) SearchEnvironmentsExecute(r ApiSearchEnvironmen
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2638,7 +3153,7 @@ func (a *EnvironmentsApiService) SearchEnvironmentsExecute(r ApiSearchEnvironmen
 
 type ApiUpdateEnvironmentRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	environmentUpdateParameters *EnvironmentUpdateParameters
 }
@@ -2660,7 +3175,7 @@ UpdateEnvironment Update an environment by ID.
  @param environmentId The ID of the environment.
  @return ApiUpdateEnvironmentRequest
 */
-func (a *EnvironmentsApiService) UpdateEnvironment(ctx context.Context, environmentId string) ApiUpdateEnvironmentRequest {
+func (a *EnvironmentsAPIService) UpdateEnvironment(ctx context.Context, environmentId string) ApiUpdateEnvironmentRequest {
 	return ApiUpdateEnvironmentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2670,7 +3185,7 @@ func (a *EnvironmentsApiService) UpdateEnvironment(ctx context.Context, environm
 
 // Execute executes the request
 //  @return UpdateEnvironmentResponse
-func (a *EnvironmentsApiService) UpdateEnvironmentExecute(r ApiUpdateEnvironmentRequest) (*UpdateEnvironmentResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) UpdateEnvironmentExecute(r ApiUpdateEnvironmentRequest) (*UpdateEnvironmentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -2678,7 +3193,7 @@ func (a *EnvironmentsApiService) UpdateEnvironmentExecute(r ApiUpdateEnvironment
 		localVarReturnValue  *UpdateEnvironmentResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.UpdateEnvironment")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.UpdateEnvironment")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2765,7 +3280,7 @@ func (a *EnvironmentsApiService) UpdateEnvironmentExecute(r ApiUpdateEnvironment
 
 type ApiUpdateEnvironmentUserRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	userRef string
 	environmentUserParams *EnvironmentUserParams
@@ -2789,7 +3304,7 @@ UpdateEnvironmentUser Update environment user.
  @param userRef Environment user reference.
  @return ApiUpdateEnvironmentUserRequest
 */
-func (a *EnvironmentsApiService) UpdateEnvironmentUser(ctx context.Context, environmentId string, userRef string) ApiUpdateEnvironmentUserRequest {
+func (a *EnvironmentsAPIService) UpdateEnvironmentUser(ctx context.Context, environmentId string, userRef string) ApiUpdateEnvironmentUserRequest {
 	return ApiUpdateEnvironmentUserRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2800,7 +3315,7 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUser(ctx context.Context, envi
 
 // Execute executes the request
 //  @return UpdateEnvironmentUserResponse
-func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnvironmentUserRequest) (*UpdateEnvironmentUserResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) UpdateEnvironmentUserExecute(r ApiUpdateEnvironmentUserRequest) (*UpdateEnvironmentUserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -2808,7 +3323,7 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnviron
 		localVarReturnValue  *UpdateEnvironmentUserResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.UpdateEnvironmentUser")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.UpdateEnvironmentUser")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2899,7 +3414,7 @@ func (a *EnvironmentsApiService) UpdateEnvironmentUserExecute(r ApiUpdateEnviron
 
 type ApiUpdateHostRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	hostId string
 	hostUpdateParameters *HostUpdateParameters
@@ -2923,7 +3438,7 @@ UpdateHost Update a Host.
  @param hostId The ID of the host.
  @return ApiUpdateHostRequest
 */
-func (a *EnvironmentsApiService) UpdateHost(ctx context.Context, environmentId string, hostId string) ApiUpdateHostRequest {
+func (a *EnvironmentsAPIService) UpdateHost(ctx context.Context, environmentId string, hostId string) ApiUpdateHostRequest {
 	return ApiUpdateHostRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2934,7 +3449,7 @@ func (a *EnvironmentsApiService) UpdateHost(ctx context.Context, environmentId s
 
 // Execute executes the request
 //  @return UpdateHostResponse
-func (a *EnvironmentsApiService) UpdateHostExecute(r ApiUpdateHostRequest) (*UpdateHostResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) UpdateHostExecute(r ApiUpdateHostRequest) (*UpdateHostResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -2942,7 +3457,7 @@ func (a *EnvironmentsApiService) UpdateHostExecute(r ApiUpdateHostRequest) (*Upd
 		localVarReturnValue  *UpdateHostResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.UpdateHost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.UpdateHost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3037,9 +3552,145 @@ func (a *EnvironmentsApiService) UpdateHostExecute(r ApiUpdateHostRequest) (*Upd
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateOracleListenerRequest struct {
+	ctx context.Context
+	ApiService *EnvironmentsAPIService
+	environmentId string
+	listenerId string
+	updateOracleListenerParams *UpdateOracleListenerParams
+}
+
+func (r ApiUpdateOracleListenerRequest) UpdateOracleListenerParams(updateOracleListenerParams UpdateOracleListenerParams) ApiUpdateOracleListenerRequest {
+	r.updateOracleListenerParams = &updateOracleListenerParams
+	return r
+}
+
+func (r ApiUpdateOracleListenerRequest) Execute() (*UpdateOracleListenerResponse, *http.Response, error) {
+	return r.ApiService.UpdateOracleListenerExecute(r)
+}
+
+/*
+UpdateOracleListener Update an Oracle listener.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param environmentId The ID of the environment.
+ @param listenerId Oracle listener id.
+ @return ApiUpdateOracleListenerRequest
+*/
+func (a *EnvironmentsAPIService) UpdateOracleListener(ctx context.Context, environmentId string, listenerId string) ApiUpdateOracleListenerRequest {
+	return ApiUpdateOracleListenerRequest{
+		ApiService: a,
+		ctx: ctx,
+		environmentId: environmentId,
+		listenerId: listenerId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateOracleListenerResponse
+func (a *EnvironmentsAPIService) UpdateOracleListenerExecute(r ApiUpdateOracleListenerRequest) (*UpdateOracleListenerResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateOracleListenerResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.UpdateOracleListener")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/environments/{environmentId}/listeners/{listenerId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"environmentId"+"}", url.PathEscape(parameterValueToString(r.environmentId, "environmentId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"listenerId"+"}", url.PathEscape(parameterValueToString(r.listenerId, "listenerId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.environmentId) < 1 {
+		return localVarReturnValue, nil, reportError("environmentId must have at least 1 elements")
+	}
+	if strlen(r.listenerId) < 1 {
+		return localVarReturnValue, nil, reportError("listenerId must have at least 1 elements")
+	}
+	if r.updateOracleListenerParams == nil {
+		return localVarReturnValue, nil, reportError("updateOracleListenerParams is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateOracleListenerParams
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateRepositoryRequest struct {
 	ctx context.Context
-	ApiService *EnvironmentsApiService
+	ApiService *EnvironmentsAPIService
 	environmentId string
 	repositoryId string
 	updateRepositoryParameters *UpdateRepositoryParameters
@@ -3062,7 +3713,7 @@ UpdateRepository Update a Repository.
  @param repositoryId The ID of the repository.
  @return ApiUpdateRepositoryRequest
 */
-func (a *EnvironmentsApiService) UpdateRepository(ctx context.Context, environmentId string, repositoryId string) ApiUpdateRepositoryRequest {
+func (a *EnvironmentsAPIService) UpdateRepository(ctx context.Context, environmentId string, repositoryId string) ApiUpdateRepositoryRequest {
 	return ApiUpdateRepositoryRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3073,7 +3724,7 @@ func (a *EnvironmentsApiService) UpdateRepository(ctx context.Context, environme
 
 // Execute executes the request
 //  @return UpdateRepositoryResponse
-func (a *EnvironmentsApiService) UpdateRepositoryExecute(r ApiUpdateRepositoryRequest) (*UpdateRepositoryResponse, *http.Response, error) {
+func (a *EnvironmentsAPIService) UpdateRepositoryExecute(r ApiUpdateRepositoryRequest) (*UpdateRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -3081,7 +3732,7 @@ func (a *EnvironmentsApiService) UpdateRepositoryExecute(r ApiUpdateRepositoryRe
 		localVarReturnValue  *UpdateRepositoryResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsApiService.UpdateRepository")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EnvironmentsAPIService.UpdateRepository")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -183,7 +183,9 @@ func (o HashicorpVault) MarshalJSON() ([]byte, error) {
 
 func (o HashicorpVault) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.EnvVariables) {
 		toSerialize["env_variables"] = o.EnvVariables
 	}

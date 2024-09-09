@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,8 @@ package delphix_dct_api
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ProvisionVDBByTimestampDefaultsRequest type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type ProvisionVDBByTimestampDefaultsRequest struct {
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
-	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
+	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty" validate:"regexp=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{0,3})?"`
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The ID of the source object (dSource or VDB) to provision from. All other objects referenced by the parameters must live on the same engine as the source.
@@ -32,6 +34,8 @@ type ProvisionVDBByTimestampDefaultsRequest struct {
 	// The Timeflow ID.
 	TimeflowId *string `json:"timeflow_id,omitempty"`
 }
+
+type _ProvisionVDBByTimestampDefaultsRequest ProvisionVDBByTimestampDefaultsRequest
 
 // NewProvisionVDBByTimestampDefaultsRequest instantiates a new ProvisionVDBByTimestampDefaultsRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -227,6 +231,43 @@ func (o ProvisionVDBByTimestampDefaultsRequest) ToMap() (map[string]interface{},
 		toSerialize["timeflow_id"] = o.TimeflowId
 	}
 	return toSerialize, nil
+}
+
+func (o *ProvisionVDBByTimestampDefaultsRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_data_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProvisionVDBByTimestampDefaultsRequest := _ProvisionVDBByTimestampDefaultsRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProvisionVDBByTimestampDefaultsRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProvisionVDBByTimestampDefaultsRequest(varProvisionVDBByTimestampDefaultsRequest)
+
+	return err
 }
 
 type NullableProvisionVDBByTimestampDefaultsRequest struct {

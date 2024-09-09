@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ConnectorTestResponse type satisfies the MappedNullable interface at compile time
@@ -25,6 +27,8 @@ type ConnectorTestResponse struct {
 	// A message describing the result of the masking connector test.
 	Message string `json:"message"`
 }
+
+type _ConnectorTestResponse ConnectorTestResponse
 
 // NewConnectorTestResponse instantiates a new ConnectorTestResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -106,6 +110,44 @@ func (o ConnectorTestResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["message"] = o.Message
 	return toSerialize, nil
+}
+
+func (o *ConnectorTestResponse) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"status",
+		"message",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConnectorTestResponse := _ConnectorTestResponse{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varConnectorTestResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConnectorTestResponse(varConnectorTestResponse)
+
+	return err
 }
 
 type NullableConnectorTestResponse struct {

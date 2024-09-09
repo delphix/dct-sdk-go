@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -33,7 +33,7 @@ type LDAPConfigParams struct {
 	// True if LDAP should be used over SSL.
 	EnableSsl *bool `json:"enable_ssl,omitempty"`
 	// File name of a truststore which can be used to validate the TLS certificate of the LDAP server. The truststore must be available at /etc/config/certs/<truststore_filename>
-	TruststoreFilename *string `json:"truststore_filename,omitempty"`
+	TruststoreFilename *string `json:"truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.\\\\-]+$"`
 	// Password for reading trustStore file provided in 'truststore_filename' property
 	TruststorePassword *string `json:"truststore_password,omitempty"`
 	// Allow connections to the LDAP server over LDAPS without validating the TLS certificate. Even though the connection to the server might be performed over LDAPS, setting this property eliminates the protection against a man-in-the-middle attach for connections to this server. Instead, consider creating a truststore with a Certificate Authority to validate the server's certificate, and set the truststore_filename property. 

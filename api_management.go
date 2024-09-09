@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// ManagementApiService ManagementApi service
-type ManagementApiService service
+// ManagementAPIService ManagementAPI service
+type ManagementAPIService service
 
 type ApiCreateEngineTagsRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 	tagsRequest *TagsRequest
 }
@@ -48,7 +48,7 @@ CreateEngineTags Create tags for an Engine.
  @param engineId The ID of the registered engine.
  @return ApiCreateEngineTagsRequest
 */
-func (a *ManagementApiService) CreateEngineTags(ctx context.Context, engineId string) ApiCreateEngineTagsRequest {
+func (a *ManagementAPIService) CreateEngineTags(ctx context.Context, engineId string) ApiCreateEngineTagsRequest {
 	return ApiCreateEngineTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +58,7 @@ func (a *ManagementApiService) CreateEngineTags(ctx context.Context, engineId st
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ManagementApiService) CreateEngineTagsExecute(r ApiCreateEngineTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ManagementAPIService) CreateEngineTagsExecute(r ApiCreateEngineTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +66,7 @@ func (a *ManagementApiService) CreateEngineTagsExecute(r ApiCreateEngineTagsRequ
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.CreateEngineTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.CreateEngineTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -153,7 +153,7 @@ func (a *ManagementApiService) CreateEngineTagsExecute(r ApiCreateEngineTagsRequ
 
 type ApiCreateHashicorpVaultRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	hashicorpVault *HashicorpVault
 }
 
@@ -172,7 +172,7 @@ CreateHashicorpVault Configure a new Hashicorp Vault
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateHashicorpVaultRequest
 */
-func (a *ManagementApiService) CreateHashicorpVault(ctx context.Context) ApiCreateHashicorpVaultRequest {
+func (a *ManagementAPIService) CreateHashicorpVault(ctx context.Context) ApiCreateHashicorpVaultRequest {
 	return ApiCreateHashicorpVaultRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -181,7 +181,7 @@ func (a *ManagementApiService) CreateHashicorpVault(ctx context.Context) ApiCrea
 
 // Execute executes the request
 //  @return HashicorpVault
-func (a *ManagementApiService) CreateHashicorpVaultExecute(r ApiCreateHashicorpVaultRequest) (*HashicorpVault, *http.Response, error) {
+func (a *ManagementAPIService) CreateHashicorpVaultExecute(r ApiCreateHashicorpVaultRequest) (*HashicorpVault, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -189,7 +189,7 @@ func (a *ManagementApiService) CreateHashicorpVaultExecute(r ApiCreateHashicorpV
 		localVarReturnValue  *HashicorpVault
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.CreateHashicorpVault")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.CreateHashicorpVault")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -275,7 +275,7 @@ func (a *ManagementApiService) CreateHashicorpVaultExecute(r ApiCreateHashicorpV
 
 type ApiCreateHashicorpVaultTagsRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	vaultId int64
 	tagsRequest *TagsRequest
 }
@@ -297,7 +297,7 @@ CreateHashicorpVaultTags Create tags for a Hashicorp vault.
  @param vaultId Numeric ID of the Hashicorp vault
  @return ApiCreateHashicorpVaultTagsRequest
 */
-func (a *ManagementApiService) CreateHashicorpVaultTags(ctx context.Context, vaultId int64) ApiCreateHashicorpVaultTagsRequest {
+func (a *ManagementAPIService) CreateHashicorpVaultTags(ctx context.Context, vaultId int64) ApiCreateHashicorpVaultTagsRequest {
 	return ApiCreateHashicorpVaultTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -307,7 +307,7 @@ func (a *ManagementApiService) CreateHashicorpVaultTags(ctx context.Context, vau
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ManagementApiService) CreateHashicorpVaultTagsExecute(r ApiCreateHashicorpVaultTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ManagementAPIService) CreateHashicorpVaultTagsExecute(r ApiCreateHashicorpVaultTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -315,7 +315,7 @@ func (a *ManagementApiService) CreateHashicorpVaultTagsExecute(r ApiCreateHashic
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.CreateHashicorpVaultTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.CreateHashicorpVaultTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -402,7 +402,7 @@ func (a *ManagementApiService) CreateHashicorpVaultTagsExecute(r ApiCreateHashic
 
 type ApiDeleteEngineTagsRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 	deleteTag *DeleteTag
 }
@@ -424,7 +424,7 @@ DeleteEngineTags Delete tags for an Engine.
  @param engineId The ID of the registered engine.
  @return ApiDeleteEngineTagsRequest
 */
-func (a *ManagementApiService) DeleteEngineTags(ctx context.Context, engineId string) ApiDeleteEngineTagsRequest {
+func (a *ManagementAPIService) DeleteEngineTags(ctx context.Context, engineId string) ApiDeleteEngineTagsRequest {
 	return ApiDeleteEngineTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -433,14 +433,14 @@ func (a *ManagementApiService) DeleteEngineTags(ctx context.Context, engineId st
 }
 
 // Execute executes the request
-func (a *ManagementApiService) DeleteEngineTagsExecute(r ApiDeleteEngineTagsRequest) (*http.Response, error) {
+func (a *ManagementAPIService) DeleteEngineTagsExecute(r ApiDeleteEngineTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.DeleteEngineTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.DeleteEngineTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -515,7 +515,7 @@ func (a *ManagementApiService) DeleteEngineTagsExecute(r ApiDeleteEngineTagsRequ
 
 type ApiDeleteHashicorpVaultRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	vaultId int64
 }
 
@@ -530,7 +530,7 @@ DeleteHashicorpVault Delete a Hashicorp vault by id
  @param vaultId Numeric ID of the Hashicorp vault
  @return ApiDeleteHashicorpVaultRequest
 */
-func (a *ManagementApiService) DeleteHashicorpVault(ctx context.Context, vaultId int64) ApiDeleteHashicorpVaultRequest {
+func (a *ManagementAPIService) DeleteHashicorpVault(ctx context.Context, vaultId int64) ApiDeleteHashicorpVaultRequest {
 	return ApiDeleteHashicorpVaultRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -539,14 +539,14 @@ func (a *ManagementApiService) DeleteHashicorpVault(ctx context.Context, vaultId
 }
 
 // Execute executes the request
-func (a *ManagementApiService) DeleteHashicorpVaultExecute(r ApiDeleteHashicorpVaultRequest) (*http.Response, error) {
+func (a *ManagementAPIService) DeleteHashicorpVaultExecute(r ApiDeleteHashicorpVaultRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.DeleteHashicorpVault")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.DeleteHashicorpVault")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -619,7 +619,7 @@ func (a *ManagementApiService) DeleteHashicorpVaultExecute(r ApiDeleteHashicorpV
 
 type ApiDeleteHashicorpVaultTagRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	vaultId int64
 	deleteTag *DeleteTag
 }
@@ -641,7 +641,7 @@ DeleteHashicorpVaultTag Delete tags for a Hashicorp vault.
  @param vaultId Numeric ID of the Hashicorp vault
  @return ApiDeleteHashicorpVaultTagRequest
 */
-func (a *ManagementApiService) DeleteHashicorpVaultTag(ctx context.Context, vaultId int64) ApiDeleteHashicorpVaultTagRequest {
+func (a *ManagementAPIService) DeleteHashicorpVaultTag(ctx context.Context, vaultId int64) ApiDeleteHashicorpVaultTagRequest {
 	return ApiDeleteHashicorpVaultTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -650,14 +650,14 @@ func (a *ManagementApiService) DeleteHashicorpVaultTag(ctx context.Context, vaul
 }
 
 // Execute executes the request
-func (a *ManagementApiService) DeleteHashicorpVaultTagExecute(r ApiDeleteHashicorpVaultTagRequest) (*http.Response, error) {
+func (a *ManagementAPIService) DeleteHashicorpVaultTagExecute(r ApiDeleteHashicorpVaultTagRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.DeleteHashicorpVaultTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.DeleteHashicorpVaultTag")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -732,7 +732,7 @@ func (a *ManagementApiService) DeleteHashicorpVaultTagExecute(r ApiDeleteHashico
 
 type ApiGetApiClassificationRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetApiClassificationRequest) Execute() (*APIClassificationConfig, *http.Response, error) {
@@ -745,7 +745,7 @@ GetApiClassification Get api classification.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetApiClassificationRequest
 */
-func (a *ManagementApiService) GetApiClassification(ctx context.Context) ApiGetApiClassificationRequest {
+func (a *ManagementAPIService) GetApiClassification(ctx context.Context) ApiGetApiClassificationRequest {
 	return ApiGetApiClassificationRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -754,7 +754,7 @@ func (a *ManagementApiService) GetApiClassification(ctx context.Context) ApiGetA
 
 // Execute executes the request
 //  @return APIClassificationConfig
-func (a *ManagementApiService) GetApiClassificationExecute(r ApiGetApiClassificationRequest) (*APIClassificationConfig, *http.Response, error) {
+func (a *ManagementAPIService) GetApiClassificationExecute(r ApiGetApiClassificationRequest) (*APIClassificationConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -762,7 +762,7 @@ func (a *ManagementApiService) GetApiClassificationExecute(r ApiGetApiClassifica
 		localVarReturnValue  *APIClassificationConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetApiClassification")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetApiClassification")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -841,9 +841,272 @@ func (a *ManagementApiService) GetApiClassificationExecute(r ApiGetApiClassifica
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetComplianceApplicationSettingsRequest struct {
+	ctx context.Context
+	ApiService *ManagementAPIService
+	engineId string
+	limit *int32
+	cursor *string
+	sort *string
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetComplianceApplicationSettingsRequest) Limit(limit int32) ApiGetComplianceApplicationSettingsRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetComplianceApplicationSettingsRequest) Cursor(cursor string) ApiGetComplianceApplicationSettingsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetComplianceApplicationSettingsRequest) Sort(sort string) ApiGetComplianceApplicationSettingsRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiGetComplianceApplicationSettingsRequest) Execute() (*ComplianceApplicationSettingsListResponse, *http.Response, error) {
+	return r.ApiService.GetComplianceApplicationSettingsExecute(r)
+}
+
+/*
+GetComplianceApplicationSettings Returns a compliance engine's application settings.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param engineId The ID of the registered engine.
+ @return ApiGetComplianceApplicationSettingsRequest
+*/
+func (a *ManagementAPIService) GetComplianceApplicationSettings(ctx context.Context, engineId string) ApiGetComplianceApplicationSettingsRequest {
+	return ApiGetComplianceApplicationSettingsRequest{
+		ApiService: a,
+		ctx: ctx,
+		engineId: engineId,
+	}
+}
+
+// Execute executes the request
+//  @return ComplianceApplicationSettingsListResponse
+func (a *ManagementAPIService) GetComplianceApplicationSettingsExecute(r ApiGetComplianceApplicationSettingsRequest) (*ComplianceApplicationSettingsListResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ComplianceApplicationSettingsListResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetComplianceApplicationSettings")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/management/engines/{engineId}/compliance-application-settings"
+	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterValueToString(r.engineId, "engineId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetEngineAutoTaggingConfigRequest struct {
+	ctx context.Context
+	ApiService *ManagementAPIService
+	engineId string
+}
+
+func (r ApiGetEngineAutoTaggingConfigRequest) Execute() (*AutoTaggingConfig, *http.Response, error) {
+	return r.ApiService.GetEngineAutoTaggingConfigExecute(r)
+}
+
+/*
+GetEngineAutoTaggingConfig Returns the engine's auto tagging configuration.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param engineId The ID of the registered engine.
+ @return ApiGetEngineAutoTaggingConfigRequest
+*/
+func (a *ManagementAPIService) GetEngineAutoTaggingConfig(ctx context.Context, engineId string) ApiGetEngineAutoTaggingConfigRequest {
+	return ApiGetEngineAutoTaggingConfigRequest{
+		ApiService: a,
+		ctx: ctx,
+		engineId: engineId,
+	}
+}
+
+// Execute executes the request
+//  @return AutoTaggingConfig
+func (a *ManagementAPIService) GetEngineAutoTaggingConfigExecute(r ApiGetEngineAutoTaggingConfigRequest) (*AutoTaggingConfig, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AutoTaggingConfig
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetEngineAutoTaggingConfig")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/management/engines/{engineId}/auto-tagging"
+	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterValueToString(r.engineId, "engineId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetEngineTagsRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 }
 
@@ -858,7 +1121,7 @@ GetEngineTags Get tags for a Engine.
  @param engineId The ID of the registered engine.
  @return ApiGetEngineTagsRequest
 */
-func (a *ManagementApiService) GetEngineTags(ctx context.Context, engineId string) ApiGetEngineTagsRequest {
+func (a *ManagementAPIService) GetEngineTags(ctx context.Context, engineId string) ApiGetEngineTagsRequest {
 	return ApiGetEngineTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -868,7 +1131,7 @@ func (a *ManagementApiService) GetEngineTags(ctx context.Context, engineId strin
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ManagementApiService) GetEngineTagsExecute(r ApiGetEngineTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ManagementAPIService) GetEngineTagsExecute(r ApiGetEngineTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -876,7 +1139,7 @@ func (a *ManagementApiService) GetEngineTagsExecute(r ApiGetEngineTagsRequest) (
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetEngineTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetEngineTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -958,7 +1221,7 @@ func (a *ManagementApiService) GetEngineTagsExecute(r ApiGetEngineTagsRequest) (
 
 type ApiGetHashicorpVaultRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	vaultId int64
 }
 
@@ -973,7 +1236,7 @@ GetHashicorpVault Get a Hashicorp vault by id
  @param vaultId Numeric ID of the Hashicorp vault
  @return ApiGetHashicorpVaultRequest
 */
-func (a *ManagementApiService) GetHashicorpVault(ctx context.Context, vaultId int64) ApiGetHashicorpVaultRequest {
+func (a *ManagementAPIService) GetHashicorpVault(ctx context.Context, vaultId int64) ApiGetHashicorpVaultRequest {
 	return ApiGetHashicorpVaultRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -983,7 +1246,7 @@ func (a *ManagementApiService) GetHashicorpVault(ctx context.Context, vaultId in
 
 // Execute executes the request
 //  @return HashicorpVault
-func (a *ManagementApiService) GetHashicorpVaultExecute(r ApiGetHashicorpVaultRequest) (*HashicorpVault, *http.Response, error) {
+func (a *ManagementAPIService) GetHashicorpVaultExecute(r ApiGetHashicorpVaultRequest) (*HashicorpVault, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -991,7 +1254,7 @@ func (a *ManagementApiService) GetHashicorpVaultExecute(r ApiGetHashicorpVaultRe
 		localVarReturnValue  *HashicorpVault
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetHashicorpVault")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetHashicorpVault")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1073,7 +1336,7 @@ func (a *ManagementApiService) GetHashicorpVaultExecute(r ApiGetHashicorpVaultRe
 
 type ApiGetHashicorpVaultTagsRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	vaultId int64
 }
 
@@ -1088,7 +1351,7 @@ GetHashicorpVaultTags Get tags for a Hashicorp vault.
  @param vaultId Numeric ID of the Hashicorp vault
  @return ApiGetHashicorpVaultTagsRequest
 */
-func (a *ManagementApiService) GetHashicorpVaultTags(ctx context.Context, vaultId int64) ApiGetHashicorpVaultTagsRequest {
+func (a *ManagementAPIService) GetHashicorpVaultTags(ctx context.Context, vaultId int64) ApiGetHashicorpVaultTagsRequest {
 	return ApiGetHashicorpVaultTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1098,7 +1361,7 @@ func (a *ManagementApiService) GetHashicorpVaultTags(ctx context.Context, vaultI
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ManagementApiService) GetHashicorpVaultTagsExecute(r ApiGetHashicorpVaultTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ManagementAPIService) GetHashicorpVaultTagsExecute(r ApiGetHashicorpVaultTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1106,7 +1369,7 @@ func (a *ManagementApiService) GetHashicorpVaultTagsExecute(r ApiGetHashicorpVau
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetHashicorpVaultTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetHashicorpVaultTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1188,7 +1451,7 @@ func (a *ManagementApiService) GetHashicorpVaultTagsExecute(r ApiGetHashicorpVau
 
 type ApiGetHashicorpVaultsRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1222,7 +1485,7 @@ GetHashicorpVaults Returns a list of configured Hashicorp vaults.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetHashicorpVaultsRequest
 */
-func (a *ManagementApiService) GetHashicorpVaults(ctx context.Context) ApiGetHashicorpVaultsRequest {
+func (a *ManagementAPIService) GetHashicorpVaults(ctx context.Context) ApiGetHashicorpVaultsRequest {
 	return ApiGetHashicorpVaultsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1231,7 +1494,7 @@ func (a *ManagementApiService) GetHashicorpVaults(ctx context.Context) ApiGetHas
 
 // Execute executes the request
 //  @return ListHashicorpVaultsResponse
-func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaultsRequest) (*ListHashicorpVaultsResponse, *http.Response, error) {
+func (a *ManagementAPIService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaultsRequest) (*ListHashicorpVaultsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1239,7 +1502,7 @@ func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaults
 		localVarReturnValue  *ListHashicorpVaultsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetHashicorpVaults")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetHashicorpVaults")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1251,13 +1514,16 @@ func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaults
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1329,7 +1595,7 @@ func (a *ManagementApiService) GetHashicorpVaultsExecute(r ApiGetHashicorpVaults
 
 type ApiGetLdapConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetLdapConfigRequest) Execute() (*LDAPConfigParams, *http.Response, error) {
@@ -1342,7 +1608,7 @@ GetLdapConfig Returns the LDAP configuration
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetLdapConfigRequest
 */
-func (a *ManagementApiService) GetLdapConfig(ctx context.Context) ApiGetLdapConfigRequest {
+func (a *ManagementAPIService) GetLdapConfig(ctx context.Context) ApiGetLdapConfigRequest {
 	return ApiGetLdapConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1351,7 +1617,7 @@ func (a *ManagementApiService) GetLdapConfig(ctx context.Context) ApiGetLdapConf
 
 // Execute executes the request
 //  @return LDAPConfigParams
-func (a *ManagementApiService) GetLdapConfigExecute(r ApiGetLdapConfigRequest) (*LDAPConfigParams, *http.Response, error) {
+func (a *ManagementAPIService) GetLdapConfigExecute(r ApiGetLdapConfigRequest) (*LDAPConfigParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1359,7 +1625,7 @@ func (a *ManagementApiService) GetLdapConfigExecute(r ApiGetLdapConfigRequest) (
 		localVarReturnValue  *LDAPConfigParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetLdapConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetLdapConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1440,7 +1706,7 @@ func (a *ManagementApiService) GetLdapConfigExecute(r ApiGetLdapConfigRequest) (
 
 type ApiGetMetadataDatabaseRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetMetadataDatabaseRequest) Execute() (*MetadataDbInfo, *http.Response, error) {
@@ -1453,7 +1719,7 @@ GetMetadataDatabase Returns configuration information about the metadata databas
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetMetadataDatabaseRequest
 */
-func (a *ManagementApiService) GetMetadataDatabase(ctx context.Context) ApiGetMetadataDatabaseRequest {
+func (a *ManagementAPIService) GetMetadataDatabase(ctx context.Context) ApiGetMetadataDatabaseRequest {
 	return ApiGetMetadataDatabaseRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1462,7 +1728,7 @@ func (a *ManagementApiService) GetMetadataDatabase(ctx context.Context) ApiGetMe
 
 // Execute executes the request
 //  @return MetadataDbInfo
-func (a *ManagementApiService) GetMetadataDatabaseExecute(r ApiGetMetadataDatabaseRequest) (*MetadataDbInfo, *http.Response, error) {
+func (a *ManagementAPIService) GetMetadataDatabaseExecute(r ApiGetMetadataDatabaseRequest) (*MetadataDbInfo, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1470,7 +1736,7 @@ func (a *ManagementApiService) GetMetadataDatabaseExecute(r ApiGetMetadataDataba
 		localVarReturnValue  *MetadataDbInfo
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetMetadataDatabase")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetMetadataDatabase")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1549,9 +1815,130 @@ func (a *ManagementApiService) GetMetadataDatabaseExecute(r ApiGetMetadataDataba
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetPhonehomeEventsRequest struct {
+	ctx context.Context
+	ApiService *ManagementAPIService
+	limit *int32
+}
+
+// The maximum number of items to return.
+func (r ApiGetPhonehomeEventsRequest) Limit(limit int32) ApiGetPhonehomeEventsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiGetPhonehomeEventsRequest) Execute() ([]BundleUploadEvent, *http.Response, error) {
+	return r.ApiService.GetPhonehomeEventsExecute(r)
+}
+
+/*
+GetPhonehomeEvents Returns previous bundle upload events
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetPhonehomeEventsRequest
+*/
+func (a *ManagementAPIService) GetPhonehomeEvents(ctx context.Context) ApiGetPhonehomeEventsRequest {
+	return ApiGetPhonehomeEventsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return []BundleUploadEvent
+func (a *ManagementAPIService) GetPhonehomeEventsExecute(r ApiGetPhonehomeEventsRequest) ([]BundleUploadEvent, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []BundleUploadEvent
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetPhonehomeEvents")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/management/phonehome/events"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetProductRegistrationDelphixConnectivityCheckRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetProductRegistrationDelphixConnectivityCheckRequest) Execute() (bool, *http.Response, error) {
@@ -1564,7 +1951,7 @@ GetProductRegistrationDelphixConnectivityCheck Returns True if Delphix services 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetProductRegistrationDelphixConnectivityCheckRequest
 */
-func (a *ManagementApiService) GetProductRegistrationDelphixConnectivityCheck(ctx context.Context) ApiGetProductRegistrationDelphixConnectivityCheckRequest {
+func (a *ManagementAPIService) GetProductRegistrationDelphixConnectivityCheck(ctx context.Context) ApiGetProductRegistrationDelphixConnectivityCheckRequest {
 	return ApiGetProductRegistrationDelphixConnectivityCheckRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1573,7 +1960,7 @@ func (a *ManagementApiService) GetProductRegistrationDelphixConnectivityCheck(ct
 
 // Execute executes the request
 //  @return bool
-func (a *ManagementApiService) GetProductRegistrationDelphixConnectivityCheckExecute(r ApiGetProductRegistrationDelphixConnectivityCheckRequest) (bool, *http.Response, error) {
+func (a *ManagementAPIService) GetProductRegistrationDelphixConnectivityCheckExecute(r ApiGetProductRegistrationDelphixConnectivityCheckRequest) (bool, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1581,7 +1968,7 @@ func (a *ManagementApiService) GetProductRegistrationDelphixConnectivityCheckExe
 		localVarReturnValue  bool
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetProductRegistrationDelphixConnectivityCheck")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetProductRegistrationDelphixConnectivityCheck")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1662,7 +2049,7 @@ func (a *ManagementApiService) GetProductRegistrationDelphixConnectivityCheckExe
 
 type ApiGetProductRegistrationKeyRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetProductRegistrationKeyRequest) Execute() (string, *http.Response, error) {
@@ -1675,7 +2062,7 @@ GetProductRegistrationKey Generates and returns a public key that can be used to
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetProductRegistrationKeyRequest
 */
-func (a *ManagementApiService) GetProductRegistrationKey(ctx context.Context) ApiGetProductRegistrationKeyRequest {
+func (a *ManagementAPIService) GetProductRegistrationKey(ctx context.Context) ApiGetProductRegistrationKeyRequest {
 	return ApiGetProductRegistrationKeyRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1684,7 +2071,7 @@ func (a *ManagementApiService) GetProductRegistrationKey(ctx context.Context) Ap
 
 // Execute executes the request
 //  @return string
-func (a *ManagementApiService) GetProductRegistrationKeyExecute(r ApiGetProductRegistrationKeyRequest) (string, *http.Response, error) {
+func (a *ManagementAPIService) GetProductRegistrationKeyExecute(r ApiGetProductRegistrationKeyRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1692,7 +2079,7 @@ func (a *ManagementApiService) GetProductRegistrationKeyExecute(r ApiGetProductR
 		localVarReturnValue  string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetProductRegistrationKey")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetProductRegistrationKey")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1773,7 +2160,7 @@ func (a *ManagementApiService) GetProductRegistrationKeyExecute(r ApiGetProductR
 
 type ApiGetProductRegistrationStatusRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetProductRegistrationStatusRequest) Execute() (bool, *http.Response, error) {
@@ -1786,7 +2173,7 @@ GetProductRegistrationStatus Returns the product registration status.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetProductRegistrationStatusRequest
 */
-func (a *ManagementApiService) GetProductRegistrationStatus(ctx context.Context) ApiGetProductRegistrationStatusRequest {
+func (a *ManagementAPIService) GetProductRegistrationStatus(ctx context.Context) ApiGetProductRegistrationStatusRequest {
 	return ApiGetProductRegistrationStatusRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1795,7 +2182,7 @@ func (a *ManagementApiService) GetProductRegistrationStatus(ctx context.Context)
 
 // Execute executes the request
 //  @return bool
-func (a *ManagementApiService) GetProductRegistrationStatusExecute(r ApiGetProductRegistrationStatusRequest) (bool, *http.Response, error) {
+func (a *ManagementAPIService) GetProductRegistrationStatusExecute(r ApiGetProductRegistrationStatusRequest) (bool, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1803,7 +2190,7 @@ func (a *ManagementApiService) GetProductRegistrationStatusExecute(r ApiGetProdu
 		localVarReturnValue  bool
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetProductRegistrationStatus")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetProductRegistrationStatus")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1884,7 +2271,7 @@ func (a *ManagementApiService) GetProductRegistrationStatusExecute(r ApiGetProdu
 
 type ApiGetProxyConfigurationRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetProxyConfigurationRequest) Execute() (*ProxyConfiguration, *http.Response, error) {
@@ -1897,7 +2284,7 @@ GetProxyConfiguration Returns the current web proxy configuration to use to conn
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetProxyConfigurationRequest
 */
-func (a *ManagementApiService) GetProxyConfiguration(ctx context.Context) ApiGetProxyConfigurationRequest {
+func (a *ManagementAPIService) GetProxyConfiguration(ctx context.Context) ApiGetProxyConfigurationRequest {
 	return ApiGetProxyConfigurationRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1906,7 +2293,7 @@ func (a *ManagementApiService) GetProxyConfiguration(ctx context.Context) ApiGet
 
 // Execute executes the request
 //  @return ProxyConfiguration
-func (a *ManagementApiService) GetProxyConfigurationExecute(r ApiGetProxyConfigurationRequest) (*ProxyConfiguration, *http.Response, error) {
+func (a *ManagementAPIService) GetProxyConfigurationExecute(r ApiGetProxyConfigurationRequest) (*ProxyConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1914,7 +2301,7 @@ func (a *ManagementApiService) GetProxyConfigurationExecute(r ApiGetProxyConfigu
 		localVarReturnValue  *ProxyConfiguration
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetProxyConfiguration")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetProxyConfiguration")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1995,7 +2382,7 @@ func (a *ManagementApiService) GetProxyConfigurationExecute(r ApiGetProxyConfigu
 
 type ApiGetRegisteredEngineRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 }
 
@@ -2010,7 +2397,7 @@ GetRegisteredEngine Returns a registered engine by ID.
  @param engineId The ID of the registered engine.
  @return ApiGetRegisteredEngineRequest
 */
-func (a *ManagementApiService) GetRegisteredEngine(ctx context.Context, engineId string) ApiGetRegisteredEngineRequest {
+func (a *ManagementAPIService) GetRegisteredEngine(ctx context.Context, engineId string) ApiGetRegisteredEngineRequest {
 	return ApiGetRegisteredEngineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2020,7 +2407,7 @@ func (a *ManagementApiService) GetRegisteredEngine(ctx context.Context, engineId
 
 // Execute executes the request
 //  @return RegisteredEngine
-func (a *ManagementApiService) GetRegisteredEngineExecute(r ApiGetRegisteredEngineRequest) (*RegisteredEngine, *http.Response, error) {
+func (a *ManagementAPIService) GetRegisteredEngineExecute(r ApiGetRegisteredEngineRequest) (*RegisteredEngine, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2028,7 +2415,7 @@ func (a *ManagementApiService) GetRegisteredEngineExecute(r ApiGetRegisteredEngi
 		localVarReturnValue  *RegisteredEngine
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetRegisteredEngine")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetRegisteredEngine")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2110,7 +2497,7 @@ func (a *ManagementApiService) GetRegisteredEngineExecute(r ApiGetRegisteredEngi
 
 type ApiGetRegisteredEnginesRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2144,7 +2531,7 @@ GetRegisteredEngines Returns a list of registered engines.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetRegisteredEnginesRequest
 */
-func (a *ManagementApiService) GetRegisteredEngines(ctx context.Context) ApiGetRegisteredEnginesRequest {
+func (a *ManagementAPIService) GetRegisteredEngines(ctx context.Context) ApiGetRegisteredEnginesRequest {
 	return ApiGetRegisteredEnginesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2153,7 +2540,7 @@ func (a *ManagementApiService) GetRegisteredEngines(ctx context.Context) ApiGetR
 
 // Execute executes the request
 //  @return ListRegisteredEnginesResponse
-func (a *ManagementApiService) GetRegisteredEnginesExecute(r ApiGetRegisteredEnginesRequest) (*ListRegisteredEnginesResponse, *http.Response, error) {
+func (a *ManagementAPIService) GetRegisteredEnginesExecute(r ApiGetRegisteredEnginesRequest) (*ListRegisteredEnginesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2161,7 +2548,7 @@ func (a *ManagementApiService) GetRegisteredEnginesExecute(r ApiGetRegisteredEng
 		localVarReturnValue  *ListRegisteredEnginesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetRegisteredEngines")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetRegisteredEngines")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2173,13 +2560,16 @@ func (a *ManagementApiService) GetRegisteredEnginesExecute(r ApiGetRegisteredEng
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2251,7 +2641,7 @@ func (a *ManagementApiService) GetRegisteredEnginesExecute(r ApiGetRegisteredEng
 
 type ApiGetSamlConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetSamlConfigRequest) Execute() (*SAMLConfigParams, *http.Response, error) {
@@ -2264,7 +2654,7 @@ GetSamlConfig Returns the SAML configuration
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetSamlConfigRequest
 */
-func (a *ManagementApiService) GetSamlConfig(ctx context.Context) ApiGetSamlConfigRequest {
+func (a *ManagementAPIService) GetSamlConfig(ctx context.Context) ApiGetSamlConfigRequest {
 	return ApiGetSamlConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2273,7 +2663,7 @@ func (a *ManagementApiService) GetSamlConfig(ctx context.Context) ApiGetSamlConf
 
 // Execute executes the request
 //  @return SAMLConfigParams
-func (a *ManagementApiService) GetSamlConfigExecute(r ApiGetSamlConfigRequest) (*SAMLConfigParams, *http.Response, error) {
+func (a *ManagementAPIService) GetSamlConfigExecute(r ApiGetSamlConfigRequest) (*SAMLConfigParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2281,7 +2671,7 @@ func (a *ManagementApiService) GetSamlConfigExecute(r ApiGetSamlConfigRequest) (
 		localVarReturnValue  *SAMLConfigParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetSamlConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetSamlConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2362,7 +2752,7 @@ func (a *ManagementApiService) GetSamlConfigExecute(r ApiGetSamlConfigRequest) (
 
 type ApiGetSmtpConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiGetSmtpConfigRequest) Execute() (*SMTPConfigParams, *http.Response, error) {
@@ -2375,7 +2765,7 @@ GetSmtpConfig Returns the SMTP configuration
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetSmtpConfigRequest
 */
-func (a *ManagementApiService) GetSmtpConfig(ctx context.Context) ApiGetSmtpConfigRequest {
+func (a *ManagementAPIService) GetSmtpConfig(ctx context.Context) ApiGetSmtpConfigRequest {
 	return ApiGetSmtpConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2384,7 +2774,7 @@ func (a *ManagementApiService) GetSmtpConfig(ctx context.Context) ApiGetSmtpConf
 
 // Execute executes the request
 //  @return SMTPConfigParams
-func (a *ManagementApiService) GetSmtpConfigExecute(r ApiGetSmtpConfigRequest) (*SMTPConfigParams, *http.Response, error) {
+func (a *ManagementAPIService) GetSmtpConfigExecute(r ApiGetSmtpConfigRequest) (*SMTPConfigParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2392,7 +2782,7 @@ func (a *ManagementApiService) GetSmtpConfigExecute(r ApiGetSmtpConfigRequest) (
 		localVarReturnValue  *SMTPConfigParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetSmtpConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetSmtpConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2473,7 +2863,7 @@ func (a *ManagementApiService) GetSmtpConfigExecute(r ApiGetSmtpConfigRequest) (
 
 type ApiListPropertiesRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 }
 
 func (r ApiListPropertiesRequest) Execute() (*GlobalProperties, *http.Response, error) {
@@ -2486,7 +2876,7 @@ ListProperties Get global properties.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListPropertiesRequest
 */
-func (a *ManagementApiService) ListProperties(ctx context.Context) ApiListPropertiesRequest {
+func (a *ManagementAPIService) ListProperties(ctx context.Context) ApiListPropertiesRequest {
 	return ApiListPropertiesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2495,7 +2885,7 @@ func (a *ManagementApiService) ListProperties(ctx context.Context) ApiListProper
 
 // Execute executes the request
 //  @return GlobalProperties
-func (a *ManagementApiService) ListPropertiesExecute(r ApiListPropertiesRequest) (*GlobalProperties, *http.Response, error) {
+func (a *ManagementAPIService) ListPropertiesExecute(r ApiListPropertiesRequest) (*GlobalProperties, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2503,7 +2893,7 @@ func (a *ManagementApiService) ListPropertiesExecute(r ApiListPropertiesRequest)
 		localVarReturnValue  *GlobalProperties
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.ListProperties")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.ListProperties")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2584,7 +2974,7 @@ func (a *ManagementApiService) ListPropertiesExecute(r ApiListPropertiesRequest)
 
 type ApiRegisterEngineRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineRegistrationParameter *EngineRegistrationParameter
 }
 
@@ -2604,7 +2994,7 @@ RegisterEngine Register an engine.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRegisterEngineRequest
 */
-func (a *ManagementApiService) RegisterEngine(ctx context.Context) ApiRegisterEngineRequest {
+func (a *ManagementAPIService) RegisterEngine(ctx context.Context) ApiRegisterEngineRequest {
 	return ApiRegisterEngineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2613,7 +3003,7 @@ func (a *ManagementApiService) RegisterEngine(ctx context.Context) ApiRegisterEn
 
 // Execute executes the request
 //  @return RegisteredEngine
-func (a *ManagementApiService) RegisterEngineExecute(r ApiRegisterEngineRequest) (*RegisteredEngine, *http.Response, error) {
+func (a *ManagementAPIService) RegisterEngineExecute(r ApiRegisterEngineRequest) (*RegisteredEngine, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2621,7 +3011,7 @@ func (a *ManagementApiService) RegisterEngineExecute(r ApiRegisterEngineRequest)
 		localVarReturnValue  *RegisteredEngine
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.RegisterEngine")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.RegisterEngine")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2707,7 +3097,7 @@ func (a *ManagementApiService) RegisterEngineExecute(r ApiRegisterEngineRequest)
 
 type ApiRegisterProductOfflineRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	productRegistrationOfflinePayload *ProductRegistrationOfflinePayload
 }
 
@@ -2726,7 +3116,7 @@ RegisterProductOffline Registers the product using a manually generated payload.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRegisterProductOfflineRequest
 */
-func (a *ManagementApiService) RegisterProductOffline(ctx context.Context) ApiRegisterProductOfflineRequest {
+func (a *ManagementAPIService) RegisterProductOffline(ctx context.Context) ApiRegisterProductOfflineRequest {
 	return ApiRegisterProductOfflineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2734,14 +3124,14 @@ func (a *ManagementApiService) RegisterProductOffline(ctx context.Context) ApiRe
 }
 
 // Execute executes the request
-func (a *ManagementApiService) RegisterProductOfflineExecute(r ApiRegisterProductOfflineRequest) (*http.Response, error) {
+func (a *ManagementAPIService) RegisterProductOfflineExecute(r ApiRegisterProductOfflineRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.RegisterProductOffline")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.RegisterProductOffline")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2818,7 +3208,7 @@ func (a *ManagementApiService) RegisterProductOfflineExecute(r ApiRegisterProduc
 
 type ApiRegisterProductOnlineRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	productRegistrationOnlinePayload *ProductRegistrationOnlinePayload
 }
 
@@ -2837,7 +3227,7 @@ RegisterProductOnline Registers the product using the provided credentials.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRegisterProductOnlineRequest
 */
-func (a *ManagementApiService) RegisterProductOnline(ctx context.Context) ApiRegisterProductOnlineRequest {
+func (a *ManagementAPIService) RegisterProductOnline(ctx context.Context) ApiRegisterProductOnlineRequest {
 	return ApiRegisterProductOnlineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2845,14 +3235,14 @@ func (a *ManagementApiService) RegisterProductOnline(ctx context.Context) ApiReg
 }
 
 // Execute executes the request
-func (a *ManagementApiService) RegisterProductOnlineExecute(r ApiRegisterProductOnlineRequest) (*http.Response, error) {
+func (a *ManagementAPIService) RegisterProductOnlineExecute(r ApiRegisterProductOnlineRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.RegisterProductOnline")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.RegisterProductOnline")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2927,9 +3317,166 @@ func (a *ManagementApiService) RegisterProductOnlineExecute(r ApiRegisterProduct
 	return localVarHTTPResponse, nil
 }
 
+type ApiSearchComplianceApplicationSettingsRequest struct {
+	ctx context.Context
+	ApiService *ManagementAPIService
+	engineId string
+	limit *int32
+	cursor *string
+	sort *string
+	searchBody *SearchBody
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiSearchComplianceApplicationSettingsRequest) Limit(limit int32) ApiSearchComplianceApplicationSettingsRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiSearchComplianceApplicationSettingsRequest) Cursor(cursor string) ApiSearchComplianceApplicationSettingsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiSearchComplianceApplicationSettingsRequest) Sort(sort string) ApiSearchComplianceApplicationSettingsRequest {
+	r.sort = &sort
+	return r
+}
+
+// A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression. 
+func (r ApiSearchComplianceApplicationSettingsRequest) SearchBody(searchBody SearchBody) ApiSearchComplianceApplicationSettingsRequest {
+	r.searchBody = &searchBody
+	return r
+}
+
+func (r ApiSearchComplianceApplicationSettingsRequest) Execute() (*ComplianceApplicationSettingsSearchResponse, *http.Response, error) {
+	return r.ApiService.SearchComplianceApplicationSettingsExecute(r)
+}
+
+/*
+SearchComplianceApplicationSettings Search a compliance engine's application settings.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param engineId The ID of the registered engine.
+ @return ApiSearchComplianceApplicationSettingsRequest
+*/
+func (a *ManagementAPIService) SearchComplianceApplicationSettings(ctx context.Context, engineId string) ApiSearchComplianceApplicationSettingsRequest {
+	return ApiSearchComplianceApplicationSettingsRequest{
+		ApiService: a,
+		ctx: ctx,
+		engineId: engineId,
+	}
+}
+
+// Execute executes the request
+//  @return ComplianceApplicationSettingsSearchResponse
+func (a *ManagementAPIService) SearchComplianceApplicationSettingsExecute(r ApiSearchComplianceApplicationSettingsRequest) (*ComplianceApplicationSettingsSearchResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ComplianceApplicationSettingsSearchResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.SearchComplianceApplicationSettings")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/management/engines/{engineId}/compliance-application-settings/search"
+	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterValueToString(r.engineId, "engineId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiSearchEnginesRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2970,7 +3517,7 @@ SearchEngines Search for engines.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchEnginesRequest
 */
-func (a *ManagementApiService) SearchEngines(ctx context.Context) ApiSearchEnginesRequest {
+func (a *ManagementAPIService) SearchEngines(ctx context.Context) ApiSearchEnginesRequest {
 	return ApiSearchEnginesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2979,7 +3526,7 @@ func (a *ManagementApiService) SearchEngines(ctx context.Context) ApiSearchEngin
 
 // Execute executes the request
 //  @return SearchEnginesResponse
-func (a *ManagementApiService) SearchEnginesExecute(r ApiSearchEnginesRequest) (*SearchEnginesResponse, *http.Response, error) {
+func (a *ManagementAPIService) SearchEnginesExecute(r ApiSearchEnginesRequest) (*SearchEnginesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2987,7 +3534,7 @@ func (a *ManagementApiService) SearchEnginesExecute(r ApiSearchEnginesRequest) (
 		localVarReturnValue  *SearchEnginesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.SearchEngines")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.SearchEngines")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2999,13 +3546,16 @@ func (a *ManagementApiService) SearchEnginesExecute(r ApiSearchEnginesRequest) (
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3079,7 +3629,7 @@ func (a *ManagementApiService) SearchEnginesExecute(r ApiSearchEnginesRequest) (
 
 type ApiSearchHashicorpVaultsRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -3120,7 +3670,7 @@ SearchHashicorpVaults Search for configured Hashicorp vaults.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchHashicorpVaultsRequest
 */
-func (a *ManagementApiService) SearchHashicorpVaults(ctx context.Context) ApiSearchHashicorpVaultsRequest {
+func (a *ManagementAPIService) SearchHashicorpVaults(ctx context.Context) ApiSearchHashicorpVaultsRequest {
 	return ApiSearchHashicorpVaultsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3129,7 +3679,7 @@ func (a *ManagementApiService) SearchHashicorpVaults(ctx context.Context) ApiSea
 
 // Execute executes the request
 //  @return SearchHashicorpVaultsResponse
-func (a *ManagementApiService) SearchHashicorpVaultsExecute(r ApiSearchHashicorpVaultsRequest) (*SearchHashicorpVaultsResponse, *http.Response, error) {
+func (a *ManagementAPIService) SearchHashicorpVaultsExecute(r ApiSearchHashicorpVaultsRequest) (*SearchHashicorpVaultsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3137,7 +3687,7 @@ func (a *ManagementApiService) SearchHashicorpVaultsExecute(r ApiSearchHashicorp
 		localVarReturnValue  *SearchHashicorpVaultsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.SearchHashicorpVaults")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.SearchHashicorpVaults")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3149,13 +3699,16 @@ func (a *ManagementApiService) SearchHashicorpVaultsExecute(r ApiSearchHashicorp
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3229,7 +3782,7 @@ func (a *ManagementApiService) SearchHashicorpVaultsExecute(r ApiSearchHashicorp
 
 type ApiUnregisterEngineRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 }
 
@@ -3244,7 +3797,7 @@ UnregisterEngine Unregister an engine.
  @param engineId The ID of the registered engine.
  @return ApiUnregisterEngineRequest
 */
-func (a *ManagementApiService) UnregisterEngine(ctx context.Context, engineId string) ApiUnregisterEngineRequest {
+func (a *ManagementAPIService) UnregisterEngine(ctx context.Context, engineId string) ApiUnregisterEngineRequest {
 	return ApiUnregisterEngineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3254,7 +3807,7 @@ func (a *ManagementApiService) UnregisterEngine(ctx context.Context, engineId st
 
 // Execute executes the request
 //  @return DeleteEngineResponse
-func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequest) (*DeleteEngineResponse, *http.Response, error) {
+func (a *ManagementAPIService) UnregisterEngineExecute(r ApiUnregisterEngineRequest) (*DeleteEngineResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -3262,7 +3815,7 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 		localVarReturnValue  *DeleteEngineResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UnregisterEngine")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UnregisterEngine")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3344,7 +3897,7 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 
 type ApiUpdateApiClassificationRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	aPIClassificationConfig *APIClassificationConfig
 }
 
@@ -3364,7 +3917,7 @@ UpdateApiClassification Update the api classification to new version.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUpdateApiClassificationRequest
 */
-func (a *ManagementApiService) UpdateApiClassification(ctx context.Context) ApiUpdateApiClassificationRequest {
+func (a *ManagementAPIService) UpdateApiClassification(ctx context.Context) ApiUpdateApiClassificationRequest {
 	return ApiUpdateApiClassificationRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3373,7 +3926,7 @@ func (a *ManagementApiService) UpdateApiClassification(ctx context.Context) ApiU
 
 // Execute executes the request
 //  @return APIClassificationConfig
-func (a *ManagementApiService) UpdateApiClassificationExecute(r ApiUpdateApiClassificationRequest) (*APIClassificationConfig, *http.Response, error) {
+func (a *ManagementAPIService) UpdateApiClassificationExecute(r ApiUpdateApiClassificationRequest) (*APIClassificationConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -3381,7 +3934,7 @@ func (a *ManagementApiService) UpdateApiClassificationExecute(r ApiUpdateApiClas
 		localVarReturnValue  *APIClassificationConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateApiClassification")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateApiClassification")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3465,9 +4018,136 @@ func (a *ManagementApiService) UpdateApiClassificationExecute(r ApiUpdateApiClas
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateEngineAutoTaggingConfigRequest struct {
+	ctx context.Context
+	ApiService *ManagementAPIService
+	engineId string
+	engineAutoTaggingConfigUpdateParameters *EngineAutoTaggingConfigUpdateParameters
+}
+
+// The auto tagging config update parameters.
+func (r ApiUpdateEngineAutoTaggingConfigRequest) EngineAutoTaggingConfigUpdateParameters(engineAutoTaggingConfigUpdateParameters EngineAutoTaggingConfigUpdateParameters) ApiUpdateEngineAutoTaggingConfigRequest {
+	r.engineAutoTaggingConfigUpdateParameters = &engineAutoTaggingConfigUpdateParameters
+	return r
+}
+
+func (r ApiUpdateEngineAutoTaggingConfigRequest) Execute() (*UpdateEngineAutoTaggingConfigResponse, *http.Response, error) {
+	return r.ApiService.UpdateEngineAutoTaggingConfigExecute(r)
+}
+
+/*
+UpdateEngineAutoTaggingConfig Update the engine's auto tagging configuration.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param engineId The ID of the registered engine.
+ @return ApiUpdateEngineAutoTaggingConfigRequest
+*/
+func (a *ManagementAPIService) UpdateEngineAutoTaggingConfig(ctx context.Context, engineId string) ApiUpdateEngineAutoTaggingConfigRequest {
+	return ApiUpdateEngineAutoTaggingConfigRequest{
+		ApiService: a,
+		ctx: ctx,
+		engineId: engineId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateEngineAutoTaggingConfigResponse
+func (a *ManagementAPIService) UpdateEngineAutoTaggingConfigExecute(r ApiUpdateEngineAutoTaggingConfigRequest) (*UpdateEngineAutoTaggingConfigResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateEngineAutoTaggingConfigResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateEngineAutoTaggingConfig")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/management/engines/{engineId}/auto-tagging"
+	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterValueToString(r.engineId, "engineId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.engineAutoTaggingConfigUpdateParameters == nil {
+		return localVarReturnValue, nil, reportError("engineAutoTaggingConfigUpdateParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.engineAutoTaggingConfigUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateLdapConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	lDAPConfigParams *LDAPConfigParams
 }
 
@@ -3487,7 +4167,7 @@ UpdateLdapConfig Update LDAP Config.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUpdateLdapConfigRequest
 */
-func (a *ManagementApiService) UpdateLdapConfig(ctx context.Context) ApiUpdateLdapConfigRequest {
+func (a *ManagementAPIService) UpdateLdapConfig(ctx context.Context) ApiUpdateLdapConfigRequest {
 	return ApiUpdateLdapConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3496,7 +4176,7 @@ func (a *ManagementApiService) UpdateLdapConfig(ctx context.Context) ApiUpdateLd
 
 // Execute executes the request
 //  @return LDAPConfigParams
-func (a *ManagementApiService) UpdateLdapConfigExecute(r ApiUpdateLdapConfigRequest) (*LDAPConfigParams, *http.Response, error) {
+func (a *ManagementAPIService) UpdateLdapConfigExecute(r ApiUpdateLdapConfigRequest) (*LDAPConfigParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -3504,7 +4184,7 @@ func (a *ManagementApiService) UpdateLdapConfigExecute(r ApiUpdateLdapConfigRequ
 		localVarReturnValue  *LDAPConfigParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateLdapConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateLdapConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3590,7 +4270,7 @@ func (a *ManagementApiService) UpdateLdapConfigExecute(r ApiUpdateLdapConfigRequ
 
 type ApiUpdatePropertiesRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	globalProperties *GlobalProperties
 }
 
@@ -3610,7 +4290,7 @@ UpdateProperties Update value of predefined properties.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUpdatePropertiesRequest
 */
-func (a *ManagementApiService) UpdateProperties(ctx context.Context) ApiUpdatePropertiesRequest {
+func (a *ManagementAPIService) UpdateProperties(ctx context.Context) ApiUpdatePropertiesRequest {
 	return ApiUpdatePropertiesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3619,7 +4299,7 @@ func (a *ManagementApiService) UpdateProperties(ctx context.Context) ApiUpdatePr
 
 // Execute executes the request
 //  @return GlobalProperties
-func (a *ManagementApiService) UpdatePropertiesExecute(r ApiUpdatePropertiesRequest) (*GlobalProperties, *http.Response, error) {
+func (a *ManagementAPIService) UpdatePropertiesExecute(r ApiUpdatePropertiesRequest) (*GlobalProperties, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -3627,7 +4307,7 @@ func (a *ManagementApiService) UpdatePropertiesExecute(r ApiUpdatePropertiesRequ
 		localVarReturnValue  *GlobalProperties
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateProperties")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateProperties")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3713,7 +4393,7 @@ func (a *ManagementApiService) UpdatePropertiesExecute(r ApiUpdatePropertiesRequ
 
 type ApiUpdateProxyConfigurationRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	proxyConfiguration *ProxyConfiguration
 }
 
@@ -3732,7 +4412,7 @@ UpdateProxyConfiguration Update the web proxy configuration to use to connect to
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUpdateProxyConfigurationRequest
 */
-func (a *ManagementApiService) UpdateProxyConfiguration(ctx context.Context) ApiUpdateProxyConfigurationRequest {
+func (a *ManagementAPIService) UpdateProxyConfiguration(ctx context.Context) ApiUpdateProxyConfigurationRequest {
 	return ApiUpdateProxyConfigurationRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3741,7 +4421,7 @@ func (a *ManagementApiService) UpdateProxyConfiguration(ctx context.Context) Api
 
 // Execute executes the request
 //  @return ProxyConfiguration
-func (a *ManagementApiService) UpdateProxyConfigurationExecute(r ApiUpdateProxyConfigurationRequest) (*ProxyConfiguration, *http.Response, error) {
+func (a *ManagementAPIService) UpdateProxyConfigurationExecute(r ApiUpdateProxyConfigurationRequest) (*ProxyConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -3749,7 +4429,7 @@ func (a *ManagementApiService) UpdateProxyConfigurationExecute(r ApiUpdateProxyC
 		localVarReturnValue  *ProxyConfiguration
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateProxyConfiguration")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateProxyConfiguration")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3835,7 +4515,7 @@ func (a *ManagementApiService) UpdateProxyConfigurationExecute(r ApiUpdateProxyC
 
 type ApiUpdateRegisteredEngineRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 	registeredEngine *RegisteredEngine
 }
@@ -3857,7 +4537,7 @@ UpdateRegisteredEngine Update a registered engine.
  @param engineId The ID of the registered engine.
  @return ApiUpdateRegisteredEngineRequest
 */
-func (a *ManagementApiService) UpdateRegisteredEngine(ctx context.Context, engineId string) ApiUpdateRegisteredEngineRequest {
+func (a *ManagementAPIService) UpdateRegisteredEngine(ctx context.Context, engineId string) ApiUpdateRegisteredEngineRequest {
 	return ApiUpdateRegisteredEngineRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3867,7 +4547,7 @@ func (a *ManagementApiService) UpdateRegisteredEngine(ctx context.Context, engin
 
 // Execute executes the request
 //  @return RegisteredEngine
-func (a *ManagementApiService) UpdateRegisteredEngineExecute(r ApiUpdateRegisteredEngineRequest) (*RegisteredEngine, *http.Response, error) {
+func (a *ManagementAPIService) UpdateRegisteredEngineExecute(r ApiUpdateRegisteredEngineRequest) (*RegisteredEngine, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -3875,7 +4555,7 @@ func (a *ManagementApiService) UpdateRegisteredEngineExecute(r ApiUpdateRegister
 		localVarReturnValue  *RegisteredEngine
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateRegisteredEngine")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateRegisteredEngine")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3962,7 +4642,7 @@ func (a *ManagementApiService) UpdateRegisteredEngineExecute(r ApiUpdateRegister
 
 type ApiUpdateRegisteredEnginePartialRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 	registeredEngine *RegisteredEngine
 }
@@ -3984,7 +4664,7 @@ UpdateRegisteredEnginePartial Update a registered engine.
  @param engineId The ID of the registered engine.
  @return ApiUpdateRegisteredEnginePartialRequest
 */
-func (a *ManagementApiService) UpdateRegisteredEnginePartial(ctx context.Context, engineId string) ApiUpdateRegisteredEnginePartialRequest {
+func (a *ManagementAPIService) UpdateRegisteredEnginePartial(ctx context.Context, engineId string) ApiUpdateRegisteredEnginePartialRequest {
 	return ApiUpdateRegisteredEnginePartialRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3994,7 +4674,7 @@ func (a *ManagementApiService) UpdateRegisteredEnginePartial(ctx context.Context
 
 // Execute executes the request
 //  @return RegisteredEngine
-func (a *ManagementApiService) UpdateRegisteredEnginePartialExecute(r ApiUpdateRegisteredEnginePartialRequest) (*RegisteredEngine, *http.Response, error) {
+func (a *ManagementAPIService) UpdateRegisteredEnginePartialExecute(r ApiUpdateRegisteredEnginePartialRequest) (*RegisteredEngine, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -4002,7 +4682,7 @@ func (a *ManagementApiService) UpdateRegisteredEnginePartialExecute(r ApiUpdateR
 		localVarReturnValue  *RegisteredEngine
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateRegisteredEnginePartial")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateRegisteredEnginePartial")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -4089,7 +4769,7 @@ func (a *ManagementApiService) UpdateRegisteredEnginePartialExecute(r ApiUpdateR
 
 type ApiUpdateSamlConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	sAMLConfigParams *SAMLConfigParams
 }
 
@@ -4109,7 +4789,7 @@ UpdateSamlConfig Update SAML Config.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUpdateSamlConfigRequest
 */
-func (a *ManagementApiService) UpdateSamlConfig(ctx context.Context) ApiUpdateSamlConfigRequest {
+func (a *ManagementAPIService) UpdateSamlConfig(ctx context.Context) ApiUpdateSamlConfigRequest {
 	return ApiUpdateSamlConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -4118,7 +4798,7 @@ func (a *ManagementApiService) UpdateSamlConfig(ctx context.Context) ApiUpdateSa
 
 // Execute executes the request
 //  @return SAMLConfigParams
-func (a *ManagementApiService) UpdateSamlConfigExecute(r ApiUpdateSamlConfigRequest) (*SAMLConfigParams, *http.Response, error) {
+func (a *ManagementAPIService) UpdateSamlConfigExecute(r ApiUpdateSamlConfigRequest) (*SAMLConfigParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -4126,7 +4806,7 @@ func (a *ManagementApiService) UpdateSamlConfigExecute(r ApiUpdateSamlConfigRequ
 		localVarReturnValue  *SAMLConfigParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateSamlConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateSamlConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -4212,7 +4892,7 @@ func (a *ManagementApiService) UpdateSamlConfigExecute(r ApiUpdateSamlConfigRequ
 
 type ApiUpdateSmtpConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	sMTPConfigParams *SMTPConfigParams
 }
 
@@ -4232,7 +4912,7 @@ UpdateSmtpConfig Update SMTP Config.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUpdateSmtpConfigRequest
 */
-func (a *ManagementApiService) UpdateSmtpConfig(ctx context.Context) ApiUpdateSmtpConfigRequest {
+func (a *ManagementAPIService) UpdateSmtpConfig(ctx context.Context) ApiUpdateSmtpConfigRequest {
 	return ApiUpdateSmtpConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -4241,7 +4921,7 @@ func (a *ManagementApiService) UpdateSmtpConfig(ctx context.Context) ApiUpdateSm
 
 // Execute executes the request
 //  @return SMTPConfigParams
-func (a *ManagementApiService) UpdateSmtpConfigExecute(r ApiUpdateSmtpConfigRequest) (*SMTPConfigParams, *http.Response, error) {
+func (a *ManagementAPIService) UpdateSmtpConfigExecute(r ApiUpdateSmtpConfigRequest) (*SMTPConfigParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -4249,7 +4929,7 @@ func (a *ManagementApiService) UpdateSmtpConfigExecute(r ApiUpdateSmtpConfigRequ
 		localVarReturnValue  *SMTPConfigParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UpdateSmtpConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UpdateSmtpConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -4335,7 +5015,7 @@ func (a *ManagementApiService) UpdateSmtpConfigExecute(r ApiUpdateSmtpConfigRequ
 
 type ApiValidateJavaPathRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	engineId string
 	validateJavaParameters *ValidateJavaParameters
 }
@@ -4357,7 +5037,7 @@ ValidateJavaPath Validate java path for the remote host machine.
  @param engineId The ID of the registered engine.
  @return ApiValidateJavaPathRequest
 */
-func (a *ManagementApiService) ValidateJavaPath(ctx context.Context, engineId string) ApiValidateJavaPathRequest {
+func (a *ManagementAPIService) ValidateJavaPath(ctx context.Context, engineId string) ApiValidateJavaPathRequest {
 	return ApiValidateJavaPathRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -4366,14 +5046,14 @@ func (a *ManagementApiService) ValidateJavaPath(ctx context.Context, engineId st
 }
 
 // Execute executes the request
-func (a *ManagementApiService) ValidateJavaPathExecute(r ApiValidateJavaPathRequest) (*http.Response, error) {
+func (a *ManagementAPIService) ValidateJavaPathExecute(r ApiValidateJavaPathRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.ValidateJavaPath")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.ValidateJavaPath")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -4451,7 +5131,7 @@ func (a *ManagementApiService) ValidateJavaPathExecute(r ApiValidateJavaPathRequ
 
 type ApiValidateLdapConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	ldapConfigValidateParameter *LdapConfigValidateParameter
 }
 
@@ -4470,7 +5150,7 @@ ValidateLdapConfig Validate LDAP Config. Without username/password, DCT performs
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiValidateLdapConfigRequest
 */
-func (a *ManagementApiService) ValidateLdapConfig(ctx context.Context) ApiValidateLdapConfigRequest {
+func (a *ManagementAPIService) ValidateLdapConfig(ctx context.Context) ApiValidateLdapConfigRequest {
 	return ApiValidateLdapConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -4479,7 +5159,7 @@ func (a *ManagementApiService) ValidateLdapConfig(ctx context.Context) ApiValida
 
 // Execute executes the request
 //  @return LdapValidateResponse
-func (a *ManagementApiService) ValidateLdapConfigExecute(r ApiValidateLdapConfigRequest) (*LdapValidateResponse, *http.Response, error) {
+func (a *ManagementAPIService) ValidateLdapConfigExecute(r ApiValidateLdapConfigRequest) (*LdapValidateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -4487,7 +5167,7 @@ func (a *ManagementApiService) ValidateLdapConfigExecute(r ApiValidateLdapConfig
 		localVarReturnValue  *LdapValidateResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.ValidateLdapConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.ValidateLdapConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -4570,7 +5250,7 @@ func (a *ManagementApiService) ValidateLdapConfigExecute(r ApiValidateLdapConfig
 
 type ApiValidateSmtpConfigRequest struct {
 	ctx context.Context
-	ApiService *ManagementApiService
+	ApiService *ManagementAPIService
 	sMTPConfigValidate *SMTPConfigValidate
 }
 
@@ -4590,7 +5270,7 @@ ValidateSmtpConfig Validate SMTP Config.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiValidateSmtpConfigRequest
 */
-func (a *ManagementApiService) ValidateSmtpConfig(ctx context.Context) ApiValidateSmtpConfigRequest {
+func (a *ManagementAPIService) ValidateSmtpConfig(ctx context.Context) ApiValidateSmtpConfigRequest {
 	return ApiValidateSmtpConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -4598,14 +5278,14 @@ func (a *ManagementApiService) ValidateSmtpConfig(ctx context.Context) ApiValida
 }
 
 // Execute executes the request
-func (a *ManagementApiService) ValidateSmtpConfigExecute(r ApiValidateSmtpConfigRequest) (*http.Response, error) {
+func (a *ManagementAPIService) ValidateSmtpConfigExecute(r ApiValidateSmtpConfigRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.ValidateSmtpConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.ValidateSmtpConfig")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}

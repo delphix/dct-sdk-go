@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ProxyConfiguration type satisfies the MappedNullable interface at compile time
@@ -31,10 +33,12 @@ type ProxyConfiguration struct {
 	// When set, these settings are enabled. True by default.
 	Enabled bool `json:"enabled"`
 	// File name of a truststore which can be used to validate the TLS certificate of the proxy server. The truststore must be available at /etc/config/certs/<truststore_filename>
-	TruststoreFilename *string `json:"truststore_filename,omitempty"`
+	TruststoreFilename *string `json:"truststore_filename,omitempty" validate:"regexp=^$|^[a-zA-Z0-9_\\\\.\\\\-]+$"`
 	// Password for reading trustStore file provided in 'truststore_filename' property
 	TruststorePassword *string `json:"truststore_password,omitempty"`
 }
+
+type _ProxyConfiguration ProxyConfiguration
 
 // NewProxyConfiguration instantiates a new ProxyConfiguration object
 // This constructor will assign default values to properties that have it defined,
@@ -282,6 +286,45 @@ func (o ProxyConfiguration) ToMap() (map[string]interface{}, error) {
 		toSerialize["truststore_password"] = o.TruststorePassword
 	}
 	return toSerialize, nil
+}
+
+func (o *ProxyConfiguration) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"host",
+		"port",
+		"enabled",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProxyConfiguration := _ProxyConfiguration{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProxyConfiguration)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProxyConfiguration(varProxyConfiguration)
+
+	return err
 }
 
 type NullableProxyConfiguration struct {

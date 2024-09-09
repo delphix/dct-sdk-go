@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,9 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the VDBGroup type satisfies the MappedNullable interface at compile time
@@ -25,25 +28,40 @@ type VDBGroup struct {
 	// A unique name for the entity.
 	Name string `json:"name"`
 	// The list of VDB IDs in this VDBGroup.
-	VdbIds []string `json:"vdb_ids"`
+	VdbIds []string `json:"vdb_ids,omitempty"`
 	// Indicates whether the VDBGroup is locked.
 	IsLocked *bool `json:"is_locked,omitempty"`
 	// The Id of the account that locked the VDBGroup.
 	LockedBy *int64 `json:"locked_by,omitempty"`
 	// The name of the account that locked the VDBGroup.
 	LockedByName *string `json:"locked_by_name,omitempty"`
+	// Source of the vdb group, default is DCT. In case of self-service container, this value would be ENGINE.
+	VdbGroupSource *string `json:"vdb_group_source,omitempty"`
+	// Data-layout Id for engine-managed vdb groups.
+	SsDataLayoutId *string `json:"ss_data_layout_id,omitempty"`
+	// Dictates order of operations on VDBs. Operations can be performed in parallel <br> for all VDBs or sequentially. Below are possible valid and invalid orderings given an example <br> VDB group with 3 vdbs (A, B, and C).<br> Valid:<br> {\"vdb_id\":\"vdb-1\", \"order\":\"1\"} {\"vdb_id\":\"vdb-2\", order:\"1\"} {vdb_id:\"vdb-3\", order:\"1\"} (parallel)<br> {vdb_id:\"vdb-1\", order:\"1\"} {vdb_id:\"vdb-2\", order:\"2\"} {vdb_id:\"vdb-3\", order:\"3\"} (sequential)<br> Invalid:<br> {vdb_id:\"vdb-1\", order:\"A\"} {vdb_id:\"vdb-2\", order:\"B\"} {vdb_id:\"vdb-3\", order:\"C\"} (sequential)<br><br> In the sequential case the vdbs with priority 1 is the first to be started and the last to<br> be stopped. This value is set on creation of VDB groups.
+	Vdbs []VDBOrder `json:"vdbs,omitempty"`
+	// The database type of the VDBGroup. If all VDBs in the group are of the same database_type, this field will be set to that type. If the VDBs are of different database_type, this field will be set to 'Mixed'.
+	DatabaseType *string `json:"database_type,omitempty"`
+	// The status of the VDBGroup. If all VDBs in the VDBGroup have the same status, this field will be set to that status. If the VDBs have different statuses, this field will be set to 'Mixed'.
+	Status *string `json:"status,omitempty"`
+	// The bookmark ID to which the VDBGroup was last successfully refreshed.
+	LastSuccessfulRefreshToBookmarkId *string `json:"last_successful_refresh_to_bookmark_id,omitempty"`
+	// The time at which the VDBGroup was last successfully refreshed.
+	LastSuccessfulRefreshTime *time.Time `json:"last_successful_refresh_time,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
+
+type _VDBGroup VDBGroup
 
 // NewVDBGroup instantiates a new VDBGroup object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVDBGroup(id string, name string, vdbIds []string) *VDBGroup {
+func NewVDBGroup(id string, name string) *VDBGroup {
 	this := VDBGroup{}
 	this.Id = id
 	this.Name = name
-	this.VdbIds = vdbIds
 	return &this
 }
 
@@ -103,26 +121,34 @@ func (o *VDBGroup) SetName(v string) {
 	o.Name = v
 }
 
-// GetVdbIds returns the VdbIds field value
+// GetVdbIds returns the VdbIds field value if set, zero value otherwise.
 func (o *VDBGroup) GetVdbIds() []string {
-	if o == nil {
+	if o == nil || IsNil(o.VdbIds) {
 		var ret []string
 		return ret
 	}
-
 	return o.VdbIds
 }
 
-// GetVdbIdsOk returns a tuple with the VdbIds field value
+// GetVdbIdsOk returns a tuple with the VdbIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VDBGroup) GetVdbIdsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.VdbIds) {
 		return nil, false
 	}
 	return o.VdbIds, true
 }
 
-// SetVdbIds sets field value
+// HasVdbIds returns a boolean if a field has been set.
+func (o *VDBGroup) HasVdbIds() bool {
+	if o != nil && !IsNil(o.VdbIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbIds gets a reference to the given []string and assigns it to the VdbIds field.
 func (o *VDBGroup) SetVdbIds(v []string) {
 	o.VdbIds = v
 }
@@ -223,6 +249,230 @@ func (o *VDBGroup) SetLockedByName(v string) {
 	o.LockedByName = &v
 }
 
+// GetVdbGroupSource returns the VdbGroupSource field value if set, zero value otherwise.
+func (o *VDBGroup) GetVdbGroupSource() string {
+	if o == nil || IsNil(o.VdbGroupSource) {
+		var ret string
+		return ret
+	}
+	return *o.VdbGroupSource
+}
+
+// GetVdbGroupSourceOk returns a tuple with the VdbGroupSource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetVdbGroupSourceOk() (*string, bool) {
+	if o == nil || IsNil(o.VdbGroupSource) {
+		return nil, false
+	}
+	return o.VdbGroupSource, true
+}
+
+// HasVdbGroupSource returns a boolean if a field has been set.
+func (o *VDBGroup) HasVdbGroupSource() bool {
+	if o != nil && !IsNil(o.VdbGroupSource) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbGroupSource gets a reference to the given string and assigns it to the VdbGroupSource field.
+func (o *VDBGroup) SetVdbGroupSource(v string) {
+	o.VdbGroupSource = &v
+}
+
+// GetSsDataLayoutId returns the SsDataLayoutId field value if set, zero value otherwise.
+func (o *VDBGroup) GetSsDataLayoutId() string {
+	if o == nil || IsNil(o.SsDataLayoutId) {
+		var ret string
+		return ret
+	}
+	return *o.SsDataLayoutId
+}
+
+// GetSsDataLayoutIdOk returns a tuple with the SsDataLayoutId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetSsDataLayoutIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SsDataLayoutId) {
+		return nil, false
+	}
+	return o.SsDataLayoutId, true
+}
+
+// HasSsDataLayoutId returns a boolean if a field has been set.
+func (o *VDBGroup) HasSsDataLayoutId() bool {
+	if o != nil && !IsNil(o.SsDataLayoutId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSsDataLayoutId gets a reference to the given string and assigns it to the SsDataLayoutId field.
+func (o *VDBGroup) SetSsDataLayoutId(v string) {
+	o.SsDataLayoutId = &v
+}
+
+// GetVdbs returns the Vdbs field value if set, zero value otherwise.
+func (o *VDBGroup) GetVdbs() []VDBOrder {
+	if o == nil || IsNil(o.Vdbs) {
+		var ret []VDBOrder
+		return ret
+	}
+	return o.Vdbs
+}
+
+// GetVdbsOk returns a tuple with the Vdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetVdbsOk() ([]VDBOrder, bool) {
+	if o == nil || IsNil(o.Vdbs) {
+		return nil, false
+	}
+	return o.Vdbs, true
+}
+
+// HasVdbs returns a boolean if a field has been set.
+func (o *VDBGroup) HasVdbs() bool {
+	if o != nil && !IsNil(o.Vdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbs gets a reference to the given []VDBOrder and assigns it to the Vdbs field.
+func (o *VDBGroup) SetVdbs(v []VDBOrder) {
+	o.Vdbs = v
+}
+
+// GetDatabaseType returns the DatabaseType field value if set, zero value otherwise.
+func (o *VDBGroup) GetDatabaseType() string {
+	if o == nil || IsNil(o.DatabaseType) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseType
+}
+
+// GetDatabaseTypeOk returns a tuple with the DatabaseType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetDatabaseTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseType) {
+		return nil, false
+	}
+	return o.DatabaseType, true
+}
+
+// HasDatabaseType returns a boolean if a field has been set.
+func (o *VDBGroup) HasDatabaseType() bool {
+	if o != nil && !IsNil(o.DatabaseType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseType gets a reference to the given string and assigns it to the DatabaseType field.
+func (o *VDBGroup) SetDatabaseType(v string) {
+	o.DatabaseType = &v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *VDBGroup) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
+		var ret string
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *VDBGroup) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *VDBGroup) SetStatus(v string) {
+	o.Status = &v
+}
+
+// GetLastSuccessfulRefreshToBookmarkId returns the LastSuccessfulRefreshToBookmarkId field value if set, zero value otherwise.
+func (o *VDBGroup) GetLastSuccessfulRefreshToBookmarkId() string {
+	if o == nil || IsNil(o.LastSuccessfulRefreshToBookmarkId) {
+		var ret string
+		return ret
+	}
+	return *o.LastSuccessfulRefreshToBookmarkId
+}
+
+// GetLastSuccessfulRefreshToBookmarkIdOk returns a tuple with the LastSuccessfulRefreshToBookmarkId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetLastSuccessfulRefreshToBookmarkIdOk() (*string, bool) {
+	if o == nil || IsNil(o.LastSuccessfulRefreshToBookmarkId) {
+		return nil, false
+	}
+	return o.LastSuccessfulRefreshToBookmarkId, true
+}
+
+// HasLastSuccessfulRefreshToBookmarkId returns a boolean if a field has been set.
+func (o *VDBGroup) HasLastSuccessfulRefreshToBookmarkId() bool {
+	if o != nil && !IsNil(o.LastSuccessfulRefreshToBookmarkId) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastSuccessfulRefreshToBookmarkId gets a reference to the given string and assigns it to the LastSuccessfulRefreshToBookmarkId field.
+func (o *VDBGroup) SetLastSuccessfulRefreshToBookmarkId(v string) {
+	o.LastSuccessfulRefreshToBookmarkId = &v
+}
+
+// GetLastSuccessfulRefreshTime returns the LastSuccessfulRefreshTime field value if set, zero value otherwise.
+func (o *VDBGroup) GetLastSuccessfulRefreshTime() time.Time {
+	if o == nil || IsNil(o.LastSuccessfulRefreshTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastSuccessfulRefreshTime
+}
+
+// GetLastSuccessfulRefreshTimeOk returns a tuple with the LastSuccessfulRefreshTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroup) GetLastSuccessfulRefreshTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastSuccessfulRefreshTime) {
+		return nil, false
+	}
+	return o.LastSuccessfulRefreshTime, true
+}
+
+// HasLastSuccessfulRefreshTime returns a boolean if a field has been set.
+func (o *VDBGroup) HasLastSuccessfulRefreshTime() bool {
+	if o != nil && !IsNil(o.LastSuccessfulRefreshTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastSuccessfulRefreshTime gets a reference to the given time.Time and assigns it to the LastSuccessfulRefreshTime field.
+func (o *VDBGroup) SetLastSuccessfulRefreshTime(v time.Time) {
+	o.LastSuccessfulRefreshTime = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *VDBGroup) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -265,9 +515,11 @@ func (o VDBGroup) MarshalJSON() ([]byte, error) {
 
 func (o VDBGroup) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	toSerialize["id"] = o.Id
 	toSerialize["name"] = o.Name
-	toSerialize["vdb_ids"] = o.VdbIds
+	if !IsNil(o.VdbIds) {
+		toSerialize["vdb_ids"] = o.VdbIds
+	}
 	if !IsNil(o.IsLocked) {
 		toSerialize["is_locked"] = o.IsLocked
 	}
@@ -277,10 +529,69 @@ func (o VDBGroup) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LockedByName) {
 		toSerialize["locked_by_name"] = o.LockedByName
 	}
+	if !IsNil(o.VdbGroupSource) {
+		toSerialize["vdb_group_source"] = o.VdbGroupSource
+	}
+	if !IsNil(o.SsDataLayoutId) {
+		toSerialize["ss_data_layout_id"] = o.SsDataLayoutId
+	}
+	if !IsNil(o.Vdbs) {
+		toSerialize["vdbs"] = o.Vdbs
+	}
+	if !IsNil(o.DatabaseType) {
+		toSerialize["database_type"] = o.DatabaseType
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.LastSuccessfulRefreshToBookmarkId) {
+		toSerialize["last_successful_refresh_to_bookmark_id"] = o.LastSuccessfulRefreshToBookmarkId
+	}
+	if !IsNil(o.LastSuccessfulRefreshTime) {
+		toSerialize["last_successful_refresh_time"] = o.LastSuccessfulRefreshTime
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
+}
+
+func (o *VDBGroup) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varVDBGroup := _VDBGroup{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varVDBGroup)
+
+	if err != nil {
+		return err
+	}
+
+	*o = VDBGroup(varVDBGroup)
+
+	return err
 }
 
 type NullableVDBGroup struct {

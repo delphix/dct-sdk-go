@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the DatabaseTemplate type satisfies the MappedNullable interface at compile time
@@ -32,6 +34,8 @@ type DatabaseTemplate struct {
 	Parameters *map[string]string `json:"parameters,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
+
+type _DatabaseTemplate DatabaseTemplate
 
 // NewDatabaseTemplate instantiates a new DatabaseTemplate object
 // This constructor will assign default values to properties that have it defined,
@@ -238,7 +242,9 @@ func (o DatabaseTemplate) MarshalJSON() ([]byte, error) {
 
 func (o DatabaseTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
@@ -251,6 +257,44 @@ func (o DatabaseTemplate) ToMap() (map[string]interface{}, error) {
 		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
+}
+
+func (o *DatabaseTemplate) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"source_type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDatabaseTemplate := _DatabaseTemplate{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDatabaseTemplate)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DatabaseTemplate(varDatabaseTemplate)
+
+	return err
 }
 
 type NullableDatabaseTemplate struct {

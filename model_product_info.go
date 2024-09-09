@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -30,6 +30,8 @@ type ProductInfo struct {
 	ProductUpgradeHistory []ProductHistory `json:"product_upgrade_history,omitempty"`
 	// All the supported API versions.
 	SupportedApiVersions []string `json:"supported_api_versions,omitempty"`
+	// The deployment mode of this DCT instance.
+	DeploymentMode *string `json:"deployment_mode,omitempty"`
 }
 
 // NewProductInfo instantiates a new ProductInfo object
@@ -209,6 +211,38 @@ func (o *ProductInfo) SetSupportedApiVersions(v []string) {
 	o.SupportedApiVersions = v
 }
 
+// GetDeploymentMode returns the DeploymentMode field value if set, zero value otherwise.
+func (o *ProductInfo) GetDeploymentMode() string {
+	if o == nil || IsNil(o.DeploymentMode) {
+		var ret string
+		return ret
+	}
+	return *o.DeploymentMode
+}
+
+// GetDeploymentModeOk returns a tuple with the DeploymentMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductInfo) GetDeploymentModeOk() (*string, bool) {
+	if o == nil || IsNil(o.DeploymentMode) {
+		return nil, false
+	}
+	return o.DeploymentMode, true
+}
+
+// HasDeploymentMode returns a boolean if a field has been set.
+func (o *ProductInfo) HasDeploymentMode() bool {
+	if o != nil && !IsNil(o.DeploymentMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeploymentMode gets a reference to the given string and assigns it to the DeploymentMode field.
+func (o *ProductInfo) SetDeploymentMode(v string) {
+	o.DeploymentMode = &v
+}
+
 func (o ProductInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -233,6 +267,9 @@ func (o ProductInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SupportedApiVersions) {
 		toSerialize["supported_api_versions"] = o.SupportedApiVersions
+	}
+	if !IsNil(o.DeploymentMode) {
+		toSerialize["deployment_mode"] = o.DeploymentMode
 	}
 	return toSerialize, nil
 }

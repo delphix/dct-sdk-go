@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// BookmarksApiService BookmarksApi service
-type BookmarksApiService service
+// BookmarksAPIService BookmarksAPI service
+type BookmarksAPIService service
 
 type ApiCreateBookmarkRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkCreateParameters *BookmarkCreateParameters
 }
 
@@ -46,7 +46,7 @@ CreateBookmark Create a bookmark at the current time.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateBookmarkRequest
 */
-func (a *BookmarksApiService) CreateBookmark(ctx context.Context) ApiCreateBookmarkRequest {
+func (a *BookmarksAPIService) CreateBookmark(ctx context.Context) ApiCreateBookmarkRequest {
 	return ApiCreateBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -55,7 +55,7 @@ func (a *BookmarksApiService) CreateBookmark(ctx context.Context) ApiCreateBookm
 
 // Execute executes the request
 //  @return CreateBookmarkResponse
-func (a *BookmarksApiService) CreateBookmarkExecute(r ApiCreateBookmarkRequest) (*CreateBookmarkResponse, *http.Response, error) {
+func (a *BookmarksAPIService) CreateBookmarkExecute(r ApiCreateBookmarkRequest) (*CreateBookmarkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -63,7 +63,7 @@ func (a *BookmarksApiService) CreateBookmarkExecute(r ApiCreateBookmarkRequest) 
 		localVarReturnValue  *CreateBookmarkResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.CreateBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.CreateBookmark")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -149,7 +149,7 @@ func (a *BookmarksApiService) CreateBookmarkExecute(r ApiCreateBookmarkRequest) 
 
 type ApiCreateBookmarkTagsRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 	tagsRequest *TagsRequest
 }
@@ -171,7 +171,7 @@ CreateBookmarkTags Create tags for a Bookmark.
  @param bookmarkId The ID of the Bookmark.
  @return ApiCreateBookmarkTagsRequest
 */
-func (a *BookmarksApiService) CreateBookmarkTags(ctx context.Context, bookmarkId string) ApiCreateBookmarkTagsRequest {
+func (a *BookmarksAPIService) CreateBookmarkTags(ctx context.Context, bookmarkId string) ApiCreateBookmarkTagsRequest {
 	return ApiCreateBookmarkTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -181,7 +181,7 @@ func (a *BookmarksApiService) CreateBookmarkTags(ctx context.Context, bookmarkId
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *BookmarksApiService) CreateBookmarkTagsExecute(r ApiCreateBookmarkTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *BookmarksAPIService) CreateBookmarkTagsExecute(r ApiCreateBookmarkTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -189,7 +189,7 @@ func (a *BookmarksApiService) CreateBookmarkTagsExecute(r ApiCreateBookmarkTagsR
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.CreateBookmarkTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.CreateBookmarkTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -279,7 +279,7 @@ func (a *BookmarksApiService) CreateBookmarkTagsExecute(r ApiCreateBookmarkTagsR
 
 type ApiDeleteBookmarkRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 }
 
@@ -294,7 +294,7 @@ DeleteBookmark Delete a bookmark.
  @param bookmarkId The ID of the Bookmark.
  @return ApiDeleteBookmarkRequest
 */
-func (a *BookmarksApiService) DeleteBookmark(ctx context.Context, bookmarkId string) ApiDeleteBookmarkRequest {
+func (a *BookmarksAPIService) DeleteBookmark(ctx context.Context, bookmarkId string) ApiDeleteBookmarkRequest {
 	return ApiDeleteBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -303,14 +303,14 @@ func (a *BookmarksApiService) DeleteBookmark(ctx context.Context, bookmarkId str
 }
 
 // Execute executes the request
-func (a *BookmarksApiService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) (*http.Response, error) {
+func (a *BookmarksAPIService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.DeleteBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.DeleteBookmark")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -386,7 +386,7 @@ func (a *BookmarksApiService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) 
 
 type ApiDeleteBookmarkTagsRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 	deleteTag *DeleteTag
 }
@@ -408,7 +408,7 @@ DeleteBookmarkTags Delete tags for a Bookmark.
  @param bookmarkId The ID of the Bookmark.
  @return ApiDeleteBookmarkTagsRequest
 */
-func (a *BookmarksApiService) DeleteBookmarkTags(ctx context.Context, bookmarkId string) ApiDeleteBookmarkTagsRequest {
+func (a *BookmarksAPIService) DeleteBookmarkTags(ctx context.Context, bookmarkId string) ApiDeleteBookmarkTagsRequest {
 	return ApiDeleteBookmarkTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -417,14 +417,14 @@ func (a *BookmarksApiService) DeleteBookmarkTags(ctx context.Context, bookmarkId
 }
 
 // Execute executes the request
-func (a *BookmarksApiService) DeleteBookmarkTagsExecute(r ApiDeleteBookmarkTagsRequest) (*http.Response, error) {
+func (a *BookmarksAPIService) DeleteBookmarkTagsExecute(r ApiDeleteBookmarkTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.DeleteBookmarkTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.DeleteBookmarkTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -502,7 +502,7 @@ func (a *BookmarksApiService) DeleteBookmarkTagsExecute(r ApiDeleteBookmarkTagsR
 
 type ApiGetBookmarkByIdRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 }
 
@@ -517,7 +517,7 @@ GetBookmarkById Get a bookmark by ID.
  @param bookmarkId The ID of the Bookmark.
  @return ApiGetBookmarkByIdRequest
 */
-func (a *BookmarksApiService) GetBookmarkById(ctx context.Context, bookmarkId string) ApiGetBookmarkByIdRequest {
+func (a *BookmarksAPIService) GetBookmarkById(ctx context.Context, bookmarkId string) ApiGetBookmarkByIdRequest {
 	return ApiGetBookmarkByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -527,7 +527,7 @@ func (a *BookmarksApiService) GetBookmarkById(ctx context.Context, bookmarkId st
 
 // Execute executes the request
 //  @return Bookmark
-func (a *BookmarksApiService) GetBookmarkByIdExecute(r ApiGetBookmarkByIdRequest) (*Bookmark, *http.Response, error) {
+func (a *BookmarksAPIService) GetBookmarkByIdExecute(r ApiGetBookmarkByIdRequest) (*Bookmark, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -535,7 +535,7 @@ func (a *BookmarksApiService) GetBookmarkByIdExecute(r ApiGetBookmarkByIdRequest
 		localVarReturnValue  *Bookmark
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetBookmarkById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.GetBookmarkById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -620,7 +620,7 @@ func (a *BookmarksApiService) GetBookmarkByIdExecute(r ApiGetBookmarkByIdRequest
 
 type ApiGetBookmarkTagsRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 }
 
@@ -635,7 +635,7 @@ GetBookmarkTags Get tags for a Bookmark.
  @param bookmarkId The ID of the Bookmark.
  @return ApiGetBookmarkTagsRequest
 */
-func (a *BookmarksApiService) GetBookmarkTags(ctx context.Context, bookmarkId string) ApiGetBookmarkTagsRequest {
+func (a *BookmarksAPIService) GetBookmarkTags(ctx context.Context, bookmarkId string) ApiGetBookmarkTagsRequest {
 	return ApiGetBookmarkTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -645,7 +645,7 @@ func (a *BookmarksApiService) GetBookmarkTags(ctx context.Context, bookmarkId st
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *BookmarksApiService) GetBookmarkTagsExecute(r ApiGetBookmarkTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *BookmarksAPIService) GetBookmarkTagsExecute(r ApiGetBookmarkTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -653,7 +653,7 @@ func (a *BookmarksApiService) GetBookmarkTagsExecute(r ApiGetBookmarkTagsRequest
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetBookmarkTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.GetBookmarkTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -738,7 +738,7 @@ func (a *BookmarksApiService) GetBookmarkTagsExecute(r ApiGetBookmarkTagsRequest
 
 type ApiGetBookmarksRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -772,7 +772,7 @@ GetBookmarks List all bookmarks.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetBookmarksRequest
 */
-func (a *BookmarksApiService) GetBookmarks(ctx context.Context) ApiGetBookmarksRequest {
+func (a *BookmarksAPIService) GetBookmarks(ctx context.Context) ApiGetBookmarksRequest {
 	return ApiGetBookmarksRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -781,7 +781,7 @@ func (a *BookmarksApiService) GetBookmarks(ctx context.Context) ApiGetBookmarksR
 
 // Execute executes the request
 //  @return ListBookmarksResponse
-func (a *BookmarksApiService) GetBookmarksExecute(r ApiGetBookmarksRequest) (*ListBookmarksResponse, *http.Response, error) {
+func (a *BookmarksAPIService) GetBookmarksExecute(r ApiGetBookmarksRequest) (*ListBookmarksResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -789,7 +789,7 @@ func (a *BookmarksApiService) GetBookmarksExecute(r ApiGetBookmarksRequest) (*Li
 		localVarReturnValue  *ListBookmarksResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetBookmarks")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.GetBookmarks")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -801,13 +801,16 @@ func (a *BookmarksApiService) GetBookmarksExecute(r ApiGetBookmarksRequest) (*Li
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -879,7 +882,7 @@ func (a *BookmarksApiService) GetBookmarksExecute(r ApiGetBookmarksRequest) (*Li
 
 type ApiGetVdbGroupsByBookmarkRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 	limit *int32
 	cursor *string
@@ -915,7 +918,7 @@ GetVdbGroupsByBookmark List VDB Groups compatible with this bookmark.
  @param bookmarkId The ID of the Bookmark.
  @return ApiGetVdbGroupsByBookmarkRequest
 */
-func (a *BookmarksApiService) GetVdbGroupsByBookmark(ctx context.Context, bookmarkId string) ApiGetVdbGroupsByBookmarkRequest {
+func (a *BookmarksAPIService) GetVdbGroupsByBookmark(ctx context.Context, bookmarkId string) ApiGetVdbGroupsByBookmarkRequest {
 	return ApiGetVdbGroupsByBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -925,7 +928,7 @@ func (a *BookmarksApiService) GetVdbGroupsByBookmark(ctx context.Context, bookma
 
 // Execute executes the request
 //  @return ListVDBGroupsByBookmarkResponse
-func (a *BookmarksApiService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByBookmarkRequest) (*ListVDBGroupsByBookmarkResponse, *http.Response, error) {
+func (a *BookmarksAPIService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByBookmarkRequest) (*ListVDBGroupsByBookmarkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -933,7 +936,7 @@ func (a *BookmarksApiService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByB
 		localVarReturnValue  *ListVDBGroupsByBookmarkResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetVdbGroupsByBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.GetVdbGroupsByBookmark")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -949,14 +952,132 @@ func (a *BookmarksApiService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByB
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiImportEngineBookmarksRequest struct {
+	ctx context.Context
+	ApiService *BookmarksAPIService
+	engineId string
+}
+
+func (r ApiImportEngineBookmarksRequest) Execute() (*ImportEngineBookmarkResponse, *http.Response, error) {
+	return r.ApiService.ImportEngineBookmarksExecute(r)
+}
+
+/*
+ImportEngineBookmarks Import engine bookmarks to DCT.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param engineId The ID of the registered engine.
+ @return ApiImportEngineBookmarksRequest
+*/
+func (a *BookmarksAPIService) ImportEngineBookmarks(ctx context.Context, engineId string) ApiImportEngineBookmarksRequest {
+	return ApiImportEngineBookmarksRequest{
+		ApiService: a,
+		ctx: ctx,
+		engineId: engineId,
+	}
+}
+
+// Execute executes the request
+//  @return ImportEngineBookmarkResponse
+func (a *BookmarksAPIService) ImportEngineBookmarksExecute(r ApiImportEngineBookmarksRequest) (*ImportEngineBookmarkResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ImportEngineBookmarkResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.ImportEngineBookmarks")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/bookmarks/import-engine-bookmarks/{engineId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterValueToString(r.engineId, "engineId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1027,7 +1148,7 @@ func (a *BookmarksApiService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByB
 
 type ApiSearchBookmarksRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1068,7 +1189,7 @@ SearchBookmarks Search for bookmarks.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchBookmarksRequest
 */
-func (a *BookmarksApiService) SearchBookmarks(ctx context.Context) ApiSearchBookmarksRequest {
+func (a *BookmarksAPIService) SearchBookmarks(ctx context.Context) ApiSearchBookmarksRequest {
 	return ApiSearchBookmarksRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1077,7 +1198,7 @@ func (a *BookmarksApiService) SearchBookmarks(ctx context.Context) ApiSearchBook
 
 // Execute executes the request
 //  @return SearchBookmarksResponse
-func (a *BookmarksApiService) SearchBookmarksExecute(r ApiSearchBookmarksRequest) (*SearchBookmarksResponse, *http.Response, error) {
+func (a *BookmarksAPIService) SearchBookmarksExecute(r ApiSearchBookmarksRequest) (*SearchBookmarksResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1085,7 +1206,7 @@ func (a *BookmarksApiService) SearchBookmarksExecute(r ApiSearchBookmarksRequest
 		localVarReturnValue  *SearchBookmarksResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.SearchBookmarks")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.SearchBookmarks")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1097,13 +1218,16 @@ func (a *BookmarksApiService) SearchBookmarksExecute(r ApiSearchBookmarksRequest
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1177,7 +1301,7 @@ func (a *BookmarksApiService) SearchBookmarksExecute(r ApiSearchBookmarksRequest
 
 type ApiSearchVdbGroupsByBookmarkRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 	limit *int32
 	cursor *string
@@ -1220,7 +1344,7 @@ SearchVdbGroupsByBookmark Search for VDB Groups compatible with this bookmark.
  @param bookmarkId The ID of the Bookmark.
  @return ApiSearchVdbGroupsByBookmarkRequest
 */
-func (a *BookmarksApiService) SearchVdbGroupsByBookmark(ctx context.Context, bookmarkId string) ApiSearchVdbGroupsByBookmarkRequest {
+func (a *BookmarksAPIService) SearchVdbGroupsByBookmark(ctx context.Context, bookmarkId string) ApiSearchVdbGroupsByBookmarkRequest {
 	return ApiSearchVdbGroupsByBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1230,7 +1354,7 @@ func (a *BookmarksApiService) SearchVdbGroupsByBookmark(ctx context.Context, boo
 
 // Execute executes the request
 //  @return SearchVDBGroupsByBookmarkResponse
-func (a *BookmarksApiService) SearchVdbGroupsByBookmarkExecute(r ApiSearchVdbGroupsByBookmarkRequest) (*SearchVDBGroupsByBookmarkResponse, *http.Response, error) {
+func (a *BookmarksAPIService) SearchVdbGroupsByBookmarkExecute(r ApiSearchVdbGroupsByBookmarkRequest) (*SearchVDBGroupsByBookmarkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1238,7 +1362,7 @@ func (a *BookmarksApiService) SearchVdbGroupsByBookmarkExecute(r ApiSearchVdbGro
 		localVarReturnValue  *SearchVDBGroupsByBookmarkResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.SearchVdbGroupsByBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.SearchVdbGroupsByBookmark")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1254,13 +1378,16 @@ func (a *BookmarksApiService) SearchVdbGroupsByBookmarkExecute(r ApiSearchVdbGro
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1334,7 +1461,7 @@ func (a *BookmarksApiService) SearchVdbGroupsByBookmarkExecute(r ApiSearchVdbGro
 
 type ApiUpdateBookmarkRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *BookmarksAPIService
 	bookmarkId string
 	updateBookmarkParameters *UpdateBookmarkParameters
 }
@@ -1356,7 +1483,7 @@ UpdateBookmark Update a bookmark
  @param bookmarkId The ID of the Bookmark.
  @return ApiUpdateBookmarkRequest
 */
-func (a *BookmarksApiService) UpdateBookmark(ctx context.Context, bookmarkId string) ApiUpdateBookmarkRequest {
+func (a *BookmarksAPIService) UpdateBookmark(ctx context.Context, bookmarkId string) ApiUpdateBookmarkRequest {
 	return ApiUpdateBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1366,7 +1493,7 @@ func (a *BookmarksApiService) UpdateBookmark(ctx context.Context, bookmarkId str
 
 // Execute executes the request
 //  @return UpdateBookmarkResponse
-func (a *BookmarksApiService) UpdateBookmarkExecute(r ApiUpdateBookmarkRequest) (*UpdateBookmarkResponse, *http.Response, error) {
+func (a *BookmarksAPIService) UpdateBookmarkExecute(r ApiUpdateBookmarkRequest) (*UpdateBookmarkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -1374,7 +1501,7 @@ func (a *BookmarksApiService) UpdateBookmarkExecute(r ApiUpdateBookmarkRequest) 
 		localVarReturnValue  *UpdateBookmarkResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.UpdateBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.UpdateBookmark")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

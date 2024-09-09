@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the MSSQLDSourceStagingPushLinkSourceParameters type satisfies the MappedNullable interface at compile time
@@ -56,7 +58,11 @@ type MSSQLDSourceStagingPushLinkSourceParameters struct {
 	StagingPostScript *string `json:"staging_post_script,omitempty"`
 	// The name of the database to create on the staging environment. This property is mutually exclusive to sync_strategy_managed_type
 	StagingDatabaseName string `json:"staging_database_name"`
+	// User provided db state that will be used to create staging push db. Default is RESTORING
+	DbState *string `json:"db_state,omitempty"`
 }
+
+type _MSSQLDSourceStagingPushLinkSourceParameters MSSQLDSourceStagingPushLinkSourceParameters
 
 // NewMSSQLDSourceStagingPushLinkSourceParameters instantiates a new MSSQLDSourceStagingPushLinkSourceParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -73,6 +79,8 @@ func NewMSSQLDSourceStagingPushLinkSourceParameters(name string, engineId string
 	this.PptRepository = pptRepository
 	this.PptHostUser = pptHostUser
 	this.StagingDatabaseName = stagingDatabaseName
+	var dbState string = "RESTORING"
+	this.DbState = &dbState
 	return &this
 }
 
@@ -85,6 +93,8 @@ func NewMSSQLDSourceStagingPushLinkSourceParametersWithDefaults() *MSSQLDSourceS
 	this.LogSyncEnabled = &logSyncEnabled
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
+	var dbState string = "RESTORING"
+	this.DbState = &dbState
 	return &this
 }
 
@@ -624,6 +634,38 @@ func (o *MSSQLDSourceStagingPushLinkSourceParameters) SetStagingDatabaseName(v s
 	o.StagingDatabaseName = v
 }
 
+// GetDbState returns the DbState field value if set, zero value otherwise.
+func (o *MSSQLDSourceStagingPushLinkSourceParameters) GetDbState() string {
+	if o == nil || IsNil(o.DbState) {
+		var ret string
+		return ret
+	}
+	return *o.DbState
+}
+
+// GetDbStateOk returns a tuple with the DbState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MSSQLDSourceStagingPushLinkSourceParameters) GetDbStateOk() (*string, bool) {
+	if o == nil || IsNil(o.DbState) {
+		return nil, false
+	}
+	return o.DbState, true
+}
+
+// HasDbState returns a boolean if a field has been set.
+func (o *MSSQLDSourceStagingPushLinkSourceParameters) HasDbState() bool {
+	if o != nil && !IsNil(o.DbState) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbState gets a reference to the given string and assigns it to the DbState field.
+func (o *MSSQLDSourceStagingPushLinkSourceParameters) SetDbState(v string) {
+	o.DbState = &v
+}
+
 func (o MSSQLDSourceStagingPushLinkSourceParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -678,7 +720,51 @@ func (o MSSQLDSourceStagingPushLinkSourceParameters) ToMap() (map[string]interfa
 		toSerialize["staging_post_script"] = o.StagingPostScript
 	}
 	toSerialize["staging_database_name"] = o.StagingDatabaseName
+	if !IsNil(o.DbState) {
+		toSerialize["db_state"] = o.DbState
+	}
 	return toSerialize, nil
+}
+
+func (o *MSSQLDSourceStagingPushLinkSourceParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"engine_id",
+		"ppt_repository",
+		"ppt_host_user",
+		"staging_database_name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varMSSQLDSourceStagingPushLinkSourceParameters := _MSSQLDSourceStagingPushLinkSourceParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varMSSQLDSourceStagingPushLinkSourceParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = MSSQLDSourceStagingPushLinkSourceParameters(varMSSQLDSourceStagingPushLinkSourceParameters)
+
+	return err
 }
 
 type NullableMSSQLDSourceStagingPushLinkSourceParameters struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,8 @@ type VCDB struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this vCDB.
 	Name NullableString `json:"name,omitempty"`
+	// The name of the container database in the Oracle DBMS.
+	DatabaseName *string `json:"database_name,omitempty"`
 	// The namespace id of this vCDB.
 	NamespaceId NullableString `json:"namespace_id,omitempty"`
 	// The namespace name of this vCDB.
@@ -54,6 +56,10 @@ type VCDB struct {
 	// Indicates whether the Engine should automatically restart this vcdb when target host reboot is detected.
 	VcdbRestart *bool `json:"vcdb_restart,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// Indicates whether datapatch should be invoked.
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// The list of node listeners for this VCDB.
+	NodeListeners []string `json:"node_listeners,omitempty"`
 }
 
 // NewVCDB instantiates a new VCDB object
@@ -145,6 +151,38 @@ func (o *VCDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *VCDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
+func (o *VCDB) GetDatabaseName() string {
+	if o == nil || IsNil(o.DatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseName
+}
+
+// GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseName) {
+		return nil, false
+	}
+	return o.DatabaseName, true
+}
+
+// HasDatabaseName returns a boolean if a field has been set.
+func (o *VCDB) HasDatabaseName() bool {
+	if o != nil && !IsNil(o.DatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
+func (o *VCDB) SetDatabaseName(v string) {
+	o.DatabaseName = &v
 }
 
 // GetNamespaceId returns the NamespaceId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -727,6 +765,70 @@ func (o *VCDB) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *VCDB) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *VCDB) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *VCDB) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
+// GetNodeListeners returns the NodeListeners field value if set, zero value otherwise.
+func (o *VCDB) GetNodeListeners() []string {
+	if o == nil || IsNil(o.NodeListeners) {
+		var ret []string
+		return ret
+	}
+	return o.NodeListeners
+}
+
+// GetNodeListenersOk returns a tuple with the NodeListeners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetNodeListenersOk() ([]string, bool) {
+	if o == nil || IsNil(o.NodeListeners) {
+		return nil, false
+	}
+	return o.NodeListeners, true
+}
+
+// HasNodeListeners returns a boolean if a field has been set.
+func (o *VCDB) HasNodeListeners() bool {
+	if o != nil && !IsNil(o.NodeListeners) {
+		return true
+	}
+
+	return false
+}
+
+// SetNodeListeners gets a reference to the given []string and assigns it to the NodeListeners field.
+func (o *VCDB) SetNodeListeners(v []string) {
+	o.NodeListeners = v
+}
+
 func (o VCDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -742,6 +844,9 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
 	}
 	if o.NamespaceId.IsSet() {
 		toSerialize["namespace_id"] = o.NamespaceId.Get()
@@ -787,6 +892,12 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.NodeListeners) {
+		toSerialize["node_listeners"] = o.NodeListeners
 	}
 	return toSerialize, nil
 }

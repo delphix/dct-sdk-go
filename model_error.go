@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -117,8 +117,12 @@ func (o Error) MarshalJSON() ([]byte, error) {
 
 func (o Error) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: message is readOnly
-	// skip: object_name is readOnly
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.ObjectName) {
+		toSerialize["object_name"] = o.ObjectName
+	}
 	return toSerialize, nil
 }
 

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// AccountsApiService AccountsApi service
-type AccountsApiService service
+// AccountsAPIService AccountsAPI service
+type AccountsAPIService service
 
 type ApiChangeAccountPasswordRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 	changePasswordParameter *ChangePasswordParameter
 }
@@ -47,7 +47,7 @@ ChangeAccountPassword Change Account Password.
  @param id Numeric ID of the Account.
  @return ApiChangeAccountPasswordRequest
 */
-func (a *AccountsApiService) ChangeAccountPassword(ctx context.Context, id int64) ApiChangeAccountPasswordRequest {
+func (a *AccountsAPIService) ChangeAccountPassword(ctx context.Context, id int64) ApiChangeAccountPasswordRequest {
 	return ApiChangeAccountPasswordRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -56,14 +56,14 @@ func (a *AccountsApiService) ChangeAccountPassword(ctx context.Context, id int64
 }
 
 // Execute executes the request
-func (a *AccountsApiService) ChangeAccountPasswordExecute(r ApiChangeAccountPasswordRequest) (*http.Response, error) {
+func (a *AccountsAPIService) ChangeAccountPasswordExecute(r ApiChangeAccountPasswordRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.ChangeAccountPassword")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.ChangeAccountPassword")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -141,7 +141,7 @@ func (a *AccountsApiService) ChangeAccountPasswordExecute(r ApiChangeAccountPass
 
 type ApiCreateAccountRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	accountCreateParameter *AccountCreateParameter
 }
 
@@ -160,7 +160,7 @@ CreateAccount Create a new Account
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAccountRequest
 */
-func (a *AccountsApiService) CreateAccount(ctx context.Context) ApiCreateAccountRequest {
+func (a *AccountsAPIService) CreateAccount(ctx context.Context) ApiCreateAccountRequest {
 	return ApiCreateAccountRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -169,7 +169,7 @@ func (a *AccountsApiService) CreateAccount(ctx context.Context) ApiCreateAccount
 
 // Execute executes the request
 //  @return AccountCreateResponse
-func (a *AccountsApiService) CreateAccountExecute(r ApiCreateAccountRequest) (*AccountCreateResponse, *http.Response, error) {
+func (a *AccountsAPIService) CreateAccountExecute(r ApiCreateAccountRequest) (*AccountCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -177,7 +177,7 @@ func (a *AccountsApiService) CreateAccountExecute(r ApiCreateAccountRequest) (*A
 		localVarReturnValue  *AccountCreateResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.CreateAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.CreateAccount")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -263,7 +263,7 @@ func (a *AccountsApiService) CreateAccountExecute(r ApiCreateAccountRequest) (*A
 
 type ApiCreateAccountTagsRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 	tagsRequest *TagsRequest
 }
@@ -285,7 +285,7 @@ CreateAccountTags Create tags for an Account.
  @param id Numeric ID of the Account.
  @return ApiCreateAccountTagsRequest
 */
-func (a *AccountsApiService) CreateAccountTags(ctx context.Context, id int64) ApiCreateAccountTagsRequest {
+func (a *AccountsAPIService) CreateAccountTags(ctx context.Context, id int64) ApiCreateAccountTagsRequest {
 	return ApiCreateAccountTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -295,7 +295,7 @@ func (a *AccountsApiService) CreateAccountTags(ctx context.Context, id int64) Ap
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *AccountsApiService) CreateAccountTagsExecute(r ApiCreateAccountTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *AccountsAPIService) CreateAccountTagsExecute(r ApiCreateAccountTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -303,7 +303,7 @@ func (a *AccountsApiService) CreateAccountTagsExecute(r ApiCreateAccountTagsRequ
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.CreateAccountTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.CreateAccountTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -390,7 +390,7 @@ func (a *AccountsApiService) CreateAccountTagsExecute(r ApiCreateAccountTagsRequ
 
 type ApiDeleteAccountRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 }
 
@@ -405,7 +405,7 @@ DeleteAccount Delete an Account
  @param id Numeric ID of the Account.
  @return ApiDeleteAccountRequest
 */
-func (a *AccountsApiService) DeleteAccount(ctx context.Context, id int64) ApiDeleteAccountRequest {
+func (a *AccountsAPIService) DeleteAccount(ctx context.Context, id int64) ApiDeleteAccountRequest {
 	return ApiDeleteAccountRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -414,14 +414,14 @@ func (a *AccountsApiService) DeleteAccount(ctx context.Context, id int64) ApiDel
 }
 
 // Execute executes the request
-func (a *AccountsApiService) DeleteAccountExecute(r ApiDeleteAccountRequest) (*http.Response, error) {
+func (a *AccountsAPIService) DeleteAccountExecute(r ApiDeleteAccountRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.DeleteAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.DeleteAccount")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -494,7 +494,7 @@ func (a *AccountsApiService) DeleteAccountExecute(r ApiDeleteAccountRequest) (*h
 
 type ApiDeleteAccountTagsRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 	deleteTag *DeleteTag
 }
@@ -516,7 +516,7 @@ DeleteAccountTags Delete tags for an Account.
  @param id Numeric ID of the Account.
  @return ApiDeleteAccountTagsRequest
 */
-func (a *AccountsApiService) DeleteAccountTags(ctx context.Context, id int64) ApiDeleteAccountTagsRequest {
+func (a *AccountsAPIService) DeleteAccountTags(ctx context.Context, id int64) ApiDeleteAccountTagsRequest {
 	return ApiDeleteAccountTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -525,14 +525,14 @@ func (a *AccountsApiService) DeleteAccountTags(ctx context.Context, id int64) Ap
 }
 
 // Execute executes the request
-func (a *AccountsApiService) DeleteAccountTagsExecute(r ApiDeleteAccountTagsRequest) (*http.Response, error) {
+func (a *AccountsAPIService) DeleteAccountTagsExecute(r ApiDeleteAccountTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.DeleteAccountTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.DeleteAccountTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -607,7 +607,7 @@ func (a *AccountsApiService) DeleteAccountTagsExecute(r ApiDeleteAccountTagsRequ
 
 type ApiDisableRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 }
 
@@ -622,7 +622,7 @@ Disable Disable an Account.
  @param id Numeric ID of the Account.
  @return ApiDisableRequest
 */
-func (a *AccountsApiService) Disable(ctx context.Context, id int64) ApiDisableRequest {
+func (a *AccountsAPIService) Disable(ctx context.Context, id int64) ApiDisableRequest {
 	return ApiDisableRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -631,14 +631,14 @@ func (a *AccountsApiService) Disable(ctx context.Context, id int64) ApiDisableRe
 }
 
 // Execute executes the request
-func (a *AccountsApiService) DisableExecute(r ApiDisableRequest) (*http.Response, error) {
+func (a *AccountsAPIService) DisableExecute(r ApiDisableRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.Disable")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.Disable")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -711,7 +711,7 @@ func (a *AccountsApiService) DisableExecute(r ApiDisableRequest) (*http.Response
 
 type ApiEnableAccountRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 }
 
@@ -726,7 +726,7 @@ EnableAccount Enable an Account.
  @param id Numeric ID of the Account.
  @return ApiEnableAccountRequest
 */
-func (a *AccountsApiService) EnableAccount(ctx context.Context, id int64) ApiEnableAccountRequest {
+func (a *AccountsAPIService) EnableAccount(ctx context.Context, id int64) ApiEnableAccountRequest {
 	return ApiEnableAccountRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -735,14 +735,14 @@ func (a *AccountsApiService) EnableAccount(ctx context.Context, id int64) ApiEna
 }
 
 // Execute executes the request
-func (a *AccountsApiService) EnableAccountExecute(r ApiEnableAccountRequest) (*http.Response, error) {
+func (a *AccountsAPIService) EnableAccountExecute(r ApiEnableAccountRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.EnableAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.EnableAccount")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -815,7 +815,7 @@ func (a *AccountsApiService) EnableAccountExecute(r ApiEnableAccountRequest) (*h
 
 type ApiGetAccountRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 }
 
@@ -830,7 +830,7 @@ GetAccount Get an Account by id
  @param id Numeric ID of the Account.
  @return ApiGetAccountRequest
 */
-func (a *AccountsApiService) GetAccount(ctx context.Context, id int64) ApiGetAccountRequest {
+func (a *AccountsAPIService) GetAccount(ctx context.Context, id int64) ApiGetAccountRequest {
 	return ApiGetAccountRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -840,7 +840,7 @@ func (a *AccountsApiService) GetAccount(ctx context.Context, id int64) ApiGetAcc
 
 // Execute executes the request
 //  @return Account
-func (a *AccountsApiService) GetAccountExecute(r ApiGetAccountRequest) (*Account, *http.Response, error) {
+func (a *AccountsAPIService) GetAccountExecute(r ApiGetAccountRequest) (*Account, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -848,7 +848,7 @@ func (a *AccountsApiService) GetAccountExecute(r ApiGetAccountRequest) (*Account
 		localVarReturnValue  *Account
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.GetAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.GetAccount")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -930,7 +930,7 @@ func (a *AccountsApiService) GetAccountExecute(r ApiGetAccountRequest) (*Account
 
 type ApiGetAccountTagsRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 }
 
@@ -945,7 +945,7 @@ GetAccountTags Get tags for an Account.
  @param id Numeric ID of the Account.
  @return ApiGetAccountTagsRequest
 */
-func (a *AccountsApiService) GetAccountTags(ctx context.Context, id int64) ApiGetAccountTagsRequest {
+func (a *AccountsAPIService) GetAccountTags(ctx context.Context, id int64) ApiGetAccountTagsRequest {
 	return ApiGetAccountTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -955,7 +955,7 @@ func (a *AccountsApiService) GetAccountTags(ctx context.Context, id int64) ApiGe
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *AccountsApiService) GetAccountTagsExecute(r ApiGetAccountTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *AccountsAPIService) GetAccountTagsExecute(r ApiGetAccountTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -963,7 +963,7 @@ func (a *AccountsApiService) GetAccountTagsExecute(r ApiGetAccountTagsRequest) (
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.GetAccountTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.GetAccountTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1045,7 +1045,7 @@ func (a *AccountsApiService) GetAccountTagsExecute(r ApiGetAccountTagsRequest) (
 
 type ApiGetAccountsRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1079,7 +1079,7 @@ GetAccounts Returns a list of Accounts
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetAccountsRequest
 */
-func (a *AccountsApiService) GetAccounts(ctx context.Context) ApiGetAccountsRequest {
+func (a *AccountsAPIService) GetAccounts(ctx context.Context) ApiGetAccountsRequest {
 	return ApiGetAccountsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1088,7 +1088,7 @@ func (a *AccountsApiService) GetAccounts(ctx context.Context) ApiGetAccountsRequ
 
 // Execute executes the request
 //  @return ListAccountsResponse
-func (a *AccountsApiService) GetAccountsExecute(r ApiGetAccountsRequest) (*ListAccountsResponse, *http.Response, error) {
+func (a *AccountsAPIService) GetAccountsExecute(r ApiGetAccountsRequest) (*ListAccountsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1096,7 +1096,7 @@ func (a *AccountsApiService) GetAccountsExecute(r ApiGetAccountsRequest) (*ListA
 		localVarReturnValue  *ListAccountsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.GetAccounts")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.GetAccounts")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1108,13 +1108,16 @@ func (a *AccountsApiService) GetAccountsExecute(r ApiGetAccountsRequest) (*ListA
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1186,7 +1189,7 @@ func (a *AccountsApiService) GetAccountsExecute(r ApiGetAccountsRequest) (*ListA
 
 type ApiGetPasswordPoliciesRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 }
 
 func (r ApiGetPasswordPoliciesRequest) Execute() (*PasswordPoliciesParams, *http.Response, error) {
@@ -1199,7 +1202,7 @@ GetPasswordPolicies Returns the password policies
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetPasswordPoliciesRequest
 */
-func (a *AccountsApiService) GetPasswordPolicies(ctx context.Context) ApiGetPasswordPoliciesRequest {
+func (a *AccountsAPIService) GetPasswordPolicies(ctx context.Context) ApiGetPasswordPoliciesRequest {
 	return ApiGetPasswordPoliciesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1208,7 +1211,7 @@ func (a *AccountsApiService) GetPasswordPolicies(ctx context.Context) ApiGetPass
 
 // Execute executes the request
 //  @return PasswordPoliciesParams
-func (a *AccountsApiService) GetPasswordPoliciesExecute(r ApiGetPasswordPoliciesRequest) (*PasswordPoliciesParams, *http.Response, error) {
+func (a *AccountsAPIService) GetPasswordPoliciesExecute(r ApiGetPasswordPoliciesRequest) (*PasswordPoliciesParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1216,7 +1219,7 @@ func (a *AccountsApiService) GetPasswordPoliciesExecute(r ApiGetPasswordPolicies
 		localVarReturnValue  *PasswordPoliciesParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.GetPasswordPolicies")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.GetPasswordPolicies")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1297,7 +1300,7 @@ func (a *AccountsApiService) GetPasswordPoliciesExecute(r ApiGetPasswordPolicies
 
 type ApiResetAccountPasswordRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 	resetPasswordParameter *ResetPasswordParameter
 }
@@ -1318,7 +1321,7 @@ ResetAccountPassword Reset Account Password.
  @param id Numeric ID of the Account.
  @return ApiResetAccountPasswordRequest
 */
-func (a *AccountsApiService) ResetAccountPassword(ctx context.Context, id int64) ApiResetAccountPasswordRequest {
+func (a *AccountsAPIService) ResetAccountPassword(ctx context.Context, id int64) ApiResetAccountPasswordRequest {
 	return ApiResetAccountPasswordRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1327,14 +1330,14 @@ func (a *AccountsApiService) ResetAccountPassword(ctx context.Context, id int64)
 }
 
 // Execute executes the request
-func (a *AccountsApiService) ResetAccountPasswordExecute(r ApiResetAccountPasswordRequest) (*http.Response, error) {
+func (a *AccountsAPIService) ResetAccountPasswordExecute(r ApiResetAccountPasswordRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.ResetAccountPassword")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.ResetAccountPassword")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1412,7 +1415,7 @@ func (a *AccountsApiService) ResetAccountPasswordExecute(r ApiResetAccountPasswo
 
 type ApiSearchAccountsRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1453,7 +1456,7 @@ SearchAccounts Search for Accounts.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchAccountsRequest
 */
-func (a *AccountsApiService) SearchAccounts(ctx context.Context) ApiSearchAccountsRequest {
+func (a *AccountsAPIService) SearchAccounts(ctx context.Context) ApiSearchAccountsRequest {
 	return ApiSearchAccountsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1462,7 +1465,7 @@ func (a *AccountsApiService) SearchAccounts(ctx context.Context) ApiSearchAccoun
 
 // Execute executes the request
 //  @return SearchAccountsResponse
-func (a *AccountsApiService) SearchAccountsExecute(r ApiSearchAccountsRequest) (*SearchAccountsResponse, *http.Response, error) {
+func (a *AccountsAPIService) SearchAccountsExecute(r ApiSearchAccountsRequest) (*SearchAccountsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1470,7 +1473,7 @@ func (a *AccountsApiService) SearchAccountsExecute(r ApiSearchAccountsRequest) (
 		localVarReturnValue  *SearchAccountsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.SearchAccounts")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.SearchAccounts")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1482,13 +1485,16 @@ func (a *AccountsApiService) SearchAccountsExecute(r ApiSearchAccountsRequest) (
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1562,7 +1568,7 @@ func (a *AccountsApiService) SearchAccountsExecute(r ApiSearchAccountsRequest) (
 
 type ApiUpdateAccountRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	id int64
 	accountUpdateParameter *AccountUpdateParameter
 }
@@ -1583,7 +1589,7 @@ UpdateAccount Update an Account
  @param id Numeric ID of the Account.
  @return ApiUpdateAccountRequest
 */
-func (a *AccountsApiService) UpdateAccount(ctx context.Context, id int64) ApiUpdateAccountRequest {
+func (a *AccountsAPIService) UpdateAccount(ctx context.Context, id int64) ApiUpdateAccountRequest {
 	return ApiUpdateAccountRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1593,7 +1599,7 @@ func (a *AccountsApiService) UpdateAccount(ctx context.Context, id int64) ApiUpd
 
 // Execute executes the request
 //  @return Account
-func (a *AccountsApiService) UpdateAccountExecute(r ApiUpdateAccountRequest) (*Account, *http.Response, error) {
+func (a *AccountsAPIService) UpdateAccountExecute(r ApiUpdateAccountRequest) (*Account, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -1601,7 +1607,7 @@ func (a *AccountsApiService) UpdateAccountExecute(r ApiUpdateAccountRequest) (*A
 		localVarReturnValue  *Account
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.UpdateAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.UpdateAccount")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1688,7 +1694,7 @@ func (a *AccountsApiService) UpdateAccountExecute(r ApiUpdateAccountRequest) (*A
 
 type ApiUpdatePasswordPoliciesRequest struct {
 	ctx context.Context
-	ApiService *AccountsApiService
+	ApiService *AccountsAPIService
 	passwordPoliciesParams *PasswordPoliciesParams
 }
 
@@ -1708,7 +1714,7 @@ UpdatePasswordPolicies Update password policies.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUpdatePasswordPoliciesRequest
 */
-func (a *AccountsApiService) UpdatePasswordPolicies(ctx context.Context) ApiUpdatePasswordPoliciesRequest {
+func (a *AccountsAPIService) UpdatePasswordPolicies(ctx context.Context) ApiUpdatePasswordPoliciesRequest {
 	return ApiUpdatePasswordPoliciesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1717,7 +1723,7 @@ func (a *AccountsApiService) UpdatePasswordPolicies(ctx context.Context) ApiUpda
 
 // Execute executes the request
 //  @return PasswordPoliciesParams
-func (a *AccountsApiService) UpdatePasswordPoliciesExecute(r ApiUpdatePasswordPoliciesRequest) (*PasswordPoliciesParams, *http.Response, error) {
+func (a *AccountsAPIService) UpdatePasswordPoliciesExecute(r ApiUpdatePasswordPoliciesRequest) (*PasswordPoliciesParams, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -1725,7 +1731,7 @@ func (a *AccountsApiService) UpdatePasswordPoliciesExecute(r ApiUpdatePasswordPo
 		localVarReturnValue  *PasswordPoliciesParams
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsApiService.UpdatePasswordPolicies")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AccountsAPIService.UpdatePasswordPolicies")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the HyperscaleMountPoint type satisfies the MappedNullable interface at compile time
@@ -25,28 +27,38 @@ type HyperscaleMountPoint struct {
 	// The ID of the Hyperscale instance of this Mount Point.
 	HyperscaleInstanceId string `json:"hyperscale_instance_id"`
 	// Name of the mount, unique for a hyperscale instance. This name will be used as a directory name by the Hyperscale instance.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The host name of the server.
-	Hostname string `json:"hostname"`
+	Hostname *string `json:"hostname,omitempty"`
 	// The path to the directory on the filesystem to mount.
-	MountPath string `json:"mount_path"`
-	// The type of filesystem. Enum having values- CIFS, NFS3, NFS4.
-	MountType string `json:"mount_type"`
+	MountPath *string `json:"mount_path,omitempty"`
+	// The type of mount filesystem. Enum having values- CIFS, NFS3, NFS4.
+	MountType *string `json:"mount_type,omitempty"`
 	// The options for mount. The endpoint will return all default options and user specified options.
 	Options *string `json:"options,omitempty"`
+	// The type of staging storage.
+	StagingStorageType *string `json:"staging_storage_type,omitempty"`
+	// The authentication mechanism for AWS_S3 storage.
+	AuthMechanism *string `json:"auth_mechanism,omitempty"`
+	// The aws bucket name for AWS_S3 storage.
+	AwsBucketName *string `json:"aws_bucket_name,omitempty"`
+	// The aws bucket region for AWS_S3 storage.
+	AwsBucketRegion *string `json:"aws_bucket_region,omitempty"`
+	// The aws bucket prefix for AWS_S3 storage.
+	AwsBucketPrefix *string `json:"aws_bucket_prefix,omitempty"`
+	// The aws bucket delimiter for AWS_S3 storage.
+	AwsBucketDelimiter *string `json:"aws_bucket_delimiter,omitempty"`
 }
+
+type _HyperscaleMountPoint HyperscaleMountPoint
 
 // NewHyperscaleMountPoint instantiates a new HyperscaleMountPoint object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewHyperscaleMountPoint(hyperscaleInstanceId string, name string, hostname string, mountPath string, mountType string) *HyperscaleMountPoint {
+func NewHyperscaleMountPoint(hyperscaleInstanceId string) *HyperscaleMountPoint {
 	this := HyperscaleMountPoint{}
 	this.HyperscaleInstanceId = hyperscaleInstanceId
-	this.Name = name
-	this.Hostname = hostname
-	this.MountPath = mountPath
-	this.MountType = mountType
 	return &this
 }
 
@@ -114,100 +126,132 @@ func (o *HyperscaleMountPoint) SetHyperscaleInstanceId(v string) {
 	o.HyperscaleInstanceId = v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *HyperscaleMountPoint) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *HyperscaleMountPoint) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetHostname returns the Hostname field value
+// GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *HyperscaleMountPoint) GetHostname() string {
-	if o == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
-
-	return o.Hostname
+	return *o.Hostname
 }
 
-// GetHostnameOk returns a tuple with the Hostname field value
+// GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetHostnameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
-	return &o.Hostname, true
+	return o.Hostname, true
 }
 
-// SetHostname sets field value
+// HasHostname returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasHostname() bool {
+	if o != nil && !IsNil(o.Hostname) {
+		return true
+	}
+
+	return false
+}
+
+// SetHostname gets a reference to the given string and assigns it to the Hostname field.
 func (o *HyperscaleMountPoint) SetHostname(v string) {
-	o.Hostname = v
+	o.Hostname = &v
 }
 
-// GetMountPath returns the MountPath field value
+// GetMountPath returns the MountPath field value if set, zero value otherwise.
 func (o *HyperscaleMountPoint) GetMountPath() string {
-	if o == nil {
+	if o == nil || IsNil(o.MountPath) {
 		var ret string
 		return ret
 	}
-
-	return o.MountPath
+	return *o.MountPath
 }
 
-// GetMountPathOk returns a tuple with the MountPath field value
+// GetMountPathOk returns a tuple with the MountPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetMountPathOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MountPath) {
 		return nil, false
 	}
-	return &o.MountPath, true
+	return o.MountPath, true
 }
 
-// SetMountPath sets field value
+// HasMountPath returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasMountPath() bool {
+	if o != nil && !IsNil(o.MountPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetMountPath gets a reference to the given string and assigns it to the MountPath field.
 func (o *HyperscaleMountPoint) SetMountPath(v string) {
-	o.MountPath = v
+	o.MountPath = &v
 }
 
-// GetMountType returns the MountType field value
+// GetMountType returns the MountType field value if set, zero value otherwise.
 func (o *HyperscaleMountPoint) GetMountType() string {
-	if o == nil {
+	if o == nil || IsNil(o.MountType) {
 		var ret string
 		return ret
 	}
-
-	return o.MountType
+	return *o.MountType
 }
 
-// GetMountTypeOk returns a tuple with the MountType field value
+// GetMountTypeOk returns a tuple with the MountType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *HyperscaleMountPoint) GetMountTypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MountType) {
 		return nil, false
 	}
-	return &o.MountType, true
+	return o.MountType, true
 }
 
-// SetMountType sets field value
+// HasMountType returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasMountType() bool {
+	if o != nil && !IsNil(o.MountType) {
+		return true
+	}
+
+	return false
+}
+
+// SetMountType gets a reference to the given string and assigns it to the MountType field.
 func (o *HyperscaleMountPoint) SetMountType(v string) {
-	o.MountType = v
+	o.MountType = &v
 }
 
 // GetOptions returns the Options field value if set, zero value otherwise.
@@ -242,6 +286,198 @@ func (o *HyperscaleMountPoint) SetOptions(v string) {
 	o.Options = &v
 }
 
+// GetStagingStorageType returns the StagingStorageType field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetStagingStorageType() string {
+	if o == nil || IsNil(o.StagingStorageType) {
+		var ret string
+		return ret
+	}
+	return *o.StagingStorageType
+}
+
+// GetStagingStorageTypeOk returns a tuple with the StagingStorageType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetStagingStorageTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.StagingStorageType) {
+		return nil, false
+	}
+	return o.StagingStorageType, true
+}
+
+// HasStagingStorageType returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasStagingStorageType() bool {
+	if o != nil && !IsNil(o.StagingStorageType) {
+		return true
+	}
+
+	return false
+}
+
+// SetStagingStorageType gets a reference to the given string and assigns it to the StagingStorageType field.
+func (o *HyperscaleMountPoint) SetStagingStorageType(v string) {
+	o.StagingStorageType = &v
+}
+
+// GetAuthMechanism returns the AuthMechanism field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetAuthMechanism() string {
+	if o == nil || IsNil(o.AuthMechanism) {
+		var ret string
+		return ret
+	}
+	return *o.AuthMechanism
+}
+
+// GetAuthMechanismOk returns a tuple with the AuthMechanism field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetAuthMechanismOk() (*string, bool) {
+	if o == nil || IsNil(o.AuthMechanism) {
+		return nil, false
+	}
+	return o.AuthMechanism, true
+}
+
+// HasAuthMechanism returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasAuthMechanism() bool {
+	if o != nil && !IsNil(o.AuthMechanism) {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthMechanism gets a reference to the given string and assigns it to the AuthMechanism field.
+func (o *HyperscaleMountPoint) SetAuthMechanism(v string) {
+	o.AuthMechanism = &v
+}
+
+// GetAwsBucketName returns the AwsBucketName field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetAwsBucketName() string {
+	if o == nil || IsNil(o.AwsBucketName) {
+		var ret string
+		return ret
+	}
+	return *o.AwsBucketName
+}
+
+// GetAwsBucketNameOk returns a tuple with the AwsBucketName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetAwsBucketNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AwsBucketName) {
+		return nil, false
+	}
+	return o.AwsBucketName, true
+}
+
+// HasAwsBucketName returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasAwsBucketName() bool {
+	if o != nil && !IsNil(o.AwsBucketName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAwsBucketName gets a reference to the given string and assigns it to the AwsBucketName field.
+func (o *HyperscaleMountPoint) SetAwsBucketName(v string) {
+	o.AwsBucketName = &v
+}
+
+// GetAwsBucketRegion returns the AwsBucketRegion field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetAwsBucketRegion() string {
+	if o == nil || IsNil(o.AwsBucketRegion) {
+		var ret string
+		return ret
+	}
+	return *o.AwsBucketRegion
+}
+
+// GetAwsBucketRegionOk returns a tuple with the AwsBucketRegion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetAwsBucketRegionOk() (*string, bool) {
+	if o == nil || IsNil(o.AwsBucketRegion) {
+		return nil, false
+	}
+	return o.AwsBucketRegion, true
+}
+
+// HasAwsBucketRegion returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasAwsBucketRegion() bool {
+	if o != nil && !IsNil(o.AwsBucketRegion) {
+		return true
+	}
+
+	return false
+}
+
+// SetAwsBucketRegion gets a reference to the given string and assigns it to the AwsBucketRegion field.
+func (o *HyperscaleMountPoint) SetAwsBucketRegion(v string) {
+	o.AwsBucketRegion = &v
+}
+
+// GetAwsBucketPrefix returns the AwsBucketPrefix field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetAwsBucketPrefix() string {
+	if o == nil || IsNil(o.AwsBucketPrefix) {
+		var ret string
+		return ret
+	}
+	return *o.AwsBucketPrefix
+}
+
+// GetAwsBucketPrefixOk returns a tuple with the AwsBucketPrefix field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetAwsBucketPrefixOk() (*string, bool) {
+	if o == nil || IsNil(o.AwsBucketPrefix) {
+		return nil, false
+	}
+	return o.AwsBucketPrefix, true
+}
+
+// HasAwsBucketPrefix returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasAwsBucketPrefix() bool {
+	if o != nil && !IsNil(o.AwsBucketPrefix) {
+		return true
+	}
+
+	return false
+}
+
+// SetAwsBucketPrefix gets a reference to the given string and assigns it to the AwsBucketPrefix field.
+func (o *HyperscaleMountPoint) SetAwsBucketPrefix(v string) {
+	o.AwsBucketPrefix = &v
+}
+
+// GetAwsBucketDelimiter returns the AwsBucketDelimiter field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetAwsBucketDelimiter() string {
+	if o == nil || IsNil(o.AwsBucketDelimiter) {
+		var ret string
+		return ret
+	}
+	return *o.AwsBucketDelimiter
+}
+
+// GetAwsBucketDelimiterOk returns a tuple with the AwsBucketDelimiter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetAwsBucketDelimiterOk() (*string, bool) {
+	if o == nil || IsNil(o.AwsBucketDelimiter) {
+		return nil, false
+	}
+	return o.AwsBucketDelimiter, true
+}
+
+// HasAwsBucketDelimiter returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasAwsBucketDelimiter() bool {
+	if o != nil && !IsNil(o.AwsBucketDelimiter) {
+		return true
+	}
+
+	return false
+}
+
+// SetAwsBucketDelimiter gets a reference to the given string and assigns it to the AwsBucketDelimiter field.
+func (o *HyperscaleMountPoint) SetAwsBucketDelimiter(v string) {
+	o.AwsBucketDelimiter = &v
+}
+
 func (o HyperscaleMountPoint) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -252,16 +488,81 @@ func (o HyperscaleMountPoint) MarshalJSON() ([]byte, error) {
 
 func (o HyperscaleMountPoint) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	toSerialize["hyperscale_instance_id"] = o.HyperscaleInstanceId
-	toSerialize["name"] = o.Name
-	toSerialize["hostname"] = o.Hostname
-	toSerialize["mount_path"] = o.MountPath
-	toSerialize["mount_type"] = o.MountType
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.MountPath) {
+		toSerialize["mount_path"] = o.MountPath
+	}
+	if !IsNil(o.MountType) {
+		toSerialize["mount_type"] = o.MountType
+	}
 	if !IsNil(o.Options) {
 		toSerialize["options"] = o.Options
 	}
+	if !IsNil(o.StagingStorageType) {
+		toSerialize["staging_storage_type"] = o.StagingStorageType
+	}
+	if !IsNil(o.AuthMechanism) {
+		toSerialize["auth_mechanism"] = o.AuthMechanism
+	}
+	if !IsNil(o.AwsBucketName) {
+		toSerialize["aws_bucket_name"] = o.AwsBucketName
+	}
+	if !IsNil(o.AwsBucketRegion) {
+		toSerialize["aws_bucket_region"] = o.AwsBucketRegion
+	}
+	if !IsNil(o.AwsBucketPrefix) {
+		toSerialize["aws_bucket_prefix"] = o.AwsBucketPrefix
+	}
+	if !IsNil(o.AwsBucketDelimiter) {
+		toSerialize["aws_bucket_delimiter"] = o.AwsBucketDelimiter
+	}
 	return toSerialize, nil
+}
+
+func (o *HyperscaleMountPoint) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"hyperscale_instance_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varHyperscaleMountPoint := _HyperscaleMountPoint{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varHyperscaleMountPoint)
+
+	if err != nil {
+		return err
+	}
+
+	*o = HyperscaleMountPoint(varHyperscaleMountPoint)
+
+	return err
 }
 
 type NullableHyperscaleMountPoint struct {

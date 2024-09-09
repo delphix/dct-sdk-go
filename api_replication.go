@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,132 @@ import (
 )
 
 
-// ReplicationApiService ReplicationApi service
-type ReplicationApiService service
+// ReplicationAPIService ReplicationAPI service
+type ReplicationAPIService service
+
+type ApiCreateReplicationProfileRequest struct {
+	ctx context.Context
+	ApiService *ReplicationAPIService
+	createReplicationProfileParameters *CreateReplicationProfileParameters
+}
+
+// The parameters to create a ReplicationProfile.
+func (r ApiCreateReplicationProfileRequest) CreateReplicationProfileParameters(createReplicationProfileParameters CreateReplicationProfileParameters) ApiCreateReplicationProfileRequest {
+	r.createReplicationProfileParameters = &createReplicationProfileParameters
+	return r
+}
+
+func (r ApiCreateReplicationProfileRequest) Execute() (*CreateReplicationProfileResponse, *http.Response, error) {
+	return r.ApiService.CreateReplicationProfileExecute(r)
+}
+
+/*
+CreateReplicationProfile Create a ReplicationProfile.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateReplicationProfileRequest
+*/
+func (a *ReplicationAPIService) CreateReplicationProfile(ctx context.Context) ApiCreateReplicationProfileRequest {
+	return ApiCreateReplicationProfileRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateReplicationProfileResponse
+func (a *ReplicationAPIService) CreateReplicationProfileExecute(r ApiCreateReplicationProfileRequest) (*CreateReplicationProfileResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateReplicationProfileResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.CreateReplicationProfile")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/replication-profiles"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createReplicationProfileParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreateReplicationProfileTagsRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	replicationProfileId string
 	tagsRequest *TagsRequest
 }
@@ -48,7 +168,7 @@ CreateReplicationProfileTags Create tags for a ReplicationProfile.
  @param replicationProfileId The ID of the ReplicationProfile.
  @return ApiCreateReplicationProfileTagsRequest
 */
-func (a *ReplicationApiService) CreateReplicationProfileTags(ctx context.Context, replicationProfileId string) ApiCreateReplicationProfileTagsRequest {
+func (a *ReplicationAPIService) CreateReplicationProfileTags(ctx context.Context, replicationProfileId string) ApiCreateReplicationProfileTagsRequest {
 	return ApiCreateReplicationProfileTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +178,7 @@ func (a *ReplicationApiService) CreateReplicationProfileTags(ctx context.Context
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ReplicationApiService) CreateReplicationProfileTagsExecute(r ApiCreateReplicationProfileTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ReplicationAPIService) CreateReplicationProfileTagsExecute(r ApiCreateReplicationProfileTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +186,7 @@ func (a *ReplicationApiService) CreateReplicationProfileTagsExecute(r ApiCreateR
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.CreateReplicationProfileTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.CreateReplicationProfileTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -154,32 +274,25 @@ func (a *ReplicationApiService) CreateReplicationProfileTagsExecute(r ApiCreateR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDeleteRepliationProfileTagsRequest struct {
+type ApiDeleteReplicationProfileRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	replicationProfileId string
-	deleteTag *DeleteTag
 }
 
-// The parameters to delete tags
-func (r ApiDeleteRepliationProfileTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteRepliationProfileTagsRequest {
-	r.deleteTag = &deleteTag
-	return r
-}
-
-func (r ApiDeleteRepliationProfileTagsRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteRepliationProfileTagsExecute(r)
+func (r ApiDeleteReplicationProfileRequest) Execute() (*ReplicationProfileDeleteJobResponse, *http.Response, error) {
+	return r.ApiService.DeleteReplicationProfileExecute(r)
 }
 
 /*
-DeleteRepliationProfileTags Delete tags for a ReplicationProfile.
+DeleteReplicationProfile Delete a ReplicationProfile.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param replicationProfileId The ID of the ReplicationProfile.
- @return ApiDeleteRepliationProfileTagsRequest
+ @return ApiDeleteReplicationProfileRequest
 */
-func (a *ReplicationApiService) DeleteRepliationProfileTags(ctx context.Context, replicationProfileId string) ApiDeleteRepliationProfileTagsRequest {
-	return ApiDeleteRepliationProfileTagsRequest{
+func (a *ReplicationAPIService) DeleteReplicationProfile(ctx context.Context, replicationProfileId string) ApiDeleteReplicationProfileRequest {
+	return ApiDeleteReplicationProfileRequest{
 		ApiService: a,
 		ctx: ctx,
 		replicationProfileId: replicationProfileId,
@@ -187,14 +300,139 @@ func (a *ReplicationApiService) DeleteRepliationProfileTags(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *ReplicationApiService) DeleteRepliationProfileTagsExecute(r ApiDeleteRepliationProfileTagsRequest) (*http.Response, error) {
+//  @return ReplicationProfileDeleteJobResponse
+func (a *ReplicationAPIService) DeleteReplicationProfileExecute(r ApiDeleteReplicationProfileRequest) (*ReplicationProfileDeleteJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ReplicationProfileDeleteJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.DeleteReplicationProfile")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/replication-profiles/{replicationProfileId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"replicationProfileId"+"}", url.PathEscape(parameterValueToString(r.replicationProfileId, "replicationProfileId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.replicationProfileId) < 1 {
+		return localVarReturnValue, nil, reportError("replicationProfileId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteReplicationProfileTagsRequest struct {
+	ctx context.Context
+	ApiService *ReplicationAPIService
+	replicationProfileId string
+	deleteTag *DeleteTag
+}
+
+// The parameters to delete tags
+func (r ApiDeleteReplicationProfileTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteReplicationProfileTagsRequest {
+	r.deleteTag = &deleteTag
+	return r
+}
+
+func (r ApiDeleteReplicationProfileTagsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteReplicationProfileTagsExecute(r)
+}
+
+/*
+DeleteReplicationProfileTags Delete tags for a ReplicationProfile.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param replicationProfileId The ID of the ReplicationProfile.
+ @return ApiDeleteReplicationProfileTagsRequest
+*/
+func (a *ReplicationAPIService) DeleteReplicationProfileTags(ctx context.Context, replicationProfileId string) ApiDeleteReplicationProfileTagsRequest {
+	return ApiDeleteReplicationProfileTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		replicationProfileId: replicationProfileId,
+	}
+}
+
+// Execute executes the request
+func (a *ReplicationAPIService) DeleteReplicationProfileTagsExecute(r ApiDeleteReplicationProfileTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.DeleteRepliationProfileTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.DeleteReplicationProfileTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -272,7 +510,7 @@ func (a *ReplicationApiService) DeleteRepliationProfileTagsExecute(r ApiDeleteRe
 
 type ApiDisableTagReplicationRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	replicationProfileId string
 }
 
@@ -287,7 +525,7 @@ DisableTagReplication Disable tag replication for given ReplicationProfile.
  @param replicationProfileId The ID of the ReplicationProfile.
  @return ApiDisableTagReplicationRequest
 */
-func (a *ReplicationApiService) DisableTagReplication(ctx context.Context, replicationProfileId string) ApiDisableTagReplicationRequest {
+func (a *ReplicationAPIService) DisableTagReplication(ctx context.Context, replicationProfileId string) ApiDisableTagReplicationRequest {
 	return ApiDisableTagReplicationRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -296,14 +534,14 @@ func (a *ReplicationApiService) DisableTagReplication(ctx context.Context, repli
 }
 
 // Execute executes the request
-func (a *ReplicationApiService) DisableTagReplicationExecute(r ApiDisableTagReplicationRequest) (*http.Response, error) {
+func (a *ReplicationAPIService) DisableTagReplicationExecute(r ApiDisableTagReplicationRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.DisableTagReplication")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.DisableTagReplication")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -379,7 +617,7 @@ func (a *ReplicationApiService) DisableTagReplicationExecute(r ApiDisableTagRepl
 
 type ApiEnableTagReplicationRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	replicationProfileId string
 }
 
@@ -394,7 +632,7 @@ EnableTagReplication Enable tag replication for given ReplicationProfile.
  @param replicationProfileId The ID of the ReplicationProfile.
  @return ApiEnableTagReplicationRequest
 */
-func (a *ReplicationApiService) EnableTagReplication(ctx context.Context, replicationProfileId string) ApiEnableTagReplicationRequest {
+func (a *ReplicationAPIService) EnableTagReplication(ctx context.Context, replicationProfileId string) ApiEnableTagReplicationRequest {
 	return ApiEnableTagReplicationRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -403,14 +641,14 @@ func (a *ReplicationApiService) EnableTagReplication(ctx context.Context, replic
 }
 
 // Execute executes the request
-func (a *ReplicationApiService) EnableTagReplicationExecute(r ApiEnableTagReplicationRequest) (*http.Response, error) {
+func (a *ReplicationAPIService) EnableTagReplicationExecute(r ApiEnableTagReplicationRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.EnableTagReplication")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.EnableTagReplication")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -484,9 +722,127 @@ func (a *ReplicationApiService) EnableTagReplicationExecute(r ApiEnableTagReplic
 	return localVarHTTPResponse, nil
 }
 
+type ApiExecuteReplicationProfileRequest struct {
+	ctx context.Context
+	ApiService *ReplicationAPIService
+	replicationProfileId string
+}
+
+func (r ApiExecuteReplicationProfileRequest) Execute() (*ExecuteReplicationProfileResponse, *http.Response, error) {
+	return r.ApiService.ExecuteReplicationProfileExecute(r)
+}
+
+/*
+ExecuteReplicationProfile Execute a ReplicationProfile.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param replicationProfileId The ID of the ReplicationProfile.
+ @return ApiExecuteReplicationProfileRequest
+*/
+func (a *ReplicationAPIService) ExecuteReplicationProfile(ctx context.Context, replicationProfileId string) ApiExecuteReplicationProfileRequest {
+	return ApiExecuteReplicationProfileRequest{
+		ApiService: a,
+		ctx: ctx,
+		replicationProfileId: replicationProfileId,
+	}
+}
+
+// Execute executes the request
+//  @return ExecuteReplicationProfileResponse
+func (a *ReplicationAPIService) ExecuteReplicationProfileExecute(r ApiExecuteReplicationProfileRequest) (*ExecuteReplicationProfileResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExecuteReplicationProfileResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.ExecuteReplicationProfile")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/replication-profiles/{replicationProfileId}/execute"
+	localVarPath = strings.Replace(localVarPath, "{"+"replicationProfileId"+"}", url.PathEscape(parameterValueToString(r.replicationProfileId, "replicationProfileId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.replicationProfileId) < 1 {
+		return localVarReturnValue, nil, reportError("replicationProfileId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetReplicationProfileByIdRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	replicationProfileId string
 }
 
@@ -501,7 +857,7 @@ GetReplicationProfileById Get a ReplicationProfile by ID.
  @param replicationProfileId The ID of the ReplicationProfile.
  @return ApiGetReplicationProfileByIdRequest
 */
-func (a *ReplicationApiService) GetReplicationProfileById(ctx context.Context, replicationProfileId string) ApiGetReplicationProfileByIdRequest {
+func (a *ReplicationAPIService) GetReplicationProfileById(ctx context.Context, replicationProfileId string) ApiGetReplicationProfileByIdRequest {
 	return ApiGetReplicationProfileByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -511,7 +867,7 @@ func (a *ReplicationApiService) GetReplicationProfileById(ctx context.Context, r
 
 // Execute executes the request
 //  @return ReplicationProfile
-func (a *ReplicationApiService) GetReplicationProfileByIdExecute(r ApiGetReplicationProfileByIdRequest) (*ReplicationProfile, *http.Response, error) {
+func (a *ReplicationAPIService) GetReplicationProfileByIdExecute(r ApiGetReplicationProfileByIdRequest) (*ReplicationProfile, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -519,7 +875,7 @@ func (a *ReplicationApiService) GetReplicationProfileByIdExecute(r ApiGetReplica
 		localVarReturnValue  *ReplicationProfile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.GetReplicationProfileById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.GetReplicationProfileById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -604,7 +960,7 @@ func (a *ReplicationApiService) GetReplicationProfileByIdExecute(r ApiGetReplica
 
 type ApiGetReplicationProfileTagsRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	replicationProfileId string
 }
 
@@ -619,7 +975,7 @@ GetReplicationProfileTags Get tags for a ReplicationProfile.
  @param replicationProfileId The ID of the ReplicationProfile.
  @return ApiGetReplicationProfileTagsRequest
 */
-func (a *ReplicationApiService) GetReplicationProfileTags(ctx context.Context, replicationProfileId string) ApiGetReplicationProfileTagsRequest {
+func (a *ReplicationAPIService) GetReplicationProfileTags(ctx context.Context, replicationProfileId string) ApiGetReplicationProfileTagsRequest {
 	return ApiGetReplicationProfileTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -629,7 +985,7 @@ func (a *ReplicationApiService) GetReplicationProfileTags(ctx context.Context, r
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ReplicationApiService) GetReplicationProfileTagsExecute(r ApiGetReplicationProfileTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ReplicationAPIService) GetReplicationProfileTagsExecute(r ApiGetReplicationProfileTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -637,7 +993,7 @@ func (a *ReplicationApiService) GetReplicationProfileTagsExecute(r ApiGetReplica
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.GetReplicationProfileTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.GetReplicationProfileTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -722,7 +1078,7 @@ func (a *ReplicationApiService) GetReplicationProfileTagsExecute(r ApiGetReplica
 
 type ApiGetReplicationProfilesRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -756,7 +1112,7 @@ GetReplicationProfiles List all ReplicationProfiles.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetReplicationProfilesRequest
 */
-func (a *ReplicationApiService) GetReplicationProfiles(ctx context.Context) ApiGetReplicationProfilesRequest {
+func (a *ReplicationAPIService) GetReplicationProfiles(ctx context.Context) ApiGetReplicationProfilesRequest {
 	return ApiGetReplicationProfilesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -765,7 +1121,7 @@ func (a *ReplicationApiService) GetReplicationProfiles(ctx context.Context) ApiG
 
 // Execute executes the request
 //  @return ListReplicationProfilesResponse
-func (a *ReplicationApiService) GetReplicationProfilesExecute(r ApiGetReplicationProfilesRequest) (*ListReplicationProfilesResponse, *http.Response, error) {
+func (a *ReplicationAPIService) GetReplicationProfilesExecute(r ApiGetReplicationProfilesRequest) (*ListReplicationProfilesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -773,7 +1129,7 @@ func (a *ReplicationApiService) GetReplicationProfilesExecute(r ApiGetReplicatio
 		localVarReturnValue  *ListReplicationProfilesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.GetReplicationProfiles")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.GetReplicationProfiles")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -785,13 +1141,16 @@ func (a *ReplicationApiService) GetReplicationProfilesExecute(r ApiGetReplicatio
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -863,7 +1222,7 @@ func (a *ReplicationApiService) GetReplicationProfilesExecute(r ApiGetReplicatio
 
 type ApiSearchReplicationProfilesRequest struct {
 	ctx context.Context
-	ApiService *ReplicationApiService
+	ApiService *ReplicationAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -904,7 +1263,7 @@ SearchReplicationProfiles Search for ReplicationProfiles.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchReplicationProfilesRequest
 */
-func (a *ReplicationApiService) SearchReplicationProfiles(ctx context.Context) ApiSearchReplicationProfilesRequest {
+func (a *ReplicationAPIService) SearchReplicationProfiles(ctx context.Context) ApiSearchReplicationProfilesRequest {
 	return ApiSearchReplicationProfilesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -913,7 +1272,7 @@ func (a *ReplicationApiService) SearchReplicationProfiles(ctx context.Context) A
 
 // Execute executes the request
 //  @return SearchReplicationProfilesResponse
-func (a *ReplicationApiService) SearchReplicationProfilesExecute(r ApiSearchReplicationProfilesRequest) (*SearchReplicationProfilesResponse, *http.Response, error) {
+func (a *ReplicationAPIService) SearchReplicationProfilesExecute(r ApiSearchReplicationProfilesRequest) (*SearchReplicationProfilesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -921,7 +1280,7 @@ func (a *ReplicationApiService) SearchReplicationProfilesExecute(r ApiSearchRepl
 		localVarReturnValue  *SearchReplicationProfilesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationApiService.SearchReplicationProfiles")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.SearchReplicationProfiles")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -933,13 +1292,16 @@ func (a *ReplicationApiService) SearchReplicationProfilesExecute(r ApiSearchRepl
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -960,6 +1322,135 @@ func (a *ReplicationApiService) SearchReplicationProfilesExecute(r ApiSearchRepl
 	}
 	// body params
 	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateReplicationProfileRequest struct {
+	ctx context.Context
+	ApiService *ReplicationAPIService
+	replicationProfileId string
+	updateReplicationProfileParameters *UpdateReplicationProfileParameters
+}
+
+func (r ApiUpdateReplicationProfileRequest) UpdateReplicationProfileParameters(updateReplicationProfileParameters UpdateReplicationProfileParameters) ApiUpdateReplicationProfileRequest {
+	r.updateReplicationProfileParameters = &updateReplicationProfileParameters
+	return r
+}
+
+func (r ApiUpdateReplicationProfileRequest) Execute() (*ReplicationProfileUpdateJobResponse, *http.Response, error) {
+	return r.ApiService.UpdateReplicationProfileExecute(r)
+}
+
+/*
+UpdateReplicationProfile Update a ReplicationProfile.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param replicationProfileId The ID of the ReplicationProfile.
+ @return ApiUpdateReplicationProfileRequest
+*/
+func (a *ReplicationAPIService) UpdateReplicationProfile(ctx context.Context, replicationProfileId string) ApiUpdateReplicationProfileRequest {
+	return ApiUpdateReplicationProfileRequest{
+		ApiService: a,
+		ctx: ctx,
+		replicationProfileId: replicationProfileId,
+	}
+}
+
+// Execute executes the request
+//  @return ReplicationProfileUpdateJobResponse
+func (a *ReplicationAPIService) UpdateReplicationProfileExecute(r ApiUpdateReplicationProfileRequest) (*ReplicationProfileUpdateJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ReplicationProfileUpdateJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationAPIService.UpdateReplicationProfile")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/replication-profiles/{replicationProfileId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"replicationProfileId"+"}", url.PathEscape(parameterValueToString(r.replicationProfileId, "replicationProfileId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.replicationProfileId) < 1 {
+		return localVarReturnValue, nil, reportError("replicationProfileId must have at least 1 elements")
+	}
+	if r.updateReplicationProfileParameters == nil {
+		return localVarReturnValue, nil, reportError("updateReplicationProfileParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateReplicationProfileParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

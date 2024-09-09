@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// GroupsApiService GroupsApi service
-type GroupsApiService service
+// GroupsAPIService GroupsAPI service
+type GroupsAPIService service
 
 type ApiGetDatasetGroupByIdRequest struct {
 	ctx context.Context
-	ApiService *GroupsApiService
+	ApiService *GroupsAPIService
 	groupId string
 }
 
@@ -41,7 +41,7 @@ GetDatasetGroupById Get a dataset group by ID or Name.
  @param groupId The ID of the dataset group.
  @return ApiGetDatasetGroupByIdRequest
 */
-func (a *GroupsApiService) GetDatasetGroupById(ctx context.Context, groupId string) ApiGetDatasetGroupByIdRequest {
+func (a *GroupsAPIService) GetDatasetGroupById(ctx context.Context, groupId string) ApiGetDatasetGroupByIdRequest {
 	return ApiGetDatasetGroupByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -51,7 +51,7 @@ func (a *GroupsApiService) GetDatasetGroupById(ctx context.Context, groupId stri
 
 // Execute executes the request
 //  @return DatasetGroup
-func (a *GroupsApiService) GetDatasetGroupByIdExecute(r ApiGetDatasetGroupByIdRequest) (*DatasetGroup, *http.Response, error) {
+func (a *GroupsAPIService) GetDatasetGroupByIdExecute(r ApiGetDatasetGroupByIdRequest) (*DatasetGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -59,7 +59,7 @@ func (a *GroupsApiService) GetDatasetGroupByIdExecute(r ApiGetDatasetGroupByIdRe
 		localVarReturnValue  *DatasetGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsApiService.GetDatasetGroupById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsAPIService.GetDatasetGroupById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -144,7 +144,7 @@ func (a *GroupsApiService) GetDatasetGroupByIdExecute(r ApiGetDatasetGroupByIdRe
 
 type ApiGetDatasetGroupsRequest struct {
 	ctx context.Context
-	ApiService *GroupsApiService
+	ApiService *GroupsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -178,7 +178,7 @@ GetDatasetGroups List all dataset groups.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetDatasetGroupsRequest
 */
-func (a *GroupsApiService) GetDatasetGroups(ctx context.Context) ApiGetDatasetGroupsRequest {
+func (a *GroupsAPIService) GetDatasetGroups(ctx context.Context) ApiGetDatasetGroupsRequest {
 	return ApiGetDatasetGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,7 +187,7 @@ func (a *GroupsApiService) GetDatasetGroups(ctx context.Context) ApiGetDatasetGr
 
 // Execute executes the request
 //  @return ListGroupsResponse
-func (a *GroupsApiService) GetDatasetGroupsExecute(r ApiGetDatasetGroupsRequest) (*ListGroupsResponse, *http.Response, error) {
+func (a *GroupsAPIService) GetDatasetGroupsExecute(r ApiGetDatasetGroupsRequest) (*ListGroupsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -195,7 +195,7 @@ func (a *GroupsApiService) GetDatasetGroupsExecute(r ApiGetDatasetGroupsRequest)
 		localVarReturnValue  *ListGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsApiService.GetDatasetGroups")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsAPIService.GetDatasetGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -207,13 +207,16 @@ func (a *GroupsApiService) GetDatasetGroupsExecute(r ApiGetDatasetGroupsRequest)
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -285,7 +288,7 @@ func (a *GroupsApiService) GetDatasetGroupsExecute(r ApiGetDatasetGroupsRequest)
 
 type ApiSearchDatasetGroupsRequest struct {
 	ctx context.Context
-	ApiService *GroupsApiService
+	ApiService *GroupsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -326,7 +329,7 @@ SearchDatasetGroups Search for dataset groups.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchDatasetGroupsRequest
 */
-func (a *GroupsApiService) SearchDatasetGroups(ctx context.Context) ApiSearchDatasetGroupsRequest {
+func (a *GroupsAPIService) SearchDatasetGroups(ctx context.Context) ApiSearchDatasetGroupsRequest {
 	return ApiSearchDatasetGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -335,7 +338,7 @@ func (a *GroupsApiService) SearchDatasetGroups(ctx context.Context) ApiSearchDat
 
 // Execute executes the request
 //  @return SearchDatasetGroupResponse
-func (a *GroupsApiService) SearchDatasetGroupsExecute(r ApiSearchDatasetGroupsRequest) (*SearchDatasetGroupResponse, *http.Response, error) {
+func (a *GroupsAPIService) SearchDatasetGroupsExecute(r ApiSearchDatasetGroupsRequest) (*SearchDatasetGroupResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -343,7 +346,7 @@ func (a *GroupsApiService) SearchDatasetGroupsExecute(r ApiSearchDatasetGroupsRe
 		localVarReturnValue  *SearchDatasetGroupResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsApiService.SearchDatasetGroups")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsAPIService.SearchDatasetGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -355,13 +358,16 @@ func (a *GroupsApiService) SearchDatasetGroupsExecute(r ApiSearchDatasetGroupsRe
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

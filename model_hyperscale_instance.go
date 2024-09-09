@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -14,6 +14,8 @@ package delphix_dct_api
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the HyperscaleInstance type satisfies the MappedNullable interface at compile time
@@ -39,12 +41,18 @@ type HyperscaleInstance struct {
 	// Ignore validation of the name associated to the TLS certificate when connecting to the hyperscale instance over HTTPs. Setting this value must only be done if the TLS certificate of the hyperscale instance does not match the hostname, and the TLS configuration of the hyperscale instance cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this hyperscale instance. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
 	// File name of a truststore which can be used to validate the TLS certificate of the hyperscale instance. The truststore must be available at /etc/config/certs/<truststore_filename> 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
+	TruststoreFilename NullableString `json:"truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.]+$"`
 	// Password to read the truststore. 
 	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	// The status of this hyperscale instance.
 	Status NullableString `json:"status,omitempty"`
+	// The status of the connection to the hyperscale instance.
+	ConnectionStatus NullableString `json:"connection_status,omitempty"`
+	// If set, details about the status of the connection to the hyperscale instance.
+	ConnectionStatusDetails *string `json:"connection_status_details,omitempty"`
 }
+
+type _HyperscaleInstance HyperscaleInstance
 
 // NewHyperscaleInstance instantiates a new HyperscaleInstance object
 // This constructor will assign default values to properties that have it defined,
@@ -464,6 +472,80 @@ func (o *HyperscaleInstance) UnsetStatus() {
 	o.Status.Unset()
 }
 
+// GetConnectionStatus returns the ConnectionStatus field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *HyperscaleInstance) GetConnectionStatus() string {
+	if o == nil || IsNil(o.ConnectionStatus.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectionStatus.Get()
+}
+
+// GetConnectionStatusOk returns a tuple with the ConnectionStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *HyperscaleInstance) GetConnectionStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ConnectionStatus.Get(), o.ConnectionStatus.IsSet()
+}
+
+// HasConnectionStatus returns a boolean if a field has been set.
+func (o *HyperscaleInstance) HasConnectionStatus() bool {
+	if o != nil && o.ConnectionStatus.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionStatus gets a reference to the given NullableString and assigns it to the ConnectionStatus field.
+func (o *HyperscaleInstance) SetConnectionStatus(v string) {
+	o.ConnectionStatus.Set(&v)
+}
+// SetConnectionStatusNil sets the value for ConnectionStatus to be an explicit nil
+func (o *HyperscaleInstance) SetConnectionStatusNil() {
+	o.ConnectionStatus.Set(nil)
+}
+
+// UnsetConnectionStatus ensures that no value is present for ConnectionStatus, not even an explicit nil
+func (o *HyperscaleInstance) UnsetConnectionStatus() {
+	o.ConnectionStatus.Unset()
+}
+
+// GetConnectionStatusDetails returns the ConnectionStatusDetails field value if set, zero value otherwise.
+func (o *HyperscaleInstance) GetConnectionStatusDetails() string {
+	if o == nil || IsNil(o.ConnectionStatusDetails) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectionStatusDetails
+}
+
+// GetConnectionStatusDetailsOk returns a tuple with the ConnectionStatusDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleInstance) GetConnectionStatusDetailsOk() (*string, bool) {
+	if o == nil || IsNil(o.ConnectionStatusDetails) {
+		return nil, false
+	}
+	return o.ConnectionStatusDetails, true
+}
+
+// HasConnectionStatusDetails returns a boolean if a field has been set.
+func (o *HyperscaleInstance) HasConnectionStatusDetails() bool {
+	if o != nil && !IsNil(o.ConnectionStatusDetails) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionStatusDetails gets a reference to the given string and assigns it to the ConnectionStatusDetails field.
+func (o *HyperscaleInstance) SetConnectionStatusDetails(v string) {
+	o.ConnectionStatusDetails = &v
+}
+
 func (o HyperscaleInstance) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -474,7 +556,9 @@ func (o HyperscaleInstance) MarshalJSON() ([]byte, error) {
 
 func (o HyperscaleInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	toSerialize["name"] = o.Name
 	toSerialize["hostname"] = o.Hostname
 	if !IsNil(o.DataType) {
@@ -502,7 +586,52 @@ func (o HyperscaleInstance) ToMap() (map[string]interface{}, error) {
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
 	}
+	if o.ConnectionStatus.IsSet() {
+		toSerialize["connection_status"] = o.ConnectionStatus.Get()
+	}
+	if !IsNil(o.ConnectionStatusDetails) {
+		toSerialize["connection_status_details"] = o.ConnectionStatusDetails
+	}
 	return toSerialize, nil
+}
+
+func (o *HyperscaleInstance) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"hostname",
+		"api_key",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varHyperscaleInstance := _HyperscaleInstance{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varHyperscaleInstance)
+
+	if err != nil {
+		return err
+	}
+
+	*o = HyperscaleInstance(varHyperscaleInstance)
+
+	return err
 }
 
 type NullableHyperscaleInstance struct {

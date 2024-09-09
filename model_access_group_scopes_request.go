@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AccessGroupScopesRequest type satisfies the MappedNullable interface at compile time
@@ -22,6 +24,8 @@ var _ MappedNullable = &AccessGroupScopesRequest{}
 type AccessGroupScopesRequest struct {
 	Scopes []AccessGroupScope `json:"scopes"`
 }
+
+type _AccessGroupScopesRequest AccessGroupScopesRequest
 
 // NewAccessGroupScopesRequest instantiates a new AccessGroupScopesRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -77,6 +81,43 @@ func (o AccessGroupScopesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["scopes"] = o.Scopes
 	return toSerialize, nil
+}
+
+func (o *AccessGroupScopesRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"scopes",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAccessGroupScopesRequest := _AccessGroupScopesRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAccessGroupScopesRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AccessGroupScopesRequest(varAccessGroupScopesRequest)
+
+	return err
 }
 
 type NullableAccessGroupScopesRequest struct {

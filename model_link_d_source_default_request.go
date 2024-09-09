@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the LinkDSourceDefaultRequest type satisfies the MappedNullable interface at compile time
@@ -23,6 +25,8 @@ type LinkDSourceDefaultRequest struct {
 	// The ID of the source to be linked.
 	SourceId string `json:"source_id"`
 }
+
+type _LinkDSourceDefaultRequest LinkDSourceDefaultRequest
 
 // NewLinkDSourceDefaultRequest instantiates a new LinkDSourceDefaultRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -78,6 +82,43 @@ func (o LinkDSourceDefaultRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_id"] = o.SourceId
 	return toSerialize, nil
+}
+
+func (o *LinkDSourceDefaultRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varLinkDSourceDefaultRequest := _LinkDSourceDefaultRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varLinkDSourceDefaultRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = LinkDSourceDefaultRequest(varLinkDSourceDefaultRequest)
+
+	return err
 }
 
 type NullableLinkDSourceDefaultRequest struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -63,6 +63,8 @@ type CreateMaskingJobRequest struct {
 	// The degree of parallelism (DOP) per Oracle job to recreate the index in the post-load process (Hyperscale Job only).
 	ParallelismDegree *int32 `json:"parallelism_degree,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// Whether the account creating this Masking job must be configured as owner of it (Hyperscale Job only).
+	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
 
 // NewCreateMaskingJobRequest instantiates a new CreateMaskingJobRequest object
@@ -71,6 +73,8 @@ type CreateMaskingJobRequest struct {
 // will change when the set of required properties is changed
 func NewCreateMaskingJobRequest() *CreateMaskingJobRequest {
 	this := CreateMaskingJobRequest{}
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
@@ -79,6 +83,8 @@ func NewCreateMaskingJobRequest() *CreateMaskingJobRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewCreateMaskingJobRequestWithDefaults() *CreateMaskingJobRequest {
 	this := CreateMaskingJobRequest{}
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
@@ -786,6 +792,38 @@ func (o *CreateMaskingJobRequest) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field value if set, zero value otherwise.
+func (o *CreateMaskingJobRequest) GetMakeCurrentAccountOwner() bool {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		var ret bool
+		return ret
+	}
+	return *o.MakeCurrentAccountOwner
+}
+
+// GetMakeCurrentAccountOwnerOk returns a tuple with the MakeCurrentAccountOwner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateMaskingJobRequest) GetMakeCurrentAccountOwnerOk() (*bool, bool) {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		return nil, false
+	}
+	return o.MakeCurrentAccountOwner, true
+}
+
+// HasMakeCurrentAccountOwner returns a boolean if a field has been set.
+func (o *CreateMaskingJobRequest) HasMakeCurrentAccountOwner() bool {
+	if o != nil && !IsNil(o.MakeCurrentAccountOwner) {
+		return true
+	}
+
+	return false
+}
+
+// SetMakeCurrentAccountOwner gets a reference to the given bool and assigns it to the MakeCurrentAccountOwner field.
+func (o *CreateMaskingJobRequest) SetMakeCurrentAccountOwner(v bool) {
+	o.MakeCurrentAccountOwner = &v
+}
+
 func (o CreateMaskingJobRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -861,6 +899,9 @@ func (o CreateMaskingJobRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.MakeCurrentAccountOwner) {
+		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
 	}
 	return toSerialize, nil
 }

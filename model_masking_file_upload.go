@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the MaskingFileUpload type satisfies the MappedNullable interface at compile time
@@ -20,12 +21,28 @@ var _ MappedNullable = &MaskingFileUpload{}
 
 // MaskingFileUpload An uploaded file.
 type MaskingFileUpload struct {
+	// ID of file.
+	Id *string `json:"id,omitempty"`
+	// A description of this file.
+	Description *string `json:"description,omitempty"`
 	// Name of this file.
 	Filename *string `json:"filename,omitempty"`
-	// An reference to this file.
-	FileReferenceId *string `json:"file_reference_id,omitempty"`
+	// Checksum of this file.
+	FileChecksum *string `json:"file_checksum,omitempty"`
 	// Size of this file in bytes.
 	FileSize *int64 `json:"file_size,omitempty"`
+	// Date that this file was created.
+	CreatedDate *time.Time `json:"created_date,omitempty"`
+	// A reference to this file.
+	FileReferenceId *string `json:"file_reference_id,omitempty"`
+	// file uuid of the corresponding file on the source masking engine.
+	EngineFileUuid *string `json:"engine_file_uuid,omitempty"`
+	// The name of the origin engine that this file belongs to.
+	EngineName *string `json:"engine_name,omitempty"`
+	// The id of the origin engine that this file belongs to.
+	EngineId *string `json:"engine_id,omitempty"`
+	// Tags of this file.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewMaskingFileUpload instantiates a new MaskingFileUpload object
@@ -43,6 +60,70 @@ func NewMaskingFileUpload() *MaskingFileUpload {
 func NewMaskingFileUploadWithDefaults() *MaskingFileUpload {
 	this := MaskingFileUpload{}
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *MaskingFileUpload) SetId(v string) {
+	o.Id = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *MaskingFileUpload) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetFilename returns the Filename field value if set, zero value otherwise.
@@ -77,36 +158,36 @@ func (o *MaskingFileUpload) SetFilename(v string) {
 	o.Filename = &v
 }
 
-// GetFileReferenceId returns the FileReferenceId field value if set, zero value otherwise.
-func (o *MaskingFileUpload) GetFileReferenceId() string {
-	if o == nil || IsNil(o.FileReferenceId) {
+// GetFileChecksum returns the FileChecksum field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetFileChecksum() string {
+	if o == nil || IsNil(o.FileChecksum) {
 		var ret string
 		return ret
 	}
-	return *o.FileReferenceId
+	return *o.FileChecksum
 }
 
-// GetFileReferenceIdOk returns a tuple with the FileReferenceId field value if set, nil otherwise
+// GetFileChecksumOk returns a tuple with the FileChecksum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MaskingFileUpload) GetFileReferenceIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FileReferenceId) {
+func (o *MaskingFileUpload) GetFileChecksumOk() (*string, bool) {
+	if o == nil || IsNil(o.FileChecksum) {
 		return nil, false
 	}
-	return o.FileReferenceId, true
+	return o.FileChecksum, true
 }
 
-// HasFileReferenceId returns a boolean if a field has been set.
-func (o *MaskingFileUpload) HasFileReferenceId() bool {
-	if o != nil && !IsNil(o.FileReferenceId) {
+// HasFileChecksum returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasFileChecksum() bool {
+	if o != nil && !IsNil(o.FileChecksum) {
 		return true
 	}
 
 	return false
 }
 
-// SetFileReferenceId gets a reference to the given string and assigns it to the FileReferenceId field.
-func (o *MaskingFileUpload) SetFileReferenceId(v string) {
-	o.FileReferenceId = &v
+// SetFileChecksum gets a reference to the given string and assigns it to the FileChecksum field.
+func (o *MaskingFileUpload) SetFileChecksum(v string) {
+	o.FileChecksum = &v
 }
 
 // GetFileSize returns the FileSize field value if set, zero value otherwise.
@@ -141,6 +222,198 @@ func (o *MaskingFileUpload) SetFileSize(v int64) {
 	o.FileSize = &v
 }
 
+// GetCreatedDate returns the CreatedDate field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetCreatedDate() time.Time {
+	if o == nil || IsNil(o.CreatedDate) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreatedDate
+}
+
+// GetCreatedDateOk returns a tuple with the CreatedDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetCreatedDateOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreatedDate) {
+		return nil, false
+	}
+	return o.CreatedDate, true
+}
+
+// HasCreatedDate returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasCreatedDate() bool {
+	if o != nil && !IsNil(o.CreatedDate) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedDate gets a reference to the given time.Time and assigns it to the CreatedDate field.
+func (o *MaskingFileUpload) SetCreatedDate(v time.Time) {
+	o.CreatedDate = &v
+}
+
+// GetFileReferenceId returns the FileReferenceId field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetFileReferenceId() string {
+	if o == nil || IsNil(o.FileReferenceId) {
+		var ret string
+		return ret
+	}
+	return *o.FileReferenceId
+}
+
+// GetFileReferenceIdOk returns a tuple with the FileReferenceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetFileReferenceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.FileReferenceId) {
+		return nil, false
+	}
+	return o.FileReferenceId, true
+}
+
+// HasFileReferenceId returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasFileReferenceId() bool {
+	if o != nil && !IsNil(o.FileReferenceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetFileReferenceId gets a reference to the given string and assigns it to the FileReferenceId field.
+func (o *MaskingFileUpload) SetFileReferenceId(v string) {
+	o.FileReferenceId = &v
+}
+
+// GetEngineFileUuid returns the EngineFileUuid field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetEngineFileUuid() string {
+	if o == nil || IsNil(o.EngineFileUuid) {
+		var ret string
+		return ret
+	}
+	return *o.EngineFileUuid
+}
+
+// GetEngineFileUuidOk returns a tuple with the EngineFileUuid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetEngineFileUuidOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineFileUuid) {
+		return nil, false
+	}
+	return o.EngineFileUuid, true
+}
+
+// HasEngineFileUuid returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasEngineFileUuid() bool {
+	if o != nil && !IsNil(o.EngineFileUuid) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineFileUuid gets a reference to the given string and assigns it to the EngineFileUuid field.
+func (o *MaskingFileUpload) SetEngineFileUuid(v string) {
+	o.EngineFileUuid = &v
+}
+
+// GetEngineName returns the EngineName field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName) {
+		var ret string
+		return ret
+	}
+	return *o.EngineName
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineName) {
+		return nil, false
+	}
+	return o.EngineName, true
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasEngineName() bool {
+	if o != nil && !IsNil(o.EngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given string and assigns it to the EngineName field.
+func (o *MaskingFileUpload) SetEngineName(v string) {
+	o.EngineName = &v
+}
+
+// GetEngineId returns the EngineId field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetEngineId() string {
+	if o == nil || IsNil(o.EngineId) {
+		var ret string
+		return ret
+	}
+	return *o.EngineId
+}
+
+// GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetEngineIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineId) {
+		return nil, false
+	}
+	return o.EngineId, true
+}
+
+// HasEngineId returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasEngineId() bool {
+	if o != nil && !IsNil(o.EngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
+func (o *MaskingFileUpload) SetEngineId(v string) {
+	o.EngineId = &v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *MaskingFileUpload) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingFileUpload) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *MaskingFileUpload) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *MaskingFileUpload) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o MaskingFileUpload) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -151,14 +424,38 @@ func (o MaskingFileUpload) MarshalJSON() ([]byte, error) {
 
 func (o MaskingFileUpload) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
 	if !IsNil(o.Filename) {
 		toSerialize["filename"] = o.Filename
+	}
+	if !IsNil(o.FileChecksum) {
+		toSerialize["file_checksum"] = o.FileChecksum
+	}
+	if !IsNil(o.FileSize) {
+		toSerialize["file_size"] = o.FileSize
+	}
+	if !IsNil(o.CreatedDate) {
+		toSerialize["created_date"] = o.CreatedDate
 	}
 	if !IsNil(o.FileReferenceId) {
 		toSerialize["file_reference_id"] = o.FileReferenceId
 	}
-	if !IsNil(o.FileSize) {
-		toSerialize["file_size"] = o.FileSize
+	if !IsNil(o.EngineFileUuid) {
+		toSerialize["engine_file_uuid"] = o.EngineFileUuid
+	}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
+	}
+	if !IsNil(o.EngineId) {
+		toSerialize["engine_id"] = o.EngineId
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

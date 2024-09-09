@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -23,12 +23,12 @@ import (
 )
 
 
-// ReportingApiService ReportingApi service
-type ReportingApiService service
+// ReportingAPIService ReportingAPI service
+type ReportingAPIService service
 
 type ApiCreateReportingScheduleRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	reportingScheduleCreateParameters *ReportingScheduleCreateParameters
 }
 
@@ -48,7 +48,7 @@ CreateReportingSchedule Create a new report schedule.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateReportingScheduleRequest
 */
-func (a *ReportingApiService) CreateReportingSchedule(ctx context.Context) ApiCreateReportingScheduleRequest {
+func (a *ReportingAPIService) CreateReportingSchedule(ctx context.Context) ApiCreateReportingScheduleRequest {
 	return ApiCreateReportingScheduleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -57,7 +57,7 @@ func (a *ReportingApiService) CreateReportingSchedule(ctx context.Context) ApiCr
 
 // Execute executes the request
 //  @return ReportingSchedule
-func (a *ReportingApiService) CreateReportingScheduleExecute(r ApiCreateReportingScheduleRequest) (*ReportingSchedule, *http.Response, error) {
+func (a *ReportingAPIService) CreateReportingScheduleExecute(r ApiCreateReportingScheduleRequest) (*ReportingSchedule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -65,7 +65,7 @@ func (a *ReportingApiService) CreateReportingScheduleExecute(r ApiCreateReportin
 		localVarReturnValue  *ReportingSchedule
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.CreateReportingSchedule")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.CreateReportingSchedule")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -151,7 +151,7 @@ func (a *ReportingApiService) CreateReportingScheduleExecute(r ApiCreateReportin
 
 type ApiCreateReportingScheduleTagsRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	reportId int32
 	tagsRequest *TagsRequest
 }
@@ -173,7 +173,7 @@ CreateReportingScheduleTags Create tags for a report schedule.
  @param reportId The ID of the report schedule.
  @return ApiCreateReportingScheduleTagsRequest
 */
-func (a *ReportingApiService) CreateReportingScheduleTags(ctx context.Context, reportId int32) ApiCreateReportingScheduleTagsRequest {
+func (a *ReportingAPIService) CreateReportingScheduleTags(ctx context.Context, reportId int32) ApiCreateReportingScheduleTagsRequest {
 	return ApiCreateReportingScheduleTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -183,7 +183,7 @@ func (a *ReportingApiService) CreateReportingScheduleTags(ctx context.Context, r
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ReportingApiService) CreateReportingScheduleTagsExecute(r ApiCreateReportingScheduleTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ReportingAPIService) CreateReportingScheduleTagsExecute(r ApiCreateReportingScheduleTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -191,7 +191,7 @@ func (a *ReportingApiService) CreateReportingScheduleTagsExecute(r ApiCreateRepo
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.CreateReportingScheduleTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.CreateReportingScheduleTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -278,7 +278,7 @@ func (a *ReportingApiService) CreateReportingScheduleTagsExecute(r ApiCreateRepo
 
 type ApiDeleteReportingScheduleRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	reportId int32
 }
 
@@ -293,7 +293,7 @@ DeleteReportingSchedule Delete report schedule by ID.
  @param reportId The ID of the report schedule.
  @return ApiDeleteReportingScheduleRequest
 */
-func (a *ReportingApiService) DeleteReportingSchedule(ctx context.Context, reportId int32) ApiDeleteReportingScheduleRequest {
+func (a *ReportingAPIService) DeleteReportingSchedule(ctx context.Context, reportId int32) ApiDeleteReportingScheduleRequest {
 	return ApiDeleteReportingScheduleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -302,14 +302,14 @@ func (a *ReportingApiService) DeleteReportingSchedule(ctx context.Context, repor
 }
 
 // Execute executes the request
-func (a *ReportingApiService) DeleteReportingScheduleExecute(r ApiDeleteReportingScheduleRequest) (*http.Response, error) {
+func (a *ReportingAPIService) DeleteReportingScheduleExecute(r ApiDeleteReportingScheduleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.DeleteReportingSchedule")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.DeleteReportingSchedule")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -382,7 +382,7 @@ func (a *ReportingApiService) DeleteReportingScheduleExecute(r ApiDeleteReportin
 
 type ApiDeleteReportingScheduleTagRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	reportId int32
 	deleteTag *DeleteTag
 }
@@ -404,7 +404,7 @@ DeleteReportingScheduleTag Delete tags for a report schedule.
  @param reportId The ID of the report schedule.
  @return ApiDeleteReportingScheduleTagRequest
 */
-func (a *ReportingApiService) DeleteReportingScheduleTag(ctx context.Context, reportId int32) ApiDeleteReportingScheduleTagRequest {
+func (a *ReportingAPIService) DeleteReportingScheduleTag(ctx context.Context, reportId int32) ApiDeleteReportingScheduleTagRequest {
 	return ApiDeleteReportingScheduleTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -413,14 +413,14 @@ func (a *ReportingApiService) DeleteReportingScheduleTag(ctx context.Context, re
 }
 
 // Execute executes the request
-func (a *ReportingApiService) DeleteReportingScheduleTagExecute(r ApiDeleteReportingScheduleTagRequest) (*http.Response, error) {
+func (a *ReportingAPIService) DeleteReportingScheduleTagExecute(r ApiDeleteReportingScheduleTagRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.DeleteReportingScheduleTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.DeleteReportingScheduleTag")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -495,7 +495,7 @@ func (a *ReportingApiService) DeleteReportingScheduleTagExecute(r ApiDeleteRepor
 
 type ApiGetApiUsageReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	startDate *time.Time
 	endDate *time.Time
 	apiMetricKind *string
@@ -557,7 +557,7 @@ GetApiUsageReport Gets the report of API usage metrics over a given time period.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetApiUsageReportRequest
 */
-func (a *ReportingApiService) GetApiUsageReport(ctx context.Context) ApiGetApiUsageReportRequest {
+func (a *ReportingAPIService) GetApiUsageReport(ctx context.Context) ApiGetApiUsageReportRequest {
 	return ApiGetApiUsageReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -566,7 +566,7 @@ func (a *ReportingApiService) GetApiUsageReport(ctx context.Context) ApiGetApiUs
 
 // Execute executes the request
 //  @return ApiUsageReportResponse
-func (a *ReportingApiService) GetApiUsageReportExecute(r ApiGetApiUsageReportRequest) (*ApiUsageReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetApiUsageReportExecute(r ApiGetApiUsageReportRequest) (*ApiUsageReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -574,7 +574,7 @@ func (a *ReportingApiService) GetApiUsageReportExecute(r ApiGetApiUsageReportReq
 		localVarReturnValue  *ApiUsageReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetApiUsageReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetApiUsageReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -586,23 +586,23 @@ func (a *ReportingApiService) GetApiUsageReportExecute(r ApiGetApiUsageReportReq
 	localVarFormParams := url.Values{}
 
 	if r.startDate != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "start_date", r.startDate, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "start_date", r.startDate, "form", "")
 	}
 	if r.endDate != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "end_date", r.endDate, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "end_date", r.endDate, "form", "")
 	}
 	if r.apiMetricKind != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "api_metric_kind", r.apiMetricKind, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "api_metric_kind", r.apiMetricKind, "form", "")
 	}
 	if r.groupBy != nil {
 		t := *r.groupBy
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", s.Index(i), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", s.Index(i).Interface(), "form", "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", t, "form", "multi")
 		}
 	}
 	if r.clientName != nil {
@@ -610,10 +610,10 @@ func (a *ReportingApiService) GetApiUsageReportExecute(r ApiGetApiUsageReportReq
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "client_name", s.Index(i), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "client_name", s.Index(i).Interface(), "form", "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "client_name", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "client_name", t, "form", "multi")
 		}
 	}
 	if r.userAgent != nil {
@@ -621,10 +621,10 @@ func (a *ReportingApiService) GetApiUsageReportExecute(r ApiGetApiUsageReportReq
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "user_agent", s.Index(i), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "user_agent", s.Index(i).Interface(), "form", "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "user_agent", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "user_agent", t, "form", "multi")
 		}
 	}
 	if r.dctVersion != nil {
@@ -632,10 +632,10 @@ func (a *ReportingApiService) GetApiUsageReportExecute(r ApiGetApiUsageReportReq
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "dct_version", s.Index(i), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "dct_version", s.Index(i).Interface(), "form", "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "dct_version", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "dct_version", t, "form", "multi")
 		}
 	}
 	// to determine the Content-Type header
@@ -708,7 +708,7 @@ func (a *ReportingApiService) GetApiUsageReportExecute(r ApiGetApiUsageReportReq
 
 type ApiGetAuditLogsSummaryReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -742,7 +742,7 @@ GetAuditLogsSummaryReport Gets the audit log summary report.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetAuditLogsSummaryReportRequest
 */
-func (a *ReportingApiService) GetAuditLogsSummaryReport(ctx context.Context) ApiGetAuditLogsSummaryReportRequest {
+func (a *ReportingAPIService) GetAuditLogsSummaryReport(ctx context.Context) ApiGetAuditLogsSummaryReportRequest {
 	return ApiGetAuditLogsSummaryReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -751,7 +751,7 @@ func (a *ReportingApiService) GetAuditLogsSummaryReport(ctx context.Context) Api
 
 // Execute executes the request
 //  @return AuditLogsSummaryReportResponse
-func (a *ReportingApiService) GetAuditLogsSummaryReportExecute(r ApiGetAuditLogsSummaryReportRequest) (*AuditLogsSummaryReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetAuditLogsSummaryReportExecute(r ApiGetAuditLogsSummaryReportRequest) (*AuditLogsSummaryReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -759,7 +759,7 @@ func (a *ReportingApiService) GetAuditLogsSummaryReportExecute(r ApiGetAuditLogs
 		localVarReturnValue  *AuditLogsSummaryReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetAuditLogsSummaryReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetAuditLogsSummaryReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -771,13 +771,160 @@ func (a *ReportingApiService) GetAuditLogsSummaryReportExecute(r ApiGetAuditLogs
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetDataRiskReportRequest struct {
+	ctx context.Context
+	ApiService *ReportingAPIService
+	limit *int32
+	cursor *string
+	sort *string
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000.
+func (r ApiGetDataRiskReportRequest) Limit(limit int32) ApiGetDataRiskReportRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetDataRiskReportRequest) Cursor(cursor string) ApiGetDataRiskReportRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetDataRiskReportRequest) Sort(sort string) ApiGetDataRiskReportRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiGetDataRiskReportRequest) Execute() (*GetDataRiskReportResponse, *http.Response, error) {
+	return r.ApiService.GetDataRiskReportExecute(r)
+}
+
+/*
+GetDataRiskReport Get the masking data risk report.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetDataRiskReportRequest
+*/
+func (a *ReportingAPIService) GetDataRiskReport(ctx context.Context) ApiGetDataRiskReportRequest {
+	return ApiGetDataRiskReportRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetDataRiskReportResponse
+func (a *ReportingAPIService) GetDataRiskReportExecute(r ApiGetDataRiskReportRequest) (*GetDataRiskReportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetDataRiskReportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetDataRiskReport")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reporting/data-risk-report"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -849,7 +996,7 @@ func (a *ReportingApiService) GetAuditLogsSummaryReportExecute(r ApiGetAuditLogs
 
 type ApiGetDsourceConsumptionReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -883,7 +1030,7 @@ GetDsourceConsumptionReport Gets the consumption report for virtualization engin
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetDsourceConsumptionReportRequest
 */
-func (a *ReportingApiService) GetDsourceConsumptionReport(ctx context.Context) ApiGetDsourceConsumptionReportRequest {
+func (a *ReportingAPIService) GetDsourceConsumptionReport(ctx context.Context) ApiGetDsourceConsumptionReportRequest {
 	return ApiGetDsourceConsumptionReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -892,7 +1039,7 @@ func (a *ReportingApiService) GetDsourceConsumptionReport(ctx context.Context) A
 
 // Execute executes the request
 //  @return DSourceConsumptionReportResponse
-func (a *ReportingApiService) GetDsourceConsumptionReportExecute(r ApiGetDsourceConsumptionReportRequest) (*DSourceConsumptionReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetDsourceConsumptionReportExecute(r ApiGetDsourceConsumptionReportRequest) (*DSourceConsumptionReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -900,7 +1047,7 @@ func (a *ReportingApiService) GetDsourceConsumptionReportExecute(r ApiGetDsource
 		localVarReturnValue  *DSourceConsumptionReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetDsourceConsumptionReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetDsourceConsumptionReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -912,13 +1059,16 @@ func (a *ReportingApiService) GetDsourceConsumptionReportExecute(r ApiGetDsource
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -990,7 +1140,7 @@ func (a *ReportingApiService) GetDsourceConsumptionReportExecute(r ApiGetDsource
 
 type ApiGetDsourceUsageReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1024,7 +1174,7 @@ GetDsourceUsageReport Gets the usage report for virtualization engine dSources.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetDsourceUsageReportRequest
 */
-func (a *ReportingApiService) GetDsourceUsageReport(ctx context.Context) ApiGetDsourceUsageReportRequest {
+func (a *ReportingAPIService) GetDsourceUsageReport(ctx context.Context) ApiGetDsourceUsageReportRequest {
 	return ApiGetDsourceUsageReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1033,7 +1183,7 @@ func (a *ReportingApiService) GetDsourceUsageReport(ctx context.Context) ApiGetD
 
 // Execute executes the request
 //  @return DSourceUsageReportResponse
-func (a *ReportingApiService) GetDsourceUsageReportExecute(r ApiGetDsourceUsageReportRequest) (*DSourceUsageReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetDsourceUsageReportExecute(r ApiGetDsourceUsageReportRequest) (*DSourceUsageReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1041,7 +1191,7 @@ func (a *ReportingApiService) GetDsourceUsageReportExecute(r ApiGetDsourceUsageR
 		localVarReturnValue  *DSourceUsageReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetDsourceUsageReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetDsourceUsageReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1053,13 +1203,160 @@ func (a *ReportingApiService) GetDsourceUsageReportExecute(r ApiGetDsourceUsageR
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetEngineGlobalObjectStateReportRequest struct {
+	ctx context.Context
+	ApiService *ReportingAPIService
+	limit *int32
+	cursor *string
+	sort *string
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000.
+func (r ApiGetEngineGlobalObjectStateReportRequest) Limit(limit int32) ApiGetEngineGlobalObjectStateReportRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetEngineGlobalObjectStateReportRequest) Cursor(cursor string) ApiGetEngineGlobalObjectStateReportRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetEngineGlobalObjectStateReportRequest) Sort(sort string) ApiGetEngineGlobalObjectStateReportRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiGetEngineGlobalObjectStateReportRequest) Execute() (*GetEngineGlobalObjectStateReportResponse, *http.Response, error) {
+	return r.ApiService.GetEngineGlobalObjectStateReportExecute(r)
+}
+
+/*
+GetEngineGlobalObjectStateReport Get the masking engine global object state report.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetEngineGlobalObjectStateReportRequest
+*/
+func (a *ReportingAPIService) GetEngineGlobalObjectStateReport(ctx context.Context) ApiGetEngineGlobalObjectStateReportRequest {
+	return ApiGetEngineGlobalObjectStateReportRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetEngineGlobalObjectStateReportResponse
+func (a *ReportingAPIService) GetEngineGlobalObjectStateReportExecute(r ApiGetEngineGlobalObjectStateReportRequest) (*GetEngineGlobalObjectStateReportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetEngineGlobalObjectStateReportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetEngineGlobalObjectStateReport")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reporting/engine-global-object-state-report"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1131,7 +1428,7 @@ func (a *ReportingApiService) GetDsourceUsageReportExecute(r ApiGetDsourceUsageR
 
 type ApiGetEnginePerformanceAnalyticsReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1165,7 +1462,7 @@ GetEnginePerformanceAnalyticsReport Gets the performance analytics report for en
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetEnginePerformanceAnalyticsReportRequest
 */
-func (a *ReportingApiService) GetEnginePerformanceAnalyticsReport(ctx context.Context) ApiGetEnginePerformanceAnalyticsReportRequest {
+func (a *ReportingAPIService) GetEnginePerformanceAnalyticsReport(ctx context.Context) ApiGetEnginePerformanceAnalyticsReportRequest {
 	return ApiGetEnginePerformanceAnalyticsReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1174,7 +1471,7 @@ func (a *ReportingApiService) GetEnginePerformanceAnalyticsReport(ctx context.Co
 
 // Execute executes the request
 //  @return EnginePerformanceAnalyticReportResponse
-func (a *ReportingApiService) GetEnginePerformanceAnalyticsReportExecute(r ApiGetEnginePerformanceAnalyticsReportRequest) (*EnginePerformanceAnalyticReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetEnginePerformanceAnalyticsReportExecute(r ApiGetEnginePerformanceAnalyticsReportRequest) (*EnginePerformanceAnalyticReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1182,7 +1479,7 @@ func (a *ReportingApiService) GetEnginePerformanceAnalyticsReportExecute(r ApiGe
 		localVarReturnValue  *EnginePerformanceAnalyticReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetEnginePerformanceAnalyticsReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetEnginePerformanceAnalyticsReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1194,13 +1491,16 @@ func (a *ReportingApiService) GetEnginePerformanceAnalyticsReportExecute(r ApiGe
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1272,7 +1572,7 @@ func (a *ReportingApiService) GetEnginePerformanceAnalyticsReportExecute(r ApiGe
 
 type ApiGetMaskingExecutionMetricsReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1306,7 +1606,7 @@ GetMaskingExecutionMetricsReport Get the masking execution metrics report.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetMaskingExecutionMetricsReportRequest
 */
-func (a *ReportingApiService) GetMaskingExecutionMetricsReport(ctx context.Context) ApiGetMaskingExecutionMetricsReportRequest {
+func (a *ReportingAPIService) GetMaskingExecutionMetricsReport(ctx context.Context) ApiGetMaskingExecutionMetricsReportRequest {
 	return ApiGetMaskingExecutionMetricsReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1315,7 +1615,7 @@ func (a *ReportingApiService) GetMaskingExecutionMetricsReport(ctx context.Conte
 
 // Execute executes the request
 //  @return MaskingExecutionMetricsReportResponse
-func (a *ReportingApiService) GetMaskingExecutionMetricsReportExecute(r ApiGetMaskingExecutionMetricsReportRequest) (*MaskingExecutionMetricsReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetMaskingExecutionMetricsReportExecute(r ApiGetMaskingExecutionMetricsReportRequest) (*MaskingExecutionMetricsReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1323,7 +1623,7 @@ func (a *ReportingApiService) GetMaskingExecutionMetricsReportExecute(r ApiGetMa
 		localVarReturnValue  *MaskingExecutionMetricsReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetMaskingExecutionMetricsReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetMaskingExecutionMetricsReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1335,13 +1635,16 @@ func (a *ReportingApiService) GetMaskingExecutionMetricsReportExecute(r ApiGetMa
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1413,7 +1716,7 @@ func (a *ReportingApiService) GetMaskingExecutionMetricsReportExecute(r ApiGetMa
 
 type ApiGetProductInfoRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 }
 
 func (r ApiGetProductInfoRequest) Execute() (*ProductInfo, *http.Response, error) {
@@ -1426,7 +1729,7 @@ GetProductInfo Returns the DCT Product Information.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetProductInfoRequest
 */
-func (a *ReportingApiService) GetProductInfo(ctx context.Context) ApiGetProductInfoRequest {
+func (a *ReportingAPIService) GetProductInfo(ctx context.Context) ApiGetProductInfoRequest {
 	return ApiGetProductInfoRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1435,7 +1738,7 @@ func (a *ReportingApiService) GetProductInfo(ctx context.Context) ApiGetProductI
 
 // Execute executes the request
 //  @return ProductInfo
-func (a *ReportingApiService) GetProductInfoExecute(r ApiGetProductInfoRequest) (*ProductInfo, *http.Response, error) {
+func (a *ReportingAPIService) GetProductInfoExecute(r ApiGetProductInfoRequest) (*ProductInfo, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1443,7 +1746,7 @@ func (a *ReportingApiService) GetProductInfoExecute(r ApiGetProductInfoRequest) 
 		localVarReturnValue  *ProductInfo
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetProductInfo")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetProductInfo")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1524,7 +1827,7 @@ func (a *ReportingApiService) GetProductInfoExecute(r ApiGetProductInfoRequest) 
 
 type ApiGetReportingScheduleByIdRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	reportId int32
 }
 
@@ -1539,7 +1842,7 @@ GetReportingScheduleById Returns a report schedule by ID.
  @param reportId The ID of the report schedule.
  @return ApiGetReportingScheduleByIdRequest
 */
-func (a *ReportingApiService) GetReportingScheduleById(ctx context.Context, reportId int32) ApiGetReportingScheduleByIdRequest {
+func (a *ReportingAPIService) GetReportingScheduleById(ctx context.Context, reportId int32) ApiGetReportingScheduleByIdRequest {
 	return ApiGetReportingScheduleByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1549,7 +1852,7 @@ func (a *ReportingApiService) GetReportingScheduleById(ctx context.Context, repo
 
 // Execute executes the request
 //  @return ReportingSchedule
-func (a *ReportingApiService) GetReportingScheduleByIdExecute(r ApiGetReportingScheduleByIdRequest) (*ReportingSchedule, *http.Response, error) {
+func (a *ReportingAPIService) GetReportingScheduleByIdExecute(r ApiGetReportingScheduleByIdRequest) (*ReportingSchedule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1557,7 +1860,7 @@ func (a *ReportingApiService) GetReportingScheduleByIdExecute(r ApiGetReportingS
 		localVarReturnValue  *ReportingSchedule
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetReportingScheduleById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetReportingScheduleById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1639,7 +1942,7 @@ func (a *ReportingApiService) GetReportingScheduleByIdExecute(r ApiGetReportingS
 
 type ApiGetReportingScheduleTagsRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	reportId int32
 }
 
@@ -1654,7 +1957,7 @@ GetReportingScheduleTags Get tags for a report schedule.
  @param reportId The ID of the report schedule.
  @return ApiGetReportingScheduleTagsRequest
 */
-func (a *ReportingApiService) GetReportingScheduleTags(ctx context.Context, reportId int32) ApiGetReportingScheduleTagsRequest {
+func (a *ReportingAPIService) GetReportingScheduleTags(ctx context.Context, reportId int32) ApiGetReportingScheduleTagsRequest {
 	return ApiGetReportingScheduleTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1664,7 +1967,7 @@ func (a *ReportingApiService) GetReportingScheduleTags(ctx context.Context, repo
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ReportingApiService) GetReportingScheduleTagsExecute(r ApiGetReportingScheduleTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetReportingScheduleTagsExecute(r ApiGetReportingScheduleTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1672,7 +1975,7 @@ func (a *ReportingApiService) GetReportingScheduleTagsExecute(r ApiGetReportingS
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetReportingScheduleTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetReportingScheduleTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1754,7 +2057,7 @@ func (a *ReportingApiService) GetReportingScheduleTagsExecute(r ApiGetReportingS
 
 type ApiGetReportingSchedulesRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1788,7 +2091,7 @@ GetReportingSchedules List all report schedules.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetReportingSchedulesRequest
 */
-func (a *ReportingApiService) GetReportingSchedules(ctx context.Context) ApiGetReportingSchedulesRequest {
+func (a *ReportingAPIService) GetReportingSchedules(ctx context.Context) ApiGetReportingSchedulesRequest {
 	return ApiGetReportingSchedulesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1797,7 +2100,7 @@ func (a *ReportingApiService) GetReportingSchedules(ctx context.Context) ApiGetR
 
 // Execute executes the request
 //  @return ListReportingScheduleResponse
-func (a *ReportingApiService) GetReportingSchedulesExecute(r ApiGetReportingSchedulesRequest) (*ListReportingScheduleResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetReportingSchedulesExecute(r ApiGetReportingSchedulesRequest) (*ListReportingScheduleResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1805,7 +2108,7 @@ func (a *ReportingApiService) GetReportingSchedulesExecute(r ApiGetReportingSche
 		localVarReturnValue  *ListReportingScheduleResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetReportingSchedules")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetReportingSchedules")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1817,13 +2120,16 @@ func (a *ReportingApiService) GetReportingSchedulesExecute(r ApiGetReportingSche
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1895,7 +2201,7 @@ func (a *ReportingApiService) GetReportingSchedulesExecute(r ApiGetReportingSche
 
 type ApiGetVdbInventoryReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1929,7 +2235,7 @@ GetVdbInventoryReport Gets the inventory report for virtualization engine VDBs.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetVdbInventoryReportRequest
 */
-func (a *ReportingApiService) GetVdbInventoryReport(ctx context.Context) ApiGetVdbInventoryReportRequest {
+func (a *ReportingAPIService) GetVdbInventoryReport(ctx context.Context) ApiGetVdbInventoryReportRequest {
 	return ApiGetVdbInventoryReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1938,7 +2244,7 @@ func (a *ReportingApiService) GetVdbInventoryReport(ctx context.Context) ApiGetV
 
 // Execute executes the request
 //  @return VDBInventoryReportResponse
-func (a *ReportingApiService) GetVdbInventoryReportExecute(r ApiGetVdbInventoryReportRequest) (*VDBInventoryReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetVdbInventoryReportExecute(r ApiGetVdbInventoryReportRequest) (*VDBInventoryReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1946,7 +2252,7 @@ func (a *ReportingApiService) GetVdbInventoryReportExecute(r ApiGetVdbInventoryR
 		localVarReturnValue  *VDBInventoryReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetVdbInventoryReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetVdbInventoryReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1958,13 +2264,16 @@ func (a *ReportingApiService) GetVdbInventoryReportExecute(r ApiGetVdbInventoryR
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2036,7 +2345,7 @@ func (a *ReportingApiService) GetVdbInventoryReportExecute(r ApiGetVdbInventoryR
 
 type ApiGetVirtualizationStorageSummaryReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2070,7 +2379,7 @@ GetVirtualizationStorageSummaryReport Gets the storage summary report for virtua
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetVirtualizationStorageSummaryReportRequest
 */
-func (a *ReportingApiService) GetVirtualizationStorageSummaryReport(ctx context.Context) ApiGetVirtualizationStorageSummaryReportRequest {
+func (a *ReportingAPIService) GetVirtualizationStorageSummaryReport(ctx context.Context) ApiGetVirtualizationStorageSummaryReportRequest {
 	return ApiGetVirtualizationStorageSummaryReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2079,7 +2388,7 @@ func (a *ReportingApiService) GetVirtualizationStorageSummaryReport(ctx context.
 
 // Execute executes the request
 //  @return VirtualizationStorageSummaryReportResponse
-func (a *ReportingApiService) GetVirtualizationStorageSummaryReportExecute(r ApiGetVirtualizationStorageSummaryReportRequest) (*VirtualizationStorageSummaryReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) GetVirtualizationStorageSummaryReportExecute(r ApiGetVirtualizationStorageSummaryReportRequest) (*VirtualizationStorageSummaryReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2087,7 +2396,7 @@ func (a *ReportingApiService) GetVirtualizationStorageSummaryReportExecute(r Api
 		localVarReturnValue  *VirtualizationStorageSummaryReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.GetVirtualizationStorageSummaryReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.GetVirtualizationStorageSummaryReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2099,13 +2408,16 @@ func (a *ReportingApiService) GetVirtualizationStorageSummaryReportExecute(r Api
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2175,9 +2487,162 @@ func (a *ReportingApiService) GetVirtualizationStorageSummaryReportExecute(r Api
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiSearchDataRiskReportRequest struct {
+	ctx context.Context
+	ApiService *ReportingAPIService
+	limit *int32
+	cursor *string
+	sort *string
+	searchBody *SearchBody
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000.
+func (r ApiSearchDataRiskReportRequest) Limit(limit int32) ApiSearchDataRiskReportRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiSearchDataRiskReportRequest) Cursor(cursor string) ApiSearchDataRiskReportRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiSearchDataRiskReportRequest) Sort(sort string) ApiSearchDataRiskReportRequest {
+	r.sort = &sort
+	return r
+}
+
+// A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression. 
+func (r ApiSearchDataRiskReportRequest) SearchBody(searchBody SearchBody) ApiSearchDataRiskReportRequest {
+	r.searchBody = &searchBody
+	return r
+}
+
+func (r ApiSearchDataRiskReportRequest) Execute() (*SearchDataRiskReportResponse, *http.Response, error) {
+	return r.ApiService.SearchDataRiskReportExecute(r)
+}
+
+/*
+SearchDataRiskReport Search the masking data risk report.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSearchDataRiskReportRequest
+*/
+func (a *ReportingAPIService) SearchDataRiskReport(ctx context.Context) ApiSearchDataRiskReportRequest {
+	return ApiSearchDataRiskReportRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return SearchDataRiskReportResponse
+func (a *ReportingAPIService) SearchDataRiskReportExecute(r ApiSearchDataRiskReportRequest) (*SearchDataRiskReportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SearchDataRiskReportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchDataRiskReport")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reporting/data-risk-report/search"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiSearchDsourceConsumptionReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2218,7 +2683,7 @@ SearchDsourceConsumptionReport Search the consumption report for virtualization 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchDsourceConsumptionReportRequest
 */
-func (a *ReportingApiService) SearchDsourceConsumptionReport(ctx context.Context) ApiSearchDsourceConsumptionReportRequest {
+func (a *ReportingAPIService) SearchDsourceConsumptionReport(ctx context.Context) ApiSearchDsourceConsumptionReportRequest {
 	return ApiSearchDsourceConsumptionReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2227,7 +2692,7 @@ func (a *ReportingApiService) SearchDsourceConsumptionReport(ctx context.Context
 
 // Execute executes the request
 //  @return DSourceConsumptionReportResponse
-func (a *ReportingApiService) SearchDsourceConsumptionReportExecute(r ApiSearchDsourceConsumptionReportRequest) (*DSourceConsumptionReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchDsourceConsumptionReportExecute(r ApiSearchDsourceConsumptionReportRequest) (*DSourceConsumptionReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2235,7 +2700,7 @@ func (a *ReportingApiService) SearchDsourceConsumptionReportExecute(r ApiSearchD
 		localVarReturnValue  *DSourceConsumptionReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchDsourceConsumptionReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchDsourceConsumptionReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2247,13 +2712,16 @@ func (a *ReportingApiService) SearchDsourceConsumptionReportExecute(r ApiSearchD
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2327,7 +2795,7 @@ func (a *ReportingApiService) SearchDsourceConsumptionReportExecute(r ApiSearchD
 
 type ApiSearchDsourceUsageReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2368,7 +2836,7 @@ SearchDsourceUsageReport Search the usage report for virtualization engine dSour
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchDsourceUsageReportRequest
 */
-func (a *ReportingApiService) SearchDsourceUsageReport(ctx context.Context) ApiSearchDsourceUsageReportRequest {
+func (a *ReportingAPIService) SearchDsourceUsageReport(ctx context.Context) ApiSearchDsourceUsageReportRequest {
 	return ApiSearchDsourceUsageReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2377,7 +2845,7 @@ func (a *ReportingApiService) SearchDsourceUsageReport(ctx context.Context) ApiS
 
 // Execute executes the request
 //  @return DSourceUsageReportResponse
-func (a *ReportingApiService) SearchDsourceUsageReportExecute(r ApiSearchDsourceUsageReportRequest) (*DSourceUsageReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchDsourceUsageReportExecute(r ApiSearchDsourceUsageReportRequest) (*DSourceUsageReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2385,7 +2853,7 @@ func (a *ReportingApiService) SearchDsourceUsageReportExecute(r ApiSearchDsource
 		localVarReturnValue  *DSourceUsageReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchDsourceUsageReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchDsourceUsageReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2397,13 +2865,169 @@ func (a *ReportingApiService) SearchDsourceUsageReportExecute(r ApiSearchDsource
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSearchEngineGlobalObjectStateReportRequest struct {
+	ctx context.Context
+	ApiService *ReportingAPIService
+	limit *int32
+	cursor *string
+	sort *string
+	searchBody *SearchBody
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 10000.
+func (r ApiSearchEngineGlobalObjectStateReportRequest) Limit(limit int32) ApiSearchEngineGlobalObjectStateReportRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiSearchEngineGlobalObjectStateReportRequest) Cursor(cursor string) ApiSearchEngineGlobalObjectStateReportRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiSearchEngineGlobalObjectStateReportRequest) Sort(sort string) ApiSearchEngineGlobalObjectStateReportRequest {
+	r.sort = &sort
+	return r
+}
+
+// A request body containing a filter expression. This enables searching for items matching arbitrarily complex conditions. The list of attributes which can be used in filter expressions is available in the x-filterable vendor extension.  # Filter Expression Overview **Note: All keywords are case-insensitive**  ## Comparison Operators | Operator | Description | Example | | --- | --- | --- | | CONTAINS | Substring or membership testing for string and list attributes respectively. | field3 CONTAINS &#39;foobar&#39;, field4 CONTAINS TRUE  | | IN | Tests if field is a member of a list literal. List can contain a maximum of 100 values | field2 IN [&#39;Goku&#39;, &#39;Vegeta&#39;] | | GE | Tests if a field is greater than or equal to a literal value | field1 GE 1.2e-2 | | GT | Tests if a field is greater than a literal value | field1 GT 1.2e-2 | | LE | Tests if a field is less than or equal to a literal value | field1 LE 9000 | | LT | Tests if a field is less than a literal value | field1 LT 9.02 | | NE | Tests if a field is not equal to a literal value | field1 NE 42 | | EQ | Tests if a field is equal to a literal value | field1 EQ 42 |  ## Search Operator The SEARCH operator filters for items which have any filterable attribute that contains the input string as a substring, comparison is done case-insensitively. This is not restricted to attributes with string values. Specifically &#x60;SEARCH &#39;12&#39;&#x60; would match an item with an attribute with an integer value of &#x60;123&#x60;.  ## Logical Operators Ordered by precedence. | Operator | Description | Example | | --- | --- | --- | | NOT | Logical NOT (Right associative) | NOT field1 LE 9000 | | AND | Logical AND (Left Associative) | field1 GT 9000 AND field2 EQ &#39;Goku&#39; | | OR | Logical OR (Left Associative) | field1 GT 9000 OR field2 EQ &#39;Goku&#39; |  ## Grouping Parenthesis &#x60;()&#x60; can be used to override operator precedence.  For example: NOT (field1 LT 1234 AND field2 CONTAINS &#39;foo&#39;)  ## Literal Values | Literal      | Description | Examples | | --- | --- | --- | | Nil | Represents the absence of a value | nil, Nil, nIl, NIL | | Boolean | true/false boolean | true, false, True, False, TRUE, FALSE | | Number | Signed integer and floating point numbers. Also supports scientific notation. | 0, 1, -1, 1.2, 0.35, 1.2e-2, -1.2e+2 | | String | Single or double quoted | \&quot;foo\&quot;, \&quot;bar\&quot;, \&quot;foo bar\&quot;, &#39;foo&#39;, &#39;bar&#39;, &#39;foo bar&#39; | | Datetime | Formatted according to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) | 2018-04-27T18:39:26.397237+00:00 | | List | Comma-separated literals wrapped in square brackets | [0], [0, 1], [&#39;foo&#39;, \&quot;bar\&quot;] |  ## Limitations - A maximum of 8 unique identifiers may be used inside a filter expression. 
+func (r ApiSearchEngineGlobalObjectStateReportRequest) SearchBody(searchBody SearchBody) ApiSearchEngineGlobalObjectStateReportRequest {
+	r.searchBody = &searchBody
+	return r
+}
+
+func (r ApiSearchEngineGlobalObjectStateReportRequest) Execute() (*SearchEngineGlobalObjectStateReportResponse, *http.Response, error) {
+	return r.ApiService.SearchEngineGlobalObjectStateReportExecute(r)
+}
+
+/*
+SearchEngineGlobalObjectStateReport Search the masking engine global object state report.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSearchEngineGlobalObjectStateReportRequest
+*/
+func (a *ReportingAPIService) SearchEngineGlobalObjectStateReport(ctx context.Context) ApiSearchEngineGlobalObjectStateReportRequest {
+	return ApiSearchEngineGlobalObjectStateReportRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return SearchEngineGlobalObjectStateReportResponse
+func (a *ReportingAPIService) SearchEngineGlobalObjectStateReportExecute(r ApiSearchEngineGlobalObjectStateReportRequest) (*SearchEngineGlobalObjectStateReportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SearchEngineGlobalObjectStateReportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchEngineGlobalObjectStateReport")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reporting/engine-global-object-state-report/search"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2477,7 +3101,7 @@ func (a *ReportingApiService) SearchDsourceUsageReportExecute(r ApiSearchDsource
 
 type ApiSearchEnginePerformanceAnalyticTrendsRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2518,7 +3142,7 @@ SearchEnginePerformanceAnalyticTrends Search the performance analytic trend data
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchEnginePerformanceAnalyticTrendsRequest
 */
-func (a *ReportingApiService) SearchEnginePerformanceAnalyticTrends(ctx context.Context) ApiSearchEnginePerformanceAnalyticTrendsRequest {
+func (a *ReportingAPIService) SearchEnginePerformanceAnalyticTrends(ctx context.Context) ApiSearchEnginePerformanceAnalyticTrendsRequest {
 	return ApiSearchEnginePerformanceAnalyticTrendsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2527,7 +3151,7 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticTrends(ctx context.
 
 // Execute executes the request
 //  @return EnginePerformanceAnalyticTrendResponse
-func (a *ReportingApiService) SearchEnginePerformanceAnalyticTrendsExecute(r ApiSearchEnginePerformanceAnalyticTrendsRequest) (*EnginePerformanceAnalyticTrendResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchEnginePerformanceAnalyticTrendsExecute(r ApiSearchEnginePerformanceAnalyticTrendsRequest) (*EnginePerformanceAnalyticTrendResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2535,7 +3159,7 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticTrendsExecute(r Api
 		localVarReturnValue  *EnginePerformanceAnalyticTrendResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchEnginePerformanceAnalyticTrends")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchEnginePerformanceAnalyticTrends")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2547,13 +3171,16 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticTrendsExecute(r Api
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2627,7 +3254,7 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticTrendsExecute(r Api
 
 type ApiSearchEnginePerformanceAnalyticsReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2668,7 +3295,7 @@ SearchEnginePerformanceAnalyticsReport Search the performance analytic report fo
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchEnginePerformanceAnalyticsReportRequest
 */
-func (a *ReportingApiService) SearchEnginePerformanceAnalyticsReport(ctx context.Context) ApiSearchEnginePerformanceAnalyticsReportRequest {
+func (a *ReportingAPIService) SearchEnginePerformanceAnalyticsReport(ctx context.Context) ApiSearchEnginePerformanceAnalyticsReportRequest {
 	return ApiSearchEnginePerformanceAnalyticsReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2677,7 +3304,7 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticsReport(ctx context
 
 // Execute executes the request
 //  @return EnginePerformanceAnalyticReportResponse
-func (a *ReportingApiService) SearchEnginePerformanceAnalyticsReportExecute(r ApiSearchEnginePerformanceAnalyticsReportRequest) (*EnginePerformanceAnalyticReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchEnginePerformanceAnalyticsReportExecute(r ApiSearchEnginePerformanceAnalyticsReportRequest) (*EnginePerformanceAnalyticReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2685,7 +3312,7 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticsReportExecute(r Ap
 		localVarReturnValue  *EnginePerformanceAnalyticReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchEnginePerformanceAnalyticsReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchEnginePerformanceAnalyticsReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2697,13 +3324,16 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticsReportExecute(r Ap
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2777,7 +3407,7 @@ func (a *ReportingApiService) SearchEnginePerformanceAnalyticsReportExecute(r Ap
 
 type ApiSearchMaskingExecutionMetricsReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2818,7 +3448,7 @@ SearchMaskingExecutionMetricsReport Search the Masking execution metrics report.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchMaskingExecutionMetricsReportRequest
 */
-func (a *ReportingApiService) SearchMaskingExecutionMetricsReport(ctx context.Context) ApiSearchMaskingExecutionMetricsReportRequest {
+func (a *ReportingAPIService) SearchMaskingExecutionMetricsReport(ctx context.Context) ApiSearchMaskingExecutionMetricsReportRequest {
 	return ApiSearchMaskingExecutionMetricsReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2827,7 +3457,7 @@ func (a *ReportingApiService) SearchMaskingExecutionMetricsReport(ctx context.Co
 
 // Execute executes the request
 //  @return MaskingExecutionMetricsReportResponse
-func (a *ReportingApiService) SearchMaskingExecutionMetricsReportExecute(r ApiSearchMaskingExecutionMetricsReportRequest) (*MaskingExecutionMetricsReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchMaskingExecutionMetricsReportExecute(r ApiSearchMaskingExecutionMetricsReportRequest) (*MaskingExecutionMetricsReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2835,7 +3465,7 @@ func (a *ReportingApiService) SearchMaskingExecutionMetricsReportExecute(r ApiSe
 		localVarReturnValue  *MaskingExecutionMetricsReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchMaskingExecutionMetricsReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchMaskingExecutionMetricsReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2847,13 +3477,16 @@ func (a *ReportingApiService) SearchMaskingExecutionMetricsReportExecute(r ApiSe
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2927,7 +3560,7 @@ func (a *ReportingApiService) SearchMaskingExecutionMetricsReportExecute(r ApiSe
 
 type ApiSearchReportingSchedulesRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2968,7 +3601,7 @@ SearchReportingSchedules Search for report schedules.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchReportingSchedulesRequest
 */
-func (a *ReportingApiService) SearchReportingSchedules(ctx context.Context) ApiSearchReportingSchedulesRequest {
+func (a *ReportingAPIService) SearchReportingSchedules(ctx context.Context) ApiSearchReportingSchedulesRequest {
 	return ApiSearchReportingSchedulesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2977,7 +3610,7 @@ func (a *ReportingApiService) SearchReportingSchedules(ctx context.Context) ApiS
 
 // Execute executes the request
 //  @return SearchReportingScheduleResponse
-func (a *ReportingApiService) SearchReportingSchedulesExecute(r ApiSearchReportingSchedulesRequest) (*SearchReportingScheduleResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchReportingSchedulesExecute(r ApiSearchReportingSchedulesRequest) (*SearchReportingScheduleResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2985,7 +3618,7 @@ func (a *ReportingApiService) SearchReportingSchedulesExecute(r ApiSearchReporti
 		localVarReturnValue  *SearchReportingScheduleResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchReportingSchedules")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchReportingSchedules")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2997,13 +3630,16 @@ func (a *ReportingApiService) SearchReportingSchedulesExecute(r ApiSearchReporti
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3077,7 +3713,7 @@ func (a *ReportingApiService) SearchReportingSchedulesExecute(r ApiSearchReporti
 
 type ApiSearchStorageSavingsSummaryReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -3118,7 +3754,7 @@ SearchStorageSavingsSummaryReport Search the saving storage summary report for v
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchStorageSavingsSummaryReportRequest
 */
-func (a *ReportingApiService) SearchStorageSavingsSummaryReport(ctx context.Context) ApiSearchStorageSavingsSummaryReportRequest {
+func (a *ReportingAPIService) SearchStorageSavingsSummaryReport(ctx context.Context) ApiSearchStorageSavingsSummaryReportRequest {
 	return ApiSearchStorageSavingsSummaryReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3127,7 +3763,7 @@ func (a *ReportingApiService) SearchStorageSavingsSummaryReport(ctx context.Cont
 
 // Execute executes the request
 //  @return StorageSavingsSummaryReportResponse
-func (a *ReportingApiService) SearchStorageSavingsSummaryReportExecute(r ApiSearchStorageSavingsSummaryReportRequest) (*StorageSavingsSummaryReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchStorageSavingsSummaryReportExecute(r ApiSearchStorageSavingsSummaryReportRequest) (*StorageSavingsSummaryReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3135,7 +3771,7 @@ func (a *ReportingApiService) SearchStorageSavingsSummaryReportExecute(r ApiSear
 		localVarReturnValue  *StorageSavingsSummaryReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchStorageSavingsSummaryReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchStorageSavingsSummaryReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3147,13 +3783,16 @@ func (a *ReportingApiService) SearchStorageSavingsSummaryReportExecute(r ApiSear
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3227,7 +3866,7 @@ func (a *ReportingApiService) SearchStorageSavingsSummaryReportExecute(r ApiSear
 
 type ApiSearchVdbInventoryReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -3268,7 +3907,7 @@ SearchVdbInventoryReport Search the inventory report for virtualization engine V
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchVdbInventoryReportRequest
 */
-func (a *ReportingApiService) SearchVdbInventoryReport(ctx context.Context) ApiSearchVdbInventoryReportRequest {
+func (a *ReportingAPIService) SearchVdbInventoryReport(ctx context.Context) ApiSearchVdbInventoryReportRequest {
 	return ApiSearchVdbInventoryReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3277,7 +3916,7 @@ func (a *ReportingApiService) SearchVdbInventoryReport(ctx context.Context) ApiS
 
 // Execute executes the request
 //  @return VDBInventoryReportResponse
-func (a *ReportingApiService) SearchVdbInventoryReportExecute(r ApiSearchVdbInventoryReportRequest) (*VDBInventoryReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchVdbInventoryReportExecute(r ApiSearchVdbInventoryReportRequest) (*VDBInventoryReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3285,7 +3924,7 @@ func (a *ReportingApiService) SearchVdbInventoryReportExecute(r ApiSearchVdbInve
 		localVarReturnValue  *VDBInventoryReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchVdbInventoryReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchVdbInventoryReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3297,13 +3936,16 @@ func (a *ReportingApiService) SearchVdbInventoryReportExecute(r ApiSearchVdbInve
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3377,7 +4019,7 @@ func (a *ReportingApiService) SearchVdbInventoryReportExecute(r ApiSearchVdbInve
 
 type ApiSearchVirtualizationStorageSummaryReportRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -3418,7 +4060,7 @@ SearchVirtualizationStorageSummaryReport Search the storage summary report for v
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchVirtualizationStorageSummaryReportRequest
 */
-func (a *ReportingApiService) SearchVirtualizationStorageSummaryReport(ctx context.Context) ApiSearchVirtualizationStorageSummaryReportRequest {
+func (a *ReportingAPIService) SearchVirtualizationStorageSummaryReport(ctx context.Context) ApiSearchVirtualizationStorageSummaryReportRequest {
 	return ApiSearchVirtualizationStorageSummaryReportRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3427,7 +4069,7 @@ func (a *ReportingApiService) SearchVirtualizationStorageSummaryReport(ctx conte
 
 // Execute executes the request
 //  @return VirtualizationStorageSummaryReportResponse
-func (a *ReportingApiService) SearchVirtualizationStorageSummaryReportExecute(r ApiSearchVirtualizationStorageSummaryReportRequest) (*VirtualizationStorageSummaryReportResponse, *http.Response, error) {
+func (a *ReportingAPIService) SearchVirtualizationStorageSummaryReportExecute(r ApiSearchVirtualizationStorageSummaryReportRequest) (*VirtualizationStorageSummaryReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3435,7 +4077,7 @@ func (a *ReportingApiService) SearchVirtualizationStorageSummaryReportExecute(r 
 		localVarReturnValue  *VirtualizationStorageSummaryReportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.SearchVirtualizationStorageSummaryReport")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.SearchVirtualizationStorageSummaryReport")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3447,13 +4089,16 @@ func (a *ReportingApiService) SearchVirtualizationStorageSummaryReportExecute(r 
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 10000
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3527,7 +4172,7 @@ func (a *ReportingApiService) SearchVirtualizationStorageSummaryReportExecute(r 
 
 type ApiUpdateReportingScheduleRequest struct {
 	ctx context.Context
-	ApiService *ReportingApiService
+	ApiService *ReportingAPIService
 	reportId int32
 	reportingSchedule *ReportingSchedule
 }
@@ -3548,7 +4193,7 @@ UpdateReportingSchedule Update a reporting schedule by ID.
  @param reportId The ID of the report schedule.
  @return ApiUpdateReportingScheduleRequest
 */
-func (a *ReportingApiService) UpdateReportingSchedule(ctx context.Context, reportId int32) ApiUpdateReportingScheduleRequest {
+func (a *ReportingAPIService) UpdateReportingSchedule(ctx context.Context, reportId int32) ApiUpdateReportingScheduleRequest {
 	return ApiUpdateReportingScheduleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3558,7 +4203,7 @@ func (a *ReportingApiService) UpdateReportingSchedule(ctx context.Context, repor
 
 // Execute executes the request
 //  @return ReportingSchedule
-func (a *ReportingApiService) UpdateReportingScheduleExecute(r ApiUpdateReportingScheduleRequest) (*ReportingSchedule, *http.Response, error) {
+func (a *ReportingAPIService) UpdateReportingScheduleExecute(r ApiUpdateReportingScheduleRequest) (*ReportingSchedule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -3566,7 +4211,7 @@ func (a *ReportingApiService) UpdateReportingScheduleExecute(r ApiUpdateReportin
 		localVarReturnValue  *ReportingSchedule
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingApiService.UpdateReportingSchedule")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReportingAPIService.UpdateReportingSchedule")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

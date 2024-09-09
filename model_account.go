@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -458,7 +458,9 @@ func (o Account) MarshalJSON() ([]byte, error) {
 
 func (o Account) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.ApiClientId) {
 		toSerialize["api_client_id"] = o.ApiClientId
 	}

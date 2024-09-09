@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,8 @@ type UpdateBookmarkParameters struct {
 	Expiration *string `json:"expiration,omitempty"`
 	// Indicates that the Bookmark should be retained forever.
 	RetainForever *bool `json:"retain_forever,omitempty"`
+	// Type of the bookmark, either PUBLIC or PRIVATE.
+	BookmarkType *string `json:"bookmark_type,omitempty"`
 }
 
 // NewUpdateBookmarkParameters instantiates a new UpdateBookmarkParameters object
@@ -141,6 +143,38 @@ func (o *UpdateBookmarkParameters) SetRetainForever(v bool) {
 	o.RetainForever = &v
 }
 
+// GetBookmarkType returns the BookmarkType field value if set, zero value otherwise.
+func (o *UpdateBookmarkParameters) GetBookmarkType() string {
+	if o == nil || IsNil(o.BookmarkType) {
+		var ret string
+		return ret
+	}
+	return *o.BookmarkType
+}
+
+// GetBookmarkTypeOk returns a tuple with the BookmarkType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateBookmarkParameters) GetBookmarkTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.BookmarkType) {
+		return nil, false
+	}
+	return o.BookmarkType, true
+}
+
+// HasBookmarkType returns a boolean if a field has been set.
+func (o *UpdateBookmarkParameters) HasBookmarkType() bool {
+	if o != nil && !IsNil(o.BookmarkType) {
+		return true
+	}
+
+	return false
+}
+
+// SetBookmarkType gets a reference to the given string and assigns it to the BookmarkType field.
+func (o *UpdateBookmarkParameters) SetBookmarkType(v string) {
+	o.BookmarkType = &v
+}
+
 func (o UpdateBookmarkParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -159,6 +193,9 @@ func (o UpdateBookmarkParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RetainForever) {
 		toSerialize["retain_forever"] = o.RetainForever
+	}
+	if !IsNil(o.BookmarkType) {
+		toSerialize["bookmark_type"] = o.BookmarkType
 	}
 	return toSerialize, nil
 }

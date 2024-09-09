@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -20,12 +20,124 @@ import (
 )
 
 
-// ConnectivityApiService ConnectivityApi service
-type ConnectivityApiService service
+// ConnectivityAPIService ConnectivityAPI service
+type ConnectivityAPIService service
+
+type ApiCommvaultConnectivityCheckRequest struct {
+	ctx context.Context
+	ApiService *ConnectivityAPIService
+	commvaultConnectivityCheckParameters *CommvaultConnectivityCheckParameters
+}
+
+// The api to check connectivity to the CommServe host and staging client from an environment.
+func (r ApiCommvaultConnectivityCheckRequest) CommvaultConnectivityCheckParameters(commvaultConnectivityCheckParameters CommvaultConnectivityCheckParameters) ApiCommvaultConnectivityCheckRequest {
+	r.commvaultConnectivityCheckParameters = &commvaultConnectivityCheckParameters
+	return r
+}
+
+func (r ApiCommvaultConnectivityCheckRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CommvaultConnectivityCheckExecute(r)
+}
+
+/*
+CommvaultConnectivityCheck Tests whether the CommServe host is accessible from the given environment and Commvault agent.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCommvaultConnectivityCheckRequest
+*/
+func (a *ConnectivityAPIService) CommvaultConnectivityCheck(ctx context.Context) ApiCommvaultConnectivityCheckRequest {
+	return ApiCommvaultConnectivityCheckRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *ConnectivityAPIService) CommvaultConnectivityCheckExecute(r ApiCommvaultConnectivityCheckRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectivityAPIService.CommvaultConnectivityCheck")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/commvault/connectivity/check"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.commvaultConnectivityCheckParameters == nil {
+		return nil, reportError("commvaultConnectivityCheckParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.commvaultConnectivityCheckParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
 
 type ApiConnectivityCheckRequest struct {
 	ctx context.Context
-	ApiService *ConnectivityApiService
+	ApiService *ConnectivityAPIService
 	connectivityCheckParameters *ConnectivityCheckParameters
 }
 
@@ -45,7 +157,7 @@ ConnectivityCheck Checks connectivity between an engine and a remote host machin
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiConnectivityCheckRequest
 */
-func (a *ConnectivityApiService) ConnectivityCheck(ctx context.Context) ApiConnectivityCheckRequest {
+func (a *ConnectivityAPIService) ConnectivityCheck(ctx context.Context) ApiConnectivityCheckRequest {
 	return ApiConnectivityCheckRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -54,7 +166,7 @@ func (a *ConnectivityApiService) ConnectivityCheck(ctx context.Context) ApiConne
 
 // Execute executes the request
 //  @return ConnectivityCheckResponse
-func (a *ConnectivityApiService) ConnectivityCheckExecute(r ApiConnectivityCheckRequest) (*ConnectivityCheckResponse, *http.Response, error) {
+func (a *ConnectivityAPIService) ConnectivityCheckExecute(r ApiConnectivityCheckRequest) (*ConnectivityCheckResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -62,7 +174,7 @@ func (a *ConnectivityApiService) ConnectivityCheckExecute(r ApiConnectivityCheck
 		localVarReturnValue  *ConnectivityCheckResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectivityApiService.ConnectivityCheck")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectivityAPIService.ConnectivityCheck")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -148,7 +260,7 @@ func (a *ConnectivityApiService) ConnectivityCheckExecute(r ApiConnectivityCheck
 
 type ApiDatabaseConnectivityCheckRequest struct {
 	ctx context.Context
-	ApiService *ConnectivityApiService
+	ApiService *ConnectivityAPIService
 	databaseConnectivityCheckParameters *DatabaseConnectivityCheckParameters
 }
 
@@ -167,7 +279,7 @@ DatabaseConnectivityCheck Tests the validity of the supplied database credential
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDatabaseConnectivityCheckRequest
 */
-func (a *ConnectivityApiService) DatabaseConnectivityCheck(ctx context.Context) ApiDatabaseConnectivityCheckRequest {
+func (a *ConnectivityAPIService) DatabaseConnectivityCheck(ctx context.Context) ApiDatabaseConnectivityCheckRequest {
 	return ApiDatabaseConnectivityCheckRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -176,7 +288,7 @@ func (a *ConnectivityApiService) DatabaseConnectivityCheck(ctx context.Context) 
 
 // Execute executes the request
 //  @return ConnectivityCheckResponse
-func (a *ConnectivityApiService) DatabaseConnectivityCheckExecute(r ApiDatabaseConnectivityCheckRequest) (*ConnectivityCheckResponse, *http.Response, error) {
+func (a *ConnectivityAPIService) DatabaseConnectivityCheckExecute(r ApiDatabaseConnectivityCheckRequest) (*ConnectivityCheckResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -184,7 +296,7 @@ func (a *ConnectivityApiService) DatabaseConnectivityCheckExecute(r ApiDatabaseC
 		localVarReturnValue  *ConnectivityCheckResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectivityApiService.DatabaseConnectivityCheck")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectivityAPIService.DatabaseConnectivityCheck")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,4 +378,116 @@ func (a *ConnectivityApiService) DatabaseConnectivityCheckExecute(r ApiDatabaseC
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiNetbackupConnectivityCheckRequest struct {
+	ctx context.Context
+	ApiService *ConnectivityAPIService
+	netbackupConnectivityCheckParameters *NetbackupConnectivityCheckParameters
+}
+
+// The api to check connectivity of NetBackup master server and client on an environment.
+func (r ApiNetbackupConnectivityCheckRequest) NetbackupConnectivityCheckParameters(netbackupConnectivityCheckParameters NetbackupConnectivityCheckParameters) ApiNetbackupConnectivityCheckRequest {
+	r.netbackupConnectivityCheckParameters = &netbackupConnectivityCheckParameters
+	return r
+}
+
+func (r ApiNetbackupConnectivityCheckRequest) Execute() (*http.Response, error) {
+	return r.ApiService.NetbackupConnectivityCheckExecute(r)
+}
+
+/*
+NetbackupConnectivityCheck Checks whether the specified NetBackup master server and client are able to communicate on the given environment.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiNetbackupConnectivityCheckRequest
+*/
+func (a *ConnectivityAPIService) NetbackupConnectivityCheck(ctx context.Context) ApiNetbackupConnectivityCheckRequest {
+	return ApiNetbackupConnectivityCheckRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *ConnectivityAPIService) NetbackupConnectivityCheckExecute(r ApiNetbackupConnectivityCheckRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectivityAPIService.NetbackupConnectivityCheck")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/netbackup/connectivity/check"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.netbackupConnectivityCheckParameters == nil {
+		return nil, reportError("netbackupConnectivityCheckParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.netbackupConnectivityCheckParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -46,6 +46,12 @@ type EnvironmentUpdateParameters struct {
 	AseDbHashicorpVaultSecretKey *string `json:"ase_db_hashicorp_vault_secret_key,omitempty"`
 	// Query to find a credential in the CyberArk vault.
 	AseDbCyberarkVaultQueryString *string `json:"ase_db_cyberark_vault_query_string,omitempty"`
+	// Azure key vault name.
+	AseDbAzureVaultName *string `json:"ase_db_azure_vault_name,omitempty"`
+	// Azure vault key for the username in the key-value store.
+	AseDbAzureVaultUsernameKey *string `json:"ase_db_azure_vault_username_key,omitempty"`
+	// Azure vault key for the password in the key-value store.
+	AseDbAzureVaultSecretKey *string `json:"ase_db_azure_vault_secret_key,omitempty"`
 	// Whether to use kerberos authentication for ASE DB discovery.
 	AseDbUseKerberosAuthentication *bool `json:"ase_db_use_kerberos_authentication,omitempty"`
 	// The environment description.
@@ -485,6 +491,102 @@ func (o *EnvironmentUpdateParameters) SetAseDbCyberarkVaultQueryString(v string)
 	o.AseDbCyberarkVaultQueryString = &v
 }
 
+// GetAseDbAzureVaultName returns the AseDbAzureVaultName field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbAzureVaultName() string {
+	if o == nil || IsNil(o.AseDbAzureVaultName) {
+		var ret string
+		return ret
+	}
+	return *o.AseDbAzureVaultName
+}
+
+// GetAseDbAzureVaultNameOk returns a tuple with the AseDbAzureVaultName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbAzureVaultNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AseDbAzureVaultName) {
+		return nil, false
+	}
+	return o.AseDbAzureVaultName, true
+}
+
+// HasAseDbAzureVaultName returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbAzureVaultName() bool {
+	if o != nil && !IsNil(o.AseDbAzureVaultName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbAzureVaultName gets a reference to the given string and assigns it to the AseDbAzureVaultName field.
+func (o *EnvironmentUpdateParameters) SetAseDbAzureVaultName(v string) {
+	o.AseDbAzureVaultName = &v
+}
+
+// GetAseDbAzureVaultUsernameKey returns the AseDbAzureVaultUsernameKey field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbAzureVaultUsernameKey() string {
+	if o == nil || IsNil(o.AseDbAzureVaultUsernameKey) {
+		var ret string
+		return ret
+	}
+	return *o.AseDbAzureVaultUsernameKey
+}
+
+// GetAseDbAzureVaultUsernameKeyOk returns a tuple with the AseDbAzureVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbAzureVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.AseDbAzureVaultUsernameKey) {
+		return nil, false
+	}
+	return o.AseDbAzureVaultUsernameKey, true
+}
+
+// HasAseDbAzureVaultUsernameKey returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbAzureVaultUsernameKey() bool {
+	if o != nil && !IsNil(o.AseDbAzureVaultUsernameKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbAzureVaultUsernameKey gets a reference to the given string and assigns it to the AseDbAzureVaultUsernameKey field.
+func (o *EnvironmentUpdateParameters) SetAseDbAzureVaultUsernameKey(v string) {
+	o.AseDbAzureVaultUsernameKey = &v
+}
+
+// GetAseDbAzureVaultSecretKey returns the AseDbAzureVaultSecretKey field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseDbAzureVaultSecretKey() string {
+	if o == nil || IsNil(o.AseDbAzureVaultSecretKey) {
+		var ret string
+		return ret
+	}
+	return *o.AseDbAzureVaultSecretKey
+}
+
+// GetAseDbAzureVaultSecretKeyOk returns a tuple with the AseDbAzureVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseDbAzureVaultSecretKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.AseDbAzureVaultSecretKey) {
+		return nil, false
+	}
+	return o.AseDbAzureVaultSecretKey, true
+}
+
+// HasAseDbAzureVaultSecretKey returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseDbAzureVaultSecretKey() bool {
+	if o != nil && !IsNil(o.AseDbAzureVaultSecretKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbAzureVaultSecretKey gets a reference to the given string and assigns it to the AseDbAzureVaultSecretKey field.
+func (o *EnvironmentUpdateParameters) SetAseDbAzureVaultSecretKey(v string) {
+	o.AseDbAzureVaultSecretKey = &v
+}
+
 // GetAseDbUseKerberosAuthentication returns the AseDbUseKerberosAuthentication field value if set, zero value otherwise.
 func (o *EnvironmentUpdateParameters) GetAseDbUseKerberosAuthentication() bool {
 	if o == nil || IsNil(o.AseDbUseKerberosAuthentication) {
@@ -597,6 +699,15 @@ func (o EnvironmentUpdateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AseDbCyberarkVaultQueryString) {
 		toSerialize["ase_db_cyberark_vault_query_string"] = o.AseDbCyberarkVaultQueryString
+	}
+	if !IsNil(o.AseDbAzureVaultName) {
+		toSerialize["ase_db_azure_vault_name"] = o.AseDbAzureVaultName
+	}
+	if !IsNil(o.AseDbAzureVaultUsernameKey) {
+		toSerialize["ase_db_azure_vault_username_key"] = o.AseDbAzureVaultUsernameKey
+	}
+	if !IsNil(o.AseDbAzureVaultSecretKey) {
+		toSerialize["ase_db_azure_vault_secret_key"] = o.AseDbAzureVaultSecretKey
 	}
 	if !IsNil(o.AseDbUseKerberosAuthentication) {
 		toSerialize["ase_db_use_kerberos_authentication"] = o.AseDbUseKerberosAuthentication

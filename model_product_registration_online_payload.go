@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ProductRegistrationOnlinePayload type satisfies the MappedNullable interface at compile time
@@ -20,18 +22,18 @@ var _ MappedNullable = &ProductRegistrationOnlinePayload{}
 
 // ProductRegistrationOnlinePayload Product registration object for a manually generated payload.
 type ProductRegistrationOnlinePayload struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Token string `json:"token"`
 }
+
+type _ProductRegistrationOnlinePayload ProductRegistrationOnlinePayload
 
 // NewProductRegistrationOnlinePayload instantiates a new ProductRegistrationOnlinePayload object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProductRegistrationOnlinePayload(username string, password string) *ProductRegistrationOnlinePayload {
+func NewProductRegistrationOnlinePayload(token string) *ProductRegistrationOnlinePayload {
 	this := ProductRegistrationOnlinePayload{}
-	this.Username = username
-	this.Password = password
+	this.Token = token
 	return &this
 }
 
@@ -43,52 +45,28 @@ func NewProductRegistrationOnlinePayloadWithDefaults() *ProductRegistrationOnlin
 	return &this
 }
 
-// GetUsername returns the Username field value
-func (o *ProductRegistrationOnlinePayload) GetUsername() string {
+// GetToken returns the Token field value
+func (o *ProductRegistrationOnlinePayload) GetToken() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Username
+	return o.Token
 }
 
-// GetUsernameOk returns a tuple with the Username field value
+// GetTokenOk returns a tuple with the Token field value
 // and a boolean to check if the value has been set.
-func (o *ProductRegistrationOnlinePayload) GetUsernameOk() (*string, bool) {
+func (o *ProductRegistrationOnlinePayload) GetTokenOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Username, true
+	return &o.Token, true
 }
 
-// SetUsername sets field value
-func (o *ProductRegistrationOnlinePayload) SetUsername(v string) {
-	o.Username = v
-}
-
-// GetPassword returns the Password field value
-func (o *ProductRegistrationOnlinePayload) GetPassword() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Password
-}
-
-// GetPasswordOk returns a tuple with the Password field value
-// and a boolean to check if the value has been set.
-func (o *ProductRegistrationOnlinePayload) GetPasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Password, true
-}
-
-// SetPassword sets field value
-func (o *ProductRegistrationOnlinePayload) SetPassword(v string) {
-	o.Password = v
+// SetToken sets field value
+func (o *ProductRegistrationOnlinePayload) SetToken(v string) {
+	o.Token = v
 }
 
 func (o ProductRegistrationOnlinePayload) MarshalJSON() ([]byte, error) {
@@ -101,9 +79,45 @@ func (o ProductRegistrationOnlinePayload) MarshalJSON() ([]byte, error) {
 
 func (o ProductRegistrationOnlinePayload) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["username"] = o.Username
-	toSerialize["password"] = o.Password
+	toSerialize["token"] = o.Token
 	return toSerialize, nil
+}
+
+func (o *ProductRegistrationOnlinePayload) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"token",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProductRegistrationOnlinePayload := _ProductRegistrationOnlinePayload{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProductRegistrationOnlinePayload)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProductRegistrationOnlinePayload(varProductRegistrationOnlinePayload)
+
+	return err
 }
 
 type NullableProductRegistrationOnlinePayload struct {

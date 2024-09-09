@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ChangePasswordParameter type satisfies the MappedNullable interface at compile time
@@ -25,6 +27,8 @@ type ChangePasswordParameter struct {
 	// New password that needs to be set for the Account. Set this to null for unsetting the current password. Not including this property also results in unsetting of the current password.
 	NewPassword *string `json:"new_password,omitempty"`
 }
+
+type _ChangePasswordParameter ChangePasswordParameter
 
 // NewChangePasswordParameter instantiates a new ChangePasswordParameter object
 // This constructor will assign default values to properties that have it defined,
@@ -115,6 +119,43 @@ func (o ChangePasswordParameter) ToMap() (map[string]interface{}, error) {
 		toSerialize["new_password"] = o.NewPassword
 	}
 	return toSerialize, nil
+}
+
+func (o *ChangePasswordParameter) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"old_password",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varChangePasswordParameter := _ChangePasswordParameter{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varChangePasswordParameter)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ChangePasswordParameter(varChangePasswordParameter)
+
+	return err
 }
 
 type NullableChangePasswordParameter struct {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -22,10 +22,12 @@ var _ MappedNullable = &VirtualizationPolicy{}
 type VirtualizationPolicy struct {
 	Id *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
+	// Whether this virtualization policy is managed by DCT or by an individual Delphix Engine.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 	Namespace *string `json:"namespace,omitempty"`
 	// The namespace id of this virtualization policy.
 	NamespaceId *string `json:"namespace_id,omitempty"`
-	// The namespace name of this virtualization policy..
+	// The namespace name of this virtualization policy.
 	NamespaceName *string `json:"namespace_name,omitempty"`
 	// Is this a replicated object.
 	IsReplica *bool `json:"is_replica,omitempty"`
@@ -142,6 +144,38 @@ func (o *VirtualizationPolicy) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *VirtualizationPolicy) SetName(v string) {
 	o.Name = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *VirtualizationPolicy) SetDctManaged(v bool) {
+	o.DctManaged = &v
 }
 
 // GetNamespace returns the Namespace field value if set, zero value otherwise.
@@ -873,6 +907,9 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	if !IsNil(o.Namespace) {
 		toSerialize["namespace"] = o.Namespace

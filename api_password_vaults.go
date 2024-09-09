@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// PasswordVaultsApiService PasswordVaultsApi service
-type PasswordVaultsApiService service
+// PasswordVaultsAPIService PasswordVaultsAPI service
+type PasswordVaultsAPIService service
 
 type ApiGetPasswordVaultByIdRequest struct {
 	ctx context.Context
-	ApiService *PasswordVaultsApiService
+	ApiService *PasswordVaultsAPIService
 	passwordVaultId string
 }
 
@@ -41,7 +41,7 @@ GetPasswordVaultById Get a password vault by ID or Name.
  @param passwordVaultId The ID of the password vault.
  @return ApiGetPasswordVaultByIdRequest
 */
-func (a *PasswordVaultsApiService) GetPasswordVaultById(ctx context.Context, passwordVaultId string) ApiGetPasswordVaultByIdRequest {
+func (a *PasswordVaultsAPIService) GetPasswordVaultById(ctx context.Context, passwordVaultId string) ApiGetPasswordVaultByIdRequest {
 	return ApiGetPasswordVaultByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -51,7 +51,7 @@ func (a *PasswordVaultsApiService) GetPasswordVaultById(ctx context.Context, pas
 
 // Execute executes the request
 //  @return PasswordVault
-func (a *PasswordVaultsApiService) GetPasswordVaultByIdExecute(r ApiGetPasswordVaultByIdRequest) (*PasswordVault, *http.Response, error) {
+func (a *PasswordVaultsAPIService) GetPasswordVaultByIdExecute(r ApiGetPasswordVaultByIdRequest) (*PasswordVault, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -59,7 +59,7 @@ func (a *PasswordVaultsApiService) GetPasswordVaultByIdExecute(r ApiGetPasswordV
 		localVarReturnValue  *PasswordVault
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PasswordVaultsApiService.GetPasswordVaultById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PasswordVaultsAPIService.GetPasswordVaultById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -144,7 +144,7 @@ func (a *PasswordVaultsApiService) GetPasswordVaultByIdExecute(r ApiGetPasswordV
 
 type ApiGetPasswordVaultsRequest struct {
 	ctx context.Context
-	ApiService *PasswordVaultsApiService
+	ApiService *PasswordVaultsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -178,7 +178,7 @@ GetPasswordVaults List all password vaults.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetPasswordVaultsRequest
 */
-func (a *PasswordVaultsApiService) GetPasswordVaults(ctx context.Context) ApiGetPasswordVaultsRequest {
+func (a *PasswordVaultsAPIService) GetPasswordVaults(ctx context.Context) ApiGetPasswordVaultsRequest {
 	return ApiGetPasswordVaultsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,7 +187,7 @@ func (a *PasswordVaultsApiService) GetPasswordVaults(ctx context.Context) ApiGet
 
 // Execute executes the request
 //  @return ListPasswordVaultsResponse
-func (a *PasswordVaultsApiService) GetPasswordVaultsExecute(r ApiGetPasswordVaultsRequest) (*ListPasswordVaultsResponse, *http.Response, error) {
+func (a *PasswordVaultsAPIService) GetPasswordVaultsExecute(r ApiGetPasswordVaultsRequest) (*ListPasswordVaultsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -195,7 +195,7 @@ func (a *PasswordVaultsApiService) GetPasswordVaultsExecute(r ApiGetPasswordVaul
 		localVarReturnValue  *ListPasswordVaultsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PasswordVaultsApiService.GetPasswordVaults")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PasswordVaultsAPIService.GetPasswordVaults")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -207,13 +207,16 @@ func (a *PasswordVaultsApiService) GetPasswordVaultsExecute(r ApiGetPasswordVaul
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -285,7 +288,7 @@ func (a *PasswordVaultsApiService) GetPasswordVaultsExecute(r ApiGetPasswordVaul
 
 type ApiSearchPasswordVaultsRequest struct {
 	ctx context.Context
-	ApiService *PasswordVaultsApiService
+	ApiService *PasswordVaultsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -326,7 +329,7 @@ SearchPasswordVaults Search for Password Vaults.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchPasswordVaultsRequest
 */
-func (a *PasswordVaultsApiService) SearchPasswordVaults(ctx context.Context) ApiSearchPasswordVaultsRequest {
+func (a *PasswordVaultsAPIService) SearchPasswordVaults(ctx context.Context) ApiSearchPasswordVaultsRequest {
 	return ApiSearchPasswordVaultsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -335,7 +338,7 @@ func (a *PasswordVaultsApiService) SearchPasswordVaults(ctx context.Context) Api
 
 // Execute executes the request
 //  @return SearchPasswordVaultResponse
-func (a *PasswordVaultsApiService) SearchPasswordVaultsExecute(r ApiSearchPasswordVaultsRequest) (*SearchPasswordVaultResponse, *http.Response, error) {
+func (a *PasswordVaultsAPIService) SearchPasswordVaultsExecute(r ApiSearchPasswordVaultsRequest) (*SearchPasswordVaultResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -343,7 +346,7 @@ func (a *PasswordVaultsApiService) SearchPasswordVaultsExecute(r ApiSearchPasswo
 		localVarReturnValue  *SearchPasswordVaultResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PasswordVaultsApiService.SearchPasswordVaults")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PasswordVaultsAPIService.SearchPasswordVaults")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -355,13 +358,16 @@ func (a *PasswordVaultsApiService) SearchPasswordVaultsExecute(r ApiSearchPasswo
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

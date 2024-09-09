@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -59,6 +59,8 @@ type Source struct {
 	MssqlSourceType NullableString `json:"mssql_source_type,omitempty"`
 	// The type of this appdata source database (Appdata Only).
 	AppdataSourceType NullableString `json:"appdata_source_type,omitempty"`
+	// If this source is of PDB type (Oracle Only).
+	IsPdb NullableBool `json:"is_pdb,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -879,6 +881,48 @@ func (o *Source) UnsetAppdataSourceType() {
 	o.AppdataSourceType.Unset()
 }
 
+// GetIsPdb returns the IsPdb field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Source) GetIsPdb() bool {
+	if o == nil || IsNil(o.IsPdb.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsPdb.Get()
+}
+
+// GetIsPdbOk returns a tuple with the IsPdb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Source) GetIsPdbOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsPdb.Get(), o.IsPdb.IsSet()
+}
+
+// HasIsPdb returns a boolean if a field has been set.
+func (o *Source) HasIsPdb() bool {
+	if o != nil && o.IsPdb.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsPdb gets a reference to the given NullableBool and assigns it to the IsPdb field.
+func (o *Source) SetIsPdb(v bool) {
+	o.IsPdb.Set(&v)
+}
+// SetIsPdbNil sets the value for IsPdb to be an explicit nil
+func (o *Source) SetIsPdbNil() {
+	o.IsPdb.Set(nil)
+}
+
+// UnsetIsPdb ensures that no value is present for IsPdb, not even an explicit nil
+func (o *Source) UnsetIsPdb() {
+	o.IsPdb.Unset()
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Source) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -980,6 +1024,9 @@ func (o Source) ToMap() (map[string]interface{}, error) {
 	}
 	if o.AppdataSourceType.IsSet() {
 		toSerialize["appdata_source_type"] = o.AppdataSourceType.Get()
+	}
+	if o.IsPdb.IsSet() {
+		toSerialize["is_pdb"] = o.IsPdb.Get()
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

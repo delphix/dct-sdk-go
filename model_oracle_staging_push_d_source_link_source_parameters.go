@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the OracleStagingPushDSourceLinkSourceParameters type satisfies the MappedNullable interface at compile time
@@ -77,7 +79,11 @@ type OracleStagingPushDSourceLinkSourceParameters struct {
 	StagingContainerDatabaseReference *string `json:"staging_container_database_reference,omitempty"`
 	// Operations to perform after syncing a created dSource and before running the LogSync.
 	OpsPreLogSync []SourceOperation `json:"ops_pre_log_sync,omitempty"`
+	// The type of TDE keystore configuration to use for the staging database.
+	TdeKeystoreConfigType *string `json:"tde_keystore_config_type,omitempty"`
 }
+
+type _OracleStagingPushDSourceLinkSourceParameters OracleStagingPushDSourceLinkSourceParameters
 
 // NewOracleStagingPushDSourceLinkSourceParameters instantiates a new OracleStagingPushDSourceLinkSourceParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -926,7 +932,7 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) GetStagingDatabaseConfigP
 
 // HasStagingDatabaseConfigParams returns a boolean if a field has been set.
 func (o *OracleStagingPushDSourceLinkSourceParameters) HasStagingDatabaseConfigParams() bool {
-	if o != nil && IsNil(o.StagingDatabaseConfigParams) {
+	if o != nil && !IsNil(o.StagingDatabaseConfigParams) {
 		return true
 	}
 
@@ -1000,6 +1006,38 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) HasOpsPreLogSync() bool {
 // SetOpsPreLogSync gets a reference to the given []SourceOperation and assigns it to the OpsPreLogSync field.
 func (o *OracleStagingPushDSourceLinkSourceParameters) SetOpsPreLogSync(v []SourceOperation) {
 	o.OpsPreLogSync = v
+}
+
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetTdeKeystoreConfigType() string {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetTdeKeystoreConfigTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given string and assigns it to the TdeKeystoreConfigType field.
+func (o *OracleStagingPushDSourceLinkSourceParameters) SetTdeKeystoreConfigType(v string) {
+	o.TdeKeystoreConfigType = &v
 }
 
 func (o OracleStagingPushDSourceLinkSourceParameters) MarshalJSON() ([]byte, error) {
@@ -1092,7 +1130,48 @@ func (o OracleStagingPushDSourceLinkSourceParameters) ToMap() (map[string]interf
 	if !IsNil(o.OpsPreLogSync) {
 		toSerialize["ops_pre_log_sync"] = o.OpsPreLogSync
 	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
 	return toSerialize, nil
+}
+
+func (o *OracleStagingPushDSourceLinkSourceParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"engine_id",
+		"database_name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varOracleStagingPushDSourceLinkSourceParameters := _OracleStagingPushDSourceLinkSourceParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varOracleStagingPushDSourceLinkSourceParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = OracleStagingPushDSourceLinkSourceParameters(varOracleStagingPushDSourceLinkSourceParameters)
+
+	return err
 }
 
 type NullableOracleStagingPushDSourceLinkSourceParameters struct {

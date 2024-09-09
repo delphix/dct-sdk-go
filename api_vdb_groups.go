@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// VDBGroupsApiService VDBGroupsApi service
-type VDBGroupsApiService service
+// VDBGroupsAPIService VDBGroupsAPI service
+type VDBGroupsAPIService service
 
 type ApiCreateVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	createVDBGroupRequest *CreateVDBGroupRequest
 }
 
@@ -46,7 +46,7 @@ CreateVdbGroup Create a new VDBGroup.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateVdbGroupRequest
 */
-func (a *VDBGroupsApiService) CreateVdbGroup(ctx context.Context) ApiCreateVdbGroupRequest {
+func (a *VDBGroupsAPIService) CreateVdbGroup(ctx context.Context) ApiCreateVdbGroupRequest {
 	return ApiCreateVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -55,7 +55,7 @@ func (a *VDBGroupsApiService) CreateVdbGroup(ctx context.Context) ApiCreateVdbGr
 
 // Execute executes the request
 //  @return CreateVDBGroupResponse
-func (a *VDBGroupsApiService) CreateVdbGroupExecute(r ApiCreateVdbGroupRequest) (*CreateVDBGroupResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) CreateVdbGroupExecute(r ApiCreateVdbGroupRequest) (*CreateVDBGroupResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -63,7 +63,7 @@ func (a *VDBGroupsApiService) CreateVdbGroupExecute(r ApiCreateVdbGroupRequest) 
 		localVarReturnValue  *CreateVDBGroupResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.CreateVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.CreateVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -149,7 +149,7 @@ func (a *VDBGroupsApiService) CreateVdbGroupExecute(r ApiCreateVdbGroupRequest) 
 
 type ApiCreateVdbGroupsTagsRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	tagsRequest *TagsRequest
 }
@@ -171,7 +171,7 @@ CreateVdbGroupsTags Create tags for a VDB Group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiCreateVdbGroupsTagsRequest
 */
-func (a *VDBGroupsApiService) CreateVdbGroupsTags(ctx context.Context, vdbGroupId string) ApiCreateVdbGroupsTagsRequest {
+func (a *VDBGroupsAPIService) CreateVdbGroupsTags(ctx context.Context, vdbGroupId string) ApiCreateVdbGroupsTagsRequest {
 	return ApiCreateVdbGroupsTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -181,7 +181,7 @@ func (a *VDBGroupsApiService) CreateVdbGroupsTags(ctx context.Context, vdbGroupI
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *VDBGroupsApiService) CreateVdbGroupsTagsExecute(r ApiCreateVdbGroupsTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) CreateVdbGroupsTagsExecute(r ApiCreateVdbGroupsTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -189,7 +189,7 @@ func (a *VDBGroupsApiService) CreateVdbGroupsTagsExecute(r ApiCreateVdbGroupsTag
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.CreateVdbGroupsTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.CreateVdbGroupsTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -282,7 +282,7 @@ func (a *VDBGroupsApiService) CreateVdbGroupsTagsExecute(r ApiCreateVdbGroupsTag
 
 type ApiDeleteVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 }
 
@@ -297,7 +297,7 @@ DeleteVdbGroup Delete a VDBGoup.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiDeleteVdbGroupRequest
 */
-func (a *VDBGroupsApiService) DeleteVdbGroup(ctx context.Context, vdbGroupId string) ApiDeleteVdbGroupRequest {
+func (a *VDBGroupsAPIService) DeleteVdbGroup(ctx context.Context, vdbGroupId string) ApiDeleteVdbGroupRequest {
 	return ApiDeleteVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -306,14 +306,14 @@ func (a *VDBGroupsApiService) DeleteVdbGroup(ctx context.Context, vdbGroupId str
 }
 
 // Execute executes the request
-func (a *VDBGroupsApiService) DeleteVdbGroupExecute(r ApiDeleteVdbGroupRequest) (*http.Response, error) {
+func (a *VDBGroupsAPIService) DeleteVdbGroupExecute(r ApiDeleteVdbGroupRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.DeleteVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.DeleteVdbGroup")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -392,7 +392,7 @@ func (a *VDBGroupsApiService) DeleteVdbGroupExecute(r ApiDeleteVdbGroupRequest) 
 
 type ApiDeleteVdbGroupTagsRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	deleteTag *DeleteTag
 }
@@ -414,7 +414,7 @@ DeleteVdbGroupTags Delete tags for a VDB Group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiDeleteVdbGroupTagsRequest
 */
-func (a *VDBGroupsApiService) DeleteVdbGroupTags(ctx context.Context, vdbGroupId string) ApiDeleteVdbGroupTagsRequest {
+func (a *VDBGroupsAPIService) DeleteVdbGroupTags(ctx context.Context, vdbGroupId string) ApiDeleteVdbGroupTagsRequest {
 	return ApiDeleteVdbGroupTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -423,14 +423,14 @@ func (a *VDBGroupsApiService) DeleteVdbGroupTags(ctx context.Context, vdbGroupId
 }
 
 // Execute executes the request
-func (a *VDBGroupsApiService) DeleteVdbGroupTagsExecute(r ApiDeleteVdbGroupTagsRequest) (*http.Response, error) {
+func (a *VDBGroupsAPIService) DeleteVdbGroupTagsExecute(r ApiDeleteVdbGroupTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.DeleteVdbGroupTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.DeleteVdbGroupTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -511,7 +511,7 @@ func (a *VDBGroupsApiService) DeleteVdbGroupTagsExecute(r ApiDeleteVdbGroupTagsR
 
 type ApiGetBookmarksByVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	limit *int32
 	cursor *string
@@ -547,7 +547,7 @@ GetBookmarksByVdbGroup List bookmarks compatible with this VDB Group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiGetBookmarksByVdbGroupRequest
 */
-func (a *VDBGroupsApiService) GetBookmarksByVdbGroup(ctx context.Context, vdbGroupId string) ApiGetBookmarksByVdbGroupRequest {
+func (a *VDBGroupsAPIService) GetBookmarksByVdbGroup(ctx context.Context, vdbGroupId string) ApiGetBookmarksByVdbGroupRequest {
 	return ApiGetBookmarksByVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -557,7 +557,7 @@ func (a *VDBGroupsApiService) GetBookmarksByVdbGroup(ctx context.Context, vdbGro
 
 // Execute executes the request
 //  @return ListBookmarksByVDBGroupsResponse
-func (a *VDBGroupsApiService) GetBookmarksByVdbGroupExecute(r ApiGetBookmarksByVdbGroupRequest) (*ListBookmarksByVDBGroupsResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) GetBookmarksByVdbGroupExecute(r ApiGetBookmarksByVdbGroupRequest) (*ListBookmarksByVDBGroupsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -565,7 +565,7 @@ func (a *VDBGroupsApiService) GetBookmarksByVdbGroupExecute(r ApiGetBookmarksByV
 		localVarReturnValue  *ListBookmarksByVDBGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.GetBookmarksByVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.GetBookmarksByVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -584,13 +584,16 @@ func (a *VDBGroupsApiService) GetBookmarksByVdbGroupExecute(r ApiGetBookmarksByV
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -662,7 +665,7 @@ func (a *VDBGroupsApiService) GetBookmarksByVdbGroupExecute(r ApiGetBookmarksByV
 
 type ApiGetVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 }
 
@@ -677,7 +680,7 @@ GetVdbGroup Get a VDBGroup by name.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiGetVdbGroupRequest
 */
-func (a *VDBGroupsApiService) GetVdbGroup(ctx context.Context, vdbGroupId string) ApiGetVdbGroupRequest {
+func (a *VDBGroupsAPIService) GetVdbGroup(ctx context.Context, vdbGroupId string) ApiGetVdbGroupRequest {
 	return ApiGetVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -687,7 +690,7 @@ func (a *VDBGroupsApiService) GetVdbGroup(ctx context.Context, vdbGroupId string
 
 // Execute executes the request
 //  @return VDBGroup
-func (a *VDBGroupsApiService) GetVdbGroupExecute(r ApiGetVdbGroupRequest) (*VDBGroup, *http.Response, error) {
+func (a *VDBGroupsAPIService) GetVdbGroupExecute(r ApiGetVdbGroupRequest) (*VDBGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -695,7 +698,7 @@ func (a *VDBGroupsApiService) GetVdbGroupExecute(r ApiGetVdbGroupRequest) (*VDBG
 		localVarReturnValue  *VDBGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.GetVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.GetVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -783,7 +786,7 @@ func (a *VDBGroupsApiService) GetVdbGroupExecute(r ApiGetVdbGroupRequest) (*VDBG
 
 type ApiGetVdbGroupTagsRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 }
 
@@ -798,7 +801,7 @@ GetVdbGroupTags Get tags for a VDB Group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiGetVdbGroupTagsRequest
 */
-func (a *VDBGroupsApiService) GetVdbGroupTags(ctx context.Context, vdbGroupId string) ApiGetVdbGroupTagsRequest {
+func (a *VDBGroupsAPIService) GetVdbGroupTags(ctx context.Context, vdbGroupId string) ApiGetVdbGroupTagsRequest {
 	return ApiGetVdbGroupTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -808,7 +811,7 @@ func (a *VDBGroupsApiService) GetVdbGroupTags(ctx context.Context, vdbGroupId st
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *VDBGroupsApiService) GetVdbGroupTagsExecute(r ApiGetVdbGroupTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) GetVdbGroupTagsExecute(r ApiGetVdbGroupTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -816,7 +819,7 @@ func (a *VDBGroupsApiService) GetVdbGroupTagsExecute(r ApiGetVdbGroupTagsRequest
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.GetVdbGroupTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.GetVdbGroupTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -902,9 +905,130 @@ func (a *VDBGroupsApiService) GetVdbGroupTagsExecute(r ApiGetVdbGroupTagsRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetVdbGroupVdbsLatestSnapshotsRequest struct {
+	ctx context.Context
+	ApiService *VDBGroupsAPIService
+	vdbGroupId string
+}
+
+func (r ApiGetVdbGroupVdbsLatestSnapshotsRequest) Execute() (*LatestSnapshotsResponse, *http.Response, error) {
+	return r.ApiService.GetVdbGroupVdbsLatestSnapshotsExecute(r)
+}
+
+/*
+GetVdbGroupVdbsLatestSnapshots Get latest snapshot of all the vdbs in VDBGroup.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbGroupId The ID or name of the VDBGroup.
+ @return ApiGetVdbGroupVdbsLatestSnapshotsRequest
+*/
+func (a *VDBGroupsAPIService) GetVdbGroupVdbsLatestSnapshots(ctx context.Context, vdbGroupId string) ApiGetVdbGroupVdbsLatestSnapshotsRequest {
+	return ApiGetVdbGroupVdbsLatestSnapshotsRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbGroupId: vdbGroupId,
+	}
+}
+
+// Execute executes the request
+//  @return LatestSnapshotsResponse
+func (a *VDBGroupsAPIService) GetVdbGroupVdbsLatestSnapshotsExecute(r ApiGetVdbGroupVdbsLatestSnapshotsRequest) (*LatestSnapshotsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *LatestSnapshotsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.GetVdbGroupVdbsLatestSnapshots")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdb-groups/{vdbGroupId}/latest-snapshots"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbGroupId"+"}", url.PathEscape(parameterValueToString(r.vdbGroupId, "vdbGroupId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbGroupId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have at least 1 elements")
+	}
+	if strlen(r.vdbGroupId) > 256 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have less than 256 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetVdbGroupsRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -938,7 +1062,7 @@ GetVdbGroups List all VDBGroups.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetVdbGroupsRequest
 */
-func (a *VDBGroupsApiService) GetVdbGroups(ctx context.Context) ApiGetVdbGroupsRequest {
+func (a *VDBGroupsAPIService) GetVdbGroups(ctx context.Context) ApiGetVdbGroupsRequest {
 	return ApiGetVdbGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -947,7 +1071,7 @@ func (a *VDBGroupsApiService) GetVdbGroups(ctx context.Context) ApiGetVdbGroupsR
 
 // Execute executes the request
 //  @return ListVDBGroupsResponse
-func (a *VDBGroupsApiService) GetVdbGroupsExecute(r ApiGetVdbGroupsRequest) (*ListVDBGroupsResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) GetVdbGroupsExecute(r ApiGetVdbGroupsRequest) (*ListVDBGroupsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -955,7 +1079,7 @@ func (a *VDBGroupsApiService) GetVdbGroupsExecute(r ApiGetVdbGroupsRequest) (*Li
 		localVarReturnValue  *ListVDBGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.GetVdbGroups")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.GetVdbGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -967,13 +1091,16 @@ func (a *VDBGroupsApiService) GetVdbGroupsExecute(r ApiGetVdbGroupsRequest) (*Li
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1045,7 +1172,7 @@ func (a *VDBGroupsApiService) GetVdbGroupsExecute(r ApiGetVdbGroupsRequest) (*Li
 
 type ApiLockVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	lockVDBGroupParameters *LockVDBGroupParameters
 }
@@ -1067,7 +1194,7 @@ LockVdbGroup Lock a VDB Group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiLockVdbGroupRequest
 */
-func (a *VDBGroupsApiService) LockVdbGroup(ctx context.Context, vdbGroupId string) ApiLockVdbGroupRequest {
+func (a *VDBGroupsAPIService) LockVdbGroup(ctx context.Context, vdbGroupId string) ApiLockVdbGroupRequest {
 	return ApiLockVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1077,7 +1204,7 @@ func (a *VDBGroupsApiService) LockVdbGroup(ctx context.Context, vdbGroupId strin
 
 // Execute executes the request
 //  @return VDBGroup
-func (a *VDBGroupsApiService) LockVdbGroupExecute(r ApiLockVdbGroupRequest) (*VDBGroup, *http.Response, error) {
+func (a *VDBGroupsAPIService) LockVdbGroupExecute(r ApiLockVdbGroupRequest) (*VDBGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1085,7 +1212,7 @@ func (a *VDBGroupsApiService) LockVdbGroupExecute(r ApiLockVdbGroupRequest) (*VD
 		localVarReturnValue  *VDBGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.LockVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.LockVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1178,7 +1305,7 @@ func (a *VDBGroupsApiService) LockVdbGroupExecute(r ApiLockVdbGroupRequest) (*VD
 
 type ApiProvisionVdbGroupFromBookmarkRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	provisionVDBGroupFromBookmarkParameters *ProvisionVDBGroupFromBookmarkParameters
 }
 
@@ -1198,7 +1325,7 @@ ProvisionVdbGroupFromBookmark Provision a new VDB Group from a Bookmark.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiProvisionVdbGroupFromBookmarkRequest
 */
-func (a *VDBGroupsApiService) ProvisionVdbGroupFromBookmark(ctx context.Context) ApiProvisionVdbGroupFromBookmarkRequest {
+func (a *VDBGroupsAPIService) ProvisionVdbGroupFromBookmark(ctx context.Context) ApiProvisionVdbGroupFromBookmarkRequest {
 	return ApiProvisionVdbGroupFromBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1207,7 +1334,7 @@ func (a *VDBGroupsApiService) ProvisionVdbGroupFromBookmark(ctx context.Context)
 
 // Execute executes the request
 //  @return ProvisionVDBGroupFromBookmarkResponse
-func (a *VDBGroupsApiService) ProvisionVdbGroupFromBookmarkExecute(r ApiProvisionVdbGroupFromBookmarkRequest) (*ProvisionVDBGroupFromBookmarkResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) ProvisionVdbGroupFromBookmarkExecute(r ApiProvisionVdbGroupFromBookmarkRequest) (*ProvisionVDBGroupFromBookmarkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1215,7 +1342,7 @@ func (a *VDBGroupsApiService) ProvisionVdbGroupFromBookmarkExecute(r ApiProvisio
 		localVarReturnValue  *ProvisionVDBGroupFromBookmarkResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.ProvisionVdbGroupFromBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.ProvisionVdbGroupFromBookmark")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1298,7 +1425,7 @@ func (a *VDBGroupsApiService) ProvisionVdbGroupFromBookmarkExecute(r ApiProvisio
 
 type ApiRefreshVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	refreshVDBGroupParameters *RefreshVDBGroupParameters
 }
@@ -1314,13 +1441,17 @@ func (r ApiRefreshVdbGroupRequest) Execute() (*RefreshVDBGroupResponse, *http.Re
 }
 
 /*
-RefreshVdbGroup Refresh a VDBGroup.
+RefreshVdbGroup Refresh a VDBGroup from bookmark.
+
+This API is marked as deprecated in favour of renamed API '/vdb-groups/{vdbGroupId}/refresh_from_bookmark'
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiRefreshVdbGroupRequest
+
+Deprecated
 */
-func (a *VDBGroupsApiService) RefreshVdbGroup(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupRequest {
+func (a *VDBGroupsAPIService) RefreshVdbGroup(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupRequest {
 	return ApiRefreshVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1330,7 +1461,8 @@ func (a *VDBGroupsApiService) RefreshVdbGroup(ctx context.Context, vdbGroupId st
 
 // Execute executes the request
 //  @return RefreshVDBGroupResponse
-func (a *VDBGroupsApiService) RefreshVdbGroupExecute(r ApiRefreshVdbGroupRequest) (*RefreshVDBGroupResponse, *http.Response, error) {
+// Deprecated
+func (a *VDBGroupsAPIService) RefreshVdbGroupExecute(r ApiRefreshVdbGroupRequest) (*RefreshVDBGroupResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1338,7 +1470,7 @@ func (a *VDBGroupsApiService) RefreshVdbGroupExecute(r ApiRefreshVdbGroupRequest
 		localVarReturnValue  *RefreshVDBGroupResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.RefreshVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.RefreshVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1426,9 +1558,399 @@ func (a *VDBGroupsApiService) RefreshVdbGroupExecute(r ApiRefreshVdbGroupRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiRefreshVdbGroupBySnapshotRequest struct {
+	ctx context.Context
+	ApiService *VDBGroupsAPIService
+	vdbGroupId string
+	refreshVDBGroupBySnapshotParameters *RefreshVDBGroupBySnapshotParameters
+}
+
+// The parameters to refresh a VDBGroup by snapshot.
+func (r ApiRefreshVdbGroupBySnapshotRequest) RefreshVDBGroupBySnapshotParameters(refreshVDBGroupBySnapshotParameters RefreshVDBGroupBySnapshotParameters) ApiRefreshVdbGroupBySnapshotRequest {
+	r.refreshVDBGroupBySnapshotParameters = &refreshVDBGroupBySnapshotParameters
+	return r
+}
+
+func (r ApiRefreshVdbGroupBySnapshotRequest) Execute() (*RefreshVDBGroupResponse, *http.Response, error) {
+	return r.ApiService.RefreshVdbGroupBySnapshotExecute(r)
+}
+
+/*
+RefreshVdbGroupBySnapshot Refresh a VDBGroup by snapshot.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbGroupId The ID or name of the VDBGroup.
+ @return ApiRefreshVdbGroupBySnapshotRequest
+*/
+func (a *VDBGroupsAPIService) RefreshVdbGroupBySnapshot(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupBySnapshotRequest {
+	return ApiRefreshVdbGroupBySnapshotRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbGroupId: vdbGroupId,
+	}
+}
+
+// Execute executes the request
+//  @return RefreshVDBGroupResponse
+func (a *VDBGroupsAPIService) RefreshVdbGroupBySnapshotExecute(r ApiRefreshVdbGroupBySnapshotRequest) (*RefreshVDBGroupResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RefreshVDBGroupResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.RefreshVdbGroupBySnapshot")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdb-groups/{vdbGroupId}/refresh_by_snapshot"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbGroupId"+"}", url.PathEscape(parameterValueToString(r.vdbGroupId, "vdbGroupId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbGroupId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have at least 1 elements")
+	}
+	if strlen(r.vdbGroupId) > 256 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have less than 256 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.refreshVDBGroupBySnapshotParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRefreshVdbGroupByTimestampRequest struct {
+	ctx context.Context
+	ApiService *VDBGroupsAPIService
+	vdbGroupId string
+	refreshVDBGroupByTimestampParameters *RefreshVDBGroupByTimestampParameters
+}
+
+// The parameters to refresh a VDBGroup by timestamp.
+func (r ApiRefreshVdbGroupByTimestampRequest) RefreshVDBGroupByTimestampParameters(refreshVDBGroupByTimestampParameters RefreshVDBGroupByTimestampParameters) ApiRefreshVdbGroupByTimestampRequest {
+	r.refreshVDBGroupByTimestampParameters = &refreshVDBGroupByTimestampParameters
+	return r
+}
+
+func (r ApiRefreshVdbGroupByTimestampRequest) Execute() (*RefreshVDBGroupResponse, *http.Response, error) {
+	return r.ApiService.RefreshVdbGroupByTimestampExecute(r)
+}
+
+/*
+RefreshVdbGroupByTimestamp Refresh a VDBGroup by timestamp.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbGroupId The ID or name of the VDBGroup.
+ @return ApiRefreshVdbGroupByTimestampRequest
+*/
+func (a *VDBGroupsAPIService) RefreshVdbGroupByTimestamp(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupByTimestampRequest {
+	return ApiRefreshVdbGroupByTimestampRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbGroupId: vdbGroupId,
+	}
+}
+
+// Execute executes the request
+//  @return RefreshVDBGroupResponse
+func (a *VDBGroupsAPIService) RefreshVdbGroupByTimestampExecute(r ApiRefreshVdbGroupByTimestampRequest) (*RefreshVDBGroupResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RefreshVDBGroupResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.RefreshVdbGroupByTimestamp")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdb-groups/{vdbGroupId}/refresh_by_timestamp"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbGroupId"+"}", url.PathEscape(parameterValueToString(r.vdbGroupId, "vdbGroupId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbGroupId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have at least 1 elements")
+	}
+	if strlen(r.vdbGroupId) > 256 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have less than 256 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.refreshVDBGroupByTimestampParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRefreshVdbGroupFromBookmarkRequest struct {
+	ctx context.Context
+	ApiService *VDBGroupsAPIService
+	vdbGroupId string
+	refreshVDBGroupParameters *RefreshVDBGroupParameters
+}
+
+// The parameters to refresh a VDBGroup.
+func (r ApiRefreshVdbGroupFromBookmarkRequest) RefreshVDBGroupParameters(refreshVDBGroupParameters RefreshVDBGroupParameters) ApiRefreshVdbGroupFromBookmarkRequest {
+	r.refreshVDBGroupParameters = &refreshVDBGroupParameters
+	return r
+}
+
+func (r ApiRefreshVdbGroupFromBookmarkRequest) Execute() (*RefreshVDBGroupResponse, *http.Response, error) {
+	return r.ApiService.RefreshVdbGroupFromBookmarkExecute(r)
+}
+
+/*
+RefreshVdbGroupFromBookmark Refresh a VDBGroup from bookmark.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vdbGroupId The ID or name of the VDBGroup.
+ @return ApiRefreshVdbGroupFromBookmarkRequest
+*/
+func (a *VDBGroupsAPIService) RefreshVdbGroupFromBookmark(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupFromBookmarkRequest {
+	return ApiRefreshVdbGroupFromBookmarkRequest{
+		ApiService: a,
+		ctx: ctx,
+		vdbGroupId: vdbGroupId,
+	}
+}
+
+// Execute executes the request
+//  @return RefreshVDBGroupResponse
+func (a *VDBGroupsAPIService) RefreshVdbGroupFromBookmarkExecute(r ApiRefreshVdbGroupFromBookmarkRequest) (*RefreshVDBGroupResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RefreshVDBGroupResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.RefreshVdbGroupFromBookmark")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdb-groups/{vdbGroupId}/refresh_from_bookmark"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbGroupId"+"}", url.PathEscape(parameterValueToString(r.vdbGroupId, "vdbGroupId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vdbGroupId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have at least 1 elements")
+	}
+	if strlen(r.vdbGroupId) > 256 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have less than 256 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.refreshVDBGroupParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRollbackVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	rollbackVDBGroupParameters *RollbackVDBGroupParameters
 }
@@ -1444,13 +1966,17 @@ func (r ApiRollbackVdbGroupRequest) Execute() (*RollbackVDBGroupResponse, *http.
 }
 
 /*
-RollbackVdbGroup Rollback a VDBGroup.
+RollbackVdbGroup Rollback a VDBGroup from a bookmark.
+
+This API is marked as deprecated in favour of API '/vdb-groups/{vdbGroupId}/refresh_from_bookmark'
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiRollbackVdbGroupRequest
+
+Deprecated
 */
-func (a *VDBGroupsApiService) RollbackVdbGroup(ctx context.Context, vdbGroupId string) ApiRollbackVdbGroupRequest {
+func (a *VDBGroupsAPIService) RollbackVdbGroup(ctx context.Context, vdbGroupId string) ApiRollbackVdbGroupRequest {
 	return ApiRollbackVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1460,7 +1986,8 @@ func (a *VDBGroupsApiService) RollbackVdbGroup(ctx context.Context, vdbGroupId s
 
 // Execute executes the request
 //  @return RollbackVDBGroupResponse
-func (a *VDBGroupsApiService) RollbackVdbGroupExecute(r ApiRollbackVdbGroupRequest) (*RollbackVDBGroupResponse, *http.Response, error) {
+// Deprecated
+func (a *VDBGroupsAPIService) RollbackVdbGroupExecute(r ApiRollbackVdbGroupRequest) (*RollbackVDBGroupResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1468,7 +1995,7 @@ func (a *VDBGroupsApiService) RollbackVdbGroupExecute(r ApiRollbackVdbGroupReque
 		localVarReturnValue  *RollbackVDBGroupResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.RollbackVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.RollbackVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1558,7 +2085,7 @@ func (a *VDBGroupsApiService) RollbackVdbGroupExecute(r ApiRollbackVdbGroupReque
 
 type ApiSearchBookmarksByVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	limit *int32
 	cursor *string
@@ -1601,7 +2128,7 @@ SearchBookmarksByVdbGroup Search for bookmarks compatible with this VDB Group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiSearchBookmarksByVdbGroupRequest
 */
-func (a *VDBGroupsApiService) SearchBookmarksByVdbGroup(ctx context.Context, vdbGroupId string) ApiSearchBookmarksByVdbGroupRequest {
+func (a *VDBGroupsAPIService) SearchBookmarksByVdbGroup(ctx context.Context, vdbGroupId string) ApiSearchBookmarksByVdbGroupRequest {
 	return ApiSearchBookmarksByVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1611,7 +2138,7 @@ func (a *VDBGroupsApiService) SearchBookmarksByVdbGroup(ctx context.Context, vdb
 
 // Execute executes the request
 //  @return SearchBookmarksByVDBGroupsResponse
-func (a *VDBGroupsApiService) SearchBookmarksByVdbGroupExecute(r ApiSearchBookmarksByVdbGroupRequest) (*SearchBookmarksByVDBGroupsResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) SearchBookmarksByVdbGroupExecute(r ApiSearchBookmarksByVdbGroupRequest) (*SearchBookmarksByVDBGroupsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1619,7 +2146,7 @@ func (a *VDBGroupsApiService) SearchBookmarksByVdbGroupExecute(r ApiSearchBookma
 		localVarReturnValue  *SearchBookmarksByVDBGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.SearchBookmarksByVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.SearchBookmarksByVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1638,13 +2165,16 @@ func (a *VDBGroupsApiService) SearchBookmarksByVdbGroupExecute(r ApiSearchBookma
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1718,7 +2248,7 @@ func (a *VDBGroupsApiService) SearchBookmarksByVdbGroupExecute(r ApiSearchBookma
 
 type ApiSearchVdbGroupsRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1759,7 +2289,7 @@ SearchVdbGroups Search for VDB Groups.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchVdbGroupsRequest
 */
-func (a *VDBGroupsApiService) SearchVdbGroups(ctx context.Context) ApiSearchVdbGroupsRequest {
+func (a *VDBGroupsAPIService) SearchVdbGroups(ctx context.Context) ApiSearchVdbGroupsRequest {
 	return ApiSearchVdbGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1768,7 +2298,7 @@ func (a *VDBGroupsApiService) SearchVdbGroups(ctx context.Context) ApiSearchVdbG
 
 // Execute executes the request
 //  @return SearchVDBGroupResponse
-func (a *VDBGroupsApiService) SearchVdbGroupsExecute(r ApiSearchVdbGroupsRequest) (*SearchVDBGroupResponse, *http.Response, error) {
+func (a *VDBGroupsAPIService) SearchVdbGroupsExecute(r ApiSearchVdbGroupsRequest) (*SearchVDBGroupResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1776,7 +2306,7 @@ func (a *VDBGroupsApiService) SearchVdbGroupsExecute(r ApiSearchVdbGroupsRequest
 		localVarReturnValue  *SearchVDBGroupResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.SearchVdbGroups")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.SearchVdbGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1788,13 +2318,16 @@ func (a *VDBGroupsApiService) SearchVdbGroupsExecute(r ApiSearchVdbGroupsRequest
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1868,7 +2401,7 @@ func (a *VDBGroupsApiService) SearchVdbGroupsExecute(r ApiSearchVdbGroupsRequest
 
 type ApiUnlockVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 }
 
@@ -1883,7 +2416,7 @@ UnlockVdbGroup Unlock a VDB Group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiUnlockVdbGroupRequest
 */
-func (a *VDBGroupsApiService) UnlockVdbGroup(ctx context.Context, vdbGroupId string) ApiUnlockVdbGroupRequest {
+func (a *VDBGroupsAPIService) UnlockVdbGroup(ctx context.Context, vdbGroupId string) ApiUnlockVdbGroupRequest {
 	return ApiUnlockVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1893,7 +2426,7 @@ func (a *VDBGroupsApiService) UnlockVdbGroup(ctx context.Context, vdbGroupId str
 
 // Execute executes the request
 //  @return VDBGroup
-func (a *VDBGroupsApiService) UnlockVdbGroupExecute(r ApiUnlockVdbGroupRequest) (*VDBGroup, *http.Response, error) {
+func (a *VDBGroupsAPIService) UnlockVdbGroupExecute(r ApiUnlockVdbGroupRequest) (*VDBGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1901,7 +2434,7 @@ func (a *VDBGroupsApiService) UnlockVdbGroupExecute(r ApiUnlockVdbGroupRequest) 
 		localVarReturnValue  *VDBGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.UnlockVdbGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.UnlockVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1989,7 +2522,7 @@ func (a *VDBGroupsApiService) UnlockVdbGroupExecute(r ApiUnlockVdbGroupRequest) 
 
 type ApiUpdateVdbGroupByIdRequest struct {
 	ctx context.Context
-	ApiService *VDBGroupsApiService
+	ApiService *VDBGroupsAPIService
 	vdbGroupId string
 	updateVDBGroupParameters *UpdateVDBGroupParameters
 }
@@ -2011,7 +2544,7 @@ UpdateVdbGroupById Update values of a VDB group.
  @param vdbGroupId The ID or name of the VDBGroup.
  @return ApiUpdateVdbGroupByIdRequest
 */
-func (a *VDBGroupsApiService) UpdateVdbGroupById(ctx context.Context, vdbGroupId string) ApiUpdateVdbGroupByIdRequest {
+func (a *VDBGroupsAPIService) UpdateVdbGroupById(ctx context.Context, vdbGroupId string) ApiUpdateVdbGroupByIdRequest {
 	return ApiUpdateVdbGroupByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2021,7 +2554,7 @@ func (a *VDBGroupsApiService) UpdateVdbGroupById(ctx context.Context, vdbGroupId
 
 // Execute executes the request
 //  @return VDBGroup
-func (a *VDBGroupsApiService) UpdateVdbGroupByIdExecute(r ApiUpdateVdbGroupByIdRequest) (*VDBGroup, *http.Response, error) {
+func (a *VDBGroupsAPIService) UpdateVdbGroupByIdExecute(r ApiUpdateVdbGroupByIdRequest) (*VDBGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -2029,7 +2562,7 @@ func (a *VDBGroupsApiService) UpdateVdbGroupByIdExecute(r ApiUpdateVdbGroupByIdR
 		localVarReturnValue  *VDBGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.UpdateVdbGroupById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.UpdateVdbGroupById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

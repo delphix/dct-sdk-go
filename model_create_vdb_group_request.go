@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CreateVDBGroupRequest type satisfies the MappedNullable interface at compile time
@@ -21,21 +23,24 @@ var _ MappedNullable = &CreateVDBGroupRequest{}
 // CreateVDBGroupRequest struct for CreateVDBGroupRequest
 type CreateVDBGroupRequest struct {
 	Name string `json:"name"`
-	VdbIds []string `json:"vdb_ids"`
+	VdbIds []string `json:"vdb_ids,omitempty"`
+	// Dictates order of operations on VDBs. Operations can be performed in parallel <br> for all VDBs or sequentially. Below are possible valid and invalid orderings given an example <br> VDB group with 3 vdbs (A, B, and C).<br> Valid:<br> {\"vdb_id\":\"vdb-1\", \"order\":\"1\"} {\"vdb_id\":\"vdb-2\", order:\"1\"} {vdb_id:\"vdb-3\", order:\"1\"} (parallel)<br> {vdb_id:\"vdb-1\", order:\"1\"} {vdb_id:\"vdb-2\", order:\"2\"} {vdb_id:\"vdb-3\", order:\"3\"} (sequential)<br> Invalid:<br> {vdb_id:\"vdb-1\", order:\"A\"} {vdb_id:\"vdb-2\", order:\"B\"} {vdb_id:\"vdb-3\", order:\"C\"} (sequential)<br><br> In the sequential case the vdbs with priority 1 is the first to be started and the last to<br> be stopped. This value is set on creation of VDB groups.
+	Vdbs []CreateVDBGroupOrder `json:"vdbs,omitempty"`
 	// The tags to be created for VDB Group.
 	Tags []Tag `json:"tags,omitempty"`
 	// Whether the account creating this VDB group must be configured as owner of the VDB group.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
 
+type _CreateVDBGroupRequest CreateVDBGroupRequest
+
 // NewCreateVDBGroupRequest instantiates a new CreateVDBGroupRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateVDBGroupRequest(name string, vdbIds []string) *CreateVDBGroupRequest {
+func NewCreateVDBGroupRequest(name string) *CreateVDBGroupRequest {
 	this := CreateVDBGroupRequest{}
 	this.Name = name
-	this.VdbIds = vdbIds
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
@@ -75,28 +80,68 @@ func (o *CreateVDBGroupRequest) SetName(v string) {
 	o.Name = v
 }
 
-// GetVdbIds returns the VdbIds field value
+// GetVdbIds returns the VdbIds field value if set, zero value otherwise.
 func (o *CreateVDBGroupRequest) GetVdbIds() []string {
-	if o == nil {
+	if o == nil || IsNil(o.VdbIds) {
 		var ret []string
 		return ret
 	}
-
 	return o.VdbIds
 }
 
-// GetVdbIdsOk returns a tuple with the VdbIds field value
+// GetVdbIdsOk returns a tuple with the VdbIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateVDBGroupRequest) GetVdbIdsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.VdbIds) {
 		return nil, false
 	}
 	return o.VdbIds, true
 }
 
-// SetVdbIds sets field value
+// HasVdbIds returns a boolean if a field has been set.
+func (o *CreateVDBGroupRequest) HasVdbIds() bool {
+	if o != nil && !IsNil(o.VdbIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbIds gets a reference to the given []string and assigns it to the VdbIds field.
 func (o *CreateVDBGroupRequest) SetVdbIds(v []string) {
 	o.VdbIds = v
+}
+
+// GetVdbs returns the Vdbs field value if set, zero value otherwise.
+func (o *CreateVDBGroupRequest) GetVdbs() []CreateVDBGroupOrder {
+	if o == nil || IsNil(o.Vdbs) {
+		var ret []CreateVDBGroupOrder
+		return ret
+	}
+	return o.Vdbs
+}
+
+// GetVdbsOk returns a tuple with the Vdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateVDBGroupRequest) GetVdbsOk() ([]CreateVDBGroupOrder, bool) {
+	if o == nil || IsNil(o.Vdbs) {
+		return nil, false
+	}
+	return o.Vdbs, true
+}
+
+// HasVdbs returns a boolean if a field has been set.
+func (o *CreateVDBGroupRequest) HasVdbs() bool {
+	if o != nil && !IsNil(o.Vdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbs gets a reference to the given []CreateVDBGroupOrder and assigns it to the Vdbs field.
+func (o *CreateVDBGroupRequest) SetVdbs(v []CreateVDBGroupOrder) {
+	o.Vdbs = v
 }
 
 // GetTags returns the Tags field value if set, zero value otherwise.
@@ -174,7 +219,12 @@ func (o CreateVDBGroupRequest) MarshalJSON() ([]byte, error) {
 func (o CreateVDBGroupRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
-	toSerialize["vdb_ids"] = o.VdbIds
+	if !IsNil(o.VdbIds) {
+		toSerialize["vdb_ids"] = o.VdbIds
+	}
+	if !IsNil(o.Vdbs) {
+		toSerialize["vdbs"] = o.Vdbs
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
@@ -182,6 +232,43 @@ func (o CreateVDBGroupRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateVDBGroupRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateVDBGroupRequest := _CreateVDBGroupRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateVDBGroupRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateVDBGroupRequest(varCreateVDBGroupRequest)
+
+	return err
 }
 
 type NullableCreateVDBGroupRequest struct {

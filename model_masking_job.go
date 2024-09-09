@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,10 @@ type MaskingJob struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this Masking Job.
 	Name *string `json:"name,omitempty"`
+	// The ID of the Rule Set used by this Masking Job (Standard Job only). For hyperscale jobs, see dataset_id.
+	RuleSetId *string `json:"rule_set_id,omitempty"`
+	// The name of the Rule Set used by this Masking Job (Standard Job only). For hyperscale jobs, see dataset_id.
+	RuleSetName *string `json:"rule_set_name,omitempty"`
 	Ruleset *MaskingRuleset `json:"ruleset,omitempty"`
 	// The type of data being masked by this Job. If the Masking Job is masking a database this is the type of the database (Standard Job only).
 	ConnectorType *string `json:"connector_type,omitempty"`
@@ -34,8 +38,7 @@ type MaskingJob struct {
 	CreationDate *time.Time `json:"creation_date,omitempty"`
 	// The date this MaskingJob was last executed to completion.
 	LastCompletedExecutionDate *time.Time `json:"last_completed_execution_date,omitempty"`
-	// The status of this MaskingJob's last execution.
-	LastExecutionStatus *string `json:"last_execution_status,omitempty"`
+	LastExecutionStatus *ExecutionStatus `json:"last_execution_status,omitempty"`
 	// The ID of this MaskingJob's last execution.
 	LastExecutionId *string `json:"last_execution_id,omitempty"`
 	// The username of the Connector used by the MaskingJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
@@ -46,7 +49,8 @@ type MaskingJob struct {
 	OnTheFlySourceConnectorUsername NullableString `json:"on_the_fly_source_connector_username,omitempty"`
 	// The password of the source Connector used by the on-the-fly MaskingJob (Standard Job only).
 	OnTheFlySourceConnectorPassword NullableString `json:"on_the_fly_source_connector_password,omitempty"`
-	// The type of this Job.
+	// The engine type of this Job. This field is present for API backward compatibility.
+	// Deprecated
 	JobType *string `json:"job_type,omitempty"`
 	// The ID of the Hyperscale instance of this Job (Hyperscale Job only).
 	HyperscaleInstanceId *string `json:"hyperscale_instance_id,omitempty"`
@@ -158,6 +162,70 @@ func (o *MaskingJob) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *MaskingJob) SetName(v string) {
 	o.Name = &v
+}
+
+// GetRuleSetId returns the RuleSetId field value if set, zero value otherwise.
+func (o *MaskingJob) GetRuleSetId() string {
+	if o == nil || IsNil(o.RuleSetId) {
+		var ret string
+		return ret
+	}
+	return *o.RuleSetId
+}
+
+// GetRuleSetIdOk returns a tuple with the RuleSetId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingJob) GetRuleSetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RuleSetId) {
+		return nil, false
+	}
+	return o.RuleSetId, true
+}
+
+// HasRuleSetId returns a boolean if a field has been set.
+func (o *MaskingJob) HasRuleSetId() bool {
+	if o != nil && !IsNil(o.RuleSetId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRuleSetId gets a reference to the given string and assigns it to the RuleSetId field.
+func (o *MaskingJob) SetRuleSetId(v string) {
+	o.RuleSetId = &v
+}
+
+// GetRuleSetName returns the RuleSetName field value if set, zero value otherwise.
+func (o *MaskingJob) GetRuleSetName() string {
+	if o == nil || IsNil(o.RuleSetName) {
+		var ret string
+		return ret
+	}
+	return *o.RuleSetName
+}
+
+// GetRuleSetNameOk returns a tuple with the RuleSetName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingJob) GetRuleSetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.RuleSetName) {
+		return nil, false
+	}
+	return o.RuleSetName, true
+}
+
+// HasRuleSetName returns a boolean if a field has been set.
+func (o *MaskingJob) HasRuleSetName() bool {
+	if o != nil && !IsNil(o.RuleSetName) {
+		return true
+	}
+
+	return false
+}
+
+// SetRuleSetName gets a reference to the given string and assigns it to the RuleSetName field.
+func (o *MaskingJob) SetRuleSetName(v string) {
+	o.RuleSetName = &v
 }
 
 // GetRuleset returns the Ruleset field value if set, zero value otherwise.
@@ -321,9 +389,9 @@ func (o *MaskingJob) SetLastCompletedExecutionDate(v time.Time) {
 }
 
 // GetLastExecutionStatus returns the LastExecutionStatus field value if set, zero value otherwise.
-func (o *MaskingJob) GetLastExecutionStatus() string {
+func (o *MaskingJob) GetLastExecutionStatus() ExecutionStatus {
 	if o == nil || IsNil(o.LastExecutionStatus) {
-		var ret string
+		var ret ExecutionStatus
 		return ret
 	}
 	return *o.LastExecutionStatus
@@ -331,7 +399,7 @@ func (o *MaskingJob) GetLastExecutionStatus() string {
 
 // GetLastExecutionStatusOk returns a tuple with the LastExecutionStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MaskingJob) GetLastExecutionStatusOk() (*string, bool) {
+func (o *MaskingJob) GetLastExecutionStatusOk() (*ExecutionStatus, bool) {
 	if o == nil || IsNil(o.LastExecutionStatus) {
 		return nil, false
 	}
@@ -347,8 +415,8 @@ func (o *MaskingJob) HasLastExecutionStatus() bool {
 	return false
 }
 
-// SetLastExecutionStatus gets a reference to the given string and assigns it to the LastExecutionStatus field.
-func (o *MaskingJob) SetLastExecutionStatus(v string) {
+// SetLastExecutionStatus gets a reference to the given ExecutionStatus and assigns it to the LastExecutionStatus field.
+func (o *MaskingJob) SetLastExecutionStatus(v ExecutionStatus) {
 	o.LastExecutionStatus = &v
 }
 
@@ -553,6 +621,7 @@ func (o *MaskingJob) UnsetOnTheFlySourceConnectorPassword() {
 }
 
 // GetJobType returns the JobType field value if set, zero value otherwise.
+// Deprecated
 func (o *MaskingJob) GetJobType() string {
 	if o == nil || IsNil(o.JobType) {
 		var ret string
@@ -563,6 +632,7 @@ func (o *MaskingJob) GetJobType() string {
 
 // GetJobTypeOk returns a tuple with the JobType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *MaskingJob) GetJobTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.JobType) {
 		return nil, false
@@ -580,6 +650,7 @@ func (o *MaskingJob) HasJobType() bool {
 }
 
 // SetJobType gets a reference to the given string and assigns it to the JobType field.
+// Deprecated
 func (o *MaskingJob) SetJobType(v string) {
 	o.JobType = &v
 }
@@ -1074,9 +1145,17 @@ func (o MaskingJob) MarshalJSON() ([]byte, error) {
 
 func (o MaskingJob) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.RuleSetId) {
+		toSerialize["rule_set_id"] = o.RuleSetId
+	}
+	if !IsNil(o.RuleSetName) {
+		toSerialize["rule_set_name"] = o.RuleSetName
 	}
 	if !IsNil(o.Ruleset) {
 		toSerialize["ruleset"] = o.Ruleset

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the OracleDSourceLinkSourceParameters type satisfies the MappedNullable interface at compile time
@@ -86,6 +88,8 @@ type OracleDSourceLinkSourceParameters struct {
 	NonSysUsername *string `json:"non_sys_username,omitempty"`
 	// Password for non sys user authentication (Single tenant only).
 	NonSysPassword *string `json:"non_sys_password,omitempty"`
+	// Delphix display name for the non sys vault user(Single tenant only).
+	NonSysVaultUsername *string `json:"non_sys_vault_username,omitempty"`
 	// The name or reference of the vault from which to read the database credentials (Single tenant only).
 	NonSysVault *string `json:"non_sys_vault,omitempty"`
 	// Vault engine name where the credential is stored (Single tenant only).
@@ -108,6 +112,8 @@ type OracleDSourceLinkSourceParameters struct {
 	FallbackUsername *string `json:"fallback_username,omitempty"`
 	// Password for fallback username.
 	FallbackPassword *string `json:"fallback_password,omitempty"`
+	// Delphix display name for the fallback vault user.
+	FallbackVaultUsername *string `json:"fallback_vault_username,omitempty"`
 	// The name or reference of the vault from which to read the database credentials.
 	FallbackVault *string `json:"fallback_vault,omitempty"`
 	// Vault engine name where the credential is stored.
@@ -129,6 +135,8 @@ type OracleDSourceLinkSourceParameters struct {
 	// Operations to perform after syncing a created dSource and before running the LogSync.
 	OpsPreLogSync []SourceOperation `json:"ops_pre_log_sync,omitempty"`
 }
+
+type _OracleDSourceLinkSourceParameters OracleDSourceLinkSourceParameters
 
 // NewOracleDSourceLinkSourceParameters instantiates a new OracleDSourceLinkSourceParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -1268,6 +1276,38 @@ func (o *OracleDSourceLinkSourceParameters) SetNonSysPassword(v string) {
 	o.NonSysPassword = &v
 }
 
+// GetNonSysVaultUsername returns the NonSysVaultUsername field value if set, zero value otherwise.
+func (o *OracleDSourceLinkSourceParameters) GetNonSysVaultUsername() string {
+	if o == nil || IsNil(o.NonSysVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.NonSysVaultUsername
+}
+
+// GetNonSysVaultUsernameOk returns a tuple with the NonSysVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleDSourceLinkSourceParameters) GetNonSysVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.NonSysVaultUsername) {
+		return nil, false
+	}
+	return o.NonSysVaultUsername, true
+}
+
+// HasNonSysVaultUsername returns a boolean if a field has been set.
+func (o *OracleDSourceLinkSourceParameters) HasNonSysVaultUsername() bool {
+	if o != nil && !IsNil(o.NonSysVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetNonSysVaultUsername gets a reference to the given string and assigns it to the NonSysVaultUsername field.
+func (o *OracleDSourceLinkSourceParameters) SetNonSysVaultUsername(v string) {
+	o.NonSysVaultUsername = &v
+}
+
 // GetNonSysVault returns the NonSysVault field value if set, zero value otherwise.
 func (o *OracleDSourceLinkSourceParameters) GetNonSysVault() string {
 	if o == nil || IsNil(o.NonSysVault) {
@@ -1618,6 +1658,38 @@ func (o *OracleDSourceLinkSourceParameters) HasFallbackPassword() bool {
 // SetFallbackPassword gets a reference to the given string and assigns it to the FallbackPassword field.
 func (o *OracleDSourceLinkSourceParameters) SetFallbackPassword(v string) {
 	o.FallbackPassword = &v
+}
+
+// GetFallbackVaultUsername returns the FallbackVaultUsername field value if set, zero value otherwise.
+func (o *OracleDSourceLinkSourceParameters) GetFallbackVaultUsername() string {
+	if o == nil || IsNil(o.FallbackVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.FallbackVaultUsername
+}
+
+// GetFallbackVaultUsernameOk returns a tuple with the FallbackVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleDSourceLinkSourceParameters) GetFallbackVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.FallbackVaultUsername) {
+		return nil, false
+	}
+	return o.FallbackVaultUsername, true
+}
+
+// HasFallbackVaultUsername returns a boolean if a field has been set.
+func (o *OracleDSourceLinkSourceParameters) HasFallbackVaultUsername() bool {
+	if o != nil && !IsNil(o.FallbackVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetFallbackVaultUsername gets a reference to the given string and assigns it to the FallbackVaultUsername field.
+func (o *OracleDSourceLinkSourceParameters) SetFallbackVaultUsername(v string) {
+	o.FallbackVaultUsername = &v
 }
 
 // GetFallbackVault returns the FallbackVault field value if set, zero value otherwise.
@@ -2047,6 +2119,9 @@ func (o OracleDSourceLinkSourceParameters) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.NonSysPassword) {
 		toSerialize["non_sys_password"] = o.NonSysPassword
 	}
+	if !IsNil(o.NonSysVaultUsername) {
+		toSerialize["non_sys_vault_username"] = o.NonSysVaultUsername
+	}
 	if !IsNil(o.NonSysVault) {
 		toSerialize["non_sys_vault"] = o.NonSysVault
 	}
@@ -2080,6 +2155,9 @@ func (o OracleDSourceLinkSourceParameters) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.FallbackPassword) {
 		toSerialize["fallback_password"] = o.FallbackPassword
 	}
+	if !IsNil(o.FallbackVaultUsername) {
+		toSerialize["fallback_vault_username"] = o.FallbackVaultUsername
+	}
 	if !IsNil(o.FallbackVault) {
 		toSerialize["fallback_vault"] = o.FallbackVault
 	}
@@ -2111,6 +2189,43 @@ func (o OracleDSourceLinkSourceParameters) ToMap() (map[string]interface{}, erro
 		toSerialize["ops_pre_log_sync"] = o.OpsPreLogSync
 	}
 	return toSerialize, nil
+}
+
+func (o *OracleDSourceLinkSourceParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varOracleDSourceLinkSourceParameters := _OracleDSourceLinkSourceParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varOracleDSourceLinkSourceParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = OracleDSourceLinkSourceParameters(varOracleDSourceLinkSourceParameters)
+
+	return err
 }
 
 type NullableOracleDSourceLinkSourceParameters struct {

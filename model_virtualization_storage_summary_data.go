@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the VirtualizationStorageSummaryData type satisfies the MappedNullable interface at compile time
@@ -40,7 +42,15 @@ type VirtualizationStorageSummaryData struct {
 	VdbCount *int64 `json:"vdb_count,omitempty"`
 	// The total number of dSources and VDBs on the engine.
 	TotalObjectCount *int64 `json:"total_object_count,omitempty"`
+	// The amount of storage reversed by the engine as a safety buffer, in bytes.
+	ReservedStorage *int64 `json:"reserved_storage,omitempty"`
+	// The amount of storage used by all dSources on the engine, in bytes.
+	DsourceUsedStorage *int64 `json:"dsource_used_storage,omitempty"`
+	// The amount of storage used by all VDBs on the engine, in bytes.
+	VdbUsedStorage *int64 `json:"vdb_used_storage,omitempty"`
 }
+
+type _VirtualizationStorageSummaryData VirtualizationStorageSummaryData
 
 // NewVirtualizationStorageSummaryData instantiates a new VirtualizationStorageSummaryData object
 // This constructor will assign default values to properties that have it defined,
@@ -358,6 +368,102 @@ func (o *VirtualizationStorageSummaryData) SetTotalObjectCount(v int64) {
 	o.TotalObjectCount = &v
 }
 
+// GetReservedStorage returns the ReservedStorage field value if set, zero value otherwise.
+func (o *VirtualizationStorageSummaryData) GetReservedStorage() int64 {
+	if o == nil || IsNil(o.ReservedStorage) {
+		var ret int64
+		return ret
+	}
+	return *o.ReservedStorage
+}
+
+// GetReservedStorageOk returns a tuple with the ReservedStorage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationStorageSummaryData) GetReservedStorageOk() (*int64, bool) {
+	if o == nil || IsNil(o.ReservedStorage) {
+		return nil, false
+	}
+	return o.ReservedStorage, true
+}
+
+// HasReservedStorage returns a boolean if a field has been set.
+func (o *VirtualizationStorageSummaryData) HasReservedStorage() bool {
+	if o != nil && !IsNil(o.ReservedStorage) {
+		return true
+	}
+
+	return false
+}
+
+// SetReservedStorage gets a reference to the given int64 and assigns it to the ReservedStorage field.
+func (o *VirtualizationStorageSummaryData) SetReservedStorage(v int64) {
+	o.ReservedStorage = &v
+}
+
+// GetDsourceUsedStorage returns the DsourceUsedStorage field value if set, zero value otherwise.
+func (o *VirtualizationStorageSummaryData) GetDsourceUsedStorage() int64 {
+	if o == nil || IsNil(o.DsourceUsedStorage) {
+		var ret int64
+		return ret
+	}
+	return *o.DsourceUsedStorage
+}
+
+// GetDsourceUsedStorageOk returns a tuple with the DsourceUsedStorage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationStorageSummaryData) GetDsourceUsedStorageOk() (*int64, bool) {
+	if o == nil || IsNil(o.DsourceUsedStorage) {
+		return nil, false
+	}
+	return o.DsourceUsedStorage, true
+}
+
+// HasDsourceUsedStorage returns a boolean if a field has been set.
+func (o *VirtualizationStorageSummaryData) HasDsourceUsedStorage() bool {
+	if o != nil && !IsNil(o.DsourceUsedStorage) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceUsedStorage gets a reference to the given int64 and assigns it to the DsourceUsedStorage field.
+func (o *VirtualizationStorageSummaryData) SetDsourceUsedStorage(v int64) {
+	o.DsourceUsedStorage = &v
+}
+
+// GetVdbUsedStorage returns the VdbUsedStorage field value if set, zero value otherwise.
+func (o *VirtualizationStorageSummaryData) GetVdbUsedStorage() int64 {
+	if o == nil || IsNil(o.VdbUsedStorage) {
+		var ret int64
+		return ret
+	}
+	return *o.VdbUsedStorage
+}
+
+// GetVdbUsedStorageOk returns a tuple with the VdbUsedStorage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationStorageSummaryData) GetVdbUsedStorageOk() (*int64, bool) {
+	if o == nil || IsNil(o.VdbUsedStorage) {
+		return nil, false
+	}
+	return o.VdbUsedStorage, true
+}
+
+// HasVdbUsedStorage returns a boolean if a field has been set.
+func (o *VirtualizationStorageSummaryData) HasVdbUsedStorage() bool {
+	if o != nil && !IsNil(o.VdbUsedStorage) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbUsedStorage gets a reference to the given int64 and assigns it to the VdbUsedStorage field.
+func (o *VirtualizationStorageSummaryData) SetVdbUsedStorage(v int64) {
+	o.VdbUsedStorage = &v
+}
+
 func (o VirtualizationStorageSummaryData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -392,7 +498,55 @@ func (o VirtualizationStorageSummaryData) ToMap() (map[string]interface{}, error
 	if !IsNil(o.TotalObjectCount) {
 		toSerialize["total_object_count"] = o.TotalObjectCount
 	}
+	if !IsNil(o.ReservedStorage) {
+		toSerialize["reserved_storage"] = o.ReservedStorage
+	}
+	if !IsNil(o.DsourceUsedStorage) {
+		toSerialize["dsource_used_storage"] = o.DsourceUsedStorage
+	}
+	if !IsNil(o.VdbUsedStorage) {
+		toSerialize["vdb_used_storage"] = o.VdbUsedStorage
+	}
 	return toSerialize, nil
+}
+
+func (o *VirtualizationStorageSummaryData) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"engine_id",
+		"engine_name",
+		"engine_hostname",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varVirtualizationStorageSummaryData := _VirtualizationStorageSummaryData{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varVirtualizationStorageSummaryData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = VirtualizationStorageSummaryData(varVirtualizationStorageSummaryData)
+
+	return err
 }
 
 type NullableVirtualizationStorageSummaryData struct {

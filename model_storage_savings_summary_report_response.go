@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &StorageSavingsSummaryReportResponse{}
 type StorageSavingsSummaryReportResponse struct {
 	Items []StorageSavingsSummaryData `json:"items,omitempty"`
 	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
-	SummarizedData *StorageSavingsReportSummarizedData `json:"summarized_data,omitempty"`
+	Totals *StorageSavingsReportSummarizedData `json:"totals,omitempty"`
 }
 
 // NewStorageSavingsSummaryReportResponse instantiates a new StorageSavingsSummaryReportResponse object
@@ -106,36 +106,36 @@ func (o *StorageSavingsSummaryReportResponse) SetResponseMetadata(v PaginatedRes
 	o.ResponseMetadata = &v
 }
 
-// GetSummarizedData returns the SummarizedData field value if set, zero value otherwise.
-func (o *StorageSavingsSummaryReportResponse) GetSummarizedData() StorageSavingsReportSummarizedData {
-	if o == nil || IsNil(o.SummarizedData) {
+// GetTotals returns the Totals field value if set, zero value otherwise.
+func (o *StorageSavingsSummaryReportResponse) GetTotals() StorageSavingsReportSummarizedData {
+	if o == nil || IsNil(o.Totals) {
 		var ret StorageSavingsReportSummarizedData
 		return ret
 	}
-	return *o.SummarizedData
+	return *o.Totals
 }
 
-// GetSummarizedDataOk returns a tuple with the SummarizedData field value if set, nil otherwise
+// GetTotalsOk returns a tuple with the Totals field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StorageSavingsSummaryReportResponse) GetSummarizedDataOk() (*StorageSavingsReportSummarizedData, bool) {
-	if o == nil || IsNil(o.SummarizedData) {
+func (o *StorageSavingsSummaryReportResponse) GetTotalsOk() (*StorageSavingsReportSummarizedData, bool) {
+	if o == nil || IsNil(o.Totals) {
 		return nil, false
 	}
-	return o.SummarizedData, true
+	return o.Totals, true
 }
 
-// HasSummarizedData returns a boolean if a field has been set.
-func (o *StorageSavingsSummaryReportResponse) HasSummarizedData() bool {
-	if o != nil && !IsNil(o.SummarizedData) {
+// HasTotals returns a boolean if a field has been set.
+func (o *StorageSavingsSummaryReportResponse) HasTotals() bool {
+	if o != nil && !IsNil(o.Totals) {
 		return true
 	}
 
 	return false
 }
 
-// SetSummarizedData gets a reference to the given StorageSavingsReportSummarizedData and assigns it to the SummarizedData field.
-func (o *StorageSavingsSummaryReportResponse) SetSummarizedData(v StorageSavingsReportSummarizedData) {
-	o.SummarizedData = &v
+// SetTotals gets a reference to the given StorageSavingsReportSummarizedData and assigns it to the Totals field.
+func (o *StorageSavingsSummaryReportResponse) SetTotals(v StorageSavingsReportSummarizedData) {
+	o.Totals = &v
 }
 
 func (o StorageSavingsSummaryReportResponse) MarshalJSON() ([]byte, error) {
@@ -154,8 +154,8 @@ func (o StorageSavingsSummaryReportResponse) ToMap() (map[string]interface{}, er
 	if !IsNil(o.ResponseMetadata) {
 		toSerialize["response_metadata"] = o.ResponseMetadata
 	}
-	if !IsNil(o.SummarizedData) {
-		toSerialize["summarized_data"] = o.SummarizedData
+	if !IsNil(o.Totals) {
+		toSerialize["totals"] = o.Totals
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -25,8 +25,10 @@ type VDB struct {
 	Id *string `json:"id,omitempty"`
 	// The database type of this VDB.
 	DatabaseType NullableString `json:"database_type,omitempty"`
-	// The container name of this VDB.
+	// The logical name of this VDB.
 	Name NullableString `json:"name,omitempty"`
+	// The name of the database on the target environment or in the database management system.
+	DatabaseName *string `json:"database_name,omitempty"`
 	// The namespace id of this VDB.
 	NamespaceId *string `json:"namespace_id,omitempty"`
 	// The namespace name of this VDB.
@@ -69,6 +71,8 @@ type VDB struct {
 	ParentId NullableString `json:"parent_id,omitempty"`
 	// A reference to the parent dSource of this VDB.
 	ParentDsourceId NullableString `json:"parent_dsource_id,omitempty"`
+	// A reference to the root parent dataset of this VDB which could be a VDB or a dSource.
+	RootParentId NullableString `json:"root_parent_id,omitempty"`
 	// The name of the group containing this VDB.
 	GroupName NullableString `json:"group_name,omitempty"`
 	// Name of the Engine where this VDB is hosted
@@ -101,6 +105,10 @@ type VDB struct {
 	VdbRestart *bool `json:"vdb_restart,omitempty"`
 	// Indicates whether this VDB has an AppData database.
 	IsAppdata *bool `json:"is_appdata,omitempty"`
+	// ZFS exported data directory path.
+	ExportedDataDirectory *string `json:"exported_data_directory,omitempty"`
+	// ZFS exported data directory path of the virtual CDB container (vCDB).
+	VcdbExportedDataDirectory *string `json:"vcdb_exported_data_directory,omitempty"`
 	// The ID of the toolkit associated with this VDB.
 	ToolkitId *string `json:"toolkit_id,omitempty"`
 	// The version of the plugin associated with this VDB.
@@ -113,6 +121,10 @@ type VDB struct {
 	PrimaryEngineName *string `json:"primary_engine_name,omitempty"`
 	// The list of replicas replicated from this object.
 	Replicas []Replica `json:"replicas,omitempty"`
+	// Indicates whether datapatch should be invoked.
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// The list of node listeners for this VDB.
+	NodeListeners []string `json:"node_listeners,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -246,6 +258,38 @@ func (o *VDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *VDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
+func (o *VDB) GetDatabaseName() string {
+	if o == nil || IsNil(o.DatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseName
+}
+
+// GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseName) {
+		return nil, false
+	}
+	return o.DatabaseName, true
+}
+
+// HasDatabaseName returns a boolean if a field has been set.
+func (o *VDB) HasDatabaseName() bool {
+	if o != nil && !IsNil(o.DatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
+func (o *VDB) SetDatabaseName(v string) {
+	o.DatabaseName = &v
 }
 
 // GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
@@ -1050,6 +1094,48 @@ func (o *VDB) UnsetParentDsourceId() {
 	o.ParentDsourceId.Unset()
 }
 
+// GetRootParentId returns the RootParentId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetRootParentId() string {
+	if o == nil || IsNil(o.RootParentId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RootParentId.Get()
+}
+
+// GetRootParentIdOk returns a tuple with the RootParentId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetRootParentIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RootParentId.Get(), o.RootParentId.IsSet()
+}
+
+// HasRootParentId returns a boolean if a field has been set.
+func (o *VDB) HasRootParentId() bool {
+	if o != nil && o.RootParentId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRootParentId gets a reference to the given NullableString and assigns it to the RootParentId field.
+func (o *VDB) SetRootParentId(v string) {
+	o.RootParentId.Set(&v)
+}
+// SetRootParentIdNil sets the value for RootParentId to be an explicit nil
+func (o *VDB) SetRootParentIdNil() {
+	o.RootParentId.Set(nil)
+}
+
+// UnsetRootParentId ensures that no value is present for RootParentId, not even an explicit nil
+func (o *VDB) UnsetRootParentId() {
+	o.RootParentId.Unset()
+}
+
 // GetGroupName returns the GroupName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetGroupName() string {
 	if o == nil || IsNil(o.GroupName.Get()) {
@@ -1303,7 +1389,7 @@ func (o *VDB) GetAppdataSourceParamsOk() (map[string]interface{}, bool) {
 
 // HasAppdataSourceParams returns a boolean if a field has been set.
 func (o *VDB) HasAppdataSourceParams() bool {
-	if o != nil && IsNil(o.AppdataSourceParams) {
+	if o != nil && !IsNil(o.AppdataSourceParams) {
 		return true
 	}
 
@@ -1378,7 +1464,7 @@ func (o *VDB) GetConfigParamsOk() (map[string]interface{}, bool) {
 
 // HasConfigParams returns a boolean if a field has been set.
 func (o *VDB) HasConfigParams() bool {
-	if o != nil && IsNil(o.ConfigParams) {
+	if o != nil && !IsNil(o.ConfigParams) {
 		return true
 	}
 
@@ -1411,7 +1497,7 @@ func (o *VDB) GetAdditionalMountPointsOk() ([]AdditionalMountPoint, bool) {
 
 // HasAdditionalMountPoints returns a boolean if a field has been set.
 func (o *VDB) HasAdditionalMountPoints() bool {
-	if o != nil && IsNil(o.AdditionalMountPoints) {
+	if o != nil && !IsNil(o.AdditionalMountPoints) {
 		return true
 	}
 
@@ -1444,7 +1530,7 @@ func (o *VDB) GetAppdataConfigParamsOk() (map[string]interface{}, bool) {
 
 // HasAppdataConfigParams returns a boolean if a field has been set.
 func (o *VDB) HasAppdataConfigParams() bool {
-	if o != nil && IsNil(o.AppdataConfigParams) {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
 		return true
 	}
 
@@ -1658,6 +1744,70 @@ func (o *VDB) SetIsAppdata(v bool) {
 	o.IsAppdata = &v
 }
 
+// GetExportedDataDirectory returns the ExportedDataDirectory field value if set, zero value otherwise.
+func (o *VDB) GetExportedDataDirectory() string {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		var ret string
+		return ret
+	}
+	return *o.ExportedDataDirectory
+}
+
+// GetExportedDataDirectoryOk returns a tuple with the ExportedDataDirectory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetExportedDataDirectoryOk() (*string, bool) {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		return nil, false
+	}
+	return o.ExportedDataDirectory, true
+}
+
+// HasExportedDataDirectory returns a boolean if a field has been set.
+func (o *VDB) HasExportedDataDirectory() bool {
+	if o != nil && !IsNil(o.ExportedDataDirectory) {
+		return true
+	}
+
+	return false
+}
+
+// SetExportedDataDirectory gets a reference to the given string and assigns it to the ExportedDataDirectory field.
+func (o *VDB) SetExportedDataDirectory(v string) {
+	o.ExportedDataDirectory = &v
+}
+
+// GetVcdbExportedDataDirectory returns the VcdbExportedDataDirectory field value if set, zero value otherwise.
+func (o *VDB) GetVcdbExportedDataDirectory() string {
+	if o == nil || IsNil(o.VcdbExportedDataDirectory) {
+		var ret string
+		return ret
+	}
+	return *o.VcdbExportedDataDirectory
+}
+
+// GetVcdbExportedDataDirectoryOk returns a tuple with the VcdbExportedDataDirectory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetVcdbExportedDataDirectoryOk() (*string, bool) {
+	if o == nil || IsNil(o.VcdbExportedDataDirectory) {
+		return nil, false
+	}
+	return o.VcdbExportedDataDirectory, true
+}
+
+// HasVcdbExportedDataDirectory returns a boolean if a field has been set.
+func (o *VDB) HasVcdbExportedDataDirectory() bool {
+	if o != nil && !IsNil(o.VcdbExportedDataDirectory) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbExportedDataDirectory gets a reference to the given string and assigns it to the VcdbExportedDataDirectory field.
+func (o *VDB) SetVcdbExportedDataDirectory(v string) {
+	o.VcdbExportedDataDirectory = &v
+}
+
 // GetToolkitId returns the ToolkitId field value if set, zero value otherwise.
 func (o *VDB) GetToolkitId() string {
 	if o == nil || IsNil(o.ToolkitId) {
@@ -1860,6 +2010,70 @@ func (o *VDB) SetReplicas(v []Replica) {
 	o.Replicas = v
 }
 
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *VDB) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *VDB) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *VDB) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
+// GetNodeListeners returns the NodeListeners field value if set, zero value otherwise.
+func (o *VDB) GetNodeListeners() []string {
+	if o == nil || IsNil(o.NodeListeners) {
+		var ret []string
+		return ret
+	}
+	return o.NodeListeners
+}
+
+// GetNodeListenersOk returns a tuple with the NodeListeners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNodeListenersOk() ([]string, bool) {
+	if o == nil || IsNil(o.NodeListeners) {
+		return nil, false
+	}
+	return o.NodeListeners, true
+}
+
+// HasNodeListeners returns a boolean if a field has been set.
+func (o *VDB) HasNodeListeners() bool {
+	if o != nil && !IsNil(o.NodeListeners) {
+		return true
+	}
+
+	return false
+}
+
+// SetNodeListeners gets a reference to the given []string and assigns it to the NodeListeners field.
+func (o *VDB) SetNodeListeners(v []string) {
+	o.NodeListeners = v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1878,6 +2092,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
 	}
 	if !IsNil(o.NamespaceId) {
 		toSerialize["namespace_id"] = o.NamespaceId
@@ -1942,6 +2159,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if o.ParentDsourceId.IsSet() {
 		toSerialize["parent_dsource_id"] = o.ParentDsourceId.Get()
 	}
+	if o.RootParentId.IsSet() {
+		toSerialize["root_parent_id"] = o.RootParentId.Get()
+	}
 	if o.GroupName.IsSet() {
 		toSerialize["group_name"] = o.GroupName.Get()
 	}
@@ -1993,6 +2213,12 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsAppdata) {
 		toSerialize["is_appdata"] = o.IsAppdata
 	}
+	if !IsNil(o.ExportedDataDirectory) {
+		toSerialize["exported_data_directory"] = o.ExportedDataDirectory
+	}
+	if !IsNil(o.VcdbExportedDataDirectory) {
+		toSerialize["vcdb_exported_data_directory"] = o.VcdbExportedDataDirectory
+	}
 	if !IsNil(o.ToolkitId) {
 		toSerialize["toolkit_id"] = o.ToolkitId
 	}
@@ -2010,6 +2236,12 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Replicas) {
 		toSerialize["replicas"] = o.Replicas
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.NodeListeners) {
+		toSerialize["node_listeners"] = o.NodeListeners
 	}
 	return toSerialize, nil
 }

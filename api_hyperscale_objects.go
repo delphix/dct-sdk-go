@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,17 +21,17 @@ import (
 )
 
 
-// HyperscaleObjectsApiService HyperscaleObjectsApi service
-type HyperscaleObjectsApiService service
+// HyperscaleObjectsAPIService HyperscaleObjectsAPI service
+type HyperscaleObjectsAPIService service
 
 type ApiCreateHyperscaleConnectorRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
-	hyperscaleConnector *HyperscaleConnector
+	ApiService *HyperscaleObjectsAPIService
+	hyperscaleConnectorCreateParameters *HyperscaleConnectorCreateParameters
 }
 
-func (r ApiCreateHyperscaleConnectorRequest) HyperscaleConnector(hyperscaleConnector HyperscaleConnector) ApiCreateHyperscaleConnectorRequest {
-	r.hyperscaleConnector = &hyperscaleConnector
+func (r ApiCreateHyperscaleConnectorRequest) HyperscaleConnectorCreateParameters(hyperscaleConnectorCreateParameters HyperscaleConnectorCreateParameters) ApiCreateHyperscaleConnectorRequest {
+	r.hyperscaleConnectorCreateParameters = &hyperscaleConnectorCreateParameters
 	return r
 }
 
@@ -45,7 +45,7 @@ CreateHyperscaleConnector Create a Hyperscale Connector.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateHyperscaleConnectorRequest
 */
-func (a *HyperscaleObjectsApiService) CreateHyperscaleConnector(ctx context.Context) ApiCreateHyperscaleConnectorRequest {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleConnector(ctx context.Context) ApiCreateHyperscaleConnectorRequest {
 	return ApiCreateHyperscaleConnectorRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -54,7 +54,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnector(ctx context.Cont
 
 // Execute executes the request
 //  @return CreateHyperscaleConnectorResponse
-func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorExecute(r ApiCreateHyperscaleConnectorRequest) (*CreateHyperscaleConnectorResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleConnectorExecute(r ApiCreateHyperscaleConnectorRequest) (*CreateHyperscaleConnectorResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -62,7 +62,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorExecute(r ApiCrea
 		localVarReturnValue  *CreateHyperscaleConnectorResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleConnector")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.CreateHyperscaleConnector")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -72,8 +72,8 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorExecute(r ApiCrea
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.hyperscaleConnector == nil {
-		return localVarReturnValue, nil, reportError("hyperscaleConnector is required and must be specified")
+	if r.hyperscaleConnectorCreateParameters == nil {
+		return localVarReturnValue, nil, reportError("hyperscaleConnectorCreateParameters is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -94,7 +94,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorExecute(r ApiCrea
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.hyperscaleConnector
+	localVarPostBody = r.hyperscaleConnectorCreateParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -148,7 +148,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorExecute(r ApiCrea
 
 type ApiCreateHyperscaleConnectorTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleConnectorId string
 	tagsRequest *TagsRequest
 }
@@ -170,7 +170,7 @@ CreateHyperscaleConnectorTags Create tags for a Hyperscale Connector.
  @param hyperscaleConnectorId The ID of the Hyperscale Connector.
  @return ApiCreateHyperscaleConnectorTagsRequest
 */
-func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiCreateHyperscaleConnectorTagsRequest {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiCreateHyperscaleConnectorTagsRequest {
 	return ApiCreateHyperscaleConnectorTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -180,7 +180,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorTags(ctx context.
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorTagsExecute(r ApiCreateHyperscaleConnectorTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleConnectorTagsExecute(r ApiCreateHyperscaleConnectorTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -188,7 +188,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorTagsExecute(r Api
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleConnectorTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.CreateHyperscaleConnectorTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -278,7 +278,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleConnectorTagsExecute(r Api
 
 type ApiCreateHyperscaleDatasetTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 	tagsRequest *TagsRequest
 }
@@ -300,7 +300,7 @@ CreateHyperscaleDatasetTags Create tags for a Hyperscale Dataset.
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
  @return ApiCreateHyperscaleDatasetTagsRequest
 */
-func (a *HyperscaleObjectsApiService) CreateHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiCreateHyperscaleDatasetTagsRequest {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiCreateHyperscaleDatasetTagsRequest {
 	return ApiCreateHyperscaleDatasetTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -310,7 +310,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleDatasetTags(ctx context.Co
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *HyperscaleObjectsApiService) CreateHyperscaleDatasetTagsExecute(r ApiCreateHyperscaleDatasetTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleDatasetTagsExecute(r ApiCreateHyperscaleDatasetTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -318,7 +318,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleDatasetTagsExecute(r ApiCr
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleDatasetTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.CreateHyperscaleDatasetTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -408,7 +408,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleDatasetTagsExecute(r ApiCr
 
 type ApiCreateHyperscaleMountPointRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleMountPoint *HyperscaleMountPoint
 }
 
@@ -428,7 +428,7 @@ CreateHyperscaleMountPoint Create a Hyperscale Mount Point
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateHyperscaleMountPointRequest
 */
-func (a *HyperscaleObjectsApiService) CreateHyperscaleMountPoint(ctx context.Context) ApiCreateHyperscaleMountPointRequest {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleMountPoint(ctx context.Context) ApiCreateHyperscaleMountPointRequest {
 	return ApiCreateHyperscaleMountPointRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -437,7 +437,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleMountPoint(ctx context.Con
 
 // Execute executes the request
 //  @return CreateHyperscaleMountPointResponse
-func (a *HyperscaleObjectsApiService) CreateHyperscaleMountPointExecute(r ApiCreateHyperscaleMountPointRequest) (*CreateHyperscaleMountPointResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) CreateHyperscaleMountPointExecute(r ApiCreateHyperscaleMountPointRequest) (*CreateHyperscaleMountPointResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -445,7 +445,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleMountPointExecute(r ApiCre
 		localVarReturnValue  *CreateHyperscaleMountPointResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.CreateHyperscaleMountPoint")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.CreateHyperscaleMountPoint")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -531,7 +531,7 @@ func (a *HyperscaleObjectsApiService) CreateHyperscaleMountPointExecute(r ApiCre
 
 type ApiDeleteHyperscaleConnectorRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleConnectorId string
 }
 
@@ -546,7 +546,7 @@ DeleteHyperscaleConnector Delete a Hyperscale Connector.
  @param hyperscaleConnectorId The ID of the Hyperscale Connector.
  @return ApiDeleteHyperscaleConnectorRequest
 */
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnector(ctx context.Context, hyperscaleConnectorId string) ApiDeleteHyperscaleConnectorRequest {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleConnector(ctx context.Context, hyperscaleConnectorId string) ApiDeleteHyperscaleConnectorRequest {
 	return ApiDeleteHyperscaleConnectorRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -556,7 +556,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnector(ctx context.Cont
 
 // Execute executes the request
 //  @return DeleteHyperscaleConnectorResponse
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorExecute(r ApiDeleteHyperscaleConnectorRequest) (*DeleteHyperscaleConnectorResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleConnectorExecute(r ApiDeleteHyperscaleConnectorRequest) (*DeleteHyperscaleConnectorResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -564,7 +564,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorExecute(r ApiDele
 		localVarReturnValue  *DeleteHyperscaleConnectorResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleConnector")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.DeleteHyperscaleConnector")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -649,7 +649,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorExecute(r ApiDele
 
 type ApiDeleteHyperscaleConnectorTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleConnectorId string
 	deleteTag *DeleteTag
 }
@@ -671,7 +671,7 @@ DeleteHyperscaleConnectorTags Delete tags for a Hyperscale Connector.
  @param hyperscaleConnectorId The ID of the Hyperscale Connector.
  @return ApiDeleteHyperscaleConnectorTagsRequest
 */
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiDeleteHyperscaleConnectorTagsRequest {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiDeleteHyperscaleConnectorTagsRequest {
 	return ApiDeleteHyperscaleConnectorTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -680,14 +680,14 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorTags(ctx context.
 }
 
 // Execute executes the request
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorTagsExecute(r ApiDeleteHyperscaleConnectorTagsRequest) (*http.Response, error) {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleConnectorTagsExecute(r ApiDeleteHyperscaleConnectorTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleConnectorTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.DeleteHyperscaleConnectorTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -765,7 +765,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleConnectorTagsExecute(r Api
 
 type ApiDeleteHyperscaleDatasetTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 	deleteTag *DeleteTag
 }
@@ -787,7 +787,7 @@ DeleteHyperscaleDatasetTags Delete tags for a Hyperscale Dataset.
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
  @return ApiDeleteHyperscaleDatasetTagsRequest
 */
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiDeleteHyperscaleDatasetTagsRequest {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiDeleteHyperscaleDatasetTagsRequest {
 	return ApiDeleteHyperscaleDatasetTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -796,14 +796,14 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleDatasetTags(ctx context.Co
 }
 
 // Execute executes the request
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleDatasetTagsExecute(r ApiDeleteHyperscaleDatasetTagsRequest) (*http.Response, error) {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleDatasetTagsExecute(r ApiDeleteHyperscaleDatasetTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleDatasetTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.DeleteHyperscaleDatasetTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -881,7 +881,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleDatasetTagsExecute(r ApiDe
 
 type ApiDeleteHyperscaleMountPointRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleMountPointId string
 }
 
@@ -896,7 +896,7 @@ DeleteHyperscaleMountPoint Delete a Hyperscale Mount Point.
  @param hyperscaleMountPointId The ID of the Hyperscale Mount Point.
  @return ApiDeleteHyperscaleMountPointRequest
 */
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleMountPoint(ctx context.Context, hyperscaleMountPointId string) ApiDeleteHyperscaleMountPointRequest {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleMountPoint(ctx context.Context, hyperscaleMountPointId string) ApiDeleteHyperscaleMountPointRequest {
 	return ApiDeleteHyperscaleMountPointRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -906,7 +906,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleMountPoint(ctx context.Con
 
 // Execute executes the request
 //  @return DeleteHyperscaleMountPointResponse
-func (a *HyperscaleObjectsApiService) DeleteHyperscaleMountPointExecute(r ApiDeleteHyperscaleMountPointRequest) (*DeleteHyperscaleMountPointResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) DeleteHyperscaleMountPointExecute(r ApiDeleteHyperscaleMountPointRequest) (*DeleteHyperscaleMountPointResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -914,7 +914,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleMountPointExecute(r ApiDel
 		localVarReturnValue  *DeleteHyperscaleMountPointResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.DeleteHyperscaleMountPoint")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.DeleteHyperscaleMountPoint")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -999,7 +999,7 @@ func (a *HyperscaleObjectsApiService) DeleteHyperscaleMountPointExecute(r ApiDel
 
 type ApiGetHyperscaleConnectorByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleConnectorId string
 }
 
@@ -1014,7 +1014,7 @@ GetHyperscaleConnectorById Get a Hyperscale Connector.
  @param hyperscaleConnectorId The ID of the Hyperscale Connector.
  @return ApiGetHyperscaleConnectorByIdRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorById(ctx context.Context, hyperscaleConnectorId string) ApiGetHyperscaleConnectorByIdRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleConnectorById(ctx context.Context, hyperscaleConnectorId string) ApiGetHyperscaleConnectorByIdRequest {
 	return ApiGetHyperscaleConnectorByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1024,7 +1024,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorById(ctx context.Con
 
 // Execute executes the request
 //  @return HyperscaleConnector
-func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorByIdExecute(r ApiGetHyperscaleConnectorByIdRequest) (*HyperscaleConnector, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleConnectorByIdExecute(r ApiGetHyperscaleConnectorByIdRequest) (*HyperscaleConnector, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1032,7 +1032,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorByIdExecute(r ApiGet
 		localVarReturnValue  *HyperscaleConnector
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleConnectorById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleConnectorById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1117,7 +1117,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorByIdExecute(r ApiGet
 
 type ApiGetHyperscaleConnectorTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleConnectorId string
 }
 
@@ -1132,7 +1132,7 @@ GetHyperscaleConnectorTags Get tags for a Hyperscale Connector.
  @param hyperscaleConnectorId The ID of the Hyperscale Connector.
  @return ApiGetHyperscaleConnectorTagsRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiGetHyperscaleConnectorTagsRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleConnectorTags(ctx context.Context, hyperscaleConnectorId string) ApiGetHyperscaleConnectorTagsRequest {
 	return ApiGetHyperscaleConnectorTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1142,7 +1142,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorTags(ctx context.Con
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorTagsExecute(r ApiGetHyperscaleConnectorTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleConnectorTagsExecute(r ApiGetHyperscaleConnectorTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1150,7 +1150,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorTagsExecute(r ApiGet
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleConnectorTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleConnectorTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1235,7 +1235,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorTagsExecute(r ApiGet
 
 type ApiGetHyperscaleConnectorsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1269,7 +1269,7 @@ GetHyperscaleConnectors Returns a list of Hyperscale Connectors.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetHyperscaleConnectorsRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleConnectors(ctx context.Context) ApiGetHyperscaleConnectorsRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleConnectors(ctx context.Context) ApiGetHyperscaleConnectorsRequest {
 	return ApiGetHyperscaleConnectorsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1278,7 +1278,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectors(ctx context.Contex
 
 // Execute executes the request
 //  @return ListHyperscaleConnectorsResponse
-func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorsExecute(r ApiGetHyperscaleConnectorsRequest) (*ListHyperscaleConnectorsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleConnectorsExecute(r ApiGetHyperscaleConnectorsRequest) (*ListHyperscaleConnectorsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1286,7 +1286,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorsExecute(r ApiGetHyp
 		localVarReturnValue  *ListHyperscaleConnectorsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleConnectors")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleConnectors")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1298,13 +1298,16 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorsExecute(r ApiGetHyp
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1376,7 +1379,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleConnectorsExecute(r ApiGetHyp
 
 type ApiGetHyperscaleDatasetByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 }
 
@@ -1391,7 +1394,7 @@ GetHyperscaleDatasetById Get a Hyperscale Dataset.
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
  @return ApiGetHyperscaleDatasetByIdRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetById(ctx context.Context, hyperscaleDatasetId string) ApiGetHyperscaleDatasetByIdRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetById(ctx context.Context, hyperscaleDatasetId string) ApiGetHyperscaleDatasetByIdRequest {
 	return ApiGetHyperscaleDatasetByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1401,7 +1404,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetById(ctx context.Conte
 
 // Execute executes the request
 //  @return HyperscaleDataset
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetByIdExecute(r ApiGetHyperscaleDatasetByIdRequest) (*HyperscaleDataset, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetByIdExecute(r ApiGetHyperscaleDatasetByIdRequest) (*HyperscaleDataset, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1409,7 +1412,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetByIdExecute(r ApiGetHy
 		localVarReturnValue  *HyperscaleDataset
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleDatasetById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleDatasetById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1494,7 +1497,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetByIdExecute(r ApiGetHy
 
 type ApiGetHyperscaleDatasetTableOrFileByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 	hyperscaleDatasetTableOrFileId string
 }
@@ -1511,7 +1514,7 @@ GetHyperscaleDatasetTableOrFileById Get a Hyperscale Dataset table or file by ID
  @param hyperscaleDatasetTableOrFileId The ID of the Hyperscale Dataset table or file.
  @return ApiGetHyperscaleDatasetTableOrFileByIdRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTableOrFileById(ctx context.Context, hyperscaleDatasetId string, hyperscaleDatasetTableOrFileId string) ApiGetHyperscaleDatasetTableOrFileByIdRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetTableOrFileById(ctx context.Context, hyperscaleDatasetId string, hyperscaleDatasetTableOrFileId string) ApiGetHyperscaleDatasetTableOrFileByIdRequest {
 	return ApiGetHyperscaleDatasetTableOrFileByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1522,7 +1525,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTableOrFileById(ctx co
 
 // Execute executes the request
 //  @return HyperscaleDatasetTableOrFile
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTableOrFileByIdExecute(r ApiGetHyperscaleDatasetTableOrFileByIdRequest) (*HyperscaleDatasetTableOrFile, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetTableOrFileByIdExecute(r ApiGetHyperscaleDatasetTableOrFileByIdRequest) (*HyperscaleDatasetTableOrFile, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1530,7 +1533,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTableOrFileByIdExecute
 		localVarReturnValue  *HyperscaleDatasetTableOrFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleDatasetTableOrFileById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleDatasetTableOrFileById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1619,7 +1622,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTableOrFileByIdExecute
 
 type ApiGetHyperscaleDatasetTablesOrFilesRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 	limit *int32
 	cursor *string
@@ -1655,7 +1658,7 @@ GetHyperscaleDatasetTablesOrFiles Get the tables or files of a hyperscale datase
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
  @return ApiGetHyperscaleDatasetTablesOrFilesRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTablesOrFiles(ctx context.Context, hyperscaleDatasetId string) ApiGetHyperscaleDatasetTablesOrFilesRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetTablesOrFiles(ctx context.Context, hyperscaleDatasetId string) ApiGetHyperscaleDatasetTablesOrFilesRequest {
 	return ApiGetHyperscaleDatasetTablesOrFilesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1665,7 +1668,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTablesOrFiles(ctx cont
 
 // Execute executes the request
 //  @return ListHyperscaleDatasetTablesOrFilesResponse
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTablesOrFilesExecute(r ApiGetHyperscaleDatasetTablesOrFilesRequest) (*ListHyperscaleDatasetTablesOrFilesResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetTablesOrFilesExecute(r ApiGetHyperscaleDatasetTablesOrFilesRequest) (*ListHyperscaleDatasetTablesOrFilesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1673,7 +1676,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTablesOrFilesExecute(r
 		localVarReturnValue  *ListHyperscaleDatasetTablesOrFilesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleDatasetTablesOrFiles")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleDatasetTablesOrFiles")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1689,13 +1692,16 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTablesOrFilesExecute(r
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1767,7 +1773,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTablesOrFilesExecute(r
 
 type ApiGetHyperscaleDatasetTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 }
 
@@ -1782,7 +1788,7 @@ GetHyperscaleDatasetTags Get tags for a Hyperscale Dataset.
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
  @return ApiGetHyperscaleDatasetTagsRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiGetHyperscaleDatasetTagsRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetTags(ctx context.Context, hyperscaleDatasetId string) ApiGetHyperscaleDatasetTagsRequest {
 	return ApiGetHyperscaleDatasetTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1792,7 +1798,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTags(ctx context.Conte
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTagsExecute(r ApiGetHyperscaleDatasetTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetTagsExecute(r ApiGetHyperscaleDatasetTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1800,7 +1806,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTagsExecute(r ApiGetHy
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleDatasetTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleDatasetTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1885,7 +1891,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetTagsExecute(r ApiGetHy
 
 type ApiGetHyperscaleDatasetsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1919,7 +1925,7 @@ GetHyperscaleDatasets Returns a list of Hyperscale Datasets.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetHyperscaleDatasetsRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasets(ctx context.Context) ApiGetHyperscaleDatasetsRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasets(ctx context.Context) ApiGetHyperscaleDatasetsRequest {
 	return ApiGetHyperscaleDatasetsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1928,7 +1934,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasets(ctx context.Context)
 
 // Execute executes the request
 //  @return ListHyperscaleDatasetsResponse
-func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetsExecute(r ApiGetHyperscaleDatasetsRequest) (*ListHyperscaleDatasetsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleDatasetsExecute(r ApiGetHyperscaleDatasetsRequest) (*ListHyperscaleDatasetsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1936,7 +1942,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetsExecute(r ApiGetHyper
 		localVarReturnValue  *ListHyperscaleDatasetsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleDatasets")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleDatasets")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1948,13 +1954,16 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetsExecute(r ApiGetHyper
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2026,7 +2035,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleDatasetsExecute(r ApiGetHyper
 
 type ApiGetHyperscaleMountPointByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleMountPointId string
 }
 
@@ -2041,7 +2050,7 @@ GetHyperscaleMountPointById Get a Hyperscale Mount Points.
  @param hyperscaleMountPointId The ID of the Hyperscale Mount Point.
  @return ApiGetHyperscaleMountPointByIdRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointById(ctx context.Context, hyperscaleMountPointId string) ApiGetHyperscaleMountPointByIdRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleMountPointById(ctx context.Context, hyperscaleMountPointId string) ApiGetHyperscaleMountPointByIdRequest {
 	return ApiGetHyperscaleMountPointByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2051,7 +2060,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointById(ctx context.Co
 
 // Execute executes the request
 //  @return HyperscaleMountPoint
-func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointByIdExecute(r ApiGetHyperscaleMountPointByIdRequest) (*HyperscaleMountPoint, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleMountPointByIdExecute(r ApiGetHyperscaleMountPointByIdRequest) (*HyperscaleMountPoint, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2059,7 +2068,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointByIdExecute(r ApiGe
 		localVarReturnValue  *HyperscaleMountPoint
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleMountPointById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleMountPointById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2144,7 +2153,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointByIdExecute(r ApiGe
 
 type ApiGetHyperscaleMountPointsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2178,7 +2187,7 @@ GetHyperscaleMountPoints Returns a list of Hyperscale Mount Points.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetHyperscaleMountPointsRequest
 */
-func (a *HyperscaleObjectsApiService) GetHyperscaleMountPoints(ctx context.Context) ApiGetHyperscaleMountPointsRequest {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleMountPoints(ctx context.Context) ApiGetHyperscaleMountPointsRequest {
 	return ApiGetHyperscaleMountPointsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2187,7 +2196,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleMountPoints(ctx context.Conte
 
 // Execute executes the request
 //  @return ListHyperscaleMountPointsResponse
-func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointsExecute(r ApiGetHyperscaleMountPointsRequest) (*ListHyperscaleMountPointsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) GetHyperscaleMountPointsExecute(r ApiGetHyperscaleMountPointsRequest) (*ListHyperscaleMountPointsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2195,7 +2204,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointsExecute(r ApiGetHy
 		localVarReturnValue  *ListHyperscaleMountPointsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.GetHyperscaleMountPoints")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.GetHyperscaleMountPoints")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2207,13 +2216,16 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointsExecute(r ApiGetHy
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2285,7 +2297,7 @@ func (a *HyperscaleObjectsApiService) GetHyperscaleMountPointsExecute(r ApiGetHy
 
 type ApiSearchHyperscaleConnectorsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2326,7 +2338,7 @@ SearchHyperscaleConnectors Search for Hyperscale Connectors.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchHyperscaleConnectorsRequest
 */
-func (a *HyperscaleObjectsApiService) SearchHyperscaleConnectors(ctx context.Context) ApiSearchHyperscaleConnectorsRequest {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleConnectors(ctx context.Context) ApiSearchHyperscaleConnectorsRequest {
 	return ApiSearchHyperscaleConnectorsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2335,7 +2347,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleConnectors(ctx context.Con
 
 // Execute executes the request
 //  @return SearchHyperscaleConnectorsResponse
-func (a *HyperscaleObjectsApiService) SearchHyperscaleConnectorsExecute(r ApiSearchHyperscaleConnectorsRequest) (*SearchHyperscaleConnectorsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleConnectorsExecute(r ApiSearchHyperscaleConnectorsRequest) (*SearchHyperscaleConnectorsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2343,7 +2355,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleConnectorsExecute(r ApiSea
 		localVarReturnValue  *SearchHyperscaleConnectorsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.SearchHyperscaleConnectors")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.SearchHyperscaleConnectors")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2355,13 +2367,16 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleConnectorsExecute(r ApiSea
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2435,7 +2450,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleConnectorsExecute(r ApiSea
 
 type ApiSearchHyperscaleDatasetTablesOrFilesRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 	limit *int32
 	cursor *string
@@ -2478,7 +2493,7 @@ SearchHyperscaleDatasetTablesOrFiles Search the tables or files of a hyperscale 
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
  @return ApiSearchHyperscaleDatasetTablesOrFilesRequest
 */
-func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetTablesOrFiles(ctx context.Context, hyperscaleDatasetId string) ApiSearchHyperscaleDatasetTablesOrFilesRequest {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleDatasetTablesOrFiles(ctx context.Context, hyperscaleDatasetId string) ApiSearchHyperscaleDatasetTablesOrFilesRequest {
 	return ApiSearchHyperscaleDatasetTablesOrFilesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2488,7 +2503,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetTablesOrFiles(ctx c
 
 // Execute executes the request
 //  @return SearchHyperscaleDatasetTablesOrFilesResponse
-func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetTablesOrFilesExecute(r ApiSearchHyperscaleDatasetTablesOrFilesRequest) (*SearchHyperscaleDatasetTablesOrFilesResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleDatasetTablesOrFilesExecute(r ApiSearchHyperscaleDatasetTablesOrFilesRequest) (*SearchHyperscaleDatasetTablesOrFilesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2496,7 +2511,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetTablesOrFilesExecut
 		localVarReturnValue  *SearchHyperscaleDatasetTablesOrFilesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.SearchHyperscaleDatasetTablesOrFiles")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.SearchHyperscaleDatasetTablesOrFiles")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2512,13 +2527,16 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetTablesOrFilesExecut
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2592,7 +2610,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetTablesOrFilesExecut
 
 type ApiSearchHyperscaleDatasetsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2633,7 +2651,7 @@ SearchHyperscaleDatasets Search for Hyperscale Datasets.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchHyperscaleDatasetsRequest
 */
-func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasets(ctx context.Context) ApiSearchHyperscaleDatasetsRequest {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleDatasets(ctx context.Context) ApiSearchHyperscaleDatasetsRequest {
 	return ApiSearchHyperscaleDatasetsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2642,7 +2660,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasets(ctx context.Conte
 
 // Execute executes the request
 //  @return SearchHyperscaleDatasetsResponse
-func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetsExecute(r ApiSearchHyperscaleDatasetsRequest) (*SearchHyperscaleDatasetsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleDatasetsExecute(r ApiSearchHyperscaleDatasetsRequest) (*SearchHyperscaleDatasetsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2650,7 +2668,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetsExecute(r ApiSearc
 		localVarReturnValue  *SearchHyperscaleDatasetsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.SearchHyperscaleDatasets")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.SearchHyperscaleDatasets")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2662,13 +2680,16 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetsExecute(r ApiSearc
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2742,7 +2763,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleDatasetsExecute(r ApiSearc
 
 type ApiSearchHyperscaleMountPointsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2783,7 +2804,7 @@ SearchHyperscaleMountPoints Search for Hyperscale Mount Points.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchHyperscaleMountPointsRequest
 */
-func (a *HyperscaleObjectsApiService) SearchHyperscaleMountPoints(ctx context.Context) ApiSearchHyperscaleMountPointsRequest {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleMountPoints(ctx context.Context) ApiSearchHyperscaleMountPointsRequest {
 	return ApiSearchHyperscaleMountPointsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2792,7 +2813,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleMountPoints(ctx context.Co
 
 // Execute executes the request
 //  @return SearchHyperscaleMountPointsResponse
-func (a *HyperscaleObjectsApiService) SearchHyperscaleMountPointsExecute(r ApiSearchHyperscaleMountPointsRequest) (*SearchHyperscaleMountPointsResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) SearchHyperscaleMountPointsExecute(r ApiSearchHyperscaleMountPointsRequest) (*SearchHyperscaleMountPointsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2800,7 +2821,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleMountPointsExecute(r ApiSe
 		localVarReturnValue  *SearchHyperscaleMountPointsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.SearchHyperscaleMountPoints")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.SearchHyperscaleMountPoints")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2812,13 +2833,16 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleMountPointsExecute(r ApiSe
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2892,7 +2916,7 @@ func (a *HyperscaleObjectsApiService) SearchHyperscaleMountPointsExecute(r ApiSe
 
 type ApiUpdateHyperscaleConnectorByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleConnectorId string
 	hyperscaleConnectorUpdateParameters *HyperscaleConnectorUpdateParameters
 }
@@ -2914,7 +2938,7 @@ UpdateHyperscaleConnectorById Update a Hyperscale Connector by ID.
  @param hyperscaleConnectorId The ID of the Hyperscale Connector.
  @return ApiUpdateHyperscaleConnectorByIdRequest
 */
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleConnectorById(ctx context.Context, hyperscaleConnectorId string) ApiUpdateHyperscaleConnectorByIdRequest {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleConnectorById(ctx context.Context, hyperscaleConnectorId string) ApiUpdateHyperscaleConnectorByIdRequest {
 	return ApiUpdateHyperscaleConnectorByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2924,7 +2948,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleConnectorById(ctx context.
 
 // Execute executes the request
 //  @return UpdateHyperscaleConnectorResponse
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleConnectorByIdExecute(r ApiUpdateHyperscaleConnectorByIdRequest) (*UpdateHyperscaleConnectorResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleConnectorByIdExecute(r ApiUpdateHyperscaleConnectorByIdRequest) (*UpdateHyperscaleConnectorResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -2932,7 +2956,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleConnectorByIdExecute(r Api
 		localVarReturnValue  *UpdateHyperscaleConnectorResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleConnectorById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.UpdateHyperscaleConnectorById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3019,7 +3043,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleConnectorByIdExecute(r Api
 
 type ApiUpdateHyperscaleDatasetByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 	hyperscaleDatasetUpdateParameters *HyperscaleDatasetUpdateParameters
 }
@@ -3041,7 +3065,7 @@ UpdateHyperscaleDatasetById Update a Hyperscale Dataset by ID.
  @param hyperscaleDatasetId The ID of the Hyperscale Dataset.
  @return ApiUpdateHyperscaleDatasetByIdRequest
 */
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetById(ctx context.Context, hyperscaleDatasetId string) ApiUpdateHyperscaleDatasetByIdRequest {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleDatasetById(ctx context.Context, hyperscaleDatasetId string) ApiUpdateHyperscaleDatasetByIdRequest {
 	return ApiUpdateHyperscaleDatasetByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3051,7 +3075,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetById(ctx context.Co
 
 // Execute executes the request
 //  @return UpdateHyperscaleDatasetResponse
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetByIdExecute(r ApiUpdateHyperscaleDatasetByIdRequest) (*UpdateHyperscaleDatasetResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleDatasetByIdExecute(r ApiUpdateHyperscaleDatasetByIdRequest) (*UpdateHyperscaleDatasetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -3059,7 +3083,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetByIdExecute(r ApiUp
 		localVarReturnValue  *UpdateHyperscaleDatasetResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleDatasetById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.UpdateHyperscaleDatasetById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3146,7 +3170,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetByIdExecute(r ApiUp
 
 type ApiUpdateHyperscaleDatasetTableOrFileByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleDatasetId string
 	hyperscaleDatasetTableOrFileId string
 	hyperscaleDatasetTableOrFileUpdateParameters *HyperscaleDatasetTableOrFileUpdateParameters
@@ -3170,7 +3194,7 @@ UpdateHyperscaleDatasetTableOrFileById Update a Hyperscale Dataset table or file
  @param hyperscaleDatasetTableOrFileId The ID of the Hyperscale Dataset table or file.
  @return ApiUpdateHyperscaleDatasetTableOrFileByIdRequest
 */
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetTableOrFileById(ctx context.Context, hyperscaleDatasetId string, hyperscaleDatasetTableOrFileId string) ApiUpdateHyperscaleDatasetTableOrFileByIdRequest {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleDatasetTableOrFileById(ctx context.Context, hyperscaleDatasetId string, hyperscaleDatasetTableOrFileId string) ApiUpdateHyperscaleDatasetTableOrFileByIdRequest {
 	return ApiUpdateHyperscaleDatasetTableOrFileByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3181,7 +3205,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetTableOrFileById(ctx
 
 // Execute executes the request
 //  @return UpdateHyperscaleDatasetTableOrFileResponse
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetTableOrFileByIdExecute(r ApiUpdateHyperscaleDatasetTableOrFileByIdRequest) (*UpdateHyperscaleDatasetTableOrFileResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleDatasetTableOrFileByIdExecute(r ApiUpdateHyperscaleDatasetTableOrFileByIdRequest) (*UpdateHyperscaleDatasetTableOrFileResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -3189,7 +3213,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetTableOrFileByIdExec
 		localVarReturnValue  *UpdateHyperscaleDatasetTableOrFileResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleDatasetTableOrFileById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.UpdateHyperscaleDatasetTableOrFileById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3280,7 +3304,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleDatasetTableOrFileByIdExec
 
 type ApiUpdateHyperscaleMountPointByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleObjectsApiService
+	ApiService *HyperscaleObjectsAPIService
 	hyperscaleMountPointId string
 	hyperscaleMountPointUpdateParameters *HyperscaleMountPointUpdateParameters
 }
@@ -3302,7 +3326,7 @@ UpdateHyperscaleMountPointById Update a Hyperscale Mount Point by ID.
  @param hyperscaleMountPointId The ID of the Hyperscale Mount Point.
  @return ApiUpdateHyperscaleMountPointByIdRequest
 */
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleMountPointById(ctx context.Context, hyperscaleMountPointId string) ApiUpdateHyperscaleMountPointByIdRequest {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleMountPointById(ctx context.Context, hyperscaleMountPointId string) ApiUpdateHyperscaleMountPointByIdRequest {
 	return ApiUpdateHyperscaleMountPointByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3312,7 +3336,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleMountPointById(ctx context
 
 // Execute executes the request
 //  @return UpdateHyperscaleMountPointResponse
-func (a *HyperscaleObjectsApiService) UpdateHyperscaleMountPointByIdExecute(r ApiUpdateHyperscaleMountPointByIdRequest) (*UpdateHyperscaleMountPointResponse, *http.Response, error) {
+func (a *HyperscaleObjectsAPIService) UpdateHyperscaleMountPointByIdExecute(r ApiUpdateHyperscaleMountPointByIdRequest) (*UpdateHyperscaleMountPointResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -3320,7 +3344,7 @@ func (a *HyperscaleObjectsApiService) UpdateHyperscaleMountPointByIdExecute(r Ap
 		localVarReturnValue  *UpdateHyperscaleMountPointResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsApiService.UpdateHyperscaleMountPointById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleObjectsAPIService.UpdateHyperscaleMountPointById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

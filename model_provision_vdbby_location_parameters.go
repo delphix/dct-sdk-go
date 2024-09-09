@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -76,18 +76,18 @@ type ProvisionVDBByLocationParameters struct {
 	AutoSelectRepository *bool `json:"auto_select_repository,omitempty"`
 	// Indicates whether the Engine should automatically restart this virtual source when target host reboot is detected.
 	VdbRestart *bool `json:"vdb_restart,omitempty"`
-	// The ID of the target VDB Template (Oracle Only).
+	// The ID of the target VDB Template (Oracle and MSSql Only).
 	TemplateId *string `json:"template_id,omitempty"`
 	// The ID of the configuration template to apply to the auxiliary container database. This is only relevant when provisioning a Multitenant pluggable database into an existing CDB, i.e when the cdb_id property is set.(Oracle Only)
 	AuxiliaryTemplateId *string `json:"auxiliary_template_id,omitempty"`
 	// Target VDB file mapping rules (Oracle Only). Rules must be line separated (\\n or \\r) and each line must have the format \"pattern:replacement\". Lines are applied in order.
 	FileMappingRules *string `json:"file_mapping_rules,omitempty"`
 	// Target VDB SID name (Oracle Only).
-	OracleInstanceName *string `json:"oracle_instance_name,omitempty"`
+	OracleInstanceName *string `json:"oracle_instance_name,omitempty" validate:"regexp=^[a-zA-Z0-9_]+$"`
 	// Target VDB db_unique_name (Oracle Only).
-	UniqueName *string `json:"unique_name,omitempty"`
+	UniqueName *string `json:"unique_name,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\$#]+$"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the name of the provisioned vCDB (Oracle Multitenant Only).
-	VcdbName *string `json:"vcdb_name,omitempty"`
+	VcdbName *string `json:"vcdb_name,omitempty" validate:"regexp=^[a-zA-Z0-9_]+$"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the database name of the provisioned vCDB. Defaults to the value of the vcdb_name property. (Oracle Multitenant Only).
 	VcdbDatabaseName *string `json:"vcdb_database_name,omitempty"`
 	// Mount point for the VDB (Oracle, ASE, AppData).
@@ -149,7 +149,7 @@ type ProvisionVDBByLocationParameters struct {
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	// This privileged unix username will be used to create the VDB. Leave this field blank if you do not want to use privilege elevation. The unix privileged username should begin with a letter or an underscore, followed by letters, digits, underscores, or dashes. They can end with a dollar sign (postgres only).
-	PrivilegedOsUser *string `json:"privileged_os_user,omitempty"`
+	PrivilegedOsUser *string `json:"privileged_os_user,omitempty" validate:"regexp=^$|^[a-zA-Z_][a-zA-Z0-9_\\\\-]+[$]?$"`
 	// Port number for Postgres target database (postgres only).
 	PostgresPort *int32 `json:"postgres_port,omitempty"`
 	// Custom Database-Level config settings (postgres only).
@@ -160,6 +160,8 @@ type ProvisionVDBByLocationParameters struct {
 	MssqlFailoverDriveLetter *string `json:"mssql_failover_drive_letter,omitempty"`
 	// The tags to be created for VDB.
 	Tags []Tag `json:"tags,omitempty"`
+	// Whether to invoke datapatch during provisioning (Oracle Only).
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
 	// The location to provision from.
 	Location *string `json:"location,omitempty"`
 	// ID of the timeflow to provision from.
@@ -2140,7 +2142,7 @@ func (o *ProvisionVDBByLocationParameters) GetAdditionalMountPointsOk() ([]Addit
 
 // HasAdditionalMountPoints returns a boolean if a field has been set.
 func (o *ProvisionVDBByLocationParameters) HasAdditionalMountPoints() bool {
-	if o != nil && IsNil(o.AdditionalMountPoints) {
+	if o != nil && !IsNil(o.AdditionalMountPoints) {
 		return true
 	}
 
@@ -2173,7 +2175,7 @@ func (o *ProvisionVDBByLocationParameters) GetAppdataConfigParamsOk() (map[strin
 
 // HasAppdataConfigParams returns a boolean if a field has been set.
 func (o *ProvisionVDBByLocationParameters) HasAppdataConfigParams() bool {
-	if o != nil && IsNil(o.AppdataConfigParams) {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
 		return true
 	}
 
@@ -2206,7 +2208,7 @@ func (o *ProvisionVDBByLocationParameters) GetConfigParamsOk() (map[string]inter
 
 // HasConfigParams returns a boolean if a field has been set.
 func (o *ProvisionVDBByLocationParameters) HasConfigParams() bool {
-	if o != nil && IsNil(o.ConfigParams) {
+	if o != nil && !IsNil(o.ConfigParams) {
 		return true
 	}
 
@@ -2408,6 +2410,38 @@ func (o *ProvisionVDBByLocationParameters) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *ProvisionVDBByLocationParameters) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *ProvisionVDBByLocationParameters) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByLocationParameters) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *ProvisionVDBByLocationParameters) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *ProvisionVDBByLocationParameters) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
 }
 
 // GetLocation returns the Location field value if set, zero value otherwise.
@@ -2786,6 +2820,9 @@ func (o ProvisionVDBByLocationParameters) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
 	}
 	if !IsNil(o.Location) {
 		toSerialize["location"] = o.Location

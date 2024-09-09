@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -20,12 +20,12 @@ import (
 )
 
 
-// LoginApiService LoginApi service
-type LoginApiService service
+// LoginAPIService LoginAPI service
+type LoginAPIService service
 
 type ApiAccountLoginRequest struct {
 	ctx context.Context
-	ApiService *LoginApiService
+	ApiService *LoginAPIService
 	accountLoginParameter *AccountLoginParameter
 }
 
@@ -44,7 +44,7 @@ AccountLogin Login to Account with Username and Password
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiAccountLoginRequest
 */
-func (a *LoginApiService) AccountLogin(ctx context.Context) ApiAccountLoginRequest {
+func (a *LoginAPIService) AccountLogin(ctx context.Context) ApiAccountLoginRequest {
 	return ApiAccountLoginRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -53,7 +53,7 @@ func (a *LoginApiService) AccountLogin(ctx context.Context) ApiAccountLoginReque
 
 // Execute executes the request
 //  @return LoginToken
-func (a *LoginApiService) AccountLoginExecute(r ApiAccountLoginRequest) (*LoginToken, *http.Response, error) {
+func (a *LoginAPIService) AccountLoginExecute(r ApiAccountLoginRequest) (*LoginToken, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -61,7 +61,7 @@ func (a *LoginApiService) AccountLoginExecute(r ApiAccountLoginRequest) (*LoginT
 		localVarReturnValue  *LoginToken
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AccountLogin")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.AccountLogin")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -157,7 +157,7 @@ func (a *LoginApiService) AccountLoginExecute(r ApiAccountLoginRequest) (*LoginT
 
 type ApiAccountLogoutRequest struct {
 	ctx context.Context
-	ApiService *LoginApiService
+	ApiService *LoginAPIService
 	authorization *string
 }
 
@@ -177,7 +177,7 @@ AccountLogout Invalidates username/password and SSO login session.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiAccountLogoutRequest
 */
-func (a *LoginApiService) AccountLogout(ctx context.Context) ApiAccountLogoutRequest {
+func (a *LoginAPIService) AccountLogout(ctx context.Context) ApiAccountLogoutRequest {
 	return ApiAccountLogoutRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -185,14 +185,14 @@ func (a *LoginApiService) AccountLogout(ctx context.Context) ApiAccountLogoutReq
 }
 
 // Execute executes the request
-func (a *LoginApiService) AccountLogoutExecute(r ApiAccountLogoutRequest) (*http.Response, error) {
+func (a *LoginAPIService) AccountLogoutExecute(r ApiAccountLogoutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AccountLogout")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.AccountLogout")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -223,7 +223,7 @@ func (a *LoginApiService) AccountLogoutExecute(r ApiAccountLogoutRequest) (*http
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "simple", "")
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -268,7 +268,7 @@ func (a *LoginApiService) AccountLogoutExecute(r ApiAccountLogoutRequest) (*http
 
 type ApiTokenInfoRequest struct {
 	ctx context.Context
-	ApiService *LoginApiService
+	ApiService *LoginAPIService
 	tokenInfoRequest *TokenInfoRequest
 }
 
@@ -287,7 +287,7 @@ TokenInfo Get Token Information
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiTokenInfoRequest
 */
-func (a *LoginApiService) TokenInfo(ctx context.Context) ApiTokenInfoRequest {
+func (a *LoginAPIService) TokenInfo(ctx context.Context) ApiTokenInfoRequest {
 	return ApiTokenInfoRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -296,7 +296,7 @@ func (a *LoginApiService) TokenInfo(ctx context.Context) ApiTokenInfoRequest {
 
 // Execute executes the request
 //  @return TokenInfoResponse
-func (a *LoginApiService) TokenInfoExecute(r ApiTokenInfoRequest) (*TokenInfoResponse, *http.Response, error) {
+func (a *LoginAPIService) TokenInfoExecute(r ApiTokenInfoRequest) (*TokenInfoResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -304,7 +304,7 @@ func (a *LoginApiService) TokenInfoExecute(r ApiTokenInfoRequest) (*TokenInfoRes
 		localVarReturnValue  *TokenInfoResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.TokenInfo")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.TokenInfo")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

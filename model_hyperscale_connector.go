@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -20,10 +20,9 @@ var _ MappedNullable = &HyperscaleConnector{}
 
 // HyperscaleConnector A Hyperscale connector to read/write data from/to a datasource.
 type HyperscaleConnector struct {
-	DatabaseType *string `json:"database_type,omitempty"`
 	// The ID of the Hyperscale Connector.
 	Id *string `json:"id,omitempty"`
-	// The ID of the Hyperscale instance of this Dataset.
+	// The ID of the Hyperscale instance of this Connector.
 	HyperscaleInstanceId *string `json:"hyperscale_instance_id,omitempty"`
 	DataType *HyperscaleDataTypeEnum `json:"data_type,omitempty"`
 	Name *string `json:"name,omitempty"`
@@ -67,38 +66,6 @@ func NewHyperscaleConnector() *HyperscaleConnector {
 func NewHyperscaleConnectorWithDefaults() *HyperscaleConnector {
 	this := HyperscaleConnector{}
 	return &this
-}
-
-// GetDatabaseType returns the DatabaseType field value if set, zero value otherwise.
-func (o *HyperscaleConnector) GetDatabaseType() string {
-	if o == nil || IsNil(o.DatabaseType) {
-		var ret string
-		return ret
-	}
-	return *o.DatabaseType
-}
-
-// GetDatabaseTypeOk returns a tuple with the DatabaseType field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *HyperscaleConnector) GetDatabaseTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.DatabaseType) {
-		return nil, false
-	}
-	return o.DatabaseType, true
-}
-
-// HasDatabaseType returns a boolean if a field has been set.
-func (o *HyperscaleConnector) HasDatabaseType() bool {
-	if o != nil && !IsNil(o.DatabaseType) {
-		return true
-	}
-
-	return false
-}
-
-// SetDatabaseType gets a reference to the given string and assigns it to the DatabaseType field.
-func (o *HyperscaleConnector) SetDatabaseType(v string) {
-	o.DatabaseType = &v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -655,10 +622,9 @@ func (o HyperscaleConnector) MarshalJSON() ([]byte, error) {
 
 func (o HyperscaleConnector) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.DatabaseType) {
-		toSerialize["database_type"] = o.DatabaseType
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-	// skip: id is readOnly
 	if !IsNil(o.HyperscaleInstanceId) {
 		toSerialize["hyperscale_instance_id"] = o.HyperscaleInstanceId
 	}

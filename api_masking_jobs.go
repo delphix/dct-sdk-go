@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// MaskingJobsApiService MaskingJobsApi service
-type MaskingJobsApiService service
+// MaskingJobsAPIService MaskingJobsAPI service
+type MaskingJobsAPIService service
 
 type ApiAddEngineToMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	engineIdBody *EngineIdBody
 }
@@ -48,7 +48,7 @@ AddEngineToMaskingJob Add an engine to a Masking Job (Hyperscale Job only).
  @param maskingJobId The ID of the Masking Job.
  @return ApiAddEngineToMaskingJobRequest
 */
-func (a *MaskingJobsApiService) AddEngineToMaskingJob(ctx context.Context, maskingJobId string) ApiAddEngineToMaskingJobRequest {
+func (a *MaskingJobsAPIService) AddEngineToMaskingJob(ctx context.Context, maskingJobId string) ApiAddEngineToMaskingJobRequest {
 	return ApiAddEngineToMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +58,7 @@ func (a *MaskingJobsApiService) AddEngineToMaskingJob(ctx context.Context, maski
 
 // Execute executes the request
 //  @return AddEngineToJobResponse
-func (a *MaskingJobsApiService) AddEngineToMaskingJobExecute(r ApiAddEngineToMaskingJobRequest) (*AddEngineToJobResponse, *http.Response, error) {
+func (a *MaskingJobsAPIService) AddEngineToMaskingJobExecute(r ApiAddEngineToMaskingJobRequest) (*AddEngineToJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +66,7 @@ func (a *MaskingJobsApiService) AddEngineToMaskingJobExecute(r ApiAddEngineToMas
 		localVarReturnValue  *AddEngineToJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.AddEngineToMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.AddEngineToMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -156,7 +156,7 @@ func (a *MaskingJobsApiService) AddEngineToMaskingJobExecute(r ApiAddEngineToMas
 
 type ApiCopyMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	copyMaskingJobParameters *CopyMaskingJobParameters
 }
@@ -176,8 +176,10 @@ CopyMaskingJob Copies the masking job to another engine.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiCopyMaskingJobRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) CopyMaskingJob(ctx context.Context, maskingJobId string) ApiCopyMaskingJobRequest {
+func (a *MaskingJobsAPIService) CopyMaskingJob(ctx context.Context, maskingJobId string) ApiCopyMaskingJobRequest {
 	return ApiCopyMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -187,7 +189,8 @@ func (a *MaskingJobsApiService) CopyMaskingJob(ctx context.Context, maskingJobId
 
 // Execute executes the request
 //  @return CopyMaskingJobResponse
-func (a *MaskingJobsApiService) CopyMaskingJobExecute(r ApiCopyMaskingJobRequest) (*CopyMaskingJobResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) CopyMaskingJobExecute(r ApiCopyMaskingJobRequest) (*CopyMaskingJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -195,7 +198,7 @@ func (a *MaskingJobsApiService) CopyMaskingJobExecute(r ApiCopyMaskingJobRequest
 		localVarReturnValue  *CopyMaskingJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.CopyMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.CopyMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -282,7 +285,7 @@ func (a *MaskingJobsApiService) CopyMaskingJobExecute(r ApiCopyMaskingJobRequest
 
 type ApiCreateMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	createMaskingJobRequest *CreateMaskingJobRequest
 }
 
@@ -302,7 +305,7 @@ CreateMaskingJob Create a Masking Job.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateMaskingJobRequest
 */
-func (a *MaskingJobsApiService) CreateMaskingJob(ctx context.Context) ApiCreateMaskingJobRequest {
+func (a *MaskingJobsAPIService) CreateMaskingJob(ctx context.Context) ApiCreateMaskingJobRequest {
 	return ApiCreateMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -311,7 +314,7 @@ func (a *MaskingJobsApiService) CreateMaskingJob(ctx context.Context) ApiCreateM
 
 // Execute executes the request
 //  @return CreateMaskingJobResponse
-func (a *MaskingJobsApiService) CreateMaskingJobExecute(r ApiCreateMaskingJobRequest) (*CreateMaskingJobResponse, *http.Response, error) {
+func (a *MaskingJobsAPIService) CreateMaskingJobExecute(r ApiCreateMaskingJobRequest) (*CreateMaskingJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -319,7 +322,7 @@ func (a *MaskingJobsApiService) CreateMaskingJobExecute(r ApiCreateMaskingJobReq
 		localVarReturnValue  *CreateMaskingJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.CreateMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.CreateMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -405,7 +408,7 @@ func (a *MaskingJobsApiService) CreateMaskingJobExecute(r ApiCreateMaskingJobReq
 
 type ApiCreateMaskingJobTagRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	tagsRequest *TagsRequest
 }
@@ -426,8 +429,10 @@ CreateMaskingJobTag Create tags for a Masking Job.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiCreateMaskingJobTagRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) CreateMaskingJobTag(ctx context.Context, maskingJobId string) ApiCreateMaskingJobTagRequest {
+func (a *MaskingJobsAPIService) CreateMaskingJobTag(ctx context.Context, maskingJobId string) ApiCreateMaskingJobTagRequest {
 	return ApiCreateMaskingJobTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -437,7 +442,8 @@ func (a *MaskingJobsApiService) CreateMaskingJobTag(ctx context.Context, masking
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *MaskingJobsApiService) CreateMaskingJobTagExecute(r ApiCreateMaskingJobTagRequest) (*TagsResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) CreateMaskingJobTagExecute(r ApiCreateMaskingJobTagRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -445,7 +451,7 @@ func (a *MaskingJobsApiService) CreateMaskingJobTagExecute(r ApiCreateMaskingJob
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.CreateMaskingJobTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.CreateMaskingJobTag")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -535,7 +541,7 @@ func (a *MaskingJobsApiService) CreateMaskingJobTagExecute(r ApiCreateMaskingJob
 
 type ApiDeleteMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	force *bool
 }
@@ -557,7 +563,7 @@ DeleteMaskingJob Delete a masking job.
  @param maskingJobId The ID of the Masking Job.
  @return ApiDeleteMaskingJobRequest
 */
-func (a *MaskingJobsApiService) DeleteMaskingJob(ctx context.Context, maskingJobId string) ApiDeleteMaskingJobRequest {
+func (a *MaskingJobsAPIService) DeleteMaskingJob(ctx context.Context, maskingJobId string) ApiDeleteMaskingJobRequest {
 	return ApiDeleteMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -567,7 +573,7 @@ func (a *MaskingJobsApiService) DeleteMaskingJob(ctx context.Context, maskingJob
 
 // Execute executes the request
 //  @return DeleteMaskingJobResponse
-func (a *MaskingJobsApiService) DeleteMaskingJobExecute(r ApiDeleteMaskingJobRequest) (*DeleteMaskingJobResponse, *http.Response, error) {
+func (a *MaskingJobsAPIService) DeleteMaskingJobExecute(r ApiDeleteMaskingJobRequest) (*DeleteMaskingJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -575,7 +581,7 @@ func (a *MaskingJobsApiService) DeleteMaskingJobExecute(r ApiDeleteMaskingJobReq
 		localVarReturnValue  *DeleteMaskingJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.DeleteMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.DeleteMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -591,7 +597,10 @@ func (a *MaskingJobsApiService) DeleteMaskingJobExecute(r ApiDeleteMaskingJobReq
 	}
 
 	if r.force != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "force", r.force, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "force", r.force, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.force = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -663,7 +672,7 @@ func (a *MaskingJobsApiService) DeleteMaskingJobExecute(r ApiDeleteMaskingJobReq
 
 type ApiDeleteMaskingJobTagRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	deleteTag *DeleteTag
 }
@@ -684,8 +693,10 @@ DeleteMaskingJobTag Delete tags for a Masking Job.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiDeleteMaskingJobTagRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) DeleteMaskingJobTag(ctx context.Context, maskingJobId string) ApiDeleteMaskingJobTagRequest {
+func (a *MaskingJobsAPIService) DeleteMaskingJobTag(ctx context.Context, maskingJobId string) ApiDeleteMaskingJobTagRequest {
 	return ApiDeleteMaskingJobTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -694,14 +705,15 @@ func (a *MaskingJobsApiService) DeleteMaskingJobTag(ctx context.Context, masking
 }
 
 // Execute executes the request
-func (a *MaskingJobsApiService) DeleteMaskingJobTagExecute(r ApiDeleteMaskingJobTagRequest) (*http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) DeleteMaskingJobTagExecute(r ApiDeleteMaskingJobTagRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.DeleteMaskingJobTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.DeleteMaskingJobTag")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -779,7 +791,7 @@ func (a *MaskingJobsApiService) DeleteMaskingJobTagExecute(r ApiDeleteMaskingJob
 
 type ApiExecuteMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	executeMaskingJobParameters *ExecuteMaskingJobParameters
 }
@@ -799,8 +811,10 @@ ExecuteMaskingJob Execute a MaskingJob.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiExecuteMaskingJobRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) ExecuteMaskingJob(ctx context.Context, maskingJobId string) ApiExecuteMaskingJobRequest {
+func (a *MaskingJobsAPIService) ExecuteMaskingJob(ctx context.Context, maskingJobId string) ApiExecuteMaskingJobRequest {
 	return ApiExecuteMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -810,7 +824,8 @@ func (a *MaskingJobsApiService) ExecuteMaskingJob(ctx context.Context, maskingJo
 
 // Execute executes the request
 //  @return ExecuteMaskingJobResponse
-func (a *MaskingJobsApiService) ExecuteMaskingJobExecute(r ApiExecuteMaskingJobRequest) (*ExecuteMaskingJobResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) ExecuteMaskingJobExecute(r ApiExecuteMaskingJobRequest) (*ExecuteMaskingJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -818,7 +833,7 @@ func (a *MaskingJobsApiService) ExecuteMaskingJobExecute(r ApiExecuteMaskingJobR
 		localVarReturnValue  *ExecuteMaskingJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.ExecuteMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.ExecuteMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -905,7 +920,7 @@ func (a *MaskingJobsApiService) ExecuteMaskingJobExecute(r ApiExecuteMaskingJobR
 
 type ApiGetMaskingJobByIdRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 }
 
@@ -919,8 +934,10 @@ GetMaskingJobById Retrieve a MaskingJob by ID.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiGetMaskingJobByIdRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) GetMaskingJobById(ctx context.Context, maskingJobId string) ApiGetMaskingJobByIdRequest {
+func (a *MaskingJobsAPIService) GetMaskingJobById(ctx context.Context, maskingJobId string) ApiGetMaskingJobByIdRequest {
 	return ApiGetMaskingJobByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -930,7 +947,8 @@ func (a *MaskingJobsApiService) GetMaskingJobById(ctx context.Context, maskingJo
 
 // Execute executes the request
 //  @return MaskingJob
-func (a *MaskingJobsApiService) GetMaskingJobByIdExecute(r ApiGetMaskingJobByIdRequest) (*MaskingJob, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) GetMaskingJobByIdExecute(r ApiGetMaskingJobByIdRequest) (*MaskingJob, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -938,7 +956,7 @@ func (a *MaskingJobsApiService) GetMaskingJobByIdExecute(r ApiGetMaskingJobByIdR
 		localVarReturnValue  *MaskingJob
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.GetMaskingJobById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.GetMaskingJobById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1023,7 +1041,7 @@ func (a *MaskingJobsApiService) GetMaskingJobByIdExecute(r ApiGetMaskingJobByIdR
 
 type ApiGetMaskingJobConnectorsRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 }
 
@@ -1037,8 +1055,10 @@ GetMaskingJobConnectors Get connectors for a Masking Job by ID.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiGetMaskingJobConnectorsRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) GetMaskingJobConnectors(ctx context.Context, maskingJobId string) ApiGetMaskingJobConnectorsRequest {
+func (a *MaskingJobsAPIService) GetMaskingJobConnectors(ctx context.Context, maskingJobId string) ApiGetMaskingJobConnectorsRequest {
 	return ApiGetMaskingJobConnectorsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1048,7 +1068,8 @@ func (a *MaskingJobsApiService) GetMaskingJobConnectors(ctx context.Context, mas
 
 // Execute executes the request
 //  @return MaskingJobConnectorsResponse
-func (a *MaskingJobsApiService) GetMaskingJobConnectorsExecute(r ApiGetMaskingJobConnectorsRequest) (*MaskingJobConnectorsResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) GetMaskingJobConnectorsExecute(r ApiGetMaskingJobConnectorsRequest) (*MaskingJobConnectorsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1056,7 +1077,7 @@ func (a *MaskingJobsApiService) GetMaskingJobConnectorsExecute(r ApiGetMaskingJo
 		localVarReturnValue  *MaskingJobConnectorsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.GetMaskingJobConnectors")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.GetMaskingJobConnectors")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1141,7 +1162,7 @@ func (a *MaskingJobsApiService) GetMaskingJobConnectorsExecute(r ApiGetMaskingJo
 
 type ApiGetMaskingJobSourceEnginesRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1175,7 +1196,7 @@ GetMaskingJobSourceEngines Retrieve the list of masking jobs along with their so
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetMaskingJobSourceEnginesRequest
 */
-func (a *MaskingJobsApiService) GetMaskingJobSourceEngines(ctx context.Context) ApiGetMaskingJobSourceEnginesRequest {
+func (a *MaskingJobsAPIService) GetMaskingJobSourceEngines(ctx context.Context) ApiGetMaskingJobSourceEnginesRequest {
 	return ApiGetMaskingJobSourceEnginesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1184,7 +1205,7 @@ func (a *MaskingJobsApiService) GetMaskingJobSourceEngines(ctx context.Context) 
 
 // Execute executes the request
 //  @return ListMaskingJobSourceEnginesResponse
-func (a *MaskingJobsApiService) GetMaskingJobSourceEnginesExecute(r ApiGetMaskingJobSourceEnginesRequest) (*ListMaskingJobSourceEnginesResponse, *http.Response, error) {
+func (a *MaskingJobsAPIService) GetMaskingJobSourceEnginesExecute(r ApiGetMaskingJobSourceEnginesRequest) (*ListMaskingJobSourceEnginesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1192,7 +1213,7 @@ func (a *MaskingJobsApiService) GetMaskingJobSourceEnginesExecute(r ApiGetMaskin
 		localVarReturnValue  *ListMaskingJobSourceEnginesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.GetMaskingJobSourceEngines")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.GetMaskingJobSourceEngines")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1204,13 +1225,16 @@ func (a *MaskingJobsApiService) GetMaskingJobSourceEnginesExecute(r ApiGetMaskin
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1282,7 +1306,7 @@ func (a *MaskingJobsApiService) GetMaskingJobSourceEnginesExecute(r ApiGetMaskin
 
 type ApiGetMaskingJobTagRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 }
 
@@ -1296,8 +1320,10 @@ GetMaskingJobTag Get tags for a Masking Job.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiGetMaskingJobTagRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) GetMaskingJobTag(ctx context.Context, maskingJobId string) ApiGetMaskingJobTagRequest {
+func (a *MaskingJobsAPIService) GetMaskingJobTag(ctx context.Context, maskingJobId string) ApiGetMaskingJobTagRequest {
 	return ApiGetMaskingJobTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1307,7 +1333,8 @@ func (a *MaskingJobsApiService) GetMaskingJobTag(ctx context.Context, maskingJob
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *MaskingJobsApiService) GetMaskingJobTagExecute(r ApiGetMaskingJobTagRequest) (*TagsResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) GetMaskingJobTagExecute(r ApiGetMaskingJobTagRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1315,7 +1342,7 @@ func (a *MaskingJobsApiService) GetMaskingJobTagExecute(r ApiGetMaskingJobTagReq
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.GetMaskingJobTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.GetMaskingJobTag")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1400,7 +1427,7 @@ func (a *MaskingJobsApiService) GetMaskingJobTagExecute(r ApiGetMaskingJobTagReq
 
 type ApiGetMaskingJobsRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1433,8 +1460,10 @@ GetMaskingJobs Retrieve the list of masking jobs.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetMaskingJobsRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) GetMaskingJobs(ctx context.Context) ApiGetMaskingJobsRequest {
+func (a *MaskingJobsAPIService) GetMaskingJobs(ctx context.Context) ApiGetMaskingJobsRequest {
 	return ApiGetMaskingJobsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1443,7 +1472,8 @@ func (a *MaskingJobsApiService) GetMaskingJobs(ctx context.Context) ApiGetMaskin
 
 // Execute executes the request
 //  @return ListMaskingJobsResponse
-func (a *MaskingJobsApiService) GetMaskingJobsExecute(r ApiGetMaskingJobsRequest) (*ListMaskingJobsResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) GetMaskingJobsExecute(r ApiGetMaskingJobsRequest) (*ListMaskingJobsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1451,7 +1481,7 @@ func (a *MaskingJobsApiService) GetMaskingJobsExecute(r ApiGetMaskingJobsRequest
 		localVarReturnValue  *ListMaskingJobsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.GetMaskingJobs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.GetMaskingJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1463,13 +1493,16 @@ func (a *MaskingJobsApiService) GetMaskingJobsExecute(r ApiGetMaskingJobsRequest
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1541,7 +1574,7 @@ func (a *MaskingJobsApiService) GetMaskingJobsExecute(r ApiGetMaskingJobsRequest
 
 type ApiMigrateMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	migrateMaskingJobParameters *MigrateMaskingJobParameters
 }
@@ -1561,8 +1594,10 @@ MigrateMaskingJob Migrates the masking job from its current source engine to ano
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param maskingJobId The ID of the Masking Job.
  @return ApiMigrateMaskingJobRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) MigrateMaskingJob(ctx context.Context, maskingJobId string) ApiMigrateMaskingJobRequest {
+func (a *MaskingJobsAPIService) MigrateMaskingJob(ctx context.Context, maskingJobId string) ApiMigrateMaskingJobRequest {
 	return ApiMigrateMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1572,7 +1607,8 @@ func (a *MaskingJobsApiService) MigrateMaskingJob(ctx context.Context, maskingJo
 
 // Execute executes the request
 //  @return MigrateMaskingJobResponse
-func (a *MaskingJobsApiService) MigrateMaskingJobExecute(r ApiMigrateMaskingJobRequest) (*MigrateMaskingJobResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) MigrateMaskingJobExecute(r ApiMigrateMaskingJobRequest) (*MigrateMaskingJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1580,7 +1616,7 @@ func (a *MaskingJobsApiService) MigrateMaskingJobExecute(r ApiMigrateMaskingJobR
 		localVarReturnValue  *MigrateMaskingJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.MigrateMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.MigrateMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1667,7 +1703,7 @@ func (a *MaskingJobsApiService) MigrateMaskingJobExecute(r ApiMigrateMaskingJobR
 
 type ApiReImportMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 }
 
@@ -1682,7 +1718,7 @@ ReImportMaskingJob Re-import the dataset from the source MaskingJob (Hyperscale 
  @param maskingJobId The ID of the Masking Job.
  @return ApiReImportMaskingJobRequest
 */
-func (a *MaskingJobsApiService) ReImportMaskingJob(ctx context.Context, maskingJobId string) ApiReImportMaskingJobRequest {
+func (a *MaskingJobsAPIService) ReImportMaskingJob(ctx context.Context, maskingJobId string) ApiReImportMaskingJobRequest {
 	return ApiReImportMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1692,7 +1728,7 @@ func (a *MaskingJobsApiService) ReImportMaskingJob(ctx context.Context, maskingJ
 
 // Execute executes the request
 //  @return ReImportMaskingJobResponse
-func (a *MaskingJobsApiService) ReImportMaskingJobExecute(r ApiReImportMaskingJobRequest) (*ReImportMaskingJobResponse, *http.Response, error) {
+func (a *MaskingJobsAPIService) ReImportMaskingJobExecute(r ApiReImportMaskingJobRequest) (*ReImportMaskingJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1700,7 +1736,7 @@ func (a *MaskingJobsApiService) ReImportMaskingJobExecute(r ApiReImportMaskingJo
 		localVarReturnValue  *ReImportMaskingJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.ReImportMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.ReImportMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1785,7 +1821,7 @@ func (a *MaskingJobsApiService) ReImportMaskingJobExecute(r ApiReImportMaskingJo
 
 type ApiRemoveEngineFromMaskingJobRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	engineIdBody *EngineIdBody
 }
@@ -1807,7 +1843,7 @@ RemoveEngineFromMaskingJob Remove an engine from a Masking Job (Hyperscale Job o
  @param maskingJobId The ID of the Masking Job.
  @return ApiRemoveEngineFromMaskingJobRequest
 */
-func (a *MaskingJobsApiService) RemoveEngineFromMaskingJob(ctx context.Context, maskingJobId string) ApiRemoveEngineFromMaskingJobRequest {
+func (a *MaskingJobsAPIService) RemoveEngineFromMaskingJob(ctx context.Context, maskingJobId string) ApiRemoveEngineFromMaskingJobRequest {
 	return ApiRemoveEngineFromMaskingJobRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1817,7 +1853,7 @@ func (a *MaskingJobsApiService) RemoveEngineFromMaskingJob(ctx context.Context, 
 
 // Execute executes the request
 //  @return RemoveEngineFromJobResponse
-func (a *MaskingJobsApiService) RemoveEngineFromMaskingJobExecute(r ApiRemoveEngineFromMaskingJobRequest) (*RemoveEngineFromJobResponse, *http.Response, error) {
+func (a *MaskingJobsAPIService) RemoveEngineFromMaskingJobExecute(r ApiRemoveEngineFromMaskingJobRequest) (*RemoveEngineFromJobResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1825,7 +1861,7 @@ func (a *MaskingJobsApiService) RemoveEngineFromMaskingJobExecute(r ApiRemoveEng
 		localVarReturnValue  *RemoveEngineFromJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.RemoveEngineFromMaskingJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.RemoveEngineFromMaskingJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1915,7 +1951,7 @@ func (a *MaskingJobsApiService) RemoveEngineFromMaskingJobExecute(r ApiRemoveEng
 
 type ApiSearchMaskingJobSourceEnginesRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1956,7 +1992,7 @@ SearchMaskingJobSourceEngines Search the list of masking jobs along with their s
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchMaskingJobSourceEnginesRequest
 */
-func (a *MaskingJobsApiService) SearchMaskingJobSourceEngines(ctx context.Context) ApiSearchMaskingJobSourceEnginesRequest {
+func (a *MaskingJobsAPIService) SearchMaskingJobSourceEngines(ctx context.Context) ApiSearchMaskingJobSourceEnginesRequest {
 	return ApiSearchMaskingJobSourceEnginesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1965,7 +2001,7 @@ func (a *MaskingJobsApiService) SearchMaskingJobSourceEngines(ctx context.Contex
 
 // Execute executes the request
 //  @return SearchMaskingJobSourceEnginesResponse
-func (a *MaskingJobsApiService) SearchMaskingJobSourceEnginesExecute(r ApiSearchMaskingJobSourceEnginesRequest) (*SearchMaskingJobSourceEnginesResponse, *http.Response, error) {
+func (a *MaskingJobsAPIService) SearchMaskingJobSourceEnginesExecute(r ApiSearchMaskingJobSourceEnginesRequest) (*SearchMaskingJobSourceEnginesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1973,7 +2009,7 @@ func (a *MaskingJobsApiService) SearchMaskingJobSourceEnginesExecute(r ApiSearch
 		localVarReturnValue  *SearchMaskingJobSourceEnginesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.SearchMaskingJobSourceEngines")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.SearchMaskingJobSourceEngines")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1985,13 +2021,16 @@ func (a *MaskingJobsApiService) SearchMaskingJobSourceEnginesExecute(r ApiSearch
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2065,7 +2104,7 @@ func (a *MaskingJobsApiService) SearchMaskingJobSourceEnginesExecute(r ApiSearch
 
 type ApiSearchMaskingJobsRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2105,8 +2144,10 @@ SearchMaskingJobs Search masking jobs.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchMaskingJobsRequest
+
+Deprecated
 */
-func (a *MaskingJobsApiService) SearchMaskingJobs(ctx context.Context) ApiSearchMaskingJobsRequest {
+func (a *MaskingJobsAPIService) SearchMaskingJobs(ctx context.Context) ApiSearchMaskingJobsRequest {
 	return ApiSearchMaskingJobsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2115,7 +2156,8 @@ func (a *MaskingJobsApiService) SearchMaskingJobs(ctx context.Context) ApiSearch
 
 // Execute executes the request
 //  @return SearchMaskingJobsResponse
-func (a *MaskingJobsApiService) SearchMaskingJobsExecute(r ApiSearchMaskingJobsRequest) (*SearchMaskingJobsResponse, *http.Response, error) {
+// Deprecated
+func (a *MaskingJobsAPIService) SearchMaskingJobsExecute(r ApiSearchMaskingJobsRequest) (*SearchMaskingJobsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -2123,7 +2165,7 @@ func (a *MaskingJobsApiService) SearchMaskingJobsExecute(r ApiSearchMaskingJobsR
 		localVarReturnValue  *SearchMaskingJobsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.SearchMaskingJobs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.SearchMaskingJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2135,13 +2177,16 @@ func (a *MaskingJobsApiService) SearchMaskingJobsExecute(r ApiSearchMaskingJobsR
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -2215,7 +2260,7 @@ func (a *MaskingJobsApiService) SearchMaskingJobsExecute(r ApiSearchMaskingJobsR
 
 type ApiUpdateMaskingJobByIdRequest struct {
 	ctx context.Context
-	ApiService *MaskingJobsApiService
+	ApiService *MaskingJobsAPIService
 	maskingJobId string
 	updateMaskingJobParameters *UpdateMaskingJobParameters
 }
@@ -2237,7 +2282,7 @@ UpdateMaskingJobById Update values of a MaskingJob.
  @param maskingJobId The ID of the Masking Job.
  @return ApiUpdateMaskingJobByIdRequest
 */
-func (a *MaskingJobsApiService) UpdateMaskingJobById(ctx context.Context, maskingJobId string) ApiUpdateMaskingJobByIdRequest {
+func (a *MaskingJobsAPIService) UpdateMaskingJobById(ctx context.Context, maskingJobId string) ApiUpdateMaskingJobByIdRequest {
 	return ApiUpdateMaskingJobByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2247,7 +2292,7 @@ func (a *MaskingJobsApiService) UpdateMaskingJobById(ctx context.Context, maskin
 
 // Execute executes the request
 //  @return MaskingJob
-func (a *MaskingJobsApiService) UpdateMaskingJobByIdExecute(r ApiUpdateMaskingJobByIdRequest) (*MaskingJob, *http.Response, error) {
+func (a *MaskingJobsAPIService) UpdateMaskingJobByIdExecute(r ApiUpdateMaskingJobByIdRequest) (*MaskingJob, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -2255,7 +2300,7 @@ func (a *MaskingJobsApiService) UpdateMaskingJobByIdExecute(r ApiUpdateMaskingJo
 		localVarReturnValue  *MaskingJob
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsApiService.UpdateMaskingJobById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MaskingJobsAPIService.UpdateMaskingJobById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the DeleteDSourceRequest type satisfies the MappedNullable interface at compile time
@@ -29,6 +31,8 @@ type DeleteDSourceRequest struct {
 	// Password for privileged user (Oracle only).
 	OraclePassword *string `json:"oracle_password,omitempty"`
 }
+
+type _DeleteDSourceRequest DeleteDSourceRequest
 
 // NewDeleteDSourceRequest instantiates a new DeleteDSourceRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -193,6 +197,43 @@ func (o DeleteDSourceRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["oracle_password"] = o.OraclePassword
 	}
 	return toSerialize, nil
+}
+
+func (o *DeleteDSourceRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"dsource_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDeleteDSourceRequest := _DeleteDSourceRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDeleteDSourceRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeleteDSourceRequest(varDeleteDSourceRequest)
+
+	return err
 }
 
 type NullableDeleteDSourceRequest struct {

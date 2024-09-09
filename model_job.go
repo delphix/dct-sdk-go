@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -57,7 +57,11 @@ type Job struct {
 	AccountName *string `json:"account_name,omitempty"`
 	// Completion percentage of the Job.
 	PercentComplete *int32 `json:"percent_complete,omitempty"`
+	// Deprecated
 	VirtualizationTasks []VirtualizationTask `json:"virtualization_tasks,omitempty"`
+	Tasks []JobTask `json:"tasks,omitempty"`
+	// The ID of the associated masking execution, if any.
+	ExecutionId NullableString `json:"execution_id,omitempty"`
 }
 
 // NewJob instantiates a new Job object
@@ -660,6 +664,7 @@ func (o *Job) SetPercentComplete(v int32) {
 }
 
 // GetVirtualizationTasks returns the VirtualizationTasks field value if set, zero value otherwise.
+// Deprecated
 func (o *Job) GetVirtualizationTasks() []VirtualizationTask {
 	if o == nil || IsNil(o.VirtualizationTasks) {
 		var ret []VirtualizationTask
@@ -670,6 +675,7 @@ func (o *Job) GetVirtualizationTasks() []VirtualizationTask {
 
 // GetVirtualizationTasksOk returns a tuple with the VirtualizationTasks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *Job) GetVirtualizationTasksOk() ([]VirtualizationTask, bool) {
 	if o == nil || IsNil(o.VirtualizationTasks) {
 		return nil, false
@@ -687,8 +693,83 @@ func (o *Job) HasVirtualizationTasks() bool {
 }
 
 // SetVirtualizationTasks gets a reference to the given []VirtualizationTask and assigns it to the VirtualizationTasks field.
+// Deprecated
 func (o *Job) SetVirtualizationTasks(v []VirtualizationTask) {
 	o.VirtualizationTasks = v
+}
+
+// GetTasks returns the Tasks field value if set, zero value otherwise.
+func (o *Job) GetTasks() []JobTask {
+	if o == nil || IsNil(o.Tasks) {
+		var ret []JobTask
+		return ret
+	}
+	return o.Tasks
+}
+
+// GetTasksOk returns a tuple with the Tasks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetTasksOk() ([]JobTask, bool) {
+	if o == nil || IsNil(o.Tasks) {
+		return nil, false
+	}
+	return o.Tasks, true
+}
+
+// HasTasks returns a boolean if a field has been set.
+func (o *Job) HasTasks() bool {
+	if o != nil && !IsNil(o.Tasks) {
+		return true
+	}
+
+	return false
+}
+
+// SetTasks gets a reference to the given []JobTask and assigns it to the Tasks field.
+func (o *Job) SetTasks(v []JobTask) {
+	o.Tasks = v
+}
+
+// GetExecutionId returns the ExecutionId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Job) GetExecutionId() string {
+	if o == nil || IsNil(o.ExecutionId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ExecutionId.Get()
+}
+
+// GetExecutionIdOk returns a tuple with the ExecutionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Job) GetExecutionIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ExecutionId.Get(), o.ExecutionId.IsSet()
+}
+
+// HasExecutionId returns a boolean if a field has been set.
+func (o *Job) HasExecutionId() bool {
+	if o != nil && o.ExecutionId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionId gets a reference to the given NullableString and assigns it to the ExecutionId field.
+func (o *Job) SetExecutionId(v string) {
+	o.ExecutionId.Set(&v)
+}
+// SetExecutionIdNil sets the value for ExecutionId to be an explicit nil
+func (o *Job) SetExecutionIdNil() {
+	o.ExecutionId.Set(nil)
+}
+
+// UnsetExecutionId ensures that no value is present for ExecutionId, not even an explicit nil
+func (o *Job) UnsetExecutionId() {
+	o.ExecutionId.Unset()
 }
 
 func (o Job) MarshalJSON() ([]byte, error) {
@@ -757,6 +838,12 @@ func (o Job) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.VirtualizationTasks) {
 		toSerialize["virtualization_tasks"] = o.VirtualizationTasks
+	}
+	if !IsNil(o.Tasks) {
+		toSerialize["tasks"] = o.Tasks
+	}
+	if o.ExecutionId.IsSet() {
+		toSerialize["execution_id"] = o.ExecutionId.Get()
 	}
 	return toSerialize, nil
 }

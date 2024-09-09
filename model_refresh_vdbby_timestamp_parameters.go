@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -24,7 +24,7 @@ type RefreshVDBByTimestampParameters struct {
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
-	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty"`
+	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty" validate:"regexp=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{0,3})?"`
 	// ID of the timeflow to refresh to, mutually exclusive with dataset_id.
 	TimeflowId *string `json:"timeflow_id,omitempty"`
 	// ID of the dataset to refresh to, mutually exclusive with timeflow_id.

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -44,6 +44,8 @@ type Repository struct {
 	Rac *bool `json:"rac,omitempty"`
 	// The network ports for connecting to the database instance.
 	Ports []int64 `json:"ports,omitempty"`
+	// The network port for connecting to the SQL Server instance.
+	Port *int64 `json:"port,omitempty"`
 	// Fully qualified name of the dump history file.
 	DumpHistoryFile *string `json:"dump_history_file,omitempty"`
 	// Database page size for the SAP ASE instance.
@@ -64,6 +66,8 @@ type Repository struct {
 	InstallationHome *string `json:"installation_home,omitempty"`
 	// MSSQL failover cluster drive letter.
 	DriveLetter []string `json:"drive_letter,omitempty"`
+	// Flag indicating whether the repository was automatically discovered.
+	Discovered *bool `json:"discovered,omitempty"`
 }
 
 // NewRepository instantiates a new Repository object
@@ -467,6 +471,38 @@ func (o *Repository) SetPorts(v []int64) {
 	o.Ports = v
 }
 
+// GetPort returns the Port field value if set, zero value otherwise.
+func (o *Repository) GetPort() int64 {
+	if o == nil || IsNil(o.Port) {
+		var ret int64
+		return ret
+	}
+	return *o.Port
+}
+
+// GetPortOk returns a tuple with the Port field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetPortOk() (*int64, bool) {
+	if o == nil || IsNil(o.Port) {
+		return nil, false
+	}
+	return o.Port, true
+}
+
+// HasPort returns a boolean if a field has been set.
+func (o *Repository) HasPort() bool {
+	if o != nil && !IsNil(o.Port) {
+		return true
+	}
+
+	return false
+}
+
+// SetPort gets a reference to the given int64 and assigns it to the Port field.
+func (o *Repository) SetPort(v int64) {
+	o.Port = &v
+}
+
 // GetDumpHistoryFile returns the DumpHistoryFile field value if set, zero value otherwise.
 func (o *Repository) GetDumpHistoryFile() string {
 	if o == nil || IsNil(o.DumpHistoryFile) {
@@ -787,6 +823,38 @@ func (o *Repository) SetDriveLetter(v []string) {
 	o.DriveLetter = v
 }
 
+// GetDiscovered returns the Discovered field value if set, zero value otherwise.
+func (o *Repository) GetDiscovered() bool {
+	if o == nil || IsNil(o.Discovered) {
+		var ret bool
+		return ret
+	}
+	return *o.Discovered
+}
+
+// GetDiscoveredOk returns a tuple with the Discovered field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetDiscoveredOk() (*bool, bool) {
+	if o == nil || IsNil(o.Discovered) {
+		return nil, false
+	}
+	return o.Discovered, true
+}
+
+// HasDiscovered returns a boolean if a field has been set.
+func (o *Repository) HasDiscovered() bool {
+	if o != nil && !IsNil(o.Discovered) {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscovered gets a reference to the given bool and assigns it to the Discovered field.
+func (o *Repository) SetDiscovered(v bool) {
+	o.Discovered = &v
+}
+
 func (o Repository) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -833,6 +901,9 @@ func (o Repository) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Ports) {
 		toSerialize["ports"] = o.Ports
 	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
 	if !IsNil(o.DumpHistoryFile) {
 		toSerialize["dump_history_file"] = o.DumpHistoryFile
 	}
@@ -862,6 +933,9 @@ func (o Repository) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DriveLetter) {
 		toSerialize["drive_letter"] = o.DriveLetter
+	}
+	if !IsNil(o.Discovered) {
+		toSerialize["discovered"] = o.Discovered
 	}
 	return toSerialize, nil
 }

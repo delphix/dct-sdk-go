@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -20,15 +20,15 @@ import (
 )
 
 
-// SamlLoginApiService SamlLoginApi service
-type SamlLoginApiService service
+// SamlLoginAPIService SamlLoginAPI service
+type SamlLoginAPIService service
 
 type ApiCheckSamlRequest struct {
 	ctx context.Context
-	ApiService *SamlLoginApiService
+	ApiService *SamlLoginAPIService
 }
 
-func (r ApiCheckSamlRequest) Execute() (*http.Response, error) {
+func (r ApiCheckSamlRequest) Execute() (*SAMLValidationResponse, *http.Response, error) {
 	return r.ApiService.CheckSamlExecute(r)
 }
 
@@ -38,7 +38,7 @@ CheckSaml Check if SAML is enabled
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCheckSamlRequest
 */
-func (a *SamlLoginApiService) CheckSaml(ctx context.Context) ApiCheckSamlRequest {
+func (a *SamlLoginAPIService) CheckSaml(ctx context.Context) ApiCheckSamlRequest {
 	return ApiCheckSamlRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -46,16 +46,18 @@ func (a *SamlLoginApiService) CheckSaml(ctx context.Context) ApiCheckSamlRequest
 }
 
 // Execute executes the request
-func (a *SamlLoginApiService) CheckSamlExecute(r ApiCheckSamlRequest) (*http.Response, error) {
+//  @return SAMLValidationResponse
+func (a *SamlLoginAPIService) CheckSamlExecute(r ApiCheckSamlRequest) (*SAMLValidationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *SAMLValidationResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlLoginApiService.CheckSaml")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlLoginAPIService.CheckSaml")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/is-saml-enabled"
@@ -97,19 +99,19 @@ func (a *SamlLoginApiService) CheckSamlExecute(r ApiCheckSamlRequest) (*http.Res
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -117,18 +119,17 @@ func (a *SamlLoginApiService) CheckSamlExecute(r ApiCheckSamlRequest) (*http.Res
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

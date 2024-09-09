@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -19,7 +19,7 @@ import (
 // checks if the Execution type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Execution{}
 
-// Execution The execution of a masking or profile job.
+// Execution The execution of a masking or discovery job.
 type Execution struct {
 	// The Execution entity ID.
 	Id *string `json:"id,omitempty"`
@@ -36,8 +36,7 @@ type Execution struct {
 	SourceConnectorId *string `json:"source_connector_id,omitempty"`
 	// The ID of the target connector. This field is only used for multi-tenant jobs.
 	TargetConnectorId *string `json:"target_connector_id,omitempty"`
-	// The status of the execution regarding its completion.
-	Status *string `json:"status,omitempty"`
+	Status *ExecutionStatus `json:"status,omitempty"`
 	// The number of rows masked or profiled so far by this execution. This is not applicable for JSON file type.
 	RowsMasked *int64 `json:"rows_masked,omitempty"`
 	// The total number of rows that this execution should mask. This value is set to -1 while the total row count is being calculated. This is not applicable for JSON file type.
@@ -333,9 +332,9 @@ func (o *Execution) SetTargetConnectorId(v string) {
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
-func (o *Execution) GetStatus() string {
+func (o *Execution) GetStatus() ExecutionStatus {
 	if o == nil || IsNil(o.Status) {
-		var ret string
+		var ret ExecutionStatus
 		return ret
 	}
 	return *o.Status
@@ -343,7 +342,7 @@ func (o *Execution) GetStatus() string {
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Execution) GetStatusOk() (*string, bool) {
+func (o *Execution) GetStatusOk() (*ExecutionStatus, bool) {
 	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
@@ -359,8 +358,8 @@ func (o *Execution) HasStatus() bool {
 	return false
 }
 
-// SetStatus gets a reference to the given string and assigns it to the Status field.
-func (o *Execution) SetStatus(v string) {
+// SetStatus gets a reference to the given ExecutionStatus and assigns it to the Status field.
+func (o *Execution) SetStatus(v ExecutionStatus) {
 	o.Status = &v
 }
 

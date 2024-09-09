@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -27,10 +27,24 @@ type Bookmark struct {
 	Name *string `json:"name,omitempty"`
 	// The date and time that this bookmark was created.
 	CreationDate *time.Time `json:"creation_date,omitempty"`
+	// The timestamp for the data that the bookmark refers to.
+	DataTimestamp *time.Time `json:"data_timestamp,omitempty"`
+	// The timeflow for the snapshot that the bookmark was created of.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
+	// The location for the data that the bookmark refers to.
+	Location *string `json:"location,omitempty"`
 	// The list of VDB IDs associated with this bookmark.
 	VdbIds []string `json:"vdb_ids,omitempty"`
 	// The list of dSource IDs associated with this bookmark.
 	DsourceIds []string `json:"dsource_ids,omitempty"`
+	// The ID of the VDB group on which bookmark is created.
+	VdbGroupId *string `json:"vdb_group_id,omitempty"`
+	// The name of the VDB group on which bookmark is created.
+	VdbGroupName *string `json:"vdb_group_name,omitempty"`
+	// The list of VDB IDs and VDB names associated with this bookmark.
+	Vdbs []BookmarkVDBs `json:"vdbs,omitempty"`
+	// The list of dSource IDs and dSource names associated with this bookmark.
+	Dsources []BookmarkDSources `json:"dsources,omitempty"`
 	// The retention policy for this bookmark, in days. A value of -1 indicates the bookmark should be kept forever. Deprecated in favor of expiration.
 	// Deprecated
 	Retention *int64 `json:"retention,omitempty"`
@@ -40,6 +54,18 @@ type Bookmark struct {
 	Status NullableString `json:"status,omitempty"`
 	// Whether this bookmark is created from a replicated dataset or not.
 	ReplicatedDataset *bool `json:"replicated_dataset,omitempty"`
+	// Source of the bookmark, default is DCT. In case of self-service bookmarks, this value would be ENGINE.
+	BookmarkSource *string `json:"bookmark_source,omitempty"`
+	// Status of the bookmark. It can have INACTIVE value for engine bookmarks only. If this value is INACTIVE then ss_bookmark_errors would have the list of associated errors.
+	BookmarkStatus *string `json:"bookmark_status,omitempty"`
+	// Data-layout Id for engine-managed bookmarks.
+	SsDataLayoutId *string `json:"ss_data_layout_id,omitempty"`
+	// Engine reference of the self-service bookmark.
+	SsBookmarkReference *string `json:"ss_bookmark_reference,omitempty"`
+	// List of errors if any, during bookmark creation in DCT from self-service.
+	SsBookmarkErrors []string `json:"ss_bookmark_errors,omitempty"`
+	// Type of the bookmark, either PUBLIC or PRIVATE.
+	BookmarkType *string `json:"bookmark_type,omitempty"`
 	// The tags to be created for this Bookmark.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -50,6 +76,8 @@ type Bookmark struct {
 // will change when the set of required properties is changed
 func NewBookmark() *Bookmark {
 	this := Bookmark{}
+	var bookmarkType string = "PRIVATE"
+	this.BookmarkType = &bookmarkType
 	return &this
 }
 
@@ -58,6 +86,8 @@ func NewBookmark() *Bookmark {
 // but it doesn't guarantee that properties required by API are set
 func NewBookmarkWithDefaults() *Bookmark {
 	this := Bookmark{}
+	var bookmarkType string = "PRIVATE"
+	this.BookmarkType = &bookmarkType
 	return &this
 }
 
@@ -157,6 +187,102 @@ func (o *Bookmark) SetCreationDate(v time.Time) {
 	o.CreationDate = &v
 }
 
+// GetDataTimestamp returns the DataTimestamp field value if set, zero value otherwise.
+func (o *Bookmark) GetDataTimestamp() time.Time {
+	if o == nil || IsNil(o.DataTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.DataTimestamp
+}
+
+// GetDataTimestampOk returns a tuple with the DataTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetDataTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.DataTimestamp) {
+		return nil, false
+	}
+	return o.DataTimestamp, true
+}
+
+// HasDataTimestamp returns a boolean if a field has been set.
+func (o *Bookmark) HasDataTimestamp() bool {
+	if o != nil && !IsNil(o.DataTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataTimestamp gets a reference to the given time.Time and assigns it to the DataTimestamp field.
+func (o *Bookmark) SetDataTimestamp(v time.Time) {
+	o.DataTimestamp = &v
+}
+
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *Bookmark) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *Bookmark) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *Bookmark) SetTimeflowId(v string) {
+	o.TimeflowId = &v
+}
+
+// GetLocation returns the Location field value if set, zero value otherwise.
+func (o *Bookmark) GetLocation() string {
+	if o == nil || IsNil(o.Location) {
+		var ret string
+		return ret
+	}
+	return *o.Location
+}
+
+// GetLocationOk returns a tuple with the Location field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.Location) {
+		return nil, false
+	}
+	return o.Location, true
+}
+
+// HasLocation returns a boolean if a field has been set.
+func (o *Bookmark) HasLocation() bool {
+	if o != nil && !IsNil(o.Location) {
+		return true
+	}
+
+	return false
+}
+
+// SetLocation gets a reference to the given string and assigns it to the Location field.
+func (o *Bookmark) SetLocation(v string) {
+	o.Location = &v
+}
+
 // GetVdbIds returns the VdbIds field value if set, zero value otherwise.
 func (o *Bookmark) GetVdbIds() []string {
 	if o == nil || IsNil(o.VdbIds) {
@@ -219,6 +345,134 @@ func (o *Bookmark) HasDsourceIds() bool {
 // SetDsourceIds gets a reference to the given []string and assigns it to the DsourceIds field.
 func (o *Bookmark) SetDsourceIds(v []string) {
 	o.DsourceIds = v
+}
+
+// GetVdbGroupId returns the VdbGroupId field value if set, zero value otherwise.
+func (o *Bookmark) GetVdbGroupId() string {
+	if o == nil || IsNil(o.VdbGroupId) {
+		var ret string
+		return ret
+	}
+	return *o.VdbGroupId
+}
+
+// GetVdbGroupIdOk returns a tuple with the VdbGroupId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetVdbGroupIdOk() (*string, bool) {
+	if o == nil || IsNil(o.VdbGroupId) {
+		return nil, false
+	}
+	return o.VdbGroupId, true
+}
+
+// HasVdbGroupId returns a boolean if a field has been set.
+func (o *Bookmark) HasVdbGroupId() bool {
+	if o != nil && !IsNil(o.VdbGroupId) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbGroupId gets a reference to the given string and assigns it to the VdbGroupId field.
+func (o *Bookmark) SetVdbGroupId(v string) {
+	o.VdbGroupId = &v
+}
+
+// GetVdbGroupName returns the VdbGroupName field value if set, zero value otherwise.
+func (o *Bookmark) GetVdbGroupName() string {
+	if o == nil || IsNil(o.VdbGroupName) {
+		var ret string
+		return ret
+	}
+	return *o.VdbGroupName
+}
+
+// GetVdbGroupNameOk returns a tuple with the VdbGroupName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetVdbGroupNameOk() (*string, bool) {
+	if o == nil || IsNil(o.VdbGroupName) {
+		return nil, false
+	}
+	return o.VdbGroupName, true
+}
+
+// HasVdbGroupName returns a boolean if a field has been set.
+func (o *Bookmark) HasVdbGroupName() bool {
+	if o != nil && !IsNil(o.VdbGroupName) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbGroupName gets a reference to the given string and assigns it to the VdbGroupName field.
+func (o *Bookmark) SetVdbGroupName(v string) {
+	o.VdbGroupName = &v
+}
+
+// GetVdbs returns the Vdbs field value if set, zero value otherwise.
+func (o *Bookmark) GetVdbs() []BookmarkVDBs {
+	if o == nil || IsNil(o.Vdbs) {
+		var ret []BookmarkVDBs
+		return ret
+	}
+	return o.Vdbs
+}
+
+// GetVdbsOk returns a tuple with the Vdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetVdbsOk() ([]BookmarkVDBs, bool) {
+	if o == nil || IsNil(o.Vdbs) {
+		return nil, false
+	}
+	return o.Vdbs, true
+}
+
+// HasVdbs returns a boolean if a field has been set.
+func (o *Bookmark) HasVdbs() bool {
+	if o != nil && !IsNil(o.Vdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbs gets a reference to the given []BookmarkVDBs and assigns it to the Vdbs field.
+func (o *Bookmark) SetVdbs(v []BookmarkVDBs) {
+	o.Vdbs = v
+}
+
+// GetDsources returns the Dsources field value if set, zero value otherwise.
+func (o *Bookmark) GetDsources() []BookmarkDSources {
+	if o == nil || IsNil(o.Dsources) {
+		var ret []BookmarkDSources
+		return ret
+	}
+	return o.Dsources
+}
+
+// GetDsourcesOk returns a tuple with the Dsources field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetDsourcesOk() ([]BookmarkDSources, bool) {
+	if o == nil || IsNil(o.Dsources) {
+		return nil, false
+	}
+	return o.Dsources, true
+}
+
+// HasDsources returns a boolean if a field has been set.
+func (o *Bookmark) HasDsources() bool {
+	if o != nil && !IsNil(o.Dsources) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsources gets a reference to the given []BookmarkDSources and assigns it to the Dsources field.
+func (o *Bookmark) SetDsources(v []BookmarkDSources) {
+	o.Dsources = v
 }
 
 // GetRetention returns the Retention field value if set, zero value otherwise.
@@ -362,6 +616,198 @@ func (o *Bookmark) SetReplicatedDataset(v bool) {
 	o.ReplicatedDataset = &v
 }
 
+// GetBookmarkSource returns the BookmarkSource field value if set, zero value otherwise.
+func (o *Bookmark) GetBookmarkSource() string {
+	if o == nil || IsNil(o.BookmarkSource) {
+		var ret string
+		return ret
+	}
+	return *o.BookmarkSource
+}
+
+// GetBookmarkSourceOk returns a tuple with the BookmarkSource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetBookmarkSourceOk() (*string, bool) {
+	if o == nil || IsNil(o.BookmarkSource) {
+		return nil, false
+	}
+	return o.BookmarkSource, true
+}
+
+// HasBookmarkSource returns a boolean if a field has been set.
+func (o *Bookmark) HasBookmarkSource() bool {
+	if o != nil && !IsNil(o.BookmarkSource) {
+		return true
+	}
+
+	return false
+}
+
+// SetBookmarkSource gets a reference to the given string and assigns it to the BookmarkSource field.
+func (o *Bookmark) SetBookmarkSource(v string) {
+	o.BookmarkSource = &v
+}
+
+// GetBookmarkStatus returns the BookmarkStatus field value if set, zero value otherwise.
+func (o *Bookmark) GetBookmarkStatus() string {
+	if o == nil || IsNil(o.BookmarkStatus) {
+		var ret string
+		return ret
+	}
+	return *o.BookmarkStatus
+}
+
+// GetBookmarkStatusOk returns a tuple with the BookmarkStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetBookmarkStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.BookmarkStatus) {
+		return nil, false
+	}
+	return o.BookmarkStatus, true
+}
+
+// HasBookmarkStatus returns a boolean if a field has been set.
+func (o *Bookmark) HasBookmarkStatus() bool {
+	if o != nil && !IsNil(o.BookmarkStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetBookmarkStatus gets a reference to the given string and assigns it to the BookmarkStatus field.
+func (o *Bookmark) SetBookmarkStatus(v string) {
+	o.BookmarkStatus = &v
+}
+
+// GetSsDataLayoutId returns the SsDataLayoutId field value if set, zero value otherwise.
+func (o *Bookmark) GetSsDataLayoutId() string {
+	if o == nil || IsNil(o.SsDataLayoutId) {
+		var ret string
+		return ret
+	}
+	return *o.SsDataLayoutId
+}
+
+// GetSsDataLayoutIdOk returns a tuple with the SsDataLayoutId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetSsDataLayoutIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SsDataLayoutId) {
+		return nil, false
+	}
+	return o.SsDataLayoutId, true
+}
+
+// HasSsDataLayoutId returns a boolean if a field has been set.
+func (o *Bookmark) HasSsDataLayoutId() bool {
+	if o != nil && !IsNil(o.SsDataLayoutId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSsDataLayoutId gets a reference to the given string and assigns it to the SsDataLayoutId field.
+func (o *Bookmark) SetSsDataLayoutId(v string) {
+	o.SsDataLayoutId = &v
+}
+
+// GetSsBookmarkReference returns the SsBookmarkReference field value if set, zero value otherwise.
+func (o *Bookmark) GetSsBookmarkReference() string {
+	if o == nil || IsNil(o.SsBookmarkReference) {
+		var ret string
+		return ret
+	}
+	return *o.SsBookmarkReference
+}
+
+// GetSsBookmarkReferenceOk returns a tuple with the SsBookmarkReference field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetSsBookmarkReferenceOk() (*string, bool) {
+	if o == nil || IsNil(o.SsBookmarkReference) {
+		return nil, false
+	}
+	return o.SsBookmarkReference, true
+}
+
+// HasSsBookmarkReference returns a boolean if a field has been set.
+func (o *Bookmark) HasSsBookmarkReference() bool {
+	if o != nil && !IsNil(o.SsBookmarkReference) {
+		return true
+	}
+
+	return false
+}
+
+// SetSsBookmarkReference gets a reference to the given string and assigns it to the SsBookmarkReference field.
+func (o *Bookmark) SetSsBookmarkReference(v string) {
+	o.SsBookmarkReference = &v
+}
+
+// GetSsBookmarkErrors returns the SsBookmarkErrors field value if set, zero value otherwise.
+func (o *Bookmark) GetSsBookmarkErrors() []string {
+	if o == nil || IsNil(o.SsBookmarkErrors) {
+		var ret []string
+		return ret
+	}
+	return o.SsBookmarkErrors
+}
+
+// GetSsBookmarkErrorsOk returns a tuple with the SsBookmarkErrors field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetSsBookmarkErrorsOk() ([]string, bool) {
+	if o == nil || IsNil(o.SsBookmarkErrors) {
+		return nil, false
+	}
+	return o.SsBookmarkErrors, true
+}
+
+// HasSsBookmarkErrors returns a boolean if a field has been set.
+func (o *Bookmark) HasSsBookmarkErrors() bool {
+	if o != nil && !IsNil(o.SsBookmarkErrors) {
+		return true
+	}
+
+	return false
+}
+
+// SetSsBookmarkErrors gets a reference to the given []string and assigns it to the SsBookmarkErrors field.
+func (o *Bookmark) SetSsBookmarkErrors(v []string) {
+	o.SsBookmarkErrors = v
+}
+
+// GetBookmarkType returns the BookmarkType field value if set, zero value otherwise.
+func (o *Bookmark) GetBookmarkType() string {
+	if o == nil || IsNil(o.BookmarkType) {
+		var ret string
+		return ret
+	}
+	return *o.BookmarkType
+}
+
+// GetBookmarkTypeOk returns a tuple with the BookmarkType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetBookmarkTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.BookmarkType) {
+		return nil, false
+	}
+	return o.BookmarkType, true
+}
+
+// HasBookmarkType returns a boolean if a field has been set.
+func (o *Bookmark) HasBookmarkType() bool {
+	if o != nil && !IsNil(o.BookmarkType) {
+		return true
+	}
+
+	return false
+}
+
+// SetBookmarkType gets a reference to the given string and assigns it to the BookmarkType field.
+func (o *Bookmark) SetBookmarkType(v string) {
+	o.BookmarkType = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Bookmark) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -404,16 +850,41 @@ func (o Bookmark) MarshalJSON() ([]byte, error) {
 
 func (o Bookmark) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	// skip: creation_date is readOnly
+	if !IsNil(o.CreationDate) {
+		toSerialize["creation_date"] = o.CreationDate
+	}
+	if !IsNil(o.DataTimestamp) {
+		toSerialize["data_timestamp"] = o.DataTimestamp
+	}
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
+	}
+	if !IsNil(o.Location) {
+		toSerialize["location"] = o.Location
+	}
 	if !IsNil(o.VdbIds) {
 		toSerialize["vdb_ids"] = o.VdbIds
 	}
 	if !IsNil(o.DsourceIds) {
 		toSerialize["dsource_ids"] = o.DsourceIds
+	}
+	if !IsNil(o.VdbGroupId) {
+		toSerialize["vdb_group_id"] = o.VdbGroupId
+	}
+	if !IsNil(o.VdbGroupName) {
+		toSerialize["vdb_group_name"] = o.VdbGroupName
+	}
+	if !IsNil(o.Vdbs) {
+		toSerialize["vdbs"] = o.Vdbs
+	}
+	if !IsNil(o.Dsources) {
+		toSerialize["dsources"] = o.Dsources
 	}
 	if !IsNil(o.Retention) {
 		toSerialize["retention"] = o.Retention
@@ -426,6 +897,24 @@ func (o Bookmark) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ReplicatedDataset) {
 		toSerialize["replicated_dataset"] = o.ReplicatedDataset
+	}
+	if !IsNil(o.BookmarkSource) {
+		toSerialize["bookmark_source"] = o.BookmarkSource
+	}
+	if !IsNil(o.BookmarkStatus) {
+		toSerialize["bookmark_status"] = o.BookmarkStatus
+	}
+	if !IsNil(o.SsDataLayoutId) {
+		toSerialize["ss_data_layout_id"] = o.SsDataLayoutId
+	}
+	if !IsNil(o.SsBookmarkReference) {
+		toSerialize["ss_bookmark_reference"] = o.SsBookmarkReference
+	}
+	if !IsNil(o.SsBookmarkErrors) {
+		toSerialize["ss_bookmark_errors"] = o.SsBookmarkErrors
+	}
+	if !IsNil(o.BookmarkType) {
+		toSerialize["bookmark_type"] = o.BookmarkType
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

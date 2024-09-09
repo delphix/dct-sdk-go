@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// HyperscaleInstanceApiService HyperscaleInstanceApi service
-type HyperscaleInstanceApiService service
+// HyperscaleInstanceAPIService HyperscaleInstanceAPI service
+type HyperscaleInstanceAPIService service
 
 type ApiAddEngineToHyperscaleInstanceRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 	engineIdBody *EngineIdBody
 }
@@ -48,7 +48,7 @@ AddEngineToHyperscaleInstance Add an engine to a Hyperscale Instance.
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiAddEngineToHyperscaleInstanceRequest
 */
-func (a *HyperscaleInstanceApiService) AddEngineToHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiAddEngineToHyperscaleInstanceRequest {
+func (a *HyperscaleInstanceAPIService) AddEngineToHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiAddEngineToHyperscaleInstanceRequest {
 	return ApiAddEngineToHyperscaleInstanceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +58,7 @@ func (a *HyperscaleInstanceApiService) AddEngineToHyperscaleInstance(ctx context
 
 // Execute executes the request
 //  @return AddEngineToHyperscaleResponse
-func (a *HyperscaleInstanceApiService) AddEngineToHyperscaleInstanceExecute(r ApiAddEngineToHyperscaleInstanceRequest) (*AddEngineToHyperscaleResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) AddEngineToHyperscaleInstanceExecute(r ApiAddEngineToHyperscaleInstanceRequest) (*AddEngineToHyperscaleResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +66,7 @@ func (a *HyperscaleInstanceApiService) AddEngineToHyperscaleInstanceExecute(r Ap
 		localVarReturnValue  *AddEngineToHyperscaleResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.AddEngineToHyperscaleInstance")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.AddEngineToHyperscaleInstance")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -153,7 +153,7 @@ func (a *HyperscaleInstanceApiService) AddEngineToHyperscaleInstanceExecute(r Ap
 
 type ApiCreateHyperscaleInstanceTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 	tagsRequest *TagsRequest
 }
@@ -175,7 +175,7 @@ CreateHyperscaleInstanceTags Create tags for a Hyperscale Instance.
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiCreateHyperscaleInstanceTagsRequest
 */
-func (a *HyperscaleInstanceApiService) CreateHyperscaleInstanceTags(ctx context.Context, hyperscaleInstanceId string) ApiCreateHyperscaleInstanceTagsRequest {
+func (a *HyperscaleInstanceAPIService) CreateHyperscaleInstanceTags(ctx context.Context, hyperscaleInstanceId string) ApiCreateHyperscaleInstanceTagsRequest {
 	return ApiCreateHyperscaleInstanceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -185,7 +185,7 @@ func (a *HyperscaleInstanceApiService) CreateHyperscaleInstanceTags(ctx context.
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *HyperscaleInstanceApiService) CreateHyperscaleInstanceTagsExecute(r ApiCreateHyperscaleInstanceTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) CreateHyperscaleInstanceTagsExecute(r ApiCreateHyperscaleInstanceTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -193,7 +193,7 @@ func (a *HyperscaleInstanceApiService) CreateHyperscaleInstanceTagsExecute(r Api
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.CreateHyperscaleInstanceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.CreateHyperscaleInstanceTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -280,7 +280,7 @@ func (a *HyperscaleInstanceApiService) CreateHyperscaleInstanceTagsExecute(r Api
 
 type ApiDeleteHyperscaleInstanceTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 	deleteTag *DeleteTag
 }
@@ -302,7 +302,7 @@ DeleteHyperscaleInstanceTags Delete tags for a Hyperscale Instance.
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiDeleteHyperscaleInstanceTagsRequest
 */
-func (a *HyperscaleInstanceApiService) DeleteHyperscaleInstanceTags(ctx context.Context, hyperscaleInstanceId string) ApiDeleteHyperscaleInstanceTagsRequest {
+func (a *HyperscaleInstanceAPIService) DeleteHyperscaleInstanceTags(ctx context.Context, hyperscaleInstanceId string) ApiDeleteHyperscaleInstanceTagsRequest {
 	return ApiDeleteHyperscaleInstanceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -311,14 +311,14 @@ func (a *HyperscaleInstanceApiService) DeleteHyperscaleInstanceTags(ctx context.
 }
 
 // Execute executes the request
-func (a *HyperscaleInstanceApiService) DeleteHyperscaleInstanceTagsExecute(r ApiDeleteHyperscaleInstanceTagsRequest) (*http.Response, error) {
+func (a *HyperscaleInstanceAPIService) DeleteHyperscaleInstanceTagsExecute(r ApiDeleteHyperscaleInstanceTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.DeleteHyperscaleInstanceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.DeleteHyperscaleInstanceTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -393,7 +393,7 @@ func (a *HyperscaleInstanceApiService) DeleteHyperscaleInstanceTagsExecute(r Api
 
 type ApiGetHyperscaleInstanceByIdRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 }
 
@@ -408,7 +408,7 @@ GetHyperscaleInstanceById Returns a Hyperscale Instance by ID.
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiGetHyperscaleInstanceByIdRequest
 */
-func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceById(ctx context.Context, hyperscaleInstanceId string) ApiGetHyperscaleInstanceByIdRequest {
+func (a *HyperscaleInstanceAPIService) GetHyperscaleInstanceById(ctx context.Context, hyperscaleInstanceId string) ApiGetHyperscaleInstanceByIdRequest {
 	return ApiGetHyperscaleInstanceByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -418,7 +418,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceById(ctx context.Con
 
 // Execute executes the request
 //  @return HyperscaleInstance
-func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceByIdExecute(r ApiGetHyperscaleInstanceByIdRequest) (*HyperscaleInstance, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) GetHyperscaleInstanceByIdExecute(r ApiGetHyperscaleInstanceByIdRequest) (*HyperscaleInstance, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -426,7 +426,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceByIdExecute(r ApiGet
 		localVarReturnValue  *HyperscaleInstance
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.GetHyperscaleInstanceById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.GetHyperscaleInstanceById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -508,7 +508,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceByIdExecute(r ApiGet
 
 type ApiGetHyperscaleInstanceTagsRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 }
 
@@ -523,7 +523,7 @@ GetHyperscaleInstanceTags Get tags for a Hyperscale Instance.
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiGetHyperscaleInstanceTagsRequest
 */
-func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceTags(ctx context.Context, hyperscaleInstanceId string) ApiGetHyperscaleInstanceTagsRequest {
+func (a *HyperscaleInstanceAPIService) GetHyperscaleInstanceTags(ctx context.Context, hyperscaleInstanceId string) ApiGetHyperscaleInstanceTagsRequest {
 	return ApiGetHyperscaleInstanceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -533,7 +533,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceTags(ctx context.Con
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceTagsExecute(r ApiGetHyperscaleInstanceTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) GetHyperscaleInstanceTagsExecute(r ApiGetHyperscaleInstanceTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -541,7 +541,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceTagsExecute(r ApiGet
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.GetHyperscaleInstanceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.GetHyperscaleInstanceTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -623,7 +623,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstanceTagsExecute(r ApiGet
 
 type ApiGetHyperscaleInstancesRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -657,7 +657,7 @@ GetHyperscaleInstances Returns a list of Hyperscale instances.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetHyperscaleInstancesRequest
 */
-func (a *HyperscaleInstanceApiService) GetHyperscaleInstances(ctx context.Context) ApiGetHyperscaleInstancesRequest {
+func (a *HyperscaleInstanceAPIService) GetHyperscaleInstances(ctx context.Context) ApiGetHyperscaleInstancesRequest {
 	return ApiGetHyperscaleInstancesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -666,7 +666,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstances(ctx context.Contex
 
 // Execute executes the request
 //  @return ListHyperscaleInstancesResponse
-func (a *HyperscaleInstanceApiService) GetHyperscaleInstancesExecute(r ApiGetHyperscaleInstancesRequest) (*ListHyperscaleInstancesResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) GetHyperscaleInstancesExecute(r ApiGetHyperscaleInstancesRequest) (*ListHyperscaleInstancesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -674,7 +674,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstancesExecute(r ApiGetHyp
 		localVarReturnValue  *ListHyperscaleInstancesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.GetHyperscaleInstances")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.GetHyperscaleInstances")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -686,13 +686,16 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstancesExecute(r ApiGetHyp
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -764,7 +767,7 @@ func (a *HyperscaleInstanceApiService) GetHyperscaleInstancesExecute(r ApiGetHyp
 
 type ApiRegisterHyperscaleInstanceRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceRegistrationParameter *HyperscaleInstanceRegistrationParameter
 }
 
@@ -784,7 +787,7 @@ RegisterHyperscaleInstance Register a Hyperscale instance
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRegisterHyperscaleInstanceRequest
 */
-func (a *HyperscaleInstanceApiService) RegisterHyperscaleInstance(ctx context.Context) ApiRegisterHyperscaleInstanceRequest {
+func (a *HyperscaleInstanceAPIService) RegisterHyperscaleInstance(ctx context.Context) ApiRegisterHyperscaleInstanceRequest {
 	return ApiRegisterHyperscaleInstanceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -793,7 +796,7 @@ func (a *HyperscaleInstanceApiService) RegisterHyperscaleInstance(ctx context.Co
 
 // Execute executes the request
 //  @return HyperscaleInstance
-func (a *HyperscaleInstanceApiService) RegisterHyperscaleInstanceExecute(r ApiRegisterHyperscaleInstanceRequest) (*HyperscaleInstance, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) RegisterHyperscaleInstanceExecute(r ApiRegisterHyperscaleInstanceRequest) (*HyperscaleInstance, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -801,7 +804,7 @@ func (a *HyperscaleInstanceApiService) RegisterHyperscaleInstanceExecute(r ApiRe
 		localVarReturnValue  *HyperscaleInstance
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.RegisterHyperscaleInstance")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.RegisterHyperscaleInstance")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -887,7 +890,7 @@ func (a *HyperscaleInstanceApiService) RegisterHyperscaleInstanceExecute(r ApiRe
 
 type ApiRemoveEngineFromHyperscaleInstanceRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 	engineIdBody *EngineIdBody
 }
@@ -909,7 +912,7 @@ RemoveEngineFromHyperscaleInstance Remove an engine from a Hyperscale Instance.
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiRemoveEngineFromHyperscaleInstanceRequest
 */
-func (a *HyperscaleInstanceApiService) RemoveEngineFromHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiRemoveEngineFromHyperscaleInstanceRequest {
+func (a *HyperscaleInstanceAPIService) RemoveEngineFromHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiRemoveEngineFromHyperscaleInstanceRequest {
 	return ApiRemoveEngineFromHyperscaleInstanceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -919,7 +922,7 @@ func (a *HyperscaleInstanceApiService) RemoveEngineFromHyperscaleInstance(ctx co
 
 // Execute executes the request
 //  @return RemoveEngineFromHyperscaleResponse
-func (a *HyperscaleInstanceApiService) RemoveEngineFromHyperscaleInstanceExecute(r ApiRemoveEngineFromHyperscaleInstanceRequest) (*RemoveEngineFromHyperscaleResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) RemoveEngineFromHyperscaleInstanceExecute(r ApiRemoveEngineFromHyperscaleInstanceRequest) (*RemoveEngineFromHyperscaleResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -927,7 +930,7 @@ func (a *HyperscaleInstanceApiService) RemoveEngineFromHyperscaleInstanceExecute
 		localVarReturnValue  *RemoveEngineFromHyperscaleResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.RemoveEngineFromHyperscaleInstance")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.RemoveEngineFromHyperscaleInstance")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1014,7 +1017,7 @@ func (a *HyperscaleInstanceApiService) RemoveEngineFromHyperscaleInstanceExecute
 
 type ApiSearchHyperscaleInstancesRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1055,7 +1058,7 @@ SearchHyperscaleInstances Search for Hyperscale instances.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchHyperscaleInstancesRequest
 */
-func (a *HyperscaleInstanceApiService) SearchHyperscaleInstances(ctx context.Context) ApiSearchHyperscaleInstancesRequest {
+func (a *HyperscaleInstanceAPIService) SearchHyperscaleInstances(ctx context.Context) ApiSearchHyperscaleInstancesRequest {
 	return ApiSearchHyperscaleInstancesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1064,7 +1067,7 @@ func (a *HyperscaleInstanceApiService) SearchHyperscaleInstances(ctx context.Con
 
 // Execute executes the request
 //  @return SearchHyperscaleInstancesResponse
-func (a *HyperscaleInstanceApiService) SearchHyperscaleInstancesExecute(r ApiSearchHyperscaleInstancesRequest) (*SearchHyperscaleInstancesResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) SearchHyperscaleInstancesExecute(r ApiSearchHyperscaleInstancesRequest) (*SearchHyperscaleInstancesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1072,7 +1075,7 @@ func (a *HyperscaleInstanceApiService) SearchHyperscaleInstancesExecute(r ApiSea
 		localVarReturnValue  *SearchHyperscaleInstancesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.SearchHyperscaleInstances")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.SearchHyperscaleInstances")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1084,13 +1087,16 @@ func (a *HyperscaleInstanceApiService) SearchHyperscaleInstancesExecute(r ApiSea
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1164,7 +1170,7 @@ func (a *HyperscaleInstanceApiService) SearchHyperscaleInstancesExecute(r ApiSea
 
 type ApiSyncEnginesHyperscaleInstanceRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 	syncEnginesHyperscaleParameters *SyncEnginesHyperscaleParameters
 }
@@ -1185,7 +1191,7 @@ SyncEnginesHyperscaleInstance Sync the global object from a source engine to eng
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiSyncEnginesHyperscaleInstanceRequest
 */
-func (a *HyperscaleInstanceApiService) SyncEnginesHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiSyncEnginesHyperscaleInstanceRequest {
+func (a *HyperscaleInstanceAPIService) SyncEnginesHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiSyncEnginesHyperscaleInstanceRequest {
 	return ApiSyncEnginesHyperscaleInstanceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1195,7 +1201,7 @@ func (a *HyperscaleInstanceApiService) SyncEnginesHyperscaleInstance(ctx context
 
 // Execute executes the request
 //  @return SyncEnginesHyperscaleResponse
-func (a *HyperscaleInstanceApiService) SyncEnginesHyperscaleInstanceExecute(r ApiSyncEnginesHyperscaleInstanceRequest) (*SyncEnginesHyperscaleResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) SyncEnginesHyperscaleInstanceExecute(r ApiSyncEnginesHyperscaleInstanceRequest) (*SyncEnginesHyperscaleResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1203,7 +1209,7 @@ func (a *HyperscaleInstanceApiService) SyncEnginesHyperscaleInstanceExecute(r Ap
 		localVarReturnValue  *SyncEnginesHyperscaleResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.SyncEnginesHyperscaleInstance")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.SyncEnginesHyperscaleInstance")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1287,7 +1293,7 @@ func (a *HyperscaleInstanceApiService) SyncEnginesHyperscaleInstanceExecute(r Ap
 
 type ApiUnregisterHyperscaleInstanceRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 }
 
@@ -1302,7 +1308,7 @@ UnregisterHyperscaleInstance Unregister a Hyperscale Instance.
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiUnregisterHyperscaleInstanceRequest
 */
-func (a *HyperscaleInstanceApiService) UnregisterHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiUnregisterHyperscaleInstanceRequest {
+func (a *HyperscaleInstanceAPIService) UnregisterHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiUnregisterHyperscaleInstanceRequest {
 	return ApiUnregisterHyperscaleInstanceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1312,7 +1318,7 @@ func (a *HyperscaleInstanceApiService) UnregisterHyperscaleInstance(ctx context.
 
 // Execute executes the request
 //  @return UnregisterHyperscaleInstanceResponse
-func (a *HyperscaleInstanceApiService) UnregisterHyperscaleInstanceExecute(r ApiUnregisterHyperscaleInstanceRequest) (*UnregisterHyperscaleInstanceResponse, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) UnregisterHyperscaleInstanceExecute(r ApiUnregisterHyperscaleInstanceRequest) (*UnregisterHyperscaleInstanceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -1320,7 +1326,7 @@ func (a *HyperscaleInstanceApiService) UnregisterHyperscaleInstanceExecute(r Api
 		localVarReturnValue  *UnregisterHyperscaleInstanceResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.UnregisterHyperscaleInstance")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.UnregisterHyperscaleInstance")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1402,7 +1408,7 @@ func (a *HyperscaleInstanceApiService) UnregisterHyperscaleInstanceExecute(r Api
 
 type ApiUpdateHyperscaleInstanceRequest struct {
 	ctx context.Context
-	ApiService *HyperscaleInstanceApiService
+	ApiService *HyperscaleInstanceAPIService
 	hyperscaleInstanceId string
 	hyperscaleInstanceUpdateParams *HyperscaleInstanceUpdateParams
 }
@@ -1424,7 +1430,7 @@ UpdateHyperscaleInstance Update an Hyperscale Instance
  @param hyperscaleInstanceId The ID of hyperscale instance.
  @return ApiUpdateHyperscaleInstanceRequest
 */
-func (a *HyperscaleInstanceApiService) UpdateHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiUpdateHyperscaleInstanceRequest {
+func (a *HyperscaleInstanceAPIService) UpdateHyperscaleInstance(ctx context.Context, hyperscaleInstanceId string) ApiUpdateHyperscaleInstanceRequest {
 	return ApiUpdateHyperscaleInstanceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1434,7 +1440,7 @@ func (a *HyperscaleInstanceApiService) UpdateHyperscaleInstance(ctx context.Cont
 
 // Execute executes the request
 //  @return HyperscaleInstance
-func (a *HyperscaleInstanceApiService) UpdateHyperscaleInstanceExecute(r ApiUpdateHyperscaleInstanceRequest) (*HyperscaleInstance, *http.Response, error) {
+func (a *HyperscaleInstanceAPIService) UpdateHyperscaleInstanceExecute(r ApiUpdateHyperscaleInstanceRequest) (*HyperscaleInstance, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -1442,7 +1448,7 @@ func (a *HyperscaleInstanceApiService) UpdateHyperscaleInstanceExecute(r ApiUpda
 		localVarReturnValue  *HyperscaleInstance
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceApiService.UpdateHyperscaleInstance")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HyperscaleInstanceAPIService.UpdateHyperscaleInstance")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CopyMaskingJobParameters type satisfies the MappedNullable interface at compile time
@@ -24,11 +26,13 @@ type CopyMaskingJobParameters struct {
 	TargetEngineId string `json:"target_engine_id"`
 	// The ID or name of the source environment on the target engine. This only applies to On-The-Fly jobs.
 	SourceEnvironmentId *string `json:"source_environment_id,omitempty"`
-	// The ID or name of the target environment to copy the job into.
+	// The ID or name of the target environment on the target engine to copy the job into.
 	TargetEnvironmentId *string `json:"target_environment_id,omitempty"`
 	// Whether to overwrite objects that already exist on the target engine.
 	ForceOverwrite *bool `json:"force_overwrite,omitempty"`
 }
+
+type _CopyMaskingJobParameters CopyMaskingJobParameters
 
 // NewCopyMaskingJobParameters instantiates a new CopyMaskingJobParameters object
 // This constructor will assign default values to properties that have it defined,
@@ -193,6 +197,43 @@ func (o CopyMaskingJobParameters) ToMap() (map[string]interface{}, error) {
 		toSerialize["force_overwrite"] = o.ForceOverwrite
 	}
 	return toSerialize, nil
+}
+
+func (o *CopyMaskingJobParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"target_engine_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCopyMaskingJobParameters := _CopyMaskingJobParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCopyMaskingJobParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CopyMaskingJobParameters(varCopyMaskingJobParameters)
+
+	return err
 }
 
 type NullableCopyMaskingJobParameters struct {

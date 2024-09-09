@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,9 +21,9 @@ var _ MappedNullable = &ConfigSettingsStg{}
 // ConfigSettingsStg Custom Database-Level config settings.
 type ConfigSettingsStg struct {
 	// Name of the property.
-	PropertyName *string `json:"property_name,omitempty"`
+	PropertyName *string `json:"property_name,omitempty" validate:"regexp=^$|^[_a-zA-Z0-9]*$"`
 	// Value of the property.
-	Value *string `json:"value,omitempty"`
+	Value *string `json:"value,omitempty" validate:"regexp=^$|^''$|^[\\/_.:%@'+!*a-zA-Z0-9\\\\[\\\\]\\\\- ]*$"`
 	// Select this option to comment out the provided property name in the configuration file.
 	CommentProperty *bool `json:"comment_property,omitempty"`
 }

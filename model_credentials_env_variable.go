@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CredentialsEnvVariable type satisfies the MappedNullable interface at compile time
@@ -24,6 +26,8 @@ type CredentialsEnvVariable struct {
 	BaseVarName string `json:"base_var_name"`
 	// Password to assign to the environment variables.
 	Password *string `json:"password,omitempty"`
+	// Delphix display name for the vault user.
+	VaultUsername *string `json:"vault_username,omitempty"`
 	// The name or reference of the vault to assign to the environment variables.
 	Vault *string `json:"vault,omitempty"`
 	// Vault engine name where the credential is stored.
@@ -43,6 +47,8 @@ type CredentialsEnvVariable struct {
 	// Query to find a credential in the CyberArk vault.
 	CyberarkVaultQueryString *string `json:"cyberark_vault_query_string,omitempty"`
 }
+
+type _CredentialsEnvVariable CredentialsEnvVariable
 
 // NewCredentialsEnvVariable instantiates a new CredentialsEnvVariable object
 // This constructor will assign default values to properties that have it defined,
@@ -116,6 +122,38 @@ func (o *CredentialsEnvVariable) HasPassword() bool {
 // SetPassword gets a reference to the given string and assigns it to the Password field.
 func (o *CredentialsEnvVariable) SetPassword(v string) {
 	o.Password = &v
+}
+
+// GetVaultUsername returns the VaultUsername field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetVaultUsername() string {
+	if o == nil || IsNil(o.VaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.VaultUsername
+}
+
+// GetVaultUsernameOk returns a tuple with the VaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.VaultUsername) {
+		return nil, false
+	}
+	return o.VaultUsername, true
+}
+
+// HasVaultUsername returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasVaultUsername() bool {
+	if o != nil && !IsNil(o.VaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetVaultUsername gets a reference to the given string and assigns it to the VaultUsername field.
+func (o *CredentialsEnvVariable) SetVaultUsername(v string) {
+	o.VaultUsername = &v
 }
 
 // GetVault returns the Vault field value if set, zero value otherwise.
@@ -420,6 +458,9 @@ func (o CredentialsEnvVariable) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Password) {
 		toSerialize["password"] = o.Password
 	}
+	if !IsNil(o.VaultUsername) {
+		toSerialize["vault_username"] = o.VaultUsername
+	}
 	if !IsNil(o.Vault) {
 		toSerialize["vault"] = o.Vault
 	}
@@ -448,6 +489,43 @@ func (o CredentialsEnvVariable) ToMap() (map[string]interface{}, error) {
 		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
 	}
 	return toSerialize, nil
+}
+
+func (o *CredentialsEnvVariable) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"base_var_name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCredentialsEnvVariable := _CredentialsEnvVariable{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCredentialsEnvVariable)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CredentialsEnvVariable(varCredentialsEnvVariable)
+
+	return err
 }
 
 type NullableCredentialsEnvVariable struct {

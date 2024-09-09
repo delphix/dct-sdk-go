@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -47,7 +47,7 @@ type RegisteredEngine struct {
 	// Ignore validation of the name associated to the TLS certificate when connecting to the engine over HTTPs. Setting this value must only be done if the TLS certificate of the engine does not match the hostname, and the TLS configuration of the engine cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
 	// File name of a truststore which can be used to validate the TLS certificate of the engine. The truststore must be available at /etc/config/certs/<truststore_filename> 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
+	TruststoreFilename NullableString `json:"truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.]+$"`
 	// Password to read the truststore. 
 	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	// the status of the engine 
@@ -97,7 +97,7 @@ type RegisteredEngine struct {
 	// List of Hyperscale Instances that this engine is connected to.
 	HyperscaleInstanceIds []string `json:"hyperscale_instance_ids,omitempty"`
 	// File name of a truststore which can be used to validate the TLS certificate of the engine as expected by associated hyperscale instances. 
-	HyperscaleTruststoreFilename NullableString `json:"hyperscale_truststore_filename,omitempty"`
+	HyperscaleTruststoreFilename NullableString `json:"hyperscale_truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.]+$"`
 	// Password to read the truststore as expected by associated hyperscale instances. 
 	HyperscaleTruststorePassword NullableString `json:"hyperscale_truststore_password,omitempty"`
 }
@@ -1074,7 +1074,7 @@ func (o *RegisteredEngine) GetHashicorpVaultUsernameCommandArgsOk() ([]string, b
 
 // HasHashicorpVaultUsernameCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultUsernameCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultUsernameCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultUsernameCommandArgs) {
 		return true
 	}
 
@@ -1107,7 +1107,7 @@ func (o *RegisteredEngine) GetHashicorpVaultMaskingUsernameCommandArgsOk() ([]st
 
 // HasHashicorpVaultMaskingUsernameCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultMaskingUsernameCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
 		return true
 	}
 
@@ -1140,7 +1140,7 @@ func (o *RegisteredEngine) GetHashicorpVaultPasswordCommandArgsOk() ([]string, b
 
 // HasHashicorpVaultPasswordCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultPasswordCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultPasswordCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultPasswordCommandArgs) {
 		return true
 	}
 
@@ -1173,7 +1173,7 @@ func (o *RegisteredEngine) GetHashicorpVaultMaskingPasswordCommandArgsOk() ([]st
 
 // HasHashicorpVaultMaskingPasswordCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultMaskingPasswordCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
 		return true
 	}
 
@@ -1532,7 +1532,7 @@ func (o *RegisteredEngine) GetHyperscaleInstanceIdsOk() ([]string, bool) {
 
 // HasHyperscaleInstanceIds returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHyperscaleInstanceIds() bool {
-	if o != nil && IsNil(o.HyperscaleInstanceIds) {
+	if o != nil && !IsNil(o.HyperscaleInstanceIds) {
 		return true
 	}
 
@@ -1638,7 +1638,9 @@ func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 
 func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if o.Uuid.IsSet() {
 		toSerialize["uuid"] = o.Uuid.Get()
 	}
@@ -1687,11 +1689,15 @@ func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	if o.ConnectionStatus.IsSet() {
 		toSerialize["connection_status"] = o.ConnectionStatus.Get()
 	}
-	// skip: engine_connection_status is readOnly
+	if !IsNil(o.EngineConnectionStatus) {
+		toSerialize["engine_connection_status"] = o.EngineConnectionStatus
+	}
 	if o.ConnectionStatusDetails.IsSet() {
 		toSerialize["connection_status_details"] = o.ConnectionStatusDetails.Get()
 	}
-	// skip: engine_connection_status_details is readOnly
+	if !IsNil(o.EngineConnectionStatusDetails) {
+		toSerialize["engine_connection_status_details"] = o.EngineConnectionStatusDetails
+	}
 	if o.Username.IsSet() {
 		toSerialize["username"] = o.Username.Get()
 	}

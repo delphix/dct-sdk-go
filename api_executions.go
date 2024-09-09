@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// ExecutionsApiService ExecutionsApi service
-type ExecutionsApiService service
+// ExecutionsAPIService ExecutionsAPI service
+type ExecutionsAPIService service
 
 type ApiCancelExecutionRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	executionId string
 	executionCancelParameters *ExecutionCancelParameters
 }
@@ -47,7 +47,7 @@ CancelExecution Cancel an Execution.
  @param executionId The ID of the Execution.
  @return ApiCancelExecutionRequest
 */
-func (a *ExecutionsApiService) CancelExecution(ctx context.Context, executionId string) ApiCancelExecutionRequest {
+func (a *ExecutionsAPIService) CancelExecution(ctx context.Context, executionId string) ApiCancelExecutionRequest {
 	return ApiCancelExecutionRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -56,14 +56,14 @@ func (a *ExecutionsApiService) CancelExecution(ctx context.Context, executionId 
 }
 
 // Execute executes the request
-func (a *ExecutionsApiService) CancelExecutionExecute(r ApiCancelExecutionRequest) (*http.Response, error) {
+func (a *ExecutionsAPIService) CancelExecutionExecute(r ApiCancelExecutionRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.CancelExecution")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.CancelExecution")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -141,7 +141,7 @@ func (a *ExecutionsApiService) CancelExecutionExecute(r ApiCancelExecutionReques
 
 type ApiCleanupExecutionRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	executionId string
 }
 
@@ -156,7 +156,7 @@ CleanupExecution Cleanup an Execution (Hyperscale only).
  @param executionId The ID of the Execution.
  @return ApiCleanupExecutionRequest
 */
-func (a *ExecutionsApiService) CleanupExecution(ctx context.Context, executionId string) ApiCleanupExecutionRequest {
+func (a *ExecutionsAPIService) CleanupExecution(ctx context.Context, executionId string) ApiCleanupExecutionRequest {
 	return ApiCleanupExecutionRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -166,7 +166,7 @@ func (a *ExecutionsApiService) CleanupExecution(ctx context.Context, executionId
 
 // Execute executes the request
 //  @return CleanupExecutionResponse
-func (a *ExecutionsApiService) CleanupExecutionExecute(r ApiCleanupExecutionRequest) (*CleanupExecutionResponse, *http.Response, error) {
+func (a *ExecutionsAPIService) CleanupExecutionExecute(r ApiCleanupExecutionRequest) (*CleanupExecutionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -174,7 +174,7 @@ func (a *ExecutionsApiService) CleanupExecutionExecute(r ApiCleanupExecutionRequ
 		localVarReturnValue  *CleanupExecutionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.CleanupExecution")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.CleanupExecution")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -259,7 +259,7 @@ func (a *ExecutionsApiService) CleanupExecutionExecute(r ApiCleanupExecutionRequ
 
 type ApiGetExecutionByIdRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	executionId string
 }
 
@@ -274,7 +274,7 @@ GetExecutionById Retrieve an Execution by ID.
  @param executionId The ID of the Execution.
  @return ApiGetExecutionByIdRequest
 */
-func (a *ExecutionsApiService) GetExecutionById(ctx context.Context, executionId string) ApiGetExecutionByIdRequest {
+func (a *ExecutionsAPIService) GetExecutionById(ctx context.Context, executionId string) ApiGetExecutionByIdRequest {
 	return ApiGetExecutionByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -284,7 +284,7 @@ func (a *ExecutionsApiService) GetExecutionById(ctx context.Context, executionId
 
 // Execute executes the request
 //  @return Execution
-func (a *ExecutionsApiService) GetExecutionByIdExecute(r ApiGetExecutionByIdRequest) (*Execution, *http.Response, error) {
+func (a *ExecutionsAPIService) GetExecutionByIdExecute(r ApiGetExecutionByIdRequest) (*Execution, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -292,7 +292,7 @@ func (a *ExecutionsApiService) GetExecutionByIdExecute(r ApiGetExecutionByIdRequ
 		localVarReturnValue  *Execution
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.GetExecutionById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.GetExecutionById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -377,7 +377,7 @@ func (a *ExecutionsApiService) GetExecutionByIdExecute(r ApiGetExecutionByIdRequ
 
 type ApiGetExecutionEventsRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	executionId string
 	limit *int32
 	cursor *string
@@ -413,7 +413,7 @@ GetExecutionEvents Retrieve the list of events for a masking execution.
  @param executionId The ID of the Execution.
  @return ApiGetExecutionEventsRequest
 */
-func (a *ExecutionsApiService) GetExecutionEvents(ctx context.Context, executionId string) ApiGetExecutionEventsRequest {
+func (a *ExecutionsAPIService) GetExecutionEvents(ctx context.Context, executionId string) ApiGetExecutionEventsRequest {
 	return ApiGetExecutionEventsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -423,7 +423,7 @@ func (a *ExecutionsApiService) GetExecutionEvents(ctx context.Context, execution
 
 // Execute executes the request
 //  @return ListExecutionEventsResponse
-func (a *ExecutionsApiService) GetExecutionEventsExecute(r ApiGetExecutionEventsRequest) (*ListExecutionEventsResponse, *http.Response, error) {
+func (a *ExecutionsAPIService) GetExecutionEventsExecute(r ApiGetExecutionEventsRequest) (*ListExecutionEventsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -431,7 +431,7 @@ func (a *ExecutionsApiService) GetExecutionEventsExecute(r ApiGetExecutionEvents
 		localVarReturnValue  *ListExecutionEventsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.GetExecutionEvents")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.GetExecutionEvents")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -447,13 +447,16 @@ func (a *ExecutionsApiService) GetExecutionEventsExecute(r ApiGetExecutionEvents
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -525,7 +528,7 @@ func (a *ExecutionsApiService) GetExecutionEventsExecute(r ApiGetExecutionEvents
 
 type ApiGetExecutionLogRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	executionId string
 }
 
@@ -540,7 +543,7 @@ GetExecutionLog Retrieve the masking execution log.
  @param executionId The ID of the Execution.
  @return ApiGetExecutionLogRequest
 */
-func (a *ExecutionsApiService) GetExecutionLog(ctx context.Context, executionId string) ApiGetExecutionLogRequest {
+func (a *ExecutionsAPIService) GetExecutionLog(ctx context.Context, executionId string) ApiGetExecutionLogRequest {
 	return ApiGetExecutionLogRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -550,7 +553,7 @@ func (a *ExecutionsApiService) GetExecutionLog(ctx context.Context, executionId 
 
 // Execute executes the request
 //  @return ExecutionLog
-func (a *ExecutionsApiService) GetExecutionLogExecute(r ApiGetExecutionLogRequest) (*ExecutionLog, *http.Response, error) {
+func (a *ExecutionsAPIService) GetExecutionLogExecute(r ApiGetExecutionLogRequest) (*ExecutionLog, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -558,7 +561,7 @@ func (a *ExecutionsApiService) GetExecutionLogExecute(r ApiGetExecutionLogReques
 		localVarReturnValue  *ExecutionLog
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.GetExecutionLog")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.GetExecutionLog")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -643,7 +646,7 @@ func (a *ExecutionsApiService) GetExecutionLogExecute(r ApiGetExecutionLogReques
 
 type ApiGetExecutionsRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -677,7 +680,7 @@ GetExecutions Retrieve the list of masking executions.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetExecutionsRequest
 */
-func (a *ExecutionsApiService) GetExecutions(ctx context.Context) ApiGetExecutionsRequest {
+func (a *ExecutionsAPIService) GetExecutions(ctx context.Context) ApiGetExecutionsRequest {
 	return ApiGetExecutionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -686,7 +689,7 @@ func (a *ExecutionsApiService) GetExecutions(ctx context.Context) ApiGetExecutio
 
 // Execute executes the request
 //  @return ListExecutionsResponse
-func (a *ExecutionsApiService) GetExecutionsExecute(r ApiGetExecutionsRequest) (*ListExecutionsResponse, *http.Response, error) {
+func (a *ExecutionsAPIService) GetExecutionsExecute(r ApiGetExecutionsRequest) (*ListExecutionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -694,7 +697,7 @@ func (a *ExecutionsApiService) GetExecutionsExecute(r ApiGetExecutionsRequest) (
 		localVarReturnValue  *ListExecutionsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.GetExecutions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.GetExecutions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -706,13 +709,16 @@ func (a *ExecutionsApiService) GetExecutionsExecute(r ApiGetExecutionsRequest) (
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -784,7 +790,7 @@ func (a *ExecutionsApiService) GetExecutionsExecute(r ApiGetExecutionsRequest) (
 
 type ApiRestartExecutionRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	executionId string
 }
 
@@ -799,7 +805,7 @@ RestartExecution Restart an Execution (Hyperscale only).
  @param executionId The ID of the Execution.
  @return ApiRestartExecutionRequest
 */
-func (a *ExecutionsApiService) RestartExecution(ctx context.Context, executionId string) ApiRestartExecutionRequest {
+func (a *ExecutionsAPIService) RestartExecution(ctx context.Context, executionId string) ApiRestartExecutionRequest {
 	return ApiRestartExecutionRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -809,7 +815,7 @@ func (a *ExecutionsApiService) RestartExecution(ctx context.Context, executionId
 
 // Execute executes the request
 //  @return RestartExecutionResponse
-func (a *ExecutionsApiService) RestartExecutionExecute(r ApiRestartExecutionRequest) (*RestartExecutionResponse, *http.Response, error) {
+func (a *ExecutionsAPIService) RestartExecutionExecute(r ApiRestartExecutionRequest) (*RestartExecutionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -817,7 +823,7 @@ func (a *ExecutionsApiService) RestartExecutionExecute(r ApiRestartExecutionRequ
 		localVarReturnValue  *RestartExecutionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.RestartExecution")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.RestartExecution")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -902,7 +908,7 @@ func (a *ExecutionsApiService) RestartExecutionExecute(r ApiRestartExecutionRequ
 
 type ApiSearchExecutionEventsRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	executionId string
 	limit *int32
 	cursor *string
@@ -945,7 +951,7 @@ SearchExecutionEvents Search masking executions events.
  @param executionId The ID of the Execution.
  @return ApiSearchExecutionEventsRequest
 */
-func (a *ExecutionsApiService) SearchExecutionEvents(ctx context.Context, executionId string) ApiSearchExecutionEventsRequest {
+func (a *ExecutionsAPIService) SearchExecutionEvents(ctx context.Context, executionId string) ApiSearchExecutionEventsRequest {
 	return ApiSearchExecutionEventsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -955,7 +961,7 @@ func (a *ExecutionsApiService) SearchExecutionEvents(ctx context.Context, execut
 
 // Execute executes the request
 //  @return SearchExecutionEventsResponse
-func (a *ExecutionsApiService) SearchExecutionEventsExecute(r ApiSearchExecutionEventsRequest) (*SearchExecutionEventsResponse, *http.Response, error) {
+func (a *ExecutionsAPIService) SearchExecutionEventsExecute(r ApiSearchExecutionEventsRequest) (*SearchExecutionEventsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -963,7 +969,7 @@ func (a *ExecutionsApiService) SearchExecutionEventsExecute(r ApiSearchExecution
 		localVarReturnValue  *SearchExecutionEventsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.SearchExecutionEvents")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.SearchExecutionEvents")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -979,13 +985,16 @@ func (a *ExecutionsApiService) SearchExecutionEventsExecute(r ApiSearchExecution
 	}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1059,7 +1068,7 @@ func (a *ExecutionsApiService) SearchExecutionEventsExecute(r ApiSearchExecution
 
 type ApiSearchExecutionsRequest struct {
 	ctx context.Context
-	ApiService *ExecutionsApiService
+	ApiService *ExecutionsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1100,7 +1109,7 @@ SearchExecutions Search masking executions.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchExecutionsRequest
 */
-func (a *ExecutionsApiService) SearchExecutions(ctx context.Context) ApiSearchExecutionsRequest {
+func (a *ExecutionsAPIService) SearchExecutions(ctx context.Context) ApiSearchExecutionsRequest {
 	return ApiSearchExecutionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1109,7 +1118,7 @@ func (a *ExecutionsApiService) SearchExecutions(ctx context.Context) ApiSearchEx
 
 // Execute executes the request
 //  @return SearchExecutionsResponse
-func (a *ExecutionsApiService) SearchExecutionsExecute(r ApiSearchExecutionsRequest) (*SearchExecutionsResponse, *http.Response, error) {
+func (a *ExecutionsAPIService) SearchExecutionsExecute(r ApiSearchExecutionsRequest) (*SearchExecutionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1117,7 +1126,7 @@ func (a *ExecutionsApiService) SearchExecutionsExecute(r ApiSearchExecutionsRequ
 		localVarReturnValue  *SearchExecutionsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsApiService.SearchExecutions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExecutionsAPIService.SearchExecutions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1129,13 +1138,16 @@ func (a *ExecutionsApiService) SearchExecutionsExecute(r ApiSearchExecutionsRequ
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AccessGroupScope type satisfies the MappedNullable interface at compile time
@@ -35,6 +37,8 @@ type AccessGroupScope struct {
 	// An array of always allowed permissions which can be used to specify object type and permission. An object with same object type and permission can not be added in 'objects' array.
 	AlwaysAllowedPermissions []AlwaysAllowedPermission `json:"always_allowed_permissions,omitempty"`
 }
+
+type _AccessGroupScope AccessGroupScope
 
 // NewAccessGroupScope instantiates a new AccessGroupScope object
 // This constructor will assign default values to properties that have it defined,
@@ -280,7 +284,9 @@ func (o AccessGroupScope) MarshalJSON() ([]byte, error) {
 
 func (o AccessGroupScope) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
@@ -298,6 +304,43 @@ func (o AccessGroupScope) ToMap() (map[string]interface{}, error) {
 		toSerialize["always_allowed_permissions"] = o.AlwaysAllowedPermissions
 	}
 	return toSerialize, nil
+}
+
+func (o *AccessGroupScope) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"role_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAccessGroupScope := _AccessGroupScope{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAccessGroupScope)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AccessGroupScope(varAccessGroupScope)
+
+	return err
 }
 
 type NullableAccessGroupScope struct {

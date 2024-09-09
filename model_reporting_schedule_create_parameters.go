@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.16.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ReportingScheduleCreateParameters type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type ReportingScheduleCreateParameters struct {
 	CronExpression string `json:"cron_expression"`
 	// Timezones are specified according to the Olson tzinfo database - \"https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\".
 	TimeZone *string `json:"time_zone,omitempty"`
-	Message *string `json:"message,omitempty"`
+	Message string `json:"message"`
 	FileFormat string `json:"file_format"`
 	Enabled bool `json:"enabled"`
 	Recipients []string `json:"recipients"`
@@ -35,14 +37,17 @@ type ReportingScheduleCreateParameters struct {
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
 
+type _ReportingScheduleCreateParameters ReportingScheduleCreateParameters
+
 // NewReportingScheduleCreateParameters instantiates a new ReportingScheduleCreateParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewReportingScheduleCreateParameters(reportType string, cronExpression string, fileFormat string, enabled bool, recipients []string) *ReportingScheduleCreateParameters {
+func NewReportingScheduleCreateParameters(reportType string, cronExpression string, message string, fileFormat string, enabled bool, recipients []string) *ReportingScheduleCreateParameters {
 	this := ReportingScheduleCreateParameters{}
 	this.ReportType = reportType
 	this.CronExpression = cronExpression
+	this.Message = message
 	this.FileFormat = fileFormat
 	this.Enabled = enabled
 	this.Recipients = recipients
@@ -143,36 +148,28 @@ func (o *ReportingScheduleCreateParameters) SetTimeZone(v string) {
 	o.TimeZone = &v
 }
 
-// GetMessage returns the Message field value if set, zero value otherwise.
+// GetMessage returns the Message field value
 func (o *ReportingScheduleCreateParameters) GetMessage() string {
-	if o == nil || IsNil(o.Message) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Message
+
+	return o.Message
 }
 
-// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
 func (o *ReportingScheduleCreateParameters) GetMessageOk() (*string, bool) {
-	if o == nil || IsNil(o.Message) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Message, true
+	return &o.Message, true
 }
 
-// HasMessage returns a boolean if a field has been set.
-func (o *ReportingScheduleCreateParameters) HasMessage() bool {
-	if o != nil && !IsNil(o.Message) {
-		return true
-	}
-
-	return false
-}
-
-// SetMessage gets a reference to the given string and assigns it to the Message field.
+// SetMessage sets field value
 func (o *ReportingScheduleCreateParameters) SetMessage(v string) {
-	o.Message = &v
+	o.Message = v
 }
 
 // GetFileFormat returns the FileFormat field value
@@ -358,9 +355,7 @@ func (o ReportingScheduleCreateParameters) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.TimeZone) {
 		toSerialize["time_zone"] = o.TimeZone
 	}
-	if !IsNil(o.Message) {
-		toSerialize["message"] = o.Message
-	}
+	toSerialize["message"] = o.Message
 	toSerialize["file_format"] = o.FileFormat
 	toSerialize["enabled"] = o.Enabled
 	toSerialize["recipients"] = o.Recipients
@@ -374,6 +369,48 @@ func (o ReportingScheduleCreateParameters) ToMap() (map[string]interface{}, erro
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
 	}
 	return toSerialize, nil
+}
+
+func (o *ReportingScheduleCreateParameters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"report_type",
+		"cron_expression",
+		"message",
+		"file_format",
+		"enabled",
+		"recipients",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReportingScheduleCreateParameters := _ReportingScheduleCreateParameters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReportingScheduleCreateParameters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReportingScheduleCreateParameters(varReportingScheduleCreateParameters)
+
+	return err
 }
 
 type NullableReportingScheduleCreateParameters struct {
