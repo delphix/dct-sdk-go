@@ -1,11 +1,8 @@
-module github.com/delphix/dct-sdk-go
+module github.com/delphix/dct-sdk-go/v21
 
 go 1.22
 
-require (
-	github.com/delphix/dct-sdk-go/v21 v21.0.0
-	github.com/stretchr/testify v1.9.0
-)
+require github.com/stretchr/testify v1.9.0
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
