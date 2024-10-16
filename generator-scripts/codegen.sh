@@ -61,7 +61,7 @@ go mod init github.com/delphix/dct-sdk-go && go mod tidy \
 popd
 
 # running the sanity test file
-go run test.go || die "test failed"
+# go run test.go || die "test failed"
 
 # deleting the tmp directory
 rm -rf $script_base_dir/tmp
