@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -510,6 +510,20 @@ type ApiGetTimeflowSnapshotDayRangeRequest struct {
 	ctx context.Context
 	ApiService *TimeflowsAPIService
 	timeflowId string
+	timezone *string
+	timezoneOffset *int32
+}
+
+// The timezone in which the snapshot timestamps are to be interpreted. This property gets precedence over timezone_offset. If the timezone in this property is unknown to the application, the timezone_offset is used as fallback to interpret the snapshot timestamps.
+func (r ApiGetTimeflowSnapshotDayRangeRequest) Timezone(timezone string) ApiGetTimeflowSnapshotDayRangeRequest {
+	r.timezone = &timezone
+	return r
+}
+
+// The offset in seconds of timezone in which the snapshot timestamps are to be interpreted. This property is used as fallback to interpret the snapshot timestamps if timezone is not valid.
+func (r ApiGetTimeflowSnapshotDayRangeRequest) TimezoneOffset(timezoneOffset int32) ApiGetTimeflowSnapshotDayRangeRequest {
+	r.timezoneOffset = &timezoneOffset
+	return r
 }
 
 func (r ApiGetTimeflowSnapshotDayRangeRequest) Execute() (*SnapshotsDayRangesResponse, *http.Response, error) {
@@ -556,6 +570,12 @@ func (a *TimeflowsAPIService) GetTimeflowSnapshotDayRangeExecute(r ApiGetTimeflo
 		return localVarReturnValue, nil, reportError("timeflowId must have at least 1 elements")
 	}
 
+	if r.timezone != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "timezone", r.timezone, "form", "")
+	}
+	if r.timezoneOffset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "timezone_offset", r.timezoneOffset, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

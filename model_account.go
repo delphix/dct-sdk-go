@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -39,6 +39,8 @@ type Account struct {
 	LastAccessTime *time.Time `json:"last_access_time,omitempty"`
 	// Creation time of this Account. This value is null for accounts created prior to version 9.0.0 of the product.
 	CreationTime *time.Time `json:"creation_time,omitempty"`
+	// Expiration time of the API key, if null then API key will never expire.
+	ApiKeyExpiryTime *time.Time `json:"api_key_expiry_time,omitempty"`
 	// Access group scopes associated with this account.
 	EffectiveScopes []EffectiveScope `json:"effective_scopes,omitempty"`
 	// The tags to be created for this Account.
@@ -352,6 +354,38 @@ func (o *Account) SetCreationTime(v time.Time) {
 	o.CreationTime = &v
 }
 
+// GetApiKeyExpiryTime returns the ApiKeyExpiryTime field value if set, zero value otherwise.
+func (o *Account) GetApiKeyExpiryTime() time.Time {
+	if o == nil || IsNil(o.ApiKeyExpiryTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ApiKeyExpiryTime
+}
+
+// GetApiKeyExpiryTimeOk returns a tuple with the ApiKeyExpiryTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Account) GetApiKeyExpiryTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.ApiKeyExpiryTime) {
+		return nil, false
+	}
+	return o.ApiKeyExpiryTime, true
+}
+
+// HasApiKeyExpiryTime returns a boolean if a field has been set.
+func (o *Account) HasApiKeyExpiryTime() bool {
+	if o != nil && !IsNil(o.ApiKeyExpiryTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiKeyExpiryTime gets a reference to the given time.Time and assigns it to the ApiKeyExpiryTime field.
+func (o *Account) SetApiKeyExpiryTime(v time.Time) {
+	o.ApiKeyExpiryTime = &v
+}
+
 // GetEffectiveScopes returns the EffectiveScopes field value if set, zero value otherwise.
 func (o *Account) GetEffectiveScopes() []EffectiveScope {
 	if o == nil || IsNil(o.EffectiveScopes) {
@@ -484,6 +518,9 @@ func (o Account) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CreationTime) {
 		toSerialize["creation_time"] = o.CreationTime
+	}
+	if !IsNil(o.ApiKeyExpiryTime) {
+		toSerialize["api_key_expiry_time"] = o.ApiKeyExpiryTime
 	}
 	if !IsNil(o.EffectiveScopes) {
 		toSerialize["effective_scopes"] = o.EffectiveScopes

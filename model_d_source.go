@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -87,12 +87,16 @@ type DSource struct {
 	SyncPolicyId *string `json:"sync_policy_id,omitempty"`
 	// The id of the retention policy associated with this dSource.
 	RetentionPolicyId *string `json:"retention_policy_id,omitempty"`
+	// The id of the replica retention policy associated with this dSource.
+	ReplicaRetentionPolicyId *string `json:"replica_retention_policy_id,omitempty"`
 	// The id of the quota policy associated with this dSource.
 	QuotaPolicyId *string `json:"quota_policy_id,omitempty"`
 	// True if LogSync is enabled for this dSource.
 	LogsyncEnabled *bool `json:"logsync_enabled,omitempty"`
 	// ZFS exported data directory path.
 	ExportedDataDirectory *string `json:"exported_data_directory,omitempty"`
+	// A reference to the Non Virtual Database Template.
+	TemplateId NullableString `json:"template_id,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -1380,6 +1384,38 @@ func (o *DSource) SetRetentionPolicyId(v string) {
 	o.RetentionPolicyId = &v
 }
 
+// GetReplicaRetentionPolicyId returns the ReplicaRetentionPolicyId field value if set, zero value otherwise.
+func (o *DSource) GetReplicaRetentionPolicyId() string {
+	if o == nil || IsNil(o.ReplicaRetentionPolicyId) {
+		var ret string
+		return ret
+	}
+	return *o.ReplicaRetentionPolicyId
+}
+
+// GetReplicaRetentionPolicyIdOk returns a tuple with the ReplicaRetentionPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetReplicaRetentionPolicyIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ReplicaRetentionPolicyId) {
+		return nil, false
+	}
+	return o.ReplicaRetentionPolicyId, true
+}
+
+// HasReplicaRetentionPolicyId returns a boolean if a field has been set.
+func (o *DSource) HasReplicaRetentionPolicyId() bool {
+	if o != nil && !IsNil(o.ReplicaRetentionPolicyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicaRetentionPolicyId gets a reference to the given string and assigns it to the ReplicaRetentionPolicyId field.
+func (o *DSource) SetReplicaRetentionPolicyId(v string) {
+	o.ReplicaRetentionPolicyId = &v
+}
+
 // GetQuotaPolicyId returns the QuotaPolicyId field value if set, zero value otherwise.
 func (o *DSource) GetQuotaPolicyId() string {
 	if o == nil || IsNil(o.QuotaPolicyId) {
@@ -1474,6 +1510,48 @@ func (o *DSource) HasExportedDataDirectory() bool {
 // SetExportedDataDirectory gets a reference to the given string and assigns it to the ExportedDataDirectory field.
 func (o *DSource) SetExportedDataDirectory(v string) {
 	o.ExportedDataDirectory = &v
+}
+
+// GetTemplateId returns the TemplateId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetTemplateId() string {
+	if o == nil || IsNil(o.TemplateId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateId.Get()
+}
+
+// GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetTemplateIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TemplateId.Get(), o.TemplateId.IsSet()
+}
+
+// HasTemplateId returns a boolean if a field has been set.
+func (o *DSource) HasTemplateId() bool {
+	if o != nil && o.TemplateId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateId gets a reference to the given NullableString and assigns it to the TemplateId field.
+func (o *DSource) SetTemplateId(v string) {
+	o.TemplateId.Set(&v)
+}
+// SetTemplateIdNil sets the value for TemplateId to be an explicit nil
+func (o *DSource) SetTemplateIdNil() {
+	o.TemplateId.Set(nil)
+}
+
+// UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
+func (o *DSource) UnsetTemplateId() {
+	o.TemplateId.Unset()
 }
 
 func (o DSource) MarshalJSON() ([]byte, error) {
@@ -1588,6 +1666,9 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RetentionPolicyId) {
 		toSerialize["retention_policy_id"] = o.RetentionPolicyId
 	}
+	if !IsNil(o.ReplicaRetentionPolicyId) {
+		toSerialize["replica_retention_policy_id"] = o.ReplicaRetentionPolicyId
+	}
 	if !IsNil(o.QuotaPolicyId) {
 		toSerialize["quota_policy_id"] = o.QuotaPolicyId
 	}
@@ -1596,6 +1677,9 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExportedDataDirectory) {
 		toSerialize["exported_data_directory"] = o.ExportedDataDirectory
+	}
+	if o.TemplateId.IsSet() {
+		toSerialize["template_id"] = o.TemplateId.Get()
 	}
 	return toSerialize, nil
 }

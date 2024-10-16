@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the TokenInfoResponse type satisfies the MappedNullable interface at compile time
@@ -38,6 +39,8 @@ type TokenInfoResponse struct {
 	LdapPrincipal *string `json:"ldap_principal,omitempty"`
 	// Seconds duration after which the token will expire.
 	Exp *int64 `json:"exp,omitempty"`
+	// Last activity time of this token in UTC timezone.
+	LastActivityTime *time.Time `json:"last_activity_time,omitempty"`
 }
 
 // NewTokenInfoResponse instantiates a new TokenInfoResponse object
@@ -345,6 +348,38 @@ func (o *TokenInfoResponse) SetExp(v int64) {
 	o.Exp = &v
 }
 
+// GetLastActivityTime returns the LastActivityTime field value if set, zero value otherwise.
+func (o *TokenInfoResponse) GetLastActivityTime() time.Time {
+	if o == nil || IsNil(o.LastActivityTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastActivityTime
+}
+
+// GetLastActivityTimeOk returns a tuple with the LastActivityTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenInfoResponse) GetLastActivityTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastActivityTime) {
+		return nil, false
+	}
+	return o.LastActivityTime, true
+}
+
+// HasLastActivityTime returns a boolean if a field has been set.
+func (o *TokenInfoResponse) HasLastActivityTime() bool {
+	if o != nil && !IsNil(o.LastActivityTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastActivityTime gets a reference to the given time.Time and assigns it to the LastActivityTime field.
+func (o *TokenInfoResponse) SetLastActivityTime(v time.Time) {
+	o.LastActivityTime = &v
+}
+
 func (o TokenInfoResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -381,6 +416,9 @@ func (o TokenInfoResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Exp) {
 		toSerialize["exp"] = o.Exp
+	}
+	if !IsNil(o.LastActivityTime) {
+		toSerialize["last_activity_time"] = o.LastActivityTime
 	}
 	return toSerialize, nil
 }

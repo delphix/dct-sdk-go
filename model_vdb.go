@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -44,6 +44,7 @@ type VDB struct {
 	// The database version of this VDB.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
 	// The JDBC connection URL for this VDB.
+	// Deprecated
 	JdbcConnectionString *string `json:"jdbc_connection_string,omitempty"`
 	// The total size of this VDB, in bytes.
 	Size NullableInt64 `json:"size,omitempty"`
@@ -123,8 +124,16 @@ type VDB struct {
 	Replicas []Replica `json:"replicas,omitempty"`
 	// Indicates whether datapatch should be invoked.
 	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// True if VDB is enabled false if VDB is disabled.
+	Enabled *bool `json:"enabled,omitempty"`
 	// The list of node listeners for this VDB.
 	NodeListeners []string `json:"node_listeners,omitempty"`
+	// The instance name name of this single instance VDB.
+	InstanceName *string `json:"instance_name,omitempty"`
+	// The instance number of this single instance VDB.
+	InstanceNumber *int32 `json:"instance_number,omitempty"`
+	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
+	OracleServices []OracleService `json:"oracle_services,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -527,6 +536,7 @@ func (o *VDB) UnsetDatabaseVersion() {
 }
 
 // GetJdbcConnectionString returns the JdbcConnectionString field value if set, zero value otherwise.
+// Deprecated
 func (o *VDB) GetJdbcConnectionString() string {
 	if o == nil || IsNil(o.JdbcConnectionString) {
 		var ret string
@@ -537,6 +547,7 @@ func (o *VDB) GetJdbcConnectionString() string {
 
 // GetJdbcConnectionStringOk returns a tuple with the JdbcConnectionString field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *VDB) GetJdbcConnectionStringOk() (*string, bool) {
 	if o == nil || IsNil(o.JdbcConnectionString) {
 		return nil, false
@@ -554,6 +565,7 @@ func (o *VDB) HasJdbcConnectionString() bool {
 }
 
 // SetJdbcConnectionString gets a reference to the given string and assigns it to the JdbcConnectionString field.
+// Deprecated
 func (o *VDB) SetJdbcConnectionString(v string) {
 	o.JdbcConnectionString = &v
 }
@@ -2042,6 +2054,38 @@ func (o *VDB) SetInvokeDatapatch(v bool) {
 	o.InvokeDatapatch = &v
 }
 
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
+func (o *VDB) GetEnabled() bool {
+	if o == nil || IsNil(o.Enabled) {
+		var ret bool
+		return ret
+	}
+	return *o.Enabled
+}
+
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.Enabled) {
+		return nil, false
+	}
+	return o.Enabled, true
+}
+
+// HasEnabled returns a boolean if a field has been set.
+func (o *VDB) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
+func (o *VDB) SetEnabled(v bool) {
+	o.Enabled = &v
+}
+
 // GetNodeListeners returns the NodeListeners field value if set, zero value otherwise.
 func (o *VDB) GetNodeListeners() []string {
 	if o == nil || IsNil(o.NodeListeners) {
@@ -2072,6 +2116,134 @@ func (o *VDB) HasNodeListeners() bool {
 // SetNodeListeners gets a reference to the given []string and assigns it to the NodeListeners field.
 func (o *VDB) SetNodeListeners(v []string) {
 	o.NodeListeners = v
+}
+
+// GetInstanceName returns the InstanceName field value if set, zero value otherwise.
+func (o *VDB) GetInstanceName() string {
+	if o == nil || IsNil(o.InstanceName) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceName
+}
+
+// GetInstanceNameOk returns a tuple with the InstanceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInstanceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceName) {
+		return nil, false
+	}
+	return o.InstanceName, true
+}
+
+// HasInstanceName returns a boolean if a field has been set.
+func (o *VDB) HasInstanceName() bool {
+	if o != nil && !IsNil(o.InstanceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceName gets a reference to the given string and assigns it to the InstanceName field.
+func (o *VDB) SetInstanceName(v string) {
+	o.InstanceName = &v
+}
+
+// GetInstanceNumber returns the InstanceNumber field value if set, zero value otherwise.
+func (o *VDB) GetInstanceNumber() int32 {
+	if o == nil || IsNil(o.InstanceNumber) {
+		var ret int32
+		return ret
+	}
+	return *o.InstanceNumber
+}
+
+// GetInstanceNumberOk returns a tuple with the InstanceNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInstanceNumberOk() (*int32, bool) {
+	if o == nil || IsNil(o.InstanceNumber) {
+		return nil, false
+	}
+	return o.InstanceNumber, true
+}
+
+// HasInstanceNumber returns a boolean if a field has been set.
+func (o *VDB) HasInstanceNumber() bool {
+	if o != nil && !IsNil(o.InstanceNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceNumber gets a reference to the given int32 and assigns it to the InstanceNumber field.
+func (o *VDB) SetInstanceNumber(v int32) {
+	o.InstanceNumber = &v
+}
+
+// GetInstances returns the Instances field value if set, zero value otherwise.
+func (o *VDB) GetInstances() []OracleRACDatabaseInstance {
+	if o == nil || IsNil(o.Instances) {
+		var ret []OracleRACDatabaseInstance
+		return ret
+	}
+	return o.Instances
+}
+
+// GetInstancesOk returns a tuple with the Instances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInstancesOk() ([]OracleRACDatabaseInstance, bool) {
+	if o == nil || IsNil(o.Instances) {
+		return nil, false
+	}
+	return o.Instances, true
+}
+
+// HasInstances returns a boolean if a field has been set.
+func (o *VDB) HasInstances() bool {
+	if o != nil && !IsNil(o.Instances) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstances gets a reference to the given []OracleRACDatabaseInstance and assigns it to the Instances field.
+func (o *VDB) SetInstances(v []OracleRACDatabaseInstance) {
+	o.Instances = v
+}
+
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *VDB) GetOracleServices() []OracleService {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []OracleService
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetOracleServicesOk() ([]OracleService, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *VDB) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []OracleService and assigns it to the OracleServices field.
+func (o *VDB) SetOracleServices(v []OracleService) {
+	o.OracleServices = v
 }
 
 func (o VDB) MarshalJSON() ([]byte, error) {
@@ -2240,8 +2412,23 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.InvokeDatapatch) {
 		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
 	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
 	if !IsNil(o.NodeListeners) {
 		toSerialize["node_listeners"] = o.NodeListeners
+	}
+	if !IsNil(o.InstanceName) {
+		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.InstanceNumber) {
+		toSerialize["instance_number"] = o.InstanceNumber
+	}
+	if !IsNil(o.Instances) {
+		toSerialize["instances"] = o.Instances
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -120,11 +120,11 @@ func (o *ProvisionVDBGroupFromBookmarkParameters) GetProvisionParameters() map[s
 
 // GetProvisionParametersOk returns a tuple with the ProvisionParameters field value
 // and a boolean to check if the value has been set.
-func (o *ProvisionVDBGroupFromBookmarkParameters) GetProvisionParametersOk() (*map[string]BaseProvisionVDBParameters, bool) {
+func (o *ProvisionVDBGroupFromBookmarkParameters) GetProvisionParametersOk() (map[string]BaseProvisionVDBParameters, bool) {
 	if o == nil {
-		return nil, false
+		return map[string]BaseProvisionVDBParameters{}, false
 	}
-	return &o.ProvisionParameters, true
+	return o.ProvisionParameters, true
 }
 
 // SetProvisionParameters sets field value

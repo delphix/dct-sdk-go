@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -35,14 +35,18 @@ type ComplianceJob struct {
 	IsOnTheFlyMasking *bool `json:"is_on_the_fly_masking,omitempty"`
 	// The date this MaskingJob was created (Standard Job only).
 	CreationDate *time.Time `json:"creation_date,omitempty"`
-	// The date this MaskingJob was last executed to completion.
+	// The date this ComplianceJob was last executed to completion.
 	LastCompletedExecutionDate *time.Time `json:"last_completed_execution_date,omitempty"`
 	LastExecutionStatus *ExecutionStatus `json:"last_execution_status,omitempty"`
-	// The ID of this MaskingJob's last execution.
+	// The ID of this ComplianceJob's last execution.
 	LastExecutionId *string `json:"last_execution_id,omitempty"`
-	// The username of the Connector used by the MaskingJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
+	// The start time of the most recent execution of this compliance job.
+	LastExecutionStartTime *time.Time `json:"last_execution_start_time,omitempty"`
+	// The run time of the most recent execution of this compliance job in ms.
+	LastExecutionRunTime *int64 `json:"last_execution_run_time,omitempty"`
+	// The username of the Connector used by the ComplianceJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
 	ConnectorUsername NullableString `json:"connector_username,omitempty"`
-	// The password of the Connector used by the MaskingJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
+	// The password of the Connector used by the ComplianceJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
 	ConnectorPassword NullableString `json:"connector_password,omitempty"`
 	// The id of the OTF source connector for this job
 	OnTheFlySourceConnectorId NullableString `json:"on_the_fly_source_connector_id,omitempty"`
@@ -50,17 +54,17 @@ type ComplianceJob struct {
 	OnTheFlySourceConnectorName NullableString `json:"on_the_fly_source_connector_name,omitempty"`
 	// The type of the OTF source connector for this job
 	OnTheFlySourceConnectorType NullableString `json:"on_the_fly_source_connector_type,omitempty"`
-	// The username of the source Connector used by the on-the-fly MaskingJob (Standard Job only).
+	// The username of the source Connector used by the on-the-fly job (Standard Job only).
 	OnTheFlySourceConnectorUsername NullableString `json:"on_the_fly_source_connector_username,omitempty"`
-	// The password of the source Connector used by the on-the-fly MaskingJob (Standard Job only).
+	// The password of the source Connector used by the on-the-fly job (Standard Job only).
 	OnTheFlySourceConnectorPassword NullableString `json:"on_the_fly_source_connector_password,omitempty"`
 	// The type of compliance job.
 	Type *string `json:"type,omitempty"`
 	// The execution type of this Job.
 	ExecutionType *string `json:"execution_type,omitempty"`
-	// The ID of the Hyperscale instance of this Job (Hyperscale Job only).
+	// The ID of the Hyperscale instance of this job (Hyperscale Job only).
 	HyperscaleInstanceId *string `json:"hyperscale_instance_id,omitempty"`
-	// Description of the Job (Hyperscale Job only).
+	// Description of the job (Hyperscale Job only).
 	Description *string `json:"description,omitempty"`
 	// Dataset of the Hyperscale Job (Hyperscale Job only).
 	DatasetId *string `json:"dataset_id,omitempty"`
@@ -86,8 +90,18 @@ type ComplianceJob struct {
 	SourceMaskingJobId *string `json:"source_masking_job_id,omitempty"`
 	// The engine on which this job resides (Standard Job only).
 	EngineId *string `json:"engine_id,omitempty"`
+	// The name of the engine on which this job resides (Standard Job only).
+	EngineName *string `json:"engine_name,omitempty"`
 	// List of engines that this job can run on (Hyperscale Job only).
 	EngineIds []string `json:"engine_ids,omitempty"`
+	// The id of the discovery policy in use - applicable for discovery jobs only.
+	DiscoveryPolicyId NullableString `json:"discovery_policy_id,omitempty"`
+	// The name of the discovery policy in use - applicable for discovery jobs only.
+	DiscoveryPolicyName NullableString `json:"discovery_policy_name,omitempty"`
+	// The name of the environment in which this job resides on the compliance engine.
+	EnvironmentName *string `json:"environment_name,omitempty"`
+	// The name of the application associated with the environment in which this job resides on the compliance engine.
+	ApplicationName *string `json:"application_name,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -426,6 +440,70 @@ func (o *ComplianceJob) HasLastExecutionId() bool {
 // SetLastExecutionId gets a reference to the given string and assigns it to the LastExecutionId field.
 func (o *ComplianceJob) SetLastExecutionId(v string) {
 	o.LastExecutionId = &v
+}
+
+// GetLastExecutionStartTime returns the LastExecutionStartTime field value if set, zero value otherwise.
+func (o *ComplianceJob) GetLastExecutionStartTime() time.Time {
+	if o == nil || IsNil(o.LastExecutionStartTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastExecutionStartTime
+}
+
+// GetLastExecutionStartTimeOk returns a tuple with the LastExecutionStartTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetLastExecutionStartTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastExecutionStartTime) {
+		return nil, false
+	}
+	return o.LastExecutionStartTime, true
+}
+
+// HasLastExecutionStartTime returns a boolean if a field has been set.
+func (o *ComplianceJob) HasLastExecutionStartTime() bool {
+	if o != nil && !IsNil(o.LastExecutionStartTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastExecutionStartTime gets a reference to the given time.Time and assigns it to the LastExecutionStartTime field.
+func (o *ComplianceJob) SetLastExecutionStartTime(v time.Time) {
+	o.LastExecutionStartTime = &v
+}
+
+// GetLastExecutionRunTime returns the LastExecutionRunTime field value if set, zero value otherwise.
+func (o *ComplianceJob) GetLastExecutionRunTime() int64 {
+	if o == nil || IsNil(o.LastExecutionRunTime) {
+		var ret int64
+		return ret
+	}
+	return *o.LastExecutionRunTime
+}
+
+// GetLastExecutionRunTimeOk returns a tuple with the LastExecutionRunTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetLastExecutionRunTimeOk() (*int64, bool) {
+	if o == nil || IsNil(o.LastExecutionRunTime) {
+		return nil, false
+	}
+	return o.LastExecutionRunTime, true
+}
+
+// HasLastExecutionRunTime returns a boolean if a field has been set.
+func (o *ComplianceJob) HasLastExecutionRunTime() bool {
+	if o != nil && !IsNil(o.LastExecutionRunTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastExecutionRunTime gets a reference to the given int64 and assigns it to the LastExecutionRunTime field.
+func (o *ComplianceJob) SetLastExecutionRunTime(v int64) {
+	o.LastExecutionRunTime = &v
 }
 
 // GetConnectorUsername returns the ConnectorUsername field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1234,6 +1312,38 @@ func (o *ComplianceJob) SetEngineId(v string) {
 	o.EngineId = &v
 }
 
+// GetEngineName returns the EngineName field value if set, zero value otherwise.
+func (o *ComplianceJob) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName) {
+		var ret string
+		return ret
+	}
+	return *o.EngineName
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineName) {
+		return nil, false
+	}
+	return o.EngineName, true
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *ComplianceJob) HasEngineName() bool {
+	if o != nil && !IsNil(o.EngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given string and assigns it to the EngineName field.
+func (o *ComplianceJob) SetEngineName(v string) {
+	o.EngineName = &v
+}
+
 // GetEngineIds returns the EngineIds field value if set, zero value otherwise.
 func (o *ComplianceJob) GetEngineIds() []string {
 	if o == nil || IsNil(o.EngineIds) {
@@ -1264,6 +1374,154 @@ func (o *ComplianceJob) HasEngineIds() bool {
 // SetEngineIds gets a reference to the given []string and assigns it to the EngineIds field.
 func (o *ComplianceJob) SetEngineIds(v []string) {
 	o.EngineIds = v
+}
+
+// GetDiscoveryPolicyId returns the DiscoveryPolicyId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ComplianceJob) GetDiscoveryPolicyId() string {
+	if o == nil || IsNil(o.DiscoveryPolicyId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DiscoveryPolicyId.Get()
+}
+
+// GetDiscoveryPolicyIdOk returns a tuple with the DiscoveryPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ComplianceJob) GetDiscoveryPolicyIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DiscoveryPolicyId.Get(), o.DiscoveryPolicyId.IsSet()
+}
+
+// HasDiscoveryPolicyId returns a boolean if a field has been set.
+func (o *ComplianceJob) HasDiscoveryPolicyId() bool {
+	if o != nil && o.DiscoveryPolicyId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscoveryPolicyId gets a reference to the given NullableString and assigns it to the DiscoveryPolicyId field.
+func (o *ComplianceJob) SetDiscoveryPolicyId(v string) {
+	o.DiscoveryPolicyId.Set(&v)
+}
+// SetDiscoveryPolicyIdNil sets the value for DiscoveryPolicyId to be an explicit nil
+func (o *ComplianceJob) SetDiscoveryPolicyIdNil() {
+	o.DiscoveryPolicyId.Set(nil)
+}
+
+// UnsetDiscoveryPolicyId ensures that no value is present for DiscoveryPolicyId, not even an explicit nil
+func (o *ComplianceJob) UnsetDiscoveryPolicyId() {
+	o.DiscoveryPolicyId.Unset()
+}
+
+// GetDiscoveryPolicyName returns the DiscoveryPolicyName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ComplianceJob) GetDiscoveryPolicyName() string {
+	if o == nil || IsNil(o.DiscoveryPolicyName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DiscoveryPolicyName.Get()
+}
+
+// GetDiscoveryPolicyNameOk returns a tuple with the DiscoveryPolicyName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ComplianceJob) GetDiscoveryPolicyNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DiscoveryPolicyName.Get(), o.DiscoveryPolicyName.IsSet()
+}
+
+// HasDiscoveryPolicyName returns a boolean if a field has been set.
+func (o *ComplianceJob) HasDiscoveryPolicyName() bool {
+	if o != nil && o.DiscoveryPolicyName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscoveryPolicyName gets a reference to the given NullableString and assigns it to the DiscoveryPolicyName field.
+func (o *ComplianceJob) SetDiscoveryPolicyName(v string) {
+	o.DiscoveryPolicyName.Set(&v)
+}
+// SetDiscoveryPolicyNameNil sets the value for DiscoveryPolicyName to be an explicit nil
+func (o *ComplianceJob) SetDiscoveryPolicyNameNil() {
+	o.DiscoveryPolicyName.Set(nil)
+}
+
+// UnsetDiscoveryPolicyName ensures that no value is present for DiscoveryPolicyName, not even an explicit nil
+func (o *ComplianceJob) UnsetDiscoveryPolicyName() {
+	o.DiscoveryPolicyName.Unset()
+}
+
+// GetEnvironmentName returns the EnvironmentName field value if set, zero value otherwise.
+func (o *ComplianceJob) GetEnvironmentName() string {
+	if o == nil || IsNil(o.EnvironmentName) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentName
+}
+
+// GetEnvironmentNameOk returns a tuple with the EnvironmentName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetEnvironmentNameOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentName) {
+		return nil, false
+	}
+	return o.EnvironmentName, true
+}
+
+// HasEnvironmentName returns a boolean if a field has been set.
+func (o *ComplianceJob) HasEnvironmentName() bool {
+	if o != nil && !IsNil(o.EnvironmentName) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentName gets a reference to the given string and assigns it to the EnvironmentName field.
+func (o *ComplianceJob) SetEnvironmentName(v string) {
+	o.EnvironmentName = &v
+}
+
+// GetApplicationName returns the ApplicationName field value if set, zero value otherwise.
+func (o *ComplianceJob) GetApplicationName() string {
+	if o == nil || IsNil(o.ApplicationName) {
+		var ret string
+		return ret
+	}
+	return *o.ApplicationName
+}
+
+// GetApplicationNameOk returns a tuple with the ApplicationName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetApplicationNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ApplicationName) {
+		return nil, false
+	}
+	return o.ApplicationName, true
+}
+
+// HasApplicationName returns a boolean if a field has been set.
+func (o *ComplianceJob) HasApplicationName() bool {
+	if o != nil && !IsNil(o.ApplicationName) {
+		return true
+	}
+
+	return false
+}
+
+// SetApplicationName gets a reference to the given string and assigns it to the ApplicationName field.
+func (o *ComplianceJob) SetApplicationName(v string) {
+	o.ApplicationName = &v
 }
 
 // GetTags returns the Tags field value if set, zero value otherwise.
@@ -1338,6 +1596,12 @@ func (o ComplianceJob) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastExecutionId) {
 		toSerialize["last_execution_id"] = o.LastExecutionId
 	}
+	if !IsNil(o.LastExecutionStartTime) {
+		toSerialize["last_execution_start_time"] = o.LastExecutionStartTime
+	}
+	if !IsNil(o.LastExecutionRunTime) {
+		toSerialize["last_execution_run_time"] = o.LastExecutionRunTime
+	}
 	if o.ConnectorUsername.IsSet() {
 		toSerialize["connector_username"] = o.ConnectorUsername.Get()
 	}
@@ -1407,8 +1671,23 @@ func (o ComplianceJob) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
+	}
 	if !IsNil(o.EngineIds) {
 		toSerialize["engine_ids"] = o.EngineIds
+	}
+	if o.DiscoveryPolicyId.IsSet() {
+		toSerialize["discovery_policy_id"] = o.DiscoveryPolicyId.Get()
+	}
+	if o.DiscoveryPolicyName.IsSet() {
+		toSerialize["discovery_policy_name"] = o.DiscoveryPolicyName.Get()
+	}
+	if !IsNil(o.EnvironmentName) {
+		toSerialize["environment_name"] = o.EnvironmentName
+	}
+	if !IsNil(o.ApplicationName) {
+		toSerialize["application_name"] = o.ApplicationName
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

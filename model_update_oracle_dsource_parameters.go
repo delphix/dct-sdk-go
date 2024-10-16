@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -67,6 +67,8 @@ type UpdateOracleDsourceParameters struct {
 	CustomEnvVariablesPaths []string `json:"custom_env_variables_paths,omitempty"`
 	// Database configuration parameter overrides.
 	StagingDatabaseConfigParams map[string]interface{} `json:"staging_database_config_params,omitempty"`
+	// The template ID of the target Oracle Staging Push dSource.
+	TemplateId *string `json:"template_id,omitempty"`
 }
 
 // NewUpdateOracleDsourceParameters instantiates a new UpdateOracleDsourceParameters object
@@ -859,6 +861,38 @@ func (o *UpdateOracleDsourceParameters) SetStagingDatabaseConfigParams(v map[str
 	o.StagingDatabaseConfigParams = v
 }
 
+// GetTemplateId returns the TemplateId field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetTemplateId() string {
+	if o == nil || IsNil(o.TemplateId) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateId
+}
+
+// GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetTemplateIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TemplateId) {
+		return nil, false
+	}
+	return o.TemplateId, true
+}
+
+// HasTemplateId returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasTemplateId() bool {
+	if o != nil && !IsNil(o.TemplateId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateId gets a reference to the given string and assigns it to the TemplateId field.
+func (o *UpdateOracleDsourceParameters) SetTemplateId(v string) {
+	o.TemplateId = &v
+}
+
 func (o UpdateOracleDsourceParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -940,6 +974,9 @@ func (o UpdateOracleDsourceParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if o.StagingDatabaseConfigParams != nil {
 		toSerialize["staging_database_config_params"] = o.StagingDatabaseConfigParams
+	}
+	if !IsNil(o.TemplateId) {
+		toSerialize["template_id"] = o.TemplateId
 	}
 	return toSerialize, nil
 }

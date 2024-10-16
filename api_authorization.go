@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -2783,6 +2783,27 @@ func (a *AuthorizationAPIService) GetRoleTagsExecute(r ApiGetRoleTagsRequest) (*
 type ApiGetRolesRequest struct {
 	ctx context.Context
 	ApiService *AuthorizationAPIService
+	limit *int32
+	cursor *string
+	sort *string
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetRolesRequest) Limit(limit int32) ApiGetRolesRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetRolesRequest) Cursor(cursor string) ApiGetRolesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetRolesRequest) Sort(sort string) ApiGetRolesRequest {
+	r.sort = &sort
+	return r
 }
 
 func (r ApiGetRolesRequest) Execute() (*ListRolesResponse, *http.Response, error) {
@@ -2823,6 +2844,18 @@ func (a *AuthorizationAPIService) GetRolesExecute(r ApiGetRolesRequest) (*ListRo
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

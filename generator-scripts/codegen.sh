@@ -3,7 +3,7 @@
 # Copyright (c) 2022 by Delphix. All rights reserved.
 #
 
-OPEN_API_GENERATOR_URL=https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.3.0/openapi-generator-cli-6.3.0.jar
+OPEN_API_GENERATOR_URL=https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.9.0/openapi-generator-cli-7.9.0.jar
 
 function die
 {

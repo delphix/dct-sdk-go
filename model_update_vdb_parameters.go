@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -73,6 +73,8 @@ type UpdateVDBParameters struct {
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	// Mount point for the VDB (AppData only), can only be updated while the VDB is disabled.
 	MountPoint *string `json:"mount_point,omitempty"`
+	// List of jdbc connection strings which are used to connect with the database.
+	OracleServices []string `json:"oracle_services,omitempty"`
 }
 
 // NewUpdateVDBParameters instantiates a new UpdateVDBParameters object
@@ -963,6 +965,38 @@ func (o *UpdateVDBParameters) SetMountPoint(v string) {
 	o.MountPoint = &v
 }
 
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetOracleServices() []string {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []string
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetOracleServicesOk() ([]string, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []string and assigns it to the OracleServices field.
+func (o *UpdateVDBParameters) SetOracleServices(v []string) {
+	o.OracleServices = v
+}
+
 func (o UpdateVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1053,6 +1087,9 @@ func (o UpdateVDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MountPoint) {
 		toSerialize["mount_point"] = o.MountPoint
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
 	}
 	return toSerialize, nil
 }

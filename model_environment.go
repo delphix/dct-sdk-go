@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -52,6 +52,8 @@ type Environment struct {
 	Repositories []Repository `json:"repositories,omitempty"`
 	// Oracle listeners associated with this environment.
 	Listeners []OracleListener `json:"listeners,omitempty"`
+	// The operating system type of this environment.
+	OsType *string `json:"os_type,omitempty"`
 }
 
 // NewEnvironment instantiates a new Environment object
@@ -593,6 +595,38 @@ func (o *Environment) SetListeners(v []OracleListener) {
 	o.Listeners = v
 }
 
+// GetOsType returns the OsType field value if set, zero value otherwise.
+func (o *Environment) GetOsType() string {
+	if o == nil || IsNil(o.OsType) {
+		var ret string
+		return ret
+	}
+	return *o.OsType
+}
+
+// GetOsTypeOk returns a tuple with the OsType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetOsTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.OsType) {
+		return nil, false
+	}
+	return o.OsType, true
+}
+
+// HasOsType returns a boolean if a field has been set.
+func (o *Environment) HasOsType() bool {
+	if o != nil && !IsNil(o.OsType) {
+		return true
+	}
+
+	return false
+}
+
+// SetOsType gets a reference to the given string and assigns it to the OsType field.
+func (o *Environment) SetOsType(v string) {
+	o.OsType = &v
+}
+
 func (o Environment) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -650,6 +684,9 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Listeners) {
 		toSerialize["listeners"] = o.Listeners
+	}
+	if !IsNil(o.OsType) {
+		toSerialize["os_type"] = o.OsType
 	}
 	return toSerialize, nil
 }

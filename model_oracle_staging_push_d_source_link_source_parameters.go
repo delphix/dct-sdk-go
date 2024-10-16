@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -81,6 +81,8 @@ type OracleStagingPushDSourceLinkSourceParameters struct {
 	OpsPreLogSync []SourceOperation `json:"ops_pre_log_sync,omitempty"`
 	// The type of TDE keystore configuration to use for the staging database.
 	TdeKeystoreConfigType *string `json:"tde_keystore_config_type,omitempty"`
+	// The template ID of the target Oracle Staging Push dSource.
+	TemplateId *string `json:"template_id,omitempty"`
 }
 
 type _OracleStagingPushDSourceLinkSourceParameters OracleStagingPushDSourceLinkSourceParameters
@@ -1040,6 +1042,38 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) SetTdeKeystoreConfigType(
 	o.TdeKeystoreConfigType = &v
 }
 
+// GetTemplateId returns the TemplateId field value if set, zero value otherwise.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetTemplateId() string {
+	if o == nil || IsNil(o.TemplateId) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateId
+}
+
+// GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetTemplateIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TemplateId) {
+		return nil, false
+	}
+	return o.TemplateId, true
+}
+
+// HasTemplateId returns a boolean if a field has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) HasTemplateId() bool {
+	if o != nil && !IsNil(o.TemplateId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateId gets a reference to the given string and assigns it to the TemplateId field.
+func (o *OracleStagingPushDSourceLinkSourceParameters) SetTemplateId(v string) {
+	o.TemplateId = &v
+}
+
 func (o OracleStagingPushDSourceLinkSourceParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1132,6 +1166,9 @@ func (o OracleStagingPushDSourceLinkSourceParameters) ToMap() (map[string]interf
 	}
 	if !IsNil(o.TdeKeystoreConfigType) {
 		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
+	if !IsNil(o.TemplateId) {
+		toSerialize["template_id"] = o.TemplateId
 	}
 	return toSerialize, nil
 }

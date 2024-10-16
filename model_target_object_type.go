@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -16,7 +16,7 @@ import (
 	"fmt"
 )
 
-// TargetObjectType the model 'TargetObjectType'
+// TargetObjectType A DCT specific object type.
 type TargetObjectType string
 
 // List of TargetObjectType

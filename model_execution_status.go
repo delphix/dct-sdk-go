@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,7 @@ const (
 	EXECUTIONSTATUS_FAILED ExecutionStatus = "FAILED"
 	EXECUTIONSTATUS_SUCCEEDED ExecutionStatus = "SUCCEEDED"
 	EXECUTIONSTATUS_WARNING ExecutionStatus = "WARNING"
+	EXECUTIONSTATUS_WAITING ExecutionStatus = "WAITING"
 )
 
 // All allowed values of ExecutionStatus enum
@@ -39,6 +40,7 @@ var AllowedExecutionStatusEnumValues = []ExecutionStatus{
 	"FAILED",
 	"SUCCEEDED",
 	"WARNING",
+	"WAITING",
 }
 
 func (v *ExecutionStatus) UnmarshalJSON(src []byte) error {

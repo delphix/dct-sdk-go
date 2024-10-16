@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,8 @@ type ExecutionEvent struct {
 	Id *string `json:"id,omitempty"`
 	// The ID of the execution.
 	ExecutionId *string `json:"execution_id,omitempty"`
+	// The ID of the execution component.
+	ExecutionComponentId *string `json:"execution_component_id,omitempty"`
 	// The type of execution event.
 	EventType *string `json:"event_type,omitempty"`
 	// The severity of the execution event.
@@ -124,6 +126,38 @@ func (o *ExecutionEvent) HasExecutionId() bool {
 // SetExecutionId gets a reference to the given string and assigns it to the ExecutionId field.
 func (o *ExecutionEvent) SetExecutionId(v string) {
 	o.ExecutionId = &v
+}
+
+// GetExecutionComponentId returns the ExecutionComponentId field value if set, zero value otherwise.
+func (o *ExecutionEvent) GetExecutionComponentId() string {
+	if o == nil || IsNil(o.ExecutionComponentId) {
+		var ret string
+		return ret
+	}
+	return *o.ExecutionComponentId
+}
+
+// GetExecutionComponentIdOk returns a tuple with the ExecutionComponentId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ExecutionEvent) GetExecutionComponentIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExecutionComponentId) {
+		return nil, false
+	}
+	return o.ExecutionComponentId, true
+}
+
+// HasExecutionComponentId returns a boolean if a field has been set.
+func (o *ExecutionEvent) HasExecutionComponentId() bool {
+	if o != nil && !IsNil(o.ExecutionComponentId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionComponentId gets a reference to the given string and assigns it to the ExecutionComponentId field.
+func (o *ExecutionEvent) SetExecutionComponentId(v string) {
+	o.ExecutionComponentId = &v
 }
 
 // GetEventType returns the EventType field value if set, zero value otherwise.
@@ -429,6 +463,9 @@ func (o ExecutionEvent) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExecutionId) {
 		toSerialize["execution_id"] = o.ExecutionId
+	}
+	if !IsNil(o.ExecutionComponentId) {
+		toSerialize["execution_component_id"] = o.ExecutionComponentId
 	}
 	if !IsNil(o.EventType) {
 		toSerialize["event_type"] = o.EventType

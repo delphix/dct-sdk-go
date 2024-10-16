@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -32,6 +32,8 @@ type VirtualizationPolicy struct {
 	// Is this a replicated object.
 	IsReplica *bool `json:"is_replica,omitempty"`
 	EngineId *string `json:"engine_id,omitempty"`
+	// The name of the engine the policy belongs to.
+	EngineName *string `json:"engine_name,omitempty"`
 	PolicyType *string `json:"policy_type,omitempty"`
 	TimezoneId *string `json:"timezone_id,omitempty"`
 	// True if this is the default policy created when the system is setup.
@@ -63,6 +65,8 @@ type VirtualizationPolicy struct {
 	Schedules []VirtualizationSchedule `json:"schedules,omitempty"`
 	// Size of the quota, in bytes. (QUOTA_POLICY only).
 	Size NullableInt64 `json:"size,omitempty"`
+	// The tags that are applied to this VirtualizationPolicy.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewVirtualizationPolicy instantiates a new VirtualizationPolicy object
@@ -336,6 +340,38 @@ func (o *VirtualizationPolicy) HasEngineId() bool {
 // SetEngineId gets a reference to the given string and assigns it to the EngineId field.
 func (o *VirtualizationPolicy) SetEngineId(v string) {
 	o.EngineId = &v
+}
+
+// GetEngineName returns the EngineName field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName) {
+		var ret string
+		return ret
+	}
+	return *o.EngineName
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineName) {
+		return nil, false
+	}
+	return o.EngineName, true
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasEngineName() bool {
+	if o != nil && !IsNil(o.EngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given string and assigns it to the EngineName field.
+func (o *VirtualizationPolicy) SetEngineName(v string) {
+	o.EngineName = &v
 }
 
 // GetPolicyType returns the PolicyType field value if set, zero value otherwise.
@@ -892,6 +928,38 @@ func (o *VirtualizationPolicy) UnsetSize() {
 	o.Size.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *VirtualizationPolicy) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o VirtualizationPolicy) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -925,6 +993,9 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
+	}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
 	}
 	if !IsNil(o.PolicyType) {
 		toSerialize["policy_type"] = o.PolicyType
@@ -976,6 +1047,9 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Size.IsSet() {
 		toSerialize["size"] = o.Size.Get()
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

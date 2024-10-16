@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -38,7 +38,7 @@ type MaskingExecutionMetrics struct {
 	BytesMasked *int64 `json:"bytes_masked,omitempty"`
 	// The total number of bytes. This is only applicable for JSON file type.
 	BytesTotal *int64 `json:"bytes_total,omitempty"`
-	// The time taken by the execution in ms. Only available for successful executions.
+	// The time taken by the execution in ms.
 	Duration *int64 `json:"duration,omitempty"`
 	// The number of tables or files in the ruleset associated to the Masking job.
 	TablesFilesCount *int64 `json:"tables_files_count,omitempty"`

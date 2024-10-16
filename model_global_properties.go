@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,16 @@ type GlobalProperties struct {
 	PhonehomeUploadCadence *int32 `json:"phonehome_upload_cadence,omitempty"`
 	// Property to define the maximum uncompressed bundle transfer size, in bytes, for phonehome.
 	PhonehomeMaximumTransferSize *int32 `json:"phonehome_maximum_transfer_size,omitempty"`
+	// Property to define the expiry time for login token, in seconds. Specify -1 to indicate never expiry of token.
+	TokenExpiryTime *int32 `json:"token_expiry_time,omitempty"`
+	// Property to define the maximum user inactivity time for login token, in seconds. Specify -1 to indicate never invalidate of token due to inactivity.
+	TokenMaximumInactivityTime *int32 `json:"token_maximum_inactivity_time,omitempty"`
+	// List of enabled features.
+	FeatureFlags []string `json:"feature_flags,omitempty"`
+	// Property to define the expiry time for API key, in seconds. Specify -1 to indicate never expiry of tapi key.
+	ApiKeyExpiryTime *int32 `json:"api_key_expiry_time,omitempty"`
+	// Restricts the IP ranges DCT will connect to when registering engines.
+	AllowedIpRanges []string `json:"allowed_ip_ranges,omitempty"`
 }
 
 // NewGlobalProperties instantiates a new GlobalProperties object
@@ -141,6 +151,166 @@ func (o *GlobalProperties) SetPhonehomeMaximumTransferSize(v int32) {
 	o.PhonehomeMaximumTransferSize = &v
 }
 
+// GetTokenExpiryTime returns the TokenExpiryTime field value if set, zero value otherwise.
+func (o *GlobalProperties) GetTokenExpiryTime() int32 {
+	if o == nil || IsNil(o.TokenExpiryTime) {
+		var ret int32
+		return ret
+	}
+	return *o.TokenExpiryTime
+}
+
+// GetTokenExpiryTimeOk returns a tuple with the TokenExpiryTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetTokenExpiryTimeOk() (*int32, bool) {
+	if o == nil || IsNil(o.TokenExpiryTime) {
+		return nil, false
+	}
+	return o.TokenExpiryTime, true
+}
+
+// HasTokenExpiryTime returns a boolean if a field has been set.
+func (o *GlobalProperties) HasTokenExpiryTime() bool {
+	if o != nil && !IsNil(o.TokenExpiryTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenExpiryTime gets a reference to the given int32 and assigns it to the TokenExpiryTime field.
+func (o *GlobalProperties) SetTokenExpiryTime(v int32) {
+	o.TokenExpiryTime = &v
+}
+
+// GetTokenMaximumInactivityTime returns the TokenMaximumInactivityTime field value if set, zero value otherwise.
+func (o *GlobalProperties) GetTokenMaximumInactivityTime() int32 {
+	if o == nil || IsNil(o.TokenMaximumInactivityTime) {
+		var ret int32
+		return ret
+	}
+	return *o.TokenMaximumInactivityTime
+}
+
+// GetTokenMaximumInactivityTimeOk returns a tuple with the TokenMaximumInactivityTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetTokenMaximumInactivityTimeOk() (*int32, bool) {
+	if o == nil || IsNil(o.TokenMaximumInactivityTime) {
+		return nil, false
+	}
+	return o.TokenMaximumInactivityTime, true
+}
+
+// HasTokenMaximumInactivityTime returns a boolean if a field has been set.
+func (o *GlobalProperties) HasTokenMaximumInactivityTime() bool {
+	if o != nil && !IsNil(o.TokenMaximumInactivityTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenMaximumInactivityTime gets a reference to the given int32 and assigns it to the TokenMaximumInactivityTime field.
+func (o *GlobalProperties) SetTokenMaximumInactivityTime(v int32) {
+	o.TokenMaximumInactivityTime = &v
+}
+
+// GetFeatureFlags returns the FeatureFlags field value if set, zero value otherwise.
+func (o *GlobalProperties) GetFeatureFlags() []string {
+	if o == nil || IsNil(o.FeatureFlags) {
+		var ret []string
+		return ret
+	}
+	return o.FeatureFlags
+}
+
+// GetFeatureFlagsOk returns a tuple with the FeatureFlags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetFeatureFlagsOk() ([]string, bool) {
+	if o == nil || IsNil(o.FeatureFlags) {
+		return nil, false
+	}
+	return o.FeatureFlags, true
+}
+
+// HasFeatureFlags returns a boolean if a field has been set.
+func (o *GlobalProperties) HasFeatureFlags() bool {
+	if o != nil && !IsNil(o.FeatureFlags) {
+		return true
+	}
+
+	return false
+}
+
+// SetFeatureFlags gets a reference to the given []string and assigns it to the FeatureFlags field.
+func (o *GlobalProperties) SetFeatureFlags(v []string) {
+	o.FeatureFlags = v
+}
+
+// GetApiKeyExpiryTime returns the ApiKeyExpiryTime field value if set, zero value otherwise.
+func (o *GlobalProperties) GetApiKeyExpiryTime() int32 {
+	if o == nil || IsNil(o.ApiKeyExpiryTime) {
+		var ret int32
+		return ret
+	}
+	return *o.ApiKeyExpiryTime
+}
+
+// GetApiKeyExpiryTimeOk returns a tuple with the ApiKeyExpiryTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetApiKeyExpiryTimeOk() (*int32, bool) {
+	if o == nil || IsNil(o.ApiKeyExpiryTime) {
+		return nil, false
+	}
+	return o.ApiKeyExpiryTime, true
+}
+
+// HasApiKeyExpiryTime returns a boolean if a field has been set.
+func (o *GlobalProperties) HasApiKeyExpiryTime() bool {
+	if o != nil && !IsNil(o.ApiKeyExpiryTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiKeyExpiryTime gets a reference to the given int32 and assigns it to the ApiKeyExpiryTime field.
+func (o *GlobalProperties) SetApiKeyExpiryTime(v int32) {
+	o.ApiKeyExpiryTime = &v
+}
+
+// GetAllowedIpRanges returns the AllowedIpRanges field value if set, zero value otherwise.
+func (o *GlobalProperties) GetAllowedIpRanges() []string {
+	if o == nil || IsNil(o.AllowedIpRanges) {
+		var ret []string
+		return ret
+	}
+	return o.AllowedIpRanges
+}
+
+// GetAllowedIpRangesOk returns a tuple with the AllowedIpRanges field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetAllowedIpRangesOk() ([]string, bool) {
+	if o == nil || IsNil(o.AllowedIpRanges) {
+		return nil, false
+	}
+	return o.AllowedIpRanges, true
+}
+
+// HasAllowedIpRanges returns a boolean if a field has been set.
+func (o *GlobalProperties) HasAllowedIpRanges() bool {
+	if o != nil && !IsNil(o.AllowedIpRanges) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedIpRanges gets a reference to the given []string and assigns it to the AllowedIpRanges field.
+func (o *GlobalProperties) SetAllowedIpRanges(v []string) {
+	o.AllowedIpRanges = v
+}
+
 func (o GlobalProperties) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -159,6 +329,21 @@ func (o GlobalProperties) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PhonehomeMaximumTransferSize) {
 		toSerialize["phonehome_maximum_transfer_size"] = o.PhonehomeMaximumTransferSize
+	}
+	if !IsNil(o.TokenExpiryTime) {
+		toSerialize["token_expiry_time"] = o.TokenExpiryTime
+	}
+	if !IsNil(o.TokenMaximumInactivityTime) {
+		toSerialize["token_maximum_inactivity_time"] = o.TokenMaximumInactivityTime
+	}
+	if !IsNil(o.FeatureFlags) {
+		toSerialize["feature_flags"] = o.FeatureFlags
+	}
+	if !IsNil(o.ApiKeyExpiryTime) {
+		toSerialize["api_key_expiry_time"] = o.ApiKeyExpiryTime
+	}
+	if !IsNil(o.AllowedIpRanges) {
+		toSerialize["allowed_ip_ranges"] = o.AllowedIpRanges
 	}
 	return toSerialize, nil
 }

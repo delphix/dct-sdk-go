@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -66,7 +66,6 @@ type _OracleAttachDSourceParameters OracleAttachDSourceParameters
 // will change when the set of required properties is changed
 func NewOracleAttachDSourceParameters(sourceId string) *OracleAttachDSourceParameters {
 	this := OracleAttachDSourceParameters{}
-	this.SourceId = sourceId
 	var bandwidthLimit int32 = 0
 	this.BandwidthLimit = &bandwidthLimit
 	var checkLogical bool = false

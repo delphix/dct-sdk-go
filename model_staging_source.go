@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -46,6 +46,7 @@ type StagingSource struct {
 	// The dsource_id associated with this staging source.
 	DsourceId *string `json:"dsource_id,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	OracleServices []OracleService `json:"oracle_services,omitempty"`
 }
 
 // NewStagingSource instantiates a new StagingSource object
@@ -593,6 +594,38 @@ func (o *StagingSource) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *StagingSource) GetOracleServices() []OracleService {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []OracleService
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetOracleServicesOk() ([]OracleService, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *StagingSource) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []OracleService and assigns it to the OracleServices field.
+func (o *StagingSource) SetOracleServices(v []OracleService) {
+	o.OracleServices = v
+}
+
 func (o StagingSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -644,6 +677,9 @@ func (o StagingSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
 	}
 	return toSerialize, nil
 }

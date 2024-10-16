@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -3509,6 +3509,133 @@ func (a *DSourcesAPIService) SnapshotDsourceExecute(r ApiSnapshotDsourceRequest)
 	}
 	// body params
 	localVarPostBody = r.dSourceSnapshotParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateMssqlDsourceByIdRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	updateMSSQLDsourceParameters *UpdateMSSQLDsourceParameters
+}
+
+// The new data to update an MSSql dSource.
+func (r ApiUpdateMssqlDsourceByIdRequest) UpdateMSSQLDsourceParameters(updateMSSQLDsourceParameters UpdateMSSQLDsourceParameters) ApiUpdateMssqlDsourceByIdRequest {
+	r.updateMSSQLDsourceParameters = &updateMSSQLDsourceParameters
+	return r
+}
+
+func (r ApiUpdateMssqlDsourceByIdRequest) Execute() (*UpdateDsourceResponse, *http.Response, error) {
+	return r.ApiService.UpdateMssqlDsourceByIdExecute(r)
+}
+
+/*
+UpdateMssqlDsourceById Update values of an MSSql dSource
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiUpdateMssqlDsourceByIdRequest
+*/
+func (a *DSourcesAPIService) UpdateMssqlDsourceById(ctx context.Context, dsourceId string) ApiUpdateMssqlDsourceByIdRequest {
+	return ApiUpdateMssqlDsourceByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateDsourceResponse
+func (a *DSourcesAPIService) UpdateMssqlDsourceByIdExecute(r ApiUpdateMssqlDsourceByIdRequest) (*UpdateDsourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateDsourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.UpdateMssqlDsourceById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/mssql/{dsourceId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateMSSQLDsourceParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

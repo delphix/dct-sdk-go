@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.16.0
+API version: 3.17.0
 Contact: support@delphix.com
 */
 
@@ -51,11 +51,25 @@ type Execution struct {
 	SubmitTime *time.Time `json:"submit_time,omitempty"`
 	// The date and time that this execution completed.
 	EndTime *time.Time `json:"end_time,omitempty"`
+	// The time this execution spent running, in milliseconds.
+	RunDuration *int64 `json:"run_duration,omitempty"`
+	// The time this execution spent in the queue, in milliseconds.
+	QueueDuration *int64 `json:"queue_duration,omitempty"`
+	// The total time this execution took, in milliseconds.
+	TotalDuration *int64 `json:"total_duration,omitempty"`
+	// The account id of the DCT user who started this execution.
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The account name of the DCT user who started this execution.
+	AccountName *string `json:"account_name,omitempty"`
 	// The progression of steps or events performed by this execution. Only available for executions on masking engines that are version 6.0.14.0 and higher.
 	TaskEvents []TaskEvent `json:"task_events,omitempty"`
 	HyperscaleTaskEvents []HyperscaleTaskEvent `json:"hyperscale_task_events,omitempty"`
 	// Progress of the task (value between 0 and 1, Hyperscale executions only)
 	Progress *float32 `json:"progress,omitempty"`
+	// The total number of execution components in this execution.
+	ExecutionComponentsTotal *int32 `json:"execution_components_total,omitempty"`
+	// The number of execution components processed so far in this execution.
+	ExecutionComponentsProcessed *int32 `json:"execution_components_processed,omitempty"`
 }
 
 // NewExecution instantiates a new Execution object
@@ -587,6 +601,166 @@ func (o *Execution) SetEndTime(v time.Time) {
 	o.EndTime = &v
 }
 
+// GetRunDuration returns the RunDuration field value if set, zero value otherwise.
+func (o *Execution) GetRunDuration() int64 {
+	if o == nil || IsNil(o.RunDuration) {
+		var ret int64
+		return ret
+	}
+	return *o.RunDuration
+}
+
+// GetRunDurationOk returns a tuple with the RunDuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetRunDurationOk() (*int64, bool) {
+	if o == nil || IsNil(o.RunDuration) {
+		return nil, false
+	}
+	return o.RunDuration, true
+}
+
+// HasRunDuration returns a boolean if a field has been set.
+func (o *Execution) HasRunDuration() bool {
+	if o != nil && !IsNil(o.RunDuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetRunDuration gets a reference to the given int64 and assigns it to the RunDuration field.
+func (o *Execution) SetRunDuration(v int64) {
+	o.RunDuration = &v
+}
+
+// GetQueueDuration returns the QueueDuration field value if set, zero value otherwise.
+func (o *Execution) GetQueueDuration() int64 {
+	if o == nil || IsNil(o.QueueDuration) {
+		var ret int64
+		return ret
+	}
+	return *o.QueueDuration
+}
+
+// GetQueueDurationOk returns a tuple with the QueueDuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetQueueDurationOk() (*int64, bool) {
+	if o == nil || IsNil(o.QueueDuration) {
+		return nil, false
+	}
+	return o.QueueDuration, true
+}
+
+// HasQueueDuration returns a boolean if a field has been set.
+func (o *Execution) HasQueueDuration() bool {
+	if o != nil && !IsNil(o.QueueDuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetQueueDuration gets a reference to the given int64 and assigns it to the QueueDuration field.
+func (o *Execution) SetQueueDuration(v int64) {
+	o.QueueDuration = &v
+}
+
+// GetTotalDuration returns the TotalDuration field value if set, zero value otherwise.
+func (o *Execution) GetTotalDuration() int64 {
+	if o == nil || IsNil(o.TotalDuration) {
+		var ret int64
+		return ret
+	}
+	return *o.TotalDuration
+}
+
+// GetTotalDurationOk returns a tuple with the TotalDuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetTotalDurationOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalDuration) {
+		return nil, false
+	}
+	return o.TotalDuration, true
+}
+
+// HasTotalDuration returns a boolean if a field has been set.
+func (o *Execution) HasTotalDuration() bool {
+	if o != nil && !IsNil(o.TotalDuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalDuration gets a reference to the given int64 and assigns it to the TotalDuration field.
+func (o *Execution) SetTotalDuration(v int64) {
+	o.TotalDuration = &v
+}
+
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *Execution) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *Execution) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *Execution) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *Execution) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *Execution) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *Execution) SetAccountName(v string) {
+	o.AccountName = &v
+}
+
 // GetTaskEvents returns the TaskEvents field value if set, zero value otherwise.
 func (o *Execution) GetTaskEvents() []TaskEvent {
 	if o == nil || IsNil(o.TaskEvents) {
@@ -683,6 +857,70 @@ func (o *Execution) SetProgress(v float32) {
 	o.Progress = &v
 }
 
+// GetExecutionComponentsTotal returns the ExecutionComponentsTotal field value if set, zero value otherwise.
+func (o *Execution) GetExecutionComponentsTotal() int32 {
+	if o == nil || IsNil(o.ExecutionComponentsTotal) {
+		var ret int32
+		return ret
+	}
+	return *o.ExecutionComponentsTotal
+}
+
+// GetExecutionComponentsTotalOk returns a tuple with the ExecutionComponentsTotal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetExecutionComponentsTotalOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExecutionComponentsTotal) {
+		return nil, false
+	}
+	return o.ExecutionComponentsTotal, true
+}
+
+// HasExecutionComponentsTotal returns a boolean if a field has been set.
+func (o *Execution) HasExecutionComponentsTotal() bool {
+	if o != nil && !IsNil(o.ExecutionComponentsTotal) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionComponentsTotal gets a reference to the given int32 and assigns it to the ExecutionComponentsTotal field.
+func (o *Execution) SetExecutionComponentsTotal(v int32) {
+	o.ExecutionComponentsTotal = &v
+}
+
+// GetExecutionComponentsProcessed returns the ExecutionComponentsProcessed field value if set, zero value otherwise.
+func (o *Execution) GetExecutionComponentsProcessed() int32 {
+	if o == nil || IsNil(o.ExecutionComponentsProcessed) {
+		var ret int32
+		return ret
+	}
+	return *o.ExecutionComponentsProcessed
+}
+
+// GetExecutionComponentsProcessedOk returns a tuple with the ExecutionComponentsProcessed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetExecutionComponentsProcessedOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExecutionComponentsProcessed) {
+		return nil, false
+	}
+	return o.ExecutionComponentsProcessed, true
+}
+
+// HasExecutionComponentsProcessed returns a boolean if a field has been set.
+func (o *Execution) HasExecutionComponentsProcessed() bool {
+	if o != nil && !IsNil(o.ExecutionComponentsProcessed) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionComponentsProcessed gets a reference to the given int32 and assigns it to the ExecutionComponentsProcessed field.
+func (o *Execution) SetExecutionComponentsProcessed(v int32) {
+	o.ExecutionComponentsProcessed = &v
+}
+
 func (o Execution) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -741,6 +979,21 @@ func (o Execution) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EndTime) {
 		toSerialize["end_time"] = o.EndTime
 	}
+	if !IsNil(o.RunDuration) {
+		toSerialize["run_duration"] = o.RunDuration
+	}
+	if !IsNil(o.QueueDuration) {
+		toSerialize["queue_duration"] = o.QueueDuration
+	}
+	if !IsNil(o.TotalDuration) {
+		toSerialize["total_duration"] = o.TotalDuration
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
+	}
 	if !IsNil(o.TaskEvents) {
 		toSerialize["task_events"] = o.TaskEvents
 	}
@@ -749,6 +1002,12 @@ func (o Execution) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Progress) {
 		toSerialize["progress"] = o.Progress
+	}
+	if !IsNil(o.ExecutionComponentsTotal) {
+		toSerialize["execution_components_total"] = o.ExecutionComponentsTotal
+	}
+	if !IsNil(o.ExecutionComponentsProcessed) {
+		toSerialize["execution_components_processed"] = o.ExecutionComponentsProcessed
 	}
 	return toSerialize, nil
 }
