@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -66,6 +66,8 @@ type VCDB struct {
 	InstanceNumber *int32 `json:"instance_number,omitempty"`
 	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
 	OracleServices []OracleService `json:"oracle_services,omitempty"`
+	// The repository id of this Virtual CDB.
+	RepositoryId *string `json:"repository_id,omitempty"`
 }
 
 // NewVCDB instantiates a new VCDB object
@@ -963,6 +965,38 @@ func (o *VCDB) SetOracleServices(v []OracleService) {
 	o.OracleServices = v
 }
 
+// GetRepositoryId returns the RepositoryId field value if set, zero value otherwise.
+func (o *VCDB) GetRepositoryId() string {
+	if o == nil || IsNil(o.RepositoryId) {
+		var ret string
+		return ret
+	}
+	return *o.RepositoryId
+}
+
+// GetRepositoryIdOk returns a tuple with the RepositoryId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetRepositoryIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RepositoryId) {
+		return nil, false
+	}
+	return o.RepositoryId, true
+}
+
+// HasRepositoryId returns a boolean if a field has been set.
+func (o *VCDB) HasRepositoryId() bool {
+	if o != nil && !IsNil(o.RepositoryId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRepositoryId gets a reference to the given string and assigns it to the RepositoryId field.
+func (o *VCDB) SetRepositoryId(v string) {
+	o.RepositoryId = &v
+}
+
 func (o VCDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1044,6 +1078,9 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OracleServices) {
 		toSerialize["oracle_services"] = o.OracleServices
+	}
+	if !IsNil(o.RepositoryId) {
+		toSerialize["repository_id"] = o.RepositoryId
 	}
 	return toSerialize, nil
 }

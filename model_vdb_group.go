@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -27,13 +27,13 @@ type VDBGroup struct {
 	Id string `json:"id"`
 	// A unique name for the entity.
 	Name string `json:"name"`
-	// The list of VDB IDs in this VDBGroup.
+	// The list of VDB IDs in this VDB Group.
 	VdbIds []string `json:"vdb_ids,omitempty"`
-	// Indicates whether the VDBGroup is locked.
+	// Indicates whether the VDB Group is locked.
 	IsLocked *bool `json:"is_locked,omitempty"`
-	// The Id of the account that locked the VDBGroup.
+	// The Id of the account that locked the VDB Group.
 	LockedBy *int64 `json:"locked_by,omitempty"`
-	// The name of the account that locked the VDBGroup.
+	// The name of the account that locked the VDB Group.
 	LockedByName *string `json:"locked_by_name,omitempty"`
 	// Source of the vdb group, default is DCT. In case of self-service container, this value would be ENGINE.
 	VdbGroupSource *string `json:"vdb_group_source,omitempty"`
@@ -41,13 +41,13 @@ type VDBGroup struct {
 	SsDataLayoutId *string `json:"ss_data_layout_id,omitempty"`
 	// Dictates order of operations on VDBs. Operations can be performed in parallel <br> for all VDBs or sequentially. Below are possible valid and invalid orderings given an example <br> VDB group with 3 vdbs (A, B, and C).<br> Valid:<br> {\"vdb_id\":\"vdb-1\", \"order\":\"1\"} {\"vdb_id\":\"vdb-2\", order:\"1\"} {vdb_id:\"vdb-3\", order:\"1\"} (parallel)<br> {vdb_id:\"vdb-1\", order:\"1\"} {vdb_id:\"vdb-2\", order:\"2\"} {vdb_id:\"vdb-3\", order:\"3\"} (sequential)<br> Invalid:<br> {vdb_id:\"vdb-1\", order:\"A\"} {vdb_id:\"vdb-2\", order:\"B\"} {vdb_id:\"vdb-3\", order:\"C\"} (sequential)<br><br> In the sequential case the vdbs with priority 1 is the first to be started and the last to<br> be stopped. This value is set on creation of VDB groups.
 	Vdbs []VDBOrder `json:"vdbs,omitempty"`
-	// The database type of the VDBGroup. If all VDBs in the group are of the same database_type, this field will be set to that type. If the VDBs are of different database_type, this field will be set to 'Mixed'.
+	// The database type of the VDB Group. If all VDBs in the group are of the same database_type, this field will be set to that type. If the VDBs are of different database_type, this field will be set to 'Mixed'.
 	DatabaseType *string `json:"database_type,omitempty"`
-	// The status of the VDBGroup. If all VDBs in the VDBGroup have the same status, this field will be set to that status. If the VDBs have different statuses, this field will be set to 'Mixed'.
+	// The status of the VDB Group. If all VDBs in the VDB Group have the same status, this field will be set to that status. If the VDBs have different statuses, this field will be set to 'Mixed'.
 	Status *string `json:"status,omitempty"`
-	// The bookmark ID to which the VDBGroup was last successfully refreshed.
+	// The bookmark ID to which the VDB Group was last successfully refreshed.
 	LastSuccessfulRefreshToBookmarkId *string `json:"last_successful_refresh_to_bookmark_id,omitempty"`
-	// The time at which the VDBGroup was last successfully refreshed.
+	// The time at which the VDB Group was last successfully refreshed.
 	LastSuccessfulRefreshTime *time.Time `json:"last_successful_refresh_time,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }

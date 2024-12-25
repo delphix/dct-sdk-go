@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -21,6 +21,7 @@ var _ MappedNullable = &CreateVDBGroupResponse{}
 // CreateVDBGroupResponse struct for CreateVDBGroupResponse
 type CreateVDBGroupResponse struct {
 	VdbGroup *VDBGroup `json:"vdb_group,omitempty"`
+	Job *Job `json:"job,omitempty"`
 }
 
 // NewCreateVDBGroupResponse instantiates a new CreateVDBGroupResponse object
@@ -72,6 +73,38 @@ func (o *CreateVDBGroupResponse) SetVdbGroup(v VDBGroup) {
 	o.VdbGroup = &v
 }
 
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *CreateVDBGroupResponse) GetJob() Job {
+	if o == nil || IsNil(o.Job) {
+		var ret Job
+		return ret
+	}
+	return *o.Job
+}
+
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateVDBGroupResponse) GetJobOk() (*Job, bool) {
+	if o == nil || IsNil(o.Job) {
+		return nil, false
+	}
+	return o.Job, true
+}
+
+// HasJob returns a boolean if a field has been set.
+func (o *CreateVDBGroupResponse) HasJob() bool {
+	if o != nil && !IsNil(o.Job) {
+		return true
+	}
+
+	return false
+}
+
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *CreateVDBGroupResponse) SetJob(v Job) {
+	o.Job = &v
+}
+
 func (o CreateVDBGroupResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -84,6 +117,9 @@ func (o CreateVDBGroupResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.VdbGroup) {
 		toSerialize["vdb_group"] = o.VdbGroup
+	}
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
 	}
 	return toSerialize, nil
 }

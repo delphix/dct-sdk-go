@@ -1,4 +1,4 @@
-module github.com/delphix/dct-sdk-go/v22
+module github.com/delphix/dct-sdk-go/v23
 
 go 1.22
 
@@ -6,3 +6,5 @@ go 1.22
 // replace local/dct-sdk-go => .
 
 // require local/dct-sdk-go v1.0.0
+
+// require local/dct-sdk-go v0.0.0-00010101000000-000000000000

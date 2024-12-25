@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -36,13 +36,13 @@ type RuleSet struct {
 	// The name of the engine this rule set originated from.
 	EngineName NullableString `json:"engine_name,omitempty"`
 	// The total number of data elements in this rule set.
-	DataElementsTotal NullableInt32 `json:"data_elements_total,omitempty"`
+	DataElementsTotal NullableInt64 `json:"data_elements_total,omitempty"`
 	// The number of sensitive data elements in this rule set.
-	DataElementsSensitive NullableInt32 `json:"data_elements_sensitive,omitempty"`
+	DataElementsSensitive NullableInt64 `json:"data_elements_sensitive,omitempty"`
 	// The total number of records in this rule set.
-	RecordsTotal NullableInt32 `json:"records_total,omitempty"`
+	RecordsTotal NullableInt64 `json:"records_total,omitempty"`
 	// The number of sensitive records in this rule set.
-	RecordsSensitive NullableInt32 `json:"records_sensitive,omitempty"`
+	RecordsSensitive NullableInt64 `json:"records_sensitive,omitempty"`
 	// The tags of this rule set.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -371,9 +371,9 @@ func (o *RuleSet) UnsetEngineName() {
 }
 
 // GetDataElementsTotal returns the DataElementsTotal field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RuleSet) GetDataElementsTotal() int32 {
+func (o *RuleSet) GetDataElementsTotal() int64 {
 	if o == nil || IsNil(o.DataElementsTotal.Get()) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.DataElementsTotal.Get()
@@ -382,7 +382,7 @@ func (o *RuleSet) GetDataElementsTotal() int32 {
 // GetDataElementsTotalOk returns a tuple with the DataElementsTotal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RuleSet) GetDataElementsTotalOk() (*int32, bool) {
+func (o *RuleSet) GetDataElementsTotalOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -398,8 +398,8 @@ func (o *RuleSet) HasDataElementsTotal() bool {
 	return false
 }
 
-// SetDataElementsTotal gets a reference to the given NullableInt32 and assigns it to the DataElementsTotal field.
-func (o *RuleSet) SetDataElementsTotal(v int32) {
+// SetDataElementsTotal gets a reference to the given NullableInt64 and assigns it to the DataElementsTotal field.
+func (o *RuleSet) SetDataElementsTotal(v int64) {
 	o.DataElementsTotal.Set(&v)
 }
 // SetDataElementsTotalNil sets the value for DataElementsTotal to be an explicit nil
@@ -413,9 +413,9 @@ func (o *RuleSet) UnsetDataElementsTotal() {
 }
 
 // GetDataElementsSensitive returns the DataElementsSensitive field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RuleSet) GetDataElementsSensitive() int32 {
+func (o *RuleSet) GetDataElementsSensitive() int64 {
 	if o == nil || IsNil(o.DataElementsSensitive.Get()) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.DataElementsSensitive.Get()
@@ -424,7 +424,7 @@ func (o *RuleSet) GetDataElementsSensitive() int32 {
 // GetDataElementsSensitiveOk returns a tuple with the DataElementsSensitive field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RuleSet) GetDataElementsSensitiveOk() (*int32, bool) {
+func (o *RuleSet) GetDataElementsSensitiveOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -440,8 +440,8 @@ func (o *RuleSet) HasDataElementsSensitive() bool {
 	return false
 }
 
-// SetDataElementsSensitive gets a reference to the given NullableInt32 and assigns it to the DataElementsSensitive field.
-func (o *RuleSet) SetDataElementsSensitive(v int32) {
+// SetDataElementsSensitive gets a reference to the given NullableInt64 and assigns it to the DataElementsSensitive field.
+func (o *RuleSet) SetDataElementsSensitive(v int64) {
 	o.DataElementsSensitive.Set(&v)
 }
 // SetDataElementsSensitiveNil sets the value for DataElementsSensitive to be an explicit nil
@@ -455,9 +455,9 @@ func (o *RuleSet) UnsetDataElementsSensitive() {
 }
 
 // GetRecordsTotal returns the RecordsTotal field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RuleSet) GetRecordsTotal() int32 {
+func (o *RuleSet) GetRecordsTotal() int64 {
 	if o == nil || IsNil(o.RecordsTotal.Get()) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.RecordsTotal.Get()
@@ -466,7 +466,7 @@ func (o *RuleSet) GetRecordsTotal() int32 {
 // GetRecordsTotalOk returns a tuple with the RecordsTotal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RuleSet) GetRecordsTotalOk() (*int32, bool) {
+func (o *RuleSet) GetRecordsTotalOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -482,8 +482,8 @@ func (o *RuleSet) HasRecordsTotal() bool {
 	return false
 }
 
-// SetRecordsTotal gets a reference to the given NullableInt32 and assigns it to the RecordsTotal field.
-func (o *RuleSet) SetRecordsTotal(v int32) {
+// SetRecordsTotal gets a reference to the given NullableInt64 and assigns it to the RecordsTotal field.
+func (o *RuleSet) SetRecordsTotal(v int64) {
 	o.RecordsTotal.Set(&v)
 }
 // SetRecordsTotalNil sets the value for RecordsTotal to be an explicit nil
@@ -497,9 +497,9 @@ func (o *RuleSet) UnsetRecordsTotal() {
 }
 
 // GetRecordsSensitive returns the RecordsSensitive field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RuleSet) GetRecordsSensitive() int32 {
+func (o *RuleSet) GetRecordsSensitive() int64 {
 	if o == nil || IsNil(o.RecordsSensitive.Get()) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.RecordsSensitive.Get()
@@ -508,7 +508,7 @@ func (o *RuleSet) GetRecordsSensitive() int32 {
 // GetRecordsSensitiveOk returns a tuple with the RecordsSensitive field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RuleSet) GetRecordsSensitiveOk() (*int32, bool) {
+func (o *RuleSet) GetRecordsSensitiveOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -524,8 +524,8 @@ func (o *RuleSet) HasRecordsSensitive() bool {
 	return false
 }
 
-// SetRecordsSensitive gets a reference to the given NullableInt32 and assigns it to the RecordsSensitive field.
-func (o *RuleSet) SetRecordsSensitive(v int32) {
+// SetRecordsSensitive gets a reference to the given NullableInt64 and assigns it to the RecordsSensitive field.
+func (o *RuleSet) SetRecordsSensitive(v int64) {
 	o.RecordsSensitive.Set(&v)
 }
 // SetRecordsSensitiveNil sets the value for RecordsSensitive to be an explicit nil

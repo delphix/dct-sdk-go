@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -3818,12 +3818,12 @@ type ApiUpgradeOracleDsourceRequest struct {
 	ctx context.Context
 	ApiService *DSourcesAPIService
 	dsourceId string
-	upgradeOracleDsourceParameters *UpgradeOracleDsourceParameters
+	upgradeOracleDatabaseParameters *UpgradeOracleDatabaseParameters
 }
 
 // The new data to upgrade an Oracle dSource.
-func (r ApiUpgradeOracleDsourceRequest) UpgradeOracleDsourceParameters(upgradeOracleDsourceParameters UpgradeOracleDsourceParameters) ApiUpgradeOracleDsourceRequest {
-	r.upgradeOracleDsourceParameters = &upgradeOracleDsourceParameters
+func (r ApiUpgradeOracleDsourceRequest) UpgradeOracleDatabaseParameters(upgradeOracleDatabaseParameters UpgradeOracleDatabaseParameters) ApiUpgradeOracleDsourceRequest {
+	r.upgradeOracleDatabaseParameters = &upgradeOracleDatabaseParameters
 	return r
 }
 
@@ -3889,7 +3889,7 @@ func (a *DSourcesAPIService) UpgradeOracleDsourceExecute(r ApiUpgradeOracleDsour
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.upgradeOracleDsourceParameters
+	localVarPostBody = r.upgradeOracleDatabaseParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

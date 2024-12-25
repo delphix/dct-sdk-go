@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -20,7 +20,7 @@ var _ MappedNullable = &VdbGroupTimestampSummaryItem{}
 
 // VdbGroupTimestampSummaryItem struct for VdbGroupTimestampSummaryItem
 type VdbGroupTimestampSummaryItem struct {
-	// Id of the VDB in the VDBGroup.
+	// Id of the VDB in the VDB Group.
 	VdbId *string `json:"vdb_id,omitempty"`
 	TimeflowRange *TimeflowRange `json:"timeflow_range,omitempty"`
 }

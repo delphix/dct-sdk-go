@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -97,6 +97,12 @@ type DSource struct {
 	ExportedDataDirectory *string `json:"exported_data_directory,omitempty"`
 	// A reference to the Non Virtual Database Template.
 	TemplateId NullableString `json:"template_id,omitempty"`
+	// Indicates whether Delphix should automatically restart this staging database when staging host reboot is detected.
+	AllowAutoStagingRestartOnHostReboot *bool `json:"allow_auto_staging_restart_on_host_reboot,omitempty"`
+	// Indicates whether this staging database is configured as a physical standby.
+	PhysicalStandby *bool `json:"physical_standby,omitempty"`
+	// Indicates whether this staging database snapshot is validated by opening it in read-only mode.
+	ValidateByOpeningDbInReadOnlyMode *bool `json:"validate_by_opening_db_in_read_only_mode,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -1554,6 +1560,102 @@ func (o *DSource) UnsetTemplateId() {
 	o.TemplateId.Unset()
 }
 
+// GetAllowAutoStagingRestartOnHostReboot returns the AllowAutoStagingRestartOnHostReboot field value if set, zero value otherwise.
+func (o *DSource) GetAllowAutoStagingRestartOnHostReboot() bool {
+	if o == nil || IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		var ret bool
+		return ret
+	}
+	return *o.AllowAutoStagingRestartOnHostReboot
+}
+
+// GetAllowAutoStagingRestartOnHostRebootOk returns a tuple with the AllowAutoStagingRestartOnHostReboot field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetAllowAutoStagingRestartOnHostRebootOk() (*bool, bool) {
+	if o == nil || IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		return nil, false
+	}
+	return o.AllowAutoStagingRestartOnHostReboot, true
+}
+
+// HasAllowAutoStagingRestartOnHostReboot returns a boolean if a field has been set.
+func (o *DSource) HasAllowAutoStagingRestartOnHostReboot() bool {
+	if o != nil && !IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowAutoStagingRestartOnHostReboot gets a reference to the given bool and assigns it to the AllowAutoStagingRestartOnHostReboot field.
+func (o *DSource) SetAllowAutoStagingRestartOnHostReboot(v bool) {
+	o.AllowAutoStagingRestartOnHostReboot = &v
+}
+
+// GetPhysicalStandby returns the PhysicalStandby field value if set, zero value otherwise.
+func (o *DSource) GetPhysicalStandby() bool {
+	if o == nil || IsNil(o.PhysicalStandby) {
+		var ret bool
+		return ret
+	}
+	return *o.PhysicalStandby
+}
+
+// GetPhysicalStandbyOk returns a tuple with the PhysicalStandby field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPhysicalStandbyOk() (*bool, bool) {
+	if o == nil || IsNil(o.PhysicalStandby) {
+		return nil, false
+	}
+	return o.PhysicalStandby, true
+}
+
+// HasPhysicalStandby returns a boolean if a field has been set.
+func (o *DSource) HasPhysicalStandby() bool {
+	if o != nil && !IsNil(o.PhysicalStandby) {
+		return true
+	}
+
+	return false
+}
+
+// SetPhysicalStandby gets a reference to the given bool and assigns it to the PhysicalStandby field.
+func (o *DSource) SetPhysicalStandby(v bool) {
+	o.PhysicalStandby = &v
+}
+
+// GetValidateByOpeningDbInReadOnlyMode returns the ValidateByOpeningDbInReadOnlyMode field value if set, zero value otherwise.
+func (o *DSource) GetValidateByOpeningDbInReadOnlyMode() bool {
+	if o == nil || IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ValidateByOpeningDbInReadOnlyMode
+}
+
+// GetValidateByOpeningDbInReadOnlyModeOk returns a tuple with the ValidateByOpeningDbInReadOnlyMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetValidateByOpeningDbInReadOnlyModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		return nil, false
+	}
+	return o.ValidateByOpeningDbInReadOnlyMode, true
+}
+
+// HasValidateByOpeningDbInReadOnlyMode returns a boolean if a field has been set.
+func (o *DSource) HasValidateByOpeningDbInReadOnlyMode() bool {
+	if o != nil && !IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidateByOpeningDbInReadOnlyMode gets a reference to the given bool and assigns it to the ValidateByOpeningDbInReadOnlyMode field.
+func (o *DSource) SetValidateByOpeningDbInReadOnlyMode(v bool) {
+	o.ValidateByOpeningDbInReadOnlyMode = &v
+}
+
 func (o DSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1680,6 +1782,15 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if o.TemplateId.IsSet() {
 		toSerialize["template_id"] = o.TemplateId.Get()
+	}
+	if !IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		toSerialize["allow_auto_staging_restart_on_host_reboot"] = o.AllowAutoStagingRestartOnHostReboot
+	}
+	if !IsNil(o.PhysicalStandby) {
+		toSerialize["physical_standby"] = o.PhysicalStandby
+	}
+	if !IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		toSerialize["validate_by_opening_db_in_read_only_mode"] = o.ValidateByOpeningDbInReadOnlyMode
 	}
 	return toSerialize, nil
 }

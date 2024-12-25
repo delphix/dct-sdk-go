@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -13,8 +13,6 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
-	"bytes"
-	"fmt"
 )
 
 // checks if the UpdateRepositoryParameters type satisfies the MappedNullable interface at compile time
@@ -22,8 +20,6 @@ var _ MappedNullable = &UpdateRepositoryParameters{}
 
 // UpdateRepositoryParameters struct for UpdateRepositoryParameters
 type UpdateRepositoryParameters struct {
-	// The database type of this repository.
-	DatabaseType string `json:"database_type"`
 	// Flag indicating whether the repository should be used for provisioning.
 	AllowProvisioning *bool `json:"allow_provisioning,omitempty"`
 	// Flag indicating whether this repository can be used by the Delphix Engine for internal processing.
@@ -36,15 +32,12 @@ type UpdateRepositoryParameters struct {
 	Bits *int32 `json:"bits,omitempty"`
 }
 
-type _UpdateRepositoryParameters UpdateRepositoryParameters
-
 // NewUpdateRepositoryParameters instantiates a new UpdateRepositoryParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateRepositoryParameters(databaseType string) *UpdateRepositoryParameters {
+func NewUpdateRepositoryParameters() *UpdateRepositoryParameters {
 	this := UpdateRepositoryParameters{}
-	this.DatabaseType = databaseType
 	return &this
 }
 
@@ -54,30 +47,6 @@ func NewUpdateRepositoryParameters(databaseType string) *UpdateRepositoryParamet
 func NewUpdateRepositoryParametersWithDefaults() *UpdateRepositoryParameters {
 	this := UpdateRepositoryParameters{}
 	return &this
-}
-
-// GetDatabaseType returns the DatabaseType field value
-func (o *UpdateRepositoryParameters) GetDatabaseType() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.DatabaseType
-}
-
-// GetDatabaseTypeOk returns a tuple with the DatabaseType field value
-// and a boolean to check if the value has been set.
-func (o *UpdateRepositoryParameters) GetDatabaseTypeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.DatabaseType, true
-}
-
-// SetDatabaseType sets field value
-func (o *UpdateRepositoryParameters) SetDatabaseType(v string) {
-	o.DatabaseType = v
 }
 
 // GetAllowProvisioning returns the AllowProvisioning field value if set, zero value otherwise.
@@ -250,7 +219,6 @@ func (o UpdateRepositoryParameters) MarshalJSON() ([]byte, error) {
 
 func (o UpdateRepositoryParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["database_type"] = o.DatabaseType
 	if !IsNil(o.AllowProvisioning) {
 		toSerialize["allow_provisioning"] = o.AllowProvisioning
 	}
@@ -267,43 +235,6 @@ func (o UpdateRepositoryParameters) ToMap() (map[string]interface{}, error) {
 		toSerialize["bits"] = o.Bits
 	}
 	return toSerialize, nil
-}
-
-func (o *UpdateRepositoryParameters) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"database_type",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varUpdateRepositoryParameters := _UpdateRepositoryParameters{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varUpdateRepositoryParameters)
-
-	if err != nil {
-		return err
-	}
-
-	*o = UpdateRepositoryParameters(varUpdateRepositoryParameters)
-
-	return err
 }
 
 type NullableUpdateRepositoryParameters struct {

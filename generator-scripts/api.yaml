@@ -6,7 +6,7 @@ info:
     name: Delphix Support
     url: https://support.delphix.com
     email: support@delphix.com
-  version: 3.17.0
+  version: 3.18.0
 externalDocs:
   description: External docs
   url: https://dct.delphix.com
@@ -756,6 +756,8 @@ paths:
             type: boolean
           linking_enabled:
             type: boolean
+          repository:
+            type: string
   /sources/{sourceId}:
     get:
       tags:
@@ -1221,7 +1223,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpgradeOracleDsourceParameters'
+              $ref: '#/components/schemas/UpgradeOracleDatabaseParameters'
       responses:
         '200':
           description: OK
@@ -1567,6 +1569,12 @@ paths:
             type: string
           template_id:
             type: string
+          allow_auto_staging_restart_on_host_reboot:
+            type: boolean
+          physical_standby:
+            type: boolean
+          validate_by_opening_db_in_read_only_mode:
+            type: boolean
   /dsources/{dsourceId}:
     get:
       tags:
@@ -2331,6 +2339,8 @@ paths:
             type: string
           instance_number:
             type: integer
+          repository_id:
+            type: string
   /vdbs/{vdbId}:
     get:
       tags:
@@ -2889,6 +2899,25 @@ paths:
                     $ref: '#/components/schemas/Job'
     parameters:
     - $ref: '#/components/parameters/vdbIdParam'
+  /vdbs/{vdbId}/undo_refresh:
+    post:
+      tags:
+      - VDBs
+      summary: Undo the last refresh operation.
+      operationId: undo_refresh
+      responses:
+        '200':
+          description: VDB undo refresh initiated.
+          content:
+            application/json:
+              schema:
+                title: UndoRefreshVDBResponse
+                type: object
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+    parameters:
+    - $ref: '#/components/parameters/vdbIdParam'
   /vdbs/{vdbId}/switch_timeflow:
     post:
       tags:
@@ -2908,6 +2937,31 @@ paths:
             application/json:
               schema:
                 title: SwitchTimeflowResponse
+                type: object
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+    parameters:
+    - $ref: '#/components/parameters/vdbIdParam'
+  /vdbs/oracle/{vdbId}/upgrade:
+    post:
+      tags:
+      - VDBs
+      summary: Upgrade Oracle VDB
+      operationId: upgrade_vdb
+      requestBody:
+        description: The new API to upgrade Oracle VDB
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpgradeOracleDatabaseParameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: UpgradeVDBResponse
                 type: object
                 properties:
                   job:
@@ -3102,10 +3156,10 @@ paths:
     post:
       tags:
       - VDBGroups
-      summary: Create a new VDBGroup.
+      summary: Create a new VDB Group.
       operationId: create_vdb_group
       requestBody:
-        description: The parameters to create a VDBGroup.
+        description: The parameters to create a VDB Group.
         content:
           application/json:
             schema:
@@ -3154,10 +3208,15 @@ paths:
                   description: Whether the account creating this VDB group must be
                     configured as owner of the VDB group.
                   default: true
+                refresh_immediately:
+                  type: boolean
+                  description: If true, VDB Group will be refreshed immediately after
+                    creation.
+                  default: false
         required: true
       responses:
         '201':
-          description: VDBGroup Created.
+          description: VDB Group Created.
           content:
             application/json:
               schema:
@@ -3166,6 +3225,8 @@ paths:
                 properties:
                   vdb_group:
                     $ref: '#/components/schemas/VDBGroup'
+                  job:
+                    $ref: '#/components/schemas/Job'
   /vdb-groups/provision_from_bookmark:
     post:
       tags:
@@ -3237,7 +3298,7 @@ paths:
     get:
       tags:
       - VDBGroups
-      summary: Get a VDBGroup by name.
+      summary: Get a VDB Group by name.
       operationId: get_vdb_group
       responses:
         '200':
@@ -3271,14 +3332,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VDBGroup'
+                title: UpdateVDBGroupResponse
+                type: object
+                allOf:
+                - $ref: '#/components/schemas/VDBGroup'
+                - type: object
+                  properties:
+                    job:
+                      $ref: '#/components/schemas/Job'
     parameters:
     - $ref: '#/components/parameters/vdbGroupIdParam'
   /vdb-groups/{vdbGroupId}/latest-snapshots:
     get:
       tags:
       - VDBGroups
-      summary: Get latest snapshot of all the vdbs in VDBGroup.
+      summary: Get latest snapshot of all the vdbs in VDB Group.
       operationId: get_vdb_group_vdbs_latest_snapshots
       responses:
         '200':
@@ -3299,7 +3367,7 @@ paths:
     post:
       tags:
       - VDBGroups
-      summary: Get timestamp summary of all the vdbs in VDBGroup.
+      summary: Get timestamp summary of all the vdbs in VDB Group.
       operationId: get_vdb_group_timestamp_summary
       requestBody:
         content:
@@ -3376,18 +3444,18 @@ paths:
     post:
       tags:
       - VDBGroups
-      summary: Refresh a VDBGroup from bookmark.
+      summary: Refresh a VDB Group from bookmark.
       description: This API is marked as deprecated in favour of renamed API '/vdb-groups/{vdbGroupId}/refresh_from_bookmark'
       operationId: refresh_vdb_group
       requestBody:
-        description: The parameters to refresh a VDBGroup.
+        description: The parameters to refresh a VDB Group.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RefreshVDBGroupParameters'
       responses:
         '200':
-          description: VDBGroup refresh initiated.
+          description: VDB Group refresh initiated.
           content:
             application/json:
               schema:
@@ -3403,17 +3471,17 @@ paths:
     post:
       tags:
       - VDBGroups
-      summary: Refresh a VDBGroup from bookmark.
+      summary: Refresh a VDB Group from bookmark.
       operationId: refresh_vdb_group_from_bookmark
       requestBody:
-        description: The parameters to refresh a VDBGroup.
+        description: The parameters to refresh a VDB Group.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RefreshVDBGroupParameters'
       responses:
         '200':
-          description: VDBGroup refresh initiated.
+          description: VDB Group refresh initiated.
           content:
             application/json:
               schema:
@@ -3428,17 +3496,17 @@ paths:
     post:
       tags:
       - VDBGroups
-      summary: Refresh a VDBGroup by snapshot.
+      summary: Refresh a VDB Group by snapshot.
       operationId: refresh_vdb_group_by_snapshot
       requestBody:
-        description: The parameters to refresh a VDBGroup by snapshot.
+        description: The parameters to refresh a VDB Group by snapshot.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RefreshVDBGroupBySnapshotParameters'
       responses:
         '200':
-          description: VDBGroup refresh initiated.
+          description: VDB Group refresh initiated.
           content:
             application/json:
               schema:
@@ -3453,17 +3521,17 @@ paths:
     post:
       tags:
       - VDBGroups
-      summary: Refresh a VDBGroup by timestamp.
+      summary: Refresh a VDB Group by timestamp.
       operationId: refresh_vdb_group_by_timestamp
       requestBody:
-        description: The parameters to refresh a VDBGroup by timestamp.
+        description: The parameters to refresh a VDB Group by timestamp.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RefreshVDBGroupByTimestampParameters'
       responses:
         '200':
-          description: VDBGroup refresh initiated.
+          description: VDB Group refresh initiated.
           content:
             application/json:
               schema:
@@ -3478,18 +3546,18 @@ paths:
     post:
       tags:
       - VDBGroups
-      summary: Rollback a VDBGroup from a bookmark.
+      summary: Rollback a VDB Group from a bookmark.
       description: This API is marked as deprecated in favour of API '/vdb-groups/{vdbGroupId}/refresh_from_bookmark'
       operationId: rollback_vdb_group
       requestBody:
-        description: The parameters to rollback a VDBGroup.
+        description: The parameters to rollback a VDB Group.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RollbackVDBGroupParameters'
       responses:
         '200':
-          description: VDBGroup rollback initiated.
+          description: VDB Group rollback initiated.
           content:
             application/json:
               schema:
@@ -4786,6 +4854,12 @@ paths:
                 type: integer
               toolkit_path:
                 type: string
+              connector_port:
+                type: integer
+              connector_version:
+                type: string
+              connector_dot_net_framework_version:
+                type: string
               oracle_tde_keystores_root_path:
                 type: string
               processor_type:
@@ -5819,6 +5893,8 @@ paths:
             type: string
           instance_number:
             type: integer
+          repository_id:
+            type: string
   /cdbs/{cdbId}:
     get:
       tags:
@@ -5992,7 +6068,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpgradeOracleCdbParameters'
+              $ref: '#/components/schemas/UpgradeOracleContainerDatabaseParameters'
       responses:
         '200':
           description: OK
@@ -6146,6 +6222,8 @@ paths:
             type: string
           instance_number:
             type: integer
+          repository_id:
+            type: string
   /vcdbs/{vcdbId}:
     get:
       tags:
@@ -6358,6 +6436,31 @@ paths:
                     $ref: '#/components/schemas/Job'
     parameters:
     - $ref: '#/components/parameters/vcdbIdParam'
+  /vcdbs/{vcdbId}/upgrade:
+    post:
+      tags:
+      - VCDBs
+      summary: Upgrade Oracle vCDB
+      operationId: upgrade_vcdb
+      requestBody:
+        description: The new data to upgrade an Oracle vCDB.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpgradeOracleContainerDatabaseParameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: UpgradeVCDBResponse
+                type: object
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+    parameters:
+    - $ref: '#/components/parameters/vcdbIdParam'
   /virtualization-policies:
     get:
       tags:
@@ -6482,8 +6585,6 @@ paths:
       - VirtualizationPolicies
       summary: Fetch a virtualization policy by Id.
       operationId: get_virtualization_policy_by_id
-      parameters:
-      - $ref: '#/components/parameters/virtualizationPolicyIdParam'
       responses:
         '200':
           description: Returns a single virtualization policy
@@ -6493,6 +6594,8 @@ paths:
                 $ref: '#/components/schemas/VirtualizationPolicy'
         '404':
           description: Virtualization policy not found
+    parameters:
+    - $ref: '#/components/parameters/virtualizationPolicyIdParam'
   /virtualization-policies/{policyId}/tags:
     get:
       tags:
@@ -6538,48 +6641,6 @@ paths:
       responses:
         '204':
           description: No Content
-    parameters:
-    - $ref: '#/components/parameters/virtualizationPolicyIdParam'
-  /virtualization-policies/{policyId}/apply:
-    post:
-      tags:
-      - VirtualizationPolicies
-      summary: Apply a virtualization policy to the given list of objects.
-      operationId: apply_virtualization_policy_by_id_or_name
-      requestBody:
-        $ref: '#/components/requestBodies/VirtualizationPolicyApplyBody'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: VirtualizationPolicyApplyResponse
-                type: object
-                properties:
-                  job:
-                    $ref: '#/components/schemas/Job'
-    parameters:
-    - $ref: '#/components/parameters/virtualizationPolicyIdParam'
-  /virtualization-policies/{policyId}/unapply:
-    post:
-      tags:
-      - VirtualizationPolicies
-      summary: Unapply a virtualization policy to the given list of objects.
-      operationId: unapply_virtualization_policy_by_id_or_name
-      requestBody:
-        $ref: '#/components/requestBodies/VirtualizationPolicyApplyBody'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: VirtualizationPolicyUnapplyResponse
-                type: object
-                properties:
-                  job:
-                    $ref: '#/components/schemas/Job'
     parameters:
     - $ref: '#/components/parameters/virtualizationPolicyIdParam'
   /replication-profiles:
@@ -12850,6 +12911,25 @@ paths:
           description: No Content
     parameters:
     - $ref: '#/components/parameters/accountIdParam'
+  /management/accounts/api-key-regenerate:
+    post:
+      tags:
+      - Accounts
+      summary: Regenerate api key for the self.
+      operationId: api-key-regenerate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApikeyRegenerateParameter'
+        required: true
+      responses:
+        '200':
+          description: Updated current account with the new API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountCreateResponse'
   /management/accounts/{id}:
     get:
       tags:
@@ -13029,6 +13109,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PasswordPoliciesParams'
+  /management/license:
+    get:
+      tags:
+      - License
+      summary: Returns the DCT license information.
+      operationId: get_license
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseInfo'
+  /management/license/change-license:
+    post:
+      tags:
+      - License
+      summary: Change the current DCT license.
+      operationId: change_license
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeLicenseParameters'
+        required: true
+      responses:
+        '200':
+          description: OK
   /management/properties:
     get:
       tags:
@@ -15543,6 +15651,13 @@ components:
           type: string
           description: DCT version at the time of api call
           example: 2.2.0
+    ApikeyRegenerateParameter:
+      required:
+      - token
+      properties:
+        token:
+          type: string
+          description: Current api key for the account
     AppDataDSourceLinkSourceParameters:
       required:
       - environment_user
@@ -16612,7 +16727,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OracleService'
+        repository_id:
+          type: string
+          description: The repository id of this CDB.
+          example: 1-ORACLE_INSTALL-1
       description: The Delphix representation of an Oracle Container Database.
+    ChangeLicenseParameters:
+      title: ChangeLicenseParameters
+      required:
+      - tier
+      type: object
+      properties:
+        tier:
+          $ref: '#/components/schemas/LicenseTier'
+      description: Parameters to change the DCT license.
     ChangePasswordParameter:
       required:
       - old_password
@@ -18032,6 +18160,18 @@ components:
           description: A reference to the Non Virtual Database Template.
           nullable: true
           example: DATABASE_TEMPLATE-1
+        allow_auto_staging_restart_on_host_reboot:
+          type: boolean
+          description: Indicates whether Delphix should automatically restart this
+            staging database when staging host reboot is detected.
+        physical_standby:
+          type: boolean
+          description: Indicates whether this staging database is configured as a
+            physical standby.
+        validate_by_opening_db_in_read_only_mode:
+          type: boolean
+          description: Indicates whether this staging database snapshot is validated
+            by opening it in read-only mode.
       description: The Delphix storage-based copy of the source database including
         its history.
       example:
@@ -18858,6 +18998,7 @@ components:
             is assigned an algorithm and domain.
         row_count:
           type: integer
+          format: int64
         last_refresh_time:
           type: string
           format: date-time
@@ -19146,7 +19287,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VDBDisableParametersMapping'
-      description: Parameters to disable a VDBGroup.
+      description: Parameters to disable a VDB Group.
     DisableVDBParameters:
       type: object
       properties:
@@ -19386,7 +19527,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VDBEnableParametersMapping'
-      description: Parameters to enable a VDBGroup.
+      description: Parameters to enable a VDB Group.
     EnableVDBParameters:
       type: object
       properties:
@@ -21155,6 +21296,19 @@ components:
           type: string
           description: The path for the toolkit that resides on the host.
           example: /work
+        connector_port:
+          type: integer
+          description: The port that the Windows Connector connects on.
+          example: 9100
+        connector_version:
+          type: string
+          description: The Windows Connector version that is installed on the provided
+            host.
+          example: 1.17.0
+        connector_dot_net_framework_version:
+          type: string
+          description: The .NET Framework version used for Windows Connector Service.
+          example: '3.5'
         oracle_tde_keystores_root_path:
           minLength: 1
           type: string
@@ -22516,6 +22670,52 @@ components:
           type: string
           description: Password of the account to validate the ldap optional attributes.
           x-dct-toolkit-credential-field: true
+    LicenseInfo:
+      title: LicenseInfo
+      type: object
+      properties:
+        tier:
+          $ref: '#/components/schemas/LicenseTier'
+        virtualization_engine_count:
+          minimum: 0
+          type: integer
+          description: The number of virtualization engines counting against the limit.
+          format: int32
+          nullable: true
+          example: 1
+        masking_engine_count:
+          minimum: 0
+          type: integer
+          description: The number of masking engines counting against the limit. Masking
+            engines added to a Hyperscale Instance's pool do not count against the
+            limit.
+          format: int32
+          nullable: true
+          example: 0
+        virtualization_engine_count_limit:
+          type: integer
+          description: The maximum number of registered virtualization engines allowed
+            for the current license tier.
+          format: int32
+          nullable: true
+          example: 2
+        masking_engine_count_limit:
+          type: integer
+          description: The maximum number of registered masking engines allowed for
+            the current license tier. Masking engines added to a Hyperscale Instance's
+            pool do not count against the limit.
+          format: int32
+          nullable: true
+          example: 1
+      description: Information about the current DCT license.
+    LicenseTier:
+      type: string
+      description: The DCT license tiers.
+      example: CORE
+      enum:
+      - CORE
+      - SELF_SERVICE
+      - ENTERPRISE
     LinkDSourceDefaultRequest:
       required:
       - source_id
@@ -24005,6 +24205,7 @@ components:
           - VIRTUALIZATION_ACTION
           - VIRTUALIZATION_ALERT
           - VIRTUALIZATION_FAULT
+          - LICENSE
       description: A DCT object type.
     OracleAttachCdbParameters:
       required:
@@ -24904,6 +25105,8 @@ components:
       - CONFIGURE_PREDEFINED_AUTO_TAGGING
       - APPLY
       - UNAPPLY
+      - UNDO_REFRESH
+      - CONVERT
     PermissionObject:
       description: A Permission Object which is mapping between object type and its
         permissions.
@@ -24993,6 +25196,8 @@ components:
             - API_KEY_DELETE
             - APPLY
             - UNAPPLY
+            - UNDO_REFRESH
+            - CONVERT
       description: A Permission object.
     PermissionsRequest:
       required:
@@ -26634,22 +26839,22 @@ components:
         data_elements_total:
           type: integer
           description: The total number of data elements in this rule set.
-          format: int32
+          format: int64
           nullable: true
         data_elements_sensitive:
           type: integer
           description: The number of sensitive data elements in this rule set.
-          format: int32
+          format: int64
           nullable: true
         records_total:
           type: integer
           description: The total number of records in this rule set.
-          format: int32
+          format: int64
           nullable: true
         records_sensitive:
           type: integer
           description: The number of sensitive records in this rule set.
-          format: int32
+          format: int64
           nullable: true
         tags:
           type: array
@@ -27413,6 +27618,9 @@ components:
         repository:
           type: string
           description: The repository id for this staging source.
+        type:
+          type: string
+          description: The type of source configuration for this staging source.
         oracle_config_type:
           $ref: '#/components/schemas/OracleConfigTypeEnum'
         cdb_type:
@@ -27442,6 +27650,7 @@ components:
         ip_address: 192.0.2.0
         fqdn: prod01.myhost.com
         repository: 1-REPO-1
+        type: OracleSIConfig
         oracle_config_type: OraclePDBConfig
         cdb_type: ROOT_CDB
         dsource_id: 1-CONTAINER-1
@@ -27471,7 +27680,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VDBStartParametersMapping'
-      description: Parameters to start a VDBGroup.
+      description: Parameters to start a VDB Group.
     StartVDBParameters:
       type: object
       properties:
@@ -27502,7 +27711,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VDBStopParametersMapping'
-      description: Parameters to stop a VDBGroup.
+      description: Parameters to stop a VDB Group.
     StopVDBParameters:
       type: object
       properties:
@@ -28724,14 +28933,6 @@ components:
       required:
       - database_type
       properties:
-        database_type:
-          type: string
-          description: The database type of this repository.
-          enum:
-          - ORACLE
-          - MSSQL
-          - ASE
-          - APPDATA
         allow_provisioning:
           type: boolean
           description: Flag indicating whether the repository should be used for provisioning.
@@ -28809,6 +29010,15 @@ components:
           - jdbc:oracle:thin:@hostname:port:SID
           items:
             type: string
+        instances:
+          type: array
+          description: The instances of this RAC database.
+          example:
+          - instance_name: instance1
+            instance_number: 1
+            node_reference: ORACLE_CLUSTER_NODE-1
+          items:
+            $ref: '#/components/schemas/OracleRACDatabaseInstance'
       description: Parameters to update a VCDB.
     UpdateVDBGroupParameters:
       type: object
@@ -28845,6 +29055,11 @@ components:
             is set on creation of VDB groups.
           items:
             $ref: '#/components/schemas/CreateVDBGroupOrder'
+        refresh_immediately:
+          type: boolean
+          description: If true, the VDB Group will be refreshed immediately after
+            the update.
+          default: false
       description: Parameters to update a VDB group.
     UpdateVDBParameters:
       type: object
@@ -29051,31 +29266,46 @@ components:
           - jdbc:oracle:thin:@hostname:port:SID
           items:
             type: string
+        instances:
+          type: array
+          description: The instances of this RAC database.
+          example:
+          - instance_name: instance1
+            instance_number: 1
+            node_reference: ORACLE_CLUSTER_NODE-1
+          items:
+            $ref: '#/components/schemas/OracleRACDatabaseInstance'
       description: Parameters to update a VDB.
-    UpgradeOracleCdbParameters:
+    UpgradeOracleContainerDatabaseParameters:
+      required:
+      - environment_user_id
+      - repository_id
       type: object
       properties:
         repository_id:
           type: string
-          description: The object reference of the CDB repository to upgrade to.
-          example: ORACLE_INSTALL-4
+          description: The id of the CDB/vCDB repository to upgrade to.
+          example: 1-ORACLE_INSTALL-4
         environment_user_id:
           type: string
-          description: Reference of the environment user to use for CDB upgrade.
+          description: Reference of the environment user to use for CDB/vCDB upgrade.
           example: HOST_USER-4
-      description: Parameters to upgrade an Oracle Container database.
-    UpgradeOracleDsourceParameters:
+      description: Parameters to upgrade CDB/vCDB.
+    UpgradeOracleDatabaseParameters:
+      required:
+      - environment_user_id
+      - repository_id
       type: object
       properties:
         repository_id:
           type: string
-          description: The object reference of the dSource repository to upgrade to.
-          example: ORACLE_INSTALL-4
+          description: The id of the dSource/VDB repository to upgrade to.
+          example: 1-ORACLE_INSTALL-4
         environment_user_id:
           type: string
-          description: Reference of the environment user to use for dSource upgrade.
+          description: Reference of the environment user to use for dSource/VDB upgrade.
           example: HOST_USER-4
-      description: Parameters to upgrade a dSource.
+      description: Parameters to upgrade a dSource/VDB.
     VCDB:
       type: object
       properties:
@@ -29184,6 +29414,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OracleService'
+        repository_id:
+          type: string
+          description: The repository id of this Virtual CDB.
+          example: 1-ORACLE_INSTALL-1
       description: The Delphix Oracle Virtual Container Database.
     VDB:
       type: object
@@ -29469,6 +29703,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OracleService'
+        repository_id:
+          type: string
+          description: The repository id of this VDB.
+          example: 1-ORACLE_INSTALL-1
       description: A Delphix virtual database or dataset.
     VDBDisableParametersMapping:
       description: Parameters to disable a VDB.
@@ -29513,7 +29751,7 @@ components:
           example: my-first-vdb-group
         vdb_ids:
           type: array
-          description: The list of VDB IDs in this VDBGroup.
+          description: The list of VDB IDs in this VDB Group.
           example:
           - vdb-123
           - vdb-456
@@ -29523,16 +29761,16 @@ components:
             type: string
         is_locked:
           type: boolean
-          description: Indicates whether the VDBGroup is locked.
+          description: Indicates whether the VDB Group is locked.
           example: false
         locked_by:
           type: integer
-          description: The Id of the account that locked the VDBGroup.
+          description: The Id of the account that locked the VDB Group.
           format: int64
           example: 1
         locked_by_name:
           type: string
-          description: The name of the account that locked the VDBGroup.
+          description: The name of the account that locked the VDB Group.
           example: admin
         vdb_group_source:
           type: string
@@ -29560,24 +29798,24 @@ components:
             $ref: '#/components/schemas/VDBOrder'
         database_type:
           type: string
-          description: The database type of the VDBGroup. If all VDBs in the group
+          description: The database type of the VDB Group. If all VDBs in the group
             are of the same database_type, this field will be set to that type. If
             the VDBs are of different database_type, this field will be set to 'Mixed'.
           example: Oracle
         status:
           type: string
-          description: The status of the VDBGroup. If all VDBs in the VDBGroup have
+          description: The status of the VDB Group. If all VDBs in the VDB Group have
             the same status, this field will be set to that status. If the VDBs have
             different statuses, this field will be set to 'Mixed'.
           example: RUNNING
         last_successful_refresh_to_bookmark_id:
           type: string
-          description: The bookmark ID to which the VDBGroup was last successfully
+          description: The bookmark ID to which the VDB Group was last successfully
             refreshed.
           example: bookmark-123
         last_successful_refresh_time:
           type: string
-          description: The time at which the VDBGroup was last successfully refreshed.
+          description: The time at which the VDB Group was last successfully refreshed.
           format: date-time
           example: 2021-05-01T08:51:34.148Z
         tags:
@@ -29595,7 +29833,7 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: ID of the VDB present in the VDBGroup.
+          description: ID of the VDB present in the VDB Group.
         snapshot_id:
           maxLength: 256
           minLength: 1
@@ -29611,7 +29849,7 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: ID of the VDB present in the VDBGroup.
+          description: ID of the VDB present in the VDB Group.
         timestamp:
           type: string
           description: The point in time from which to execute the operation. Mutually
@@ -29704,9 +29942,14 @@ components:
           last_refresh_time_with_group_refresh:
             type: string
             description: The last time the VDB was successfully refreshed as a part
-              of VDBGroup refresh operation in UTC timezone.
+              of VDB Group refresh operation in UTC timezone.
             format: date-time
             example: 2022-05-29T15:00:00Z
+          in_sync:
+            type: boolean
+            description: Indicates if the VDB is in sync with the VDB Group or not.
+              If this VDB is was last refreshed as part of the VDB Group then this
+              value will be true.
     VDBStartParametersMapping:
       description: Parameters to start a VDB.
       allOf:
@@ -29873,7 +30116,7 @@ components:
       properties:
         vdb_id:
           type: string
-          description: Id of the VDB in the VDBGroup.
+          description: Id of the VDB in the VDB Group.
         timeflow_range:
           $ref: '#/components/schemas/TimeflowRange'
     VirtualDatasetHooks:
@@ -31027,6 +31270,8 @@ components:
         - -instance_name
         - instance_number
         - -instance_number
+        - repository_id
+        - -repository_id
       example: id
     classifierIdParam:
       name: classifierId
@@ -31810,6 +32055,12 @@ components:
         - -exported_data_directory
         - template_id
         - -template_id
+        - allow_auto_staging_restart_on_host_reboot
+        - -allow_auto_staging_restart_on_host_reboot
+        - physical_standby
+        - -physical_standby
+        - validate_by_opening_db_in_read_only_mode
+        - -validate_by_opening_db_in_read_only_mode
       example: id
     endDate:
       name: end_date
@@ -33298,6 +33549,8 @@ components:
         - -discovered
         - linking_enabled
         - -linking_enabled
+        - repository
+        - -repository
       example: id
     stagingSourceIdParam:
       name: stagingSourceId
@@ -33573,11 +33826,13 @@ components:
         - -instance_name
         - instance_number
         - -instance_number
+        - repository_id
+        - -repository_id
       example: id
     vdbGroupIdParam:
       name: vdbGroupId
       in: path
-      description: The ID or name of the VDBGroup.
+      description: The ID or name of the VDB Group.
       required: true
       style: simple
       explode: false
@@ -33738,6 +33993,8 @@ components:
         - -instance_name
         - instance_number
         - -instance_number
+        - repository_id
+        - -repository_id
       example: id
     virtualizationActionsSortParam:
       name: sort
@@ -33952,6 +34209,10 @@ components:
         - -name
         - dct_managed
         - -dct_managed
+        - create_user
+        - -create_user
+        - create_timestamp
+        - -create_timestamp
         - engine_id
         - -engine_id
         - engine_name

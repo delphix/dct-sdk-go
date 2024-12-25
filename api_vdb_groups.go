@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -30,7 +30,7 @@ type ApiCreateVdbGroupRequest struct {
 	createVDBGroupRequest *CreateVDBGroupRequest
 }
 
-// The parameters to create a VDBGroup.
+// The parameters to create a VDB Group.
 func (r ApiCreateVdbGroupRequest) CreateVDBGroupRequest(createVDBGroupRequest CreateVDBGroupRequest) ApiCreateVdbGroupRequest {
 	r.createVDBGroupRequest = &createVDBGroupRequest
 	return r
@@ -41,7 +41,7 @@ func (r ApiCreateVdbGroupRequest) Execute() (*CreateVDBGroupResponse, *http.Resp
 }
 
 /*
-CreateVdbGroup Create a new VDBGroup.
+CreateVdbGroup Create a new VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateVdbGroupRequest
@@ -168,7 +168,7 @@ func (r ApiCreateVdbGroupsTagsRequest) Execute() (*TagsResponse, *http.Response,
 CreateVdbGroupsTags Create tags for a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiCreateVdbGroupsTagsRequest
 */
 func (a *VDBGroupsAPIService) CreateVdbGroupsTags(ctx context.Context, vdbGroupId string) ApiCreateVdbGroupsTagsRequest {
@@ -294,7 +294,7 @@ func (r ApiDeleteVdbGroupRequest) Execute() (*http.Response, error) {
 DeleteVdbGroup Delete a VDBGoup.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiDeleteVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) DeleteVdbGroup(ctx context.Context, vdbGroupId string) ApiDeleteVdbGroupRequest {
@@ -411,7 +411,7 @@ func (r ApiDeleteVdbGroupTagsRequest) Execute() (*http.Response, error) {
 DeleteVdbGroupTags Delete tags for a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiDeleteVdbGroupTagsRequest
 */
 func (a *VDBGroupsAPIService) DeleteVdbGroupTags(ctx context.Context, vdbGroupId string) ApiDeleteVdbGroupTagsRequest {
@@ -530,7 +530,7 @@ func (r ApiDisableVdbGroupRequest) Execute() (*DisableVDBGroupResponse, *http.Re
 DisableVdbGroup Disable a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiDisableVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) DisableVdbGroup(ctx context.Context, vdbGroupId string) ApiDisableVdbGroupRequest {
@@ -660,7 +660,7 @@ func (r ApiEnableVdbGroupRequest) Execute() (*EnableVDBGroupResponse, *http.Resp
 EnableVdbGroup Enable a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiEnableVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) EnableVdbGroup(ctx context.Context, vdbGroupId string) ApiEnableVdbGroupRequest {
@@ -804,7 +804,7 @@ func (r ApiGetBookmarksByVdbGroupRequest) Execute() (*ListBookmarksByVDBGroupsRe
 GetBookmarksByVdbGroup List bookmarks compatible with this VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiGetBookmarksByVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) GetBookmarksByVdbGroup(ctx context.Context, vdbGroupId string) ApiGetBookmarksByVdbGroupRequest {
@@ -934,10 +934,10 @@ func (r ApiGetVdbGroupRequest) Execute() (*VDBGroup, *http.Response, error) {
 }
 
 /*
-GetVdbGroup Get a VDBGroup by name.
+GetVdbGroup Get a VDB Group by name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiGetVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) GetVdbGroup(ctx context.Context, vdbGroupId string) ApiGetVdbGroupRequest {
@@ -1058,7 +1058,7 @@ func (r ApiGetVdbGroupTagsRequest) Execute() (*TagsResponse, *http.Response, err
 GetVdbGroupTags Get tags for a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiGetVdbGroupTagsRequest
 */
 func (a *VDBGroupsAPIService) GetVdbGroupTags(ctx context.Context, vdbGroupId string) ApiGetVdbGroupTagsRequest {
@@ -1182,10 +1182,10 @@ func (r ApiGetVdbGroupTimestampSummaryRequest) Execute() (*VdbGroupTimestampSumm
 }
 
 /*
-GetVdbGroupTimestampSummary Get timestamp summary of all the vdbs in VDBGroup.
+GetVdbGroupTimestampSummary Get timestamp summary of all the vdbs in VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiGetVdbGroupTimestampSummaryRequest
 */
 func (a *VDBGroupsAPIService) GetVdbGroupTimestampSummary(ctx context.Context, vdbGroupId string) ApiGetVdbGroupTimestampSummaryRequest {
@@ -1305,10 +1305,10 @@ func (r ApiGetVdbGroupVdbsLatestSnapshotsRequest) Execute() (*LatestSnapshotsRes
 }
 
 /*
-GetVdbGroupVdbsLatestSnapshots Get latest snapshot of all the vdbs in VDBGroup.
+GetVdbGroupVdbsLatestSnapshots Get latest snapshot of all the vdbs in VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiGetVdbGroupVdbsLatestSnapshotsRequest
 */
 func (a *VDBGroupsAPIService) GetVdbGroupVdbsLatestSnapshots(ctx context.Context, vdbGroupId string) ApiGetVdbGroupVdbsLatestSnapshotsRequest {
@@ -1580,7 +1580,7 @@ func (r ApiLockVdbGroupRequest) Execute() (*VDBGroup, *http.Response, error) {
 LockVdbGroup Lock a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiLockVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) LockVdbGroup(ctx context.Context, vdbGroupId string) ApiLockVdbGroupRequest {
@@ -1819,7 +1819,7 @@ type ApiRefreshVdbGroupRequest struct {
 	refreshVDBGroupParameters *RefreshVDBGroupParameters
 }
 
-// The parameters to refresh a VDBGroup.
+// The parameters to refresh a VDB Group.
 func (r ApiRefreshVdbGroupRequest) RefreshVDBGroupParameters(refreshVDBGroupParameters RefreshVDBGroupParameters) ApiRefreshVdbGroupRequest {
 	r.refreshVDBGroupParameters = &refreshVDBGroupParameters
 	return r
@@ -1830,12 +1830,12 @@ func (r ApiRefreshVdbGroupRequest) Execute() (*RefreshVDBGroupResponse, *http.Re
 }
 
 /*
-RefreshVdbGroup Refresh a VDBGroup from bookmark.
+RefreshVdbGroup Refresh a VDB Group from bookmark.
 
 This API is marked as deprecated in favour of renamed API '/vdb-groups/{vdbGroupId}/refresh_from_bookmark'
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiRefreshVdbGroupRequest
 
 Deprecated
@@ -1954,7 +1954,7 @@ type ApiRefreshVdbGroupBySnapshotRequest struct {
 	refreshVDBGroupBySnapshotParameters *RefreshVDBGroupBySnapshotParameters
 }
 
-// The parameters to refresh a VDBGroup by snapshot.
+// The parameters to refresh a VDB Group by snapshot.
 func (r ApiRefreshVdbGroupBySnapshotRequest) RefreshVDBGroupBySnapshotParameters(refreshVDBGroupBySnapshotParameters RefreshVDBGroupBySnapshotParameters) ApiRefreshVdbGroupBySnapshotRequest {
 	r.refreshVDBGroupBySnapshotParameters = &refreshVDBGroupBySnapshotParameters
 	return r
@@ -1965,10 +1965,10 @@ func (r ApiRefreshVdbGroupBySnapshotRequest) Execute() (*RefreshVDBGroupResponse
 }
 
 /*
-RefreshVdbGroupBySnapshot Refresh a VDBGroup by snapshot.
+RefreshVdbGroupBySnapshot Refresh a VDB Group by snapshot.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiRefreshVdbGroupBySnapshotRequest
 */
 func (a *VDBGroupsAPIService) RefreshVdbGroupBySnapshot(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupBySnapshotRequest {
@@ -2084,7 +2084,7 @@ type ApiRefreshVdbGroupByTimestampRequest struct {
 	refreshVDBGroupByTimestampParameters *RefreshVDBGroupByTimestampParameters
 }
 
-// The parameters to refresh a VDBGroup by timestamp.
+// The parameters to refresh a VDB Group by timestamp.
 func (r ApiRefreshVdbGroupByTimestampRequest) RefreshVDBGroupByTimestampParameters(refreshVDBGroupByTimestampParameters RefreshVDBGroupByTimestampParameters) ApiRefreshVdbGroupByTimestampRequest {
 	r.refreshVDBGroupByTimestampParameters = &refreshVDBGroupByTimestampParameters
 	return r
@@ -2095,10 +2095,10 @@ func (r ApiRefreshVdbGroupByTimestampRequest) Execute() (*RefreshVDBGroupRespons
 }
 
 /*
-RefreshVdbGroupByTimestamp Refresh a VDBGroup by timestamp.
+RefreshVdbGroupByTimestamp Refresh a VDB Group by timestamp.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiRefreshVdbGroupByTimestampRequest
 */
 func (a *VDBGroupsAPIService) RefreshVdbGroupByTimestamp(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupByTimestampRequest {
@@ -2214,7 +2214,7 @@ type ApiRefreshVdbGroupFromBookmarkRequest struct {
 	refreshVDBGroupParameters *RefreshVDBGroupParameters
 }
 
-// The parameters to refresh a VDBGroup.
+// The parameters to refresh a VDB Group.
 func (r ApiRefreshVdbGroupFromBookmarkRequest) RefreshVDBGroupParameters(refreshVDBGroupParameters RefreshVDBGroupParameters) ApiRefreshVdbGroupFromBookmarkRequest {
 	r.refreshVDBGroupParameters = &refreshVDBGroupParameters
 	return r
@@ -2225,10 +2225,10 @@ func (r ApiRefreshVdbGroupFromBookmarkRequest) Execute() (*RefreshVDBGroupRespon
 }
 
 /*
-RefreshVdbGroupFromBookmark Refresh a VDBGroup from bookmark.
+RefreshVdbGroupFromBookmark Refresh a VDB Group from bookmark.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiRefreshVdbGroupFromBookmarkRequest
 */
 func (a *VDBGroupsAPIService) RefreshVdbGroupFromBookmark(ctx context.Context, vdbGroupId string) ApiRefreshVdbGroupFromBookmarkRequest {
@@ -2344,7 +2344,7 @@ type ApiRollbackVdbGroupRequest struct {
 	rollbackVDBGroupParameters *RollbackVDBGroupParameters
 }
 
-// The parameters to rollback a VDBGroup.
+// The parameters to rollback a VDB Group.
 func (r ApiRollbackVdbGroupRequest) RollbackVDBGroupParameters(rollbackVDBGroupParameters RollbackVDBGroupParameters) ApiRollbackVdbGroupRequest {
 	r.rollbackVDBGroupParameters = &rollbackVDBGroupParameters
 	return r
@@ -2355,12 +2355,12 @@ func (r ApiRollbackVdbGroupRequest) Execute() (*RollbackVDBGroupResponse, *http.
 }
 
 /*
-RollbackVdbGroup Rollback a VDBGroup from a bookmark.
+RollbackVdbGroup Rollback a VDB Group from a bookmark.
 
 This API is marked as deprecated in favour of API '/vdb-groups/{vdbGroupId}/refresh_from_bookmark'
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiRollbackVdbGroupRequest
 
 Deprecated
@@ -2514,7 +2514,7 @@ func (r ApiSearchBookmarksByVdbGroupRequest) Execute() (*SearchBookmarksByVDBGro
 SearchBookmarksByVdbGroup Search for bookmarks compatible with this VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiSearchBookmarksByVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) SearchBookmarksByVdbGroup(ctx context.Context, vdbGroupId string) ApiSearchBookmarksByVdbGroupRequest {
@@ -2809,7 +2809,7 @@ func (r ApiStartVdbGroupRequest) Execute() (*StartVDBGroupResponse, *http.Respon
 StartVdbGroup Start a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiStartVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) StartVdbGroup(ctx context.Context, vdbGroupId string) ApiStartVdbGroupRequest {
@@ -2939,7 +2939,7 @@ func (r ApiStopVdbGroupRequest) Execute() (*StopVDBGroupResponse, *http.Response
 StopVdbGroup Stop a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiStopVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) StopVdbGroup(ctx context.Context, vdbGroupId string) ApiStopVdbGroupRequest {
@@ -3062,7 +3062,7 @@ func (r ApiUnlockVdbGroupRequest) Execute() (*VDBGroup, *http.Response, error) {
 UnlockVdbGroup Unlock a VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiUnlockVdbGroupRequest
 */
 func (a *VDBGroupsAPIService) UnlockVdbGroup(ctx context.Context, vdbGroupId string) ApiUnlockVdbGroupRequest {
@@ -3182,7 +3182,7 @@ func (r ApiUpdateVdbGroupByIdRequest) UpdateVDBGroupParameters(updateVDBGroupPar
 	return r
 }
 
-func (r ApiUpdateVdbGroupByIdRequest) Execute() (*VDBGroup, *http.Response, error) {
+func (r ApiUpdateVdbGroupByIdRequest) Execute() (*UpdateVDBGroupResponse, *http.Response, error) {
 	return r.ApiService.UpdateVdbGroupByIdExecute(r)
 }
 
@@ -3190,7 +3190,7 @@ func (r ApiUpdateVdbGroupByIdRequest) Execute() (*VDBGroup, *http.Response, erro
 UpdateVdbGroupById Update values of a VDB group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vdbGroupId The ID or name of the VDBGroup.
+ @param vdbGroupId The ID or name of the VDB Group.
  @return ApiUpdateVdbGroupByIdRequest
 */
 func (a *VDBGroupsAPIService) UpdateVdbGroupById(ctx context.Context, vdbGroupId string) ApiUpdateVdbGroupByIdRequest {
@@ -3202,13 +3202,13 @@ func (a *VDBGroupsAPIService) UpdateVdbGroupById(ctx context.Context, vdbGroupId
 }
 
 // Execute executes the request
-//  @return VDBGroup
-func (a *VDBGroupsAPIService) UpdateVdbGroupByIdExecute(r ApiUpdateVdbGroupByIdRequest) (*VDBGroup, *http.Response, error) {
+//  @return UpdateVDBGroupResponse
+func (a *VDBGroupsAPIService) UpdateVdbGroupByIdExecute(r ApiUpdateVdbGroupByIdRequest) (*UpdateVDBGroupResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *VDBGroup
+		localVarReturnValue  *UpdateVDBGroupResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsAPIService.UpdateVdbGroupById")

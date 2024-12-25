@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &VDBGroupRefreshBySnapshot{}
 
 // VDBGroupRefreshBySnapshot Parameters to refresh a VDB Group by snapshot.
 type VDBGroupRefreshBySnapshot struct {
-	// ID of the VDB present in the VDBGroup.
+	// ID of the VDB present in the VDB Group.
 	VdbId string `json:"vdb_id"`
 	// ID of the snapshot to refresh from.
 	SnapshotId string `json:"snapshot_id"`

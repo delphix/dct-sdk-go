@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -30,6 +30,8 @@ type CreateVDBGroupRequest struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// Whether the account creating this VDB group must be configured as owner of the VDB group.
 	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
+	// If true, VDB Group will be refreshed immediately after creation.
+	RefreshImmediately *bool `json:"refresh_immediately,omitempty"`
 }
 
 type _CreateVDBGroupRequest CreateVDBGroupRequest
@@ -43,6 +45,8 @@ func NewCreateVDBGroupRequest(name string) *CreateVDBGroupRequest {
 	this.Name = name
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
+	var refreshImmediately bool = false
+	this.RefreshImmediately = &refreshImmediately
 	return &this
 }
 
@@ -53,6 +57,8 @@ func NewCreateVDBGroupRequestWithDefaults() *CreateVDBGroupRequest {
 	this := CreateVDBGroupRequest{}
 	var makeCurrentAccountOwner bool = true
 	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
+	var refreshImmediately bool = false
+	this.RefreshImmediately = &refreshImmediately
 	return &this
 }
 
@@ -208,6 +214,38 @@ func (o *CreateVDBGroupRequest) SetMakeCurrentAccountOwner(v bool) {
 	o.MakeCurrentAccountOwner = &v
 }
 
+// GetRefreshImmediately returns the RefreshImmediately field value if set, zero value otherwise.
+func (o *CreateVDBGroupRequest) GetRefreshImmediately() bool {
+	if o == nil || IsNil(o.RefreshImmediately) {
+		var ret bool
+		return ret
+	}
+	return *o.RefreshImmediately
+}
+
+// GetRefreshImmediatelyOk returns a tuple with the RefreshImmediately field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateVDBGroupRequest) GetRefreshImmediatelyOk() (*bool, bool) {
+	if o == nil || IsNil(o.RefreshImmediately) {
+		return nil, false
+	}
+	return o.RefreshImmediately, true
+}
+
+// HasRefreshImmediately returns a boolean if a field has been set.
+func (o *CreateVDBGroupRequest) HasRefreshImmediately() bool {
+	if o != nil && !IsNil(o.RefreshImmediately) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefreshImmediately gets a reference to the given bool and assigns it to the RefreshImmediately field.
+func (o *CreateVDBGroupRequest) SetRefreshImmediately(v bool) {
+	o.RefreshImmediately = &v
+}
+
 func (o CreateVDBGroupRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -230,6 +268,9 @@ func (o CreateVDBGroupRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MakeCurrentAccountOwner) {
 		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
+	}
+	if !IsNil(o.RefreshImmediately) {
+		toSerialize["refresh_immediately"] = o.RefreshImmediately
 	}
 	return toSerialize, nil
 }

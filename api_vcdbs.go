@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -1512,6 +1512,133 @@ func (a *VCDBsAPIService) UpdateVcdbByIdExecute(r ApiUpdateVcdbByIdRequest) (*Up
 	}
 	// body params
 	localVarPostBody = r.updateVCDBParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpgradeVcdbRequest struct {
+	ctx context.Context
+	ApiService *VCDBsAPIService
+	vcdbId string
+	upgradeOracleContainerDatabaseParameters *UpgradeOracleContainerDatabaseParameters
+}
+
+// The new data to upgrade an Oracle vCDB.
+func (r ApiUpgradeVcdbRequest) UpgradeOracleContainerDatabaseParameters(upgradeOracleContainerDatabaseParameters UpgradeOracleContainerDatabaseParameters) ApiUpgradeVcdbRequest {
+	r.upgradeOracleContainerDatabaseParameters = &upgradeOracleContainerDatabaseParameters
+	return r
+}
+
+func (r ApiUpgradeVcdbRequest) Execute() (*UpgradeVCDBResponse, *http.Response, error) {
+	return r.ApiService.UpgradeVcdbExecute(r)
+}
+
+/*
+UpgradeVcdb Upgrade Oracle vCDB
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vcdbId The ID of the vCDB.
+ @return ApiUpgradeVcdbRequest
+*/
+func (a *VCDBsAPIService) UpgradeVcdb(ctx context.Context, vcdbId string) ApiUpgradeVcdbRequest {
+	return ApiUpgradeVcdbRequest{
+		ApiService: a,
+		ctx: ctx,
+		vcdbId: vcdbId,
+	}
+}
+
+// Execute executes the request
+//  @return UpgradeVCDBResponse
+func (a *VCDBsAPIService) UpgradeVcdbExecute(r ApiUpgradeVcdbRequest) (*UpgradeVCDBResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpgradeVCDBResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VCDBsAPIService.UpgradeVcdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vcdbs/{vcdbId}/upgrade"
+	localVarPath = strings.Replace(localVarPath, "{"+"vcdbId"+"}", url.PathEscape(parameterValueToString(r.vcdbId, "vcdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vcdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vcdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.upgradeOracleContainerDatabaseParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -23,7 +23,7 @@ var _ MappedNullable = &VDBGroupRefreshByTimestamp{}
 
 // VDBGroupRefreshByTimestamp Parameters to refresh a VDB Group by timestamp.
 type VDBGroupRefreshByTimestamp struct {
-	// ID of the VDB present in the VDBGroup.
+	// ID of the VDB present in the VDB Group.
 	VdbId string `json:"vdb_id"`
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`

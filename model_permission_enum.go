@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -86,6 +86,8 @@ const (
 	PERMISSIONENUM_CONFIGURE_PREDEFINED_AUTO_TAGGING PermissionEnum = "CONFIGURE_PREDEFINED_AUTO_TAGGING"
 	PERMISSIONENUM_APPLY PermissionEnum = "APPLY"
 	PERMISSIONENUM_UNAPPLY PermissionEnum = "UNAPPLY"
+	PERMISSIONENUM_UNDO_REFRESH PermissionEnum = "UNDO_REFRESH"
+	PERMISSIONENUM_CONVERT PermissionEnum = "CONVERT"
 )
 
 // All allowed values of PermissionEnum enum
@@ -155,6 +157,8 @@ var AllowedPermissionEnumEnumValues = []PermissionEnum{
 	"CONFIGURE_PREDEFINED_AUTO_TAGGING",
 	"APPLY",
 	"UNAPPLY",
+	"UNDO_REFRESH",
+	"CONVERT",
 }
 
 func (v *PermissionEnum) UnmarshalJSON(src []byte) error {

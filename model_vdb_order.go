@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -26,8 +26,10 @@ type VDBOrder struct {
 	// Dictates order of operations on VDBs. Operations can be performed in parallel <br> for all VDBs or sequentially. Below are possible valid and invalid orderings given an example <br> VDB group with 3 vdbs (A, B, and C).<br> Valid:<br> {\"vdb_id\":\"vdb-1\", \"order\":\"1\"} {\"vdb_id\":\"vdb-2\", order:\"1\"} {vdb_id:\"vdb-3\", order:\"1\"} (parallel)<br> {vdb_id:\"vdb-1\", order:\"1\"} {vdb_id:\"vdb-2\", order:\"2\"} {vdb_id:\"vdb-3\", order:\"3\"} (sequential)<br> Invalid:<br> {vdb_id:\"vdb-1\", order:\"A\"} {vdb_id:\"vdb-2\", order:\"B\"} {vdb_id:\"vdb-3\", order:\"C\"} (sequential)<br><br> In the sequential case the vdbs with priority 1 is the first to be started and the last to<br> be stopped. This value is set on creation of VDB groups.
 	Order *int32 `json:"order,omitempty"`
 	VdbName *string `json:"vdb_name,omitempty"`
-	// The last time the VDB was successfully refreshed as a part of VDBGroup refresh operation in UTC timezone.
+	// The last time the VDB was successfully refreshed as a part of VDB Group refresh operation in UTC timezone.
 	LastRefreshTimeWithGroupRefresh *time.Time `json:"last_refresh_time_with_group_refresh,omitempty"`
+	// Indicates if the VDB is in sync with the VDB Group or not. If this VDB is was last refreshed as part of the VDB Group then this value will be true.
+	InSync *bool `json:"in_sync,omitempty"`
 }
 
 // NewVDBOrder instantiates a new VDBOrder object
@@ -179,6 +181,38 @@ func (o *VDBOrder) SetLastRefreshTimeWithGroupRefresh(v time.Time) {
 	o.LastRefreshTimeWithGroupRefresh = &v
 }
 
+// GetInSync returns the InSync field value if set, zero value otherwise.
+func (o *VDBOrder) GetInSync() bool {
+	if o == nil || IsNil(o.InSync) {
+		var ret bool
+		return ret
+	}
+	return *o.InSync
+}
+
+// GetInSyncOk returns a tuple with the InSync field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBOrder) GetInSyncOk() (*bool, bool) {
+	if o == nil || IsNil(o.InSync) {
+		return nil, false
+	}
+	return o.InSync, true
+}
+
+// HasInSync returns a boolean if a field has been set.
+func (o *VDBOrder) HasInSync() bool {
+	if o != nil && !IsNil(o.InSync) {
+		return true
+	}
+
+	return false
+}
+
+// SetInSync gets a reference to the given bool and assigns it to the InSync field.
+func (o *VDBOrder) SetInSync(v bool) {
+	o.InSync = &v
+}
+
 func (o VDBOrder) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -200,6 +234,9 @@ func (o VDBOrder) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.LastRefreshTimeWithGroupRefresh) {
 		toSerialize["last_refresh_time_with_group_refresh"] = o.LastRefreshTimeWithGroupRefresh
+	}
+	if !IsNil(o.InSync) {
+		toSerialize["in_sync"] = o.InSync
 	}
 	return toSerialize, nil
 }

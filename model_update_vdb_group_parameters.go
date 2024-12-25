@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,8 @@ type UpdateVDBGroupParameters struct {
 	VdbIds []string `json:"vdb_ids,omitempty"`
 	// Dictates order of operations on VDBs. Operations can be performed in parallel <br> for all VDBs or sequentially. Below are possible valid and invalid orderings given an example <br> VDB group with 3 vdbs (A, B, and C).<br> Valid:<br> {\"vdb_id\":\"vdb-1\", \"order\":\"1\"} {\"vdb_id\":\"vdb-2\", order:\"1\"} {vdb_id:\"vdb-3\", order:\"1\"} (parallel)<br> {vdb_id:\"vdb-1\", order:\"1\"} {vdb_id:\"vdb-2\", order:\"2\"} {vdb_id:\"vdb-3\", order:\"3\"} (sequential)<br> Invalid:<br> {vdb_id:\"vdb-1\", order:\"A\"} {vdb_id:\"vdb-2\", order:\"B\"} {vdb_id:\"vdb-3\", order:\"C\"} (sequential)<br><br> In the sequential case the vdbs with priority 1 is the first to be started and the last to<br> be stopped. This value is set on creation of VDB groups.
 	Vdbs []CreateVDBGroupOrder `json:"vdbs,omitempty"`
+	// If true, the VDB Group will be refreshed immediately after the update.
+	RefreshImmediately *bool `json:"refresh_immediately,omitempty"`
 }
 
 // NewUpdateVDBGroupParameters instantiates a new UpdateVDBGroupParameters object
@@ -33,6 +35,8 @@ type UpdateVDBGroupParameters struct {
 // will change when the set of required properties is changed
 func NewUpdateVDBGroupParameters() *UpdateVDBGroupParameters {
 	this := UpdateVDBGroupParameters{}
+	var refreshImmediately bool = false
+	this.RefreshImmediately = &refreshImmediately
 	return &this
 }
 
@@ -41,6 +45,8 @@ func NewUpdateVDBGroupParameters() *UpdateVDBGroupParameters {
 // but it doesn't guarantee that properties required by API are set
 func NewUpdateVDBGroupParametersWithDefaults() *UpdateVDBGroupParameters {
 	this := UpdateVDBGroupParameters{}
+	var refreshImmediately bool = false
+	this.RefreshImmediately = &refreshImmediately
 	return &this
 }
 
@@ -140,6 +146,38 @@ func (o *UpdateVDBGroupParameters) SetVdbs(v []CreateVDBGroupOrder) {
 	o.Vdbs = v
 }
 
+// GetRefreshImmediately returns the RefreshImmediately field value if set, zero value otherwise.
+func (o *UpdateVDBGroupParameters) GetRefreshImmediately() bool {
+	if o == nil || IsNil(o.RefreshImmediately) {
+		var ret bool
+		return ret
+	}
+	return *o.RefreshImmediately
+}
+
+// GetRefreshImmediatelyOk returns a tuple with the RefreshImmediately field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBGroupParameters) GetRefreshImmediatelyOk() (*bool, bool) {
+	if o == nil || IsNil(o.RefreshImmediately) {
+		return nil, false
+	}
+	return o.RefreshImmediately, true
+}
+
+// HasRefreshImmediately returns a boolean if a field has been set.
+func (o *UpdateVDBGroupParameters) HasRefreshImmediately() bool {
+	if o != nil && !IsNil(o.RefreshImmediately) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefreshImmediately gets a reference to the given bool and assigns it to the RefreshImmediately field.
+func (o *UpdateVDBGroupParameters) SetRefreshImmediately(v bool) {
+	o.RefreshImmediately = &v
+}
+
 func (o UpdateVDBGroupParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -158,6 +196,9 @@ func (o UpdateVDBGroupParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Vdbs) {
 		toSerialize["vdbs"] = o.Vdbs
+	}
+	if !IsNil(o.RefreshImmediately) {
+		toSerialize["refresh_immediately"] = o.RefreshImmediately
 	}
 	return toSerialize, nil
 }

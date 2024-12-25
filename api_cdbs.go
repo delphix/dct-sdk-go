@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -1563,12 +1563,12 @@ type ApiUpgradeCdbRequest struct {
 	ctx context.Context
 	ApiService *CDBsAPIService
 	cdbId string
-	upgradeOracleCdbParameters *UpgradeOracleCdbParameters
+	upgradeOracleContainerDatabaseParameters *UpgradeOracleContainerDatabaseParameters
 }
 
 // The new data to upgrade an Oracle CDB.
-func (r ApiUpgradeCdbRequest) UpgradeOracleCdbParameters(upgradeOracleCdbParameters UpgradeOracleCdbParameters) ApiUpgradeCdbRequest {
-	r.upgradeOracleCdbParameters = &upgradeOracleCdbParameters
+func (r ApiUpgradeCdbRequest) UpgradeOracleContainerDatabaseParameters(upgradeOracleContainerDatabaseParameters UpgradeOracleContainerDatabaseParameters) ApiUpgradeCdbRequest {
+	r.upgradeOracleContainerDatabaseParameters = &upgradeOracleContainerDatabaseParameters
 	return r
 }
 
@@ -1634,7 +1634,7 @@ func (a *CDBsAPIService) UpgradeCdbExecute(r ApiUpgradeCdbRequest) (*UpgradeCDBR
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.upgradeOracleCdbParameters
+	localVarPostBody = r.upgradeOracleContainerDatabaseParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

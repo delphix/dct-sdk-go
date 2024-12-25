@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -40,6 +40,8 @@ type StagingSource struct {
 	Fqdn NullableString `json:"fqdn,omitempty"`
 	// The repository id for this staging source.
 	Repository *string `json:"repository,omitempty"`
+	// The type of source configuration for this staging source.
+	Type *string `json:"type,omitempty"`
 	OracleConfigType *OracleConfigTypeEnum `json:"oracle_config_type,omitempty"`
 	// The cdb type for this staging source. (Oracle only)
 	CdbType *string `json:"cdb_type,omitempty"`
@@ -466,6 +468,38 @@ func (o *StagingSource) SetRepository(v string) {
 	o.Repository = &v
 }
 
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *StagingSource) GetType() string {
+	if o == nil || IsNil(o.Type) {
+		var ret string
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *StagingSource) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
+func (o *StagingSource) SetType(v string) {
+	o.Type = &v
+}
+
 // GetOracleConfigType returns the OracleConfigType field value if set, zero value otherwise.
 func (o *StagingSource) GetOracleConfigType() OracleConfigTypeEnum {
 	if o == nil || IsNil(o.OracleConfigType) {
@@ -665,6 +699,9 @@ func (o StagingSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Repository) {
 		toSerialize["repository"] = o.Repository
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
 	}
 	if !IsNil(o.OracleConfigType) {
 		toSerialize["oracle_config_type"] = o.OracleConfigType

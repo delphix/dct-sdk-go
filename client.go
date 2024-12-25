@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.17.0
+// APIClient manages communication with the Delphix DCT API API v3.18.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -93,6 +93,8 @@ type APIClient struct {
 	JobsAPI *JobsAPIService
 
 	KerberosConfigAPI *KerberosConfigAPIService
+
+	LicenseAPI *LicenseAPIService
 
 	LoginAPI *LoginAPIService
 
@@ -183,6 +185,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.HyperscaleObjectsAPI = (*HyperscaleObjectsAPIService)(&c.common)
 	c.JobsAPI = (*JobsAPIService)(&c.common)
 	c.KerberosConfigAPI = (*KerberosConfigAPIService)(&c.common)
+	c.LicenseAPI = (*LicenseAPIService)(&c.common)
 	c.LoginAPI = (*LoginAPIService)(&c.common)
 	c.ManagementAPI = (*ManagementAPIService)(&c.common)
 	c.MaskingEnvironmentsAPI = (*MaskingEnvironmentsAPIService)(&c.common)

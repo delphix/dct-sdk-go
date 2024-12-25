@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -69,6 +69,12 @@ type Host struct {
 	SshPort *int32 `json:"ssh_port,omitempty"`
 	// The path for the toolkit that resides on the host.
 	ToolkitPath *string `json:"toolkit_path,omitempty"`
+	// The port that the Windows Connector connects on.
+	ConnectorPort *int32 `json:"connector_port,omitempty"`
+	// The Windows Connector version that is installed on the provided host.
+	ConnectorVersion *string `json:"connector_version,omitempty"`
+	// The .NET Framework version used for Windows Connector Service.
+	ConnectorDotNetFrameworkVersion *string `json:"connector_dot_net_framework_version,omitempty"`
 	// The path to the root of the Oracle TDE keystores artifact directories.
 	OracleTdeKeystoresRootPath *string `json:"oracle_tde_keystores_root_path,omitempty"`
 	// The platform for the host machine.
@@ -862,6 +868,102 @@ func (o *Host) SetToolkitPath(v string) {
 	o.ToolkitPath = &v
 }
 
+// GetConnectorPort returns the ConnectorPort field value if set, zero value otherwise.
+func (o *Host) GetConnectorPort() int32 {
+	if o == nil || IsNil(o.ConnectorPort) {
+		var ret int32
+		return ret
+	}
+	return *o.ConnectorPort
+}
+
+// GetConnectorPortOk returns a tuple with the ConnectorPort field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetConnectorPortOk() (*int32, bool) {
+	if o == nil || IsNil(o.ConnectorPort) {
+		return nil, false
+	}
+	return o.ConnectorPort, true
+}
+
+// HasConnectorPort returns a boolean if a field has been set.
+func (o *Host) HasConnectorPort() bool {
+	if o != nil && !IsNil(o.ConnectorPort) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectorPort gets a reference to the given int32 and assigns it to the ConnectorPort field.
+func (o *Host) SetConnectorPort(v int32) {
+	o.ConnectorPort = &v
+}
+
+// GetConnectorVersion returns the ConnectorVersion field value if set, zero value otherwise.
+func (o *Host) GetConnectorVersion() string {
+	if o == nil || IsNil(o.ConnectorVersion) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectorVersion
+}
+
+// GetConnectorVersionOk returns a tuple with the ConnectorVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetConnectorVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.ConnectorVersion) {
+		return nil, false
+	}
+	return o.ConnectorVersion, true
+}
+
+// HasConnectorVersion returns a boolean if a field has been set.
+func (o *Host) HasConnectorVersion() bool {
+	if o != nil && !IsNil(o.ConnectorVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectorVersion gets a reference to the given string and assigns it to the ConnectorVersion field.
+func (o *Host) SetConnectorVersion(v string) {
+	o.ConnectorVersion = &v
+}
+
+// GetConnectorDotNetFrameworkVersion returns the ConnectorDotNetFrameworkVersion field value if set, zero value otherwise.
+func (o *Host) GetConnectorDotNetFrameworkVersion() string {
+	if o == nil || IsNil(o.ConnectorDotNetFrameworkVersion) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectorDotNetFrameworkVersion
+}
+
+// GetConnectorDotNetFrameworkVersionOk returns a tuple with the ConnectorDotNetFrameworkVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetConnectorDotNetFrameworkVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.ConnectorDotNetFrameworkVersion) {
+		return nil, false
+	}
+	return o.ConnectorDotNetFrameworkVersion, true
+}
+
+// HasConnectorDotNetFrameworkVersion returns a boolean if a field has been set.
+func (o *Host) HasConnectorDotNetFrameworkVersion() bool {
+	if o != nil && !IsNil(o.ConnectorDotNetFrameworkVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectorDotNetFrameworkVersion gets a reference to the given string and assigns it to the ConnectorDotNetFrameworkVersion field.
+func (o *Host) SetConnectorDotNetFrameworkVersion(v string) {
+	o.ConnectorDotNetFrameworkVersion = &v
+}
+
 // GetOracleTdeKeystoresRootPath returns the OracleTdeKeystoresRootPath field value if set, zero value otherwise.
 func (o *Host) GetOracleTdeKeystoresRootPath() string {
 	if o == nil || IsNil(o.OracleTdeKeystoresRootPath) {
@@ -1039,6 +1141,15 @@ func (o Host) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ToolkitPath) {
 		toSerialize["toolkit_path"] = o.ToolkitPath
+	}
+	if !IsNil(o.ConnectorPort) {
+		toSerialize["connector_port"] = o.ConnectorPort
+	}
+	if !IsNil(o.ConnectorVersion) {
+		toSerialize["connector_version"] = o.ConnectorVersion
+	}
+	if !IsNil(o.ConnectorDotNetFrameworkVersion) {
+		toSerialize["connector_dot_net_framework_version"] = o.ConnectorDotNetFrameworkVersion
 	}
 	if !IsNil(o.OracleTdeKeystoresRootPath) {
 		toSerialize["oracle_tde_keystores_root_path"] = o.OracleTdeKeystoresRootPath

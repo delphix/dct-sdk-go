@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -39,7 +39,7 @@ type DatabaseTableMetadata struct {
 	KeyColumn *string `json:"key_column,omitempty"`
 	// This field indicates whether or not a table has sensitive data. This field is assigned by DCT to true or false based on whether the table is assigned an algorithm and domain.
 	IsSensitive *bool `json:"is_sensitive,omitempty"`
-	RowCount *int32 `json:"row_count,omitempty"`
+	RowCount *int64 `json:"row_count,omitempty"`
 	LastRefreshTime *time.Time `json:"last_refresh_time,omitempty"`
 	LastRowCountTime *time.Time `json:"last_row_count_time,omitempty"`
 	// The id of the engine associated with this column.
@@ -354,9 +354,9 @@ func (o *DatabaseTableMetadata) SetIsSensitive(v bool) {
 }
 
 // GetRowCount returns the RowCount field value if set, zero value otherwise.
-func (o *DatabaseTableMetadata) GetRowCount() int32 {
+func (o *DatabaseTableMetadata) GetRowCount() int64 {
 	if o == nil || IsNil(o.RowCount) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.RowCount
@@ -364,7 +364,7 @@ func (o *DatabaseTableMetadata) GetRowCount() int32 {
 
 // GetRowCountOk returns a tuple with the RowCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DatabaseTableMetadata) GetRowCountOk() (*int32, bool) {
+func (o *DatabaseTableMetadata) GetRowCountOk() (*int64, bool) {
 	if o == nil || IsNil(o.RowCount) {
 		return nil, false
 	}
@@ -380,8 +380,8 @@ func (o *DatabaseTableMetadata) HasRowCount() bool {
 	return false
 }
 
-// SetRowCount gets a reference to the given int32 and assigns it to the RowCount field.
-func (o *DatabaseTableMetadata) SetRowCount(v int32) {
+// SetRowCount gets a reference to the given int64 and assigns it to the RowCount field.
+func (o *DatabaseTableMetadata) SetRowCount(v int64) {
 	o.RowCount = &v
 }
 

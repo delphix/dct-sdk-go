@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.17.0
+API version: 3.18.0
 Contact: support@delphix.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the DisableVDBGroupParameters type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &DisableVDBGroupParameters{}
 
-// DisableVDBGroupParameters Parameters to disable a VDBGroup.
+// DisableVDBGroupParameters Parameters to disable a VDB Group.
 type DisableVDBGroupParameters struct {
 	VdbDisableParamMappings []VDBDisableParametersMapping `json:"vdb_disable_param_mappings,omitempty"`
 }
