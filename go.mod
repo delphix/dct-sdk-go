@@ -1,4 +1,4 @@
-module github.com/delphix/dct-sdk-go/v2025.1.2
+module github.com/delphix/dct-sdk-go/v25
 
 go 1.22
 
