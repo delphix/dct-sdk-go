@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -49,6 +49,8 @@ type StagingSource struct {
 	DsourceId *string `json:"dsource_id,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 	OracleServices []OracleService `json:"oracle_services,omitempty"`
+	// The environment user reference.
+	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
 }
 
 // NewStagingSource instantiates a new StagingSource object
@@ -660,6 +662,38 @@ func (o *StagingSource) SetOracleServices(v []OracleService) {
 	o.OracleServices = v
 }
 
+// GetEnvironmentUserRef returns the EnvironmentUserRef field value if set, zero value otherwise.
+func (o *StagingSource) GetEnvironmentUserRef() string {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserRef
+}
+
+// GetEnvironmentUserRefOk returns a tuple with the EnvironmentUserRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetEnvironmentUserRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		return nil, false
+	}
+	return o.EnvironmentUserRef, true
+}
+
+// HasEnvironmentUserRef returns a boolean if a field has been set.
+func (o *StagingSource) HasEnvironmentUserRef() bool {
+	if o != nil && !IsNil(o.EnvironmentUserRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserRef gets a reference to the given string and assigns it to the EnvironmentUserRef field.
+func (o *StagingSource) SetEnvironmentUserRef(v string) {
+	o.EnvironmentUserRef = &v
+}
+
 func (o StagingSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -717,6 +751,9 @@ func (o StagingSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OracleServices) {
 		toSerialize["oracle_services"] = o.OracleServices
+	}
+	if !IsNil(o.EnvironmentUserRef) {
+		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
 	}
 	return toSerialize, nil
 }

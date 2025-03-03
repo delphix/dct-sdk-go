@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -143,6 +143,7 @@ type ProvisionVDBByTimestampParameters struct {
 	CdbTdeKeystorePassword *string `json:"cdb_tde_keystore_password,omitempty"`
 	// ID of the key created by Delphix. (Oracle Multitenant Only)
 	VcdbTdeKeyIdentifier *string `json:"vcdb_tde_key_identifier,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
 	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
 	// Specifies additional locations on which to mount a subdirectory of an AppData container.
@@ -165,6 +166,8 @@ type ProvisionVDBByTimestampParameters struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// Whether to invoke datapatch during provisioning (Oracle Only).
 	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// Whether the virtual database will be provisioned for a containerized environment, such as Linux containers.
+	ContainerMode *bool `json:"container_mode,omitempty"`
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
@@ -2097,6 +2100,38 @@ func (o *ProvisionVDBByTimestampParameters) SetVcdbTdeKeyIdentifier(v string) {
 	o.VcdbTdeKeyIdentifier = &v
 }
 
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *ProvisionVDBByTimestampParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
 // GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetAppdataSourceParams() map[string]interface{} {
 	if o == nil || IsNil(o.AppdataSourceParams) {
@@ -2450,6 +2485,38 @@ func (o *ProvisionVDBByTimestampParameters) HasInvokeDatapatch() bool {
 // SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
 func (o *ProvisionVDBByTimestampParameters) SetInvokeDatapatch(v bool) {
 	o.InvokeDatapatch = &v
+}
+
+// GetContainerMode returns the ContainerMode field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetContainerMode() bool {
+	if o == nil || IsNil(o.ContainerMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ContainerMode
+}
+
+// GetContainerModeOk returns a tuple with the ContainerMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetContainerModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ContainerMode) {
+		return nil, false
+	}
+	return o.ContainerMode, true
+}
+
+// HasContainerMode returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasContainerMode() bool {
+	if o != nil && !IsNil(o.ContainerMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerMode gets a reference to the given bool and assigns it to the ContainerMode field.
+func (o *ProvisionVDBByTimestampParameters) SetContainerMode(v bool) {
+	o.ContainerMode = &v
 }
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
@@ -2823,6 +2890,9 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.VcdbTdeKeyIdentifier) {
 		toSerialize["vcdb_tde_key_identifier"] = o.VcdbTdeKeyIdentifier
 	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
 	if !IsNil(o.AppdataSourceParams) {
 		toSerialize["appdata_source_params"] = o.AppdataSourceParams
 	}
@@ -2855,6 +2925,9 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.InvokeDatapatch) {
 		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.ContainerMode) {
+		toSerialize["container_mode"] = o.ContainerMode
 	}
 	if !IsNil(o.Timestamp) {
 		toSerialize["timestamp"] = o.Timestamp

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -908,7 +908,7 @@ func (r ApiImportDatabaseTemplatesRequest) Execute() (*http.Response, error) {
 }
 
 /*
-ImportDatabaseTemplates Imports the database templates from an an engine.
+ImportDatabaseTemplates Imports the database templates from an engine.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiImportDatabaseTemplatesRequest

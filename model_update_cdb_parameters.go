@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,14 @@ var _ MappedNullable = &UpdateCDBParameters{}
 type UpdateCDBParameters struct {
 	// List of jdbc connection strings which are used to connect with the database.
 	OracleServices []string `json:"oracle_services,omitempty"`
+	// True if LogSync is enabled for this CDB.
+	LogsyncEnabled *bool `json:"logsync_enabled,omitempty"`
+	LogsyncMode *OracleLogsyncModeTypeEnum `json:"logsync_mode,omitempty"`
+	// Interval between LogSync requests, in seconds.
+	LogsyncInterval *int64 `json:"logsync_interval,omitempty"`
+	// For a CDB using software keystore, this is the password of the software keystore used by this database. For a CDB using OKV, this is the password for the endpoint provided during the installation of the Oracle Key Vault client library (i.e., okvclient.jar) on the host where this database runs. For a CDB using HSM, this is the credential of the external key manager which is managing master encryption keys of this database.
+	TdeKeystorePassword *string `json:"tde_keystore_password,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 }
 
 // NewUpdateCDBParameters instantiates a new UpdateCDBParameters object
@@ -73,6 +81,166 @@ func (o *UpdateCDBParameters) SetOracleServices(v []string) {
 	o.OracleServices = v
 }
 
+// GetLogsyncEnabled returns the LogsyncEnabled field value if set, zero value otherwise.
+func (o *UpdateCDBParameters) GetLogsyncEnabled() bool {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.LogsyncEnabled
+}
+
+// GetLogsyncEnabledOk returns a tuple with the LogsyncEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCDBParameters) GetLogsyncEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		return nil, false
+	}
+	return o.LogsyncEnabled, true
+}
+
+// HasLogsyncEnabled returns a boolean if a field has been set.
+func (o *UpdateCDBParameters) HasLogsyncEnabled() bool {
+	if o != nil && !IsNil(o.LogsyncEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncEnabled gets a reference to the given bool and assigns it to the LogsyncEnabled field.
+func (o *UpdateCDBParameters) SetLogsyncEnabled(v bool) {
+	o.LogsyncEnabled = &v
+}
+
+// GetLogsyncMode returns the LogsyncMode field value if set, zero value otherwise.
+func (o *UpdateCDBParameters) GetLogsyncMode() OracleLogsyncModeTypeEnum {
+	if o == nil || IsNil(o.LogsyncMode) {
+		var ret OracleLogsyncModeTypeEnum
+		return ret
+	}
+	return *o.LogsyncMode
+}
+
+// GetLogsyncModeOk returns a tuple with the LogsyncMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCDBParameters) GetLogsyncModeOk() (*OracleLogsyncModeTypeEnum, bool) {
+	if o == nil || IsNil(o.LogsyncMode) {
+		return nil, false
+	}
+	return o.LogsyncMode, true
+}
+
+// HasLogsyncMode returns a boolean if a field has been set.
+func (o *UpdateCDBParameters) HasLogsyncMode() bool {
+	if o != nil && !IsNil(o.LogsyncMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncMode gets a reference to the given OracleLogsyncModeTypeEnum and assigns it to the LogsyncMode field.
+func (o *UpdateCDBParameters) SetLogsyncMode(v OracleLogsyncModeTypeEnum) {
+	o.LogsyncMode = &v
+}
+
+// GetLogsyncInterval returns the LogsyncInterval field value if set, zero value otherwise.
+func (o *UpdateCDBParameters) GetLogsyncInterval() int64 {
+	if o == nil || IsNil(o.LogsyncInterval) {
+		var ret int64
+		return ret
+	}
+	return *o.LogsyncInterval
+}
+
+// GetLogsyncIntervalOk returns a tuple with the LogsyncInterval field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCDBParameters) GetLogsyncIntervalOk() (*int64, bool) {
+	if o == nil || IsNil(o.LogsyncInterval) {
+		return nil, false
+	}
+	return o.LogsyncInterval, true
+}
+
+// HasLogsyncInterval returns a boolean if a field has been set.
+func (o *UpdateCDBParameters) HasLogsyncInterval() bool {
+	if o != nil && !IsNil(o.LogsyncInterval) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncInterval gets a reference to the given int64 and assigns it to the LogsyncInterval field.
+func (o *UpdateCDBParameters) SetLogsyncInterval(v int64) {
+	o.LogsyncInterval = &v
+}
+
+// GetTdeKeystorePassword returns the TdeKeystorePassword field value if set, zero value otherwise.
+func (o *UpdateCDBParameters) GetTdeKeystorePassword() string {
+	if o == nil || IsNil(o.TdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeystorePassword
+}
+
+// GetTdeKeystorePasswordOk returns a tuple with the TdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCDBParameters) GetTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeystorePassword) {
+		return nil, false
+	}
+	return o.TdeKeystorePassword, true
+}
+
+// HasTdeKeystorePassword returns a boolean if a field has been set.
+func (o *UpdateCDBParameters) HasTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.TdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystorePassword gets a reference to the given string and assigns it to the TdeKeystorePassword field.
+func (o *UpdateCDBParameters) SetTdeKeystorePassword(v string) {
+	o.TdeKeystorePassword = &v
+}
+
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *UpdateCDBParameters) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCDBParameters) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *UpdateCDBParameters) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *UpdateCDBParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
 func (o UpdateCDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -85,6 +253,21 @@ func (o UpdateCDBParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.OracleServices) {
 		toSerialize["oracle_services"] = o.OracleServices
+	}
+	if !IsNil(o.LogsyncEnabled) {
+		toSerialize["logsync_enabled"] = o.LogsyncEnabled
+	}
+	if !IsNil(o.LogsyncMode) {
+		toSerialize["logsync_mode"] = o.LogsyncMode
+	}
+	if !IsNil(o.LogsyncInterval) {
+		toSerialize["logsync_interval"] = o.LogsyncInterval
+	}
+	if !IsNil(o.TdeKeystorePassword) {
+		toSerialize["tde_keystore_password"] = o.TdeKeystorePassword
+	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -1008,6 +1008,136 @@ func (a *TimeflowsAPIService) SearchTimeflowsExecute(r ApiSearchTimeflowsRequest
 	}
 	// body params
 	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTimeflowRepairRequest struct {
+	ctx context.Context
+	ApiService *TimeflowsAPIService
+	timeflowId string
+	timeflowRepairRequest *TimeflowRepairRequest
+}
+
+// Timeflow repair information.
+func (r ApiTimeflowRepairRequest) TimeflowRepairRequest(timeflowRepairRequest TimeflowRepairRequest) ApiTimeflowRepairRequest {
+	r.timeflowRepairRequest = &timeflowRepairRequest
+	return r
+}
+
+func (r ApiTimeflowRepairRequest) Execute() (*TimeflowRepairResponse, *http.Response, error) {
+	return r.ApiService.TimeflowRepairExecute(r)
+}
+
+/*
+TimeflowRepair Repair a Timeflow.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param timeflowId The ID of the timeflow.
+ @return ApiTimeflowRepairRequest
+*/
+func (a *TimeflowsAPIService) TimeflowRepair(ctx context.Context, timeflowId string) ApiTimeflowRepairRequest {
+	return ApiTimeflowRepairRequest{
+		ApiService: a,
+		ctx: ctx,
+		timeflowId: timeflowId,
+	}
+}
+
+// Execute executes the request
+//  @return TimeflowRepairResponse
+func (a *TimeflowsAPIService) TimeflowRepairExecute(r ApiTimeflowRepairRequest) (*TimeflowRepairResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TimeflowRepairResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.TimeflowRepair")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/timeflows/{timeflowId}/repair"
+	localVarPath = strings.Replace(localVarPath, "{"+"timeflowId"+"}", url.PathEscape(parameterValueToString(r.timeflowId, "timeflowId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.timeflowId) < 1 {
+		return localVarReturnValue, nil, reportError("timeflowId must have at least 1 elements")
+	}
+	if r.timeflowRepairRequest == nil {
+		return localVarReturnValue, nil, reportError("timeflowRepairRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.timeflowRepairRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

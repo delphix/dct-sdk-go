@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -36,6 +36,10 @@ type Environment struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// True if this environment is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
+	// Flag indicating whether the data transfer is encrypted or not.
+	EncryptionEnabled *bool `json:"encryption_enabled,omitempty"`
+	// The environment description.
+	Description *string `json:"description,omitempty"`
 	// True if this environment is a cluster of hosts.
 	IsCluster *bool `json:"is_cluster,omitempty"`
 	// Cluster home for RAC environment.
@@ -54,6 +58,8 @@ type Environment struct {
 	Listeners []OracleListener `json:"listeners,omitempty"`
 	// The operating system type of this environment.
 	OsType *string `json:"os_type,omitempty"`
+	// Environment users associated with this environment.
+	EnvUsers []EnvironmentUser `json:"env_users,omitempty"`
 }
 
 // NewEnvironment instantiates a new Environment object
@@ -337,6 +343,70 @@ func (o *Environment) HasEnabled() bool {
 // SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *Environment) SetEnabled(v bool) {
 	o.Enabled = &v
+}
+
+// GetEncryptionEnabled returns the EncryptionEnabled field value if set, zero value otherwise.
+func (o *Environment) GetEncryptionEnabled() bool {
+	if o == nil || IsNil(o.EncryptionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.EncryptionEnabled
+}
+
+// GetEncryptionEnabledOk returns a tuple with the EncryptionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetEncryptionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.EncryptionEnabled) {
+		return nil, false
+	}
+	return o.EncryptionEnabled, true
+}
+
+// HasEncryptionEnabled returns a boolean if a field has been set.
+func (o *Environment) HasEncryptionEnabled() bool {
+	if o != nil && !IsNil(o.EncryptionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncryptionEnabled gets a reference to the given bool and assigns it to the EncryptionEnabled field.
+func (o *Environment) SetEncryptionEnabled(v bool) {
+	o.EncryptionEnabled = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *Environment) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *Environment) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *Environment) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetIsCluster returns the IsCluster field value if set, zero value otherwise.
@@ -627,6 +697,38 @@ func (o *Environment) SetOsType(v string) {
 	o.OsType = &v
 }
 
+// GetEnvUsers returns the EnvUsers field value if set, zero value otherwise.
+func (o *Environment) GetEnvUsers() []EnvironmentUser {
+	if o == nil || IsNil(o.EnvUsers) {
+		var ret []EnvironmentUser
+		return ret
+	}
+	return o.EnvUsers
+}
+
+// GetEnvUsersOk returns a tuple with the EnvUsers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetEnvUsersOk() ([]EnvironmentUser, bool) {
+	if o == nil || IsNil(o.EnvUsers) {
+		return nil, false
+	}
+	return o.EnvUsers, true
+}
+
+// HasEnvUsers returns a boolean if a field has been set.
+func (o *Environment) HasEnvUsers() bool {
+	if o != nil && !IsNil(o.EnvUsers) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvUsers gets a reference to the given []EnvironmentUser and assigns it to the EnvUsers field.
+func (o *Environment) SetEnvUsers(v []EnvironmentUser) {
+	o.EnvUsers = v
+}
+
 func (o Environment) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -661,6 +763,12 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Enabled) {
 		toSerialize["enabled"] = o.Enabled
 	}
+	if !IsNil(o.EncryptionEnabled) {
+		toSerialize["encryption_enabled"] = o.EncryptionEnabled
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
 	if !IsNil(o.IsCluster) {
 		toSerialize["is_cluster"] = o.IsCluster
 	}
@@ -687,6 +795,9 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OsType) {
 		toSerialize["os_type"] = o.OsType
+	}
+	if !IsNil(o.EnvUsers) {
+		toSerialize["env_users"] = o.EnvUsers
 	}
 	return toSerialize, nil
 }

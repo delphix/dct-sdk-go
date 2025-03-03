@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &HyperscaleInstanceUpdateParams{}
 type HyperscaleInstanceUpdateParams struct {
 	// Name in DCT of the Hyperscale instance.
 	Name *string `json:"name,omitempty"`
-	// Hostname of the Hyperscale instance.
+	// Hostname of the Hyperscale instance. If the Hyperscale instance is running on a custom port (not 443), the port can be specified using the \"hostname:port\" format, for instance \"hyperscale-1.mycompany.co:1765\"
 	Hostname *string `json:"hostname,omitempty"`
 	// API key to connect to the Hyperscale instance.
 	ApiKey NullableString `json:"api_key,omitempty"`

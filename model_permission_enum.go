@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -76,6 +76,7 @@ const (
 	PERMISSIONENUM_RESOLVE_OR_IGNORE PermissionEnum = "RESOLVE_OR_IGNORE"
 	PERMISSIONENUM_API_KEY_RESET PermissionEnum = "API_KEY_RESET"
 	PERMISSIONENUM_API_KEY_DELETE PermissionEnum = "API_KEY_DELETE"
+	PERMISSIONENUM_READ_STORAGE_CAPACITY_DATA PermissionEnum = "READ_STORAGE_CAPACITY_DATA"
 	PERMISSIONENUM_DELETE_BOOKMARK PermissionEnum = "DELETE_BOOKMARK"
 	PERMISSIONENUM_UPDATE_BOOKMARK PermissionEnum = "UPDATE_BOOKMARK"
 	PERMISSIONENUM_READ_BOOKMARK PermissionEnum = "READ_BOOKMARK"
@@ -88,6 +89,8 @@ const (
 	PERMISSIONENUM_UNAPPLY PermissionEnum = "UNAPPLY"
 	PERMISSIONENUM_UNDO_REFRESH PermissionEnum = "UNDO_REFRESH"
 	PERMISSIONENUM_CONVERT PermissionEnum = "CONVERT"
+	PERMISSIONENUM_REPAIR_TIMEFLOW PermissionEnum = "REPAIR_TIMEFLOW"
+	PERMISSIONENUM_EXPORT PermissionEnum = "EXPORT"
 )
 
 // All allowed values of PermissionEnum enum
@@ -147,6 +150,7 @@ var AllowedPermissionEnumEnumValues = []PermissionEnum{
 	"RESOLVE_OR_IGNORE",
 	"API_KEY_RESET",
 	"API_KEY_DELETE",
+	"READ_STORAGE_CAPACITY_DATA",
 	"DELETE_BOOKMARK",
 	"UPDATE_BOOKMARK",
 	"READ_BOOKMARK",
@@ -159,6 +163,8 @@ var AllowedPermissionEnumEnumValues = []PermissionEnum{
 	"UNAPPLY",
 	"UNDO_REFRESH",
 	"CONVERT",
+	"REPAIR_TIMEFLOW",
+	"EXPORT",
 }
 
 func (v *PermissionEnum) UnmarshalJSON(src []byte) error {

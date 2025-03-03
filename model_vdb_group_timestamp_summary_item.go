@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,8 @@ var _ MappedNullable = &VdbGroupTimestampSummaryItem{}
 type VdbGroupTimestampSummaryItem struct {
 	// Id of the VDB in the VDB Group.
 	VdbId *string `json:"vdb_id,omitempty"`
+	// Error description if there is any error finding the timestamp summary for this VDB.
+	Error *string `json:"error,omitempty"`
 	TimeflowRange *TimeflowRange `json:"timeflow_range,omitempty"`
 }
 
@@ -74,6 +76,38 @@ func (o *VdbGroupTimestampSummaryItem) SetVdbId(v string) {
 	o.VdbId = &v
 }
 
+// GetError returns the Error field value if set, zero value otherwise.
+func (o *VdbGroupTimestampSummaryItem) GetError() string {
+	if o == nil || IsNil(o.Error) {
+		var ret string
+		return ret
+	}
+	return *o.Error
+}
+
+// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VdbGroupTimestampSummaryItem) GetErrorOk() (*string, bool) {
+	if o == nil || IsNil(o.Error) {
+		return nil, false
+	}
+	return o.Error, true
+}
+
+// HasError returns a boolean if a field has been set.
+func (o *VdbGroupTimestampSummaryItem) HasError() bool {
+	if o != nil && !IsNil(o.Error) {
+		return true
+	}
+
+	return false
+}
+
+// SetError gets a reference to the given string and assigns it to the Error field.
+func (o *VdbGroupTimestampSummaryItem) SetError(v string) {
+	o.Error = &v
+}
+
 // GetTimeflowRange returns the TimeflowRange field value if set, zero value otherwise.
 func (o *VdbGroupTimestampSummaryItem) GetTimeflowRange() TimeflowRange {
 	if o == nil || IsNil(o.TimeflowRange) {
@@ -118,6 +152,9 @@ func (o VdbGroupTimestampSummaryItem) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.VdbId) {
 		toSerialize["vdb_id"] = o.VdbId
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
 	}
 	if !IsNil(o.TimeflowRange) {
 		toSerialize["timeflow_range"] = o.TimeflowRange

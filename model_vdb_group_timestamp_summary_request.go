@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,9 @@ var _ MappedNullable = &VDBGroupTimestampSummaryRequest{}
 type VDBGroupTimestampSummaryRequest struct {
 	// The timestamp to get the summary for.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
+	// vdb ids for which summary is needed.
+	VdbIds []string `json:"vdb_ids,omitempty"`
+	Mode *RefreshModeEnum `json:"mode,omitempty"`
 }
 
 // NewVDBGroupTimestampSummaryRequest instantiates a new VDBGroupTimestampSummaryRequest object
@@ -74,6 +77,70 @@ func (o *VDBGroupTimestampSummaryRequest) SetTimestamp(v time.Time) {
 	o.Timestamp = &v
 }
 
+// GetVdbIds returns the VdbIds field value if set, zero value otherwise.
+func (o *VDBGroupTimestampSummaryRequest) GetVdbIds() []string {
+	if o == nil || IsNil(o.VdbIds) {
+		var ret []string
+		return ret
+	}
+	return o.VdbIds
+}
+
+// GetVdbIdsOk returns a tuple with the VdbIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroupTimestampSummaryRequest) GetVdbIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.VdbIds) {
+		return nil, false
+	}
+	return o.VdbIds, true
+}
+
+// HasVdbIds returns a boolean if a field has been set.
+func (o *VDBGroupTimestampSummaryRequest) HasVdbIds() bool {
+	if o != nil && !IsNil(o.VdbIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbIds gets a reference to the given []string and assigns it to the VdbIds field.
+func (o *VDBGroupTimestampSummaryRequest) SetVdbIds(v []string) {
+	o.VdbIds = v
+}
+
+// GetMode returns the Mode field value if set, zero value otherwise.
+func (o *VDBGroupTimestampSummaryRequest) GetMode() RefreshModeEnum {
+	if o == nil || IsNil(o.Mode) {
+		var ret RefreshModeEnum
+		return ret
+	}
+	return *o.Mode
+}
+
+// GetModeOk returns a tuple with the Mode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroupTimestampSummaryRequest) GetModeOk() (*RefreshModeEnum, bool) {
+	if o == nil || IsNil(o.Mode) {
+		return nil, false
+	}
+	return o.Mode, true
+}
+
+// HasMode returns a boolean if a field has been set.
+func (o *VDBGroupTimestampSummaryRequest) HasMode() bool {
+	if o != nil && !IsNil(o.Mode) {
+		return true
+	}
+
+	return false
+}
+
+// SetMode gets a reference to the given RefreshModeEnum and assigns it to the Mode field.
+func (o *VDBGroupTimestampSummaryRequest) SetMode(v RefreshModeEnum) {
+	o.Mode = &v
+}
+
 func (o VDBGroupTimestampSummaryRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -86,6 +153,12 @@ func (o VDBGroupTimestampSummaryRequest) ToMap() (map[string]interface{}, error)
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Timestamp) {
 		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.VdbIds) {
+		toSerialize["vdb_ids"] = o.VdbIds
+	}
+	if !IsNil(o.Mode) {
+		toSerialize["mode"] = o.Mode
 	}
 	return toSerialize, nil
 }

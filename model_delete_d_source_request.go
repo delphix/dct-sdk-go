@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -30,6 +30,8 @@ type DeleteDSourceRequest struct {
 	OracleUsername *string `json:"oracle_username,omitempty"`
 	// Password for privileged user (Oracle only).
 	OraclePassword *string `json:"oracle_password,omitempty"`
+	// Flag indicating whether to delete all dependent VDBs before deleting the dSource.
+	DeleteAllDependentVdbs *bool `json:"delete_all_dependent_vdbs,omitempty"`
 }
 
 type _DeleteDSourceRequest DeleteDSourceRequest
@@ -43,6 +45,8 @@ func NewDeleteDSourceRequest(dsourceId string) *DeleteDSourceRequest {
 	this.DsourceId = dsourceId
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentVdbs bool = false
+	this.DeleteAllDependentVdbs = &deleteAllDependentVdbs
 	return &this
 }
 
@@ -53,6 +57,8 @@ func NewDeleteDSourceRequestWithDefaults() *DeleteDSourceRequest {
 	this := DeleteDSourceRequest{}
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentVdbs bool = false
+	this.DeleteAllDependentVdbs = &deleteAllDependentVdbs
 	return &this
 }
 
@@ -176,6 +182,38 @@ func (o *DeleteDSourceRequest) SetOraclePassword(v string) {
 	o.OraclePassword = &v
 }
 
+// GetDeleteAllDependentVdbs returns the DeleteAllDependentVdbs field value if set, zero value otherwise.
+func (o *DeleteDSourceRequest) GetDeleteAllDependentVdbs() bool {
+	if o == nil || IsNil(o.DeleteAllDependentVdbs) {
+		var ret bool
+		return ret
+	}
+	return *o.DeleteAllDependentVdbs
+}
+
+// GetDeleteAllDependentVdbsOk returns a tuple with the DeleteAllDependentVdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteDSourceRequest) GetDeleteAllDependentVdbsOk() (*bool, bool) {
+	if o == nil || IsNil(o.DeleteAllDependentVdbs) {
+		return nil, false
+	}
+	return o.DeleteAllDependentVdbs, true
+}
+
+// HasDeleteAllDependentVdbs returns a boolean if a field has been set.
+func (o *DeleteDSourceRequest) HasDeleteAllDependentVdbs() bool {
+	if o != nil && !IsNil(o.DeleteAllDependentVdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeleteAllDependentVdbs gets a reference to the given bool and assigns it to the DeleteAllDependentVdbs field.
+func (o *DeleteDSourceRequest) SetDeleteAllDependentVdbs(v bool) {
+	o.DeleteAllDependentVdbs = &v
+}
+
 func (o DeleteDSourceRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -195,6 +233,9 @@ func (o DeleteDSourceRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OraclePassword) {
 		toSerialize["oracle_password"] = o.OraclePassword
+	}
+	if !IsNil(o.DeleteAllDependentVdbs) {
+		toSerialize["delete_all_dependent_vdbs"] = o.DeleteAllDependentVdbs
 	}
 	return toSerialize, nil
 }

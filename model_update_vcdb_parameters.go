@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,15 @@ type UpdateVCDBParameters struct {
 	OracleServices []string `json:"oracle_services,omitempty"`
 	// The instances of this RAC database.
 	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
+	// The list of node listener ids for this VCDB.
+	NodeListeners []string `json:"node_listeners,omitempty"`
+	// Indicates whether datapatch should be invoked.
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// For a vCDB using software keystore, this is the password of the software keystore used by this database. For a vCDB using OKV, this is the password for the endpoint provided during the installation of the Oracle Key Vault client library (i.e., okvclient.jar) on the host where this database runs. For a vCDB using HSM, this is the credential of the external key manager which is managing master encryption keys of this database.
+	TdeKeystorePassword *string `json:"tde_keystore_password,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
+	// The master encryption key id of this database.
+	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
 }
 
 // NewUpdateVCDBParameters instantiates a new UpdateVCDBParameters object
@@ -107,6 +116,166 @@ func (o *UpdateVCDBParameters) SetInstances(v []OracleRACDatabaseInstance) {
 	o.Instances = v
 }
 
+// GetNodeListeners returns the NodeListeners field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetNodeListeners() []string {
+	if o == nil || IsNil(o.NodeListeners) {
+		var ret []string
+		return ret
+	}
+	return o.NodeListeners
+}
+
+// GetNodeListenersOk returns a tuple with the NodeListeners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetNodeListenersOk() ([]string, bool) {
+	if o == nil || IsNil(o.NodeListeners) {
+		return nil, false
+	}
+	return o.NodeListeners, true
+}
+
+// HasNodeListeners returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasNodeListeners() bool {
+	if o != nil && !IsNil(o.NodeListeners) {
+		return true
+	}
+
+	return false
+}
+
+// SetNodeListeners gets a reference to the given []string and assigns it to the NodeListeners field.
+func (o *UpdateVCDBParameters) SetNodeListeners(v []string) {
+	o.NodeListeners = v
+}
+
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *UpdateVCDBParameters) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
+// GetTdeKeystorePassword returns the TdeKeystorePassword field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetTdeKeystorePassword() string {
+	if o == nil || IsNil(o.TdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeystorePassword
+}
+
+// GetTdeKeystorePasswordOk returns a tuple with the TdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeystorePassword) {
+		return nil, false
+	}
+	return o.TdeKeystorePassword, true
+}
+
+// HasTdeKeystorePassword returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.TdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystorePassword gets a reference to the given string and assigns it to the TdeKeystorePassword field.
+func (o *UpdateVCDBParameters) SetTdeKeystorePassword(v string) {
+	o.TdeKeystorePassword = &v
+}
+
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *UpdateVCDBParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
+// GetTdeKeyIdentifier returns the TdeKeyIdentifier field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetTdeKeyIdentifier() string {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeyIdentifier
+}
+
+// GetTdeKeyIdentifierOk returns a tuple with the TdeKeyIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetTdeKeyIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		return nil, false
+	}
+	return o.TdeKeyIdentifier, true
+}
+
+// HasTdeKeyIdentifier returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasTdeKeyIdentifier() bool {
+	if o != nil && !IsNil(o.TdeKeyIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeyIdentifier gets a reference to the given string and assigns it to the TdeKeyIdentifier field.
+func (o *UpdateVCDBParameters) SetTdeKeyIdentifier(v string) {
+	o.TdeKeyIdentifier = &v
+}
+
 func (o UpdateVCDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +291,21 @@ func (o UpdateVCDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Instances) {
 		toSerialize["instances"] = o.Instances
+	}
+	if !IsNil(o.NodeListeners) {
+		toSerialize["node_listeners"] = o.NodeListeners
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.TdeKeystorePassword) {
+		toSerialize["tde_keystore_password"] = o.TdeKeystorePassword
+	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
+	if !IsNil(o.TdeKeyIdentifier) {
+		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
 	}
 	return toSerialize, nil
 }

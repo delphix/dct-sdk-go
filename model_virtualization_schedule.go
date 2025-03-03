@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -23,7 +23,7 @@ var _ MappedNullable = &VirtualizationSchedule{}
 // VirtualizationSchedule struct for VirtualizationSchedule
 type VirtualizationSchedule struct {
 	CronString string `json:"cron_string"`
-	CutoffTime int64 `json:"cutoff_time"`
+	CutoffTime *int64 `json:"cutoff_time,omitempty"`
 }
 
 type _VirtualizationSchedule VirtualizationSchedule
@@ -32,10 +32,9 @@ type _VirtualizationSchedule VirtualizationSchedule
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVirtualizationSchedule(cronString string, cutoffTime int64) *VirtualizationSchedule {
+func NewVirtualizationSchedule(cronString string) *VirtualizationSchedule {
 	this := VirtualizationSchedule{}
 	this.CronString = cronString
-	this.CutoffTime = cutoffTime
 	return &this
 }
 
@@ -71,28 +70,36 @@ func (o *VirtualizationSchedule) SetCronString(v string) {
 	o.CronString = v
 }
 
-// GetCutoffTime returns the CutoffTime field value
+// GetCutoffTime returns the CutoffTime field value if set, zero value otherwise.
 func (o *VirtualizationSchedule) GetCutoffTime() int64 {
-	if o == nil {
+	if o == nil || IsNil(o.CutoffTime) {
 		var ret int64
 		return ret
 	}
-
-	return o.CutoffTime
+	return *o.CutoffTime
 }
 
-// GetCutoffTimeOk returns a tuple with the CutoffTime field value
+// GetCutoffTimeOk returns a tuple with the CutoffTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VirtualizationSchedule) GetCutoffTimeOk() (*int64, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CutoffTime) {
 		return nil, false
 	}
-	return &o.CutoffTime, true
+	return o.CutoffTime, true
 }
 
-// SetCutoffTime sets field value
+// HasCutoffTime returns a boolean if a field has been set.
+func (o *VirtualizationSchedule) HasCutoffTime() bool {
+	if o != nil && !IsNil(o.CutoffTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetCutoffTime gets a reference to the given int64 and assigns it to the CutoffTime field.
 func (o *VirtualizationSchedule) SetCutoffTime(v int64) {
-	o.CutoffTime = v
+	o.CutoffTime = &v
 }
 
 func (o VirtualizationSchedule) MarshalJSON() ([]byte, error) {
@@ -106,7 +113,9 @@ func (o VirtualizationSchedule) MarshalJSON() ([]byte, error) {
 func (o VirtualizationSchedule) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["cron_string"] = o.CronString
-	toSerialize["cutoff_time"] = o.CutoffTime
+	if !IsNil(o.CutoffTime) {
+		toSerialize["cutoff_time"] = o.CutoffTime
+	}
 	return toSerialize, nil
 }
 
@@ -116,7 +125,6 @@ func (o *VirtualizationSchedule) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"cron_string",
-		"cutoff_time",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -142,6 +142,7 @@ type ProvisionVDBFromBookmarkParameters struct {
 	CdbTdeKeystorePassword *string `json:"cdb_tde_keystore_password,omitempty"`
 	// ID of the key created by Delphix. (Oracle Multitenant Only)
 	VcdbTdeKeyIdentifier *string `json:"vcdb_tde_key_identifier,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
 	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
 	// Specifies additional locations on which to mount a subdirectory of an AppData container.
@@ -164,6 +165,8 @@ type ProvisionVDBFromBookmarkParameters struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// Whether to invoke datapatch during provisioning (Oracle Only).
 	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// Whether the virtual database will be provisioned for a containerized environment, such as Linux containers.
+	ContainerMode *bool `json:"container_mode,omitempty"`
 	// The ID of the bookmark from which to execute the operation. The bookmark must contain only one VDB.
 	BookmarkId string `json:"bookmark_id"`
 	// Whether the account provisioning this VDB must be configured as owner of the VDB.
@@ -2088,6 +2091,38 @@ func (o *ProvisionVDBFromBookmarkParameters) SetVcdbTdeKeyIdentifier(v string) {
 	o.VcdbTdeKeyIdentifier = &v
 }
 
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *ProvisionVDBFromBookmarkParameters) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBFromBookmarkParameters) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *ProvisionVDBFromBookmarkParameters) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *ProvisionVDBFromBookmarkParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
 // GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise.
 func (o *ProvisionVDBFromBookmarkParameters) GetAppdataSourceParams() map[string]interface{} {
 	if o == nil || IsNil(o.AppdataSourceParams) {
@@ -2443,6 +2478,38 @@ func (o *ProvisionVDBFromBookmarkParameters) SetInvokeDatapatch(v bool) {
 	o.InvokeDatapatch = &v
 }
 
+// GetContainerMode returns the ContainerMode field value if set, zero value otherwise.
+func (o *ProvisionVDBFromBookmarkParameters) GetContainerMode() bool {
+	if o == nil || IsNil(o.ContainerMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ContainerMode
+}
+
+// GetContainerModeOk returns a tuple with the ContainerMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBFromBookmarkParameters) GetContainerModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ContainerMode) {
+		return nil, false
+	}
+	return o.ContainerMode, true
+}
+
+// HasContainerMode returns a boolean if a field has been set.
+func (o *ProvisionVDBFromBookmarkParameters) HasContainerMode() bool {
+	if o != nil && !IsNil(o.ContainerMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerMode gets a reference to the given bool and assigns it to the ContainerMode field.
+func (o *ProvisionVDBFromBookmarkParameters) SetContainerMode(v bool) {
+	o.ContainerMode = &v
+}
+
 // GetBookmarkId returns the BookmarkId field value
 func (o *ProvisionVDBFromBookmarkParameters) GetBookmarkId() string {
 	if o == nil {
@@ -2686,6 +2753,9 @@ func (o ProvisionVDBFromBookmarkParameters) ToMap() (map[string]interface{}, err
 	if !IsNil(o.VcdbTdeKeyIdentifier) {
 		toSerialize["vcdb_tde_key_identifier"] = o.VcdbTdeKeyIdentifier
 	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
 	if !IsNil(o.AppdataSourceParams) {
 		toSerialize["appdata_source_params"] = o.AppdataSourceParams
 	}
@@ -2718,6 +2788,9 @@ func (o ProvisionVDBFromBookmarkParameters) ToMap() (map[string]interface{}, err
 	}
 	if !IsNil(o.InvokeDatapatch) {
 		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.ContainerMode) {
+		toSerialize["container_mode"] = o.ContainerMode
 	}
 	toSerialize["bookmark_id"] = o.BookmarkId
 	if !IsNil(o.MakeCurrentAccountOwner) {

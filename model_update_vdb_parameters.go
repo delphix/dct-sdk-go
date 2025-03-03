@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -77,6 +77,8 @@ type UpdateVDBParameters struct {
 	OracleServices []string `json:"oracle_services,omitempty"`
 	// The instances of this RAC database.
 	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
+	// Indicates whether datapatch should be invoked.
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
 }
 
 // NewUpdateVDBParameters instantiates a new UpdateVDBParameters object
@@ -1031,6 +1033,38 @@ func (o *UpdateVDBParameters) SetInstances(v []OracleRACDatabaseInstance) {
 	o.Instances = v
 }
 
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *UpdateVDBParameters) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
 func (o UpdateVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1127,6 +1161,9 @@ func (o UpdateVDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Instances) {
 		toSerialize["instances"] = o.Instances
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
 	}
 	return toSerialize, nil
 }

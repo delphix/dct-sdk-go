@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -54,6 +54,8 @@ type EnvironmentUpdateParameters struct {
 	AseDbAzureVaultSecretKey *string `json:"ase_db_azure_vault_secret_key,omitempty"`
 	// Whether to use kerberos authentication for ASE DB discovery.
 	AseDbUseKerberosAuthentication *bool `json:"ase_db_use_kerberos_authentication,omitempty"`
+	// Flag indicating whether the data transfer is encrypted or not.
+	EncryptionEnabled *bool `json:"encryption_enabled,omitempty"`
 	// The environment description.
 	Description *string `json:"description,omitempty"`
 }
@@ -619,6 +621,38 @@ func (o *EnvironmentUpdateParameters) SetAseDbUseKerberosAuthentication(v bool) 
 	o.AseDbUseKerberosAuthentication = &v
 }
 
+// GetEncryptionEnabled returns the EncryptionEnabled field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetEncryptionEnabled() bool {
+	if o == nil || IsNil(o.EncryptionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.EncryptionEnabled
+}
+
+// GetEncryptionEnabledOk returns a tuple with the EncryptionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetEncryptionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.EncryptionEnabled) {
+		return nil, false
+	}
+	return o.EncryptionEnabled, true
+}
+
+// HasEncryptionEnabled returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasEncryptionEnabled() bool {
+	if o != nil && !IsNil(o.EncryptionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncryptionEnabled gets a reference to the given bool and assigns it to the EncryptionEnabled field.
+func (o *EnvironmentUpdateParameters) SetEncryptionEnabled(v bool) {
+	o.EncryptionEnabled = &v
+}
+
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *EnvironmentUpdateParameters) GetDescription() string {
 	if o == nil || IsNil(o.Description) {
@@ -711,6 +745,9 @@ func (o EnvironmentUpdateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AseDbUseKerberosAuthentication) {
 		toSerialize["ase_db_use_kerberos_authentication"] = o.AseDbUseKerberosAuthentication
+	}
+	if !IsNil(o.EncryptionEnabled) {
+		toSerialize["encryption_enabled"] = o.EncryptionEnabled
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description

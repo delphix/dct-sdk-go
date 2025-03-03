@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -90,6 +90,8 @@ type VDB struct {
 	TemplateId NullableString `json:"template_id,omitempty"`
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
+	// The environment user reference.
+	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
 	// Specifies additional locations on which to mount a subdirectory of an AppData container. Can only be updated while the VDB is disabled.
 	AdditionalMountPoints []AdditionalMountPoint `json:"additional_mount_points,omitempty"`
 	// The parameters specified by the source config schema in the toolkit
@@ -136,6 +138,13 @@ type VDB struct {
 	OracleServices []OracleService `json:"oracle_services,omitempty"`
 	// The repository id of this VDB.
 	RepositoryId *string `json:"repository_id,omitempty"`
+	ContainerizationState *ContainerizationStateEnum `json:"containerization_state,omitempty"`
+	// Path to a copy of the parent's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots containing encrypted database files.
+	ParentTdeKeystorePath *string `json:"parent_tde_keystore_path,omitempty"`
+	// Path to the keystore of the target vCDB.
+	TargetVcdbTdeKeystorePath *string `json:"target_vcdb_tde_keystore_path,omitempty"`
+	// ID of the key created by Delphix, as recorded in v$encryption_keys.key_id.
+	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -1490,6 +1499,38 @@ func (o *VDB) SetConfigParams(v map[string]interface{}) {
 	o.ConfigParams = v
 }
 
+// GetEnvironmentUserRef returns the EnvironmentUserRef field value if set, zero value otherwise.
+func (o *VDB) GetEnvironmentUserRef() string {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserRef
+}
+
+// GetEnvironmentUserRefOk returns a tuple with the EnvironmentUserRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetEnvironmentUserRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		return nil, false
+	}
+	return o.EnvironmentUserRef, true
+}
+
+// HasEnvironmentUserRef returns a boolean if a field has been set.
+func (o *VDB) HasEnvironmentUserRef() bool {
+	if o != nil && !IsNil(o.EnvironmentUserRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserRef gets a reference to the given string and assigns it to the EnvironmentUserRef field.
+func (o *VDB) SetEnvironmentUserRef(v string) {
+	o.EnvironmentUserRef = &v
+}
+
 // GetAdditionalMountPoints returns the AdditionalMountPoints field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetAdditionalMountPoints() []AdditionalMountPoint {
 	if o == nil {
@@ -2280,6 +2321,134 @@ func (o *VDB) SetRepositoryId(v string) {
 	o.RepositoryId = &v
 }
 
+// GetContainerizationState returns the ContainerizationState field value if set, zero value otherwise.
+func (o *VDB) GetContainerizationState() ContainerizationStateEnum {
+	if o == nil || IsNil(o.ContainerizationState) {
+		var ret ContainerizationStateEnum
+		return ret
+	}
+	return *o.ContainerizationState
+}
+
+// GetContainerizationStateOk returns a tuple with the ContainerizationState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetContainerizationStateOk() (*ContainerizationStateEnum, bool) {
+	if o == nil || IsNil(o.ContainerizationState) {
+		return nil, false
+	}
+	return o.ContainerizationState, true
+}
+
+// HasContainerizationState returns a boolean if a field has been set.
+func (o *VDB) HasContainerizationState() bool {
+	if o != nil && !IsNil(o.ContainerizationState) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerizationState gets a reference to the given ContainerizationStateEnum and assigns it to the ContainerizationState field.
+func (o *VDB) SetContainerizationState(v ContainerizationStateEnum) {
+	o.ContainerizationState = &v
+}
+
+// GetParentTdeKeystorePath returns the ParentTdeKeystorePath field value if set, zero value otherwise.
+func (o *VDB) GetParentTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentTdeKeystorePath
+}
+
+// GetParentTdeKeystorePathOk returns a tuple with the ParentTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetParentTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentTdeKeystorePath, true
+}
+
+// HasParentTdeKeystorePath returns a boolean if a field has been set.
+func (o *VDB) HasParentTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentTdeKeystorePath gets a reference to the given string and assigns it to the ParentTdeKeystorePath field.
+func (o *VDB) SetParentTdeKeystorePath(v string) {
+	o.ParentTdeKeystorePath = &v
+}
+
+// GetTargetVcdbTdeKeystorePath returns the TargetVcdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *VDB) GetTargetVcdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.TargetVcdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.TargetVcdbTdeKeystorePath
+}
+
+// GetTargetVcdbTdeKeystorePathOk returns a tuple with the TargetVcdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetTargetVcdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetVcdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.TargetVcdbTdeKeystorePath, true
+}
+
+// HasTargetVcdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *VDB) HasTargetVcdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.TargetVcdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetVcdbTdeKeystorePath gets a reference to the given string and assigns it to the TargetVcdbTdeKeystorePath field.
+func (o *VDB) SetTargetVcdbTdeKeystorePath(v string) {
+	o.TargetVcdbTdeKeystorePath = &v
+}
+
+// GetTdeKeyIdentifier returns the TdeKeyIdentifier field value if set, zero value otherwise.
+func (o *VDB) GetTdeKeyIdentifier() string {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeyIdentifier
+}
+
+// GetTdeKeyIdentifierOk returns a tuple with the TdeKeyIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetTdeKeyIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		return nil, false
+	}
+	return o.TdeKeyIdentifier, true
+}
+
+// HasTdeKeyIdentifier returns a boolean if a field has been set.
+func (o *VDB) HasTdeKeyIdentifier() bool {
+	if o != nil && !IsNil(o.TdeKeyIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeyIdentifier gets a reference to the given string and assigns it to the TdeKeyIdentifier field.
+func (o *VDB) SetTdeKeyIdentifier(v string) {
+	o.TdeKeyIdentifier = &v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -2395,6 +2564,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if o.ConfigParams != nil {
 		toSerialize["config_params"] = o.ConfigParams
 	}
+	if !IsNil(o.EnvironmentUserRef) {
+		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
+	}
 	if o.AdditionalMountPoints != nil {
 		toSerialize["additional_mount_points"] = o.AdditionalMountPoints
 	}
@@ -2466,6 +2638,18 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RepositoryId) {
 		toSerialize["repository_id"] = o.RepositoryId
+	}
+	if !IsNil(o.ContainerizationState) {
+		toSerialize["containerization_state"] = o.ContainerizationState
+	}
+	if !IsNil(o.ParentTdeKeystorePath) {
+		toSerialize["parent_tde_keystore_path"] = o.ParentTdeKeystorePath
+	}
+	if !IsNil(o.TargetVcdbTdeKeystorePath) {
+		toSerialize["target_vcdb_tde_keystore_path"] = o.TargetVcdbTdeKeystorePath
+	}
+	if !IsNil(o.TdeKeyIdentifier) {
+		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
 	}
 	return toSerialize, nil
 }

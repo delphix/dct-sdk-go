@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -81,6 +81,12 @@ type Host struct {
 	ProcessorType *string `json:"processor_type,omitempty"`
 	// The OS timezone.
 	Timezone *string `json:"timezone,omitempty"`
+	// The PowerShell version installed on the windows target host.
+	PowershellVersion *string `json:"powershell_version,omitempty"`
+	// The OS release.
+	Release *string `json:"release,omitempty"`
+	// Traceroute network hops from host to Delphix Engine.
+	TraceRouteInfo *string `json:"trace_route_info,omitempty"`
 }
 
 // NewHost instantiates a new Host object
@@ -1060,6 +1066,102 @@ func (o *Host) SetTimezone(v string) {
 	o.Timezone = &v
 }
 
+// GetPowershellVersion returns the PowershellVersion field value if set, zero value otherwise.
+func (o *Host) GetPowershellVersion() string {
+	if o == nil || IsNil(o.PowershellVersion) {
+		var ret string
+		return ret
+	}
+	return *o.PowershellVersion
+}
+
+// GetPowershellVersionOk returns a tuple with the PowershellVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetPowershellVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.PowershellVersion) {
+		return nil, false
+	}
+	return o.PowershellVersion, true
+}
+
+// HasPowershellVersion returns a boolean if a field has been set.
+func (o *Host) HasPowershellVersion() bool {
+	if o != nil && !IsNil(o.PowershellVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetPowershellVersion gets a reference to the given string and assigns it to the PowershellVersion field.
+func (o *Host) SetPowershellVersion(v string) {
+	o.PowershellVersion = &v
+}
+
+// GetRelease returns the Release field value if set, zero value otherwise.
+func (o *Host) GetRelease() string {
+	if o == nil || IsNil(o.Release) {
+		var ret string
+		return ret
+	}
+	return *o.Release
+}
+
+// GetReleaseOk returns a tuple with the Release field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetReleaseOk() (*string, bool) {
+	if o == nil || IsNil(o.Release) {
+		return nil, false
+	}
+	return o.Release, true
+}
+
+// HasRelease returns a boolean if a field has been set.
+func (o *Host) HasRelease() bool {
+	if o != nil && !IsNil(o.Release) {
+		return true
+	}
+
+	return false
+}
+
+// SetRelease gets a reference to the given string and assigns it to the Release field.
+func (o *Host) SetRelease(v string) {
+	o.Release = &v
+}
+
+// GetTraceRouteInfo returns the TraceRouteInfo field value if set, zero value otherwise.
+func (o *Host) GetTraceRouteInfo() string {
+	if o == nil || IsNil(o.TraceRouteInfo) {
+		var ret string
+		return ret
+	}
+	return *o.TraceRouteInfo
+}
+
+// GetTraceRouteInfoOk returns a tuple with the TraceRouteInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetTraceRouteInfoOk() (*string, bool) {
+	if o == nil || IsNil(o.TraceRouteInfo) {
+		return nil, false
+	}
+	return o.TraceRouteInfo, true
+}
+
+// HasTraceRouteInfo returns a boolean if a field has been set.
+func (o *Host) HasTraceRouteInfo() bool {
+	if o != nil && !IsNil(o.TraceRouteInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetTraceRouteInfo gets a reference to the given string and assigns it to the TraceRouteInfo field.
+func (o *Host) SetTraceRouteInfo(v string) {
+	o.TraceRouteInfo = &v
+}
+
 func (o Host) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1159,6 +1261,15 @@ func (o Host) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Timezone) {
 		toSerialize["timezone"] = o.Timezone
+	}
+	if !IsNil(o.PowershellVersion) {
+		toSerialize["powershell_version"] = o.PowershellVersion
+	}
+	if !IsNil(o.Release) {
+		toSerialize["release"] = o.Release
+	}
+	if !IsNil(o.TraceRouteInfo) {
+		toSerialize["trace_route_info"] = o.TraceRouteInfo
 	}
 	return toSerialize, nil
 }

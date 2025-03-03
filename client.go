@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.18.0
+// APIClient manages communication with the Delphix DCT API API v3.20.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -61,6 +61,8 @@ type APIClient struct {
 	CDBsAPI *CDBsAPIService
 
 	ClassifiersAPI *ClassifiersAPIService
+
+	ComplianceJobCollectionsAPI *ComplianceJobCollectionsAPIService
 
 	ComplianceJobsAPI *ComplianceJobsAPIService
 
@@ -89,6 +91,8 @@ type APIClient struct {
 	HyperscaleInstanceAPI *HyperscaleInstanceAPIService
 
 	HyperscaleObjectsAPI *HyperscaleObjectsAPIService
+
+	JobCollectionExecutionsAPI *JobCollectionExecutionsAPIService
 
 	JobsAPI *JobsAPIService
 
@@ -125,6 +129,8 @@ type APIClient struct {
 	StagingSourcesAPI *StagingSourcesAPIService
 
 	StorageUsageAPI *StorageUsageAPIService
+
+	TagsAPI *TagsAPIService
 
 	TimeflowsAPI *TimeflowsAPIService
 
@@ -169,6 +175,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.BookmarksAPI = (*BookmarksAPIService)(&c.common)
 	c.CDBsAPI = (*CDBsAPIService)(&c.common)
 	c.ClassifiersAPI = (*ClassifiersAPIService)(&c.common)
+	c.ComplianceJobCollectionsAPI = (*ComplianceJobCollectionsAPIService)(&c.common)
 	c.ComplianceJobsAPI = (*ComplianceJobsAPIService)(&c.common)
 	c.ConnectivityAPI = (*ConnectivityAPIService)(&c.common)
 	c.ConnectorsAPI = (*ConnectorsAPIService)(&c.common)
@@ -183,6 +190,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.GroupsAPI = (*GroupsAPIService)(&c.common)
 	c.HyperscaleInstanceAPI = (*HyperscaleInstanceAPIService)(&c.common)
 	c.HyperscaleObjectsAPI = (*HyperscaleObjectsAPIService)(&c.common)
+	c.JobCollectionExecutionsAPI = (*JobCollectionExecutionsAPIService)(&c.common)
 	c.JobsAPI = (*JobsAPIService)(&c.common)
 	c.KerberosConfigAPI = (*KerberosConfigAPIService)(&c.common)
 	c.LicenseAPI = (*LicenseAPIService)(&c.common)
@@ -201,6 +209,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SourcesAPI = (*SourcesAPIService)(&c.common)
 	c.StagingSourcesAPI = (*StagingSourcesAPIService)(&c.common)
 	c.StorageUsageAPI = (*StorageUsageAPIService)(&c.common)
+	c.TagsAPI = (*TagsAPIService)(&c.common)
 	c.TimeflowsAPI = (*TimeflowsAPIService)(&c.common)
 	c.ToolkitsAPI = (*ToolkitsAPIService)(&c.common)
 	c.VCDBsAPI = (*VCDBsAPIService)(&c.common)

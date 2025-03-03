@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -65,11 +65,17 @@ type OracleStagingPushDSourceLinkSourceParameters struct {
 	// An array of strings of whitespace-separated parameters to be passed to the source command. The first parameter must be an absolute path to a file that exists on the target environment. Every subsequent parameter will be treated as an argument interpreted by the environment file.
 	CustomEnvVariablesPaths []string `json:"custom_env_variables_paths,omitempty"`
 	// Boolean value indicates whether this staging database should automatically be restarted when staging host reboot is detected.
+	// Deprecated
 	AutoStagingRestart *bool `json:"auto_staging_restart,omitempty"`
+	// Boolean value indicates whether this staging database should automatically be restarted when staging host reboot is detected.
+	AllowAutoStagingRestartOnHostReboot *bool `json:"allow_auto_staging_restart_on_host_reboot,omitempty"`
 	// Boolean value indicates whether this staging database will be configured as a physical standby.
 	PhysicalStandby *bool `json:"physical_standby,omitempty"`
 	// Boolean value indicates whether this staging database snapshot will be validated by opening it in read-only.
+	// Deprecated
 	ValidateSnapshotInReadonly *bool `json:"validate_snapshot_in_readonly,omitempty"`
+	// Boolean value indicates whether this staging database snapshot will be validated by opening it in read-only.
+	ValidateByOpeningDbInReadOnlyMode *bool `json:"validate_by_opening_db_in_read_only_mode,omitempty"`
 	// An array of name value pair of Oracle database configuration parameter overrides. This property is deprecated. Use staging_database_config_params instead.
 	// Deprecated
 	StagingDatabaseTemplates []NameValuePair `json:"staging_database_templates,omitempty"`
@@ -783,6 +789,7 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) SetCustomEnvVariablesPath
 }
 
 // GetAutoStagingRestart returns the AutoStagingRestart field value if set, zero value otherwise.
+// Deprecated
 func (o *OracleStagingPushDSourceLinkSourceParameters) GetAutoStagingRestart() bool {
 	if o == nil || IsNil(o.AutoStagingRestart) {
 		var ret bool
@@ -793,6 +800,7 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) GetAutoStagingRestart() b
 
 // GetAutoStagingRestartOk returns a tuple with the AutoStagingRestart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *OracleStagingPushDSourceLinkSourceParameters) GetAutoStagingRestartOk() (*bool, bool) {
 	if o == nil || IsNil(o.AutoStagingRestart) {
 		return nil, false
@@ -810,8 +818,41 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) HasAutoStagingRestart() b
 }
 
 // SetAutoStagingRestart gets a reference to the given bool and assigns it to the AutoStagingRestart field.
+// Deprecated
 func (o *OracleStagingPushDSourceLinkSourceParameters) SetAutoStagingRestart(v bool) {
 	o.AutoStagingRestart = &v
+}
+
+// GetAllowAutoStagingRestartOnHostReboot returns the AllowAutoStagingRestartOnHostReboot field value if set, zero value otherwise.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetAllowAutoStagingRestartOnHostReboot() bool {
+	if o == nil || IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		var ret bool
+		return ret
+	}
+	return *o.AllowAutoStagingRestartOnHostReboot
+}
+
+// GetAllowAutoStagingRestartOnHostRebootOk returns a tuple with the AllowAutoStagingRestartOnHostReboot field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetAllowAutoStagingRestartOnHostRebootOk() (*bool, bool) {
+	if o == nil || IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		return nil, false
+	}
+	return o.AllowAutoStagingRestartOnHostReboot, true
+}
+
+// HasAllowAutoStagingRestartOnHostReboot returns a boolean if a field has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) HasAllowAutoStagingRestartOnHostReboot() bool {
+	if o != nil && !IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowAutoStagingRestartOnHostReboot gets a reference to the given bool and assigns it to the AllowAutoStagingRestartOnHostReboot field.
+func (o *OracleStagingPushDSourceLinkSourceParameters) SetAllowAutoStagingRestartOnHostReboot(v bool) {
+	o.AllowAutoStagingRestartOnHostReboot = &v
 }
 
 // GetPhysicalStandby returns the PhysicalStandby field value if set, zero value otherwise.
@@ -847,6 +888,7 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) SetPhysicalStandby(v bool
 }
 
 // GetValidateSnapshotInReadonly returns the ValidateSnapshotInReadonly field value if set, zero value otherwise.
+// Deprecated
 func (o *OracleStagingPushDSourceLinkSourceParameters) GetValidateSnapshotInReadonly() bool {
 	if o == nil || IsNil(o.ValidateSnapshotInReadonly) {
 		var ret bool
@@ -857,6 +899,7 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) GetValidateSnapshotInRead
 
 // GetValidateSnapshotInReadonlyOk returns a tuple with the ValidateSnapshotInReadonly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *OracleStagingPushDSourceLinkSourceParameters) GetValidateSnapshotInReadonlyOk() (*bool, bool) {
 	if o == nil || IsNil(o.ValidateSnapshotInReadonly) {
 		return nil, false
@@ -874,8 +917,41 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) HasValidateSnapshotInRead
 }
 
 // SetValidateSnapshotInReadonly gets a reference to the given bool and assigns it to the ValidateSnapshotInReadonly field.
+// Deprecated
 func (o *OracleStagingPushDSourceLinkSourceParameters) SetValidateSnapshotInReadonly(v bool) {
 	o.ValidateSnapshotInReadonly = &v
+}
+
+// GetValidateByOpeningDbInReadOnlyMode returns the ValidateByOpeningDbInReadOnlyMode field value if set, zero value otherwise.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetValidateByOpeningDbInReadOnlyMode() bool {
+	if o == nil || IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ValidateByOpeningDbInReadOnlyMode
+}
+
+// GetValidateByOpeningDbInReadOnlyModeOk returns a tuple with the ValidateByOpeningDbInReadOnlyMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetValidateByOpeningDbInReadOnlyModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		return nil, false
+	}
+	return o.ValidateByOpeningDbInReadOnlyMode, true
+}
+
+// HasValidateByOpeningDbInReadOnlyMode returns a boolean if a field has been set.
+func (o *OracleStagingPushDSourceLinkSourceParameters) HasValidateByOpeningDbInReadOnlyMode() bool {
+	if o != nil && !IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidateByOpeningDbInReadOnlyMode gets a reference to the given bool and assigns it to the ValidateByOpeningDbInReadOnlyMode field.
+func (o *OracleStagingPushDSourceLinkSourceParameters) SetValidateByOpeningDbInReadOnlyMode(v bool) {
+	o.ValidateByOpeningDbInReadOnlyMode = &v
 }
 
 // GetStagingDatabaseTemplates returns the StagingDatabaseTemplates field value if set, zero value otherwise.
@@ -1146,11 +1222,17 @@ func (o OracleStagingPushDSourceLinkSourceParameters) ToMap() (map[string]interf
 	if !IsNil(o.AutoStagingRestart) {
 		toSerialize["auto_staging_restart"] = o.AutoStagingRestart
 	}
+	if !IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		toSerialize["allow_auto_staging_restart_on_host_reboot"] = o.AllowAutoStagingRestartOnHostReboot
+	}
 	if !IsNil(o.PhysicalStandby) {
 		toSerialize["physical_standby"] = o.PhysicalStandby
 	}
 	if !IsNil(o.ValidateSnapshotInReadonly) {
 		toSerialize["validate_snapshot_in_readonly"] = o.ValidateSnapshotInReadonly
+	}
+	if !IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		toSerialize["validate_by_opening_db_in_read_only_mode"] = o.ValidateByOpeningDbInReadOnlyMode
 	}
 	if !IsNil(o.StagingDatabaseTemplates) {
 		toSerialize["staging_database_templates"] = o.StagingDatabaseTemplates

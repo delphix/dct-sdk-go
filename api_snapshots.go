@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -785,6 +785,124 @@ func (a *SnapshotsAPIService) GetSnapshotByIdExecute(r ApiGetSnapshotByIdRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetSnapshotRuntimeByIdRequest struct {
+	ctx context.Context
+	ApiService *SnapshotsAPIService
+	snapshotId string
+}
+
+func (r ApiGetSnapshotRuntimeByIdRequest) Execute() (*SnapshotRuntime, *http.Response, error) {
+	return r.ApiService.GetSnapshotRuntimeByIdExecute(r)
+}
+
+/*
+GetSnapshotRuntimeById Get a runtime object of a snapshot by id
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param snapshotId The ID of the snapshot.
+ @return ApiGetSnapshotRuntimeByIdRequest
+*/
+func (a *SnapshotsAPIService) GetSnapshotRuntimeById(ctx context.Context, snapshotId string) ApiGetSnapshotRuntimeByIdRequest {
+	return ApiGetSnapshotRuntimeByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		snapshotId: snapshotId,
+	}
+}
+
+// Execute executes the request
+//  @return SnapshotRuntime
+func (a *SnapshotsAPIService) GetSnapshotRuntimeByIdExecute(r ApiGetSnapshotRuntimeByIdRequest) (*SnapshotRuntime, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SnapshotRuntime
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnapshotsAPIService.GetSnapshotRuntimeById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/snapshots/{snapshotId}/runtime"
+	localVarPath = strings.Replace(localVarPath, "{"+"snapshotId"+"}", url.PathEscape(parameterValueToString(r.snapshotId, "snapshotId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.snapshotId) < 1 {
+		return localVarReturnValue, nil, reportError("snapshotId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetSnapshotTagsRequest struct {
 	ctx context.Context
 	ApiService *SnapshotsAPIService
@@ -1096,6 +1214,137 @@ func (a *SnapshotsAPIService) GetSnapshotsExecute(r ApiGetSnapshotsRequest) (*Li
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetSnapshotsCapacityDataRequest struct {
+	ctx context.Context
+	ApiService *SnapshotsAPIService
+	engineId *string
+	datasetId *string
+}
+
+// ID of a registered engine.
+func (r ApiGetSnapshotsCapacityDataRequest) EngineId(engineId string) ApiGetSnapshotsCapacityDataRequest {
+	r.engineId = &engineId
+	return r
+}
+
+// The ID of the dSource or VDB.
+func (r ApiGetSnapshotsCapacityDataRequest) DatasetId(datasetId string) ApiGetSnapshotsCapacityDataRequest {
+	r.datasetId = &datasetId
+	return r
+}
+
+func (r ApiGetSnapshotsCapacityDataRequest) Execute() (*SnapshotCapacityResponse, *http.Response, error) {
+	return r.ApiService.GetSnapshotsCapacityDataExecute(r)
+}
+
+/*
+GetSnapshotsCapacityData Lists capacity metrics for all snapshots of dataset or the engine.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetSnapshotsCapacityDataRequest
+*/
+func (a *SnapshotsAPIService) GetSnapshotsCapacityData(ctx context.Context) ApiGetSnapshotsCapacityDataRequest {
+	return ApiGetSnapshotsCapacityDataRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return SnapshotCapacityResponse
+func (a *SnapshotsAPIService) GetSnapshotsCapacityDataExecute(r ApiGetSnapshotsCapacityDataRequest) (*SnapshotCapacityResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SnapshotCapacityResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnapshotsAPIService.GetSnapshotsCapacityData")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/snapshots/capacity"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.engineId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "engine_id", r.engineId, "form", "")
+	}
+	if r.datasetId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dataset_id", r.datasetId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

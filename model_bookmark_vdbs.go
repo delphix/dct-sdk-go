@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the BookmarkVDBs type satisfies the MappedNullable interface at compile time
@@ -24,6 +25,12 @@ type BookmarkVDBs struct {
 	VdbId *string `json:"vdb_id,omitempty"`
 	// The VDB name.
 	VdbName *string `json:"vdb_name,omitempty"`
+	// The timestamp of origin timeline location.
+	SourceDataTimestamp *time.Time `json:"source_data_timestamp,omitempty"`
+	// The root of the VDB.
+	RootParentId *string `json:"root_parent_id,omitempty"`
+	// The timeflow id of the snapshot.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
 }
 
 // NewBookmarkVDBs instantiates a new BookmarkVDBs object
@@ -107,6 +114,102 @@ func (o *BookmarkVDBs) SetVdbName(v string) {
 	o.VdbName = &v
 }
 
+// GetSourceDataTimestamp returns the SourceDataTimestamp field value if set, zero value otherwise.
+func (o *BookmarkVDBs) GetSourceDataTimestamp() time.Time {
+	if o == nil || IsNil(o.SourceDataTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.SourceDataTimestamp
+}
+
+// GetSourceDataTimestampOk returns a tuple with the SourceDataTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkVDBs) GetSourceDataTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.SourceDataTimestamp) {
+		return nil, false
+	}
+	return o.SourceDataTimestamp, true
+}
+
+// HasSourceDataTimestamp returns a boolean if a field has been set.
+func (o *BookmarkVDBs) HasSourceDataTimestamp() bool {
+	if o != nil && !IsNil(o.SourceDataTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceDataTimestamp gets a reference to the given time.Time and assigns it to the SourceDataTimestamp field.
+func (o *BookmarkVDBs) SetSourceDataTimestamp(v time.Time) {
+	o.SourceDataTimestamp = &v
+}
+
+// GetRootParentId returns the RootParentId field value if set, zero value otherwise.
+func (o *BookmarkVDBs) GetRootParentId() string {
+	if o == nil || IsNil(o.RootParentId) {
+		var ret string
+		return ret
+	}
+	return *o.RootParentId
+}
+
+// GetRootParentIdOk returns a tuple with the RootParentId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkVDBs) GetRootParentIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RootParentId) {
+		return nil, false
+	}
+	return o.RootParentId, true
+}
+
+// HasRootParentId returns a boolean if a field has been set.
+func (o *BookmarkVDBs) HasRootParentId() bool {
+	if o != nil && !IsNil(o.RootParentId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRootParentId gets a reference to the given string and assigns it to the RootParentId field.
+func (o *BookmarkVDBs) SetRootParentId(v string) {
+	o.RootParentId = &v
+}
+
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *BookmarkVDBs) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkVDBs) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *BookmarkVDBs) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *BookmarkVDBs) SetTimeflowId(v string) {
+	o.TimeflowId = &v
+}
+
 func (o BookmarkVDBs) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +225,15 @@ func (o BookmarkVDBs) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.VdbName) {
 		toSerialize["vdb_name"] = o.VdbName
+	}
+	if !IsNil(o.SourceDataTimestamp) {
+		toSerialize["source_data_timestamp"] = o.SourceDataTimestamp
+	}
+	if !IsNil(o.RootParentId) {
+		toSerialize["root_parent_id"] = o.RootParentId
+	}
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
 	}
 	return toSerialize, nil
 }

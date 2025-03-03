@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -71,12 +71,16 @@ type Source struct {
 	OracleServices []OracleService `json:"oracle_services,omitempty"`
 	// The username of the database user.
 	User *string `json:"user,omitempty"`
+	// The environment user reference.
+	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
 	// The username of a database user that does not have administrative privileges.
 	NonSysUser *string `json:"non_sys_user,omitempty"`
 	// Whether this source was discovered.
 	Discovered *bool `json:"discovered,omitempty"`
 	// Whether this source should be used for linking.
 	LinkingEnabled *bool `json:"linking_enabled,omitempty"`
+	// The cdb type for this source. (Oracle only)
+	CdbType *string `json:"cdb_type,omitempty"`
 }
 
 // NewSource instantiates a new Source object
@@ -1133,6 +1137,38 @@ func (o *Source) SetUser(v string) {
 	o.User = &v
 }
 
+// GetEnvironmentUserRef returns the EnvironmentUserRef field value if set, zero value otherwise.
+func (o *Source) GetEnvironmentUserRef() string {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserRef
+}
+
+// GetEnvironmentUserRefOk returns a tuple with the EnvironmentUserRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetEnvironmentUserRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		return nil, false
+	}
+	return o.EnvironmentUserRef, true
+}
+
+// HasEnvironmentUserRef returns a boolean if a field has been set.
+func (o *Source) HasEnvironmentUserRef() bool {
+	if o != nil && !IsNil(o.EnvironmentUserRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserRef gets a reference to the given string and assigns it to the EnvironmentUserRef field.
+func (o *Source) SetEnvironmentUserRef(v string) {
+	o.EnvironmentUserRef = &v
+}
+
 // GetNonSysUser returns the NonSysUser field value if set, zero value otherwise.
 func (o *Source) GetNonSysUser() string {
 	if o == nil || IsNil(o.NonSysUser) {
@@ -1229,6 +1265,38 @@ func (o *Source) SetLinkingEnabled(v bool) {
 	o.LinkingEnabled = &v
 }
 
+// GetCdbType returns the CdbType field value if set, zero value otherwise.
+func (o *Source) GetCdbType() string {
+	if o == nil || IsNil(o.CdbType) {
+		var ret string
+		return ret
+	}
+	return *o.CdbType
+}
+
+// GetCdbTypeOk returns a tuple with the CdbType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetCdbTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.CdbType) {
+		return nil, false
+	}
+	return o.CdbType, true
+}
+
+// HasCdbType returns a boolean if a field has been set.
+func (o *Source) HasCdbType() bool {
+	if o != nil && !IsNil(o.CdbType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbType gets a reference to the given string and assigns it to the CdbType field.
+func (o *Source) SetCdbType(v string) {
+	o.CdbType = &v
+}
+
 func (o Source) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1320,6 +1388,9 @@ func (o Source) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.User) {
 		toSerialize["user"] = o.User
 	}
+	if !IsNil(o.EnvironmentUserRef) {
+		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
+	}
 	if !IsNil(o.NonSysUser) {
 		toSerialize["non_sys_user"] = o.NonSysUser
 	}
@@ -1328,6 +1399,9 @@ func (o Source) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.LinkingEnabled) {
 		toSerialize["linking_enabled"] = o.LinkingEnabled
+	}
+	if !IsNil(o.CdbType) {
+		toSerialize["cdb_type"] = o.CdbType
 	}
 	return toSerialize, nil
 }

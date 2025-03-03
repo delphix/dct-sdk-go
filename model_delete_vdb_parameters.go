@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,8 @@ var _ MappedNullable = &DeleteVDBParameters{}
 type DeleteVDBParameters struct {
 	// Whether to continue the operation upon failures.
 	Force *bool `json:"force,omitempty"`
+	// Flag indicating whether to delete all dependent VDBs before deleting the VDB.
+	DeleteAllDependentVdbs *bool `json:"delete_all_dependent_vdbs,omitempty"`
 }
 
 // NewDeleteVDBParameters instantiates a new DeleteVDBParameters object
@@ -32,6 +34,8 @@ func NewDeleteVDBParameters() *DeleteVDBParameters {
 	this := DeleteVDBParameters{}
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentVdbs bool = false
+	this.DeleteAllDependentVdbs = &deleteAllDependentVdbs
 	return &this
 }
 
@@ -42,6 +46,8 @@ func NewDeleteVDBParametersWithDefaults() *DeleteVDBParameters {
 	this := DeleteVDBParameters{}
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentVdbs bool = false
+	this.DeleteAllDependentVdbs = &deleteAllDependentVdbs
 	return &this
 }
 
@@ -77,6 +83,38 @@ func (o *DeleteVDBParameters) SetForce(v bool) {
 	o.Force = &v
 }
 
+// GetDeleteAllDependentVdbs returns the DeleteAllDependentVdbs field value if set, zero value otherwise.
+func (o *DeleteVDBParameters) GetDeleteAllDependentVdbs() bool {
+	if o == nil || IsNil(o.DeleteAllDependentVdbs) {
+		var ret bool
+		return ret
+	}
+	return *o.DeleteAllDependentVdbs
+}
+
+// GetDeleteAllDependentVdbsOk returns a tuple with the DeleteAllDependentVdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteVDBParameters) GetDeleteAllDependentVdbsOk() (*bool, bool) {
+	if o == nil || IsNil(o.DeleteAllDependentVdbs) {
+		return nil, false
+	}
+	return o.DeleteAllDependentVdbs, true
+}
+
+// HasDeleteAllDependentVdbs returns a boolean if a field has been set.
+func (o *DeleteVDBParameters) HasDeleteAllDependentVdbs() bool {
+	if o != nil && !IsNil(o.DeleteAllDependentVdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeleteAllDependentVdbs gets a reference to the given bool and assigns it to the DeleteAllDependentVdbs field.
+func (o *DeleteVDBParameters) SetDeleteAllDependentVdbs(v bool) {
+	o.DeleteAllDependentVdbs = &v
+}
+
 func (o DeleteVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -89,6 +127,9 @@ func (o DeleteVDBParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Force) {
 		toSerialize["force"] = o.Force
+	}
+	if !IsNil(o.DeleteAllDependentVdbs) {
+		toSerialize["delete_all_dependent_vdbs"] = o.DeleteAllDependentVdbs
 	}
 	return toSerialize, nil
 }

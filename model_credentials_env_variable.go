@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -46,6 +46,12 @@ type CredentialsEnvVariable struct {
 	AzureVaultSecretKey *string `json:"azure_vault_secret_key,omitempty"`
 	// Query to find a credential in the CyberArk vault.
 	CyberarkVaultQueryString *string `json:"cyberark_vault_query_string,omitempty"`
+	// Credential type of the credential environment variable
+	CredentialType *string `json:"credential_type,omitempty"`
+	// Element ID of the credential environment variable
+	ElementId *string `json:"element_id,omitempty"`
+	// Type of the credential environment variable
+	Type *string `json:"type,omitempty"`
 }
 
 type _CredentialsEnvVariable CredentialsEnvVariable
@@ -444,6 +450,102 @@ func (o *CredentialsEnvVariable) SetCyberarkVaultQueryString(v string) {
 	o.CyberarkVaultQueryString = &v
 }
 
+// GetCredentialType returns the CredentialType field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetCredentialType() string {
+	if o == nil || IsNil(o.CredentialType) {
+		var ret string
+		return ret
+	}
+	return *o.CredentialType
+}
+
+// GetCredentialTypeOk returns a tuple with the CredentialType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetCredentialTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.CredentialType) {
+		return nil, false
+	}
+	return o.CredentialType, true
+}
+
+// HasCredentialType returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasCredentialType() bool {
+	if o != nil && !IsNil(o.CredentialType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialType gets a reference to the given string and assigns it to the CredentialType field.
+func (o *CredentialsEnvVariable) SetCredentialType(v string) {
+	o.CredentialType = &v
+}
+
+// GetElementId returns the ElementId field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetElementId() string {
+	if o == nil || IsNil(o.ElementId) {
+		var ret string
+		return ret
+	}
+	return *o.ElementId
+}
+
+// GetElementIdOk returns a tuple with the ElementId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetElementIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ElementId) {
+		return nil, false
+	}
+	return o.ElementId, true
+}
+
+// HasElementId returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasElementId() bool {
+	if o != nil && !IsNil(o.ElementId) {
+		return true
+	}
+
+	return false
+}
+
+// SetElementId gets a reference to the given string and assigns it to the ElementId field.
+func (o *CredentialsEnvVariable) SetElementId(v string) {
+	o.ElementId = &v
+}
+
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetType() string {
+	if o == nil || IsNil(o.Type) {
+		var ret string
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
+func (o *CredentialsEnvVariable) SetType(v string) {
+	o.Type = &v
+}
+
 func (o CredentialsEnvVariable) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -487,6 +589,15 @@ func (o CredentialsEnvVariable) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CyberarkVaultQueryString) {
 		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
+	}
+	if !IsNil(o.CredentialType) {
+		toSerialize["credential_type"] = o.CredentialType
+	}
+	if !IsNil(o.ElementId) {
+		toSerialize["element_id"] = o.ElementId
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
 	}
 	return toSerialize, nil
 }

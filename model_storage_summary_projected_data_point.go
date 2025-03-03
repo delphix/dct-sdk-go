@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,46 @@ type StorageSummaryProjectedDataPoint struct {
 	Timestamp *string `json:"timestamp,omitempty"`
 	// The projected amount of storage used by engine objects and reserved space, in bytes.
 	UsedStorage *int64 `json:"used_storage,omitempty"`
+	// Total actual space used by the dSources.
+	DsourceTotalSize *int64 `json:"dsource_total_size,omitempty"`
+	// Total amount of space used for the active copy of the dSources.
+	DsourceBaseSize *int64 `json:"dsource_base_size,omitempty"`
+	// Total amount of space used by dSource logs.
+	DsourceLogsSize *int64 `json:"dsource_logs_size,omitempty"`
+	// Total amount of space used by dSource snapshots.
+	DsourceSnapshotSize *int64 `json:"dsource_snapshot_size,omitempty"`
+	// Total actual space used by the VDBs.
+	VdbTotalSize *int64 `json:"vdb_total_size,omitempty"`
+	// Total amount of space used for the active copy of the VDBs.
+	VdbBaseSize *int64 `json:"vdb_base_size,omitempty"`
+	// Total amount of space used by VDB logs.
+	VdbLogsSize *int64 `json:"vdb_logs_size,omitempty"`
+	// Total amount of space used by VDB snapshots.
+	VdbSnapshotSize *int64 `json:"vdb_snapshot_size,omitempty"`
+	// Total actual space used by the CDBs.
+	CdbTotalSize *int64 `json:"cdb_total_size,omitempty"`
+	// Total amount of space used for the active copy of the CDBs.
+	CdbBaseSize *int64 `json:"cdb_base_size,omitempty"`
+	// Total amount of space used by CDB logs.
+	CdbLogsSize *int64 `json:"cdb_logs_size,omitempty"`
+	// Total amount of space used by CDB snapshots.
+	CdbSnapshotSize *int64 `json:"cdb_snapshot_size,omitempty"`
+	// Total actual space used by the VCDBs.
+	VcdbTotalSize *int64 `json:"vcdb_total_size,omitempty"`
+	// Total amount of space used for the active copy of the VCDBs.
+	VcdbBaseSize *int64 `json:"vcdb_base_size,omitempty"`
+	// Total amount of space used by VCDB logs.
+	VcdbLogsSize *int64 `json:"vcdb_logs_size,omitempty"`
+	// Total amount of space used by VCDB snapshots.
+	VcdbSnapshotSize *int64 `json:"vcdb_snapshot_size,omitempty"`
+	// Total actual space used by the Heldspace.
+	HeldspaceTotalSize *int64 `json:"heldspace_total_size,omitempty"`
+	// Total amount of space used for the copy of the Heldspace.
+	HeldspaceBaseSize *int64 `json:"heldspace_base_size,omitempty"`
+	// Total amount of space used by Heldspace logs.
+	HeldspaceLogsSize *int64 `json:"heldspace_logs_size,omitempty"`
+	// Total amount of space used by Heldspace snapshots.
+	HeldspaceSnapshotSize *int64 `json:"heldspace_snapshot_size,omitempty"`
 }
 
 // NewStorageSummaryProjectedDataPoint instantiates a new StorageSummaryProjectedDataPoint object
@@ -106,6 +146,646 @@ func (o *StorageSummaryProjectedDataPoint) SetUsedStorage(v int64) {
 	o.UsedStorage = &v
 }
 
+// GetDsourceTotalSize returns the DsourceTotalSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceTotalSize() int64 {
+	if o == nil || IsNil(o.DsourceTotalSize) {
+		var ret int64
+		return ret
+	}
+	return *o.DsourceTotalSize
+}
+
+// GetDsourceTotalSizeOk returns a tuple with the DsourceTotalSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceTotalSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.DsourceTotalSize) {
+		return nil, false
+	}
+	return o.DsourceTotalSize, true
+}
+
+// HasDsourceTotalSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasDsourceTotalSize() bool {
+	if o != nil && !IsNil(o.DsourceTotalSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceTotalSize gets a reference to the given int64 and assigns it to the DsourceTotalSize field.
+func (o *StorageSummaryProjectedDataPoint) SetDsourceTotalSize(v int64) {
+	o.DsourceTotalSize = &v
+}
+
+// GetDsourceBaseSize returns the DsourceBaseSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceBaseSize() int64 {
+	if o == nil || IsNil(o.DsourceBaseSize) {
+		var ret int64
+		return ret
+	}
+	return *o.DsourceBaseSize
+}
+
+// GetDsourceBaseSizeOk returns a tuple with the DsourceBaseSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceBaseSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.DsourceBaseSize) {
+		return nil, false
+	}
+	return o.DsourceBaseSize, true
+}
+
+// HasDsourceBaseSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasDsourceBaseSize() bool {
+	if o != nil && !IsNil(o.DsourceBaseSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceBaseSize gets a reference to the given int64 and assigns it to the DsourceBaseSize field.
+func (o *StorageSummaryProjectedDataPoint) SetDsourceBaseSize(v int64) {
+	o.DsourceBaseSize = &v
+}
+
+// GetDsourceLogsSize returns the DsourceLogsSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceLogsSize() int64 {
+	if o == nil || IsNil(o.DsourceLogsSize) {
+		var ret int64
+		return ret
+	}
+	return *o.DsourceLogsSize
+}
+
+// GetDsourceLogsSizeOk returns a tuple with the DsourceLogsSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceLogsSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.DsourceLogsSize) {
+		return nil, false
+	}
+	return o.DsourceLogsSize, true
+}
+
+// HasDsourceLogsSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasDsourceLogsSize() bool {
+	if o != nil && !IsNil(o.DsourceLogsSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceLogsSize gets a reference to the given int64 and assigns it to the DsourceLogsSize field.
+func (o *StorageSummaryProjectedDataPoint) SetDsourceLogsSize(v int64) {
+	o.DsourceLogsSize = &v
+}
+
+// GetDsourceSnapshotSize returns the DsourceSnapshotSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceSnapshotSize() int64 {
+	if o == nil || IsNil(o.DsourceSnapshotSize) {
+		var ret int64
+		return ret
+	}
+	return *o.DsourceSnapshotSize
+}
+
+// GetDsourceSnapshotSizeOk returns a tuple with the DsourceSnapshotSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetDsourceSnapshotSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.DsourceSnapshotSize) {
+		return nil, false
+	}
+	return o.DsourceSnapshotSize, true
+}
+
+// HasDsourceSnapshotSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasDsourceSnapshotSize() bool {
+	if o != nil && !IsNil(o.DsourceSnapshotSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceSnapshotSize gets a reference to the given int64 and assigns it to the DsourceSnapshotSize field.
+func (o *StorageSummaryProjectedDataPoint) SetDsourceSnapshotSize(v int64) {
+	o.DsourceSnapshotSize = &v
+}
+
+// GetVdbTotalSize returns the VdbTotalSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVdbTotalSize() int64 {
+	if o == nil || IsNil(o.VdbTotalSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VdbTotalSize
+}
+
+// GetVdbTotalSizeOk returns a tuple with the VdbTotalSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVdbTotalSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VdbTotalSize) {
+		return nil, false
+	}
+	return o.VdbTotalSize, true
+}
+
+// HasVdbTotalSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVdbTotalSize() bool {
+	if o != nil && !IsNil(o.VdbTotalSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbTotalSize gets a reference to the given int64 and assigns it to the VdbTotalSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVdbTotalSize(v int64) {
+	o.VdbTotalSize = &v
+}
+
+// GetVdbBaseSize returns the VdbBaseSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVdbBaseSize() int64 {
+	if o == nil || IsNil(o.VdbBaseSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VdbBaseSize
+}
+
+// GetVdbBaseSizeOk returns a tuple with the VdbBaseSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVdbBaseSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VdbBaseSize) {
+		return nil, false
+	}
+	return o.VdbBaseSize, true
+}
+
+// HasVdbBaseSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVdbBaseSize() bool {
+	if o != nil && !IsNil(o.VdbBaseSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbBaseSize gets a reference to the given int64 and assigns it to the VdbBaseSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVdbBaseSize(v int64) {
+	o.VdbBaseSize = &v
+}
+
+// GetVdbLogsSize returns the VdbLogsSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVdbLogsSize() int64 {
+	if o == nil || IsNil(o.VdbLogsSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VdbLogsSize
+}
+
+// GetVdbLogsSizeOk returns a tuple with the VdbLogsSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVdbLogsSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VdbLogsSize) {
+		return nil, false
+	}
+	return o.VdbLogsSize, true
+}
+
+// HasVdbLogsSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVdbLogsSize() bool {
+	if o != nil && !IsNil(o.VdbLogsSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbLogsSize gets a reference to the given int64 and assigns it to the VdbLogsSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVdbLogsSize(v int64) {
+	o.VdbLogsSize = &v
+}
+
+// GetVdbSnapshotSize returns the VdbSnapshotSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVdbSnapshotSize() int64 {
+	if o == nil || IsNil(o.VdbSnapshotSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VdbSnapshotSize
+}
+
+// GetVdbSnapshotSizeOk returns a tuple with the VdbSnapshotSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVdbSnapshotSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VdbSnapshotSize) {
+		return nil, false
+	}
+	return o.VdbSnapshotSize, true
+}
+
+// HasVdbSnapshotSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVdbSnapshotSize() bool {
+	if o != nil && !IsNil(o.VdbSnapshotSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbSnapshotSize gets a reference to the given int64 and assigns it to the VdbSnapshotSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVdbSnapshotSize(v int64) {
+	o.VdbSnapshotSize = &v
+}
+
+// GetCdbTotalSize returns the CdbTotalSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetCdbTotalSize() int64 {
+	if o == nil || IsNil(o.CdbTotalSize) {
+		var ret int64
+		return ret
+	}
+	return *o.CdbTotalSize
+}
+
+// GetCdbTotalSizeOk returns a tuple with the CdbTotalSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetCdbTotalSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.CdbTotalSize) {
+		return nil, false
+	}
+	return o.CdbTotalSize, true
+}
+
+// HasCdbTotalSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasCdbTotalSize() bool {
+	if o != nil && !IsNil(o.CdbTotalSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbTotalSize gets a reference to the given int64 and assigns it to the CdbTotalSize field.
+func (o *StorageSummaryProjectedDataPoint) SetCdbTotalSize(v int64) {
+	o.CdbTotalSize = &v
+}
+
+// GetCdbBaseSize returns the CdbBaseSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetCdbBaseSize() int64 {
+	if o == nil || IsNil(o.CdbBaseSize) {
+		var ret int64
+		return ret
+	}
+	return *o.CdbBaseSize
+}
+
+// GetCdbBaseSizeOk returns a tuple with the CdbBaseSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetCdbBaseSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.CdbBaseSize) {
+		return nil, false
+	}
+	return o.CdbBaseSize, true
+}
+
+// HasCdbBaseSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasCdbBaseSize() bool {
+	if o != nil && !IsNil(o.CdbBaseSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbBaseSize gets a reference to the given int64 and assigns it to the CdbBaseSize field.
+func (o *StorageSummaryProjectedDataPoint) SetCdbBaseSize(v int64) {
+	o.CdbBaseSize = &v
+}
+
+// GetCdbLogsSize returns the CdbLogsSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetCdbLogsSize() int64 {
+	if o == nil || IsNil(o.CdbLogsSize) {
+		var ret int64
+		return ret
+	}
+	return *o.CdbLogsSize
+}
+
+// GetCdbLogsSizeOk returns a tuple with the CdbLogsSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetCdbLogsSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.CdbLogsSize) {
+		return nil, false
+	}
+	return o.CdbLogsSize, true
+}
+
+// HasCdbLogsSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasCdbLogsSize() bool {
+	if o != nil && !IsNil(o.CdbLogsSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbLogsSize gets a reference to the given int64 and assigns it to the CdbLogsSize field.
+func (o *StorageSummaryProjectedDataPoint) SetCdbLogsSize(v int64) {
+	o.CdbLogsSize = &v
+}
+
+// GetCdbSnapshotSize returns the CdbSnapshotSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetCdbSnapshotSize() int64 {
+	if o == nil || IsNil(o.CdbSnapshotSize) {
+		var ret int64
+		return ret
+	}
+	return *o.CdbSnapshotSize
+}
+
+// GetCdbSnapshotSizeOk returns a tuple with the CdbSnapshotSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetCdbSnapshotSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.CdbSnapshotSize) {
+		return nil, false
+	}
+	return o.CdbSnapshotSize, true
+}
+
+// HasCdbSnapshotSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasCdbSnapshotSize() bool {
+	if o != nil && !IsNil(o.CdbSnapshotSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbSnapshotSize gets a reference to the given int64 and assigns it to the CdbSnapshotSize field.
+func (o *StorageSummaryProjectedDataPoint) SetCdbSnapshotSize(v int64) {
+	o.CdbSnapshotSize = &v
+}
+
+// GetVcdbTotalSize returns the VcdbTotalSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbTotalSize() int64 {
+	if o == nil || IsNil(o.VcdbTotalSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VcdbTotalSize
+}
+
+// GetVcdbTotalSizeOk returns a tuple with the VcdbTotalSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbTotalSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VcdbTotalSize) {
+		return nil, false
+	}
+	return o.VcdbTotalSize, true
+}
+
+// HasVcdbTotalSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVcdbTotalSize() bool {
+	if o != nil && !IsNil(o.VcdbTotalSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbTotalSize gets a reference to the given int64 and assigns it to the VcdbTotalSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVcdbTotalSize(v int64) {
+	o.VcdbTotalSize = &v
+}
+
+// GetVcdbBaseSize returns the VcdbBaseSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbBaseSize() int64 {
+	if o == nil || IsNil(o.VcdbBaseSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VcdbBaseSize
+}
+
+// GetVcdbBaseSizeOk returns a tuple with the VcdbBaseSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbBaseSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VcdbBaseSize) {
+		return nil, false
+	}
+	return o.VcdbBaseSize, true
+}
+
+// HasVcdbBaseSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVcdbBaseSize() bool {
+	if o != nil && !IsNil(o.VcdbBaseSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbBaseSize gets a reference to the given int64 and assigns it to the VcdbBaseSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVcdbBaseSize(v int64) {
+	o.VcdbBaseSize = &v
+}
+
+// GetVcdbLogsSize returns the VcdbLogsSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbLogsSize() int64 {
+	if o == nil || IsNil(o.VcdbLogsSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VcdbLogsSize
+}
+
+// GetVcdbLogsSizeOk returns a tuple with the VcdbLogsSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbLogsSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VcdbLogsSize) {
+		return nil, false
+	}
+	return o.VcdbLogsSize, true
+}
+
+// HasVcdbLogsSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVcdbLogsSize() bool {
+	if o != nil && !IsNil(o.VcdbLogsSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbLogsSize gets a reference to the given int64 and assigns it to the VcdbLogsSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVcdbLogsSize(v int64) {
+	o.VcdbLogsSize = &v
+}
+
+// GetVcdbSnapshotSize returns the VcdbSnapshotSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbSnapshotSize() int64 {
+	if o == nil || IsNil(o.VcdbSnapshotSize) {
+		var ret int64
+		return ret
+	}
+	return *o.VcdbSnapshotSize
+}
+
+// GetVcdbSnapshotSizeOk returns a tuple with the VcdbSnapshotSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetVcdbSnapshotSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.VcdbSnapshotSize) {
+		return nil, false
+	}
+	return o.VcdbSnapshotSize, true
+}
+
+// HasVcdbSnapshotSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasVcdbSnapshotSize() bool {
+	if o != nil && !IsNil(o.VcdbSnapshotSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbSnapshotSize gets a reference to the given int64 and assigns it to the VcdbSnapshotSize field.
+func (o *StorageSummaryProjectedDataPoint) SetVcdbSnapshotSize(v int64) {
+	o.VcdbSnapshotSize = &v
+}
+
+// GetHeldspaceTotalSize returns the HeldspaceTotalSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceTotalSize() int64 {
+	if o == nil || IsNil(o.HeldspaceTotalSize) {
+		var ret int64
+		return ret
+	}
+	return *o.HeldspaceTotalSize
+}
+
+// GetHeldspaceTotalSizeOk returns a tuple with the HeldspaceTotalSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceTotalSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.HeldspaceTotalSize) {
+		return nil, false
+	}
+	return o.HeldspaceTotalSize, true
+}
+
+// HasHeldspaceTotalSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasHeldspaceTotalSize() bool {
+	if o != nil && !IsNil(o.HeldspaceTotalSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetHeldspaceTotalSize gets a reference to the given int64 and assigns it to the HeldspaceTotalSize field.
+func (o *StorageSummaryProjectedDataPoint) SetHeldspaceTotalSize(v int64) {
+	o.HeldspaceTotalSize = &v
+}
+
+// GetHeldspaceBaseSize returns the HeldspaceBaseSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceBaseSize() int64 {
+	if o == nil || IsNil(o.HeldspaceBaseSize) {
+		var ret int64
+		return ret
+	}
+	return *o.HeldspaceBaseSize
+}
+
+// GetHeldspaceBaseSizeOk returns a tuple with the HeldspaceBaseSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceBaseSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.HeldspaceBaseSize) {
+		return nil, false
+	}
+	return o.HeldspaceBaseSize, true
+}
+
+// HasHeldspaceBaseSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasHeldspaceBaseSize() bool {
+	if o != nil && !IsNil(o.HeldspaceBaseSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetHeldspaceBaseSize gets a reference to the given int64 and assigns it to the HeldspaceBaseSize field.
+func (o *StorageSummaryProjectedDataPoint) SetHeldspaceBaseSize(v int64) {
+	o.HeldspaceBaseSize = &v
+}
+
+// GetHeldspaceLogsSize returns the HeldspaceLogsSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceLogsSize() int64 {
+	if o == nil || IsNil(o.HeldspaceLogsSize) {
+		var ret int64
+		return ret
+	}
+	return *o.HeldspaceLogsSize
+}
+
+// GetHeldspaceLogsSizeOk returns a tuple with the HeldspaceLogsSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceLogsSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.HeldspaceLogsSize) {
+		return nil, false
+	}
+	return o.HeldspaceLogsSize, true
+}
+
+// HasHeldspaceLogsSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasHeldspaceLogsSize() bool {
+	if o != nil && !IsNil(o.HeldspaceLogsSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetHeldspaceLogsSize gets a reference to the given int64 and assigns it to the HeldspaceLogsSize field.
+func (o *StorageSummaryProjectedDataPoint) SetHeldspaceLogsSize(v int64) {
+	o.HeldspaceLogsSize = &v
+}
+
+// GetHeldspaceSnapshotSize returns the HeldspaceSnapshotSize field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceSnapshotSize() int64 {
+	if o == nil || IsNil(o.HeldspaceSnapshotSize) {
+		var ret int64
+		return ret
+	}
+	return *o.HeldspaceSnapshotSize
+}
+
+// GetHeldspaceSnapshotSizeOk returns a tuple with the HeldspaceSnapshotSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetHeldspaceSnapshotSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.HeldspaceSnapshotSize) {
+		return nil, false
+	}
+	return o.HeldspaceSnapshotSize, true
+}
+
+// HasHeldspaceSnapshotSize returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasHeldspaceSnapshotSize() bool {
+	if o != nil && !IsNil(o.HeldspaceSnapshotSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetHeldspaceSnapshotSize gets a reference to the given int64 and assigns it to the HeldspaceSnapshotSize field.
+func (o *StorageSummaryProjectedDataPoint) SetHeldspaceSnapshotSize(v int64) {
+	o.HeldspaceSnapshotSize = &v
+}
+
 func (o StorageSummaryProjectedDataPoint) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -121,6 +801,66 @@ func (o StorageSummaryProjectedDataPoint) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.UsedStorage) {
 		toSerialize["used_storage"] = o.UsedStorage
+	}
+	if !IsNil(o.DsourceTotalSize) {
+		toSerialize["dsource_total_size"] = o.DsourceTotalSize
+	}
+	if !IsNil(o.DsourceBaseSize) {
+		toSerialize["dsource_base_size"] = o.DsourceBaseSize
+	}
+	if !IsNil(o.DsourceLogsSize) {
+		toSerialize["dsource_logs_size"] = o.DsourceLogsSize
+	}
+	if !IsNil(o.DsourceSnapshotSize) {
+		toSerialize["dsource_snapshot_size"] = o.DsourceSnapshotSize
+	}
+	if !IsNil(o.VdbTotalSize) {
+		toSerialize["vdb_total_size"] = o.VdbTotalSize
+	}
+	if !IsNil(o.VdbBaseSize) {
+		toSerialize["vdb_base_size"] = o.VdbBaseSize
+	}
+	if !IsNil(o.VdbLogsSize) {
+		toSerialize["vdb_logs_size"] = o.VdbLogsSize
+	}
+	if !IsNil(o.VdbSnapshotSize) {
+		toSerialize["vdb_snapshot_size"] = o.VdbSnapshotSize
+	}
+	if !IsNil(o.CdbTotalSize) {
+		toSerialize["cdb_total_size"] = o.CdbTotalSize
+	}
+	if !IsNil(o.CdbBaseSize) {
+		toSerialize["cdb_base_size"] = o.CdbBaseSize
+	}
+	if !IsNil(o.CdbLogsSize) {
+		toSerialize["cdb_logs_size"] = o.CdbLogsSize
+	}
+	if !IsNil(o.CdbSnapshotSize) {
+		toSerialize["cdb_snapshot_size"] = o.CdbSnapshotSize
+	}
+	if !IsNil(o.VcdbTotalSize) {
+		toSerialize["vcdb_total_size"] = o.VcdbTotalSize
+	}
+	if !IsNil(o.VcdbBaseSize) {
+		toSerialize["vcdb_base_size"] = o.VcdbBaseSize
+	}
+	if !IsNil(o.VcdbLogsSize) {
+		toSerialize["vcdb_logs_size"] = o.VcdbLogsSize
+	}
+	if !IsNil(o.VcdbSnapshotSize) {
+		toSerialize["vcdb_snapshot_size"] = o.VcdbSnapshotSize
+	}
+	if !IsNil(o.HeldspaceTotalSize) {
+		toSerialize["heldspace_total_size"] = o.HeldspaceTotalSize
+	}
+	if !IsNil(o.HeldspaceBaseSize) {
+		toSerialize["heldspace_base_size"] = o.HeldspaceBaseSize
+	}
+	if !IsNil(o.HeldspaceLogsSize) {
+		toSerialize["heldspace_logs_size"] = o.HeldspaceLogsSize
+	}
+	if !IsNil(o.HeldspaceSnapshotSize) {
+		toSerialize["heldspace_snapshot_size"] = o.HeldspaceSnapshotSize
 	}
 	return toSerialize, nil
 }

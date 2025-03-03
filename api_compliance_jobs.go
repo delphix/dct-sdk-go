@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -287,7 +287,7 @@ func (r ApiExecuteComplianceJobRequest) Execute() (*ExecuteComplianceJobResponse
 }
 
 /*
-ExecuteComplianceJob Execute a compliance.
+ExecuteComplianceJob Execute a compliance job.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param complianceJobId The ID of the compliance job.

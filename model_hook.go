@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -27,6 +27,7 @@ type Hook struct {
 	Shell *string `json:"shell,omitempty"`
 	ElementId *string `json:"element_id,omitempty"`
 	HasCredentials *bool `json:"has_credentials,omitempty"`
+	CredentialsEnvVars []CredentialsEnvVariable `json:"credentials_env_vars,omitempty"`
 }
 
 type _Hook Hook
@@ -201,6 +202,38 @@ func (o *Hook) SetHasCredentials(v bool) {
 	o.HasCredentials = &v
 }
 
+// GetCredentialsEnvVars returns the CredentialsEnvVars field value if set, zero value otherwise.
+func (o *Hook) GetCredentialsEnvVars() []CredentialsEnvVariable {
+	if o == nil || IsNil(o.CredentialsEnvVars) {
+		var ret []CredentialsEnvVariable
+		return ret
+	}
+	return o.CredentialsEnvVars
+}
+
+// GetCredentialsEnvVarsOk returns a tuple with the CredentialsEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetCredentialsEnvVarsOk() ([]CredentialsEnvVariable, bool) {
+	if o == nil || IsNil(o.CredentialsEnvVars) {
+		return nil, false
+	}
+	return o.CredentialsEnvVars, true
+}
+
+// HasCredentialsEnvVars returns a boolean if a field has been set.
+func (o *Hook) HasCredentialsEnvVars() bool {
+	if o != nil && !IsNil(o.CredentialsEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialsEnvVars gets a reference to the given []CredentialsEnvVariable and assigns it to the CredentialsEnvVars field.
+func (o *Hook) SetCredentialsEnvVars(v []CredentialsEnvVariable) {
+	o.CredentialsEnvVars = v
+}
+
 func (o Hook) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -223,6 +256,9 @@ func (o Hook) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.HasCredentials) {
 		toSerialize["has_credentials"] = o.HasCredentials
+	}
+	if !IsNil(o.CredentialsEnvVars) {
+		toSerialize["credentials_env_vars"] = o.CredentialsEnvVars
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -19,21 +19,21 @@ import (
 // checks if the ComplianceJob type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ComplianceJob{}
 
-// ComplianceJob A masking job.
+// ComplianceJob A compliance job.
 type ComplianceJob struct {
-	// The Masking Job entity ID.
+	// The Compliance Job entity ID.
 	Id *string `json:"id,omitempty"`
-	// The name of this Masking Job.
+	// The name of this Compliance Job.
 	Name *string `json:"name,omitempty"`
-	// The ID of the Rule Set used by this Masking Job (Standard Job only). For hyperscale jobs, see dataset_id.
+	// The ID of the Rule Set used by this Compliance Job (Standard Job only). For hyperscale jobs, see dataset_id.
 	RuleSetId *string `json:"rule_set_id,omitempty"`
-	// The name of the Rule Set used by this Masking Job (Standard Job only). For hyperscale jobs, see dataset_id.
+	// The name of the Rule Set used by this Compliance Job (Standard Job only). For hyperscale jobs, see dataset_id.
 	RuleSetName *string `json:"rule_set_name,omitempty"`
-	// The type of data being masked by this Job. If the Masking Job is masking a database this is the type of the database (Standard Job only).
+	// The type of data being masked by this Job. If the Compliance Job is masking a database this is the type of the database (Standard Job only).
 	ConnectorType *string `json:"connector_type,omitempty"`
 	// Whether this is an on-the-fly masking job (Standard Job only).
 	IsOnTheFlyMasking *bool `json:"is_on_the_fly_masking,omitempty"`
-	// The date this MaskingJob was created (Standard Job only).
+	// The date this ComplianceJob was created (Standard Job only).
 	CreationDate *time.Time `json:"creation_date,omitempty"`
 	// The date this ComplianceJob was last executed to completion.
 	LastCompletedExecutionDate *time.Time `json:"last_completed_execution_date,omitempty"`

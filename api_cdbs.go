@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -1017,6 +1017,124 @@ func (a *CDBsAPIService) GetCdbByIdExecute(r ApiGetCdbByIdRequest) (*CDB, *http.
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetCdbDeletionDependenciesRequest struct {
+	ctx context.Context
+	ApiService *CDBsAPIService
+	cdbId string
+}
+
+func (r ApiGetCdbDeletionDependenciesRequest) Execute() (*DeletionDependenciesResponse, *http.Response, error) {
+	return r.ApiService.GetCdbDeletionDependenciesExecute(r)
+}
+
+/*
+GetCdbDeletionDependencies Get deletion dependencies of a CDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param cdbId The ID of the CDB.
+ @return ApiGetCdbDeletionDependenciesRequest
+*/
+func (a *CDBsAPIService) GetCdbDeletionDependencies(ctx context.Context, cdbId string) ApiGetCdbDeletionDependenciesRequest {
+	return ApiGetCdbDeletionDependenciesRequest{
+		ApiService: a,
+		ctx: ctx,
+		cdbId: cdbId,
+	}
+}
+
+// Execute executes the request
+//  @return DeletionDependenciesResponse
+func (a *CDBsAPIService) GetCdbDeletionDependenciesExecute(r ApiGetCdbDeletionDependenciesRequest) (*DeletionDependenciesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeletionDependenciesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CDBsAPIService.GetCdbDeletionDependencies")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cdbs/{cdbId}/deletion-dependencies"
+	localVarPath = strings.Replace(localVarPath, "{"+"cdbId"+"}", url.PathEscape(parameterValueToString(r.cdbId, "cdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.cdbId) < 1 {
+		return localVarReturnValue, nil, reportError("cdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetCdbsRequest struct {
 	ctx context.Context
 	ApiService *CDBsAPIService
@@ -1432,6 +1550,133 @@ func (a *CDBsAPIService) SearchCdbsExecute(r ApiSearchCdbsRequest) (*SearchCDBsR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateCdbRequest struct {
+	ctx context.Context
+	ApiService *CDBsAPIService
+	cdbId string
+	updateCDBParameters *UpdateCDBParameters
+}
+
+// The parameters to update a CDB.
+func (r ApiUpdateCdbRequest) UpdateCDBParameters(updateCDBParameters UpdateCDBParameters) ApiUpdateCdbRequest {
+	r.updateCDBParameters = &updateCDBParameters
+	return r
+}
+
+func (r ApiUpdateCdbRequest) Execute() (*UpdateCDBResponse, *http.Response, error) {
+	return r.ApiService.UpdateCdbExecute(r)
+}
+
+/*
+UpdateCdb Update a CDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param cdbId The ID of the CDB.
+ @return ApiUpdateCdbRequest
+*/
+func (a *CDBsAPIService) UpdateCdb(ctx context.Context, cdbId string) ApiUpdateCdbRequest {
+	return ApiUpdateCdbRequest{
+		ApiService: a,
+		ctx: ctx,
+		cdbId: cdbId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateCDBResponse
+func (a *CDBsAPIService) UpdateCdbExecute(r ApiUpdateCdbRequest) (*UpdateCDBResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateCDBResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CDBsAPIService.UpdateCdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cdbs/{cdbId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"cdbId"+"}", url.PathEscape(parameterValueToString(r.cdbId, "cdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.cdbId) < 1 {
+		return localVarReturnValue, nil, reportError("cdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateCDBParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateCdbByIdRequest struct {
 	ctx context.Context
 	ApiService *CDBsAPIService
@@ -1455,6 +1700,8 @@ UpdateCdbById Update a CDB.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param cdbId The ID of the CDB.
  @return ApiUpdateCdbByIdRequest
+
+Deprecated
 */
 func (a *CDBsAPIService) UpdateCdbById(ctx context.Context, cdbId string) ApiUpdateCdbByIdRequest {
 	return ApiUpdateCdbByIdRequest{
@@ -1466,6 +1713,7 @@ func (a *CDBsAPIService) UpdateCdbById(ctx context.Context, cdbId string) ApiUpd
 
 // Execute executes the request
 //  @return UpdateCDBResponse
+// Deprecated
 func (a *CDBsAPIService) UpdateCdbByIdExecute(r ApiUpdateCdbByIdRequest) (*UpdateCDBResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
@@ -1635,6 +1883,133 @@ func (a *CDBsAPIService) UpgradeCdbExecute(r ApiUpgradeCdbRequest) (*UpgradeCDBR
 	}
 	// body params
 	localVarPostBody = r.upgradeOracleContainerDatabaseParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiVerifyCdbJdbcConnectionStringRequest struct {
+	ctx context.Context
+	ApiService *CDBsAPIService
+	cdbId string
+	oracleVerifyJdbcConnectionStringParams *OracleVerifyJdbcConnectionStringParams
+}
+
+// The parameters to verify oracle jdbc connection string.
+func (r ApiVerifyCdbJdbcConnectionStringRequest) OracleVerifyJdbcConnectionStringParams(oracleVerifyJdbcConnectionStringParams OracleVerifyJdbcConnectionStringParams) ApiVerifyCdbJdbcConnectionStringRequest {
+	r.oracleVerifyJdbcConnectionStringParams = &oracleVerifyJdbcConnectionStringParams
+	return r
+}
+
+func (r ApiVerifyCdbJdbcConnectionStringRequest) Execute() (*ConnectivityCheckResponse, *http.Response, error) {
+	return r.ApiService.VerifyCdbJdbcConnectionStringExecute(r)
+}
+
+/*
+VerifyCdbJdbcConnectionString Verify JDBC connection string for a CDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param cdbId The ID of the CDB.
+ @return ApiVerifyCdbJdbcConnectionStringRequest
+*/
+func (a *CDBsAPIService) VerifyCdbJdbcConnectionString(ctx context.Context, cdbId string) ApiVerifyCdbJdbcConnectionStringRequest {
+	return ApiVerifyCdbJdbcConnectionStringRequest{
+		ApiService: a,
+		ctx: ctx,
+		cdbId: cdbId,
+	}
+}
+
+// Execute executes the request
+//  @return ConnectivityCheckResponse
+func (a *CDBsAPIService) VerifyCdbJdbcConnectionStringExecute(r ApiVerifyCdbJdbcConnectionStringRequest) (*ConnectivityCheckResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConnectivityCheckResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CDBsAPIService.VerifyCdbJdbcConnectionString")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cdbs/{cdbId}/jdbc-check"
+	localVarPath = strings.Replace(localVarPath, "{"+"cdbId"+"}", url.PathEscape(parameterValueToString(r.cdbId, "cdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.cdbId) < 1 {
+		return localVarReturnValue, nil, reportError("cdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleVerifyJdbcConnectionStringParams
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

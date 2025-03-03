@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -887,6 +887,124 @@ func (a *VCDBsAPIService) GetVcdbByIdExecute(r ApiGetVcdbByIdRequest) (*VCDB, *h
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetVcdbDeletionDependenciesRequest struct {
+	ctx context.Context
+	ApiService *VCDBsAPIService
+	vcdbId string
+}
+
+func (r ApiGetVcdbDeletionDependenciesRequest) Execute() (*DeletionDependenciesResponse, *http.Response, error) {
+	return r.ApiService.GetVcdbDeletionDependenciesExecute(r)
+}
+
+/*
+GetVcdbDeletionDependencies Get deletion dependencies of a vCDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vcdbId The ID of the vCDB.
+ @return ApiGetVcdbDeletionDependenciesRequest
+*/
+func (a *VCDBsAPIService) GetVcdbDeletionDependencies(ctx context.Context, vcdbId string) ApiGetVcdbDeletionDependenciesRequest {
+	return ApiGetVcdbDeletionDependenciesRequest{
+		ApiService: a,
+		ctx: ctx,
+		vcdbId: vcdbId,
+	}
+}
+
+// Execute executes the request
+//  @return DeletionDependenciesResponse
+func (a *VCDBsAPIService) GetVcdbDeletionDependenciesExecute(r ApiGetVcdbDeletionDependenciesRequest) (*DeletionDependenciesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeletionDependenciesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VCDBsAPIService.GetVcdbDeletionDependencies")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vcdbs/{vcdbId}/deletion-dependencies"
+	localVarPath = strings.Replace(localVarPath, "{"+"vcdbId"+"}", url.PathEscape(parameterValueToString(r.vcdbId, "vcdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vcdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vcdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetVcdbsRequest struct {
 	ctx context.Context
 	ApiService *VCDBsAPIService
@@ -1436,6 +1554,133 @@ func (a *VCDBsAPIService) StopVcdbExecute(r ApiStopVcdbRequest) (*StopVCDBRespon
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateVcdbRequest struct {
+	ctx context.Context
+	ApiService *VCDBsAPIService
+	vcdbId string
+	updateVCDBParameters *UpdateVCDBParameters
+}
+
+// The parameters to update a VCDB.
+func (r ApiUpdateVcdbRequest) UpdateVCDBParameters(updateVCDBParameters UpdateVCDBParameters) ApiUpdateVcdbRequest {
+	r.updateVCDBParameters = &updateVCDBParameters
+	return r
+}
+
+func (r ApiUpdateVcdbRequest) Execute() (*UpdateVCDBResponse, *http.Response, error) {
+	return r.ApiService.UpdateVcdbExecute(r)
+}
+
+/*
+UpdateVcdb Update values of a VCDB
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vcdbId The ID of the vCDB.
+ @return ApiUpdateVcdbRequest
+*/
+func (a *VCDBsAPIService) UpdateVcdb(ctx context.Context, vcdbId string) ApiUpdateVcdbRequest {
+	return ApiUpdateVcdbRequest{
+		ApiService: a,
+		ctx: ctx,
+		vcdbId: vcdbId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateVCDBResponse
+func (a *VCDBsAPIService) UpdateVcdbExecute(r ApiUpdateVcdbRequest) (*UpdateVCDBResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateVCDBResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VCDBsAPIService.UpdateVcdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vcdbs/{vcdbId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"vcdbId"+"}", url.PathEscape(parameterValueToString(r.vcdbId, "vcdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vcdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vcdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateVCDBParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateVcdbByIdRequest struct {
 	ctx context.Context
 	ApiService *VCDBsAPIService
@@ -1459,6 +1704,8 @@ UpdateVcdbById Update a VCDB.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vcdbId The ID of the vCDB.
  @return ApiUpdateVcdbByIdRequest
+
+Deprecated
 */
 func (a *VCDBsAPIService) UpdateVcdbById(ctx context.Context, vcdbId string) ApiUpdateVcdbByIdRequest {
 	return ApiUpdateVcdbByIdRequest{
@@ -1470,6 +1717,7 @@ func (a *VCDBsAPIService) UpdateVcdbById(ctx context.Context, vcdbId string) Api
 
 // Execute executes the request
 //  @return UpdateVCDBResponse
+// Deprecated
 func (a *VCDBsAPIService) UpdateVcdbByIdExecute(r ApiUpdateVcdbByIdRequest) (*UpdateVCDBResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
@@ -1639,6 +1887,133 @@ func (a *VCDBsAPIService) UpgradeVcdbExecute(r ApiUpgradeVcdbRequest) (*UpgradeV
 	}
 	// body params
 	localVarPostBody = r.upgradeOracleContainerDatabaseParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiVerifyVcdbJdbcConnectionStringRequest struct {
+	ctx context.Context
+	ApiService *VCDBsAPIService
+	vcdbId string
+	oracleVerifyJdbcConnectionStringParams *OracleVerifyJdbcConnectionStringParams
+}
+
+// The parameters to verify oracle jdbc connection string.
+func (r ApiVerifyVcdbJdbcConnectionStringRequest) OracleVerifyJdbcConnectionStringParams(oracleVerifyJdbcConnectionStringParams OracleVerifyJdbcConnectionStringParams) ApiVerifyVcdbJdbcConnectionStringRequest {
+	r.oracleVerifyJdbcConnectionStringParams = &oracleVerifyJdbcConnectionStringParams
+	return r
+}
+
+func (r ApiVerifyVcdbJdbcConnectionStringRequest) Execute() (*ConnectivityCheckResponse, *http.Response, error) {
+	return r.ApiService.VerifyVcdbJdbcConnectionStringExecute(r)
+}
+
+/*
+VerifyVcdbJdbcConnectionString Verify JDBC connection string for a vCDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vcdbId The ID of the vCDB.
+ @return ApiVerifyVcdbJdbcConnectionStringRequest
+*/
+func (a *VCDBsAPIService) VerifyVcdbJdbcConnectionString(ctx context.Context, vcdbId string) ApiVerifyVcdbJdbcConnectionStringRequest {
+	return ApiVerifyVcdbJdbcConnectionStringRequest{
+		ApiService: a,
+		ctx: ctx,
+		vcdbId: vcdbId,
+	}
+}
+
+// Execute executes the request
+//  @return ConnectivityCheckResponse
+func (a *VCDBsAPIService) VerifyVcdbJdbcConnectionStringExecute(r ApiVerifyVcdbJdbcConnectionStringRequest) (*ConnectivityCheckResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConnectivityCheckResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VCDBsAPIService.VerifyVcdbJdbcConnectionString")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vcdbs/{vcdbId}/jdbc-check"
+	localVarPath = strings.Replace(localVarPath, "{"+"vcdbId"+"}", url.PathEscape(parameterValueToString(r.vcdbId, "vcdbId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.vcdbId) < 1 {
+		return localVarReturnValue, nil, reportError("vcdbId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleVerifyJdbcConnectionStringParams
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

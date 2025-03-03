@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -31,6 +31,7 @@ type VDBGroupRefreshByTimestamp struct {
 	TimestampInDatabaseTimezone *string `json:"timestamp_in_database_timezone,omitempty" validate:"regexp=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{0,3})?"`
 	// The Timeflow ID.
 	TimeflowId *string `json:"timeflow_id,omitempty"`
+	Mode *RefreshModeEnum `json:"mode,omitempty"`
 }
 
 type _VDBGroupRefreshByTimestamp VDBGroupRefreshByTimestamp
@@ -173,6 +174,38 @@ func (o *VDBGroupRefreshByTimestamp) SetTimeflowId(v string) {
 	o.TimeflowId = &v
 }
 
+// GetMode returns the Mode field value if set, zero value otherwise.
+func (o *VDBGroupRefreshByTimestamp) GetMode() RefreshModeEnum {
+	if o == nil || IsNil(o.Mode) {
+		var ret RefreshModeEnum
+		return ret
+	}
+	return *o.Mode
+}
+
+// GetModeOk returns a tuple with the Mode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBGroupRefreshByTimestamp) GetModeOk() (*RefreshModeEnum, bool) {
+	if o == nil || IsNil(o.Mode) {
+		return nil, false
+	}
+	return o.Mode, true
+}
+
+// HasMode returns a boolean if a field has been set.
+func (o *VDBGroupRefreshByTimestamp) HasMode() bool {
+	if o != nil && !IsNil(o.Mode) {
+		return true
+	}
+
+	return false
+}
+
+// SetMode gets a reference to the given RefreshModeEnum and assigns it to the Mode field.
+func (o *VDBGroupRefreshByTimestamp) SetMode(v RefreshModeEnum) {
+	o.Mode = &v
+}
+
 func (o VDBGroupRefreshByTimestamp) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,6 +225,9 @@ func (o VDBGroupRefreshByTimestamp) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TimeflowId) {
 		toSerialize["timeflow_id"] = o.TimeflowId
+	}
+	if !IsNil(o.Mode) {
+		toSerialize["mode"] = o.Mode
 	}
 	return toSerialize, nil
 }

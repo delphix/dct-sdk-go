@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -31,6 +31,8 @@ type CreateRole struct {
 	// If set to true, adding or removing permission is not allowed.
 	Immutable *bool `json:"immutable,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// The list of profiles that influence the navigation menus shown in the UI.
+	UiProfiles []string `json:"ui_profiles,omitempty"`
 }
 
 type _CreateRole CreateRole
@@ -202,6 +204,38 @@ func (o *CreateRole) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetUiProfiles returns the UiProfiles field value if set, zero value otherwise.
+func (o *CreateRole) GetUiProfiles() []string {
+	if o == nil || IsNil(o.UiProfiles) {
+		var ret []string
+		return ret
+	}
+	return o.UiProfiles
+}
+
+// GetUiProfilesOk returns a tuple with the UiProfiles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateRole) GetUiProfilesOk() ([]string, bool) {
+	if o == nil || IsNil(o.UiProfiles) {
+		return nil, false
+	}
+	return o.UiProfiles, true
+}
+
+// HasUiProfiles returns a boolean if a field has been set.
+func (o *CreateRole) HasUiProfiles() bool {
+	if o != nil && !IsNil(o.UiProfiles) {
+		return true
+	}
+
+	return false
+}
+
+// SetUiProfiles gets a reference to the given []string and assigns it to the UiProfiles field.
+func (o *CreateRole) SetUiProfiles(v []string) {
+	o.UiProfiles = v
+}
+
 func (o CreateRole) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -222,6 +256,9 @@ func (o CreateRole) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.UiProfiles) {
+		toSerialize["ui_profiles"] = o.UiProfiles
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -70,6 +70,8 @@ type Execution struct {
 	ExecutionComponentsTotal *int32 `json:"execution_components_total,omitempty"`
 	// The number of execution components processed so far in this execution.
 	ExecutionComponentsProcessed *int32 `json:"execution_components_processed,omitempty"`
+	// The id of the compliance job collection execution this execution is part of, if any
+	CollectionExecutionId *string `json:"collection_execution_id,omitempty"`
 }
 
 // NewExecution instantiates a new Execution object
@@ -921,6 +923,38 @@ func (o *Execution) SetExecutionComponentsProcessed(v int32) {
 	o.ExecutionComponentsProcessed = &v
 }
 
+// GetCollectionExecutionId returns the CollectionExecutionId field value if set, zero value otherwise.
+func (o *Execution) GetCollectionExecutionId() string {
+	if o == nil || IsNil(o.CollectionExecutionId) {
+		var ret string
+		return ret
+	}
+	return *o.CollectionExecutionId
+}
+
+// GetCollectionExecutionIdOk returns a tuple with the CollectionExecutionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetCollectionExecutionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CollectionExecutionId) {
+		return nil, false
+	}
+	return o.CollectionExecutionId, true
+}
+
+// HasCollectionExecutionId returns a boolean if a field has been set.
+func (o *Execution) HasCollectionExecutionId() bool {
+	if o != nil && !IsNil(o.CollectionExecutionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCollectionExecutionId gets a reference to the given string and assigns it to the CollectionExecutionId field.
+func (o *Execution) SetCollectionExecutionId(v string) {
+	o.CollectionExecutionId = &v
+}
+
 func (o Execution) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1008,6 +1042,9 @@ func (o Execution) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExecutionComponentsProcessed) {
 		toSerialize["execution_components_processed"] = o.ExecutionComponentsProcessed
+	}
+	if !IsNil(o.CollectionExecutionId) {
+		toSerialize["collection_execution_id"] = o.CollectionExecutionId
 	}
 	return toSerialize, nil
 }

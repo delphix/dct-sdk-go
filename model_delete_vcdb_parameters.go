@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,8 @@ var _ MappedNullable = &DeleteVCDBParameters{}
 type DeleteVCDBParameters struct {
 	// Whether to continue the operation upon failures.
 	Force *bool `json:"force,omitempty"`
+	// Whether to delete all dependent datasets of the CDB.
+	DeleteAllDependentDatasets *bool `json:"delete_all_dependent_datasets,omitempty"`
 }
 
 // NewDeleteVCDBParameters instantiates a new DeleteVCDBParameters object
@@ -32,6 +34,8 @@ func NewDeleteVCDBParameters() *DeleteVCDBParameters {
 	this := DeleteVCDBParameters{}
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentDatasets bool = false
+	this.DeleteAllDependentDatasets = &deleteAllDependentDatasets
 	return &this
 }
 
@@ -42,6 +46,8 @@ func NewDeleteVCDBParametersWithDefaults() *DeleteVCDBParameters {
 	this := DeleteVCDBParameters{}
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentDatasets bool = false
+	this.DeleteAllDependentDatasets = &deleteAllDependentDatasets
 	return &this
 }
 
@@ -77,6 +83,38 @@ func (o *DeleteVCDBParameters) SetForce(v bool) {
 	o.Force = &v
 }
 
+// GetDeleteAllDependentDatasets returns the DeleteAllDependentDatasets field value if set, zero value otherwise.
+func (o *DeleteVCDBParameters) GetDeleteAllDependentDatasets() bool {
+	if o == nil || IsNil(o.DeleteAllDependentDatasets) {
+		var ret bool
+		return ret
+	}
+	return *o.DeleteAllDependentDatasets
+}
+
+// GetDeleteAllDependentDatasetsOk returns a tuple with the DeleteAllDependentDatasets field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteVCDBParameters) GetDeleteAllDependentDatasetsOk() (*bool, bool) {
+	if o == nil || IsNil(o.DeleteAllDependentDatasets) {
+		return nil, false
+	}
+	return o.DeleteAllDependentDatasets, true
+}
+
+// HasDeleteAllDependentDatasets returns a boolean if a field has been set.
+func (o *DeleteVCDBParameters) HasDeleteAllDependentDatasets() bool {
+	if o != nil && !IsNil(o.DeleteAllDependentDatasets) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeleteAllDependentDatasets gets a reference to the given bool and assigns it to the DeleteAllDependentDatasets field.
+func (o *DeleteVCDBParameters) SetDeleteAllDependentDatasets(v bool) {
+	o.DeleteAllDependentDatasets = &v
+}
+
 func (o DeleteVCDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -89,6 +127,9 @@ func (o DeleteVCDBParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Force) {
 		toSerialize["force"] = o.Force
+	}
+	if !IsNil(o.DeleteAllDependentDatasets) {
+		toSerialize["delete_all_dependent_datasets"] = o.DeleteAllDependentDatasets
 	}
 	return toSerialize, nil
 }

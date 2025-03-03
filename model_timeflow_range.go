@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -33,6 +33,10 @@ type TimeflowRange struct {
 	TimeflowId *string `json:"timeflow_id,omitempty"`
 	// Whether or not this range is provisionable.
 	Provisionable *bool `json:"provisionable,omitempty"`
+	// Time in milliseconds b/w timestamp and snapshot timestamp.
+	LogDelta *int64 `json:"log_delta,omitempty"`
+	// true if timeflow range is found from nearest snapshot corresponding to provided timestamp, else false
+	IsNearest *bool `json:"is_nearest,omitempty"`
 }
 
 // NewTimeflowRange instantiates a new TimeflowRange object
@@ -244,6 +248,70 @@ func (o *TimeflowRange) SetProvisionable(v bool) {
 	o.Provisionable = &v
 }
 
+// GetLogDelta returns the LogDelta field value if set, zero value otherwise.
+func (o *TimeflowRange) GetLogDelta() int64 {
+	if o == nil || IsNil(o.LogDelta) {
+		var ret int64
+		return ret
+	}
+	return *o.LogDelta
+}
+
+// GetLogDeltaOk returns a tuple with the LogDelta field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TimeflowRange) GetLogDeltaOk() (*int64, bool) {
+	if o == nil || IsNil(o.LogDelta) {
+		return nil, false
+	}
+	return o.LogDelta, true
+}
+
+// HasLogDelta returns a boolean if a field has been set.
+func (o *TimeflowRange) HasLogDelta() bool {
+	if o != nil && !IsNil(o.LogDelta) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogDelta gets a reference to the given int64 and assigns it to the LogDelta field.
+func (o *TimeflowRange) SetLogDelta(v int64) {
+	o.LogDelta = &v
+}
+
+// GetIsNearest returns the IsNearest field value if set, zero value otherwise.
+func (o *TimeflowRange) GetIsNearest() bool {
+	if o == nil || IsNil(o.IsNearest) {
+		var ret bool
+		return ret
+	}
+	return *o.IsNearest
+}
+
+// GetIsNearestOk returns a tuple with the IsNearest field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TimeflowRange) GetIsNearestOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsNearest) {
+		return nil, false
+	}
+	return o.IsNearest, true
+}
+
+// HasIsNearest returns a boolean if a field has been set.
+func (o *TimeflowRange) HasIsNearest() bool {
+	if o != nil && !IsNil(o.IsNearest) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsNearest gets a reference to the given bool and assigns it to the IsNearest field.
+func (o *TimeflowRange) SetIsNearest(v bool) {
+	o.IsNearest = &v
+}
+
 func (o TimeflowRange) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -271,6 +339,12 @@ func (o TimeflowRange) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Provisionable) {
 		toSerialize["provisionable"] = o.Provisionable
+	}
+	if !IsNil(o.LogDelta) {
+		toSerialize["log_delta"] = o.LogDelta
+	}
+	if !IsNil(o.IsNearest) {
+		toSerialize["is_nearest"] = o.IsNearest
 	}
 	return toSerialize, nil
 }

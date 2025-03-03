@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -68,6 +68,10 @@ type VCDB struct {
 	OracleServices []OracleService `json:"oracle_services,omitempty"`
 	// The repository id of this Virtual CDB.
 	RepositoryId *string `json:"repository_id,omitempty"`
+	ContainerizationState *ContainerizationStateEnum `json:"containerization_state,omitempty"`
+	// ID of the key created by Delphix, as recorded in v$encryption_keys.key_id.
+	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 }
 
 // NewVCDB instantiates a new VCDB object
@@ -997,6 +1001,102 @@ func (o *VCDB) SetRepositoryId(v string) {
 	o.RepositoryId = &v
 }
 
+// GetContainerizationState returns the ContainerizationState field value if set, zero value otherwise.
+func (o *VCDB) GetContainerizationState() ContainerizationStateEnum {
+	if o == nil || IsNil(o.ContainerizationState) {
+		var ret ContainerizationStateEnum
+		return ret
+	}
+	return *o.ContainerizationState
+}
+
+// GetContainerizationStateOk returns a tuple with the ContainerizationState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetContainerizationStateOk() (*ContainerizationStateEnum, bool) {
+	if o == nil || IsNil(o.ContainerizationState) {
+		return nil, false
+	}
+	return o.ContainerizationState, true
+}
+
+// HasContainerizationState returns a boolean if a field has been set.
+func (o *VCDB) HasContainerizationState() bool {
+	if o != nil && !IsNil(o.ContainerizationState) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerizationState gets a reference to the given ContainerizationStateEnum and assigns it to the ContainerizationState field.
+func (o *VCDB) SetContainerizationState(v ContainerizationStateEnum) {
+	o.ContainerizationState = &v
+}
+
+// GetTdeKeyIdentifier returns the TdeKeyIdentifier field value if set, zero value otherwise.
+func (o *VCDB) GetTdeKeyIdentifier() string {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeyIdentifier
+}
+
+// GetTdeKeyIdentifierOk returns a tuple with the TdeKeyIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetTdeKeyIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		return nil, false
+	}
+	return o.TdeKeyIdentifier, true
+}
+
+// HasTdeKeyIdentifier returns a boolean if a field has been set.
+func (o *VCDB) HasTdeKeyIdentifier() bool {
+	if o != nil && !IsNil(o.TdeKeyIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeyIdentifier gets a reference to the given string and assigns it to the TdeKeyIdentifier field.
+func (o *VCDB) SetTdeKeyIdentifier(v string) {
+	o.TdeKeyIdentifier = &v
+}
+
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *VCDB) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *VCDB) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *VCDB) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
 func (o VCDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1081,6 +1181,15 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RepositoryId) {
 		toSerialize["repository_id"] = o.RepositoryId
+	}
+	if !IsNil(o.ContainerizationState) {
+		toSerialize["containerization_state"] = o.ContainerizationState
+	}
+	if !IsNil(o.TdeKeyIdentifier) {
+		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
+	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
 	}
 	return toSerialize, nil
 }

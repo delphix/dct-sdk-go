@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -69,6 +69,11 @@ type UpdateOracleDsourceParameters struct {
 	StagingDatabaseConfigParams map[string]interface{} `json:"staging_database_config_params,omitempty"`
 	// The template ID of the target Oracle Staging Push dSource.
 	TemplateId *string `json:"template_id,omitempty"`
+	// True if LogSync is enabled for this dSource.
+	LogsyncEnabled *bool `json:"logsync_enabled,omitempty"`
+	LogsyncMode *OracleLogsyncModeTypeEnum `json:"logsync_mode,omitempty"`
+	// Interval between LogSync requests, in seconds.
+	LogsyncInterval *int32 `json:"logsync_interval,omitempty"`
 }
 
 // NewUpdateOracleDsourceParameters instantiates a new UpdateOracleDsourceParameters object
@@ -893,6 +898,102 @@ func (o *UpdateOracleDsourceParameters) SetTemplateId(v string) {
 	o.TemplateId = &v
 }
 
+// GetLogsyncEnabled returns the LogsyncEnabled field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetLogsyncEnabled() bool {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.LogsyncEnabled
+}
+
+// GetLogsyncEnabledOk returns a tuple with the LogsyncEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetLogsyncEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		return nil, false
+	}
+	return o.LogsyncEnabled, true
+}
+
+// HasLogsyncEnabled returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasLogsyncEnabled() bool {
+	if o != nil && !IsNil(o.LogsyncEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncEnabled gets a reference to the given bool and assigns it to the LogsyncEnabled field.
+func (o *UpdateOracleDsourceParameters) SetLogsyncEnabled(v bool) {
+	o.LogsyncEnabled = &v
+}
+
+// GetLogsyncMode returns the LogsyncMode field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetLogsyncMode() OracleLogsyncModeTypeEnum {
+	if o == nil || IsNil(o.LogsyncMode) {
+		var ret OracleLogsyncModeTypeEnum
+		return ret
+	}
+	return *o.LogsyncMode
+}
+
+// GetLogsyncModeOk returns a tuple with the LogsyncMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetLogsyncModeOk() (*OracleLogsyncModeTypeEnum, bool) {
+	if o == nil || IsNil(o.LogsyncMode) {
+		return nil, false
+	}
+	return o.LogsyncMode, true
+}
+
+// HasLogsyncMode returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasLogsyncMode() bool {
+	if o != nil && !IsNil(o.LogsyncMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncMode gets a reference to the given OracleLogsyncModeTypeEnum and assigns it to the LogsyncMode field.
+func (o *UpdateOracleDsourceParameters) SetLogsyncMode(v OracleLogsyncModeTypeEnum) {
+	o.LogsyncMode = &v
+}
+
+// GetLogsyncInterval returns the LogsyncInterval field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetLogsyncInterval() int32 {
+	if o == nil || IsNil(o.LogsyncInterval) {
+		var ret int32
+		return ret
+	}
+	return *o.LogsyncInterval
+}
+
+// GetLogsyncIntervalOk returns a tuple with the LogsyncInterval field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetLogsyncIntervalOk() (*int32, bool) {
+	if o == nil || IsNil(o.LogsyncInterval) {
+		return nil, false
+	}
+	return o.LogsyncInterval, true
+}
+
+// HasLogsyncInterval returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasLogsyncInterval() bool {
+	if o != nil && !IsNil(o.LogsyncInterval) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncInterval gets a reference to the given int32 and assigns it to the LogsyncInterval field.
+func (o *UpdateOracleDsourceParameters) SetLogsyncInterval(v int32) {
+	o.LogsyncInterval = &v
+}
+
 func (o UpdateOracleDsourceParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -977,6 +1078,15 @@ func (o UpdateOracleDsourceParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TemplateId) {
 		toSerialize["template_id"] = o.TemplateId
+	}
+	if !IsNil(o.LogsyncEnabled) {
+		toSerialize["logsync_enabled"] = o.LogsyncEnabled
+	}
+	if !IsNil(o.LogsyncMode) {
+		toSerialize["logsync_mode"] = o.LogsyncMode
+	}
+	if !IsNil(o.LogsyncInterval) {
+		toSerialize["logsync_interval"] = o.LogsyncInterval
 	}
 	return toSerialize, nil
 }

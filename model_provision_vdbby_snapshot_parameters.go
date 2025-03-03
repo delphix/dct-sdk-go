@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -140,6 +140,7 @@ type ProvisionVDBBySnapshotParameters struct {
 	CdbTdeKeystorePassword *string `json:"cdb_tde_keystore_password,omitempty"`
 	// ID of the key created by Delphix. (Oracle Multitenant Only)
 	VcdbTdeKeyIdentifier *string `json:"vcdb_tde_key_identifier,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
 	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
 	// Specifies additional locations on which to mount a subdirectory of an AppData container.
@@ -162,6 +163,8 @@ type ProvisionVDBBySnapshotParameters struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// Whether to invoke datapatch during provisioning (Oracle Only).
 	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// Whether the virtual database will be provisioned for a containerized environment, such as Linux containers.
+	ContainerMode *bool `json:"container_mode,omitempty"`
 	// The ID of the snapshot from which to execute the operation. If the snapshot_id is not, selects the latest snapshot.
 	SnapshotId *string `json:"snapshot_id,omitempty"`
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
@@ -2087,6 +2090,38 @@ func (o *ProvisionVDBBySnapshotParameters) SetVcdbTdeKeyIdentifier(v string) {
 	o.VcdbTdeKeyIdentifier = &v
 }
 
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *ProvisionVDBBySnapshotParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
 // GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise.
 func (o *ProvisionVDBBySnapshotParameters) GetAppdataSourceParams() map[string]interface{} {
 	if o == nil || IsNil(o.AppdataSourceParams) {
@@ -2442,6 +2477,38 @@ func (o *ProvisionVDBBySnapshotParameters) SetInvokeDatapatch(v bool) {
 	o.InvokeDatapatch = &v
 }
 
+// GetContainerMode returns the ContainerMode field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetContainerMode() bool {
+	if o == nil || IsNil(o.ContainerMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ContainerMode
+}
+
+// GetContainerModeOk returns a tuple with the ContainerMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetContainerModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ContainerMode) {
+		return nil, false
+	}
+	return o.ContainerMode, true
+}
+
+// HasContainerMode returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasContainerMode() bool {
+	if o != nil && !IsNil(o.ContainerMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerMode gets a reference to the given bool and assigns it to the ContainerMode field.
+func (o *ProvisionVDBBySnapshotParameters) SetContainerMode(v bool) {
+	o.ContainerMode = &v
+}
+
 // GetSnapshotId returns the SnapshotId field value if set, zero value otherwise.
 func (o *ProvisionVDBBySnapshotParameters) GetSnapshotId() string {
 	if o == nil || IsNil(o.SnapshotId) {
@@ -2757,6 +2824,9 @@ func (o ProvisionVDBBySnapshotParameters) ToMap() (map[string]interface{}, error
 	if !IsNil(o.VcdbTdeKeyIdentifier) {
 		toSerialize["vcdb_tde_key_identifier"] = o.VcdbTdeKeyIdentifier
 	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
 	if !IsNil(o.AppdataSourceParams) {
 		toSerialize["appdata_source_params"] = o.AppdataSourceParams
 	}
@@ -2789,6 +2859,9 @@ func (o ProvisionVDBBySnapshotParameters) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.InvokeDatapatch) {
 		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.ContainerMode) {
+		toSerialize["container_mode"] = o.ContainerMode
 	}
 	if !IsNil(o.SnapshotId) {
 		toSerialize["snapshot_id"] = o.SnapshotId

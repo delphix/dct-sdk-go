@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,129 @@ import (
 
 // SourcesAPIService SourcesAPI service
 type SourcesAPIService service
+
+type ApiCreateAppDataSourceRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	appDataSourceCreateParameters *AppDataSourceCreateParameters
+}
+
+// The parameters to create a AppData source.
+func (r ApiCreateAppDataSourceRequest) AppDataSourceCreateParameters(appDataSourceCreateParameters AppDataSourceCreateParameters) ApiCreateAppDataSourceRequest {
+	r.appDataSourceCreateParameters = &appDataSourceCreateParameters
+	return r
+}
+
+func (r ApiCreateAppDataSourceRequest) Execute() (*CreateAppDataSourceResponse, *http.Response, error) {
+	return r.ApiService.CreateAppDataSourceExecute(r)
+}
+
+/*
+CreateAppDataSource Create an AppData source.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateAppDataSourceRequest
+*/
+func (a *SourcesAPIService) CreateAppDataSource(ctx context.Context) ApiCreateAppDataSourceRequest {
+	return ApiCreateAppDataSourceRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateAppDataSourceResponse
+func (a *SourcesAPIService) CreateAppDataSourceExecute(r ApiCreateAppDataSourceRequest) (*CreateAppDataSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateAppDataSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.CreateAppDataSource")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/appdata"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.appDataSourceCreateParameters == nil {
+		return localVarReturnValue, nil, reportError("appDataSourceCreateParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.appDataSourceCreateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreateOracleSourceRequest struct {
 	ctx context.Context
@@ -1282,6 +1405,133 @@ func (a *SourcesAPIService) SearchSourcesExecute(r ApiSearchSourcesRequest) (*Se
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateOracleSourceByIdRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	sourceId string
+	oracleSourceUpdateParameters *OracleSourceUpdateParameters
+}
+
+// The parameters to update a Oracle source
+func (r ApiUpdateOracleSourceByIdRequest) OracleSourceUpdateParameters(oracleSourceUpdateParameters OracleSourceUpdateParameters) ApiUpdateOracleSourceByIdRequest {
+	r.oracleSourceUpdateParameters = &oracleSourceUpdateParameters
+	return r
+}
+
+func (r ApiUpdateOracleSourceByIdRequest) Execute() (*UpdateOracleSourceResponse, *http.Response, error) {
+	return r.ApiService.UpdateOracleSourceByIdExecute(r)
+}
+
+/*
+UpdateOracleSourceById Update an Oracle source by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sourceId The ID of the Source.
+ @return ApiUpdateOracleSourceByIdRequest
+*/
+func (a *SourcesAPIService) UpdateOracleSourceById(ctx context.Context, sourceId string) ApiUpdateOracleSourceByIdRequest {
+	return ApiUpdateOracleSourceByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		sourceId: sourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateOracleSourceResponse
+func (a *SourcesAPIService) UpdateOracleSourceByIdExecute(r ApiUpdateOracleSourceByIdRequest) (*UpdateOracleSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateOracleSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.UpdateOracleSourceById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/oracle/{sourceId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"sourceId"+"}", url.PathEscape(parameterValueToString(r.sourceId, "sourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.sourceId) < 1 {
+		return localVarReturnValue, nil, reportError("sourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleSourceUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdatePostgresSourceByIdRequest struct {
 	ctx context.Context
 	ApiService *SourcesAPIService
@@ -1432,6 +1682,8 @@ UpdateSourceById Update a Source.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param sourceId The ID of the Source.
  @return ApiUpdateSourceByIdRequest
+
+Deprecated
 */
 func (a *SourcesAPIService) UpdateSourceById(ctx context.Context, sourceId string) ApiUpdateSourceByIdRequest {
 	return ApiUpdateSourceByIdRequest{
@@ -1443,6 +1695,7 @@ func (a *SourcesAPIService) UpdateSourceById(ctx context.Context, sourceId strin
 
 // Execute executes the request
 //  @return UpdateSourceResponse
+// Deprecated
 func (a *SourcesAPIService) UpdateSourceByIdExecute(r ApiUpdateSourceByIdRequest) (*UpdateSourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
@@ -1485,6 +1738,133 @@ func (a *SourcesAPIService) UpdateSourceByIdExecute(r ApiUpdateSourceByIdRequest
 	}
 	// body params
 	localVarPostBody = r.updateSourceParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiVerifySourceJdbcConnectionStringRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	sourceId string
+	oracleVerifyJdbcConnectionStringParams *OracleVerifyJdbcConnectionStringParams
+}
+
+// The parameters to verify oracle jdbc connection string.
+func (r ApiVerifySourceJdbcConnectionStringRequest) OracleVerifyJdbcConnectionStringParams(oracleVerifyJdbcConnectionStringParams OracleVerifyJdbcConnectionStringParams) ApiVerifySourceJdbcConnectionStringRequest {
+	r.oracleVerifyJdbcConnectionStringParams = &oracleVerifyJdbcConnectionStringParams
+	return r
+}
+
+func (r ApiVerifySourceJdbcConnectionStringRequest) Execute() (*ConnectivityCheckResponse, *http.Response, error) {
+	return r.ApiService.VerifySourceJdbcConnectionStringExecute(r)
+}
+
+/*
+VerifySourceJdbcConnectionString Verify JDBC connection string for a source.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sourceId The ID of the Source.
+ @return ApiVerifySourceJdbcConnectionStringRequest
+*/
+func (a *SourcesAPIService) VerifySourceJdbcConnectionString(ctx context.Context, sourceId string) ApiVerifySourceJdbcConnectionStringRequest {
+	return ApiVerifySourceJdbcConnectionStringRequest{
+		ApiService: a,
+		ctx: ctx,
+		sourceId: sourceId,
+	}
+}
+
+// Execute executes the request
+//  @return ConnectivityCheckResponse
+func (a *SourcesAPIService) VerifySourceJdbcConnectionStringExecute(r ApiVerifySourceJdbcConnectionStringRequest) (*ConnectivityCheckResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConnectivityCheckResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.VerifySourceJdbcConnectionString")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/{sourceId}/jdbc-check"
+	localVarPath = strings.Replace(localVarPath, "{"+"sourceId"+"}", url.PathEscape(parameterValueToString(r.sourceId, "sourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.sourceId) < 1 {
+		return localVarReturnValue, nil, reportError("sourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleVerifyJdbcConnectionStringParams
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

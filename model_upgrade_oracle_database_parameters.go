@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -20,7 +20,7 @@ import (
 // checks if the UpgradeOracleDatabaseParameters type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UpgradeOracleDatabaseParameters{}
 
-// UpgradeOracleDatabaseParameters Parameters to upgrade a dSource/VDB.
+// UpgradeOracleDatabaseParameters Parameters to upgrade an Oracle dataset.
 type UpgradeOracleDatabaseParameters struct {
 	// The id of the dSource/VDB repository to upgrade to.
 	RepositoryId string `json:"repository_id"`

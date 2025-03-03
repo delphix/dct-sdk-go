@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -55,6 +55,10 @@ type HostUpdateParameters struct {
 	SshVerificationStrategy *SSHVerificationStrategy `json:"ssh_verification_strategy,omitempty"`
 	// Unique per Delphix key used to authenticate with the remote Delphix Connector.
 	ConnectorAuthenticationKey *string `json:"connector_authentication_key,omitempty"`
+	// The path to the Oracle Key Vault library installation on the database node.
+	OracleTdeOkvHomePath *string `json:"oracle_tde_okv_home_path,omitempty"`
+	// The credential of the tde keystore external keys management system like Oracle Key Vault or Hardware Security Module.
+	OracleTdeExternalKeyManagerCredential *string `json:"oracle_tde_external_key_manager_credential,omitempty"`
 }
 
 // NewHostUpdateParameters instantiates a new HostUpdateParameters object
@@ -650,6 +654,70 @@ func (o *HostUpdateParameters) SetConnectorAuthenticationKey(v string) {
 	o.ConnectorAuthenticationKey = &v
 }
 
+// GetOracleTdeOkvHomePath returns the OracleTdeOkvHomePath field value if set, zero value otherwise.
+func (o *HostUpdateParameters) GetOracleTdeOkvHomePath() string {
+	if o == nil || IsNil(o.OracleTdeOkvHomePath) {
+		var ret string
+		return ret
+	}
+	return *o.OracleTdeOkvHomePath
+}
+
+// GetOracleTdeOkvHomePathOk returns a tuple with the OracleTdeOkvHomePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HostUpdateParameters) GetOracleTdeOkvHomePathOk() (*string, bool) {
+	if o == nil || IsNil(o.OracleTdeOkvHomePath) {
+		return nil, false
+	}
+	return o.OracleTdeOkvHomePath, true
+}
+
+// HasOracleTdeOkvHomePath returns a boolean if a field has been set.
+func (o *HostUpdateParameters) HasOracleTdeOkvHomePath() bool {
+	if o != nil && !IsNil(o.OracleTdeOkvHomePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleTdeOkvHomePath gets a reference to the given string and assigns it to the OracleTdeOkvHomePath field.
+func (o *HostUpdateParameters) SetOracleTdeOkvHomePath(v string) {
+	o.OracleTdeOkvHomePath = &v
+}
+
+// GetOracleTdeExternalKeyManagerCredential returns the OracleTdeExternalKeyManagerCredential field value if set, zero value otherwise.
+func (o *HostUpdateParameters) GetOracleTdeExternalKeyManagerCredential() string {
+	if o == nil || IsNil(o.OracleTdeExternalKeyManagerCredential) {
+		var ret string
+		return ret
+	}
+	return *o.OracleTdeExternalKeyManagerCredential
+}
+
+// GetOracleTdeExternalKeyManagerCredentialOk returns a tuple with the OracleTdeExternalKeyManagerCredential field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HostUpdateParameters) GetOracleTdeExternalKeyManagerCredentialOk() (*string, bool) {
+	if o == nil || IsNil(o.OracleTdeExternalKeyManagerCredential) {
+		return nil, false
+	}
+	return o.OracleTdeExternalKeyManagerCredential, true
+}
+
+// HasOracleTdeExternalKeyManagerCredential returns a boolean if a field has been set.
+func (o *HostUpdateParameters) HasOracleTdeExternalKeyManagerCredential() bool {
+	if o != nil && !IsNil(o.OracleTdeExternalKeyManagerCredential) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleTdeExternalKeyManagerCredential gets a reference to the given string and assigns it to the OracleTdeExternalKeyManagerCredential field.
+func (o *HostUpdateParameters) SetOracleTdeExternalKeyManagerCredential(v string) {
+	o.OracleTdeExternalKeyManagerCredential = &v
+}
+
 func (o HostUpdateParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -713,6 +781,12 @@ func (o HostUpdateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConnectorAuthenticationKey) {
 		toSerialize["connector_authentication_key"] = o.ConnectorAuthenticationKey
+	}
+	if !IsNil(o.OracleTdeOkvHomePath) {
+		toSerialize["oracle_tde_okv_home_path"] = o.OracleTdeOkvHomePath
+	}
+	if !IsNil(o.OracleTdeExternalKeyManagerCredential) {
+		toSerialize["oracle_tde_external_key_manager_credential"] = o.OracleTdeExternalKeyManagerCredential
 	}
 	return toSerialize, nil
 }

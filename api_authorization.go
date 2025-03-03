@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -767,6 +767,135 @@ func (a *AuthorizationAPIService) AddRolePermissionsExecute(r ApiAddRolePermissi
 	}
 	// body params
 	localVarPostBody = r.permissionsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAddRoleUiProfilesRequest struct {
+	ctx context.Context
+	ApiService *AuthorizationAPIService
+	roleId string
+	uiProfilesRequest *UiProfilesRequest
+}
+
+func (r ApiAddRoleUiProfilesRequest) UiProfilesRequest(uiProfilesRequest UiProfilesRequest) ApiAddRoleUiProfilesRequest {
+	r.uiProfilesRequest = &uiProfilesRequest
+	return r
+}
+
+func (r ApiAddRoleUiProfilesRequest) Execute() (*AddUiProfilesResponse, *http.Response, error) {
+	return r.ApiService.AddRoleUiProfilesExecute(r)
+}
+
+/*
+AddRoleUiProfiles Add UI profiles to a role.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param roleId The ID of the role.
+ @return ApiAddRoleUiProfilesRequest
+*/
+func (a *AuthorizationAPIService) AddRoleUiProfiles(ctx context.Context, roleId string) ApiAddRoleUiProfilesRequest {
+	return ApiAddRoleUiProfilesRequest{
+		ApiService: a,
+		ctx: ctx,
+		roleId: roleId,
+	}
+}
+
+// Execute executes the request
+//  @return AddUiProfilesResponse
+func (a *AuthorizationAPIService) AddRoleUiProfilesExecute(r ApiAddRoleUiProfilesRequest) (*AddUiProfilesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AddUiProfilesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddRoleUiProfiles")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/roles/{roleId}/ui-profiles"
+	localVarPath = strings.Replace(localVarPath, "{"+"roleId"+"}", url.PathEscape(parameterValueToString(r.roleId, "roleId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.roleId) < 1 {
+		return localVarReturnValue, nil, reportError("roleId must have at least 1 elements")
+	}
+	if r.uiProfilesRequest == nil {
+		return localVarReturnValue, nil, reportError("uiProfilesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.uiProfilesRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1882,6 +2011,124 @@ func (a *AuthorizationAPIService) DeleteRoleTagExecute(r ApiDeleteRoleTagRequest
 	}
 	// body params
 	localVarPostBody = r.deleteTag
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteRoleUiProfilesRequest struct {
+	ctx context.Context
+	ApiService *AuthorizationAPIService
+	roleId string
+	uiProfilesRequest *UiProfilesRequest
+}
+
+func (r ApiDeleteRoleUiProfilesRequest) UiProfilesRequest(uiProfilesRequest UiProfilesRequest) ApiDeleteRoleUiProfilesRequest {
+	r.uiProfilesRequest = &uiProfilesRequest
+	return r
+}
+
+func (r ApiDeleteRoleUiProfilesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteRoleUiProfilesExecute(r)
+}
+
+/*
+DeleteRoleUiProfiles Delete UI profiles from a Role.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param roleId The ID of the role.
+ @return ApiDeleteRoleUiProfilesRequest
+*/
+func (a *AuthorizationAPIService) DeleteRoleUiProfiles(ctx context.Context, roleId string) ApiDeleteRoleUiProfilesRequest {
+	return ApiDeleteRoleUiProfilesRequest{
+		ApiService: a,
+		ctx: ctx,
+		roleId: roleId,
+	}
+}
+
+// Execute executes the request
+func (a *AuthorizationAPIService) DeleteRoleUiProfilesExecute(r ApiDeleteRoleUiProfilesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.DeleteRoleUiProfiles")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/roles/{roleId}/ui-profiles/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"roleId"+"}", url.PathEscape(parameterValueToString(r.roleId, "roleId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.roleId) < 1 {
+		return nil, reportError("roleId must have at least 1 elements")
+	}
+	if r.uiProfilesRequest == nil {
+		return nil, reportError("uiProfilesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.uiProfilesRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

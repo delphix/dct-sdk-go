@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.18.0
+API version: 3.20.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,8 @@ var _ MappedNullable = &RefreshVDBGroupByTimestampParameters{}
 type RefreshVDBGroupByTimestampParameters struct {
 	// List of the pair of VDB and timestamp to refresh from. If this is not set, all VDBs will be refreshed from latest timestamp of their parent.
 	VdbTimestampMappings []VDBGroupRefreshByTimestamp `json:"vdb_timestamp_mappings,omitempty"`
+	// If true, and the provided timestamp is not found for the VDB mapping, the system will attempt to find the nearest previous refresh point.
+	IsRefreshToNearest *bool `json:"is_refresh_to_nearest,omitempty"`
 }
 
 // NewRefreshVDBGroupByTimestampParameters instantiates a new RefreshVDBGroupByTimestampParameters object
@@ -30,6 +32,8 @@ type RefreshVDBGroupByTimestampParameters struct {
 // will change when the set of required properties is changed
 func NewRefreshVDBGroupByTimestampParameters() *RefreshVDBGroupByTimestampParameters {
 	this := RefreshVDBGroupByTimestampParameters{}
+	var isRefreshToNearest bool = false
+	this.IsRefreshToNearest = &isRefreshToNearest
 	return &this
 }
 
@@ -38,6 +42,8 @@ func NewRefreshVDBGroupByTimestampParameters() *RefreshVDBGroupByTimestampParame
 // but it doesn't guarantee that properties required by API are set
 func NewRefreshVDBGroupByTimestampParametersWithDefaults() *RefreshVDBGroupByTimestampParameters {
 	this := RefreshVDBGroupByTimestampParameters{}
+	var isRefreshToNearest bool = false
+	this.IsRefreshToNearest = &isRefreshToNearest
 	return &this
 }
 
@@ -73,6 +79,38 @@ func (o *RefreshVDBGroupByTimestampParameters) SetVdbTimestampMappings(v []VDBGr
 	o.VdbTimestampMappings = v
 }
 
+// GetIsRefreshToNearest returns the IsRefreshToNearest field value if set, zero value otherwise.
+func (o *RefreshVDBGroupByTimestampParameters) GetIsRefreshToNearest() bool {
+	if o == nil || IsNil(o.IsRefreshToNearest) {
+		var ret bool
+		return ret
+	}
+	return *o.IsRefreshToNearest
+}
+
+// GetIsRefreshToNearestOk returns a tuple with the IsRefreshToNearest field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RefreshVDBGroupByTimestampParameters) GetIsRefreshToNearestOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsRefreshToNearest) {
+		return nil, false
+	}
+	return o.IsRefreshToNearest, true
+}
+
+// HasIsRefreshToNearest returns a boolean if a field has been set.
+func (o *RefreshVDBGroupByTimestampParameters) HasIsRefreshToNearest() bool {
+	if o != nil && !IsNil(o.IsRefreshToNearest) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsRefreshToNearest gets a reference to the given bool and assigns it to the IsRefreshToNearest field.
+func (o *RefreshVDBGroupByTimestampParameters) SetIsRefreshToNearest(v bool) {
+	o.IsRefreshToNearest = &v
+}
+
 func (o RefreshVDBGroupByTimestampParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -85,6 +123,9 @@ func (o RefreshVDBGroupByTimestampParameters) ToMap() (map[string]interface{}, e
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.VdbTimestampMappings) {
 		toSerialize["vdb_timestamp_mappings"] = o.VdbTimestampMappings
+	}
+	if !IsNil(o.IsRefreshToNearest) {
+		toSerialize["is_refresh_to_nearest"] = o.IsRefreshToNearest
 	}
 	return toSerialize, nil
 }
