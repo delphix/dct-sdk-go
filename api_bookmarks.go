@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -283,7 +283,7 @@ type ApiDeleteBookmarkRequest struct {
 	bookmarkId string
 }
 
-func (r ApiDeleteBookmarkRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteBookmarkRequest) Execute() (*DeleteBookmarkResponse, *http.Response, error) {
 	return r.ApiService.DeleteBookmarkExecute(r)
 }
 
@@ -303,16 +303,18 @@ func (a *BookmarksAPIService) DeleteBookmark(ctx context.Context, bookmarkId str
 }
 
 // Execute executes the request
-func (a *BookmarksAPIService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) (*http.Response, error) {
+//  @return DeleteBookmarkResponse
+func (a *BookmarksAPIService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) (*DeleteBookmarkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *DeleteBookmarkResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksAPIService.DeleteBookmark")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/bookmarks/{bookmarkId}"
@@ -322,7 +324,7 @@ func (a *BookmarksAPIService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) 
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	if strlen(r.bookmarkId) < 1 {
-		return nil, reportError("bookmarkId must have at least 1 elements")
+		return localVarReturnValue, nil, reportError("bookmarkId must have at least 1 elements")
 	}
 
 	// to determine the Content-Type header
@@ -335,7 +337,7 @@ func (a *BookmarksAPIService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -358,19 +360,19 @@ func (a *BookmarksAPIService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) 
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -378,10 +380,19 @@ func (a *BookmarksAPIService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiDeleteBookmarkTagsRequest struct {

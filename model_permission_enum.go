@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -89,6 +89,7 @@ const (
 	PERMISSIONENUM_UNAPPLY PermissionEnum = "UNAPPLY"
 	PERMISSIONENUM_UNDO_REFRESH PermissionEnum = "UNDO_REFRESH"
 	PERMISSIONENUM_CONVERT PermissionEnum = "CONVERT"
+	PERMISSIONENUM_DELETE_HELDSPACE PermissionEnum = "DELETE_HELDSPACE"
 	PERMISSIONENUM_REPAIR_TIMEFLOW PermissionEnum = "REPAIR_TIMEFLOW"
 	PERMISSIONENUM_EXPORT PermissionEnum = "EXPORT"
 )
@@ -163,6 +164,7 @@ var AllowedPermissionEnumEnumValues = []PermissionEnum{
 	"UNAPPLY",
 	"UNDO_REFRESH",
 	"CONVERT",
+	"DELETE_HELDSPACE",
 	"REPAIR_TIMEFLOW",
 	"EXPORT",
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -75,6 +75,8 @@ type VirtualizationPolicy struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// The number of target dSources or VDBs to which this policy has been applied.
 	NumTargets *int32 `json:"num_targets,omitempty"`
+	// True if this policy is customized specifically for one object. Customized policies cannot be shared between objects.
+	Customized *bool `json:"customized,omitempty"`
 }
 
 // NewVirtualizationPolicy instantiates a new VirtualizationPolicy object
@@ -85,6 +87,8 @@ func NewVirtualizationPolicy() *VirtualizationPolicy {
 	this := VirtualizationPolicy{}
 	var defaultPolicy bool = false
 	this.DefaultPolicy = &defaultPolicy
+	var customized bool = false
+	this.Customized = &customized
 	return &this
 }
 
@@ -95,6 +99,8 @@ func NewVirtualizationPolicyWithDefaults() *VirtualizationPolicy {
 	this := VirtualizationPolicy{}
 	var defaultPolicy bool = false
 	this.DefaultPolicy = &defaultPolicy
+	var customized bool = false
+	this.Customized = &customized
 	return &this
 }
 
@@ -1100,6 +1106,38 @@ func (o *VirtualizationPolicy) SetNumTargets(v int32) {
 	o.NumTargets = &v
 }
 
+// GetCustomized returns the Customized field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetCustomized() bool {
+	if o == nil || IsNil(o.Customized) {
+		var ret bool
+		return ret
+	}
+	return *o.Customized
+}
+
+// GetCustomizedOk returns a tuple with the Customized field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetCustomizedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Customized) {
+		return nil, false
+	}
+	return o.Customized, true
+}
+
+// HasCustomized returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasCustomized() bool {
+	if o != nil && !IsNil(o.Customized) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomized gets a reference to the given bool and assigns it to the Customized field.
+func (o *VirtualizationPolicy) SetCustomized(v bool) {
+	o.Customized = &v
+}
+
 func (o VirtualizationPolicy) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1202,6 +1240,9 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NumTargets) {
 		toSerialize["num_targets"] = o.NumTargets
+	}
+	if !IsNil(o.Customized) {
+		toSerialize["customized"] = o.Customized
 	}
 	return toSerialize, nil
 }

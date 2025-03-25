@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -516,6 +516,8 @@ Get job result.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param jobId The ID of the job.
  @return ApiGetJobResultRequest
+
+Deprecated
 */
 func (a *JobsAPIService) GetJobResult(ctx context.Context, jobId string) ApiGetJobResultRequest {
 	return ApiGetJobResultRequest{
@@ -527,6 +529,7 @@ func (a *JobsAPIService) GetJobResult(ctx context.Context, jobId string) ApiGetJ
 
 // Execute executes the request
 //  @return JobResultResponse
+// Deprecated
 func (a *JobsAPIService) GetJobResultExecute(r ApiGetJobResultRequest) (*JobResultResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet

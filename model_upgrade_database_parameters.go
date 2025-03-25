@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,8 @@ type UpgradeDatabaseParameters struct {
 	RepositoryId string `json:"repository_id"`
 	// Reference of the environment user to use for dSource/VDB upgrade.
 	EnvironmentUserId *string `json:"environment_user_id,omitempty"`
+	// The id of the SQL instance on the PPT environment that we want to use for pre-provisioning (MSSQL only).
+	PptRepository *string `json:"ppt_repository,omitempty"`
 }
 
 type _UpgradeDatabaseParameters UpgradeDatabaseParameters
@@ -104,6 +106,38 @@ func (o *UpgradeDatabaseParameters) SetEnvironmentUserId(v string) {
 	o.EnvironmentUserId = &v
 }
 
+// GetPptRepository returns the PptRepository field value if set, zero value otherwise.
+func (o *UpgradeDatabaseParameters) GetPptRepository() string {
+	if o == nil || IsNil(o.PptRepository) {
+		var ret string
+		return ret
+	}
+	return *o.PptRepository
+}
+
+// GetPptRepositoryOk returns a tuple with the PptRepository field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpgradeDatabaseParameters) GetPptRepositoryOk() (*string, bool) {
+	if o == nil || IsNil(o.PptRepository) {
+		return nil, false
+	}
+	return o.PptRepository, true
+}
+
+// HasPptRepository returns a boolean if a field has been set.
+func (o *UpgradeDatabaseParameters) HasPptRepository() bool {
+	if o != nil && !IsNil(o.PptRepository) {
+		return true
+	}
+
+	return false
+}
+
+// SetPptRepository gets a reference to the given string and assigns it to the PptRepository field.
+func (o *UpgradeDatabaseParameters) SetPptRepository(v string) {
+	o.PptRepository = &v
+}
+
 func (o UpgradeDatabaseParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -117,6 +151,9 @@ func (o UpgradeDatabaseParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize["repository_id"] = o.RepositoryId
 	if !IsNil(o.EnvironmentUserId) {
 		toSerialize["environment_user_id"] = o.EnvironmentUserId
+	}
+	if !IsNil(o.PptRepository) {
+		toSerialize["ppt_repository"] = o.PptRepository
 	}
 	return toSerialize, nil
 }

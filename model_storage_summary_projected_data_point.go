@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -21,8 +21,12 @@ var _ MappedNullable = &StorageSummaryProjectedDataPoint{}
 // StorageSummaryProjectedDataPoint struct for StorageSummaryProjectedDataPoint
 type StorageSummaryProjectedDataPoint struct {
 	Timestamp *string `json:"timestamp,omitempty"`
+	// The projected amount of available storage, in bytes.
+	FreeStorage *int64 `json:"free_storage,omitempty"`
 	// The projected amount of storage used by engine objects and reserved space, in bytes.
 	UsedStorage *int64 `json:"used_storage,omitempty"`
+	// The projected amount of reserved space, in bytes.
+	ReservedStorage *int64 `json:"reserved_storage,omitempty"`
 	// Total actual space used by the dSources.
 	DsourceTotalSize *int64 `json:"dsource_total_size,omitempty"`
 	// Total amount of space used for the active copy of the dSources.
@@ -114,6 +118,38 @@ func (o *StorageSummaryProjectedDataPoint) SetTimestamp(v string) {
 	o.Timestamp = &v
 }
 
+// GetFreeStorage returns the FreeStorage field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetFreeStorage() int64 {
+	if o == nil || IsNil(o.FreeStorage) {
+		var ret int64
+		return ret
+	}
+	return *o.FreeStorage
+}
+
+// GetFreeStorageOk returns a tuple with the FreeStorage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetFreeStorageOk() (*int64, bool) {
+	if o == nil || IsNil(o.FreeStorage) {
+		return nil, false
+	}
+	return o.FreeStorage, true
+}
+
+// HasFreeStorage returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasFreeStorage() bool {
+	if o != nil && !IsNil(o.FreeStorage) {
+		return true
+	}
+
+	return false
+}
+
+// SetFreeStorage gets a reference to the given int64 and assigns it to the FreeStorage field.
+func (o *StorageSummaryProjectedDataPoint) SetFreeStorage(v int64) {
+	o.FreeStorage = &v
+}
+
 // GetUsedStorage returns the UsedStorage field value if set, zero value otherwise.
 func (o *StorageSummaryProjectedDataPoint) GetUsedStorage() int64 {
 	if o == nil || IsNil(o.UsedStorage) {
@@ -144,6 +180,38 @@ func (o *StorageSummaryProjectedDataPoint) HasUsedStorage() bool {
 // SetUsedStorage gets a reference to the given int64 and assigns it to the UsedStorage field.
 func (o *StorageSummaryProjectedDataPoint) SetUsedStorage(v int64) {
 	o.UsedStorage = &v
+}
+
+// GetReservedStorage returns the ReservedStorage field value if set, zero value otherwise.
+func (o *StorageSummaryProjectedDataPoint) GetReservedStorage() int64 {
+	if o == nil || IsNil(o.ReservedStorage) {
+		var ret int64
+		return ret
+	}
+	return *o.ReservedStorage
+}
+
+// GetReservedStorageOk returns a tuple with the ReservedStorage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSummaryProjectedDataPoint) GetReservedStorageOk() (*int64, bool) {
+	if o == nil || IsNil(o.ReservedStorage) {
+		return nil, false
+	}
+	return o.ReservedStorage, true
+}
+
+// HasReservedStorage returns a boolean if a field has been set.
+func (o *StorageSummaryProjectedDataPoint) HasReservedStorage() bool {
+	if o != nil && !IsNil(o.ReservedStorage) {
+		return true
+	}
+
+	return false
+}
+
+// SetReservedStorage gets a reference to the given int64 and assigns it to the ReservedStorage field.
+func (o *StorageSummaryProjectedDataPoint) SetReservedStorage(v int64) {
+	o.ReservedStorage = &v
 }
 
 // GetDsourceTotalSize returns the DsourceTotalSize field value if set, zero value otherwise.
@@ -799,8 +867,14 @@ func (o StorageSummaryProjectedDataPoint) ToMap() (map[string]interface{}, error
 	if !IsNil(o.Timestamp) {
 		toSerialize["timestamp"] = o.Timestamp
 	}
+	if !IsNil(o.FreeStorage) {
+		toSerialize["free_storage"] = o.FreeStorage
+	}
 	if !IsNil(o.UsedStorage) {
 		toSerialize["used_storage"] = o.UsedStorage
+	}
+	if !IsNil(o.ReservedStorage) {
+		toSerialize["reserved_storage"] = o.ReservedStorage
 	}
 	if !IsNil(o.DsourceTotalSize) {
 		toSerialize["dsource_total_size"] = o.DsourceTotalSize

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -62,6 +62,10 @@ type Job struct {
 	Tasks []JobTask `json:"tasks,omitempty"`
 	// The ID of the associated masking execution, if any.
 	ExecutionId NullableString `json:"execution_id,omitempty"`
+	// The type of the job result. This is the type of the object present in the result.
+	ResultType *string `json:"result_type,omitempty"`
+	// The result of the job execution. This is JSON serialized string of the result object whose type is specified by result_type property.
+	Result map[string]interface{} `json:"result,omitempty"`
 }
 
 // NewJob instantiates a new Job object
@@ -772,6 +776,70 @@ func (o *Job) UnsetExecutionId() {
 	o.ExecutionId.Unset()
 }
 
+// GetResultType returns the ResultType field value if set, zero value otherwise.
+func (o *Job) GetResultType() string {
+	if o == nil || IsNil(o.ResultType) {
+		var ret string
+		return ret
+	}
+	return *o.ResultType
+}
+
+// GetResultTypeOk returns a tuple with the ResultType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetResultTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.ResultType) {
+		return nil, false
+	}
+	return o.ResultType, true
+}
+
+// HasResultType returns a boolean if a field has been set.
+func (o *Job) HasResultType() bool {
+	if o != nil && !IsNil(o.ResultType) {
+		return true
+	}
+
+	return false
+}
+
+// SetResultType gets a reference to the given string and assigns it to the ResultType field.
+func (o *Job) SetResultType(v string) {
+	o.ResultType = &v
+}
+
+// GetResult returns the Result field value if set, zero value otherwise.
+func (o *Job) GetResult() map[string]interface{} {
+	if o == nil || IsNil(o.Result) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Result
+}
+
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetResultOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Result) {
+		return map[string]interface{}{}, false
+	}
+	return o.Result, true
+}
+
+// HasResult returns a boolean if a field has been set.
+func (o *Job) HasResult() bool {
+	if o != nil && !IsNil(o.Result) {
+		return true
+	}
+
+	return false
+}
+
+// SetResult gets a reference to the given map[string]interface{} and assigns it to the Result field.
+func (o *Job) SetResult(v map[string]interface{}) {
+	o.Result = v
+}
+
 func (o Job) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -844,6 +912,12 @@ func (o Job) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ExecutionId.IsSet() {
 		toSerialize["execution_id"] = o.ExecutionId.Get()
+	}
+	if !IsNil(o.ResultType) {
+		toSerialize["result_type"] = o.ResultType
+	}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
 	}
 	return toSerialize, nil
 }

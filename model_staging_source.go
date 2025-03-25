@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -51,6 +51,10 @@ type StagingSource struct {
 	OracleServices []OracleService `json:"oracle_services,omitempty"`
 	// The environment user reference.
 	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
+	// Recovery model of the source database.
+	RecoveryModel *string `json:"recovery_model,omitempty"`
+	// The base mount point for the NFS or iSCSI LUN mounts.
+	MountBase *string `json:"mount_base,omitempty"`
 }
 
 // NewStagingSource instantiates a new StagingSource object
@@ -694,6 +698,70 @@ func (o *StagingSource) SetEnvironmentUserRef(v string) {
 	o.EnvironmentUserRef = &v
 }
 
+// GetRecoveryModel returns the RecoveryModel field value if set, zero value otherwise.
+func (o *StagingSource) GetRecoveryModel() string {
+	if o == nil || IsNil(o.RecoveryModel) {
+		var ret string
+		return ret
+	}
+	return *o.RecoveryModel
+}
+
+// GetRecoveryModelOk returns a tuple with the RecoveryModel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetRecoveryModelOk() (*string, bool) {
+	if o == nil || IsNil(o.RecoveryModel) {
+		return nil, false
+	}
+	return o.RecoveryModel, true
+}
+
+// HasRecoveryModel returns a boolean if a field has been set.
+func (o *StagingSource) HasRecoveryModel() bool {
+	if o != nil && !IsNil(o.RecoveryModel) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoveryModel gets a reference to the given string and assigns it to the RecoveryModel field.
+func (o *StagingSource) SetRecoveryModel(v string) {
+	o.RecoveryModel = &v
+}
+
+// GetMountBase returns the MountBase field value if set, zero value otherwise.
+func (o *StagingSource) GetMountBase() string {
+	if o == nil || IsNil(o.MountBase) {
+		var ret string
+		return ret
+	}
+	return *o.MountBase
+}
+
+// GetMountBaseOk returns a tuple with the MountBase field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetMountBaseOk() (*string, bool) {
+	if o == nil || IsNil(o.MountBase) {
+		return nil, false
+	}
+	return o.MountBase, true
+}
+
+// HasMountBase returns a boolean if a field has been set.
+func (o *StagingSource) HasMountBase() bool {
+	if o != nil && !IsNil(o.MountBase) {
+		return true
+	}
+
+	return false
+}
+
+// SetMountBase gets a reference to the given string and assigns it to the MountBase field.
+func (o *StagingSource) SetMountBase(v string) {
+	o.MountBase = &v
+}
+
 func (o StagingSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -754,6 +822,12 @@ func (o StagingSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EnvironmentUserRef) {
 		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
+	}
+	if !IsNil(o.RecoveryModel) {
+		toSerialize["recovery_model"] = o.RecoveryModel
+	}
+	if !IsNil(o.MountBase) {
+		toSerialize["mount_base"] = o.MountBase
 	}
 	return toSerialize, nil
 }

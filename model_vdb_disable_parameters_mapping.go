@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,8 @@ var _ MappedNullable = &VDBDisableParametersMapping{}
 type VDBDisableParametersMapping struct {
 	// Whether to attempt a cleanup of the VDB before the disable.
 	AttemptCleanup *bool `json:"attempt_cleanup,omitempty"`
+	// Whether the database is running inside a container.
+	ContainerMode *bool `json:"container_mode,omitempty"`
 	// ID of the VDB to disable.
 	VdbId string `json:"vdb_id"`
 }
@@ -84,6 +86,38 @@ func (o *VDBDisableParametersMapping) SetAttemptCleanup(v bool) {
 	o.AttemptCleanup = &v
 }
 
+// GetContainerMode returns the ContainerMode field value if set, zero value otherwise.
+func (o *VDBDisableParametersMapping) GetContainerMode() bool {
+	if o == nil || IsNil(o.ContainerMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ContainerMode
+}
+
+// GetContainerModeOk returns a tuple with the ContainerMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBDisableParametersMapping) GetContainerModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ContainerMode) {
+		return nil, false
+	}
+	return o.ContainerMode, true
+}
+
+// HasContainerMode returns a boolean if a field has been set.
+func (o *VDBDisableParametersMapping) HasContainerMode() bool {
+	if o != nil && !IsNil(o.ContainerMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerMode gets a reference to the given bool and assigns it to the ContainerMode field.
+func (o *VDBDisableParametersMapping) SetContainerMode(v bool) {
+	o.ContainerMode = &v
+}
+
 // GetVdbId returns the VdbId field value
 func (o *VDBDisableParametersMapping) GetVdbId() string {
 	if o == nil {
@@ -120,6 +154,9 @@ func (o VDBDisableParametersMapping) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AttemptCleanup) {
 		toSerialize["attempt_cleanup"] = o.AttemptCleanup
+	}
+	if !IsNil(o.ContainerMode) {
+		toSerialize["container_mode"] = o.ContainerMode
 	}
 	toSerialize["vdb_id"] = o.VdbId
 	return toSerialize, nil

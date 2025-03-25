@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -72,6 +72,8 @@ type Execution struct {
 	ExecutionComponentsProcessed *int32 `json:"execution_components_processed,omitempty"`
 	// The id of the compliance job collection execution this execution is part of, if any
 	CollectionExecutionId *string `json:"collection_execution_id,omitempty"`
+	// Indicates whether all peripheral information associated with the execution, including execution components, execution events, logs and discovery results, has been fully collected and finalized.
+	DataCollectionComplete *bool `json:"data_collection_complete,omitempty"`
 }
 
 // NewExecution instantiates a new Execution object
@@ -955,6 +957,38 @@ func (o *Execution) SetCollectionExecutionId(v string) {
 	o.CollectionExecutionId = &v
 }
 
+// GetDataCollectionComplete returns the DataCollectionComplete field value if set, zero value otherwise.
+func (o *Execution) GetDataCollectionComplete() bool {
+	if o == nil || IsNil(o.DataCollectionComplete) {
+		var ret bool
+		return ret
+	}
+	return *o.DataCollectionComplete
+}
+
+// GetDataCollectionCompleteOk returns a tuple with the DataCollectionComplete field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetDataCollectionCompleteOk() (*bool, bool) {
+	if o == nil || IsNil(o.DataCollectionComplete) {
+		return nil, false
+	}
+	return o.DataCollectionComplete, true
+}
+
+// HasDataCollectionComplete returns a boolean if a field has been set.
+func (o *Execution) HasDataCollectionComplete() bool {
+	if o != nil && !IsNil(o.DataCollectionComplete) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataCollectionComplete gets a reference to the given bool and assigns it to the DataCollectionComplete field.
+func (o *Execution) SetDataCollectionComplete(v bool) {
+	o.DataCollectionComplete = &v
+}
+
 func (o Execution) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1045,6 +1079,9 @@ func (o Execution) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CollectionExecutionId) {
 		toSerialize["collection_execution_id"] = o.CollectionExecutionId
+	}
+	if !IsNil(o.DataCollectionComplete) {
+		toSerialize["data_collection_complete"] = o.DataCollectionComplete
 	}
 	return toSerialize, nil
 }

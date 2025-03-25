@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -1218,6 +1218,1046 @@ func (a *DSourcesAPIService) EnableDsourceExecute(r ApiEnableDsourceRequest) (*E
 	}
 	// body params
 	localVarPostBody = r.enableDsourceParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceByLocationRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	exportByLocationParameters *ExportByLocationParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceByLocationRequest) ExportByLocationParameters(exportByLocationParameters ExportByLocationParameters) ApiExportDsourceByLocationRequest {
+	r.exportByLocationParameters = &exportByLocationParameters
+	return r
+}
+
+func (r ApiExportDsourceByLocationRequest) Execute() (*ExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceByLocationExecute(r)
+}
+
+/*
+ExportDsourceByLocation Export a dSource using timeflow location to a physical file system.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceByLocationRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceByLocation(ctx context.Context, dsourceId string) ApiExportDsourceByLocationRequest {
+	return ApiExportDsourceByLocationRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return ExportResponse
+func (a *DSourcesAPIService) ExportDsourceByLocationExecute(r ApiExportDsourceByLocationRequest) (*ExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceByLocation")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/export-by-location"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.exportByLocationParameters == nil {
+		return localVarReturnValue, nil, reportError("exportByLocationParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.exportByLocationParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceBySnapshotRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	exportBySnapshotParameters *ExportBySnapshotParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceBySnapshotRequest) ExportBySnapshotParameters(exportBySnapshotParameters ExportBySnapshotParameters) ApiExportDsourceBySnapshotRequest {
+	r.exportBySnapshotParameters = &exportBySnapshotParameters
+	return r
+}
+
+func (r ApiExportDsourceBySnapshotRequest) Execute() (*ExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceBySnapshotExecute(r)
+}
+
+/*
+ExportDsourceBySnapshot Export a dSource using snapshot to a physical file system
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceBySnapshotRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceBySnapshot(ctx context.Context, dsourceId string) ApiExportDsourceBySnapshotRequest {
+	return ApiExportDsourceBySnapshotRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return ExportResponse
+func (a *DSourcesAPIService) ExportDsourceBySnapshotExecute(r ApiExportDsourceBySnapshotRequest) (*ExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceBySnapshot")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/export-by-snapshot"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.exportBySnapshotParameters == nil {
+		return localVarReturnValue, nil, reportError("exportBySnapshotParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.exportBySnapshotParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceByTimestampRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	exportByTimestampParameters *ExportByTimestampParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceByTimestampRequest) ExportByTimestampParameters(exportByTimestampParameters ExportByTimestampParameters) ApiExportDsourceByTimestampRequest {
+	r.exportByTimestampParameters = &exportByTimestampParameters
+	return r
+}
+
+func (r ApiExportDsourceByTimestampRequest) Execute() (*ExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceByTimestampExecute(r)
+}
+
+/*
+ExportDsourceByTimestamp Export a dSource using timestamp to a physical file system.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceByTimestampRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceByTimestamp(ctx context.Context, dsourceId string) ApiExportDsourceByTimestampRequest {
+	return ApiExportDsourceByTimestampRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return ExportResponse
+func (a *DSourcesAPIService) ExportDsourceByTimestampExecute(r ApiExportDsourceByTimestampRequest) (*ExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceByTimestamp")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/export-by-timestamp"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.exportByTimestampParameters == nil {
+		return localVarReturnValue, nil, reportError("exportByTimestampParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.exportByTimestampParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceFromBookmarkRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	exportFromBookmarkParameters *ExportFromBookmarkParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceFromBookmarkRequest) ExportFromBookmarkParameters(exportFromBookmarkParameters ExportFromBookmarkParameters) ApiExportDsourceFromBookmarkRequest {
+	r.exportFromBookmarkParameters = &exportFromBookmarkParameters
+	return r
+}
+
+func (r ApiExportDsourceFromBookmarkRequest) Execute() (*ExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceFromBookmarkExecute(r)
+}
+
+/*
+ExportDsourceFromBookmark Export a dSource using bookmark to physical file system
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceFromBookmarkRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceFromBookmark(ctx context.Context, dsourceId string) ApiExportDsourceFromBookmarkRequest {
+	return ApiExportDsourceFromBookmarkRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return ExportResponse
+func (a *DSourcesAPIService) ExportDsourceFromBookmarkExecute(r ApiExportDsourceFromBookmarkRequest) (*ExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceFromBookmark")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/export-from-bookmark"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.exportFromBookmarkParameters == nil {
+		return localVarReturnValue, nil, reportError("exportFromBookmarkParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.exportFromBookmarkParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceToAsmByBookmarkRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	oracleAsmExportFromBookmarkParameters *OracleAsmExportFromBookmarkParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceToAsmByBookmarkRequest) OracleAsmExportFromBookmarkParameters(oracleAsmExportFromBookmarkParameters OracleAsmExportFromBookmarkParameters) ApiExportDsourceToAsmByBookmarkRequest {
+	r.oracleAsmExportFromBookmarkParameters = &oracleAsmExportFromBookmarkParameters
+	return r
+}
+
+func (r ApiExportDsourceToAsmByBookmarkRequest) Execute() (*OracleAsmExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceToAsmByBookmarkExecute(r)
+}
+
+/*
+ExportDsourceToAsmByBookmark Export a dSource using bookmark to an ASM file system
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceToAsmByBookmarkRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceToAsmByBookmark(ctx context.Context, dsourceId string) ApiExportDsourceToAsmByBookmarkRequest {
+	return ApiExportDsourceToAsmByBookmarkRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return OracleAsmExportResponse
+func (a *DSourcesAPIService) ExportDsourceToAsmByBookmarkExecute(r ApiExportDsourceToAsmByBookmarkRequest) (*OracleAsmExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OracleAsmExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceToAsmByBookmark")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/asm-export-from-bookmark"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.oracleAsmExportFromBookmarkParameters == nil {
+		return localVarReturnValue, nil, reportError("oracleAsmExportFromBookmarkParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleAsmExportFromBookmarkParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceToAsmByLocationRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	oracleAsmExportByLocationParameters *OracleAsmExportByLocationParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceToAsmByLocationRequest) OracleAsmExportByLocationParameters(oracleAsmExportByLocationParameters OracleAsmExportByLocationParameters) ApiExportDsourceToAsmByLocationRequest {
+	r.oracleAsmExportByLocationParameters = &oracleAsmExportByLocationParameters
+	return r
+}
+
+func (r ApiExportDsourceToAsmByLocationRequest) Execute() (*OracleAsmExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceToAsmByLocationExecute(r)
+}
+
+/*
+ExportDsourceToAsmByLocation Export a dSource using SCN to an ASM file system
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceToAsmByLocationRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceToAsmByLocation(ctx context.Context, dsourceId string) ApiExportDsourceToAsmByLocationRequest {
+	return ApiExportDsourceToAsmByLocationRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return OracleAsmExportResponse
+func (a *DSourcesAPIService) ExportDsourceToAsmByLocationExecute(r ApiExportDsourceToAsmByLocationRequest) (*OracleAsmExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OracleAsmExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceToAsmByLocation")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/asm-export-by-location"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.oracleAsmExportByLocationParameters == nil {
+		return localVarReturnValue, nil, reportError("oracleAsmExportByLocationParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleAsmExportByLocationParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceToAsmBySnapshotRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	oracleAsmExportBySnapshotParameters *OracleAsmExportBySnapshotParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceToAsmBySnapshotRequest) OracleAsmExportBySnapshotParameters(oracleAsmExportBySnapshotParameters OracleAsmExportBySnapshotParameters) ApiExportDsourceToAsmBySnapshotRequest {
+	r.oracleAsmExportBySnapshotParameters = &oracleAsmExportBySnapshotParameters
+	return r
+}
+
+func (r ApiExportDsourceToAsmBySnapshotRequest) Execute() (*OracleAsmExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceToAsmBySnapshotExecute(r)
+}
+
+/*
+ExportDsourceToAsmBySnapshot Export a dSource by a snapshot to an ASM file system
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceToAsmBySnapshotRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceToAsmBySnapshot(ctx context.Context, dsourceId string) ApiExportDsourceToAsmBySnapshotRequest {
+	return ApiExportDsourceToAsmBySnapshotRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return OracleAsmExportResponse
+func (a *DSourcesAPIService) ExportDsourceToAsmBySnapshotExecute(r ApiExportDsourceToAsmBySnapshotRequest) (*OracleAsmExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OracleAsmExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceToAsmBySnapshot")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/asm-export-by-snapshot"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.oracleAsmExportBySnapshotParameters == nil {
+		return localVarReturnValue, nil, reportError("oracleAsmExportBySnapshotParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleAsmExportBySnapshotParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExportDsourceToAsmByTimestampRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	oracleAsmExportByTimestampParameters *OracleAsmExportByTimestampParameters
+}
+
+// The parameters to export a dSource.
+func (r ApiExportDsourceToAsmByTimestampRequest) OracleAsmExportByTimestampParameters(oracleAsmExportByTimestampParameters OracleAsmExportByTimestampParameters) ApiExportDsourceToAsmByTimestampRequest {
+	r.oracleAsmExportByTimestampParameters = &oracleAsmExportByTimestampParameters
+	return r
+}
+
+func (r ApiExportDsourceToAsmByTimestampRequest) Execute() (*OracleAsmExportResponse, *http.Response, error) {
+	return r.ApiService.ExportDsourceToAsmByTimestampExecute(r)
+}
+
+/*
+ExportDsourceToAsmByTimestamp Export a dSource using timestamp to an ASM file system
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiExportDsourceToAsmByTimestampRequest
+*/
+func (a *DSourcesAPIService) ExportDsourceToAsmByTimestamp(ctx context.Context, dsourceId string) ApiExportDsourceToAsmByTimestampRequest {
+	return ApiExportDsourceToAsmByTimestampRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return OracleAsmExportResponse
+func (a *DSourcesAPIService) ExportDsourceToAsmByTimestampExecute(r ApiExportDsourceToAsmByTimestampRequest) (*OracleAsmExportResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OracleAsmExportResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.ExportDsourceToAsmByTimestamp")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/asm-export-by-timestamp"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+	if r.oracleAsmExportByTimestampParameters == nil {
+		return localVarReturnValue, nil, reportError("oracleAsmExportByTimestampParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleAsmExportByTimestampParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2650,6 +3690,124 @@ func (a *DSourcesAPIService) GetTagsDsourceExecute(r ApiGetTagsDsourceRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetUpgradeCompatibleRepoForDsourceRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+}
+
+func (r ApiGetUpgradeCompatibleRepoForDsourceRequest) Execute() (*UpgradeCompatibleEnvironmentsResponse, *http.Response, error) {
+	return r.ApiService.GetUpgradeCompatibleRepoForDsourceExecute(r)
+}
+
+/*
+GetUpgradeCompatibleRepoForDsource Returns a list of compatible repositories for dSource upgrade.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiGetUpgradeCompatibleRepoForDsourceRequest
+*/
+func (a *DSourcesAPIService) GetUpgradeCompatibleRepoForDsource(ctx context.Context, dsourceId string) ApiGetUpgradeCompatibleRepoForDsourceRequest {
+	return ApiGetUpgradeCompatibleRepoForDsourceRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpgradeCompatibleEnvironmentsResponse
+func (a *DSourcesAPIService) GetUpgradeCompatibleRepoForDsourceExecute(r ApiGetUpgradeCompatibleRepoForDsourceRequest) (*UpgradeCompatibleEnvironmentsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpgradeCompatibleEnvironmentsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.GetUpgradeCompatibleRepoForDsource")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/upgrade_compatible_repositories"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiLinkAppdataDatabaseRequest struct {
 	ctx context.Context
 	ApiService *DSourcesAPIService
@@ -3805,6 +4963,133 @@ func (a *DSourcesAPIService) UpdateAppdataDsourceByIdExecute(r ApiUpdateAppdataD
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateAseDsourceByIdRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	updateAseDSourceParameters *UpdateAseDSourceParameters
+}
+
+// The new data to update an ASE dSource.
+func (r ApiUpdateAseDsourceByIdRequest) UpdateAseDSourceParameters(updateAseDSourceParameters UpdateAseDSourceParameters) ApiUpdateAseDsourceByIdRequest {
+	r.updateAseDSourceParameters = &updateAseDSourceParameters
+	return r
+}
+
+func (r ApiUpdateAseDsourceByIdRequest) Execute() (*UpdateDsourceResponse, *http.Response, error) {
+	return r.ApiService.UpdateAseDsourceByIdExecute(r)
+}
+
+/*
+UpdateAseDsourceById Update values of an ASE dSource
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiUpdateAseDsourceByIdRequest
+*/
+func (a *DSourcesAPIService) UpdateAseDsourceById(ctx context.Context, dsourceId string) ApiUpdateAseDsourceByIdRequest {
+	return ApiUpdateAseDsourceByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateDsourceResponse
+func (a *DSourcesAPIService) UpdateAseDsourceByIdExecute(r ApiUpdateAseDsourceByIdRequest) (*UpdateDsourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateDsourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.UpdateAseDsourceById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/ase/{dsourceId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateAseDSourceParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateMssqlDsourceByIdRequest struct {
 	ctx context.Context
 	ApiService *DSourcesAPIService
@@ -4059,6 +5344,133 @@ func (a *DSourcesAPIService) UpdateOracleDsourceByIdExecute(r ApiUpdateOracleDso
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpgradeDsourceRequest struct {
+	ctx context.Context
+	ApiService *DSourcesAPIService
+	dsourceId string
+	upgradeDatabaseParameters *UpgradeDatabaseParameters
+}
+
+// The new API to upgrade dSource
+func (r ApiUpgradeDsourceRequest) UpgradeDatabaseParameters(upgradeDatabaseParameters UpgradeDatabaseParameters) ApiUpgradeDsourceRequest {
+	r.upgradeDatabaseParameters = &upgradeDatabaseParameters
+	return r
+}
+
+func (r ApiUpgradeDsourceRequest) Execute() (*UpgradeDsourceResponse, *http.Response, error) {
+	return r.ApiService.UpgradeDsourceExecute(r)
+}
+
+/*
+UpgradeDsource Upgrade dSource
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param dsourceId The ID of the dSource.
+ @return ApiUpgradeDsourceRequest
+*/
+func (a *DSourcesAPIService) UpgradeDsource(ctx context.Context, dsourceId string) ApiUpgradeDsourceRequest {
+	return ApiUpgradeDsourceRequest{
+		ApiService: a,
+		ctx: ctx,
+		dsourceId: dsourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpgradeDsourceResponse
+func (a *DSourcesAPIService) UpgradeDsourceExecute(r ApiUpgradeDsourceRequest) (*UpgradeDsourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpgradeDsourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DSourcesAPIService.UpgradeDsource")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/dsources/{dsourceId}/upgrade"
+	localVarPath = strings.Replace(localVarPath, "{"+"dsourceId"+"}", url.PathEscape(parameterValueToString(r.dsourceId, "dsourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.dsourceId) < 1 {
+		return localVarReturnValue, nil, reportError("dsourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.upgradeDatabaseParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpgradeOracleDsourceRequest struct {
 	ctx context.Context
 	ApiService *DSourcesAPIService
@@ -4079,9 +5491,13 @@ func (r ApiUpgradeOracleDsourceRequest) Execute() (*UpgradeDsourceResponse, *htt
 /*
 UpgradeOracleDsource Upgrade the requested Oracle dSource installation and user.
 
+This API is marked as deprecated in favour of generalized API '/dsources/{dsourceId}/upgrade'
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param dsourceId The ID of the dSource.
  @return ApiUpgradeOracleDsourceRequest
+
+Deprecated
 */
 func (a *DSourcesAPIService) UpgradeOracleDsource(ctx context.Context, dsourceId string) ApiUpgradeOracleDsourceRequest {
 	return ApiUpgradeOracleDsourceRequest{
@@ -4093,6 +5509,7 @@ func (a *DSourcesAPIService) UpgradeOracleDsource(ctx context.Context, dsourceId
 
 // Execute executes the request
 //  @return UpgradeDsourceResponse
+// Deprecated
 func (a *DSourcesAPIService) UpgradeOracleDsourceExecute(r ApiUpgradeOracleDsourceRequest) (*UpgradeDsourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost

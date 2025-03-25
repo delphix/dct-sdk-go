@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -168,6 +168,10 @@ type ProvisionVDBByTimestampParameters struct {
 	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
 	// Whether the virtual database will be provisioned for a containerized environment, such as Linux containers.
 	ContainerMode *bool `json:"container_mode,omitempty"`
+	// Shared backup location to be used for VDB provision on AG Cluster.
+	MssqlAgBackupLocation *string `json:"mssql_ag_backup_location,omitempty"`
+	// Indicates whether to do fast operations for VDB on AG which will use a healthy secondary replica to recreate the AG or backup based operations which will use the primary replica to recreate the AG using backup and restore process.
+	MssqlAgBackupBased *bool `json:"mssql_ag_backup_based,omitempty"`
 	// The point in time from which to execute the operation. Mutually exclusive with timestamp_in_database_timezone. If the timestamp is not set, selects the latest point.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The point in time from which to execute the operation, expressed as a date-time in the timezone of the source database. Mutually exclusive with timestamp.
@@ -2519,6 +2523,70 @@ func (o *ProvisionVDBByTimestampParameters) SetContainerMode(v bool) {
 	o.ContainerMode = &v
 }
 
+// GetMssqlAgBackupLocation returns the MssqlAgBackupLocation field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetMssqlAgBackupLocation() string {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlAgBackupLocation
+}
+
+// GetMssqlAgBackupLocationOk returns a tuple with the MssqlAgBackupLocation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetMssqlAgBackupLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		return nil, false
+	}
+	return o.MssqlAgBackupLocation, true
+}
+
+// HasMssqlAgBackupLocation returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasMssqlAgBackupLocation() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupLocation) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupLocation gets a reference to the given string and assigns it to the MssqlAgBackupLocation field.
+func (o *ProvisionVDBByTimestampParameters) SetMssqlAgBackupLocation(v string) {
+	o.MssqlAgBackupLocation = &v
+}
+
+// GetMssqlAgBackupBased returns the MssqlAgBackupBased field value if set, zero value otherwise.
+func (o *ProvisionVDBByTimestampParameters) GetMssqlAgBackupBased() bool {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		var ret bool
+		return ret
+	}
+	return *o.MssqlAgBackupBased
+}
+
+// GetMssqlAgBackupBasedOk returns a tuple with the MssqlAgBackupBased field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBByTimestampParameters) GetMssqlAgBackupBasedOk() (*bool, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		return nil, false
+	}
+	return o.MssqlAgBackupBased, true
+}
+
+// HasMssqlAgBackupBased returns a boolean if a field has been set.
+func (o *ProvisionVDBByTimestampParameters) HasMssqlAgBackupBased() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupBased) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupBased gets a reference to the given bool and assigns it to the MssqlAgBackupBased field.
+func (o *ProvisionVDBByTimestampParameters) SetMssqlAgBackupBased(v bool) {
+	o.MssqlAgBackupBased = &v
+}
+
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
 func (o *ProvisionVDBByTimestampParameters) GetTimestamp() time.Time {
 	if o == nil || IsNil(o.Timestamp) {
@@ -2928,6 +2996,12 @@ func (o ProvisionVDBByTimestampParameters) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.ContainerMode) {
 		toSerialize["container_mode"] = o.ContainerMode
+	}
+	if !IsNil(o.MssqlAgBackupLocation) {
+		toSerialize["mssql_ag_backup_location"] = o.MssqlAgBackupLocation
+	}
+	if !IsNil(o.MssqlAgBackupBased) {
+		toSerialize["mssql_ag_backup_based"] = o.MssqlAgBackupBased
 	}
 	if !IsNil(o.Timestamp) {
 		toSerialize["timestamp"] = o.Timestamp

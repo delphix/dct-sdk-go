@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -56,6 +56,8 @@ type EngineStorageCapacityData struct {
 	UnownedSnapshotSize *int64 `json:"unowned_snapshot_size,omitempty"`
 	// Amount of space ingested by the source.
 	IngestedSize *int64 `json:"ingested_size,omitempty"`
+	// The tags that are applied to dataset.
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewEngineStorageCapacityData instantiates a new EngineStorageCapacityData object
@@ -651,6 +653,38 @@ func (o *EngineStorageCapacityData) SetIngestedSize(v int64) {
 	o.IngestedSize = &v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *EngineStorageCapacityData) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EngineStorageCapacityData) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *EngineStorageCapacityData) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *EngineStorageCapacityData) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o EngineStorageCapacityData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -714,6 +748,9 @@ func (o EngineStorageCapacityData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IngestedSize) {
 		toSerialize["ingested_size"] = o.IngestedSize
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -65,6 +65,7 @@ const (
 	OBJECTTYPEENUM_SNAPSHOT ObjectTypeEnum = "SNAPSHOT"
 	OBJECTTYPEENUM_JOB ObjectTypeEnum = "JOB"
 	OBJECTTYPEENUM_VIRTUALIZATION_POLICY_TARGET ObjectTypeEnum = "VIRTUALIZATION_POLICY_TARGET"
+	OBJECTTYPEENUM_DATA_CONNECTION ObjectTypeEnum = "DATA_CONNECTION"
 )
 
 // All allowed values of ObjectTypeEnum enum
@@ -113,6 +114,7 @@ var AllowedObjectTypeEnumEnumValues = []ObjectTypeEnum{
 	"SNAPSHOT",
 	"JOB",
 	"VIRTUALIZATION_POLICY_TARGET",
+	"DATA_CONNECTION",
 }
 
 func (v *ObjectTypeEnum) UnmarshalJSON(src []byte) error {

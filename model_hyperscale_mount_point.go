@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -48,6 +48,16 @@ type HyperscaleMountPoint struct {
 	AwsBucketPrefix *string `json:"aws_bucket_prefix,omitempty"`
 	// The aws bucket delimiter for AWS_S3 storage.
 	AwsBucketDelimiter *string `json:"aws_bucket_delimiter,omitempty"`
+	// The authentication type for Azure blob storage.
+	BlobAuthType *string `json:"blob_auth_type,omitempty"`
+	// The storage account name for Azure blob storage.
+	BlobAccountName *string `json:"blob_account_name,omitempty"`
+	// The blob container name for Azure blob storage.
+	BlobContainerName *string `json:"blob_container_name,omitempty"`
+	// The blob container prefix for Azure blob storage.
+	BlobContainerPrefix *string `json:"blob_container_prefix,omitempty"`
+	// The blob container delimiter for Azure blob storage.
+	BlobContainerDelimiter *string `json:"blob_container_delimiter,omitempty"`
 }
 
 type _HyperscaleMountPoint HyperscaleMountPoint
@@ -478,6 +488,166 @@ func (o *HyperscaleMountPoint) SetAwsBucketDelimiter(v string) {
 	o.AwsBucketDelimiter = &v
 }
 
+// GetBlobAuthType returns the BlobAuthType field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetBlobAuthType() string {
+	if o == nil || IsNil(o.BlobAuthType) {
+		var ret string
+		return ret
+	}
+	return *o.BlobAuthType
+}
+
+// GetBlobAuthTypeOk returns a tuple with the BlobAuthType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetBlobAuthTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.BlobAuthType) {
+		return nil, false
+	}
+	return o.BlobAuthType, true
+}
+
+// HasBlobAuthType returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasBlobAuthType() bool {
+	if o != nil && !IsNil(o.BlobAuthType) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobAuthType gets a reference to the given string and assigns it to the BlobAuthType field.
+func (o *HyperscaleMountPoint) SetBlobAuthType(v string) {
+	o.BlobAuthType = &v
+}
+
+// GetBlobAccountName returns the BlobAccountName field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetBlobAccountName() string {
+	if o == nil || IsNil(o.BlobAccountName) {
+		var ret string
+		return ret
+	}
+	return *o.BlobAccountName
+}
+
+// GetBlobAccountNameOk returns a tuple with the BlobAccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetBlobAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.BlobAccountName) {
+		return nil, false
+	}
+	return o.BlobAccountName, true
+}
+
+// HasBlobAccountName returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasBlobAccountName() bool {
+	if o != nil && !IsNil(o.BlobAccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobAccountName gets a reference to the given string and assigns it to the BlobAccountName field.
+func (o *HyperscaleMountPoint) SetBlobAccountName(v string) {
+	o.BlobAccountName = &v
+}
+
+// GetBlobContainerName returns the BlobContainerName field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetBlobContainerName() string {
+	if o == nil || IsNil(o.BlobContainerName) {
+		var ret string
+		return ret
+	}
+	return *o.BlobContainerName
+}
+
+// GetBlobContainerNameOk returns a tuple with the BlobContainerName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetBlobContainerNameOk() (*string, bool) {
+	if o == nil || IsNil(o.BlobContainerName) {
+		return nil, false
+	}
+	return o.BlobContainerName, true
+}
+
+// HasBlobContainerName returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasBlobContainerName() bool {
+	if o != nil && !IsNil(o.BlobContainerName) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobContainerName gets a reference to the given string and assigns it to the BlobContainerName field.
+func (o *HyperscaleMountPoint) SetBlobContainerName(v string) {
+	o.BlobContainerName = &v
+}
+
+// GetBlobContainerPrefix returns the BlobContainerPrefix field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetBlobContainerPrefix() string {
+	if o == nil || IsNil(o.BlobContainerPrefix) {
+		var ret string
+		return ret
+	}
+	return *o.BlobContainerPrefix
+}
+
+// GetBlobContainerPrefixOk returns a tuple with the BlobContainerPrefix field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetBlobContainerPrefixOk() (*string, bool) {
+	if o == nil || IsNil(o.BlobContainerPrefix) {
+		return nil, false
+	}
+	return o.BlobContainerPrefix, true
+}
+
+// HasBlobContainerPrefix returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasBlobContainerPrefix() bool {
+	if o != nil && !IsNil(o.BlobContainerPrefix) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobContainerPrefix gets a reference to the given string and assigns it to the BlobContainerPrefix field.
+func (o *HyperscaleMountPoint) SetBlobContainerPrefix(v string) {
+	o.BlobContainerPrefix = &v
+}
+
+// GetBlobContainerDelimiter returns the BlobContainerDelimiter field value if set, zero value otherwise.
+func (o *HyperscaleMountPoint) GetBlobContainerDelimiter() string {
+	if o == nil || IsNil(o.BlobContainerDelimiter) {
+		var ret string
+		return ret
+	}
+	return *o.BlobContainerDelimiter
+}
+
+// GetBlobContainerDelimiterOk returns a tuple with the BlobContainerDelimiter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleMountPoint) GetBlobContainerDelimiterOk() (*string, bool) {
+	if o == nil || IsNil(o.BlobContainerDelimiter) {
+		return nil, false
+	}
+	return o.BlobContainerDelimiter, true
+}
+
+// HasBlobContainerDelimiter returns a boolean if a field has been set.
+func (o *HyperscaleMountPoint) HasBlobContainerDelimiter() bool {
+	if o != nil && !IsNil(o.BlobContainerDelimiter) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlobContainerDelimiter gets a reference to the given string and assigns it to the BlobContainerDelimiter field.
+func (o *HyperscaleMountPoint) SetBlobContainerDelimiter(v string) {
+	o.BlobContainerDelimiter = &v
+}
+
 func (o HyperscaleMountPoint) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -524,6 +694,21 @@ func (o HyperscaleMountPoint) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AwsBucketDelimiter) {
 		toSerialize["aws_bucket_delimiter"] = o.AwsBucketDelimiter
+	}
+	if !IsNil(o.BlobAuthType) {
+		toSerialize["blob_auth_type"] = o.BlobAuthType
+	}
+	if !IsNil(o.BlobAccountName) {
+		toSerialize["blob_account_name"] = o.BlobAccountName
+	}
+	if !IsNil(o.BlobContainerName) {
+		toSerialize["blob_container_name"] = o.BlobContainerName
+	}
+	if !IsNil(o.BlobContainerPrefix) {
+		toSerialize["blob_container_prefix"] = o.BlobContainerPrefix
+	}
+	if !IsNil(o.BlobContainerDelimiter) {
+		toSerialize["blob_container_delimiter"] = o.BlobContainerDelimiter
 	}
 	return toSerialize, nil
 }
