@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.20.0
+// APIClient manages communication with the Delphix DCT API API v3.22.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -87,6 +87,8 @@ type APIClient struct {
 	ExecutionsAPI *ExecutionsAPIService
 
 	GroupsAPI *GroupsAPIService
+
+	HeldSpaceAPI *HeldSpaceAPIService
 
 	HyperscaleInstanceAPI *HyperscaleInstanceAPIService
 
@@ -188,6 +190,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.EnvironmentsAPI = (*EnvironmentsAPIService)(&c.common)
 	c.ExecutionsAPI = (*ExecutionsAPIService)(&c.common)
 	c.GroupsAPI = (*GroupsAPIService)(&c.common)
+	c.HeldSpaceAPI = (*HeldSpaceAPIService)(&c.common)
 	c.HyperscaleInstanceAPI = (*HyperscaleInstanceAPIService)(&c.common)
 	c.HyperscaleObjectsAPI = (*HyperscaleObjectsAPIService)(&c.common)
 	c.JobCollectionExecutionsAPI = (*JobCollectionExecutionsAPIService)(&c.common)

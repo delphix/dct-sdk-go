@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -77,6 +77,8 @@ type Host struct {
 	ConnectorDotNetFrameworkVersion *string `json:"connector_dot_net_framework_version,omitempty"`
 	// The path to the root of the Oracle TDE keystores artifact directories.
 	OracleTdeKeystoresRootPath *string `json:"oracle_tde_keystores_root_path,omitempty"`
+	// The path to the Oracle Key Vault library installation on the database node.
+	OracleTdeOkvHomePath *string `json:"oracle_tde_okv_home_path,omitempty"`
 	// The platform for the host machine.
 	ProcessorType *string `json:"processor_type,omitempty"`
 	// The OS timezone.
@@ -1002,6 +1004,38 @@ func (o *Host) SetOracleTdeKeystoresRootPath(v string) {
 	o.OracleTdeKeystoresRootPath = &v
 }
 
+// GetOracleTdeOkvHomePath returns the OracleTdeOkvHomePath field value if set, zero value otherwise.
+func (o *Host) GetOracleTdeOkvHomePath() string {
+	if o == nil || IsNil(o.OracleTdeOkvHomePath) {
+		var ret string
+		return ret
+	}
+	return *o.OracleTdeOkvHomePath
+}
+
+// GetOracleTdeOkvHomePathOk returns a tuple with the OracleTdeOkvHomePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetOracleTdeOkvHomePathOk() (*string, bool) {
+	if o == nil || IsNil(o.OracleTdeOkvHomePath) {
+		return nil, false
+	}
+	return o.OracleTdeOkvHomePath, true
+}
+
+// HasOracleTdeOkvHomePath returns a boolean if a field has been set.
+func (o *Host) HasOracleTdeOkvHomePath() bool {
+	if o != nil && !IsNil(o.OracleTdeOkvHomePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleTdeOkvHomePath gets a reference to the given string and assigns it to the OracleTdeOkvHomePath field.
+func (o *Host) SetOracleTdeOkvHomePath(v string) {
+	o.OracleTdeOkvHomePath = &v
+}
+
 // GetProcessorType returns the ProcessorType field value if set, zero value otherwise.
 func (o *Host) GetProcessorType() string {
 	if o == nil || IsNil(o.ProcessorType) {
@@ -1255,6 +1289,9 @@ func (o Host) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OracleTdeKeystoresRootPath) {
 		toSerialize["oracle_tde_keystores_root_path"] = o.OracleTdeKeystoresRootPath
+	}
+	if !IsNil(o.OracleTdeOkvHomePath) {
+		toSerialize["oracle_tde_okv_home_path"] = o.OracleTdeOkvHomePath
 	}
 	if !IsNil(o.ProcessorType) {
 		toSerialize["processor_type"] = o.ProcessorType

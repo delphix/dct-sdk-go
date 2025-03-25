@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,7 @@ var _ MappedNullable = &SnapshotCapacityResponse{}
 type SnapshotCapacityResponse struct {
 	// Snapshot Capacity response.
 	Items []SnapshotCapacity `json:"items,omitempty"`
+	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
 // NewSnapshotCapacityResponse instantiates a new SnapshotCapacityResponse object
@@ -73,6 +74,38 @@ func (o *SnapshotCapacityResponse) SetItems(v []SnapshotCapacity) {
 	o.Items = v
 }
 
+// GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
+func (o *SnapshotCapacityResponse) GetResponseMetadata() PaginatedResponseMetadata {
+	if o == nil || IsNil(o.ResponseMetadata) {
+		var ret PaginatedResponseMetadata
+		return ret
+	}
+	return *o.ResponseMetadata
+}
+
+// GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SnapshotCapacityResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
+	if o == nil || IsNil(o.ResponseMetadata) {
+		return nil, false
+	}
+	return o.ResponseMetadata, true
+}
+
+// HasResponseMetadata returns a boolean if a field has been set.
+func (o *SnapshotCapacityResponse) HasResponseMetadata() bool {
+	if o != nil && !IsNil(o.ResponseMetadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
+func (o *SnapshotCapacityResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
+	o.ResponseMetadata = &v
+}
+
 func (o SnapshotCapacityResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -85,6 +118,9 @@ func (o SnapshotCapacityResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Items) {
 		toSerialize["items"] = o.Items
+	}
+	if !IsNil(o.ResponseMetadata) {
+		toSerialize["response_metadata"] = o.ResponseMetadata
 	}
 	return toSerialize, nil
 }

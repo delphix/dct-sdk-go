@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -23,6 +23,129 @@ import (
 
 // DataClassesAPIService DataClassesAPI service
 type DataClassesAPIService service
+
+type ApiCreateDataClassRequest struct {
+	ctx context.Context
+	ApiService *DataClassesAPIService
+	dataClassCreateRequest *DataClassCreateRequest
+}
+
+// The new Data Class to create
+func (r ApiCreateDataClassRequest) DataClassCreateRequest(dataClassCreateRequest DataClassCreateRequest) ApiCreateDataClassRequest {
+	r.dataClassCreateRequest = &dataClassCreateRequest
+	return r
+}
+
+func (r ApiCreateDataClassRequest) Execute() (*DataClassCreateResponse, *http.Response, error) {
+	return r.ApiService.CreateDataClassExecute(r)
+}
+
+/*
+CreateDataClass Create a Data Class.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateDataClassRequest
+*/
+func (a *DataClassesAPIService) CreateDataClass(ctx context.Context) ApiCreateDataClassRequest {
+	return ApiCreateDataClassRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return DataClassCreateResponse
+func (a *DataClassesAPIService) CreateDataClassExecute(r ApiCreateDataClassRequest) (*DataClassCreateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DataClassCreateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DataClassesAPIService.CreateDataClass")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/data-classes"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.dataClassCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("dataClassCreateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.dataClassCreateRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreateDataClassTagsRequest struct {
 	ctx context.Context
@@ -1118,12 +1241,12 @@ type ApiUpdateDataClassRequest struct {
 	ctx context.Context
 	ApiService *DataClassesAPIService
 	dataClassId string
-	dataClassUpdateParams *DataClassUpdateParams
+	dataClassUpdateRequest *DataClassUpdateRequest
 }
 
-// Update the description and/or example for a Data Class.
-func (r ApiUpdateDataClassRequest) DataClassUpdateParams(dataClassUpdateParams DataClassUpdateParams) ApiUpdateDataClassRequest {
-	r.dataClassUpdateParams = &dataClassUpdateParams
+// Update a Data Class.
+func (r ApiUpdateDataClassRequest) DataClassUpdateRequest(dataClassUpdateRequest DataClassUpdateRequest) ApiUpdateDataClassRequest {
+	r.dataClassUpdateRequest = &dataClassUpdateRequest
 	return r
 }
 
@@ -1170,8 +1293,8 @@ func (a *DataClassesAPIService) UpdateDataClassExecute(r ApiUpdateDataClassReque
 	if strlen(r.dataClassId) < 1 {
 		return localVarReturnValue, nil, reportError("dataClassId must have at least 1 elements")
 	}
-	if r.dataClassUpdateParams == nil {
-		return localVarReturnValue, nil, reportError("dataClassUpdateParams is required and must be specified")
+	if r.dataClassUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("dataClassUpdateRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1192,7 +1315,7 @@ func (a *DataClassesAPIService) UpdateDataClassExecute(r ApiUpdateDataClassReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.dataClassUpdateParams
+	localVarPostBody = r.dataClassUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -15,23 +15,23 @@ import (
 	"encoding/json"
 )
 
-// checks if the OracleBaseExportTransferStrategyParameters type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &OracleBaseExportTransferStrategyParameters{}
+// checks if the BaseExportTransferStrategyParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BaseExportTransferStrategyParameters{}
 
-// OracleBaseExportTransferStrategyParameters struct for OracleBaseExportTransferStrategyParameters
-type OracleBaseExportTransferStrategyParameters struct {
+// BaseExportTransferStrategyParameters struct for BaseExportTransferStrategyParameters
+type BaseExportTransferStrategyParameters struct {
 	// Number of data streams to connect to the database.
 	RmanChannels *int32 `json:"rman_channels,omitempty"`
 	// Number of GigaBytes in which RMAN will break large files to back them in parallel.
 	RmanFileSectionSizeInGb *int32 `json:"rman_file_section_size_in_gb,omitempty"`
 }
 
-// NewOracleBaseExportTransferStrategyParameters instantiates a new OracleBaseExportTransferStrategyParameters object
+// NewBaseExportTransferStrategyParameters instantiates a new BaseExportTransferStrategyParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOracleBaseExportTransferStrategyParameters() *OracleBaseExportTransferStrategyParameters {
-	this := OracleBaseExportTransferStrategyParameters{}
+func NewBaseExportTransferStrategyParameters() *BaseExportTransferStrategyParameters {
+	this := BaseExportTransferStrategyParameters{}
 	var rmanChannels int32 = 8
 	this.RmanChannels = &rmanChannels
 	var rmanFileSectionSizeInGb int32 = 0
@@ -39,11 +39,11 @@ func NewOracleBaseExportTransferStrategyParameters() *OracleBaseExportTransferSt
 	return &this
 }
 
-// NewOracleBaseExportTransferStrategyParametersWithDefaults instantiates a new OracleBaseExportTransferStrategyParameters object
+// NewBaseExportTransferStrategyParametersWithDefaults instantiates a new BaseExportTransferStrategyParameters object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewOracleBaseExportTransferStrategyParametersWithDefaults() *OracleBaseExportTransferStrategyParameters {
-	this := OracleBaseExportTransferStrategyParameters{}
+func NewBaseExportTransferStrategyParametersWithDefaults() *BaseExportTransferStrategyParameters {
+	this := BaseExportTransferStrategyParameters{}
 	var rmanChannels int32 = 8
 	this.RmanChannels = &rmanChannels
 	var rmanFileSectionSizeInGb int32 = 0
@@ -52,7 +52,7 @@ func NewOracleBaseExportTransferStrategyParametersWithDefaults() *OracleBaseExpo
 }
 
 // GetRmanChannels returns the RmanChannels field value if set, zero value otherwise.
-func (o *OracleBaseExportTransferStrategyParameters) GetRmanChannels() int32 {
+func (o *BaseExportTransferStrategyParameters) GetRmanChannels() int32 {
 	if o == nil || IsNil(o.RmanChannels) {
 		var ret int32
 		return ret
@@ -62,7 +62,7 @@ func (o *OracleBaseExportTransferStrategyParameters) GetRmanChannels() int32 {
 
 // GetRmanChannelsOk returns a tuple with the RmanChannels field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OracleBaseExportTransferStrategyParameters) GetRmanChannelsOk() (*int32, bool) {
+func (o *BaseExportTransferStrategyParameters) GetRmanChannelsOk() (*int32, bool) {
 	if o == nil || IsNil(o.RmanChannels) {
 		return nil, false
 	}
@@ -70,7 +70,7 @@ func (o *OracleBaseExportTransferStrategyParameters) GetRmanChannelsOk() (*int32
 }
 
 // HasRmanChannels returns a boolean if a field has been set.
-func (o *OracleBaseExportTransferStrategyParameters) HasRmanChannels() bool {
+func (o *BaseExportTransferStrategyParameters) HasRmanChannels() bool {
 	if o != nil && !IsNil(o.RmanChannels) {
 		return true
 	}
@@ -79,12 +79,12 @@ func (o *OracleBaseExportTransferStrategyParameters) HasRmanChannels() bool {
 }
 
 // SetRmanChannels gets a reference to the given int32 and assigns it to the RmanChannels field.
-func (o *OracleBaseExportTransferStrategyParameters) SetRmanChannels(v int32) {
+func (o *BaseExportTransferStrategyParameters) SetRmanChannels(v int32) {
 	o.RmanChannels = &v
 }
 
 // GetRmanFileSectionSizeInGb returns the RmanFileSectionSizeInGb field value if set, zero value otherwise.
-func (o *OracleBaseExportTransferStrategyParameters) GetRmanFileSectionSizeInGb() int32 {
+func (o *BaseExportTransferStrategyParameters) GetRmanFileSectionSizeInGb() int32 {
 	if o == nil || IsNil(o.RmanFileSectionSizeInGb) {
 		var ret int32
 		return ret
@@ -94,7 +94,7 @@ func (o *OracleBaseExportTransferStrategyParameters) GetRmanFileSectionSizeInGb(
 
 // GetRmanFileSectionSizeInGbOk returns a tuple with the RmanFileSectionSizeInGb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OracleBaseExportTransferStrategyParameters) GetRmanFileSectionSizeInGbOk() (*int32, bool) {
+func (o *BaseExportTransferStrategyParameters) GetRmanFileSectionSizeInGbOk() (*int32, bool) {
 	if o == nil || IsNil(o.RmanFileSectionSizeInGb) {
 		return nil, false
 	}
@@ -102,7 +102,7 @@ func (o *OracleBaseExportTransferStrategyParameters) GetRmanFileSectionSizeInGbO
 }
 
 // HasRmanFileSectionSizeInGb returns a boolean if a field has been set.
-func (o *OracleBaseExportTransferStrategyParameters) HasRmanFileSectionSizeInGb() bool {
+func (o *BaseExportTransferStrategyParameters) HasRmanFileSectionSizeInGb() bool {
 	if o != nil && !IsNil(o.RmanFileSectionSizeInGb) {
 		return true
 	}
@@ -111,11 +111,11 @@ func (o *OracleBaseExportTransferStrategyParameters) HasRmanFileSectionSizeInGb(
 }
 
 // SetRmanFileSectionSizeInGb gets a reference to the given int32 and assigns it to the RmanFileSectionSizeInGb field.
-func (o *OracleBaseExportTransferStrategyParameters) SetRmanFileSectionSizeInGb(v int32) {
+func (o *BaseExportTransferStrategyParameters) SetRmanFileSectionSizeInGb(v int32) {
 	o.RmanFileSectionSizeInGb = &v
 }
 
-func (o OracleBaseExportTransferStrategyParameters) MarshalJSON() ([]byte, error) {
+func (o BaseExportTransferStrategyParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -123,7 +123,7 @@ func (o OracleBaseExportTransferStrategyParameters) MarshalJSON() ([]byte, error
 	return json.Marshal(toSerialize)
 }
 
-func (o OracleBaseExportTransferStrategyParameters) ToMap() (map[string]interface{}, error) {
+func (o BaseExportTransferStrategyParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.RmanChannels) {
 		toSerialize["rman_channels"] = o.RmanChannels
@@ -134,38 +134,38 @@ func (o OracleBaseExportTransferStrategyParameters) ToMap() (map[string]interfac
 	return toSerialize, nil
 }
 
-type NullableOracleBaseExportTransferStrategyParameters struct {
-	value *OracleBaseExportTransferStrategyParameters
+type NullableBaseExportTransferStrategyParameters struct {
+	value *BaseExportTransferStrategyParameters
 	isSet bool
 }
 
-func (v NullableOracleBaseExportTransferStrategyParameters) Get() *OracleBaseExportTransferStrategyParameters {
+func (v NullableBaseExportTransferStrategyParameters) Get() *BaseExportTransferStrategyParameters {
 	return v.value
 }
 
-func (v *NullableOracleBaseExportTransferStrategyParameters) Set(val *OracleBaseExportTransferStrategyParameters) {
+func (v *NullableBaseExportTransferStrategyParameters) Set(val *BaseExportTransferStrategyParameters) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableOracleBaseExportTransferStrategyParameters) IsSet() bool {
+func (v NullableBaseExportTransferStrategyParameters) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableOracleBaseExportTransferStrategyParameters) Unset() {
+func (v *NullableBaseExportTransferStrategyParameters) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableOracleBaseExportTransferStrategyParameters(val *OracleBaseExportTransferStrategyParameters) *NullableOracleBaseExportTransferStrategyParameters {
-	return &NullableOracleBaseExportTransferStrategyParameters{value: val, isSet: true}
+func NewNullableBaseExportTransferStrategyParameters(val *BaseExportTransferStrategyParameters) *NullableBaseExportTransferStrategyParameters {
+	return &NullableBaseExportTransferStrategyParameters{value: val, isSet: true}
 }
 
-func (v NullableOracleBaseExportTransferStrategyParameters) MarshalJSON() ([]byte, error) {
+func (v NullableBaseExportTransferStrategyParameters) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableOracleBaseExportTransferStrategyParameters) UnmarshalJSON(src []byte) error {
+func (v *NullableBaseExportTransferStrategyParameters) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

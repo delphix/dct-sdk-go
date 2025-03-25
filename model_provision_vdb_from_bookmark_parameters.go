@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -167,6 +167,10 @@ type ProvisionVDBFromBookmarkParameters struct {
 	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
 	// Whether the virtual database will be provisioned for a containerized environment, such as Linux containers.
 	ContainerMode *bool `json:"container_mode,omitempty"`
+	// Shared backup location to be used for VDB provision on AG Cluster.
+	MssqlAgBackupLocation *string `json:"mssql_ag_backup_location,omitempty"`
+	// Indicates whether to do fast operations for VDB on AG which will use a healthy secondary replica to recreate the AG or backup based operations which will use the primary replica to recreate the AG using backup and restore process.
+	MssqlAgBackupBased *bool `json:"mssql_ag_backup_based,omitempty"`
 	// The ID of the bookmark from which to execute the operation. The bookmark must contain only one VDB.
 	BookmarkId string `json:"bookmark_id"`
 	// Whether the account provisioning this VDB must be configured as owner of the VDB.
@@ -2510,6 +2514,70 @@ func (o *ProvisionVDBFromBookmarkParameters) SetContainerMode(v bool) {
 	o.ContainerMode = &v
 }
 
+// GetMssqlAgBackupLocation returns the MssqlAgBackupLocation field value if set, zero value otherwise.
+func (o *ProvisionVDBFromBookmarkParameters) GetMssqlAgBackupLocation() string {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlAgBackupLocation
+}
+
+// GetMssqlAgBackupLocationOk returns a tuple with the MssqlAgBackupLocation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBFromBookmarkParameters) GetMssqlAgBackupLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		return nil, false
+	}
+	return o.MssqlAgBackupLocation, true
+}
+
+// HasMssqlAgBackupLocation returns a boolean if a field has been set.
+func (o *ProvisionVDBFromBookmarkParameters) HasMssqlAgBackupLocation() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupLocation) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupLocation gets a reference to the given string and assigns it to the MssqlAgBackupLocation field.
+func (o *ProvisionVDBFromBookmarkParameters) SetMssqlAgBackupLocation(v string) {
+	o.MssqlAgBackupLocation = &v
+}
+
+// GetMssqlAgBackupBased returns the MssqlAgBackupBased field value if set, zero value otherwise.
+func (o *ProvisionVDBFromBookmarkParameters) GetMssqlAgBackupBased() bool {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		var ret bool
+		return ret
+	}
+	return *o.MssqlAgBackupBased
+}
+
+// GetMssqlAgBackupBasedOk returns a tuple with the MssqlAgBackupBased field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBFromBookmarkParameters) GetMssqlAgBackupBasedOk() (*bool, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		return nil, false
+	}
+	return o.MssqlAgBackupBased, true
+}
+
+// HasMssqlAgBackupBased returns a boolean if a field has been set.
+func (o *ProvisionVDBFromBookmarkParameters) HasMssqlAgBackupBased() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupBased) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupBased gets a reference to the given bool and assigns it to the MssqlAgBackupBased field.
+func (o *ProvisionVDBFromBookmarkParameters) SetMssqlAgBackupBased(v bool) {
+	o.MssqlAgBackupBased = &v
+}
+
 // GetBookmarkId returns the BookmarkId field value
 func (o *ProvisionVDBFromBookmarkParameters) GetBookmarkId() string {
 	if o == nil {
@@ -2791,6 +2859,12 @@ func (o ProvisionVDBFromBookmarkParameters) ToMap() (map[string]interface{}, err
 	}
 	if !IsNil(o.ContainerMode) {
 		toSerialize["container_mode"] = o.ContainerMode
+	}
+	if !IsNil(o.MssqlAgBackupLocation) {
+		toSerialize["mssql_ag_backup_location"] = o.MssqlAgBackupLocation
+	}
+	if !IsNil(o.MssqlAgBackupBased) {
+		toSerialize["mssql_ag_backup_based"] = o.MssqlAgBackupBased
 	}
 	toSerialize["bookmark_id"] = o.BookmarkId
 	if !IsNil(o.MakeCurrentAccountOwner) {

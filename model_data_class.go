@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -32,6 +32,8 @@ type DataClass struct {
 	DefaultTokenAlgorithmId NullableString `json:"default_token_algorithm_id,omitempty"`
 	// The default tokenization algorithm for this data class.
 	DefaultTokenAlgorithmName NullableString `json:"default_token_algorithm_name,omitempty"`
+	// The list of algorithm IDs available for this data class.
+	AlgorithmIds []string `json:"algorithm_ids,omitempty"`
 	// A description of this data class.
 	Description NullableString `json:"description,omitempty"`
 	// An example data value for this data class.
@@ -293,6 +295,38 @@ func (o *DataClass) SetDefaultTokenAlgorithmNameNil() {
 // UnsetDefaultTokenAlgorithmName ensures that no value is present for DefaultTokenAlgorithmName, not even an explicit nil
 func (o *DataClass) UnsetDefaultTokenAlgorithmName() {
 	o.DefaultTokenAlgorithmName.Unset()
+}
+
+// GetAlgorithmIds returns the AlgorithmIds field value if set, zero value otherwise.
+func (o *DataClass) GetAlgorithmIds() []string {
+	if o == nil || IsNil(o.AlgorithmIds) {
+		var ret []string
+		return ret
+	}
+	return o.AlgorithmIds
+}
+
+// GetAlgorithmIdsOk returns a tuple with the AlgorithmIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataClass) GetAlgorithmIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.AlgorithmIds) {
+		return nil, false
+	}
+	return o.AlgorithmIds, true
+}
+
+// HasAlgorithmIds returns a boolean if a field has been set.
+func (o *DataClass) HasAlgorithmIds() bool {
+	if o != nil && !IsNil(o.AlgorithmIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlgorithmIds gets a reference to the given []string and assigns it to the AlgorithmIds field.
+func (o *DataClass) SetAlgorithmIds(v []string) {
+	o.AlgorithmIds = v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -564,6 +598,9 @@ func (o DataClass) ToMap() (map[string]interface{}, error) {
 	}
 	if o.DefaultTokenAlgorithmName.IsSet() {
 		toSerialize["default_token_algorithm_name"] = o.DefaultTokenAlgorithmName.Get()
+	}
+	if !IsNil(o.AlgorithmIds) {
+		toSerialize["algorithm_ids"] = o.AlgorithmIds
 	}
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()

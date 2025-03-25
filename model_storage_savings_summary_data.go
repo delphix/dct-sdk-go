@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -30,7 +30,7 @@ type StorageSavingsSummaryData struct {
 	UnvirtualizedSpace *int64 `json:"unvirtualized_space,omitempty"`
 	// The disk space, in bytes, that it would take to store the dSource and its descendant VDBs without Delphix, counting only their current (active) timeflows.
 	CurrentTimeflowsUnvirtualizedSpace *int64 `json:"current_timeflows_unvirtualized_space,omitempty"`
-	// The actual space used by the VDB, in bytes.
+	// The actual space used by the dSource and its dependant VDBs, in bytes.
 	VirtualizedSpace *int64 `json:"virtualized_space,omitempty"`
 	// The name of the database on the target environment.
 	Name *string `json:"name,omitempty"`
@@ -42,6 +42,8 @@ type StorageSavingsSummaryData struct {
 	EstimatedCurrentTimeflowsSavings *int64 `json:"estimated_current_timeflows_savings,omitempty"`
 	// The disk space that has been saved by using Delphix virtualizion for only the current (active) timeflows, in percentage.
 	EstimatedCurrentTimeflowsSavingsPerc *float32 `json:"estimated_current_timeflows_savings_perc,omitempty"`
+	// Indicates if the dSource is a replica
+	IsReplica *bool `json:"is_replica,omitempty"`
 }
 
 // NewStorageSavingsSummaryData instantiates a new StorageSavingsSummaryData object
@@ -413,6 +415,38 @@ func (o *StorageSavingsSummaryData) SetEstimatedCurrentTimeflowsSavingsPerc(v fl
 	o.EstimatedCurrentTimeflowsSavingsPerc = &v
 }
 
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *StorageSavingsSummaryData) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSavingsSummaryData) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *StorageSavingsSummaryData) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *StorageSavingsSummaryData) SetIsReplica(v bool) {
+	o.IsReplica = &v
+}
+
 func (o StorageSavingsSummaryData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -455,6 +489,9 @@ func (o StorageSavingsSummaryData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EstimatedCurrentTimeflowsSavingsPerc) {
 		toSerialize["estimated_current_timeflows_savings_perc"] = o.EstimatedCurrentTimeflowsSavingsPerc
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
 	}
 	return toSerialize, nil
 }

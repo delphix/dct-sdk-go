@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,8 @@ type BookmarkDSources struct {
 	DsourceId *string `json:"dsource_id,omitempty"`
 	// The dSource name.
 	DsourceName *string `json:"dsource_name,omitempty"`
+	// The snapshot id.
+	SnapshotId *string `json:"snapshot_id,omitempty"`
 }
 
 // NewBookmarkDSources instantiates a new BookmarkDSources object
@@ -107,6 +109,38 @@ func (o *BookmarkDSources) SetDsourceName(v string) {
 	o.DsourceName = &v
 }
 
+// GetSnapshotId returns the SnapshotId field value if set, zero value otherwise.
+func (o *BookmarkDSources) GetSnapshotId() string {
+	if o == nil || IsNil(o.SnapshotId) {
+		var ret string
+		return ret
+	}
+	return *o.SnapshotId
+}
+
+// GetSnapshotIdOk returns a tuple with the SnapshotId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkDSources) GetSnapshotIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SnapshotId) {
+		return nil, false
+	}
+	return o.SnapshotId, true
+}
+
+// HasSnapshotId returns a boolean if a field has been set.
+func (o *BookmarkDSources) HasSnapshotId() bool {
+	if o != nil && !IsNil(o.SnapshotId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSnapshotId gets a reference to the given string and assigns it to the SnapshotId field.
+func (o *BookmarkDSources) SetSnapshotId(v string) {
+	o.SnapshotId = &v
+}
+
 func (o BookmarkDSources) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +156,9 @@ func (o BookmarkDSources) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DsourceName) {
 		toSerialize["dsource_name"] = o.DsourceName
+	}
+	if !IsNil(o.SnapshotId) {
+		toSerialize["snapshot_id"] = o.SnapshotId
 	}
 	return toSerialize, nil
 }

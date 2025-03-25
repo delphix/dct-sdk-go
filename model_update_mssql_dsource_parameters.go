@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ var _ MappedNullable = &UpdateMSSQLDsourceParameters{}
 
 // UpdateMSSQLDsourceParameters Parameters to update a MSSql dSource.
 type UpdateMSSQLDsourceParameters struct {
+	// The unique name of the dSource within a group.
+	Name *string `json:"name,omitempty"`
 	// Enabled LogSync for this dSource.
 	LogsyncEnabled *bool `json:"logsync_enabled,omitempty"`
 	// The encryption key to use when restoring encrypted backups.
@@ -114,6 +116,38 @@ func NewUpdateMSSQLDsourceParameters() *UpdateMSSQLDsourceParameters {
 func NewUpdateMSSQLDsourceParametersWithDefaults() *UpdateMSSQLDsourceParameters {
 	this := UpdateMSSQLDsourceParameters{}
 	return &this
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *UpdateMSSQLDsourceParameters) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateMSSQLDsourceParameters) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *UpdateMSSQLDsourceParameters) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *UpdateMSSQLDsourceParameters) SetName(v string) {
+	o.Name = &v
 }
 
 // GetLogsyncEnabled returns the LogsyncEnabled field value if set, zero value otherwise.
@@ -1374,6 +1408,9 @@ func (o UpdateMSSQLDsourceParameters) MarshalJSON() ([]byte, error) {
 
 func (o UpdateMSSQLDsourceParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
 	if !IsNil(o.LogsyncEnabled) {
 		toSerialize["logsync_enabled"] = o.LogsyncEnabled
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,8 @@ type BookmarkVDBs struct {
 	VdbId *string `json:"vdb_id,omitempty"`
 	// The VDB name.
 	VdbName *string `json:"vdb_name,omitempty"`
+	// The snapshot id.
+	SnapshotId *string `json:"snapshot_id,omitempty"`
 	// The timestamp of origin timeline location.
 	SourceDataTimestamp *time.Time `json:"source_data_timestamp,omitempty"`
 	// The root of the VDB.
@@ -112,6 +114,38 @@ func (o *BookmarkVDBs) HasVdbName() bool {
 // SetVdbName gets a reference to the given string and assigns it to the VdbName field.
 func (o *BookmarkVDBs) SetVdbName(v string) {
 	o.VdbName = &v
+}
+
+// GetSnapshotId returns the SnapshotId field value if set, zero value otherwise.
+func (o *BookmarkVDBs) GetSnapshotId() string {
+	if o == nil || IsNil(o.SnapshotId) {
+		var ret string
+		return ret
+	}
+	return *o.SnapshotId
+}
+
+// GetSnapshotIdOk returns a tuple with the SnapshotId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkVDBs) GetSnapshotIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SnapshotId) {
+		return nil, false
+	}
+	return o.SnapshotId, true
+}
+
+// HasSnapshotId returns a boolean if a field has been set.
+func (o *BookmarkVDBs) HasSnapshotId() bool {
+	if o != nil && !IsNil(o.SnapshotId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSnapshotId gets a reference to the given string and assigns it to the SnapshotId field.
+func (o *BookmarkVDBs) SetSnapshotId(v string) {
+	o.SnapshotId = &v
 }
 
 // GetSourceDataTimestamp returns the SourceDataTimestamp field value if set, zero value otherwise.
@@ -225,6 +259,9 @@ func (o BookmarkVDBs) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.VdbName) {
 		toSerialize["vdb_name"] = o.VdbName
+	}
+	if !IsNil(o.SnapshotId) {
+		toSerialize["snapshot_id"] = o.SnapshotId
 	}
 	if !IsNil(o.SourceDataTimestamp) {
 		toSerialize["source_data_timestamp"] = o.SourceDataTimestamp

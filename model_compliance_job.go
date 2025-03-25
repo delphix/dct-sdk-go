@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -44,20 +44,12 @@ type ComplianceJob struct {
 	LastExecutionStartTime *time.Time `json:"last_execution_start_time,omitempty"`
 	// The run time of the most recent execution of this compliance job in ms.
 	LastExecutionRunTime *int64 `json:"last_execution_run_time,omitempty"`
-	// The username of the Connector used by the ComplianceJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
-	ConnectorUsername NullableString `json:"connector_username,omitempty"`
-	// The password of the Connector used by the ComplianceJob (Standard Job only). For hyperscale jobs, see the connector of the dataset.
-	ConnectorPassword NullableString `json:"connector_password,omitempty"`
 	// The id of the OTF source connector for this job
 	OnTheFlySourceConnectorId NullableString `json:"on_the_fly_source_connector_id,omitempty"`
 	// The name of the OTF source connector for this job
 	OnTheFlySourceConnectorName NullableString `json:"on_the_fly_source_connector_name,omitempty"`
 	// The type of the OTF source connector for this job
 	OnTheFlySourceConnectorType NullableString `json:"on_the_fly_source_connector_type,omitempty"`
-	// The username of the source Connector used by the on-the-fly job (Standard Job only).
-	OnTheFlySourceConnectorUsername NullableString `json:"on_the_fly_source_connector_username,omitempty"`
-	// The password of the source Connector used by the on-the-fly job (Standard Job only).
-	OnTheFlySourceConnectorPassword NullableString `json:"on_the_fly_source_connector_password,omitempty"`
 	// The type of compliance job.
 	Type *string `json:"type,omitempty"`
 	// The execution type of this Job.
@@ -506,90 +498,6 @@ func (o *ComplianceJob) SetLastExecutionRunTime(v int64) {
 	o.LastExecutionRunTime = &v
 }
 
-// GetConnectorUsername returns the ConnectorUsername field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ComplianceJob) GetConnectorUsername() string {
-	if o == nil || IsNil(o.ConnectorUsername.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.ConnectorUsername.Get()
-}
-
-// GetConnectorUsernameOk returns a tuple with the ConnectorUsername field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ComplianceJob) GetConnectorUsernameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.ConnectorUsername.Get(), o.ConnectorUsername.IsSet()
-}
-
-// HasConnectorUsername returns a boolean if a field has been set.
-func (o *ComplianceJob) HasConnectorUsername() bool {
-	if o != nil && o.ConnectorUsername.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetConnectorUsername gets a reference to the given NullableString and assigns it to the ConnectorUsername field.
-func (o *ComplianceJob) SetConnectorUsername(v string) {
-	o.ConnectorUsername.Set(&v)
-}
-// SetConnectorUsernameNil sets the value for ConnectorUsername to be an explicit nil
-func (o *ComplianceJob) SetConnectorUsernameNil() {
-	o.ConnectorUsername.Set(nil)
-}
-
-// UnsetConnectorUsername ensures that no value is present for ConnectorUsername, not even an explicit nil
-func (o *ComplianceJob) UnsetConnectorUsername() {
-	o.ConnectorUsername.Unset()
-}
-
-// GetConnectorPassword returns the ConnectorPassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ComplianceJob) GetConnectorPassword() string {
-	if o == nil || IsNil(o.ConnectorPassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.ConnectorPassword.Get()
-}
-
-// GetConnectorPasswordOk returns a tuple with the ConnectorPassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ComplianceJob) GetConnectorPasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.ConnectorPassword.Get(), o.ConnectorPassword.IsSet()
-}
-
-// HasConnectorPassword returns a boolean if a field has been set.
-func (o *ComplianceJob) HasConnectorPassword() bool {
-	if o != nil && o.ConnectorPassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetConnectorPassword gets a reference to the given NullableString and assigns it to the ConnectorPassword field.
-func (o *ComplianceJob) SetConnectorPassword(v string) {
-	o.ConnectorPassword.Set(&v)
-}
-// SetConnectorPasswordNil sets the value for ConnectorPassword to be an explicit nil
-func (o *ComplianceJob) SetConnectorPasswordNil() {
-	o.ConnectorPassword.Set(nil)
-}
-
-// UnsetConnectorPassword ensures that no value is present for ConnectorPassword, not even an explicit nil
-func (o *ComplianceJob) UnsetConnectorPassword() {
-	o.ConnectorPassword.Unset()
-}
-
 // GetOnTheFlySourceConnectorId returns the OnTheFlySourceConnectorId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ComplianceJob) GetOnTheFlySourceConnectorId() string {
 	if o == nil || IsNil(o.OnTheFlySourceConnectorId.Get()) {
@@ -714,90 +622,6 @@ func (o *ComplianceJob) SetOnTheFlySourceConnectorTypeNil() {
 // UnsetOnTheFlySourceConnectorType ensures that no value is present for OnTheFlySourceConnectorType, not even an explicit nil
 func (o *ComplianceJob) UnsetOnTheFlySourceConnectorType() {
 	o.OnTheFlySourceConnectorType.Unset()
-}
-
-// GetOnTheFlySourceConnectorUsername returns the OnTheFlySourceConnectorUsername field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ComplianceJob) GetOnTheFlySourceConnectorUsername() string {
-	if o == nil || IsNil(o.OnTheFlySourceConnectorUsername.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.OnTheFlySourceConnectorUsername.Get()
-}
-
-// GetOnTheFlySourceConnectorUsernameOk returns a tuple with the OnTheFlySourceConnectorUsername field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ComplianceJob) GetOnTheFlySourceConnectorUsernameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.OnTheFlySourceConnectorUsername.Get(), o.OnTheFlySourceConnectorUsername.IsSet()
-}
-
-// HasOnTheFlySourceConnectorUsername returns a boolean if a field has been set.
-func (o *ComplianceJob) HasOnTheFlySourceConnectorUsername() bool {
-	if o != nil && o.OnTheFlySourceConnectorUsername.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetOnTheFlySourceConnectorUsername gets a reference to the given NullableString and assigns it to the OnTheFlySourceConnectorUsername field.
-func (o *ComplianceJob) SetOnTheFlySourceConnectorUsername(v string) {
-	o.OnTheFlySourceConnectorUsername.Set(&v)
-}
-// SetOnTheFlySourceConnectorUsernameNil sets the value for OnTheFlySourceConnectorUsername to be an explicit nil
-func (o *ComplianceJob) SetOnTheFlySourceConnectorUsernameNil() {
-	o.OnTheFlySourceConnectorUsername.Set(nil)
-}
-
-// UnsetOnTheFlySourceConnectorUsername ensures that no value is present for OnTheFlySourceConnectorUsername, not even an explicit nil
-func (o *ComplianceJob) UnsetOnTheFlySourceConnectorUsername() {
-	o.OnTheFlySourceConnectorUsername.Unset()
-}
-
-// GetOnTheFlySourceConnectorPassword returns the OnTheFlySourceConnectorPassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ComplianceJob) GetOnTheFlySourceConnectorPassword() string {
-	if o == nil || IsNil(o.OnTheFlySourceConnectorPassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.OnTheFlySourceConnectorPassword.Get()
-}
-
-// GetOnTheFlySourceConnectorPasswordOk returns a tuple with the OnTheFlySourceConnectorPassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ComplianceJob) GetOnTheFlySourceConnectorPasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.OnTheFlySourceConnectorPassword.Get(), o.OnTheFlySourceConnectorPassword.IsSet()
-}
-
-// HasOnTheFlySourceConnectorPassword returns a boolean if a field has been set.
-func (o *ComplianceJob) HasOnTheFlySourceConnectorPassword() bool {
-	if o != nil && o.OnTheFlySourceConnectorPassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetOnTheFlySourceConnectorPassword gets a reference to the given NullableString and assigns it to the OnTheFlySourceConnectorPassword field.
-func (o *ComplianceJob) SetOnTheFlySourceConnectorPassword(v string) {
-	o.OnTheFlySourceConnectorPassword.Set(&v)
-}
-// SetOnTheFlySourceConnectorPasswordNil sets the value for OnTheFlySourceConnectorPassword to be an explicit nil
-func (o *ComplianceJob) SetOnTheFlySourceConnectorPasswordNil() {
-	o.OnTheFlySourceConnectorPassword.Set(nil)
-}
-
-// UnsetOnTheFlySourceConnectorPassword ensures that no value is present for OnTheFlySourceConnectorPassword, not even an explicit nil
-func (o *ComplianceJob) UnsetOnTheFlySourceConnectorPassword() {
-	o.OnTheFlySourceConnectorPassword.Unset()
 }
 
 // GetType returns the Type field value if set, zero value otherwise.
@@ -1602,12 +1426,6 @@ func (o ComplianceJob) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastExecutionRunTime) {
 		toSerialize["last_execution_run_time"] = o.LastExecutionRunTime
 	}
-	if o.ConnectorUsername.IsSet() {
-		toSerialize["connector_username"] = o.ConnectorUsername.Get()
-	}
-	if o.ConnectorPassword.IsSet() {
-		toSerialize["connector_password"] = o.ConnectorPassword.Get()
-	}
 	if o.OnTheFlySourceConnectorId.IsSet() {
 		toSerialize["on_the_fly_source_connector_id"] = o.OnTheFlySourceConnectorId.Get()
 	}
@@ -1616,12 +1434,6 @@ func (o ComplianceJob) ToMap() (map[string]interface{}, error) {
 	}
 	if o.OnTheFlySourceConnectorType.IsSet() {
 		toSerialize["on_the_fly_source_connector_type"] = o.OnTheFlySourceConnectorType.Get()
-	}
-	if o.OnTheFlySourceConnectorUsername.IsSet() {
-		toSerialize["on_the_fly_source_connector_username"] = o.OnTheFlySourceConnectorUsername.Get()
-	}
-	if o.OnTheFlySourceConnectorPassword.IsSet() {
-		toSerialize["on_the_fly_source_connector_password"] = o.OnTheFlySourceConnectorPassword.Get()
 	}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type

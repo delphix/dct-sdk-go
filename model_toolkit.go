@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -40,6 +40,8 @@ type Toolkit struct {
 	UpgradeDefinition map[string]interface{} `json:"upgrade_definition,omitempty"`
 	// The schema that defines the structure of the fields in AppDataSyncParameters.
 	SnapshotParametersDefinition map[string]interface{} `json:"snapshot_parameters_definition,omitempty"`
+	// The Delphix API version that the toolkit was built against.
+	BuildApi *string `json:"build_api,omitempty"`
 	// Tags associated to this toolkit.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -381,6 +383,38 @@ func (o *Toolkit) SetSnapshotParametersDefinition(v map[string]interface{}) {
 	o.SnapshotParametersDefinition = v
 }
 
+// GetBuildApi returns the BuildApi field value if set, zero value otherwise.
+func (o *Toolkit) GetBuildApi() string {
+	if o == nil || IsNil(o.BuildApi) {
+		var ret string
+		return ret
+	}
+	return *o.BuildApi
+}
+
+// GetBuildApiOk returns a tuple with the BuildApi field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetBuildApiOk() (*string, bool) {
+	if o == nil || IsNil(o.BuildApi) {
+		return nil, false
+	}
+	return o.BuildApi, true
+}
+
+// HasBuildApi returns a boolean if a field has been set.
+func (o *Toolkit) HasBuildApi() bool {
+	if o != nil && !IsNil(o.BuildApi) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildApi gets a reference to the given string and assigns it to the BuildApi field.
+func (o *Toolkit) SetBuildApi(v string) {
+	o.BuildApi = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Toolkit) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -452,6 +486,9 @@ func (o Toolkit) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SnapshotParametersDefinition) {
 		toSerialize["snapshot_parameters_definition"] = o.SnapshotParametersDefinition
+	}
+	if !IsNil(o.BuildApi) {
+		toSerialize["build_api"] = o.BuildApi
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

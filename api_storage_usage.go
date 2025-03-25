@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -32,6 +32,10 @@ type ApiGetHistoricalStorageSummaryAggregateRequest struct {
 	endDate *time.Time
 	includeProjection *bool
 	engineIds *[]string
+	dsourceIds *[]string
+	vdbIds *[]string
+	cdbIds *[]string
+	vcdbIds *[]string
 }
 
 // Report start date/time. Defaults to first API request.
@@ -55,6 +59,30 @@ func (r ApiGetHistoricalStorageSummaryAggregateRequest) IncludeProjection(includ
 // The list of engine ids to aggregate data for. By default aggregating data for all engines.
 func (r ApiGetHistoricalStorageSummaryAggregateRequest) EngineIds(engineIds []string) ApiGetHistoricalStorageSummaryAggregateRequest {
 	r.engineIds = &engineIds
+	return r
+}
+
+// The list of dSource ids to aggregate data for. By default aggregating data for all dSources.
+func (r ApiGetHistoricalStorageSummaryAggregateRequest) DsourceIds(dsourceIds []string) ApiGetHistoricalStorageSummaryAggregateRequest {
+	r.dsourceIds = &dsourceIds
+	return r
+}
+
+// The list of VDB ids to aggregate data for. By default aggregating data for all VDBs.
+func (r ApiGetHistoricalStorageSummaryAggregateRequest) VdbIds(vdbIds []string) ApiGetHistoricalStorageSummaryAggregateRequest {
+	r.vdbIds = &vdbIds
+	return r
+}
+
+// The list of CDB ids to aggregate data for. By default aggregating data for all CDBs.
+func (r ApiGetHistoricalStorageSummaryAggregateRequest) CdbIds(cdbIds []string) ApiGetHistoricalStorageSummaryAggregateRequest {
+	r.cdbIds = &cdbIds
+	return r
+}
+
+// The list of VCDB ids to aggregate data for. By default aggregating data for all VCDBs.
+func (r ApiGetHistoricalStorageSummaryAggregateRequest) VcdbIds(vcdbIds []string) ApiGetHistoricalStorageSummaryAggregateRequest {
+	r.vcdbIds = &vcdbIds
 	return r
 }
 
@@ -114,6 +142,50 @@ func (a *StorageUsageAPIService) GetHistoricalStorageSummaryAggregateExecute(r A
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "engine_ids", t, "form", "multi")
+		}
+	}
+	if r.dsourceIds != nil {
+		t := *r.dsourceIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "dsource_ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "dsource_ids", t, "form", "multi")
+		}
+	}
+	if r.vdbIds != nil {
+		t := *r.vdbIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vdb_ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vdb_ids", t, "form", "multi")
+		}
+	}
+	if r.cdbIds != nil {
+		t := *r.cdbIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "cdb_ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "cdb_ids", t, "form", "multi")
+		}
+	}
+	if r.vcdbIds != nil {
+		t := *r.vcdbIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vcdb_ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vcdb_ids", t, "form", "multi")
 		}
 	}
 	// to determine the Content-Type header

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -56,6 +56,8 @@ type EngineStorageCapacityDependencyData struct {
 	UnownedSnapshotSize *int64 `json:"unowned_snapshot_size,omitempty"`
 	// Amount of space ingested by the source.
 	IngestedSize *int64 `json:"ingested_size,omitempty"`
+	// The tags that are applied to dataset.
+	Tags []Tag `json:"tags,omitempty"`
 	// ID of the parent dataset.
 	ParentId *string `json:"parent_id,omitempty"`
 }
@@ -653,6 +655,38 @@ func (o *EngineStorageCapacityDependencyData) SetIngestedSize(v int64) {
 	o.IngestedSize = &v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *EngineStorageCapacityDependencyData) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EngineStorageCapacityDependencyData) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *EngineStorageCapacityDependencyData) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *EngineStorageCapacityDependencyData) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 // GetParentId returns the ParentId field value if set, zero value otherwise.
 func (o *EngineStorageCapacityDependencyData) GetParentId() string {
 	if o == nil || IsNil(o.ParentId) {
@@ -748,6 +782,9 @@ func (o EngineStorageCapacityDependencyData) ToMap() (map[string]interface{}, er
 	}
 	if !IsNil(o.IngestedSize) {
 		toSerialize["ingested_size"] = o.IngestedSize
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
 	}
 	if !IsNil(o.ParentId) {
 		toSerialize["parent_id"] = o.ParentId

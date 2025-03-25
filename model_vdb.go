@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -145,6 +145,10 @@ type VDB struct {
 	TargetVcdbTdeKeystorePath *string `json:"target_vcdb_tde_keystore_path,omitempty"`
 	// ID of the key created by Delphix, as recorded in v$encryption_keys.key_id.
 	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
+	// Recovery model of the vdb database.
+	RecoveryModel *string `json:"recovery_model,omitempty"`
+	// Whether to enable CDC on provision for MSSql.
+	CdcOnProvision *bool `json:"cdc_on_provision,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -2449,6 +2453,70 @@ func (o *VDB) SetTdeKeyIdentifier(v string) {
 	o.TdeKeyIdentifier = &v
 }
 
+// GetRecoveryModel returns the RecoveryModel field value if set, zero value otherwise.
+func (o *VDB) GetRecoveryModel() string {
+	if o == nil || IsNil(o.RecoveryModel) {
+		var ret string
+		return ret
+	}
+	return *o.RecoveryModel
+}
+
+// GetRecoveryModelOk returns a tuple with the RecoveryModel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetRecoveryModelOk() (*string, bool) {
+	if o == nil || IsNil(o.RecoveryModel) {
+		return nil, false
+	}
+	return o.RecoveryModel, true
+}
+
+// HasRecoveryModel returns a boolean if a field has been set.
+func (o *VDB) HasRecoveryModel() bool {
+	if o != nil && !IsNil(o.RecoveryModel) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoveryModel gets a reference to the given string and assigns it to the RecoveryModel field.
+func (o *VDB) SetRecoveryModel(v string) {
+	o.RecoveryModel = &v
+}
+
+// GetCdcOnProvision returns the CdcOnProvision field value if set, zero value otherwise.
+func (o *VDB) GetCdcOnProvision() bool {
+	if o == nil || IsNil(o.CdcOnProvision) {
+		var ret bool
+		return ret
+	}
+	return *o.CdcOnProvision
+}
+
+// GetCdcOnProvisionOk returns a tuple with the CdcOnProvision field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetCdcOnProvisionOk() (*bool, bool) {
+	if o == nil || IsNil(o.CdcOnProvision) {
+		return nil, false
+	}
+	return o.CdcOnProvision, true
+}
+
+// HasCdcOnProvision returns a boolean if a field has been set.
+func (o *VDB) HasCdcOnProvision() bool {
+	if o != nil && !IsNil(o.CdcOnProvision) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdcOnProvision gets a reference to the given bool and assigns it to the CdcOnProvision field.
+func (o *VDB) SetCdcOnProvision(v bool) {
+	o.CdcOnProvision = &v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -2650,6 +2718,12 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TdeKeyIdentifier) {
 		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
+	}
+	if !IsNil(o.RecoveryModel) {
+		toSerialize["recovery_model"] = o.RecoveryModel
+	}
+	if !IsNil(o.CdcOnProvision) {
+		toSerialize["cdc_on_provision"] = o.CdcOnProvision
 	}
 	return toSerialize, nil
 }

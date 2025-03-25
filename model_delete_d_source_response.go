@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -62,6 +62,10 @@ type DeleteDSourceResponse struct {
 	Tasks []JobTask `json:"tasks,omitempty"`
 	// The ID of the associated masking execution, if any.
 	ExecutionId NullableString `json:"execution_id,omitempty"`
+	// The type of the job result. This is the type of the object present in the result.
+	ResultType *string `json:"result_type,omitempty"`
+	// The result of the job execution. This is JSON serialized string of the result object whose type is specified by result_type property.
+	Result map[string]interface{} `json:"result,omitempty"`
 	Job *Job `json:"job,omitempty"`
 }
 
@@ -773,6 +777,70 @@ func (o *DeleteDSourceResponse) UnsetExecutionId() {
 	o.ExecutionId.Unset()
 }
 
+// GetResultType returns the ResultType field value if set, zero value otherwise.
+func (o *DeleteDSourceResponse) GetResultType() string {
+	if o == nil || IsNil(o.ResultType) {
+		var ret string
+		return ret
+	}
+	return *o.ResultType
+}
+
+// GetResultTypeOk returns a tuple with the ResultType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteDSourceResponse) GetResultTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.ResultType) {
+		return nil, false
+	}
+	return o.ResultType, true
+}
+
+// HasResultType returns a boolean if a field has been set.
+func (o *DeleteDSourceResponse) HasResultType() bool {
+	if o != nil && !IsNil(o.ResultType) {
+		return true
+	}
+
+	return false
+}
+
+// SetResultType gets a reference to the given string and assigns it to the ResultType field.
+func (o *DeleteDSourceResponse) SetResultType(v string) {
+	o.ResultType = &v
+}
+
+// GetResult returns the Result field value if set, zero value otherwise.
+func (o *DeleteDSourceResponse) GetResult() map[string]interface{} {
+	if o == nil || IsNil(o.Result) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Result
+}
+
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteDSourceResponse) GetResultOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Result) {
+		return map[string]interface{}{}, false
+	}
+	return o.Result, true
+}
+
+// HasResult returns a boolean if a field has been set.
+func (o *DeleteDSourceResponse) HasResult() bool {
+	if o != nil && !IsNil(o.Result) {
+		return true
+	}
+
+	return false
+}
+
+// SetResult gets a reference to the given map[string]interface{} and assigns it to the Result field.
+func (o *DeleteDSourceResponse) SetResult(v map[string]interface{}) {
+	o.Result = v
+}
+
 // GetJob returns the Job field value if set, zero value otherwise.
 func (o *DeleteDSourceResponse) GetJob() Job {
 	if o == nil || IsNil(o.Job) {
@@ -877,6 +945,12 @@ func (o DeleteDSourceResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ExecutionId.IsSet() {
 		toSerialize["execution_id"] = o.ExecutionId.Get()
+	}
+	if !IsNil(o.ResultType) {
+		toSerialize["result_type"] = o.ResultType
+	}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
 	}
 	if !IsNil(o.Job) {
 		toSerialize["job"] = o.Job

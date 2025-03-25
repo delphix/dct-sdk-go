@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -143,6 +143,36 @@ type DSource struct {
 	ExternalCommvaultConfigParams map[string]interface{} `json:"external_commvault_config_params,omitempty"`
 	// Optional config template selection for Commvault configurations.
 	ExternalCommvaultConfigTemplates *string `json:"external_commvault_config_templates,omitempty"`
+	// Database user type for Database authentication.
+	MssqlUserType *string `json:"mssql_user_type,omitempty"`
+	// credential types.
+	DomainUserCredentialType *string `json:"domain_user_credential_type,omitempty"`
+	// The database user name for database user type.
+	MssqlDatabaseUsername *string `json:"mssql_database_username,omitempty"`
+	// The name or reference of the environment user for environment user type.
+	MssqlUserEnvironmentReference *string `json:"mssql_user_environment_reference,omitempty"`
+	// Domain User name for password credentials.
+	MssqlUserDomainUsername *string `json:"mssql_user_domain_username,omitempty"`
+	// Delphix display name for the vault user.
+	MssqlUserDomainVaultUsername *string `json:"mssql_user_domain_vault_username,omitempty"`
+	// The name or reference of the vault.
+	MssqlUserDomainVault *string `json:"mssql_user_domain_vault,omitempty"`
+	// Vault engine name where the credential is stored.
+	MssqlUserDomainHashicorpVaultEngine *string `json:"mssql_user_domain_hashicorp_vault_engine,omitempty"`
+	// Path in the vault engine where the credential is stored.
+	MssqlUserDomainHashicorpVaultSecretPath *string `json:"mssql_user_domain_hashicorp_vault_secret_path,omitempty"`
+	// Hashicorp vault key for the username in the key-value store.
+	MssqlUserDomainHashicorpVaultUsernameKey *string `json:"mssql_user_domain_hashicorp_vault_username_key,omitempty"`
+	// Hashicorp vault key for the password in the key-value store.
+	MssqlUserDomainHashicorpVaultSecretKey *string `json:"mssql_user_domain_hashicorp_vault_secret_key,omitempty"`
+	// Azure key vault name.
+	MssqlUserDomainAzureVaultName *string `json:"mssql_user_domain_azure_vault_name,omitempty"`
+	// Azure vault key in the key-value store.
+	MssqlUserDomainAzureVaultUsernameKey *string `json:"mssql_user_domain_azure_vault_username_key,omitempty"`
+	// Azure vault key in the key-value store.
+	MssqlUserDomainAzureVaultSecretKey *string `json:"mssql_user_domain_azure_vault_secret_key,omitempty"`
+	// Query to find a credential in the CyberArk vault.
+	MssqlUserDomainCyberarkVaultQueryString *string `json:"mssql_user_domain_cyberark_vault_query_string,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -2370,6 +2400,486 @@ func (o *DSource) SetExternalCommvaultConfigTemplates(v string) {
 	o.ExternalCommvaultConfigTemplates = &v
 }
 
+// GetMssqlUserType returns the MssqlUserType field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserType() string {
+	if o == nil || IsNil(o.MssqlUserType) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserType
+}
+
+// GetMssqlUserTypeOk returns a tuple with the MssqlUserType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserType) {
+		return nil, false
+	}
+	return o.MssqlUserType, true
+}
+
+// HasMssqlUserType returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserType() bool {
+	if o != nil && !IsNil(o.MssqlUserType) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserType gets a reference to the given string and assigns it to the MssqlUserType field.
+func (o *DSource) SetMssqlUserType(v string) {
+	o.MssqlUserType = &v
+}
+
+// GetDomainUserCredentialType returns the DomainUserCredentialType field value if set, zero value otherwise.
+func (o *DSource) GetDomainUserCredentialType() string {
+	if o == nil || IsNil(o.DomainUserCredentialType) {
+		var ret string
+		return ret
+	}
+	return *o.DomainUserCredentialType
+}
+
+// GetDomainUserCredentialTypeOk returns a tuple with the DomainUserCredentialType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDomainUserCredentialTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.DomainUserCredentialType) {
+		return nil, false
+	}
+	return o.DomainUserCredentialType, true
+}
+
+// HasDomainUserCredentialType returns a boolean if a field has been set.
+func (o *DSource) HasDomainUserCredentialType() bool {
+	if o != nil && !IsNil(o.DomainUserCredentialType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDomainUserCredentialType gets a reference to the given string and assigns it to the DomainUserCredentialType field.
+func (o *DSource) SetDomainUserCredentialType(v string) {
+	o.DomainUserCredentialType = &v
+}
+
+// GetMssqlDatabaseUsername returns the MssqlDatabaseUsername field value if set, zero value otherwise.
+func (o *DSource) GetMssqlDatabaseUsername() string {
+	if o == nil || IsNil(o.MssqlDatabaseUsername) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlDatabaseUsername
+}
+
+// GetMssqlDatabaseUsernameOk returns a tuple with the MssqlDatabaseUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlDatabaseUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlDatabaseUsername) {
+		return nil, false
+	}
+	return o.MssqlDatabaseUsername, true
+}
+
+// HasMssqlDatabaseUsername returns a boolean if a field has been set.
+func (o *DSource) HasMssqlDatabaseUsername() bool {
+	if o != nil && !IsNil(o.MssqlDatabaseUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlDatabaseUsername gets a reference to the given string and assigns it to the MssqlDatabaseUsername field.
+func (o *DSource) SetMssqlDatabaseUsername(v string) {
+	o.MssqlDatabaseUsername = &v
+}
+
+// GetMssqlUserEnvironmentReference returns the MssqlUserEnvironmentReference field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserEnvironmentReference() string {
+	if o == nil || IsNil(o.MssqlUserEnvironmentReference) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserEnvironmentReference
+}
+
+// GetMssqlUserEnvironmentReferenceOk returns a tuple with the MssqlUserEnvironmentReference field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserEnvironmentReferenceOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserEnvironmentReference) {
+		return nil, false
+	}
+	return o.MssqlUserEnvironmentReference, true
+}
+
+// HasMssqlUserEnvironmentReference returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserEnvironmentReference() bool {
+	if o != nil && !IsNil(o.MssqlUserEnvironmentReference) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserEnvironmentReference gets a reference to the given string and assigns it to the MssqlUserEnvironmentReference field.
+func (o *DSource) SetMssqlUserEnvironmentReference(v string) {
+	o.MssqlUserEnvironmentReference = &v
+}
+
+// GetMssqlUserDomainUsername returns the MssqlUserDomainUsername field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainUsername() string {
+	if o == nil || IsNil(o.MssqlUserDomainUsername) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainUsername
+}
+
+// GetMssqlUserDomainUsernameOk returns a tuple with the MssqlUserDomainUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainUsername) {
+		return nil, false
+	}
+	return o.MssqlUserDomainUsername, true
+}
+
+// HasMssqlUserDomainUsername returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainUsername() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainUsername gets a reference to the given string and assigns it to the MssqlUserDomainUsername field.
+func (o *DSource) SetMssqlUserDomainUsername(v string) {
+	o.MssqlUserDomainUsername = &v
+}
+
+// GetMssqlUserDomainVaultUsername returns the MssqlUserDomainVaultUsername field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainVaultUsername() string {
+	if o == nil || IsNil(o.MssqlUserDomainVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainVaultUsername
+}
+
+// GetMssqlUserDomainVaultUsernameOk returns a tuple with the MssqlUserDomainVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainVaultUsername) {
+		return nil, false
+	}
+	return o.MssqlUserDomainVaultUsername, true
+}
+
+// HasMssqlUserDomainVaultUsername returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainVaultUsername() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainVaultUsername gets a reference to the given string and assigns it to the MssqlUserDomainVaultUsername field.
+func (o *DSource) SetMssqlUserDomainVaultUsername(v string) {
+	o.MssqlUserDomainVaultUsername = &v
+}
+
+// GetMssqlUserDomainVault returns the MssqlUserDomainVault field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainVault() string {
+	if o == nil || IsNil(o.MssqlUserDomainVault) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainVault
+}
+
+// GetMssqlUserDomainVaultOk returns a tuple with the MssqlUserDomainVault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainVaultOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainVault) {
+		return nil, false
+	}
+	return o.MssqlUserDomainVault, true
+}
+
+// HasMssqlUserDomainVault returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainVault() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainVault) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainVault gets a reference to the given string and assigns it to the MssqlUserDomainVault field.
+func (o *DSource) SetMssqlUserDomainVault(v string) {
+	o.MssqlUserDomainVault = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultEngine returns the MssqlUserDomainHashicorpVaultEngine field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultEngine() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultEngine
+}
+
+// GetMssqlUserDomainHashicorpVaultEngineOk returns a tuple with the MssqlUserDomainHashicorpVaultEngine field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultEngineOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultEngine, true
+}
+
+// HasMssqlUserDomainHashicorpVaultEngine returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultEngine() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultEngine gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultEngine field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultEngine(v string) {
+	o.MssqlUserDomainHashicorpVaultEngine = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretPath returns the MssqlUserDomainHashicorpVaultSecretPath field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretPath() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultSecretPath
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretPathOk returns a tuple with the MssqlUserDomainHashicorpVaultSecretPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretPathOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultSecretPath, true
+}
+
+// HasMssqlUserDomainHashicorpVaultSecretPath returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultSecretPath() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultSecretPath gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultSecretPath field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultSecretPath(v string) {
+	o.MssqlUserDomainHashicorpVaultSecretPath = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultUsernameKey returns the MssqlUserDomainHashicorpVaultUsernameKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultUsernameKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultUsernameKey
+}
+
+// GetMssqlUserDomainHashicorpVaultUsernameKeyOk returns a tuple with the MssqlUserDomainHashicorpVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultUsernameKey, true
+}
+
+// HasMssqlUserDomainHashicorpVaultUsernameKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultUsernameKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultUsernameKey gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultUsernameKey field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultUsernameKey(v string) {
+	o.MssqlUserDomainHashicorpVaultUsernameKey = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretKey returns the MssqlUserDomainHashicorpVaultSecretKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultSecretKey
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretKeyOk returns a tuple with the MssqlUserDomainHashicorpVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultSecretKey, true
+}
+
+// HasMssqlUserDomainHashicorpVaultSecretKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultSecretKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultSecretKey gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultSecretKey field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultSecretKey(v string) {
+	o.MssqlUserDomainHashicorpVaultSecretKey = &v
+}
+
+// GetMssqlUserDomainAzureVaultName returns the MssqlUserDomainAzureVaultName field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainAzureVaultName() string {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultName) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainAzureVaultName
+}
+
+// GetMssqlUserDomainAzureVaultNameOk returns a tuple with the MssqlUserDomainAzureVaultName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainAzureVaultNameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultName) {
+		return nil, false
+	}
+	return o.MssqlUserDomainAzureVaultName, true
+}
+
+// HasMssqlUserDomainAzureVaultName returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainAzureVaultName() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainAzureVaultName) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainAzureVaultName gets a reference to the given string and assigns it to the MssqlUserDomainAzureVaultName field.
+func (o *DSource) SetMssqlUserDomainAzureVaultName(v string) {
+	o.MssqlUserDomainAzureVaultName = &v
+}
+
+// GetMssqlUserDomainAzureVaultUsernameKey returns the MssqlUserDomainAzureVaultUsernameKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainAzureVaultUsernameKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainAzureVaultUsernameKey
+}
+
+// GetMssqlUserDomainAzureVaultUsernameKeyOk returns a tuple with the MssqlUserDomainAzureVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainAzureVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainAzureVaultUsernameKey, true
+}
+
+// HasMssqlUserDomainAzureVaultUsernameKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainAzureVaultUsernameKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainAzureVaultUsernameKey gets a reference to the given string and assigns it to the MssqlUserDomainAzureVaultUsernameKey field.
+func (o *DSource) SetMssqlUserDomainAzureVaultUsernameKey(v string) {
+	o.MssqlUserDomainAzureVaultUsernameKey = &v
+}
+
+// GetMssqlUserDomainAzureVaultSecretKey returns the MssqlUserDomainAzureVaultSecretKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainAzureVaultSecretKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainAzureVaultSecretKey
+}
+
+// GetMssqlUserDomainAzureVaultSecretKeyOk returns a tuple with the MssqlUserDomainAzureVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainAzureVaultSecretKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainAzureVaultSecretKey, true
+}
+
+// HasMssqlUserDomainAzureVaultSecretKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainAzureVaultSecretKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainAzureVaultSecretKey gets a reference to the given string and assigns it to the MssqlUserDomainAzureVaultSecretKey field.
+func (o *DSource) SetMssqlUserDomainAzureVaultSecretKey(v string) {
+	o.MssqlUserDomainAzureVaultSecretKey = &v
+}
+
+// GetMssqlUserDomainCyberarkVaultQueryString returns the MssqlUserDomainCyberarkVaultQueryString field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainCyberarkVaultQueryString() string {
+	if o == nil || IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainCyberarkVaultQueryString
+}
+
+// GetMssqlUserDomainCyberarkVaultQueryStringOk returns a tuple with the MssqlUserDomainCyberarkVaultQueryString field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainCyberarkVaultQueryStringOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		return nil, false
+	}
+	return o.MssqlUserDomainCyberarkVaultQueryString, true
+}
+
+// HasMssqlUserDomainCyberarkVaultQueryString returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainCyberarkVaultQueryString() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainCyberarkVaultQueryString gets a reference to the given string and assigns it to the MssqlUserDomainCyberarkVaultQueryString field.
+func (o *DSource) SetMssqlUserDomainCyberarkVaultQueryString(v string) {
+	o.MssqlUserDomainCyberarkVaultQueryString = &v
+}
+
 func (o DSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -2568,6 +3078,51 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExternalCommvaultConfigTemplates) {
 		toSerialize["external_commvault_config_templates"] = o.ExternalCommvaultConfigTemplates
+	}
+	if !IsNil(o.MssqlUserType) {
+		toSerialize["mssql_user_type"] = o.MssqlUserType
+	}
+	if !IsNil(o.DomainUserCredentialType) {
+		toSerialize["domain_user_credential_type"] = o.DomainUserCredentialType
+	}
+	if !IsNil(o.MssqlDatabaseUsername) {
+		toSerialize["mssql_database_username"] = o.MssqlDatabaseUsername
+	}
+	if !IsNil(o.MssqlUserEnvironmentReference) {
+		toSerialize["mssql_user_environment_reference"] = o.MssqlUserEnvironmentReference
+	}
+	if !IsNil(o.MssqlUserDomainUsername) {
+		toSerialize["mssql_user_domain_username"] = o.MssqlUserDomainUsername
+	}
+	if !IsNil(o.MssqlUserDomainVaultUsername) {
+		toSerialize["mssql_user_domain_vault_username"] = o.MssqlUserDomainVaultUsername
+	}
+	if !IsNil(o.MssqlUserDomainVault) {
+		toSerialize["mssql_user_domain_vault"] = o.MssqlUserDomainVault
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		toSerialize["mssql_user_domain_hashicorp_vault_engine"] = o.MssqlUserDomainHashicorpVaultEngine
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		toSerialize["mssql_user_domain_hashicorp_vault_secret_path"] = o.MssqlUserDomainHashicorpVaultSecretPath
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		toSerialize["mssql_user_domain_hashicorp_vault_username_key"] = o.MssqlUserDomainHashicorpVaultUsernameKey
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		toSerialize["mssql_user_domain_hashicorp_vault_secret_key"] = o.MssqlUserDomainHashicorpVaultSecretKey
+	}
+	if !IsNil(o.MssqlUserDomainAzureVaultName) {
+		toSerialize["mssql_user_domain_azure_vault_name"] = o.MssqlUserDomainAzureVaultName
+	}
+	if !IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		toSerialize["mssql_user_domain_azure_vault_username_key"] = o.MssqlUserDomainAzureVaultUsernameKey
+	}
+	if !IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		toSerialize["mssql_user_domain_azure_vault_secret_key"] = o.MssqlUserDomainAzureVaultSecretKey
+	}
+	if !IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		toSerialize["mssql_user_domain_cyberark_vault_query_string"] = o.MssqlUserDomainCyberarkVaultQueryString
 	}
 	return toSerialize, nil
 }

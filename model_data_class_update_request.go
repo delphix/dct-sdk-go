@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.20.0
+API version: 3.22.0
 Contact: support@delphix.com
 */
 
@@ -15,36 +15,36 @@ import (
 	"encoding/json"
 )
 
-// checks if the DataClassUpdateParams type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &DataClassUpdateParams{}
+// checks if the DataClassUpdateRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DataClassUpdateRequest{}
 
-// DataClassUpdateParams Parameters used to update a Data Class.
-type DataClassUpdateParams struct {
+// DataClassUpdateRequest Parameters used to update a Data Class.
+type DataClassUpdateRequest struct {
 	// A description of this data class.
 	Description NullableString `json:"description,omitempty"`
 	// An example data value for this data class.
 	Example NullableString `json:"example,omitempty"`
 }
 
-// NewDataClassUpdateParams instantiates a new DataClassUpdateParams object
+// NewDataClassUpdateRequest instantiates a new DataClassUpdateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDataClassUpdateParams() *DataClassUpdateParams {
-	this := DataClassUpdateParams{}
+func NewDataClassUpdateRequest() *DataClassUpdateRequest {
+	this := DataClassUpdateRequest{}
 	return &this
 }
 
-// NewDataClassUpdateParamsWithDefaults instantiates a new DataClassUpdateParams object
+// NewDataClassUpdateRequestWithDefaults instantiates a new DataClassUpdateRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewDataClassUpdateParamsWithDefaults() *DataClassUpdateParams {
-	this := DataClassUpdateParams{}
+func NewDataClassUpdateRequestWithDefaults() *DataClassUpdateRequest {
+	this := DataClassUpdateRequest{}
 	return &this
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *DataClassUpdateParams) GetDescription() string {
+func (o *DataClassUpdateRequest) GetDescription() string {
 	if o == nil || IsNil(o.Description.Get()) {
 		var ret string
 		return ret
@@ -55,7 +55,7 @@ func (o *DataClassUpdateParams) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *DataClassUpdateParams) GetDescriptionOk() (*string, bool) {
+func (o *DataClassUpdateRequest) GetDescriptionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -63,7 +63,7 @@ func (o *DataClassUpdateParams) GetDescriptionOk() (*string, bool) {
 }
 
 // HasDescription returns a boolean if a field has been set.
-func (o *DataClassUpdateParams) HasDescription() bool {
+func (o *DataClassUpdateRequest) HasDescription() bool {
 	if o != nil && o.Description.IsSet() {
 		return true
 	}
@@ -72,21 +72,21 @@ func (o *DataClassUpdateParams) HasDescription() bool {
 }
 
 // SetDescription gets a reference to the given NullableString and assigns it to the Description field.
-func (o *DataClassUpdateParams) SetDescription(v string) {
+func (o *DataClassUpdateRequest) SetDescription(v string) {
 	o.Description.Set(&v)
 }
 // SetDescriptionNil sets the value for Description to be an explicit nil
-func (o *DataClassUpdateParams) SetDescriptionNil() {
+func (o *DataClassUpdateRequest) SetDescriptionNil() {
 	o.Description.Set(nil)
 }
 
 // UnsetDescription ensures that no value is present for Description, not even an explicit nil
-func (o *DataClassUpdateParams) UnsetDescription() {
+func (o *DataClassUpdateRequest) UnsetDescription() {
 	o.Description.Unset()
 }
 
 // GetExample returns the Example field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *DataClassUpdateParams) GetExample() string {
+func (o *DataClassUpdateRequest) GetExample() string {
 	if o == nil || IsNil(o.Example.Get()) {
 		var ret string
 		return ret
@@ -97,7 +97,7 @@ func (o *DataClassUpdateParams) GetExample() string {
 // GetExampleOk returns a tuple with the Example field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *DataClassUpdateParams) GetExampleOk() (*string, bool) {
+func (o *DataClassUpdateRequest) GetExampleOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -105,7 +105,7 @@ func (o *DataClassUpdateParams) GetExampleOk() (*string, bool) {
 }
 
 // HasExample returns a boolean if a field has been set.
-func (o *DataClassUpdateParams) HasExample() bool {
+func (o *DataClassUpdateRequest) HasExample() bool {
 	if o != nil && o.Example.IsSet() {
 		return true
 	}
@@ -114,20 +114,20 @@ func (o *DataClassUpdateParams) HasExample() bool {
 }
 
 // SetExample gets a reference to the given NullableString and assigns it to the Example field.
-func (o *DataClassUpdateParams) SetExample(v string) {
+func (o *DataClassUpdateRequest) SetExample(v string) {
 	o.Example.Set(&v)
 }
 // SetExampleNil sets the value for Example to be an explicit nil
-func (o *DataClassUpdateParams) SetExampleNil() {
+func (o *DataClassUpdateRequest) SetExampleNil() {
 	o.Example.Set(nil)
 }
 
 // UnsetExample ensures that no value is present for Example, not even an explicit nil
-func (o *DataClassUpdateParams) UnsetExample() {
+func (o *DataClassUpdateRequest) UnsetExample() {
 	o.Example.Unset()
 }
 
-func (o DataClassUpdateParams) MarshalJSON() ([]byte, error) {
+func (o DataClassUpdateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -135,7 +135,7 @@ func (o DataClassUpdateParams) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o DataClassUpdateParams) ToMap() (map[string]interface{}, error) {
+func (o DataClassUpdateRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
@@ -146,38 +146,38 @@ func (o DataClassUpdateParams) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableDataClassUpdateParams struct {
-	value *DataClassUpdateParams
+type NullableDataClassUpdateRequest struct {
+	value *DataClassUpdateRequest
 	isSet bool
 }
 
-func (v NullableDataClassUpdateParams) Get() *DataClassUpdateParams {
+func (v NullableDataClassUpdateRequest) Get() *DataClassUpdateRequest {
 	return v.value
 }
 
-func (v *NullableDataClassUpdateParams) Set(val *DataClassUpdateParams) {
+func (v *NullableDataClassUpdateRequest) Set(val *DataClassUpdateRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableDataClassUpdateParams) IsSet() bool {
+func (v NullableDataClassUpdateRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableDataClassUpdateParams) Unset() {
+func (v *NullableDataClassUpdateRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableDataClassUpdateParams(val *DataClassUpdateParams) *NullableDataClassUpdateParams {
-	return &NullableDataClassUpdateParams{value: val, isSet: true}
+func NewNullableDataClassUpdateRequest(val *DataClassUpdateRequest) *NullableDataClassUpdateRequest {
+	return &NullableDataClassUpdateRequest{value: val, isSet: true}
 }
 
-func (v NullableDataClassUpdateParams) MarshalJSON() ([]byte, error) {
+func (v NullableDataClassUpdateRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableDataClassUpdateParams) UnmarshalJSON(src []byte) error {
+func (v *NullableDataClassUpdateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
