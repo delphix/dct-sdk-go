@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -17,11 +17,11 @@ import (
 	"fmt"
 )
 
-// checks if the PhoneHomeBundleRegisteredEngine type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &PhoneHomeBundleRegisteredEngine{}
+// checks if the DctAnalyticsBundleRegisteredEngine type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DctAnalyticsBundleRegisteredEngine{}
 
-// PhoneHomeBundleRegisteredEngine Identification data for a Delphix Engine registered with this instance of Data Control Tower.
-type PhoneHomeBundleRegisteredEngine struct {
+// DctAnalyticsBundleRegisteredEngine Identification data for a Delphix Engine registered with this instance of Data Control Tower.
+type DctAnalyticsBundleRegisteredEngine struct {
 	// A programmatically-generated and auto-incrementing ID for the registered Delphix Engine.
 	Id int64 `json:"id"`
 	// The UUID of the registered Delphix Engine.
@@ -32,14 +32,14 @@ type PhoneHomeBundleRegisteredEngine struct {
 	Version NullableString `json:"version"`
 }
 
-type _PhoneHomeBundleRegisteredEngine PhoneHomeBundleRegisteredEngine
+type _DctAnalyticsBundleRegisteredEngine DctAnalyticsBundleRegisteredEngine
 
-// NewPhoneHomeBundleRegisteredEngine instantiates a new PhoneHomeBundleRegisteredEngine object
+// NewDctAnalyticsBundleRegisteredEngine instantiates a new DctAnalyticsBundleRegisteredEngine object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPhoneHomeBundleRegisteredEngine(id int64, uuid NullableString, type_ NullableString, version NullableString) *PhoneHomeBundleRegisteredEngine {
-	this := PhoneHomeBundleRegisteredEngine{}
+func NewDctAnalyticsBundleRegisteredEngine(id int64, uuid NullableString, type_ NullableString, version NullableString) *DctAnalyticsBundleRegisteredEngine {
+	this := DctAnalyticsBundleRegisteredEngine{}
 	this.Id = id
 	this.Uuid = uuid
 	this.Type = type_
@@ -47,16 +47,16 @@ func NewPhoneHomeBundleRegisteredEngine(id int64, uuid NullableString, type_ Nul
 	return &this
 }
 
-// NewPhoneHomeBundleRegisteredEngineWithDefaults instantiates a new PhoneHomeBundleRegisteredEngine object
+// NewDctAnalyticsBundleRegisteredEngineWithDefaults instantiates a new DctAnalyticsBundleRegisteredEngine object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPhoneHomeBundleRegisteredEngineWithDefaults() *PhoneHomeBundleRegisteredEngine {
-	this := PhoneHomeBundleRegisteredEngine{}
+func NewDctAnalyticsBundleRegisteredEngineWithDefaults() *DctAnalyticsBundleRegisteredEngine {
+	this := DctAnalyticsBundleRegisteredEngine{}
 	return &this
 }
 
 // GetId returns the Id field value
-func (o *PhoneHomeBundleRegisteredEngine) GetId() int64 {
+func (o *DctAnalyticsBundleRegisteredEngine) GetId() int64 {
 	if o == nil {
 		var ret int64
 		return ret
@@ -67,7 +67,7 @@ func (o *PhoneHomeBundleRegisteredEngine) GetId() int64 {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleRegisteredEngine) GetIdOk() (*int64, bool) {
+func (o *DctAnalyticsBundleRegisteredEngine) GetIdOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -75,13 +75,13 @@ func (o *PhoneHomeBundleRegisteredEngine) GetIdOk() (*int64, bool) {
 }
 
 // SetId sets field value
-func (o *PhoneHomeBundleRegisteredEngine) SetId(v int64) {
+func (o *DctAnalyticsBundleRegisteredEngine) SetId(v int64) {
 	o.Id = v
 }
 
 // GetUuid returns the Uuid field value
 // If the value is explicit nil, the zero value for string will be returned
-func (o *PhoneHomeBundleRegisteredEngine) GetUuid() string {
+func (o *DctAnalyticsBundleRegisteredEngine) GetUuid() string {
 	if o == nil || o.Uuid.Get() == nil {
 		var ret string
 		return ret
@@ -93,7 +93,7 @@ func (o *PhoneHomeBundleRegisteredEngine) GetUuid() string {
 // GetUuidOk returns a tuple with the Uuid field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PhoneHomeBundleRegisteredEngine) GetUuidOk() (*string, bool) {
+func (o *DctAnalyticsBundleRegisteredEngine) GetUuidOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -101,13 +101,13 @@ func (o *PhoneHomeBundleRegisteredEngine) GetUuidOk() (*string, bool) {
 }
 
 // SetUuid sets field value
-func (o *PhoneHomeBundleRegisteredEngine) SetUuid(v string) {
+func (o *DctAnalyticsBundleRegisteredEngine) SetUuid(v string) {
 	o.Uuid.Set(&v)
 }
 
 // GetType returns the Type field value
 // If the value is explicit nil, the zero value for string will be returned
-func (o *PhoneHomeBundleRegisteredEngine) GetType() string {
+func (o *DctAnalyticsBundleRegisteredEngine) GetType() string {
 	if o == nil || o.Type.Get() == nil {
 		var ret string
 		return ret
@@ -119,7 +119,7 @@ func (o *PhoneHomeBundleRegisteredEngine) GetType() string {
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PhoneHomeBundleRegisteredEngine) GetTypeOk() (*string, bool) {
+func (o *DctAnalyticsBundleRegisteredEngine) GetTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -127,13 +127,13 @@ func (o *PhoneHomeBundleRegisteredEngine) GetTypeOk() (*string, bool) {
 }
 
 // SetType sets field value
-func (o *PhoneHomeBundleRegisteredEngine) SetType(v string) {
+func (o *DctAnalyticsBundleRegisteredEngine) SetType(v string) {
 	o.Type.Set(&v)
 }
 
 // GetVersion returns the Version field value
 // If the value is explicit nil, the zero value for string will be returned
-func (o *PhoneHomeBundleRegisteredEngine) GetVersion() string {
+func (o *DctAnalyticsBundleRegisteredEngine) GetVersion() string {
 	if o == nil || o.Version.Get() == nil {
 		var ret string
 		return ret
@@ -145,7 +145,7 @@ func (o *PhoneHomeBundleRegisteredEngine) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PhoneHomeBundleRegisteredEngine) GetVersionOk() (*string, bool) {
+func (o *DctAnalyticsBundleRegisteredEngine) GetVersionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -153,11 +153,11 @@ func (o *PhoneHomeBundleRegisteredEngine) GetVersionOk() (*string, bool) {
 }
 
 // SetVersion sets field value
-func (o *PhoneHomeBundleRegisteredEngine) SetVersion(v string) {
+func (o *DctAnalyticsBundleRegisteredEngine) SetVersion(v string) {
 	o.Version.Set(&v)
 }
 
-func (o PhoneHomeBundleRegisteredEngine) MarshalJSON() ([]byte, error) {
+func (o DctAnalyticsBundleRegisteredEngine) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -165,7 +165,7 @@ func (o PhoneHomeBundleRegisteredEngine) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o PhoneHomeBundleRegisteredEngine) ToMap() (map[string]interface{}, error) {
+func (o DctAnalyticsBundleRegisteredEngine) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["uuid"] = o.Uuid.Get()
@@ -174,7 +174,7 @@ func (o PhoneHomeBundleRegisteredEngine) ToMap() (map[string]interface{}, error)
 	return toSerialize, nil
 }
 
-func (o *PhoneHomeBundleRegisteredEngine) UnmarshalJSON(data []byte) (err error) {
+func (o *DctAnalyticsBundleRegisteredEngine) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -199,53 +199,53 @@ func (o *PhoneHomeBundleRegisteredEngine) UnmarshalJSON(data []byte) (err error)
 		}
 	}
 
-	varPhoneHomeBundleRegisteredEngine := _PhoneHomeBundleRegisteredEngine{}
+	varDctAnalyticsBundleRegisteredEngine := _DctAnalyticsBundleRegisteredEngine{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPhoneHomeBundleRegisteredEngine)
+	err = decoder.Decode(&varDctAnalyticsBundleRegisteredEngine)
 
 	if err != nil {
 		return err
 	}
 
-	*o = PhoneHomeBundleRegisteredEngine(varPhoneHomeBundleRegisteredEngine)
+	*o = DctAnalyticsBundleRegisteredEngine(varDctAnalyticsBundleRegisteredEngine)
 
 	return err
 }
 
-type NullablePhoneHomeBundleRegisteredEngine struct {
-	value *PhoneHomeBundleRegisteredEngine
+type NullableDctAnalyticsBundleRegisteredEngine struct {
+	value *DctAnalyticsBundleRegisteredEngine
 	isSet bool
 }
 
-func (v NullablePhoneHomeBundleRegisteredEngine) Get() *PhoneHomeBundleRegisteredEngine {
+func (v NullableDctAnalyticsBundleRegisteredEngine) Get() *DctAnalyticsBundleRegisteredEngine {
 	return v.value
 }
 
-func (v *NullablePhoneHomeBundleRegisteredEngine) Set(val *PhoneHomeBundleRegisteredEngine) {
+func (v *NullableDctAnalyticsBundleRegisteredEngine) Set(val *DctAnalyticsBundleRegisteredEngine) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePhoneHomeBundleRegisteredEngine) IsSet() bool {
+func (v NullableDctAnalyticsBundleRegisteredEngine) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePhoneHomeBundleRegisteredEngine) Unset() {
+func (v *NullableDctAnalyticsBundleRegisteredEngine) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePhoneHomeBundleRegisteredEngine(val *PhoneHomeBundleRegisteredEngine) *NullablePhoneHomeBundleRegisteredEngine {
-	return &NullablePhoneHomeBundleRegisteredEngine{value: val, isSet: true}
+func NewNullableDctAnalyticsBundleRegisteredEngine(val *DctAnalyticsBundleRegisteredEngine) *NullableDctAnalyticsBundleRegisteredEngine {
+	return &NullableDctAnalyticsBundleRegisteredEngine{value: val, isSet: true}
 }
 
-func (v NullablePhoneHomeBundleRegisteredEngine) MarshalJSON() ([]byte, error) {
+func (v NullableDctAnalyticsBundleRegisteredEngine) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePhoneHomeBundleRegisteredEngine) UnmarshalJSON(src []byte) error {
+func (v *NullableDctAnalyticsBundleRegisteredEngine) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

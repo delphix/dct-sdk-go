@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -15,33 +15,33 @@ import (
 	"encoding/json"
 )
 
-// checks if the DataClassCreateResponse type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &DataClassCreateResponse{}
+// checks if the GenerateDataResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GenerateDataResponse{}
 
-// DataClassCreateResponse struct for DataClassCreateResponse
-type DataClassCreateResponse struct {
+// GenerateDataResponse struct for GenerateDataResponse
+type GenerateDataResponse struct {
 	Job *Job `json:"job,omitempty"`
 }
 
-// NewDataClassCreateResponse instantiates a new DataClassCreateResponse object
+// NewGenerateDataResponse instantiates a new GenerateDataResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDataClassCreateResponse() *DataClassCreateResponse {
-	this := DataClassCreateResponse{}
+func NewGenerateDataResponse() *GenerateDataResponse {
+	this := GenerateDataResponse{}
 	return &this
 }
 
-// NewDataClassCreateResponseWithDefaults instantiates a new DataClassCreateResponse object
+// NewGenerateDataResponseWithDefaults instantiates a new GenerateDataResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewDataClassCreateResponseWithDefaults() *DataClassCreateResponse {
-	this := DataClassCreateResponse{}
+func NewGenerateDataResponseWithDefaults() *GenerateDataResponse {
+	this := GenerateDataResponse{}
 	return &this
 }
 
 // GetJob returns the Job field value if set, zero value otherwise.
-func (o *DataClassCreateResponse) GetJob() Job {
+func (o *GenerateDataResponse) GetJob() Job {
 	if o == nil || IsNil(o.Job) {
 		var ret Job
 		return ret
@@ -51,7 +51,7 @@ func (o *DataClassCreateResponse) GetJob() Job {
 
 // GetJobOk returns a tuple with the Job field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DataClassCreateResponse) GetJobOk() (*Job, bool) {
+func (o *GenerateDataResponse) GetJobOk() (*Job, bool) {
 	if o == nil || IsNil(o.Job) {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *DataClassCreateResponse) GetJobOk() (*Job, bool) {
 }
 
 // HasJob returns a boolean if a field has been set.
-func (o *DataClassCreateResponse) HasJob() bool {
+func (o *GenerateDataResponse) HasJob() bool {
 	if o != nil && !IsNil(o.Job) {
 		return true
 	}
@@ -68,11 +68,11 @@ func (o *DataClassCreateResponse) HasJob() bool {
 }
 
 // SetJob gets a reference to the given Job and assigns it to the Job field.
-func (o *DataClassCreateResponse) SetJob(v Job) {
+func (o *GenerateDataResponse) SetJob(v Job) {
 	o.Job = &v
 }
 
-func (o DataClassCreateResponse) MarshalJSON() ([]byte, error) {
+func (o GenerateDataResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -80,7 +80,7 @@ func (o DataClassCreateResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o DataClassCreateResponse) ToMap() (map[string]interface{}, error) {
+func (o GenerateDataResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Job) {
 		toSerialize["job"] = o.Job
@@ -88,38 +88,38 @@ func (o DataClassCreateResponse) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableDataClassCreateResponse struct {
-	value *DataClassCreateResponse
+type NullableGenerateDataResponse struct {
+	value *GenerateDataResponse
 	isSet bool
 }
 
-func (v NullableDataClassCreateResponse) Get() *DataClassCreateResponse {
+func (v NullableGenerateDataResponse) Get() *GenerateDataResponse {
 	return v.value
 }
 
-func (v *NullableDataClassCreateResponse) Set(val *DataClassCreateResponse) {
+func (v *NullableGenerateDataResponse) Set(val *GenerateDataResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableDataClassCreateResponse) IsSet() bool {
+func (v NullableGenerateDataResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableDataClassCreateResponse) Unset() {
+func (v *NullableGenerateDataResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableDataClassCreateResponse(val *DataClassCreateResponse) *NullableDataClassCreateResponse {
-	return &NullableDataClassCreateResponse{value: val, isSet: true}
+func NewNullableGenerateDataResponse(val *GenerateDataResponse) *NullableGenerateDataResponse {
+	return &NullableGenerateDataResponse{value: val, isSet: true}
 }
 
-func (v NullableDataClassCreateResponse) MarshalJSON() ([]byte, error) {
+func (v NullableGenerateDataResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableDataClassCreateResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableGenerateDataResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

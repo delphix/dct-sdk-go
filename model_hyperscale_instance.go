@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -36,14 +36,10 @@ type HyperscaleInstance struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// API key to connect to the hyperscale instance.
 	ApiKey string `json:"api_key"`
-	// Allow connections to the hyperscale instance over HTTPs without validating the TLS certificate. Even though the connection to the hyperscale instance might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the hyperscale instance's certificate, and set the truststore_filename property. 
+	// Allow connections to the hyperscale instance over HTTPs without validating the TLS certificate. Even though the connection to the hyperscale instance might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider configuring DCT with Certificate Authority certificates. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the hyperscale instance over HTTPs. Setting this value must only be done if the TLS certificate of the hyperscale instance does not match the hostname, and the TLS configuration of the hyperscale instance cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this hyperscale instance. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
-	// File name of a truststore which can be used to validate the TLS certificate of the hyperscale instance. The truststore must be available at /etc/config/certs/<truststore_filename> 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.]+$"`
-	// Password to read the truststore. 
-	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	// The status of this hyperscale instance.
 	Status NullableString `json:"status,omitempty"`
 	// The status of the connection to the hyperscale instance.
@@ -346,90 +342,6 @@ func (o *HyperscaleInstance) SetUnsafeSslHostnameCheck(v bool) {
 	o.UnsafeSslHostnameCheck = &v
 }
 
-// GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *HyperscaleInstance) GetTruststoreFilename() string {
-	if o == nil || IsNil(o.TruststoreFilename.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststoreFilename.Get()
-}
-
-// GetTruststoreFilenameOk returns a tuple with the TruststoreFilename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *HyperscaleInstance) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststoreFilename.Get(), o.TruststoreFilename.IsSet()
-}
-
-// HasTruststoreFilename returns a boolean if a field has been set.
-func (o *HyperscaleInstance) HasTruststoreFilename() bool {
-	if o != nil && o.TruststoreFilename.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststoreFilename gets a reference to the given NullableString and assigns it to the TruststoreFilename field.
-func (o *HyperscaleInstance) SetTruststoreFilename(v string) {
-	o.TruststoreFilename.Set(&v)
-}
-// SetTruststoreFilenameNil sets the value for TruststoreFilename to be an explicit nil
-func (o *HyperscaleInstance) SetTruststoreFilenameNil() {
-	o.TruststoreFilename.Set(nil)
-}
-
-// UnsetTruststoreFilename ensures that no value is present for TruststoreFilename, not even an explicit nil
-func (o *HyperscaleInstance) UnsetTruststoreFilename() {
-	o.TruststoreFilename.Unset()
-}
-
-// GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *HyperscaleInstance) GetTruststorePassword() string {
-	if o == nil || IsNil(o.TruststorePassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststorePassword.Get()
-}
-
-// GetTruststorePasswordOk returns a tuple with the TruststorePassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *HyperscaleInstance) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststorePassword.Get(), o.TruststorePassword.IsSet()
-}
-
-// HasTruststorePassword returns a boolean if a field has been set.
-func (o *HyperscaleInstance) HasTruststorePassword() bool {
-	if o != nil && o.TruststorePassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststorePassword gets a reference to the given NullableString and assigns it to the TruststorePassword field.
-func (o *HyperscaleInstance) SetTruststorePassword(v string) {
-	o.TruststorePassword.Set(&v)
-}
-// SetTruststorePasswordNil sets the value for TruststorePassword to be an explicit nil
-func (o *HyperscaleInstance) SetTruststorePasswordNil() {
-	o.TruststorePassword.Set(nil)
-}
-
-// UnsetTruststorePassword ensures that no value is present for TruststorePassword, not even an explicit nil
-func (o *HyperscaleInstance) UnsetTruststorePassword() {
-	o.TruststorePassword.Unset()
-}
-
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *HyperscaleInstance) GetStatus() string {
 	if o == nil || IsNil(o.Status.Get()) {
@@ -576,12 +488,6 @@ func (o HyperscaleInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UnsafeSslHostnameCheck) {
 		toSerialize["unsafe_ssl_hostname_check"] = o.UnsafeSslHostnameCheck
-	}
-	if o.TruststoreFilename.IsSet() {
-		toSerialize["truststore_filename"] = o.TruststoreFilename.Get()
-	}
-	if o.TruststorePassword.IsSet() {
-		toSerialize["truststore_password"] = o.TruststorePassword.Get()
 	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -38,6 +38,8 @@ type InPlaceExportParameters struct {
 	RmanChannels *int32 `json:"rman_channels,omitempty"`
 	// Number of GigaBytes in which RMAN will break large files to back them in parallel.
 	RmanFileSectionSizeInGb *int32 `json:"rman_file_section_size_in_gb,omitempty"`
+	// Unique name to be given to the database after it is converted to physical.
+	DbUniqueName *string `json:"db_unique_name,omitempty"`
 	// The name to be given to the PDB after it is exported in-place.
 	PdbName *string `json:"pdb_name,omitempty"`
 	// Indicates operations allowed on virtual source post V2P.
@@ -361,6 +363,38 @@ func (o *InPlaceExportParameters) SetRmanFileSectionSizeInGb(v int32) {
 	o.RmanFileSectionSizeInGb = &v
 }
 
+// GetDbUniqueName returns the DbUniqueName field value if set, zero value otherwise.
+func (o *InPlaceExportParameters) GetDbUniqueName() string {
+	if o == nil || IsNil(o.DbUniqueName) {
+		var ret string
+		return ret
+	}
+	return *o.DbUniqueName
+}
+
+// GetDbUniqueNameOk returns a tuple with the DbUniqueName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InPlaceExportParameters) GetDbUniqueNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DbUniqueName) {
+		return nil, false
+	}
+	return o.DbUniqueName, true
+}
+
+// HasDbUniqueName returns a boolean if a field has been set.
+func (o *InPlaceExportParameters) HasDbUniqueName() bool {
+	if o != nil && !IsNil(o.DbUniqueName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbUniqueName gets a reference to the given string and assigns it to the DbUniqueName field.
+func (o *InPlaceExportParameters) SetDbUniqueName(v string) {
+	o.DbUniqueName = &v
+}
+
 // GetPdbName returns the PdbName field value if set, zero value otherwise.
 func (o *InPlaceExportParameters) GetPdbName() string {
 	if o == nil || IsNil(o.PdbName) {
@@ -461,6 +495,9 @@ func (o InPlaceExportParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RmanFileSectionSizeInGb) {
 		toSerialize["rman_file_section_size_in_gb"] = o.RmanFileSectionSizeInGb
+	}
+	if !IsNil(o.DbUniqueName) {
+		toSerialize["db_unique_name"] = o.DbUniqueName
 	}
 	if !IsNil(o.PdbName) {
 		toSerialize["pdb_name"] = o.PdbName

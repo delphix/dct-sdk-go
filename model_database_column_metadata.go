@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -21,11 +21,11 @@ var _ MappedNullable = &DatabaseColumnMetadata{}
 // DatabaseColumnMetadata An object describing a database column metadata with some settings.
 type DatabaseColumnMetadata struct {
 	// The id of this column metadata.
-	Id *int64 `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
 	// The name of the column.
 	ColumnName *string `json:"column_name,omitempty"`
 	// The id of the database table metadata that this column belongs to.
-	DatabaseTableMetadataId *int64 `json:"database_table_metadata_id,omitempty"`
+	DatabaseTableMetadataId *string `json:"database_table_metadata_id,omitempty"`
 	// The name of the table that this column belongs to.
 	TableName *string `json:"table_name,omitempty"`
 	// The id of the rule set that this column metadata belongs to.
@@ -62,6 +62,8 @@ type DatabaseColumnMetadata struct {
 	IsIndex *bool `json:"is_index,omitempty"`
 	// Indicates whether this column is a foreign key.
 	IsForeignKey *bool `json:"is_foreign_key,omitempty"`
+	// Whether this data class is managed by DCT or not.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 }
 
 // NewDatabaseColumnMetadata instantiates a new DatabaseColumnMetadata object
@@ -82,9 +84,9 @@ func NewDatabaseColumnMetadataWithDefaults() *DatabaseColumnMetadata {
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *DatabaseColumnMetadata) GetId() int64 {
+func (o *DatabaseColumnMetadata) GetId() string {
 	if o == nil || IsNil(o.Id) {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.Id
@@ -92,7 +94,7 @@ func (o *DatabaseColumnMetadata) GetId() int64 {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DatabaseColumnMetadata) GetIdOk() (*int64, bool) {
+func (o *DatabaseColumnMetadata) GetIdOk() (*string, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
@@ -108,8 +110,8 @@ func (o *DatabaseColumnMetadata) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given int64 and assigns it to the Id field.
-func (o *DatabaseColumnMetadata) SetId(v int64) {
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *DatabaseColumnMetadata) SetId(v string) {
 	o.Id = &v
 }
 
@@ -146,9 +148,9 @@ func (o *DatabaseColumnMetadata) SetColumnName(v string) {
 }
 
 // GetDatabaseTableMetadataId returns the DatabaseTableMetadataId field value if set, zero value otherwise.
-func (o *DatabaseColumnMetadata) GetDatabaseTableMetadataId() int64 {
+func (o *DatabaseColumnMetadata) GetDatabaseTableMetadataId() string {
 	if o == nil || IsNil(o.DatabaseTableMetadataId) {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.DatabaseTableMetadataId
@@ -156,7 +158,7 @@ func (o *DatabaseColumnMetadata) GetDatabaseTableMetadataId() int64 {
 
 // GetDatabaseTableMetadataIdOk returns a tuple with the DatabaseTableMetadataId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DatabaseColumnMetadata) GetDatabaseTableMetadataIdOk() (*int64, bool) {
+func (o *DatabaseColumnMetadata) GetDatabaseTableMetadataIdOk() (*string, bool) {
 	if o == nil || IsNil(o.DatabaseTableMetadataId) {
 		return nil, false
 	}
@@ -172,8 +174,8 @@ func (o *DatabaseColumnMetadata) HasDatabaseTableMetadataId() bool {
 	return false
 }
 
-// SetDatabaseTableMetadataId gets a reference to the given int64 and assigns it to the DatabaseTableMetadataId field.
-func (o *DatabaseColumnMetadata) SetDatabaseTableMetadataId(v int64) {
+// SetDatabaseTableMetadataId gets a reference to the given string and assigns it to the DatabaseTableMetadataId field.
+func (o *DatabaseColumnMetadata) SetDatabaseTableMetadataId(v string) {
 	o.DatabaseTableMetadataId = &v
 }
 
@@ -753,6 +755,38 @@ func (o *DatabaseColumnMetadata) SetIsForeignKey(v bool) {
 	o.IsForeignKey = &v
 }
 
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *DatabaseColumnMetadata) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatabaseColumnMetadata) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *DatabaseColumnMetadata) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *DatabaseColumnMetadata) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
 func (o DatabaseColumnMetadata) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -825,6 +859,9 @@ func (o DatabaseColumnMetadata) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsForeignKey) {
 		toSerialize["is_foreign_key"] = o.IsForeignKey
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	return toSerialize, nil
 }

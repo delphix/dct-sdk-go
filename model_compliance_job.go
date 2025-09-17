@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -62,15 +62,15 @@ type ComplianceJob struct {
 	DatasetId *string `json:"dataset_id,omitempty"`
 	// Defines whether execution data will be stored after execution is complete (Hyperscale Job only).
 	RetainExecutionData *string `json:"retain_execution_data,omitempty"`
-	// Maximum memory to be allocated for each Masking job (Hyperscale Job only).
+	// The maximum amount of memory, in MB, that the compliance job can consume during execution.
 	MaxMemory *int32 `json:"max_memory,omitempty"`
-	// Minimum memory to be allocated for each Masking job (Hyperscale Job only).
+	// The minimum amount of memory, in MB, that the compliance job can consume during execution.
 	MinMemory *int32 `json:"min_memory,omitempty"`
-	// Feedback Size for each Masking job (Hyperscale Job only).
+	// The granularity with which the system provides updates on the progress of the compliance job. For instance, a feedback size of 50000 results in log updates whenever 50000 rows are processed during the masking phase.
 	FeedbackSize *int32 `json:"feedback_size,omitempty"`
-	// Stream Row Limit for each Masking job (Hyperscale Job only).
+	// This value constrains the total number of rows that may enter the job for each masking stream.
 	StreamRowLimit *int32 `json:"stream_row_limit,omitempty"`
-	// Number of input streams to be configured for Masking Job (Hyperscale Job only).
+	// This field controls the amount of parallelism that the masking job uses to extract out the data to be masked.
 	NumInputStreams *int32 `json:"num_input_streams,omitempty"`
 	// Maximum number of parallel connection that the Hyperscale instance can have with the source datasource (Hyperscale Job only).
 	MaxConcurrentSourceConnections *int32 `json:"max_concurrent_source_connections,omitempty"`
@@ -94,7 +94,23 @@ type ComplianceJob struct {
 	EnvironmentName *string `json:"environment_name,omitempty"`
 	// The name of the application associated with the environment in which this job resides on the compliance engine.
 	ApplicationName *string `json:"application_name,omitempty"`
+	// The ID of the Account that created this ComplianceJob (Standard Job only).
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The username of the Account that created this ComplianceJob (Standard Job only).
+	AccountName *string `json:"account_name,omitempty"`
+	// Whether or not this ComplianceJob is managed by DCT (Standard Job only).
+	DctManaged *bool `json:"dct_managed,omitempty"`
+	// Whether to fail immediately or delay failure until job completion when a masking algorithm fails to mask its data (Standard Job only).
+	FailImmediately *bool `json:"fail_immediately,omitempty"`
+	// Whether the database load phase to output the masked data will be performed in batches. The size of the batches is determined by the field 'commit_size'. (Standard Job only).
+	BatchUpdate *bool `json:"batch_update,omitempty"`
+	// The size of the database commits when performing batch updates (Standard Job only).
+	CommitSize *int32 `json:"commit_size,omitempty"`
+	// The amount of parallelism, per input stream, that the job uses to load back the masked data. For example, specifying 4 output threads per stream with 5 input streams results in a total of 20 output threads for the whole job. (Standard Job only).
+	NumOutputThreadsPerStream *int32 `json:"num_output_threads_per_stream,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	JobOrchestratorId *string `json:"job_orchestrator_id,omitempty"`
+	JobOrchestratorName *string `json:"job_orchestrator_name,omitempty"`
 }
 
 // NewComplianceJob instantiates a new ComplianceJob object
@@ -1348,6 +1364,230 @@ func (o *ComplianceJob) SetApplicationName(v string) {
 	o.ApplicationName = &v
 }
 
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *ComplianceJob) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *ComplianceJob) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *ComplianceJob) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *ComplianceJob) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *ComplianceJob) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *ComplianceJob) SetAccountName(v string) {
+	o.AccountName = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *ComplianceJob) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *ComplianceJob) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *ComplianceJob) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
+// GetFailImmediately returns the FailImmediately field value if set, zero value otherwise.
+func (o *ComplianceJob) GetFailImmediately() bool {
+	if o == nil || IsNil(o.FailImmediately) {
+		var ret bool
+		return ret
+	}
+	return *o.FailImmediately
+}
+
+// GetFailImmediatelyOk returns a tuple with the FailImmediately field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetFailImmediatelyOk() (*bool, bool) {
+	if o == nil || IsNil(o.FailImmediately) {
+		return nil, false
+	}
+	return o.FailImmediately, true
+}
+
+// HasFailImmediately returns a boolean if a field has been set.
+func (o *ComplianceJob) HasFailImmediately() bool {
+	if o != nil && !IsNil(o.FailImmediately) {
+		return true
+	}
+
+	return false
+}
+
+// SetFailImmediately gets a reference to the given bool and assigns it to the FailImmediately field.
+func (o *ComplianceJob) SetFailImmediately(v bool) {
+	o.FailImmediately = &v
+}
+
+// GetBatchUpdate returns the BatchUpdate field value if set, zero value otherwise.
+func (o *ComplianceJob) GetBatchUpdate() bool {
+	if o == nil || IsNil(o.BatchUpdate) {
+		var ret bool
+		return ret
+	}
+	return *o.BatchUpdate
+}
+
+// GetBatchUpdateOk returns a tuple with the BatchUpdate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetBatchUpdateOk() (*bool, bool) {
+	if o == nil || IsNil(o.BatchUpdate) {
+		return nil, false
+	}
+	return o.BatchUpdate, true
+}
+
+// HasBatchUpdate returns a boolean if a field has been set.
+func (o *ComplianceJob) HasBatchUpdate() bool {
+	if o != nil && !IsNil(o.BatchUpdate) {
+		return true
+	}
+
+	return false
+}
+
+// SetBatchUpdate gets a reference to the given bool and assigns it to the BatchUpdate field.
+func (o *ComplianceJob) SetBatchUpdate(v bool) {
+	o.BatchUpdate = &v
+}
+
+// GetCommitSize returns the CommitSize field value if set, zero value otherwise.
+func (o *ComplianceJob) GetCommitSize() int32 {
+	if o == nil || IsNil(o.CommitSize) {
+		var ret int32
+		return ret
+	}
+	return *o.CommitSize
+}
+
+// GetCommitSizeOk returns a tuple with the CommitSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetCommitSizeOk() (*int32, bool) {
+	if o == nil || IsNil(o.CommitSize) {
+		return nil, false
+	}
+	return o.CommitSize, true
+}
+
+// HasCommitSize returns a boolean if a field has been set.
+func (o *ComplianceJob) HasCommitSize() bool {
+	if o != nil && !IsNil(o.CommitSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommitSize gets a reference to the given int32 and assigns it to the CommitSize field.
+func (o *ComplianceJob) SetCommitSize(v int32) {
+	o.CommitSize = &v
+}
+
+// GetNumOutputThreadsPerStream returns the NumOutputThreadsPerStream field value if set, zero value otherwise.
+func (o *ComplianceJob) GetNumOutputThreadsPerStream() int32 {
+	if o == nil || IsNil(o.NumOutputThreadsPerStream) {
+		var ret int32
+		return ret
+	}
+	return *o.NumOutputThreadsPerStream
+}
+
+// GetNumOutputThreadsPerStreamOk returns a tuple with the NumOutputThreadsPerStream field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetNumOutputThreadsPerStreamOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumOutputThreadsPerStream) {
+		return nil, false
+	}
+	return o.NumOutputThreadsPerStream, true
+}
+
+// HasNumOutputThreadsPerStream returns a boolean if a field has been set.
+func (o *ComplianceJob) HasNumOutputThreadsPerStream() bool {
+	if o != nil && !IsNil(o.NumOutputThreadsPerStream) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumOutputThreadsPerStream gets a reference to the given int32 and assigns it to the NumOutputThreadsPerStream field.
+func (o *ComplianceJob) SetNumOutputThreadsPerStream(v int32) {
+	o.NumOutputThreadsPerStream = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ComplianceJob) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -1378,6 +1618,70 @@ func (o *ComplianceJob) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *ComplianceJob) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetJobOrchestratorId returns the JobOrchestratorId field value if set, zero value otherwise.
+func (o *ComplianceJob) GetJobOrchestratorId() string {
+	if o == nil || IsNil(o.JobOrchestratorId) {
+		var ret string
+		return ret
+	}
+	return *o.JobOrchestratorId
+}
+
+// GetJobOrchestratorIdOk returns a tuple with the JobOrchestratorId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetJobOrchestratorIdOk() (*string, bool) {
+	if o == nil || IsNil(o.JobOrchestratorId) {
+		return nil, false
+	}
+	return o.JobOrchestratorId, true
+}
+
+// HasJobOrchestratorId returns a boolean if a field has been set.
+func (o *ComplianceJob) HasJobOrchestratorId() bool {
+	if o != nil && !IsNil(o.JobOrchestratorId) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobOrchestratorId gets a reference to the given string and assigns it to the JobOrchestratorId field.
+func (o *ComplianceJob) SetJobOrchestratorId(v string) {
+	o.JobOrchestratorId = &v
+}
+
+// GetJobOrchestratorName returns the JobOrchestratorName field value if set, zero value otherwise.
+func (o *ComplianceJob) GetJobOrchestratorName() string {
+	if o == nil || IsNil(o.JobOrchestratorName) {
+		var ret string
+		return ret
+	}
+	return *o.JobOrchestratorName
+}
+
+// GetJobOrchestratorNameOk returns a tuple with the JobOrchestratorName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetJobOrchestratorNameOk() (*string, bool) {
+	if o == nil || IsNil(o.JobOrchestratorName) {
+		return nil, false
+	}
+	return o.JobOrchestratorName, true
+}
+
+// HasJobOrchestratorName returns a boolean if a field has been set.
+func (o *ComplianceJob) HasJobOrchestratorName() bool {
+	if o != nil && !IsNil(o.JobOrchestratorName) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobOrchestratorName gets a reference to the given string and assigns it to the JobOrchestratorName field.
+func (o *ComplianceJob) SetJobOrchestratorName(v string) {
+	o.JobOrchestratorName = &v
 }
 
 func (o ComplianceJob) MarshalJSON() ([]byte, error) {
@@ -1501,8 +1805,35 @@ func (o ComplianceJob) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ApplicationName) {
 		toSerialize["application_name"] = o.ApplicationName
 	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
+	}
+	if !IsNil(o.FailImmediately) {
+		toSerialize["fail_immediately"] = o.FailImmediately
+	}
+	if !IsNil(o.BatchUpdate) {
+		toSerialize["batch_update"] = o.BatchUpdate
+	}
+	if !IsNil(o.CommitSize) {
+		toSerialize["commit_size"] = o.CommitSize
+	}
+	if !IsNil(o.NumOutputThreadsPerStream) {
+		toSerialize["num_output_threads_per_stream"] = o.NumOutputThreadsPerStream
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.JobOrchestratorId) {
+		toSerialize["job_orchestrator_id"] = o.JobOrchestratorId
+	}
+	if !IsNil(o.JobOrchestratorName) {
+		toSerialize["job_orchestrator_name"] = o.JobOrchestratorName
 	}
 	return toSerialize, nil
 }

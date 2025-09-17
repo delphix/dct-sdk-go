@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -17,11 +17,11 @@ import (
 	"fmt"
 )
 
-// checks if the PhoneHomeBundleApiTelemetry type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &PhoneHomeBundleApiTelemetry{}
+// checks if the DctAnalyticsBundleApiTelemetry type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DctAnalyticsBundleApiTelemetry{}
 
-// PhoneHomeBundleApiTelemetry Telemetry data for an HTTP API call.
-type PhoneHomeBundleApiTelemetry struct {
+// DctAnalyticsBundleApiTelemetry Telemetry data for an HTTP API call.
+type DctAnalyticsBundleApiTelemetry struct {
 	// A programmatically-generated and auto-incrementing ID number for the API call.
 	Id NullableInt64 `json:"id"`
 	// The API endpoint path that was called. Note that all identifiable parameters are removed.
@@ -46,14 +46,14 @@ type PhoneHomeBundleApiTelemetry struct {
 	AccountId int64 `json:"account_id"`
 }
 
-type _PhoneHomeBundleApiTelemetry PhoneHomeBundleApiTelemetry
+type _DctAnalyticsBundleApiTelemetry DctAnalyticsBundleApiTelemetry
 
-// NewPhoneHomeBundleApiTelemetry instantiates a new PhoneHomeBundleApiTelemetry object
+// NewDctAnalyticsBundleApiTelemetry instantiates a new DctAnalyticsBundleApiTelemetry object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPhoneHomeBundleApiTelemetry(id NullableInt64, apiEndpoint string, apiMethod string, startTime string, endTime string, responseStatus int32, userAgent string, clientName string, isAutomation bool, dctVersion string, accountId int64) *PhoneHomeBundleApiTelemetry {
-	this := PhoneHomeBundleApiTelemetry{}
+func NewDctAnalyticsBundleApiTelemetry(id NullableInt64, apiEndpoint string, apiMethod string, startTime string, endTime string, responseStatus int32, userAgent string, clientName string, isAutomation bool, dctVersion string, accountId int64) *DctAnalyticsBundleApiTelemetry {
+	this := DctAnalyticsBundleApiTelemetry{}
 	this.Id = id
 	this.ApiEndpoint = apiEndpoint
 	this.ApiMethod = apiMethod
@@ -68,17 +68,17 @@ func NewPhoneHomeBundleApiTelemetry(id NullableInt64, apiEndpoint string, apiMet
 	return &this
 }
 
-// NewPhoneHomeBundleApiTelemetryWithDefaults instantiates a new PhoneHomeBundleApiTelemetry object
+// NewDctAnalyticsBundleApiTelemetryWithDefaults instantiates a new DctAnalyticsBundleApiTelemetry object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPhoneHomeBundleApiTelemetryWithDefaults() *PhoneHomeBundleApiTelemetry {
-	this := PhoneHomeBundleApiTelemetry{}
+func NewDctAnalyticsBundleApiTelemetryWithDefaults() *DctAnalyticsBundleApiTelemetry {
+	this := DctAnalyticsBundleApiTelemetry{}
 	return &this
 }
 
 // GetId returns the Id field value
 // If the value is explicit nil, the zero value for int64 will be returned
-func (o *PhoneHomeBundleApiTelemetry) GetId() int64 {
+func (o *DctAnalyticsBundleApiTelemetry) GetId() int64 {
 	if o == nil || o.Id.Get() == nil {
 		var ret int64
 		return ret
@@ -90,7 +90,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetId() int64 {
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PhoneHomeBundleApiTelemetry) GetIdOk() (*int64, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetIdOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -98,12 +98,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetIdOk() (*int64, bool) {
 }
 
 // SetId sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetId(v int64) {
+func (o *DctAnalyticsBundleApiTelemetry) SetId(v int64) {
 	o.Id.Set(&v)
 }
 
 // GetApiEndpoint returns the ApiEndpoint field value
-func (o *PhoneHomeBundleApiTelemetry) GetApiEndpoint() string {
+func (o *DctAnalyticsBundleApiTelemetry) GetApiEndpoint() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -114,7 +114,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetApiEndpoint() string {
 
 // GetApiEndpointOk returns a tuple with the ApiEndpoint field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetApiEndpointOk() (*string, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetApiEndpointOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -122,12 +122,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetApiEndpointOk() (*string, bool) {
 }
 
 // SetApiEndpoint sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetApiEndpoint(v string) {
+func (o *DctAnalyticsBundleApiTelemetry) SetApiEndpoint(v string) {
 	o.ApiEndpoint = v
 }
 
 // GetApiMethod returns the ApiMethod field value
-func (o *PhoneHomeBundleApiTelemetry) GetApiMethod() string {
+func (o *DctAnalyticsBundleApiTelemetry) GetApiMethod() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -138,7 +138,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetApiMethod() string {
 
 // GetApiMethodOk returns a tuple with the ApiMethod field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetApiMethodOk() (*string, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetApiMethodOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -146,12 +146,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetApiMethodOk() (*string, bool) {
 }
 
 // SetApiMethod sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetApiMethod(v string) {
+func (o *DctAnalyticsBundleApiTelemetry) SetApiMethod(v string) {
 	o.ApiMethod = v
 }
 
 // GetStartTime returns the StartTime field value
-func (o *PhoneHomeBundleApiTelemetry) GetStartTime() string {
+func (o *DctAnalyticsBundleApiTelemetry) GetStartTime() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -162,7 +162,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetStartTime() string {
 
 // GetStartTimeOk returns a tuple with the StartTime field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetStartTimeOk() (*string, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetStartTimeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -170,12 +170,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetStartTimeOk() (*string, bool) {
 }
 
 // SetStartTime sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetStartTime(v string) {
+func (o *DctAnalyticsBundleApiTelemetry) SetStartTime(v string) {
 	o.StartTime = v
 }
 
 // GetEndTime returns the EndTime field value
-func (o *PhoneHomeBundleApiTelemetry) GetEndTime() string {
+func (o *DctAnalyticsBundleApiTelemetry) GetEndTime() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -186,7 +186,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetEndTime() string {
 
 // GetEndTimeOk returns a tuple with the EndTime field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetEndTimeOk() (*string, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetEndTimeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -194,12 +194,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetEndTimeOk() (*string, bool) {
 }
 
 // SetEndTime sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetEndTime(v string) {
+func (o *DctAnalyticsBundleApiTelemetry) SetEndTime(v string) {
 	o.EndTime = v
 }
 
 // GetResponseStatus returns the ResponseStatus field value
-func (o *PhoneHomeBundleApiTelemetry) GetResponseStatus() int32 {
+func (o *DctAnalyticsBundleApiTelemetry) GetResponseStatus() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -210,7 +210,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetResponseStatus() int32 {
 
 // GetResponseStatusOk returns a tuple with the ResponseStatus field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetResponseStatusOk() (*int32, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetResponseStatusOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -218,12 +218,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetResponseStatusOk() (*int32, bool) {
 }
 
 // SetResponseStatus sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetResponseStatus(v int32) {
+func (o *DctAnalyticsBundleApiTelemetry) SetResponseStatus(v int32) {
 	o.ResponseStatus = v
 }
 
 // GetUserAgent returns the UserAgent field value
-func (o *PhoneHomeBundleApiTelemetry) GetUserAgent() string {
+func (o *DctAnalyticsBundleApiTelemetry) GetUserAgent() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -234,7 +234,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetUserAgent() string {
 
 // GetUserAgentOk returns a tuple with the UserAgent field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetUserAgentOk() (*string, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetUserAgentOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -242,12 +242,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetUserAgentOk() (*string, bool) {
 }
 
 // SetUserAgent sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetUserAgent(v string) {
+func (o *DctAnalyticsBundleApiTelemetry) SetUserAgent(v string) {
 	o.UserAgent = v
 }
 
 // GetClientName returns the ClientName field value
-func (o *PhoneHomeBundleApiTelemetry) GetClientName() string {
+func (o *DctAnalyticsBundleApiTelemetry) GetClientName() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -258,7 +258,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetClientName() string {
 
 // GetClientNameOk returns a tuple with the ClientName field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetClientNameOk() (*string, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetClientNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -266,12 +266,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetClientNameOk() (*string, bool) {
 }
 
 // SetClientName sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetClientName(v string) {
+func (o *DctAnalyticsBundleApiTelemetry) SetClientName(v string) {
 	o.ClientName = v
 }
 
 // GetIsAutomation returns the IsAutomation field value
-func (o *PhoneHomeBundleApiTelemetry) GetIsAutomation() bool {
+func (o *DctAnalyticsBundleApiTelemetry) GetIsAutomation() bool {
 	if o == nil {
 		var ret bool
 		return ret
@@ -282,7 +282,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetIsAutomation() bool {
 
 // GetIsAutomationOk returns a tuple with the IsAutomation field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetIsAutomationOk() (*bool, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetIsAutomationOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -290,12 +290,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetIsAutomationOk() (*bool, bool) {
 }
 
 // SetIsAutomation sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetIsAutomation(v bool) {
+func (o *DctAnalyticsBundleApiTelemetry) SetIsAutomation(v bool) {
 	o.IsAutomation = v
 }
 
 // GetDctVersion returns the DctVersion field value
-func (o *PhoneHomeBundleApiTelemetry) GetDctVersion() string {
+func (o *DctAnalyticsBundleApiTelemetry) GetDctVersion() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -306,7 +306,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetDctVersion() string {
 
 // GetDctVersionOk returns a tuple with the DctVersion field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetDctVersionOk() (*string, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetDctVersionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -314,12 +314,12 @@ func (o *PhoneHomeBundleApiTelemetry) GetDctVersionOk() (*string, bool) {
 }
 
 // SetDctVersion sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetDctVersion(v string) {
+func (o *DctAnalyticsBundleApiTelemetry) SetDctVersion(v string) {
 	o.DctVersion = v
 }
 
 // GetAccountId returns the AccountId field value
-func (o *PhoneHomeBundleApiTelemetry) GetAccountId() int64 {
+func (o *DctAnalyticsBundleApiTelemetry) GetAccountId() int64 {
 	if o == nil {
 		var ret int64
 		return ret
@@ -330,7 +330,7 @@ func (o *PhoneHomeBundleApiTelemetry) GetAccountId() int64 {
 
 // GetAccountIdOk returns a tuple with the AccountId field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleApiTelemetry) GetAccountIdOk() (*int64, bool) {
+func (o *DctAnalyticsBundleApiTelemetry) GetAccountIdOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -338,11 +338,11 @@ func (o *PhoneHomeBundleApiTelemetry) GetAccountIdOk() (*int64, bool) {
 }
 
 // SetAccountId sets field value
-func (o *PhoneHomeBundleApiTelemetry) SetAccountId(v int64) {
+func (o *DctAnalyticsBundleApiTelemetry) SetAccountId(v int64) {
 	o.AccountId = v
 }
 
-func (o PhoneHomeBundleApiTelemetry) MarshalJSON() ([]byte, error) {
+func (o DctAnalyticsBundleApiTelemetry) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -350,7 +350,7 @@ func (o PhoneHomeBundleApiTelemetry) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o PhoneHomeBundleApiTelemetry) ToMap() (map[string]interface{}, error) {
+func (o DctAnalyticsBundleApiTelemetry) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id.Get()
 	toSerialize["api_endpoint"] = o.ApiEndpoint
@@ -366,7 +366,7 @@ func (o PhoneHomeBundleApiTelemetry) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *PhoneHomeBundleApiTelemetry) UnmarshalJSON(data []byte) (err error) {
+func (o *DctAnalyticsBundleApiTelemetry) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -398,53 +398,53 @@ func (o *PhoneHomeBundleApiTelemetry) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varPhoneHomeBundleApiTelemetry := _PhoneHomeBundleApiTelemetry{}
+	varDctAnalyticsBundleApiTelemetry := _DctAnalyticsBundleApiTelemetry{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPhoneHomeBundleApiTelemetry)
+	err = decoder.Decode(&varDctAnalyticsBundleApiTelemetry)
 
 	if err != nil {
 		return err
 	}
 
-	*o = PhoneHomeBundleApiTelemetry(varPhoneHomeBundleApiTelemetry)
+	*o = DctAnalyticsBundleApiTelemetry(varDctAnalyticsBundleApiTelemetry)
 
 	return err
 }
 
-type NullablePhoneHomeBundleApiTelemetry struct {
-	value *PhoneHomeBundleApiTelemetry
+type NullableDctAnalyticsBundleApiTelemetry struct {
+	value *DctAnalyticsBundleApiTelemetry
 	isSet bool
 }
 
-func (v NullablePhoneHomeBundleApiTelemetry) Get() *PhoneHomeBundleApiTelemetry {
+func (v NullableDctAnalyticsBundleApiTelemetry) Get() *DctAnalyticsBundleApiTelemetry {
 	return v.value
 }
 
-func (v *NullablePhoneHomeBundleApiTelemetry) Set(val *PhoneHomeBundleApiTelemetry) {
+func (v *NullableDctAnalyticsBundleApiTelemetry) Set(val *DctAnalyticsBundleApiTelemetry) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePhoneHomeBundleApiTelemetry) IsSet() bool {
+func (v NullableDctAnalyticsBundleApiTelemetry) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePhoneHomeBundleApiTelemetry) Unset() {
+func (v *NullableDctAnalyticsBundleApiTelemetry) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePhoneHomeBundleApiTelemetry(val *PhoneHomeBundleApiTelemetry) *NullablePhoneHomeBundleApiTelemetry {
-	return &NullablePhoneHomeBundleApiTelemetry{value: val, isSet: true}
+func NewNullableDctAnalyticsBundleApiTelemetry(val *DctAnalyticsBundleApiTelemetry) *NullableDctAnalyticsBundleApiTelemetry {
+	return &NullableDctAnalyticsBundleApiTelemetry{value: val, isSet: true}
 }
 
-func (v NullablePhoneHomeBundleApiTelemetry) MarshalJSON() ([]byte, error) {
+func (v NullableDctAnalyticsBundleApiTelemetry) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePhoneHomeBundleApiTelemetry) UnmarshalJSON(src []byte) error {
+func (v *NullableDctAnalyticsBundleApiTelemetry) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

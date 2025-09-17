@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -24,34 +24,34 @@ import (
 // HeldSpaceAPIService HeldSpaceAPI service
 type HeldSpaceAPIService service
 
-type ApiDeleteHeldSpaceByIdRequest struct {
+type ApiDeleteHeldspaceByIdRequest struct {
 	ctx context.Context
 	ApiService *HeldSpaceAPIService
-	heldSpaceId string
+	heldspaceId string
 }
 
-func (r ApiDeleteHeldSpaceByIdRequest) Execute() (*DeleteHeldSpaceResponse, *http.Response, error) {
-	return r.ApiService.DeleteHeldSpaceByIdExecute(r)
+func (r ApiDeleteHeldspaceByIdRequest) Execute() (*DeleteHeldSpaceResponse, *http.Response, error) {
+	return r.ApiService.DeleteHeldspaceByIdExecute(r)
 }
 
 /*
-DeleteHeldSpaceById Delete a HeldSpace.
+DeleteHeldspaceById Delete a HeldSpace.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param heldSpaceId The heldspace id to filter by.
- @return ApiDeleteHeldSpaceByIdRequest
+ @param heldspaceId The heldspace id to filter by.
+ @return ApiDeleteHeldspaceByIdRequest
 */
-func (a *HeldSpaceAPIService) DeleteHeldSpaceById(ctx context.Context, heldSpaceId string) ApiDeleteHeldSpaceByIdRequest {
-	return ApiDeleteHeldSpaceByIdRequest{
+func (a *HeldSpaceAPIService) DeleteHeldspaceById(ctx context.Context, heldspaceId string) ApiDeleteHeldspaceByIdRequest {
+	return ApiDeleteHeldspaceByIdRequest{
 		ApiService: a,
 		ctx: ctx,
-		heldSpaceId: heldSpaceId,
+		heldspaceId: heldspaceId,
 	}
 }
 
 // Execute executes the request
 //  @return DeleteHeldSpaceResponse
-func (a *HeldSpaceAPIService) DeleteHeldSpaceByIdExecute(r ApiDeleteHeldSpaceByIdRequest) (*DeleteHeldSpaceResponse, *http.Response, error) {
+func (a *HeldSpaceAPIService) DeleteHeldspaceByIdExecute(r ApiDeleteHeldspaceByIdRequest) (*DeleteHeldSpaceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -59,17 +59,20 @@ func (a *HeldSpaceAPIService) DeleteHeldSpaceByIdExecute(r ApiDeleteHeldSpaceByI
 		localVarReturnValue  *DeleteHeldSpaceResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HeldSpaceAPIService.DeleteHeldSpaceById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HeldSpaceAPIService.DeleteHeldspaceById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/heldspace/{heldSpaceId}/delete"
-	localVarPath = strings.Replace(localVarPath, "{"+"heldSpaceId"+"}", url.PathEscape(parameterValueToString(r.heldSpaceId, "heldSpaceId")), -1)
+	localVarPath := localBasePath + "/heldspace/{heldspaceId}/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"heldspaceId"+"}", url.PathEscape(parameterValueToString(r.heldspaceId, "heldspaceId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if strlen(r.heldspaceId) < 1 {
+		return localVarReturnValue, nil, reportError("heldspaceId must have at least 1 elements")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -142,7 +145,7 @@ func (a *HeldSpaceAPIService) DeleteHeldSpaceByIdExecute(r ApiDeleteHeldSpaceByI
 type ApiGetHeldspaceDeletionDependenciesRequest struct {
 	ctx context.Context
 	ApiService *HeldSpaceAPIService
-	heldSpaceId string
+	heldspaceId string
 }
 
 func (r ApiGetHeldspaceDeletionDependenciesRequest) Execute() (*HeldSpaceDeletionDependenciesResponse, *http.Response, error) {
@@ -153,14 +156,14 @@ func (r ApiGetHeldspaceDeletionDependenciesRequest) Execute() (*HeldSpaceDeletio
 GetHeldspaceDeletionDependencies Get heldspace deletion dependencies.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param heldSpaceId The heldspace id to filter by.
+ @param heldspaceId The heldspace id to filter by.
  @return ApiGetHeldspaceDeletionDependenciesRequest
 */
-func (a *HeldSpaceAPIService) GetHeldspaceDeletionDependencies(ctx context.Context, heldSpaceId string) ApiGetHeldspaceDeletionDependenciesRequest {
+func (a *HeldSpaceAPIService) GetHeldspaceDeletionDependencies(ctx context.Context, heldspaceId string) ApiGetHeldspaceDeletionDependenciesRequest {
 	return ApiGetHeldspaceDeletionDependenciesRequest{
 		ApiService: a,
 		ctx: ctx,
-		heldSpaceId: heldSpaceId,
+		heldspaceId: heldspaceId,
 	}
 }
 
@@ -179,12 +182,15 @@ func (a *HeldSpaceAPIService) GetHeldspaceDeletionDependenciesExecute(r ApiGetHe
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/heldspace/{heldSpaceId}/deletion-dependencies"
-	localVarPath = strings.Replace(localVarPath, "{"+"heldSpaceId"+"}", url.PathEscape(parameterValueToString(r.heldSpaceId, "heldSpaceId")), -1)
+	localVarPath := localBasePath + "/heldspace/{heldspaceId}/deletion-dependencies"
+	localVarPath = strings.Replace(localVarPath, "{"+"heldspaceId"+"}", url.PathEscape(parameterValueToString(r.heldspaceId, "heldspaceId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if strlen(r.heldspaceId) < 1 {
+		return localVarReturnValue, nil, reportError("heldspaceId must have at least 1 elements")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

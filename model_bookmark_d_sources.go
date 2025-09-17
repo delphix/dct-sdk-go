@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the BookmarkDSources type satisfies the MappedNullable interface at compile time
@@ -26,6 +27,10 @@ type BookmarkDSources struct {
 	DsourceName *string `json:"dsource_name,omitempty"`
 	// The snapshot id.
 	SnapshotId *string `json:"snapshot_id,omitempty"`
+	// The timeflow id.
+	TimeflowId *string `json:"timeflow_id,omitempty"`
+	// The bookmark timestamp of the dSource.
+	DataTimestamp *time.Time `json:"data_timestamp,omitempty"`
 }
 
 // NewBookmarkDSources instantiates a new BookmarkDSources object
@@ -141,6 +146,70 @@ func (o *BookmarkDSources) SetSnapshotId(v string) {
 	o.SnapshotId = &v
 }
 
+// GetTimeflowId returns the TimeflowId field value if set, zero value otherwise.
+func (o *BookmarkDSources) GetTimeflowId() string {
+	if o == nil || IsNil(o.TimeflowId) {
+		var ret string
+		return ret
+	}
+	return *o.TimeflowId
+}
+
+// GetTimeflowIdOk returns a tuple with the TimeflowId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkDSources) GetTimeflowIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TimeflowId) {
+		return nil, false
+	}
+	return o.TimeflowId, true
+}
+
+// HasTimeflowId returns a boolean if a field has been set.
+func (o *BookmarkDSources) HasTimeflowId() bool {
+	if o != nil && !IsNil(o.TimeflowId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowId gets a reference to the given string and assigns it to the TimeflowId field.
+func (o *BookmarkDSources) SetTimeflowId(v string) {
+	o.TimeflowId = &v
+}
+
+// GetDataTimestamp returns the DataTimestamp field value if set, zero value otherwise.
+func (o *BookmarkDSources) GetDataTimestamp() time.Time {
+	if o == nil || IsNil(o.DataTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.DataTimestamp
+}
+
+// GetDataTimestampOk returns a tuple with the DataTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkDSources) GetDataTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.DataTimestamp) {
+		return nil, false
+	}
+	return o.DataTimestamp, true
+}
+
+// HasDataTimestamp returns a boolean if a field has been set.
+func (o *BookmarkDSources) HasDataTimestamp() bool {
+	if o != nil && !IsNil(o.DataTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataTimestamp gets a reference to the given time.Time and assigns it to the DataTimestamp field.
+func (o *BookmarkDSources) SetDataTimestamp(v time.Time) {
+	o.DataTimestamp = &v
+}
+
 func (o BookmarkDSources) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -159,6 +228,12 @@ func (o BookmarkDSources) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SnapshotId) {
 		toSerialize["snapshot_id"] = o.SnapshotId
+	}
+	if !IsNil(o.TimeflowId) {
+		toSerialize["timeflow_id"] = o.TimeflowId
+	}
+	if !IsNil(o.DataTimestamp) {
+		toSerialize["data_timestamp"] = o.DataTimestamp
 	}
 	return toSerialize, nil
 }

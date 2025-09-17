@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -22,10 +22,10 @@ var _ MappedNullable = &GlobalProperties{}
 type GlobalProperties struct {
 	// Property to define either username & password based authentication disabled or not.
 	DisableUsernamePassword *bool `json:"disable_username_password,omitempty"`
-	// Property to define the phonehome bundle upload cadence, in days, if Delphix services are reachable.
-	PhonehomeUploadCadence *int32 `json:"phonehome_upload_cadence,omitempty"`
-	// Property to define the maximum uncompressed bundle transfer size, in bytes, for phonehome.
-	PhonehomeMaximumTransferSize *int32 `json:"phonehome_maximum_transfer_size,omitempty"`
+	// Property to define the DCT Analytics bundle upload cadence, in days, if Delphix services are reachable.
+	DctAnalyticsUploadCadence *int32 `json:"dct_analytics_upload_cadence,omitempty"`
+	// Property to define the maximum uncompressed bundle transfer size, in bytes, for DCT Analytics.
+	DctAnalyticsMaximumTransferSize *int32 `json:"dct_analytics_maximum_transfer_size,omitempty"`
 	// Property to define the expiry time for login token, in seconds. Specify -1 to indicate never expiry of token.
 	TokenExpiryTime *int32 `json:"token_expiry_time,omitempty"`
 	// Property to define the maximum user inactivity time for login token, in seconds. Specify -1 to indicate never invalidate of token due to inactivity.
@@ -87,68 +87,68 @@ func (o *GlobalProperties) SetDisableUsernamePassword(v bool) {
 	o.DisableUsernamePassword = &v
 }
 
-// GetPhonehomeUploadCadence returns the PhonehomeUploadCadence field value if set, zero value otherwise.
-func (o *GlobalProperties) GetPhonehomeUploadCadence() int32 {
-	if o == nil || IsNil(o.PhonehomeUploadCadence) {
+// GetDctAnalyticsUploadCadence returns the DctAnalyticsUploadCadence field value if set, zero value otherwise.
+func (o *GlobalProperties) GetDctAnalyticsUploadCadence() int32 {
+	if o == nil || IsNil(o.DctAnalyticsUploadCadence) {
 		var ret int32
 		return ret
 	}
-	return *o.PhonehomeUploadCadence
+	return *o.DctAnalyticsUploadCadence
 }
 
-// GetPhonehomeUploadCadenceOk returns a tuple with the PhonehomeUploadCadence field value if set, nil otherwise
+// GetDctAnalyticsUploadCadenceOk returns a tuple with the DctAnalyticsUploadCadence field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GlobalProperties) GetPhonehomeUploadCadenceOk() (*int32, bool) {
-	if o == nil || IsNil(o.PhonehomeUploadCadence) {
+func (o *GlobalProperties) GetDctAnalyticsUploadCadenceOk() (*int32, bool) {
+	if o == nil || IsNil(o.DctAnalyticsUploadCadence) {
 		return nil, false
 	}
-	return o.PhonehomeUploadCadence, true
+	return o.DctAnalyticsUploadCadence, true
 }
 
-// HasPhonehomeUploadCadence returns a boolean if a field has been set.
-func (o *GlobalProperties) HasPhonehomeUploadCadence() bool {
-	if o != nil && !IsNil(o.PhonehomeUploadCadence) {
+// HasDctAnalyticsUploadCadence returns a boolean if a field has been set.
+func (o *GlobalProperties) HasDctAnalyticsUploadCadence() bool {
+	if o != nil && !IsNil(o.DctAnalyticsUploadCadence) {
 		return true
 	}
 
 	return false
 }
 
-// SetPhonehomeUploadCadence gets a reference to the given int32 and assigns it to the PhonehomeUploadCadence field.
-func (o *GlobalProperties) SetPhonehomeUploadCadence(v int32) {
-	o.PhonehomeUploadCadence = &v
+// SetDctAnalyticsUploadCadence gets a reference to the given int32 and assigns it to the DctAnalyticsUploadCadence field.
+func (o *GlobalProperties) SetDctAnalyticsUploadCadence(v int32) {
+	o.DctAnalyticsUploadCadence = &v
 }
 
-// GetPhonehomeMaximumTransferSize returns the PhonehomeMaximumTransferSize field value if set, zero value otherwise.
-func (o *GlobalProperties) GetPhonehomeMaximumTransferSize() int32 {
-	if o == nil || IsNil(o.PhonehomeMaximumTransferSize) {
+// GetDctAnalyticsMaximumTransferSize returns the DctAnalyticsMaximumTransferSize field value if set, zero value otherwise.
+func (o *GlobalProperties) GetDctAnalyticsMaximumTransferSize() int32 {
+	if o == nil || IsNil(o.DctAnalyticsMaximumTransferSize) {
 		var ret int32
 		return ret
 	}
-	return *o.PhonehomeMaximumTransferSize
+	return *o.DctAnalyticsMaximumTransferSize
 }
 
-// GetPhonehomeMaximumTransferSizeOk returns a tuple with the PhonehomeMaximumTransferSize field value if set, nil otherwise
+// GetDctAnalyticsMaximumTransferSizeOk returns a tuple with the DctAnalyticsMaximumTransferSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GlobalProperties) GetPhonehomeMaximumTransferSizeOk() (*int32, bool) {
-	if o == nil || IsNil(o.PhonehomeMaximumTransferSize) {
+func (o *GlobalProperties) GetDctAnalyticsMaximumTransferSizeOk() (*int32, bool) {
+	if o == nil || IsNil(o.DctAnalyticsMaximumTransferSize) {
 		return nil, false
 	}
-	return o.PhonehomeMaximumTransferSize, true
+	return o.DctAnalyticsMaximumTransferSize, true
 }
 
-// HasPhonehomeMaximumTransferSize returns a boolean if a field has been set.
-func (o *GlobalProperties) HasPhonehomeMaximumTransferSize() bool {
-	if o != nil && !IsNil(o.PhonehomeMaximumTransferSize) {
+// HasDctAnalyticsMaximumTransferSize returns a boolean if a field has been set.
+func (o *GlobalProperties) HasDctAnalyticsMaximumTransferSize() bool {
+	if o != nil && !IsNil(o.DctAnalyticsMaximumTransferSize) {
 		return true
 	}
 
 	return false
 }
 
-// SetPhonehomeMaximumTransferSize gets a reference to the given int32 and assigns it to the PhonehomeMaximumTransferSize field.
-func (o *GlobalProperties) SetPhonehomeMaximumTransferSize(v int32) {
-	o.PhonehomeMaximumTransferSize = &v
+// SetDctAnalyticsMaximumTransferSize gets a reference to the given int32 and assigns it to the DctAnalyticsMaximumTransferSize field.
+func (o *GlobalProperties) SetDctAnalyticsMaximumTransferSize(v int32) {
+	o.DctAnalyticsMaximumTransferSize = &v
 }
 
 // GetTokenExpiryTime returns the TokenExpiryTime field value if set, zero value otherwise.
@@ -324,11 +324,11 @@ func (o GlobalProperties) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DisableUsernamePassword) {
 		toSerialize["disable_username_password"] = o.DisableUsernamePassword
 	}
-	if !IsNil(o.PhonehomeUploadCadence) {
-		toSerialize["phonehome_upload_cadence"] = o.PhonehomeUploadCadence
+	if !IsNil(o.DctAnalyticsUploadCadence) {
+		toSerialize["dct_analytics_upload_cadence"] = o.DctAnalyticsUploadCadence
 	}
-	if !IsNil(o.PhonehomeMaximumTransferSize) {
-		toSerialize["phonehome_maximum_transfer_size"] = o.PhonehomeMaximumTransferSize
+	if !IsNil(o.DctAnalyticsMaximumTransferSize) {
+		toSerialize["dct_analytics_maximum_transfer_size"] = o.DctAnalyticsMaximumTransferSize
 	}
 	if !IsNil(o.TokenExpiryTime) {
 		toSerialize["token_expiry_time"] = o.TokenExpiryTime

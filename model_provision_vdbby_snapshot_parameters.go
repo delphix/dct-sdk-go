@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -48,9 +48,9 @@ type ProvisionVDBBySnapshotParameters struct {
 	PreStop []Hook `json:"pre_stop,omitempty"`
 	// The commands to execute on the target environment after stopping a virtual source.
 	PostStop []Hook `json:"post_stop,omitempty"`
-	// The ID of the group into which the VDB will be provisioned. If unset, a group is selected randomly on the Engine.
+	// The ID of the group into which the VDB will be provisioned. This field must be explicitly set when marked as mandatory; otherwise, a group is selected randomly on the Engine.
 	TargetGroupId *string `json:"target_group_id,omitempty"`
-	// The unique name of the provisioned VDB within a group. If unset, a name is randomly generated.
+	// The unique name of the provisioned VDB within a group. This field must be explicitly set when marked as mandatory; otherwise, a name will be randomly generated.
 	Name *string `json:"name,omitempty"`
 	// The name of the database on the target environment. Defaults to the value of the name property.
 	DatabaseName *string `json:"database_name,omitempty"`
@@ -130,6 +130,12 @@ type ProvisionVDBBySnapshotParameters struct {
 	ParentTdeKeystorePath *string `json:"parentTdeKeystorePath,omitempty"`
 	// The password of the keystore specified in parentTdeKeystorePath. (Oracle Multitenant Only)
 	ParentTdeKeystorePassword *string `json:"parent_tde_keystore_password,omitempty"`
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host.  Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore.  (Oracle Multitenant Only) 
+	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
+	// The password of the parent PDB keystore. (Oracle Multitenant Only)
+	ParentPdbTdeKeystorePassword *string `json:"parent_pdb_tde_keystore_password,omitempty"`
+	// The password for the isolated mode TDE keystore of the target virtual PDB. (Oracle Multitenant Only)
+	TargetPdbTdeKeystorePassword *string `json:"target_pdb_tde_keystore_password,omitempty"`
 	// Secret to be used while exporting and importing vPDB encryption keys if Transparent Data Encryption is enabled on the vPDB. (Oracle Multitenant Only)
 	TdeExportedKeyFileSecret *string `json:"tde_exported_key_file_secret,omitempty"`
 	// ID of the key created by Delphix. (Oracle Multitenant Only)
@@ -1934,6 +1940,102 @@ func (o *ProvisionVDBBySnapshotParameters) SetParentTdeKeystorePassword(v string
 	o.ParentTdeKeystorePassword = &v
 }
 
+// GetParentPdbTdeKeystorePath returns the ParentPdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePath
+}
+
+// GetParentPdbTdeKeystorePathOk returns a tuple with the ParentPdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePath, true
+}
+
+// HasParentPdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasParentPdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePath gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePath field.
+func (o *ProvisionVDBBySnapshotParameters) SetParentPdbTdeKeystorePath(v string) {
+	o.ParentPdbTdeKeystorePath = &v
+}
+
+// GetParentPdbTdeKeystorePassword returns the ParentPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePassword
+}
+
+// GetParentPdbTdeKeystorePasswordOk returns a tuple with the ParentPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePassword, true
+}
+
+// HasParentPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasParentPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePassword gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePassword field.
+func (o *ProvisionVDBBySnapshotParameters) SetParentPdbTdeKeystorePassword(v string) {
+	o.ParentPdbTdeKeystorePassword = &v
+}
+
+// GetTargetPdbTdeKeystorePassword returns the TargetPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetTargetPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.TargetPdbTdeKeystorePassword
+}
+
+// GetTargetPdbTdeKeystorePasswordOk returns a tuple with the TargetPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetTargetPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.TargetPdbTdeKeystorePassword, true
+}
+
+// HasTargetPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasTargetPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.TargetPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetPdbTdeKeystorePassword gets a reference to the given string and assigns it to the TargetPdbTdeKeystorePassword field.
+func (o *ProvisionVDBBySnapshotParameters) SetTargetPdbTdeKeystorePassword(v string) {
+	o.TargetPdbTdeKeystorePassword = &v
+}
+
 // GetTdeExportedKeyFileSecret returns the TdeExportedKeyFileSecret field value if set, zero value otherwise.
 func (o *ProvisionVDBBySnapshotParameters) GetTdeExportedKeyFileSecret() string {
 	if o == nil || IsNil(o.TdeExportedKeyFileSecret) {
@@ -2876,6 +2978,15 @@ func (o ProvisionVDBBySnapshotParameters) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.ParentTdeKeystorePassword) {
 		toSerialize["parent_tde_keystore_password"] = o.ParentTdeKeystorePassword
+	}
+	if !IsNil(o.ParentPdbTdeKeystorePath) {
+		toSerialize["parent_pdb_tde_keystore_path"] = o.ParentPdbTdeKeystorePath
+	}
+	if !IsNil(o.ParentPdbTdeKeystorePassword) {
+		toSerialize["parent_pdb_tde_keystore_password"] = o.ParentPdbTdeKeystorePassword
+	}
+	if !IsNil(o.TargetPdbTdeKeystorePassword) {
+		toSerialize["target_pdb_tde_keystore_password"] = o.TargetPdbTdeKeystorePassword
 	}
 	if !IsNil(o.TdeExportedKeyFileSecret) {
 		toSerialize["tde_exported_key_file_secret"] = o.TdeExportedKeyFileSecret

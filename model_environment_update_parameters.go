@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,8 @@ type EnvironmentUpdateParameters struct {
 	ClusterAddress *string `json:"cluster_address,omitempty"`
 	// Absolute path to cluster home directory. This parameter is for UNIX cluster environments.
 	ClusterHome *string `json:"cluster_home,omitempty"`
+	Scan *string `json:"scan,omitempty"`
+	RemoteListener *string `json:"remote_listener,omitempty"`
 	// username of the SAP ASE database.
 	AseDbUsername *string `json:"ase_db_username,omitempty"`
 	// password of the SAP ASE database.
@@ -203,6 +205,70 @@ func (o *EnvironmentUpdateParameters) HasClusterHome() bool {
 // SetClusterHome gets a reference to the given string and assigns it to the ClusterHome field.
 func (o *EnvironmentUpdateParameters) SetClusterHome(v string) {
 	o.ClusterHome = &v
+}
+
+// GetScan returns the Scan field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetScan() string {
+	if o == nil || IsNil(o.Scan) {
+		var ret string
+		return ret
+	}
+	return *o.Scan
+}
+
+// GetScanOk returns a tuple with the Scan field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetScanOk() (*string, bool) {
+	if o == nil || IsNil(o.Scan) {
+		return nil, false
+	}
+	return o.Scan, true
+}
+
+// HasScan returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasScan() bool {
+	if o != nil && !IsNil(o.Scan) {
+		return true
+	}
+
+	return false
+}
+
+// SetScan gets a reference to the given string and assigns it to the Scan field.
+func (o *EnvironmentUpdateParameters) SetScan(v string) {
+	o.Scan = &v
+}
+
+// GetRemoteListener returns the RemoteListener field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetRemoteListener() string {
+	if o == nil || IsNil(o.RemoteListener) {
+		var ret string
+		return ret
+	}
+	return *o.RemoteListener
+}
+
+// GetRemoteListenerOk returns a tuple with the RemoteListener field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetRemoteListenerOk() (*string, bool) {
+	if o == nil || IsNil(o.RemoteListener) {
+		return nil, false
+	}
+	return o.RemoteListener, true
+}
+
+// HasRemoteListener returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasRemoteListener() bool {
+	if o != nil && !IsNil(o.RemoteListener) {
+		return true
+	}
+
+	return false
+}
+
+// SetRemoteListener gets a reference to the given string and assigns it to the RemoteListener field.
+func (o *EnvironmentUpdateParameters) SetRemoteListener(v string) {
+	o.RemoteListener = &v
 }
 
 // GetAseDbUsername returns the AseDbUsername field value if set, zero value otherwise.
@@ -706,6 +772,12 @@ func (o EnvironmentUpdateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ClusterHome) {
 		toSerialize["cluster_home"] = o.ClusterHome
+	}
+	if !IsNil(o.Scan) {
+		toSerialize["scan"] = o.Scan
+	}
+	if !IsNil(o.RemoteListener) {
+		toSerialize["remote_listener"] = o.RemoteListener
 	}
 	if !IsNil(o.AseDbUsername) {
 		toSerialize["ase_db_username"] = o.AseDbUsername

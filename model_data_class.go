@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,8 @@ type DataClass struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this data class.
 	Name *string `json:"name,omitempty"`
+	// A description of this data class.
+	Description NullableString `json:"description,omitempty"`
 	// The ID of the default masking algorithm for this data class.
 	DefaultAlgorithmId NullableString `json:"default_algorithm_id,omitempty"`
 	// The name of the default masking algorithm for this data class.
@@ -33,9 +35,10 @@ type DataClass struct {
 	// The default tokenization algorithm for this data class.
 	DefaultTokenAlgorithmName NullableString `json:"default_token_algorithm_name,omitempty"`
 	// The list of algorithm IDs available for this data class.
+	// Deprecated
 	AlgorithmIds []string `json:"algorithm_ids,omitempty"`
-	// A description of this data class.
-	Description NullableString `json:"description,omitempty"`
+	// The list of algorithm IDs and names available for this data class.
+	Algorithms []DataClassAlgorithmInfo `json:"algorithms,omitempty"`
 	// An example data value for this data class.
 	Example NullableString `json:"example,omitempty"`
 	// The export revision hash of this data class from the source engine.
@@ -44,6 +47,12 @@ type DataClass struct {
 	EngineId NullableString `json:"engine_id,omitempty"`
 	// The name of the engine that this data class originated from.
 	EngineName NullableString `json:"engine_name,omitempty"`
+	// The ID of the account who created this data class.
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The account name of the DCT user who created this data class.
+	AccountName *string `json:"account_name,omitempty"`
+	// Whether this data class is managed by DCT or not.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 	// The tags of this data class.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -127,6 +136,48 @@ func (o *DataClass) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *DataClass) SetName(v string) {
 	o.Name = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DataClass) GetDescription() string {
+	if o == nil || IsNil(o.Description.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Description.Get()
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DataClass) GetDescriptionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Description.Get(), o.Description.IsSet()
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *DataClass) HasDescription() bool {
+	if o != nil && o.Description.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given NullableString and assigns it to the Description field.
+func (o *DataClass) SetDescription(v string) {
+	o.Description.Set(&v)
+}
+// SetDescriptionNil sets the value for Description to be an explicit nil
+func (o *DataClass) SetDescriptionNil() {
+	o.Description.Set(nil)
+}
+
+// UnsetDescription ensures that no value is present for Description, not even an explicit nil
+func (o *DataClass) UnsetDescription() {
+	o.Description.Unset()
 }
 
 // GetDefaultAlgorithmId returns the DefaultAlgorithmId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -298,6 +349,7 @@ func (o *DataClass) UnsetDefaultTokenAlgorithmName() {
 }
 
 // GetAlgorithmIds returns the AlgorithmIds field value if set, zero value otherwise.
+// Deprecated
 func (o *DataClass) GetAlgorithmIds() []string {
 	if o == nil || IsNil(o.AlgorithmIds) {
 		var ret []string
@@ -308,6 +360,7 @@ func (o *DataClass) GetAlgorithmIds() []string {
 
 // GetAlgorithmIdsOk returns a tuple with the AlgorithmIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *DataClass) GetAlgorithmIdsOk() ([]string, bool) {
 	if o == nil || IsNil(o.AlgorithmIds) {
 		return nil, false
@@ -325,50 +378,41 @@ func (o *DataClass) HasAlgorithmIds() bool {
 }
 
 // SetAlgorithmIds gets a reference to the given []string and assigns it to the AlgorithmIds field.
+// Deprecated
 func (o *DataClass) SetAlgorithmIds(v []string) {
 	o.AlgorithmIds = v
 }
 
-// GetDescription returns the Description field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *DataClass) GetDescription() string {
-	if o == nil || IsNil(o.Description.Get()) {
-		var ret string
+// GetAlgorithms returns the Algorithms field value if set, zero value otherwise.
+func (o *DataClass) GetAlgorithms() []DataClassAlgorithmInfo {
+	if o == nil || IsNil(o.Algorithms) {
+		var ret []DataClassAlgorithmInfo
 		return ret
 	}
-	return *o.Description.Get()
+	return o.Algorithms
 }
 
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// GetAlgorithmsOk returns a tuple with the Algorithms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *DataClass) GetDescriptionOk() (*string, bool) {
-	if o == nil {
+func (o *DataClass) GetAlgorithmsOk() ([]DataClassAlgorithmInfo, bool) {
+	if o == nil || IsNil(o.Algorithms) {
 		return nil, false
 	}
-	return o.Description.Get(), o.Description.IsSet()
+	return o.Algorithms, true
 }
 
-// HasDescription returns a boolean if a field has been set.
-func (o *DataClass) HasDescription() bool {
-	if o != nil && o.Description.IsSet() {
+// HasAlgorithms returns a boolean if a field has been set.
+func (o *DataClass) HasAlgorithms() bool {
+	if o != nil && !IsNil(o.Algorithms) {
 		return true
 	}
 
 	return false
 }
 
-// SetDescription gets a reference to the given NullableString and assigns it to the Description field.
-func (o *DataClass) SetDescription(v string) {
-	o.Description.Set(&v)
-}
-// SetDescriptionNil sets the value for Description to be an explicit nil
-func (o *DataClass) SetDescriptionNil() {
-	o.Description.Set(nil)
-}
-
-// UnsetDescription ensures that no value is present for Description, not even an explicit nil
-func (o *DataClass) UnsetDescription() {
-	o.Description.Unset()
+// SetAlgorithms gets a reference to the given []DataClassAlgorithmInfo and assigns it to the Algorithms field.
+func (o *DataClass) SetAlgorithms(v []DataClassAlgorithmInfo) {
+	o.Algorithms = v
 }
 
 // GetExample returns the Example field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -539,6 +583,102 @@ func (o *DataClass) UnsetEngineName() {
 	o.EngineName.Unset()
 }
 
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *DataClass) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataClass) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *DataClass) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *DataClass) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *DataClass) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataClass) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *DataClass) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *DataClass) SetAccountName(v string) {
+	o.AccountName = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *DataClass) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataClass) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *DataClass) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *DataClass) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *DataClass) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -587,6 +727,9 @@ func (o DataClass) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if o.Description.IsSet() {
+		toSerialize["description"] = o.Description.Get()
+	}
 	if o.DefaultAlgorithmId.IsSet() {
 		toSerialize["default_algorithm_id"] = o.DefaultAlgorithmId.Get()
 	}
@@ -602,8 +745,8 @@ func (o DataClass) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AlgorithmIds) {
 		toSerialize["algorithm_ids"] = o.AlgorithmIds
 	}
-	if o.Description.IsSet() {
-		toSerialize["description"] = o.Description.Get()
+	if !IsNil(o.Algorithms) {
+		toSerialize["algorithms"] = o.Algorithms
 	}
 	if o.Example.IsSet() {
 		toSerialize["example"] = o.Example.Get()
@@ -616,6 +759,15 @@ func (o DataClass) ToMap() (map[string]interface{}, error) {
 	}
 	if o.EngineName.IsSet() {
 		toSerialize["engine_name"] = o.EngineName.Get()
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

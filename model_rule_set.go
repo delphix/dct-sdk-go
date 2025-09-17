@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the RuleSet type satisfies the MappedNullable interface at compile time
@@ -43,8 +44,20 @@ type RuleSet struct {
 	RecordsTotal NullableInt64 `json:"records_total,omitempty"`
 	// The number of sensitive records in this rule set.
 	RecordsSensitive NullableInt64 `json:"records_sensitive,omitempty"`
+	// The date this rule set was created.
+	CreationDate *time.Time `json:"creation_date,omitempty"`
+	// The ID of the account who created this rule set.
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The username of the account who created this rule set.
+	AccountName *string `json:"account_name,omitempty"`
+	// Whether or not this rule set is managed by DCT.
+	DctManaged *bool `json:"dct_managed,omitempty"`
+	// This applies when table metadata exists in DCT, but the corresponding table no longer exists in the external database. In that event, true will cause the refresh operation to delete the invalid table metadata, whereas false will fail the refresh instead.
+	RefreshDropsTables *bool `json:"refresh_drops_tables,omitempty"`
 	// The tags of this rule set.
 	Tags []Tag `json:"tags,omitempty"`
+	JobOrchestratorId *string `json:"job_orchestrator_id,omitempty"`
+	JobOrchestratorName *string `json:"job_orchestrator_name,omitempty"`
 }
 
 // NewRuleSet instantiates a new RuleSet object
@@ -538,6 +551,166 @@ func (o *RuleSet) UnsetRecordsSensitive() {
 	o.RecordsSensitive.Unset()
 }
 
+// GetCreationDate returns the CreationDate field value if set, zero value otherwise.
+func (o *RuleSet) GetCreationDate() time.Time {
+	if o == nil || IsNil(o.CreationDate) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreationDate
+}
+
+// GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetCreationDateOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreationDate) {
+		return nil, false
+	}
+	return o.CreationDate, true
+}
+
+// HasCreationDate returns a boolean if a field has been set.
+func (o *RuleSet) HasCreationDate() bool {
+	if o != nil && !IsNil(o.CreationDate) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreationDate gets a reference to the given time.Time and assigns it to the CreationDate field.
+func (o *RuleSet) SetCreationDate(v time.Time) {
+	o.CreationDate = &v
+}
+
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *RuleSet) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *RuleSet) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *RuleSet) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *RuleSet) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *RuleSet) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *RuleSet) SetAccountName(v string) {
+	o.AccountName = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *RuleSet) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *RuleSet) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *RuleSet) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
+// GetRefreshDropsTables returns the RefreshDropsTables field value if set, zero value otherwise.
+func (o *RuleSet) GetRefreshDropsTables() bool {
+	if o == nil || IsNil(o.RefreshDropsTables) {
+		var ret bool
+		return ret
+	}
+	return *o.RefreshDropsTables
+}
+
+// GetRefreshDropsTablesOk returns a tuple with the RefreshDropsTables field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetRefreshDropsTablesOk() (*bool, bool) {
+	if o == nil || IsNil(o.RefreshDropsTables) {
+		return nil, false
+	}
+	return o.RefreshDropsTables, true
+}
+
+// HasRefreshDropsTables returns a boolean if a field has been set.
+func (o *RuleSet) HasRefreshDropsTables() bool {
+	if o != nil && !IsNil(o.RefreshDropsTables) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefreshDropsTables gets a reference to the given bool and assigns it to the RefreshDropsTables field.
+func (o *RuleSet) SetRefreshDropsTables(v bool) {
+	o.RefreshDropsTables = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *RuleSet) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -568,6 +741,70 @@ func (o *RuleSet) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *RuleSet) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetJobOrchestratorId returns the JobOrchestratorId field value if set, zero value otherwise.
+func (o *RuleSet) GetJobOrchestratorId() string {
+	if o == nil || IsNil(o.JobOrchestratorId) {
+		var ret string
+		return ret
+	}
+	return *o.JobOrchestratorId
+}
+
+// GetJobOrchestratorIdOk returns a tuple with the JobOrchestratorId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetJobOrchestratorIdOk() (*string, bool) {
+	if o == nil || IsNil(o.JobOrchestratorId) {
+		return nil, false
+	}
+	return o.JobOrchestratorId, true
+}
+
+// HasJobOrchestratorId returns a boolean if a field has been set.
+func (o *RuleSet) HasJobOrchestratorId() bool {
+	if o != nil && !IsNil(o.JobOrchestratorId) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobOrchestratorId gets a reference to the given string and assigns it to the JobOrchestratorId field.
+func (o *RuleSet) SetJobOrchestratorId(v string) {
+	o.JobOrchestratorId = &v
+}
+
+// GetJobOrchestratorName returns the JobOrchestratorName field value if set, zero value otherwise.
+func (o *RuleSet) GetJobOrchestratorName() string {
+	if o == nil || IsNil(o.JobOrchestratorName) {
+		var ret string
+		return ret
+	}
+	return *o.JobOrchestratorName
+}
+
+// GetJobOrchestratorNameOk returns a tuple with the JobOrchestratorName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetJobOrchestratorNameOk() (*string, bool) {
+	if o == nil || IsNil(o.JobOrchestratorName) {
+		return nil, false
+	}
+	return o.JobOrchestratorName, true
+}
+
+// HasJobOrchestratorName returns a boolean if a field has been set.
+func (o *RuleSet) HasJobOrchestratorName() bool {
+	if o != nil && !IsNil(o.JobOrchestratorName) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobOrchestratorName gets a reference to the given string and assigns it to the JobOrchestratorName field.
+func (o *RuleSet) SetJobOrchestratorName(v string) {
+	o.JobOrchestratorName = &v
 }
 
 func (o RuleSet) MarshalJSON() ([]byte, error) {
@@ -616,8 +853,29 @@ func (o RuleSet) ToMap() (map[string]interface{}, error) {
 	if o.RecordsSensitive.IsSet() {
 		toSerialize["records_sensitive"] = o.RecordsSensitive.Get()
 	}
+	if !IsNil(o.CreationDate) {
+		toSerialize["creation_date"] = o.CreationDate
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
+	}
+	if !IsNil(o.RefreshDropsTables) {
+		toSerialize["refresh_drops_tables"] = o.RefreshDropsTables
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.JobOrchestratorId) {
+		toSerialize["job_orchestrator_id"] = o.JobOrchestratorId
+	}
+	if !IsNil(o.JobOrchestratorName) {
+		toSerialize["job_orchestrator_name"] = o.JobOrchestratorName
 	}
 	return toSerialize, nil
 }

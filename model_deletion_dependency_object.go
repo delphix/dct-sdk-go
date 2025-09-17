@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -42,6 +42,10 @@ type DeletionDependencyObject struct {
 	// ID of the parent object.
 	ParentObjectId *string `json:"parent_object_id,omitempty"`
 	ParentObjectType *DeletionDependencyObjectType `json:"parent_object_type,omitempty"`
+	// Total number of snapshots in the Timeflow if the object is a Timeflow otherwise -1.
+	TimeflowSnapshotCount *int64 `json:"timeflow_snapshot_count,omitempty"`
+	// Total number of bookmarks associated with the Timeflow if the object is a Timeflow otherwise -1.
+	TimeflowBookmarksCount *int32 `json:"timeflow_bookmarks_count,omitempty"`
 }
 
 // NewDeletionDependencyObject instantiates a new DeletionDependencyObject object
@@ -50,6 +54,10 @@ type DeletionDependencyObject struct {
 // will change when the set of required properties is changed
 func NewDeletionDependencyObject() *DeletionDependencyObject {
 	this := DeletionDependencyObject{}
+	var timeflowSnapshotCount int64 = -1
+	this.TimeflowSnapshotCount = &timeflowSnapshotCount
+	var timeflowBookmarksCount int32 = -1
+	this.TimeflowBookmarksCount = &timeflowBookmarksCount
 	return &this
 }
 
@@ -58,6 +66,10 @@ func NewDeletionDependencyObject() *DeletionDependencyObject {
 // but it doesn't guarantee that properties required by API are set
 func NewDeletionDependencyObjectWithDefaults() *DeletionDependencyObject {
 	this := DeletionDependencyObject{}
+	var timeflowSnapshotCount int64 = -1
+	this.TimeflowSnapshotCount = &timeflowSnapshotCount
+	var timeflowBookmarksCount int32 = -1
+	this.TimeflowBookmarksCount = &timeflowBookmarksCount
 	return &this
 }
 
@@ -445,6 +457,70 @@ func (o *DeletionDependencyObject) SetParentObjectType(v DeletionDependencyObjec
 	o.ParentObjectType = &v
 }
 
+// GetTimeflowSnapshotCount returns the TimeflowSnapshotCount field value if set, zero value otherwise.
+func (o *DeletionDependencyObject) GetTimeflowSnapshotCount() int64 {
+	if o == nil || IsNil(o.TimeflowSnapshotCount) {
+		var ret int64
+		return ret
+	}
+	return *o.TimeflowSnapshotCount
+}
+
+// GetTimeflowSnapshotCountOk returns a tuple with the TimeflowSnapshotCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeletionDependencyObject) GetTimeflowSnapshotCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TimeflowSnapshotCount) {
+		return nil, false
+	}
+	return o.TimeflowSnapshotCount, true
+}
+
+// HasTimeflowSnapshotCount returns a boolean if a field has been set.
+func (o *DeletionDependencyObject) HasTimeflowSnapshotCount() bool {
+	if o != nil && !IsNil(o.TimeflowSnapshotCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowSnapshotCount gets a reference to the given int64 and assigns it to the TimeflowSnapshotCount field.
+func (o *DeletionDependencyObject) SetTimeflowSnapshotCount(v int64) {
+	o.TimeflowSnapshotCount = &v
+}
+
+// GetTimeflowBookmarksCount returns the TimeflowBookmarksCount field value if set, zero value otherwise.
+func (o *DeletionDependencyObject) GetTimeflowBookmarksCount() int32 {
+	if o == nil || IsNil(o.TimeflowBookmarksCount) {
+		var ret int32
+		return ret
+	}
+	return *o.TimeflowBookmarksCount
+}
+
+// GetTimeflowBookmarksCountOk returns a tuple with the TimeflowBookmarksCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeletionDependencyObject) GetTimeflowBookmarksCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.TimeflowBookmarksCount) {
+		return nil, false
+	}
+	return o.TimeflowBookmarksCount, true
+}
+
+// HasTimeflowBookmarksCount returns a boolean if a field has been set.
+func (o *DeletionDependencyObject) HasTimeflowBookmarksCount() bool {
+	if o != nil && !IsNil(o.TimeflowBookmarksCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeflowBookmarksCount gets a reference to the given int32 and assigns it to the TimeflowBookmarksCount field.
+func (o *DeletionDependencyObject) SetTimeflowBookmarksCount(v int32) {
+	o.TimeflowBookmarksCount = &v
+}
+
 func (o DeletionDependencyObject) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -490,6 +566,12 @@ func (o DeletionDependencyObject) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ParentObjectType) {
 		toSerialize["parent_object_type"] = o.ParentObjectType
+	}
+	if !IsNil(o.TimeflowSnapshotCount) {
+		toSerialize["timeflow_snapshot_count"] = o.TimeflowSnapshotCount
+	}
+	if !IsNil(o.TimeflowBookmarksCount) {
+		toSerialize["timeflow_bookmarks_count"] = o.TimeflowBookmarksCount
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"reflect"
 )
 
 
@@ -473,6 +474,129 @@ func (a *VDBsAPIService) DisableVdbExecute(r ApiDisableVdbRequest) (*DisableVDBR
 	}
 	// body params
 	localVarPostBody = r.disableVDBParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiEmptyVdbRequest struct {
+	ctx context.Context
+	ApiService *VDBsAPIService
+	provisionEmptyVDBParameters *ProvisionEmptyVDBParameters
+}
+
+// The parameters to provision an empty VDB.
+func (r ApiEmptyVdbRequest) ProvisionEmptyVDBParameters(provisionEmptyVDBParameters ProvisionEmptyVDBParameters) ApiEmptyVdbRequest {
+	r.provisionEmptyVDBParameters = &provisionEmptyVDBParameters
+	return r
+}
+
+func (r ApiEmptyVdbRequest) Execute() (*ProvisionVDBResponse, *http.Response, error) {
+	return r.ApiService.EmptyVdbExecute(r)
+}
+
+/*
+EmptyVdb Provision an empty VDB.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiEmptyVdbRequest
+*/
+func (a *VDBsAPIService) EmptyVdb(ctx context.Context) ApiEmptyVdbRequest {
+	return ApiEmptyVdbRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ProvisionVDBResponse
+func (a *VDBsAPIService) EmptyVdbExecute(r ApiEmptyVdbRequest) (*ProvisionVDBResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ProvisionVDBResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBsAPIService.EmptyVdb")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vdbs/empty_vdb"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.provisionEmptyVDBParameters == nil {
+		return localVarReturnValue, nil, reportError("provisionEmptyVDBParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.provisionEmptyVDBParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1059,7 +1183,7 @@ func (r ApiExportVdbFromBookmarkRequest) Execute() (*ExportResponse, *http.Respo
 }
 
 /*
-ExportVdbFromBookmark Export a dSource using bookmark to physical file system
+ExportVdbFromBookmark Export a vdb using bookmark to physical file system
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbId The ID of the VDB.
@@ -1178,7 +1302,7 @@ type ApiExportVdbInPlaceRequest struct {
 	inPlaceExportParameters *InPlaceExportParameters
 }
 
-// The parameters to perform Physical file system inplace VPDB export.
+// The parameters to perform an in-place export of a virtual database to a physical file system.
 func (r ApiExportVdbInPlaceRequest) InPlaceExportParameters(inPlaceExportParameters InPlaceExportParameters) ApiExportVdbInPlaceRequest {
 	r.inPlaceExportParameters = &inPlaceExportParameters
 	return r
@@ -1189,7 +1313,7 @@ func (r ApiExportVdbInPlaceRequest) Execute() (*ExportResponse, *http.Response, 
 }
 
 /*
-ExportVdbInPlace Convert a Virtual PDB to a physical PDB on Physical file system.
+ExportVdbInPlace Convert a virtual database to a physical database on physical file system.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbId The ID of the VDB.
@@ -1319,7 +1443,7 @@ func (r ApiExportVdbToAsmByBookmarkRequest) Execute() (*OracleAsmExportResponse,
 }
 
 /*
-ExportVdbToAsmByBookmark Export a vdb using using bookmark to an ASM file system
+ExportVdbToAsmByBookmark Export a vdb using bookmark to an ASM file system
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbId The ID of the VDB.
@@ -2709,7 +2833,7 @@ type ApiGetVdbsRequest struct {
 	limit *int32
 	cursor *string
 	sort *string
-	permission *PermissionEnum
+	permission *[]PermissionEnum
 }
 
 // Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
@@ -2731,7 +2855,7 @@ func (r ApiGetVdbsRequest) Sort(sort string) ApiGetVdbsRequest {
 }
 
 // Restrict the objects, which are allowed.
-func (r ApiGetVdbsRequest) Permission(permission PermissionEnum) ApiGetVdbsRequest {
+func (r ApiGetVdbsRequest) Permission(permission []PermissionEnum) ApiGetVdbsRequest {
 	r.permission = &permission
 	return r
 }
@@ -2787,7 +2911,15 @@ func (a *VDBsAPIService) GetVdbsExecute(r ApiGetVdbsRequest) (*ListVDBsResponse,
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	if r.permission != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "permission", r.permission, "form", "")
+		t := *r.permission
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "permission", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "permission", t, "form", "multi")
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3132,7 +3264,7 @@ func (r ApiOracleAsmInPlaceVdbExportRequest) Execute() (*OracleAsmInPlaceVDBExpo
 }
 
 /*
-OracleAsmInPlaceVdbExport Convert a VDB/vPDB to a physical DB/PDB on Oracle ASM file system.
+OracleAsmInPlaceVdbExport Convert a virtual database to a physical database on Oracle ASM file system.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vdbId The ID of the VDB.
@@ -5292,7 +5424,7 @@ type ApiSearchVdbsRequest struct {
 	limit *int32
 	cursor *string
 	sort *string
-	permission *PermissionEnum
+	permission *[]PermissionEnum
 	searchBody *SearchBody
 }
 
@@ -5315,7 +5447,7 @@ func (r ApiSearchVdbsRequest) Sort(sort string) ApiSearchVdbsRequest {
 }
 
 // Restrict the objects, which are allowed.
-func (r ApiSearchVdbsRequest) Permission(permission PermissionEnum) ApiSearchVdbsRequest {
+func (r ApiSearchVdbsRequest) Permission(permission []PermissionEnum) ApiSearchVdbsRequest {
 	r.permission = &permission
 	return r
 }
@@ -5377,7 +5509,15 @@ func (a *VDBsAPIService) SearchVdbsExecute(r ApiSearchVdbsRequest) (*SearchVDBsR
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	if r.permission != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "permission", r.permission, "form", "")
+		t := *r.permission
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "permission", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "permission", t, "form", "multi")
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
