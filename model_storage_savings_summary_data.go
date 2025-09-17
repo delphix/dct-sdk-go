@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -26,16 +26,24 @@ type StorageSavingsSummaryData struct {
 	DependantVdbs *int32 `json:"dependant_vdbs,omitempty"`
 	// The engine name.
 	EngineName *string `json:"engine_name,omitempty"`
-	// The disk space that would be required if not using Delphix virtualizion, in bytes.
+	// The disk space, in bytes, that it would take to store the dSource and its descendant VDBs without Delphix, counting each of their timeflows as separate copy of the parent source data.
 	UnvirtualizedSpace *int64 `json:"unvirtualized_space,omitempty"`
-	// The actual space used by the VDB, in bytes.
+	// The disk space, in bytes, that it would take to store the dSource and its descendant VDBs without Delphix, counting only their current (active) timeflows.
+	CurrentTimeflowsUnvirtualizedSpace *int64 `json:"current_timeflows_unvirtualized_space,omitempty"`
+	// The actual space used by the dSource and its dependant VDBs, in bytes.
 	VirtualizedSpace *int64 `json:"virtualized_space,omitempty"`
 	// The name of the database on the target environment.
 	Name *string `json:"name,omitempty"`
-	// The disk space that has been saved by using Delphix virtualizion, in bytes.
+	// The disk space that has been saved by using Delphix virtualizion for all descendant timeflows, in bytes.
 	EstimatedSavings *int64 `json:"estimated_savings,omitempty"`
-	// The disk space that has been saved by using Delphix virtualizion, in percentage.
+	// The disk space that has been saved by using Delphix virtualizion for all descendant timeflows, in percentage.
 	EstimatedSavingsPerc *float32 `json:"estimated_savings_perc,omitempty"`
+	// The disk space that has been saved by using Delphix virtualizion for only the current (active) timeflows, in bytes.
+	EstimatedCurrentTimeflowsSavings *int64 `json:"estimated_current_timeflows_savings,omitempty"`
+	// The disk space that has been saved by using Delphix virtualizion for only the current (active) timeflows, in percentage.
+	EstimatedCurrentTimeflowsSavingsPerc *float32 `json:"estimated_current_timeflows_savings_perc,omitempty"`
+	// Indicates if the dSource is a replica
+	IsReplica *bool `json:"is_replica,omitempty"`
 }
 
 // NewStorageSavingsSummaryData instantiates a new StorageSavingsSummaryData object
@@ -183,6 +191,38 @@ func (o *StorageSavingsSummaryData) SetUnvirtualizedSpace(v int64) {
 	o.UnvirtualizedSpace = &v
 }
 
+// GetCurrentTimeflowsUnvirtualizedSpace returns the CurrentTimeflowsUnvirtualizedSpace field value if set, zero value otherwise.
+func (o *StorageSavingsSummaryData) GetCurrentTimeflowsUnvirtualizedSpace() int64 {
+	if o == nil || IsNil(o.CurrentTimeflowsUnvirtualizedSpace) {
+		var ret int64
+		return ret
+	}
+	return *o.CurrentTimeflowsUnvirtualizedSpace
+}
+
+// GetCurrentTimeflowsUnvirtualizedSpaceOk returns a tuple with the CurrentTimeflowsUnvirtualizedSpace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSavingsSummaryData) GetCurrentTimeflowsUnvirtualizedSpaceOk() (*int64, bool) {
+	if o == nil || IsNil(o.CurrentTimeflowsUnvirtualizedSpace) {
+		return nil, false
+	}
+	return o.CurrentTimeflowsUnvirtualizedSpace, true
+}
+
+// HasCurrentTimeflowsUnvirtualizedSpace returns a boolean if a field has been set.
+func (o *StorageSavingsSummaryData) HasCurrentTimeflowsUnvirtualizedSpace() bool {
+	if o != nil && !IsNil(o.CurrentTimeflowsUnvirtualizedSpace) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrentTimeflowsUnvirtualizedSpace gets a reference to the given int64 and assigns it to the CurrentTimeflowsUnvirtualizedSpace field.
+func (o *StorageSavingsSummaryData) SetCurrentTimeflowsUnvirtualizedSpace(v int64) {
+	o.CurrentTimeflowsUnvirtualizedSpace = &v
+}
+
 // GetVirtualizedSpace returns the VirtualizedSpace field value if set, zero value otherwise.
 func (o *StorageSavingsSummaryData) GetVirtualizedSpace() int64 {
 	if o == nil || IsNil(o.VirtualizedSpace) {
@@ -311,6 +351,102 @@ func (o *StorageSavingsSummaryData) SetEstimatedSavingsPerc(v float32) {
 	o.EstimatedSavingsPerc = &v
 }
 
+// GetEstimatedCurrentTimeflowsSavings returns the EstimatedCurrentTimeflowsSavings field value if set, zero value otherwise.
+func (o *StorageSavingsSummaryData) GetEstimatedCurrentTimeflowsSavings() int64 {
+	if o == nil || IsNil(o.EstimatedCurrentTimeflowsSavings) {
+		var ret int64
+		return ret
+	}
+	return *o.EstimatedCurrentTimeflowsSavings
+}
+
+// GetEstimatedCurrentTimeflowsSavingsOk returns a tuple with the EstimatedCurrentTimeflowsSavings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSavingsSummaryData) GetEstimatedCurrentTimeflowsSavingsOk() (*int64, bool) {
+	if o == nil || IsNil(o.EstimatedCurrentTimeflowsSavings) {
+		return nil, false
+	}
+	return o.EstimatedCurrentTimeflowsSavings, true
+}
+
+// HasEstimatedCurrentTimeflowsSavings returns a boolean if a field has been set.
+func (o *StorageSavingsSummaryData) HasEstimatedCurrentTimeflowsSavings() bool {
+	if o != nil && !IsNil(o.EstimatedCurrentTimeflowsSavings) {
+		return true
+	}
+
+	return false
+}
+
+// SetEstimatedCurrentTimeflowsSavings gets a reference to the given int64 and assigns it to the EstimatedCurrentTimeflowsSavings field.
+func (o *StorageSavingsSummaryData) SetEstimatedCurrentTimeflowsSavings(v int64) {
+	o.EstimatedCurrentTimeflowsSavings = &v
+}
+
+// GetEstimatedCurrentTimeflowsSavingsPerc returns the EstimatedCurrentTimeflowsSavingsPerc field value if set, zero value otherwise.
+func (o *StorageSavingsSummaryData) GetEstimatedCurrentTimeflowsSavingsPerc() float32 {
+	if o == nil || IsNil(o.EstimatedCurrentTimeflowsSavingsPerc) {
+		var ret float32
+		return ret
+	}
+	return *o.EstimatedCurrentTimeflowsSavingsPerc
+}
+
+// GetEstimatedCurrentTimeflowsSavingsPercOk returns a tuple with the EstimatedCurrentTimeflowsSavingsPerc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSavingsSummaryData) GetEstimatedCurrentTimeflowsSavingsPercOk() (*float32, bool) {
+	if o == nil || IsNil(o.EstimatedCurrentTimeflowsSavingsPerc) {
+		return nil, false
+	}
+	return o.EstimatedCurrentTimeflowsSavingsPerc, true
+}
+
+// HasEstimatedCurrentTimeflowsSavingsPerc returns a boolean if a field has been set.
+func (o *StorageSavingsSummaryData) HasEstimatedCurrentTimeflowsSavingsPerc() bool {
+	if o != nil && !IsNil(o.EstimatedCurrentTimeflowsSavingsPerc) {
+		return true
+	}
+
+	return false
+}
+
+// SetEstimatedCurrentTimeflowsSavingsPerc gets a reference to the given float32 and assigns it to the EstimatedCurrentTimeflowsSavingsPerc field.
+func (o *StorageSavingsSummaryData) SetEstimatedCurrentTimeflowsSavingsPerc(v float32) {
+	o.EstimatedCurrentTimeflowsSavingsPerc = &v
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *StorageSavingsSummaryData) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StorageSavingsSummaryData) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *StorageSavingsSummaryData) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *StorageSavingsSummaryData) SetIsReplica(v bool) {
+	o.IsReplica = &v
+}
+
 func (o StorageSavingsSummaryData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -333,6 +469,9 @@ func (o StorageSavingsSummaryData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UnvirtualizedSpace) {
 		toSerialize["unvirtualized_space"] = o.UnvirtualizedSpace
 	}
+	if !IsNil(o.CurrentTimeflowsUnvirtualizedSpace) {
+		toSerialize["current_timeflows_unvirtualized_space"] = o.CurrentTimeflowsUnvirtualizedSpace
+	}
 	if !IsNil(o.VirtualizedSpace) {
 		toSerialize["virtualized_space"] = o.VirtualizedSpace
 	}
@@ -344,6 +483,15 @@ func (o StorageSavingsSummaryData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EstimatedSavingsPerc) {
 		toSerialize["estimated_savings_perc"] = o.EstimatedSavingsPerc
+	}
+	if !IsNil(o.EstimatedCurrentTimeflowsSavings) {
+		toSerialize["estimated_current_timeflows_savings"] = o.EstimatedCurrentTimeflowsSavings
+	}
+	if !IsNil(o.EstimatedCurrentTimeflowsSavingsPerc) {
+		toSerialize["estimated_current_timeflows_savings_perc"] = o.EstimatedCurrentTimeflowsSavingsPerc
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
 	}
 	return toSerialize, nil
 }

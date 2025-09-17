@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -44,6 +44,8 @@ type EnvironmentRepository struct {
 	Rac *bool `json:"rac,omitempty"`
 	// The network ports for connecting to the database instance.
 	Ports []int64 `json:"ports,omitempty"`
+	// The network port for connecting to the SQL Server instance.
+	Port *int64 `json:"port,omitempty"`
 	// Fully qualified name of the dump history file.
 	DumpHistoryFile *string `json:"dump_history_file,omitempty"`
 	// Database page size for the SAP ASE instance.
@@ -60,10 +62,22 @@ type EnvironmentRepository struct {
 	MssqlClusterInstancesName []string `json:"mssql_cluster_instances_name,omitempty"`
 	// MSSQL cluster instances version.
 	MssqlClusterInstancesVersion []string `json:"mssql_cluster_instances_version,omitempty"`
+	// MSSQL cluster instance owners.
+	MssqlClusterInstancesOwners []string `json:"mssql_cluster_instances_owners,omitempty"`
+	// MSSQL cluster instances ports.
+	MssqlClusterInstancesPorts []int64 `json:"mssql_cluster_instances_ports,omitempty"`
+	// MSSQL cluster instances server names.
+	MssqlClusterInstancesServerNames []string `json:"mssql_cluster_instances_server_names,omitempty"`
+	// MSSQL cluster instances nodes.
+	MssqlClusterInstancesNodes []string `json:"mssql_cluster_instances_nodes,omitempty"`
 	// Directory where the installation home is located.
 	InstallationHome *string `json:"installation_home,omitempty"`
 	// MSSQL failover cluster drive letter.
 	DriveLetter []string `json:"drive_letter,omitempty"`
+	// Flag indicating whether the repository was automatically discovered.
+	Discovered *bool `json:"discovered,omitempty"`
+	// The list of listeners belonging to this repository.
+	MssqlListeners []MSSQLClusterListener `json:"mssql_listeners,omitempty"`
 	// The environment ID.
 	EnvironmentId *string `json:"environment_id,omitempty"`
 }
@@ -469,6 +483,38 @@ func (o *EnvironmentRepository) SetPorts(v []int64) {
 	o.Ports = v
 }
 
+// GetPort returns the Port field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetPort() int64 {
+	if o == nil || IsNil(o.Port) {
+		var ret int64
+		return ret
+	}
+	return *o.Port
+}
+
+// GetPortOk returns a tuple with the Port field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetPortOk() (*int64, bool) {
+	if o == nil || IsNil(o.Port) {
+		return nil, false
+	}
+	return o.Port, true
+}
+
+// HasPort returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasPort() bool {
+	if o != nil && !IsNil(o.Port) {
+		return true
+	}
+
+	return false
+}
+
+// SetPort gets a reference to the given int64 and assigns it to the Port field.
+func (o *EnvironmentRepository) SetPort(v int64) {
+	o.Port = &v
+}
+
 // GetDumpHistoryFile returns the DumpHistoryFile field value if set, zero value otherwise.
 func (o *EnvironmentRepository) GetDumpHistoryFile() string {
 	if o == nil || IsNil(o.DumpHistoryFile) {
@@ -725,6 +771,134 @@ func (o *EnvironmentRepository) SetMssqlClusterInstancesVersion(v []string) {
 	o.MssqlClusterInstancesVersion = v
 }
 
+// GetMssqlClusterInstancesOwners returns the MssqlClusterInstancesOwners field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesOwners() []string {
+	if o == nil || IsNil(o.MssqlClusterInstancesOwners) {
+		var ret []string
+		return ret
+	}
+	return o.MssqlClusterInstancesOwners
+}
+
+// GetMssqlClusterInstancesOwnersOk returns a tuple with the MssqlClusterInstancesOwners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesOwnersOk() ([]string, bool) {
+	if o == nil || IsNil(o.MssqlClusterInstancesOwners) {
+		return nil, false
+	}
+	return o.MssqlClusterInstancesOwners, true
+}
+
+// HasMssqlClusterInstancesOwners returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasMssqlClusterInstancesOwners() bool {
+	if o != nil && !IsNil(o.MssqlClusterInstancesOwners) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlClusterInstancesOwners gets a reference to the given []string and assigns it to the MssqlClusterInstancesOwners field.
+func (o *EnvironmentRepository) SetMssqlClusterInstancesOwners(v []string) {
+	o.MssqlClusterInstancesOwners = v
+}
+
+// GetMssqlClusterInstancesPorts returns the MssqlClusterInstancesPorts field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesPorts() []int64 {
+	if o == nil || IsNil(o.MssqlClusterInstancesPorts) {
+		var ret []int64
+		return ret
+	}
+	return o.MssqlClusterInstancesPorts
+}
+
+// GetMssqlClusterInstancesPortsOk returns a tuple with the MssqlClusterInstancesPorts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesPortsOk() ([]int64, bool) {
+	if o == nil || IsNil(o.MssqlClusterInstancesPorts) {
+		return nil, false
+	}
+	return o.MssqlClusterInstancesPorts, true
+}
+
+// HasMssqlClusterInstancesPorts returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasMssqlClusterInstancesPorts() bool {
+	if o != nil && !IsNil(o.MssqlClusterInstancesPorts) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlClusterInstancesPorts gets a reference to the given []int64 and assigns it to the MssqlClusterInstancesPorts field.
+func (o *EnvironmentRepository) SetMssqlClusterInstancesPorts(v []int64) {
+	o.MssqlClusterInstancesPorts = v
+}
+
+// GetMssqlClusterInstancesServerNames returns the MssqlClusterInstancesServerNames field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesServerNames() []string {
+	if o == nil || IsNil(o.MssqlClusterInstancesServerNames) {
+		var ret []string
+		return ret
+	}
+	return o.MssqlClusterInstancesServerNames
+}
+
+// GetMssqlClusterInstancesServerNamesOk returns a tuple with the MssqlClusterInstancesServerNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesServerNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.MssqlClusterInstancesServerNames) {
+		return nil, false
+	}
+	return o.MssqlClusterInstancesServerNames, true
+}
+
+// HasMssqlClusterInstancesServerNames returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasMssqlClusterInstancesServerNames() bool {
+	if o != nil && !IsNil(o.MssqlClusterInstancesServerNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlClusterInstancesServerNames gets a reference to the given []string and assigns it to the MssqlClusterInstancesServerNames field.
+func (o *EnvironmentRepository) SetMssqlClusterInstancesServerNames(v []string) {
+	o.MssqlClusterInstancesServerNames = v
+}
+
+// GetMssqlClusterInstancesNodes returns the MssqlClusterInstancesNodes field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesNodes() []string {
+	if o == nil || IsNil(o.MssqlClusterInstancesNodes) {
+		var ret []string
+		return ret
+	}
+	return o.MssqlClusterInstancesNodes
+}
+
+// GetMssqlClusterInstancesNodesOk returns a tuple with the MssqlClusterInstancesNodes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetMssqlClusterInstancesNodesOk() ([]string, bool) {
+	if o == nil || IsNil(o.MssqlClusterInstancesNodes) {
+		return nil, false
+	}
+	return o.MssqlClusterInstancesNodes, true
+}
+
+// HasMssqlClusterInstancesNodes returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasMssqlClusterInstancesNodes() bool {
+	if o != nil && !IsNil(o.MssqlClusterInstancesNodes) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlClusterInstancesNodes gets a reference to the given []string and assigns it to the MssqlClusterInstancesNodes field.
+func (o *EnvironmentRepository) SetMssqlClusterInstancesNodes(v []string) {
+	o.MssqlClusterInstancesNodes = v
+}
+
 // GetInstallationHome returns the InstallationHome field value if set, zero value otherwise.
 func (o *EnvironmentRepository) GetInstallationHome() string {
 	if o == nil || IsNil(o.InstallationHome) {
@@ -787,6 +961,70 @@ func (o *EnvironmentRepository) HasDriveLetter() bool {
 // SetDriveLetter gets a reference to the given []string and assigns it to the DriveLetter field.
 func (o *EnvironmentRepository) SetDriveLetter(v []string) {
 	o.DriveLetter = v
+}
+
+// GetDiscovered returns the Discovered field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetDiscovered() bool {
+	if o == nil || IsNil(o.Discovered) {
+		var ret bool
+		return ret
+	}
+	return *o.Discovered
+}
+
+// GetDiscoveredOk returns a tuple with the Discovered field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetDiscoveredOk() (*bool, bool) {
+	if o == nil || IsNil(o.Discovered) {
+		return nil, false
+	}
+	return o.Discovered, true
+}
+
+// HasDiscovered returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasDiscovered() bool {
+	if o != nil && !IsNil(o.Discovered) {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscovered gets a reference to the given bool and assigns it to the Discovered field.
+func (o *EnvironmentRepository) SetDiscovered(v bool) {
+	o.Discovered = &v
+}
+
+// GetMssqlListeners returns the MssqlListeners field value if set, zero value otherwise.
+func (o *EnvironmentRepository) GetMssqlListeners() []MSSQLClusterListener {
+	if o == nil || IsNil(o.MssqlListeners) {
+		var ret []MSSQLClusterListener
+		return ret
+	}
+	return o.MssqlListeners
+}
+
+// GetMssqlListenersOk returns a tuple with the MssqlListeners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentRepository) GetMssqlListenersOk() ([]MSSQLClusterListener, bool) {
+	if o == nil || IsNil(o.MssqlListeners) {
+		return nil, false
+	}
+	return o.MssqlListeners, true
+}
+
+// HasMssqlListeners returns a boolean if a field has been set.
+func (o *EnvironmentRepository) HasMssqlListeners() bool {
+	if o != nil && !IsNil(o.MssqlListeners) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlListeners gets a reference to the given []MSSQLClusterListener and assigns it to the MssqlListeners field.
+func (o *EnvironmentRepository) SetMssqlListeners(v []MSSQLClusterListener) {
+	o.MssqlListeners = v
 }
 
 // GetEnvironmentId returns the EnvironmentId field value if set, zero value otherwise.
@@ -867,6 +1105,9 @@ func (o EnvironmentRepository) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Ports) {
 		toSerialize["ports"] = o.Ports
 	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
 	if !IsNil(o.DumpHistoryFile) {
 		toSerialize["dump_history_file"] = o.DumpHistoryFile
 	}
@@ -891,11 +1132,29 @@ func (o EnvironmentRepository) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.MssqlClusterInstancesVersion) {
 		toSerialize["mssql_cluster_instances_version"] = o.MssqlClusterInstancesVersion
 	}
+	if !IsNil(o.MssqlClusterInstancesOwners) {
+		toSerialize["mssql_cluster_instances_owners"] = o.MssqlClusterInstancesOwners
+	}
+	if !IsNil(o.MssqlClusterInstancesPorts) {
+		toSerialize["mssql_cluster_instances_ports"] = o.MssqlClusterInstancesPorts
+	}
+	if !IsNil(o.MssqlClusterInstancesServerNames) {
+		toSerialize["mssql_cluster_instances_server_names"] = o.MssqlClusterInstancesServerNames
+	}
+	if !IsNil(o.MssqlClusterInstancesNodes) {
+		toSerialize["mssql_cluster_instances_nodes"] = o.MssqlClusterInstancesNodes
+	}
 	if !IsNil(o.InstallationHome) {
 		toSerialize["installation_home"] = o.InstallationHome
 	}
 	if !IsNil(o.DriveLetter) {
 		toSerialize["drive_letter"] = o.DriveLetter
+	}
+	if !IsNil(o.Discovered) {
+		toSerialize["discovered"] = o.Discovered
+	}
+	if !IsNil(o.MssqlListeners) {
+		toSerialize["mssql_listeners"] = o.MssqlListeners
 	}
 	if !IsNil(o.EnvironmentId) {
 		toSerialize["environment_id"] = o.EnvironmentId

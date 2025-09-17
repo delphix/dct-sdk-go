@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,8 @@ var _ MappedNullable = &DisableVDBParameters{}
 type DisableVDBParameters struct {
 	// Whether to attempt a cleanup of the VDB before the disable.
 	AttemptCleanup *bool `json:"attempt_cleanup,omitempty"`
+	// Whether the database is running inside a container.
+	ContainerMode *bool `json:"container_mode,omitempty"`
 }
 
 // NewDisableVDBParameters instantiates a new DisableVDBParameters object
@@ -77,6 +79,38 @@ func (o *DisableVDBParameters) SetAttemptCleanup(v bool) {
 	o.AttemptCleanup = &v
 }
 
+// GetContainerMode returns the ContainerMode field value if set, zero value otherwise.
+func (o *DisableVDBParameters) GetContainerMode() bool {
+	if o == nil || IsNil(o.ContainerMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ContainerMode
+}
+
+// GetContainerModeOk returns a tuple with the ContainerMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DisableVDBParameters) GetContainerModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ContainerMode) {
+		return nil, false
+	}
+	return o.ContainerMode, true
+}
+
+// HasContainerMode returns a boolean if a field has been set.
+func (o *DisableVDBParameters) HasContainerMode() bool {
+	if o != nil && !IsNil(o.ContainerMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerMode gets a reference to the given bool and assigns it to the ContainerMode field.
+func (o *DisableVDBParameters) SetContainerMode(v bool) {
+	o.ContainerMode = &v
+}
+
 func (o DisableVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -89,6 +123,9 @@ func (o DisableVDBParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AttemptCleanup) {
 		toSerialize["attempt_cleanup"] = o.AttemptCleanup
+	}
+	if !IsNil(o.ContainerMode) {
+		toSerialize["container_mode"] = o.ContainerMode
 	}
 	return toSerialize, nil
 }

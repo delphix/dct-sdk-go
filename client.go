@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -36,13 +36,13 @@ import (
 )
 
 var (
-	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	JsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?json)`)
+	XmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?xml)`)
 	queryParamSplit = regexp.MustCompile(`(^|&)([^&]+)`)
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.9.0
+// APIClient manages communication with the Delphix DCT API API v3.23.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -50,79 +50,119 @@ type APIClient struct {
 
 	// API Services
 
-	AccountsApi *AccountsApiService
+	AccountsAPI *AccountsAPIService
 
-	AlgorithmsApi *AlgorithmsApiService
+	AiGenerateAPI *AiGenerateAPIService
 
-	AuthorizationApi *AuthorizationApiService
+	AiManagementAPI *AiManagementAPIService
 
-	BookmarksApi *BookmarksApiService
+	AlgorithmsAPI *AlgorithmsAPIService
 
-	CDBsApi *CDBsApiService
+	AuthorizationAPI *AuthorizationAPIService
 
-	ConnectivityApi *ConnectivityApiService
+	BookmarksAPI *BookmarksAPIService
 
-	ConnectorsApi *ConnectorsApiService
+	CDBsAPI *CDBsAPIService
 
-	DSourcesApi *DSourcesApiService
+	ClassifiersAPI *ClassifiersAPIService
 
-	DatabaseTemplatesApi *DatabaseTemplatesApiService
+	ComplianceJobCollectionsAPI *ComplianceJobCollectionsAPIService
 
-	EnvironmentsApi *EnvironmentsApiService
+	ComplianceJobsAPI *ComplianceJobsAPIService
 
-	ExecutionsApi *ExecutionsApiService
+	ConnectivityAPI *ConnectivityAPIService
 
-	FeatureFlagApi *FeatureFlagApiService
+	ConnectorsAPI *ConnectorsAPIService
 
-	GroupsApi *GroupsApiService
+	DSourcesAPI *DSourcesAPIService
 
-	HyperscaleInstanceApi *HyperscaleInstanceApiService
+	DataClassesAPI *DataClassesAPIService
 
-	HyperscaleObjectsApi *HyperscaleObjectsApiService
+	DataConnectionsAPI *DataConnectionsAPIService
 
-	JobsApi *JobsApiService
+	DataLayoutsAPI *DataLayoutsAPIService
 
-	KerberosConfigApi *KerberosConfigApiService
+	DatabaseTemplatesAPI *DatabaseTemplatesAPIService
 
-	LoginApi *LoginApiService
+	DiscoveryExpressionsAPI *DiscoveryExpressionsAPIService
 
-	ManagementApi *ManagementApiService
+	DiscoveryPoliciesAPI *DiscoveryPoliciesAPIService
 
-	MaskingEnvironmentsApi *MaskingEnvironmentsApiService
+	EnvironmentsAPI *EnvironmentsAPIService
 
-	MaskingFilesApi *MaskingFilesApiService
+	ExecutionsAPI *ExecutionsAPIService
 
-	MaskingJobsApi *MaskingJobsApiService
+	GroupsAPI *GroupsAPIService
 
-	MaskingPluginsApi *MaskingPluginsApiService
+	HeldSpaceAPI *HeldSpaceAPIService
 
-	PasswordVaultsApi *PasswordVaultsApiService
+	HookTemplatesAPI *HookTemplatesAPIService
 
-	ReplicationApi *ReplicationApiService
+	HyperscaleInstanceAPI *HyperscaleInstanceAPIService
 
-	ReportingApi *ReportingApiService
+	HyperscaleObjectsAPI *HyperscaleObjectsAPIService
 
-	SamlLoginApi *SamlLoginApiService
+	JobCollectionExecutionsAPI *JobCollectionExecutionsAPIService
 
-	SnapshotsApi *SnapshotsApiService
+	JobsAPI *JobsAPIService
 
-	SourcesApi *SourcesApiService
+	KerberosConfigAPI *KerberosConfigAPIService
 
-	StagingSourcesApi *StagingSourcesApiService
+	LicenseAPI *LicenseAPIService
 
-	TestApi *TestApiService
+	LoginAPI *LoginAPIService
 
-	TimeflowsApi *TimeflowsApiService
+	ManagementAPI *ManagementAPIService
 
-	ToolkitsApi *ToolkitsApiService
+	MaskingEnvironmentsAPI *MaskingEnvironmentsAPIService
 
-	VCDBsApi *VCDBsApiService
+	MaskingFilesAPI *MaskingFilesAPIService
 
-	VDBGroupsApi *VDBGroupsApiService
+	MaskingJobsAPI *MaskingJobsAPIService
 
-	VDBsApi *VDBsApiService
+	NamespaceAPI *NamespaceAPIService
 
-	VirtualizationPoliciesApi *VirtualizationPoliciesApiService
+	NetworkPerformanceToolAPI *NetworkPerformanceToolAPIService
+
+	PasswordVaultsAPI *PasswordVaultsAPIService
+
+	ReplicationAPI *ReplicationAPIService
+
+	ReportingAPI *ReportingAPIService
+
+	RuleSetsAPI *RuleSetsAPIService
+
+	SamlLoginAPI *SamlLoginAPIService
+
+	SnapshotsAPI *SnapshotsAPIService
+
+	SourcesAPI *SourcesAPIService
+
+	StagingSourcesAPI *StagingSourcesAPIService
+
+	StorageUsageAPI *StorageUsageAPIService
+
+	TagsAPI *TagsAPIService
+
+	TimeflowsAPI *TimeflowsAPIService
+
+	ToolkitsAPI *ToolkitsAPIService
+
+	VCDBsAPI *VCDBsAPIService
+
+	VDBGroupsAPI *VDBGroupsAPIService
+
+	VDBsAPI *VDBsAPIService
+
+	VirtualizationActionsAPI *VirtualizationActionsAPIService
+
+	VirtualizationAlertsAPI *VirtualizationAlertsAPIService
+
+	VirtualizationFaultsAPI *VirtualizationFaultsAPIService
+
+	VirtualizationJobsAPI *VirtualizationJobsAPIService
+
+	VirtualizationPoliciesAPI *VirtualizationPoliciesAPIService
 }
 
 type service struct {
@@ -141,43 +181,63 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
-	c.AccountsApi = (*AccountsApiService)(&c.common)
-	c.AlgorithmsApi = (*AlgorithmsApiService)(&c.common)
-	c.AuthorizationApi = (*AuthorizationApiService)(&c.common)
-	c.BookmarksApi = (*BookmarksApiService)(&c.common)
-	c.CDBsApi = (*CDBsApiService)(&c.common)
-	c.ConnectivityApi = (*ConnectivityApiService)(&c.common)
-	c.ConnectorsApi = (*ConnectorsApiService)(&c.common)
-	c.DSourcesApi = (*DSourcesApiService)(&c.common)
-	c.DatabaseTemplatesApi = (*DatabaseTemplatesApiService)(&c.common)
-	c.EnvironmentsApi = (*EnvironmentsApiService)(&c.common)
-	c.ExecutionsApi = (*ExecutionsApiService)(&c.common)
-	c.FeatureFlagApi = (*FeatureFlagApiService)(&c.common)
-	c.GroupsApi = (*GroupsApiService)(&c.common)
-	c.HyperscaleInstanceApi = (*HyperscaleInstanceApiService)(&c.common)
-	c.HyperscaleObjectsApi = (*HyperscaleObjectsApiService)(&c.common)
-	c.JobsApi = (*JobsApiService)(&c.common)
-	c.KerberosConfigApi = (*KerberosConfigApiService)(&c.common)
-	c.LoginApi = (*LoginApiService)(&c.common)
-	c.ManagementApi = (*ManagementApiService)(&c.common)
-	c.MaskingEnvironmentsApi = (*MaskingEnvironmentsApiService)(&c.common)
-	c.MaskingFilesApi = (*MaskingFilesApiService)(&c.common)
-	c.MaskingJobsApi = (*MaskingJobsApiService)(&c.common)
-	c.MaskingPluginsApi = (*MaskingPluginsApiService)(&c.common)
-	c.PasswordVaultsApi = (*PasswordVaultsApiService)(&c.common)
-	c.ReplicationApi = (*ReplicationApiService)(&c.common)
-	c.ReportingApi = (*ReportingApiService)(&c.common)
-	c.SamlLoginApi = (*SamlLoginApiService)(&c.common)
-	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)
-	c.SourcesApi = (*SourcesApiService)(&c.common)
-	c.StagingSourcesApi = (*StagingSourcesApiService)(&c.common)
-	c.TestApi = (*TestApiService)(&c.common)
-	c.TimeflowsApi = (*TimeflowsApiService)(&c.common)
-	c.ToolkitsApi = (*ToolkitsApiService)(&c.common)
-	c.VCDBsApi = (*VCDBsApiService)(&c.common)
-	c.VDBGroupsApi = (*VDBGroupsApiService)(&c.common)
-	c.VDBsApi = (*VDBsApiService)(&c.common)
-	c.VirtualizationPoliciesApi = (*VirtualizationPoliciesApiService)(&c.common)
+	c.AccountsAPI = (*AccountsAPIService)(&c.common)
+	c.AiGenerateAPI = (*AiGenerateAPIService)(&c.common)
+	c.AiManagementAPI = (*AiManagementAPIService)(&c.common)
+	c.AlgorithmsAPI = (*AlgorithmsAPIService)(&c.common)
+	c.AuthorizationAPI = (*AuthorizationAPIService)(&c.common)
+	c.BookmarksAPI = (*BookmarksAPIService)(&c.common)
+	c.CDBsAPI = (*CDBsAPIService)(&c.common)
+	c.ClassifiersAPI = (*ClassifiersAPIService)(&c.common)
+	c.ComplianceJobCollectionsAPI = (*ComplianceJobCollectionsAPIService)(&c.common)
+	c.ComplianceJobsAPI = (*ComplianceJobsAPIService)(&c.common)
+	c.ConnectivityAPI = (*ConnectivityAPIService)(&c.common)
+	c.ConnectorsAPI = (*ConnectorsAPIService)(&c.common)
+	c.DSourcesAPI = (*DSourcesAPIService)(&c.common)
+	c.DataClassesAPI = (*DataClassesAPIService)(&c.common)
+	c.DataConnectionsAPI = (*DataConnectionsAPIService)(&c.common)
+	c.DataLayoutsAPI = (*DataLayoutsAPIService)(&c.common)
+	c.DatabaseTemplatesAPI = (*DatabaseTemplatesAPIService)(&c.common)
+	c.DiscoveryExpressionsAPI = (*DiscoveryExpressionsAPIService)(&c.common)
+	c.DiscoveryPoliciesAPI = (*DiscoveryPoliciesAPIService)(&c.common)
+	c.EnvironmentsAPI = (*EnvironmentsAPIService)(&c.common)
+	c.ExecutionsAPI = (*ExecutionsAPIService)(&c.common)
+	c.GroupsAPI = (*GroupsAPIService)(&c.common)
+	c.HeldSpaceAPI = (*HeldSpaceAPIService)(&c.common)
+	c.HookTemplatesAPI = (*HookTemplatesAPIService)(&c.common)
+	c.HyperscaleInstanceAPI = (*HyperscaleInstanceAPIService)(&c.common)
+	c.HyperscaleObjectsAPI = (*HyperscaleObjectsAPIService)(&c.common)
+	c.JobCollectionExecutionsAPI = (*JobCollectionExecutionsAPIService)(&c.common)
+	c.JobsAPI = (*JobsAPIService)(&c.common)
+	c.KerberosConfigAPI = (*KerberosConfigAPIService)(&c.common)
+	c.LicenseAPI = (*LicenseAPIService)(&c.common)
+	c.LoginAPI = (*LoginAPIService)(&c.common)
+	c.ManagementAPI = (*ManagementAPIService)(&c.common)
+	c.MaskingEnvironmentsAPI = (*MaskingEnvironmentsAPIService)(&c.common)
+	c.MaskingFilesAPI = (*MaskingFilesAPIService)(&c.common)
+	c.MaskingJobsAPI = (*MaskingJobsAPIService)(&c.common)
+	c.NamespaceAPI = (*NamespaceAPIService)(&c.common)
+	c.NetworkPerformanceToolAPI = (*NetworkPerformanceToolAPIService)(&c.common)
+	c.PasswordVaultsAPI = (*PasswordVaultsAPIService)(&c.common)
+	c.ReplicationAPI = (*ReplicationAPIService)(&c.common)
+	c.ReportingAPI = (*ReportingAPIService)(&c.common)
+	c.RuleSetsAPI = (*RuleSetsAPIService)(&c.common)
+	c.SamlLoginAPI = (*SamlLoginAPIService)(&c.common)
+	c.SnapshotsAPI = (*SnapshotsAPIService)(&c.common)
+	c.SourcesAPI = (*SourcesAPIService)(&c.common)
+	c.StagingSourcesAPI = (*StagingSourcesAPIService)(&c.common)
+	c.StorageUsageAPI = (*StorageUsageAPIService)(&c.common)
+	c.TagsAPI = (*TagsAPIService)(&c.common)
+	c.TimeflowsAPI = (*TimeflowsAPIService)(&c.common)
+	c.ToolkitsAPI = (*ToolkitsAPIService)(&c.common)
+	c.VCDBsAPI = (*VCDBsAPIService)(&c.common)
+	c.VDBGroupsAPI = (*VDBGroupsAPIService)(&c.common)
+	c.VDBsAPI = (*VDBsAPIService)(&c.common)
+	c.VirtualizationActionsAPI = (*VirtualizationActionsAPIService)(&c.common)
+	c.VirtualizationAlertsAPI = (*VirtualizationAlertsAPIService)(&c.common)
+	c.VirtualizationFaultsAPI = (*VirtualizationFaultsAPIService)(&c.common)
+	c.VirtualizationJobsAPI = (*VirtualizationJobsAPIService)(&c.common)
+	c.VirtualizationPoliciesAPI = (*VirtualizationPoliciesAPIService)(&c.common)
 
 	return c
 }
@@ -251,7 +311,7 @@ func parameterValueToString( obj interface{}, key string ) string {
 
 // parameterAddToHeaderOrQuery adds the provided object to the request header or url query
 // supporting deep object syntax
-func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix string, obj interface{}, collectionType string) {
+func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix string, obj interface{}, style string, collectionType string) {
 	var v = reflect.ValueOf(obj)
 	var value = ""
 	if v == reflect.ValueOf(nil) {
@@ -267,11 +327,11 @@ func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix stri
 					if err != nil {
 						return
 					}
-					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, dataMap, collectionType)
+					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, dataMap, style, collectionType)
 					return
 				}
 				if t, ok := obj.(time.Time); ok {
-					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, t.Format(time.RFC3339), collectionType)
+					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, t.Format(time.RFC3339Nano), style, collectionType)
 					return
 				}
 				value = v.Type().String() + " value"
@@ -283,7 +343,11 @@ func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix stri
 				var lenIndValue = indValue.Len()
 				for i:=0;i<lenIndValue;i++ {
 					var arrayValue = indValue.Index(i)
-					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, arrayValue.Interface(), collectionType)
+					var keyPrefixForCollectionType = keyPrefix
+					if style == "deepObject" {
+						keyPrefixForCollectionType = keyPrefix + "[" + strconv.Itoa(i) + "]"
+					}
+					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefixForCollectionType, arrayValue.Interface(), style, collectionType)
 				}
 				return
 
@@ -295,14 +359,14 @@ func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix stri
 				iter := indValue.MapRange()
 				for iter.Next() {
 					k,v := iter.Key(), iter.Value()
-					parameterAddToHeaderOrQuery(headerOrQueryParams, fmt.Sprintf("%s[%s]", keyPrefix, k.String()), v.Interface(), collectionType)
+					parameterAddToHeaderOrQuery(headerOrQueryParams, fmt.Sprintf("%s[%s]", keyPrefix, k.String()), v.Interface(), style, collectionType)
 				}
 				return
 
 			case reflect.Interface:
 				fallthrough
 			case reflect.Ptr:
-				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, v.Elem().Interface(), collectionType)
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, v.Elem().Interface(), style, collectionType)
 				return
 
 			case reflect.Int, reflect.Int8, reflect.Int16,
@@ -559,13 +623,13 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 		_, err = (*f).Seek(0, io.SeekStart)
 		return
 	}
-	if xmlCheck.MatchString(contentType) {
+	if XmlCheck.MatchString(contentType) {
 		if err = xml.Unmarshal(b, v); err != nil {
 			return err
 		}
 		return nil
 	}
-	if jsonCheck.MatchString(contentType) {
+	if JsonCheck.MatchString(contentType) {
 		if actualObj, ok := v.(interface{ GetActualInstance() interface{} }); ok { // oneOf, anyOf schemas
 			if unmarshalObj, ok := actualObj.(interface{ UnmarshalJSON([]byte) error }); ok { // make sure it has UnmarshalJSON defined
 				if err = unmarshalObj.UnmarshalJSON(b); err != nil {
@@ -602,18 +666,6 @@ func addFile(w *multipart.Writer, fieldName, path string) error {
 	return err
 }
 
-// Prevent trying to import "fmt"
-func reportError(format string, a ...interface{}) error {
-	return fmt.Errorf(format, a...)
-}
-
-// A wrapper for strict JSON decoding
-func newStrictDecoder(data []byte) *json.Decoder {
-	dec := json.NewDecoder(bytes.NewBuffer(data))
-	dec.DisallowUnknownFields()
-	return dec
-}
-
 // Set request body from an interface{}
 func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err error) {
 	if bodyBuf == nil {
@@ -630,10 +682,14 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 		_, err = bodyBuf.WriteString(s)
 	} else if s, ok := body.(*string); ok {
 		_, err = bodyBuf.WriteString(*s)
-	} else if jsonCheck.MatchString(contentType) {
+	} else if JsonCheck.MatchString(contentType) {
 		err = json.NewEncoder(bodyBuf).Encode(body)
-	} else if xmlCheck.MatchString(contentType) {
-		err = xml.NewEncoder(bodyBuf).Encode(body)
+	} else if XmlCheck.MatchString(contentType) {
+		var bs []byte
+		bs, err = xml.Marshal(body)
+		if err == nil {
+			bodyBuf.Write(bs)
+		}
 	}
 
 	if err != nil {
@@ -749,16 +805,17 @@ func formatErrorMessage(status string, v interface{}) string {
 	str := ""
 	metaValue := reflect.ValueOf(v).Elem()
 
-	field := metaValue.FieldByName("Title")
-	if field != (reflect.Value{}) {
-		str = fmt.Sprintf("%s", field.Interface())
+	if metaValue.Kind() == reflect.Struct {
+		field := metaValue.FieldByName("Title")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s", field.Interface())
+		}
+
+		field = metaValue.FieldByName("Detail")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s (%s)", str, field.Interface())
+		}
 	}
 
-	field = metaValue.FieldByName("Detail")
-	if field != (reflect.Value{}) {
-		str = fmt.Sprintf("%s (%s)", str, field.Interface())
-	}
-
-	// status title (detail)
 	return strings.TrimSpace(fmt.Sprintf("%s %s", status, str))
 }

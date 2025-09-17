@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -20,21 +20,21 @@ var _ MappedNullable = &SourceOperation{}
 
 // SourceOperation struct for SourceOperation
 type SourceOperation struct {
-	Name string `json:"name"`
-	Command string `json:"command"`
+	Name *string `json:"name,omitempty"`
+	Command *string `json:"command,omitempty"`
 	Shell *string `json:"shell,omitempty"`
 	// List of environment variables that will contain credentials for this operation.
 	CredentialsEnvVars []CredentialsEnvVariable `json:"credentials_env_vars,omitempty"`
+	// ID of the hook template
+	HookTemplateId *string `json:"hook_template_id,omitempty"`
 }
 
 // NewSourceOperation instantiates a new SourceOperation object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSourceOperation(name string, command string) *SourceOperation {
+func NewSourceOperation() *SourceOperation {
 	this := SourceOperation{}
-	this.Name = name
-	this.Command = command
 	var shell string = "bash"
 	this.Shell = &shell
 	return &this
@@ -50,52 +50,68 @@ func NewSourceOperationWithDefaults() *SourceOperation {
 	return &this
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *SourceOperation) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SourceOperation) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *SourceOperation) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *SourceOperation) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetCommand returns the Command field value
+// GetCommand returns the Command field value if set, zero value otherwise.
 func (o *SourceOperation) GetCommand() string {
-	if o == nil {
+	if o == nil || IsNil(o.Command) {
 		var ret string
 		return ret
 	}
-
-	return o.Command
+	return *o.Command
 }
 
-// GetCommandOk returns a tuple with the Command field value
+// GetCommandOk returns a tuple with the Command field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SourceOperation) GetCommandOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Command) {
 		return nil, false
 	}
-	return &o.Command, true
+	return o.Command, true
 }
 
-// SetCommand sets field value
+// HasCommand returns a boolean if a field has been set.
+func (o *SourceOperation) HasCommand() bool {
+	if o != nil && !IsNil(o.Command) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommand gets a reference to the given string and assigns it to the Command field.
 func (o *SourceOperation) SetCommand(v string) {
-	o.Command = v
+	o.Command = &v
 }
 
 // GetShell returns the Shell field value if set, zero value otherwise.
@@ -162,6 +178,38 @@ func (o *SourceOperation) SetCredentialsEnvVars(v []CredentialsEnvVariable) {
 	o.CredentialsEnvVars = v
 }
 
+// GetHookTemplateId returns the HookTemplateId field value if set, zero value otherwise.
+func (o *SourceOperation) GetHookTemplateId() string {
+	if o == nil || IsNil(o.HookTemplateId) {
+		var ret string
+		return ret
+	}
+	return *o.HookTemplateId
+}
+
+// GetHookTemplateIdOk returns a tuple with the HookTemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SourceOperation) GetHookTemplateIdOk() (*string, bool) {
+	if o == nil || IsNil(o.HookTemplateId) {
+		return nil, false
+	}
+	return o.HookTemplateId, true
+}
+
+// HasHookTemplateId returns a boolean if a field has been set.
+func (o *SourceOperation) HasHookTemplateId() bool {
+	if o != nil && !IsNil(o.HookTemplateId) {
+		return true
+	}
+
+	return false
+}
+
+// SetHookTemplateId gets a reference to the given string and assigns it to the HookTemplateId field.
+func (o *SourceOperation) SetHookTemplateId(v string) {
+	o.HookTemplateId = &v
+}
+
 func (o SourceOperation) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -172,13 +220,20 @@ func (o SourceOperation) MarshalJSON() ([]byte, error) {
 
 func (o SourceOperation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["command"] = o.Command
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Command) {
+		toSerialize["command"] = o.Command
+	}
 	if !IsNil(o.Shell) {
 		toSerialize["shell"] = o.Shell
 	}
 	if !IsNil(o.CredentialsEnvVars) {
 		toSerialize["credentials_env_vars"] = o.CredentialsEnvVars
+	}
+	if !IsNil(o.HookTemplateId) {
+		toSerialize["hook_template_id"] = o.HookTemplateId
 	}
 	return toSerialize, nil
 }

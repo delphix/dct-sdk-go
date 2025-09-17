@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,10 @@ var _ MappedNullable = &EnableVDBParameters{}
 type EnableVDBParameters struct {
 	// Whether to attempt a startup of the VDB after the enable.
 	AttemptStart *bool `json:"attempt_start,omitempty"`
+	// Whether the database is running inside a container.
+	ContainerMode *bool `json:"container_mode,omitempty"`
+	// The uid:gid string that NFS mounts should belong to.
+	OwnershipSpec *string `json:"ownership_spec,omitempty"`
 }
 
 // NewEnableVDBParameters instantiates a new EnableVDBParameters object
@@ -77,6 +81,70 @@ func (o *EnableVDBParameters) SetAttemptStart(v bool) {
 	o.AttemptStart = &v
 }
 
+// GetContainerMode returns the ContainerMode field value if set, zero value otherwise.
+func (o *EnableVDBParameters) GetContainerMode() bool {
+	if o == nil || IsNil(o.ContainerMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ContainerMode
+}
+
+// GetContainerModeOk returns a tuple with the ContainerMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnableVDBParameters) GetContainerModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ContainerMode) {
+		return nil, false
+	}
+	return o.ContainerMode, true
+}
+
+// HasContainerMode returns a boolean if a field has been set.
+func (o *EnableVDBParameters) HasContainerMode() bool {
+	if o != nil && !IsNil(o.ContainerMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerMode gets a reference to the given bool and assigns it to the ContainerMode field.
+func (o *EnableVDBParameters) SetContainerMode(v bool) {
+	o.ContainerMode = &v
+}
+
+// GetOwnershipSpec returns the OwnershipSpec field value if set, zero value otherwise.
+func (o *EnableVDBParameters) GetOwnershipSpec() string {
+	if o == nil || IsNil(o.OwnershipSpec) {
+		var ret string
+		return ret
+	}
+	return *o.OwnershipSpec
+}
+
+// GetOwnershipSpecOk returns a tuple with the OwnershipSpec field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnableVDBParameters) GetOwnershipSpecOk() (*string, bool) {
+	if o == nil || IsNil(o.OwnershipSpec) {
+		return nil, false
+	}
+	return o.OwnershipSpec, true
+}
+
+// HasOwnershipSpec returns a boolean if a field has been set.
+func (o *EnableVDBParameters) HasOwnershipSpec() bool {
+	if o != nil && !IsNil(o.OwnershipSpec) {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnershipSpec gets a reference to the given string and assigns it to the OwnershipSpec field.
+func (o *EnableVDBParameters) SetOwnershipSpec(v string) {
+	o.OwnershipSpec = &v
+}
+
 func (o EnableVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -89,6 +157,12 @@ func (o EnableVDBParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AttemptStart) {
 		toSerialize["attempt_start"] = o.AttemptStart
+	}
+	if !IsNil(o.ContainerMode) {
+		toSerialize["container_mode"] = o.ContainerMode
+	}
+	if !IsNil(o.OwnershipSpec) {
+		toSerialize["ownership_spec"] = o.OwnershipSpec
 	}
 	return toSerialize, nil
 }

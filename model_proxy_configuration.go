@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ProxyConfiguration type satisfies the MappedNullable interface at compile time
@@ -30,11 +32,9 @@ type ProxyConfiguration struct {
 	Password *string `json:"password,omitempty"`
 	// When set, these settings are enabled. True by default.
 	Enabled bool `json:"enabled"`
-	// File name of a truststore which can be used to validate the TLS certificate of the proxy server. The truststore must be available at /etc/config/certs/<truststore_filename>
-	TruststoreFilename *string `json:"truststore_filename,omitempty"`
-	// Password for reading trustStore file provided in 'truststore_filename' property
-	TruststorePassword *string `json:"truststore_password,omitempty"`
 }
+
+type _ProxyConfiguration ProxyConfiguration
 
 // NewProxyConfiguration instantiates a new ProxyConfiguration object
 // This constructor will assign default values to properties that have it defined,
@@ -192,70 +192,6 @@ func (o *ProxyConfiguration) SetEnabled(v bool) {
 	o.Enabled = v
 }
 
-// GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise.
-func (o *ProxyConfiguration) GetTruststoreFilename() string {
-	if o == nil || IsNil(o.TruststoreFilename) {
-		var ret string
-		return ret
-	}
-	return *o.TruststoreFilename
-}
-
-// GetTruststoreFilenameOk returns a tuple with the TruststoreFilename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ProxyConfiguration) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil || IsNil(o.TruststoreFilename) {
-		return nil, false
-	}
-	return o.TruststoreFilename, true
-}
-
-// HasTruststoreFilename returns a boolean if a field has been set.
-func (o *ProxyConfiguration) HasTruststoreFilename() bool {
-	if o != nil && !IsNil(o.TruststoreFilename) {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststoreFilename gets a reference to the given string and assigns it to the TruststoreFilename field.
-func (o *ProxyConfiguration) SetTruststoreFilename(v string) {
-	o.TruststoreFilename = &v
-}
-
-// GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise.
-func (o *ProxyConfiguration) GetTruststorePassword() string {
-	if o == nil || IsNil(o.TruststorePassword) {
-		var ret string
-		return ret
-	}
-	return *o.TruststorePassword
-}
-
-// GetTruststorePasswordOk returns a tuple with the TruststorePassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ProxyConfiguration) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil || IsNil(o.TruststorePassword) {
-		return nil, false
-	}
-	return o.TruststorePassword, true
-}
-
-// HasTruststorePassword returns a boolean if a field has been set.
-func (o *ProxyConfiguration) HasTruststorePassword() bool {
-	if o != nil && !IsNil(o.TruststorePassword) {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststorePassword gets a reference to the given string and assigns it to the TruststorePassword field.
-func (o *ProxyConfiguration) SetTruststorePassword(v string) {
-	o.TruststorePassword = &v
-}
-
 func (o ProxyConfiguration) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -275,13 +211,46 @@ func (o ProxyConfiguration) ToMap() (map[string]interface{}, error) {
 		toSerialize["password"] = o.Password
 	}
 	toSerialize["enabled"] = o.Enabled
-	if !IsNil(o.TruststoreFilename) {
-		toSerialize["truststore_filename"] = o.TruststoreFilename
-	}
-	if !IsNil(o.TruststorePassword) {
-		toSerialize["truststore_password"] = o.TruststorePassword
-	}
 	return toSerialize, nil
+}
+
+func (o *ProxyConfiguration) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"host",
+		"port",
+		"enabled",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProxyConfiguration := _ProxyConfiguration{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProxyConfiguration)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProxyConfiguration(varProxyConfiguration)
+
+	return err
 }
 
 type NullableProxyConfiguration struct {
