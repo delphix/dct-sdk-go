@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -74,6 +74,8 @@ type OracleDSourceLinkSourceParameters struct {
 	ForceFullBackup *bool `json:"force_full_backup,omitempty"`
 	// True if two SnapSyncs should be performed in immediate succession to reduce the number of logs required to provision the snapshot. This may significantly reduce the time necessary to provision from a snapshot.
 	DoubleSync *bool `json:"double_sync,omitempty"`
+	// RMAN rate in megabytes to be used. This is the upper limit for bytes read so that  RMAN does not consume excessive disk bandwidth and degrade online performance. (Oracle only) 
+	RmanRateInMB *int32 `json:"rman_rate_in_MB,omitempty"`
 	// Skip check that tests if there is enough space available to store the database in the Delphix Engine. The Delphix Engine estimates how much space a database will occupy after compression and prevents SnapSync if insufficient space is available. This safeguard can be overridden using this option. This may be useful when linking highly compressible databases.
 	SkipSpaceCheck *bool `json:"skip_space_check,omitempty"`
 	// Indicates whether a fresh SnapSync must be started regardless if it was possible to resume the current SnapSync. If true, we will not resume but instead ignore previous progress and backup all datafiles even if already completed from previous failed SnapSync. This does not force a full backup, if an incremental was in progress this will start a new incremental snapshot.
@@ -173,6 +175,8 @@ func NewOracleDSourceLinkSourceParameters(sourceId string) *OracleDSourceLinkSou
 	this.ForceFullBackup = &forceFullBackup
 	var doubleSync bool = false
 	this.DoubleSync = &doubleSync
+	var rmanRateInMB int32 = 0
+	this.RmanRateInMB = &rmanRateInMB
 	var skipSpaceCheck bool = false
 	this.SkipSpaceCheck = &skipSpaceCheck
 	var doNotResume bool = false
@@ -217,6 +221,8 @@ func NewOracleDSourceLinkSourceParametersWithDefaults() *OracleDSourceLinkSource
 	this.ForceFullBackup = &forceFullBackup
 	var doubleSync bool = false
 	this.DoubleSync = &doubleSync
+	var rmanRateInMB int32 = 0
+	this.RmanRateInMB = &rmanRateInMB
 	var skipSpaceCheck bool = false
 	this.SkipSpaceCheck = &skipSpaceCheck
 	var doNotResume bool = false
@@ -1050,6 +1056,38 @@ func (o *OracleDSourceLinkSourceParameters) HasDoubleSync() bool {
 // SetDoubleSync gets a reference to the given bool and assigns it to the DoubleSync field.
 func (o *OracleDSourceLinkSourceParameters) SetDoubleSync(v bool) {
 	o.DoubleSync = &v
+}
+
+// GetRmanRateInMB returns the RmanRateInMB field value if set, zero value otherwise.
+func (o *OracleDSourceLinkSourceParameters) GetRmanRateInMB() int32 {
+	if o == nil || IsNil(o.RmanRateInMB) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanRateInMB
+}
+
+// GetRmanRateInMBOk returns a tuple with the RmanRateInMB field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleDSourceLinkSourceParameters) GetRmanRateInMBOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanRateInMB) {
+		return nil, false
+	}
+	return o.RmanRateInMB, true
+}
+
+// HasRmanRateInMB returns a boolean if a field has been set.
+func (o *OracleDSourceLinkSourceParameters) HasRmanRateInMB() bool {
+	if o != nil && !IsNil(o.RmanRateInMB) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanRateInMB gets a reference to the given int32 and assigns it to the RmanRateInMB field.
+func (o *OracleDSourceLinkSourceParameters) SetRmanRateInMB(v int32) {
+	o.RmanRateInMB = &v
 }
 
 // GetSkipSpaceCheck returns the SkipSpaceCheck field value if set, zero value otherwise.
@@ -2097,6 +2135,9 @@ func (o OracleDSourceLinkSourceParameters) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.DoubleSync) {
 		toSerialize["double_sync"] = o.DoubleSync
+	}
+	if !IsNil(o.RmanRateInMB) {
+		toSerialize["rman_rate_in_MB"] = o.RmanRateInMB
 	}
 	if !IsNil(o.SkipSpaceCheck) {
 		toSerialize["skip_space_check"] = o.SkipSpaceCheck

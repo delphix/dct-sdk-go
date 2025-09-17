@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -64,6 +64,14 @@ type CDB struct {
 	// Interval between LogSync requests, in seconds.
 	LogsyncInterval *int64 `json:"logsync_interval,omitempty"`
 	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
+	// The database name of this container database.
+	DatabaseName *string `json:"database_name,omitempty"`
+	// The unique name of the container database.
+	DatabaseUniqueName *string `json:"database_unique_name,omitempty"`
+	// The path to the TDE KMS PKC11 configuration file.
+	TdeKmsPkcs11ConfigPath *string `json:"tde_kms_pkcs11_config_path,omitempty"`
+	// True if TDE keystore password is set for this container database.
+	IsTdeKeystorePasswordSet *bool `json:"is_tde_keystore_password_set,omitempty"`
 }
 
 // NewCDB instantiates a new CDB object
@@ -924,6 +932,134 @@ func (o *CDB) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
 	o.TdeKeystoreConfigType = &v
 }
 
+// GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
+func (o *CDB) GetDatabaseName() string {
+	if o == nil || IsNil(o.DatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseName
+}
+
+// GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseName) {
+		return nil, false
+	}
+	return o.DatabaseName, true
+}
+
+// HasDatabaseName returns a boolean if a field has been set.
+func (o *CDB) HasDatabaseName() bool {
+	if o != nil && !IsNil(o.DatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
+func (o *CDB) SetDatabaseName(v string) {
+	o.DatabaseName = &v
+}
+
+// GetDatabaseUniqueName returns the DatabaseUniqueName field value if set, zero value otherwise.
+func (o *CDB) GetDatabaseUniqueName() string {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUniqueName
+}
+
+// GetDatabaseUniqueNameOk returns a tuple with the DatabaseUniqueName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetDatabaseUniqueNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		return nil, false
+	}
+	return o.DatabaseUniqueName, true
+}
+
+// HasDatabaseUniqueName returns a boolean if a field has been set.
+func (o *CDB) HasDatabaseUniqueName() bool {
+	if o != nil && !IsNil(o.DatabaseUniqueName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUniqueName gets a reference to the given string and assigns it to the DatabaseUniqueName field.
+func (o *CDB) SetDatabaseUniqueName(v string) {
+	o.DatabaseUniqueName = &v
+}
+
+// GetTdeKmsPkcs11ConfigPath returns the TdeKmsPkcs11ConfigPath field value if set, zero value otherwise.
+func (o *CDB) GetTdeKmsPkcs11ConfigPath() string {
+	if o == nil || IsNil(o.TdeKmsPkcs11ConfigPath) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKmsPkcs11ConfigPath
+}
+
+// GetTdeKmsPkcs11ConfigPathOk returns a tuple with the TdeKmsPkcs11ConfigPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetTdeKmsPkcs11ConfigPathOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKmsPkcs11ConfigPath) {
+		return nil, false
+	}
+	return o.TdeKmsPkcs11ConfigPath, true
+}
+
+// HasTdeKmsPkcs11ConfigPath returns a boolean if a field has been set.
+func (o *CDB) HasTdeKmsPkcs11ConfigPath() bool {
+	if o != nil && !IsNil(o.TdeKmsPkcs11ConfigPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKmsPkcs11ConfigPath gets a reference to the given string and assigns it to the TdeKmsPkcs11ConfigPath field.
+func (o *CDB) SetTdeKmsPkcs11ConfigPath(v string) {
+	o.TdeKmsPkcs11ConfigPath = &v
+}
+
+// GetIsTdeKeystorePasswordSet returns the IsTdeKeystorePasswordSet field value if set, zero value otherwise.
+func (o *CDB) GetIsTdeKeystorePasswordSet() bool {
+	if o == nil || IsNil(o.IsTdeKeystorePasswordSet) {
+		var ret bool
+		return ret
+	}
+	return *o.IsTdeKeystorePasswordSet
+}
+
+// GetIsTdeKeystorePasswordSetOk returns a tuple with the IsTdeKeystorePasswordSet field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetIsTdeKeystorePasswordSetOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsTdeKeystorePasswordSet) {
+		return nil, false
+	}
+	return o.IsTdeKeystorePasswordSet, true
+}
+
+// HasIsTdeKeystorePasswordSet returns a boolean if a field has been set.
+func (o *CDB) HasIsTdeKeystorePasswordSet() bool {
+	if o != nil && !IsNil(o.IsTdeKeystorePasswordSet) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsTdeKeystorePasswordSet gets a reference to the given bool and assigns it to the IsTdeKeystorePasswordSet field.
+func (o *CDB) SetIsTdeKeystorePasswordSet(v bool) {
+	o.IsTdeKeystorePasswordSet = &v
+}
+
 func (o CDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1005,6 +1141,18 @@ func (o CDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TdeKeystoreConfigType) {
 		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
+	}
+	if !IsNil(o.DatabaseUniqueName) {
+		toSerialize["database_unique_name"] = o.DatabaseUniqueName
+	}
+	if !IsNil(o.TdeKmsPkcs11ConfigPath) {
+		toSerialize["tde_kms_pkcs11_config_path"] = o.TdeKmsPkcs11ConfigPath
+	}
+	if !IsNil(o.IsTdeKeystorePasswordSet) {
+		toSerialize["is_tde_keystore_password_set"] = o.IsTdeKeystorePasswordSet
 	}
 	return toSerialize, nil
 }

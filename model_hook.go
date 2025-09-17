@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -13,8 +13,6 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
-	"bytes"
-	"fmt"
 )
 
 // checks if the Hook type satisfies the MappedNullable interface at compile time
@@ -23,22 +21,20 @@ var _ MappedNullable = &Hook{}
 // Hook struct for Hook
 type Hook struct {
 	Name *string `json:"name,omitempty"`
-	Command string `json:"command"`
+	Command *string `json:"command,omitempty"`
 	Shell *string `json:"shell,omitempty"`
 	ElementId *string `json:"element_id,omitempty"`
 	HasCredentials *bool `json:"has_credentials,omitempty"`
 	CredentialsEnvVars []CredentialsEnvVariable `json:"credentials_env_vars,omitempty"`
+	HookTemplateId *string `json:"hook_template_id,omitempty"`
 }
-
-type _Hook Hook
 
 // NewHook instantiates a new Hook object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewHook(command string) *Hook {
+func NewHook() *Hook {
 	this := Hook{}
-	this.Command = command
 	return &this
 }
 
@@ -82,28 +78,36 @@ func (o *Hook) SetName(v string) {
 	o.Name = &v
 }
 
-// GetCommand returns the Command field value
+// GetCommand returns the Command field value if set, zero value otherwise.
 func (o *Hook) GetCommand() string {
-	if o == nil {
+	if o == nil || IsNil(o.Command) {
 		var ret string
 		return ret
 	}
-
-	return o.Command
+	return *o.Command
 }
 
-// GetCommandOk returns a tuple with the Command field value
+// GetCommandOk returns a tuple with the Command field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetCommandOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Command) {
 		return nil, false
 	}
-	return &o.Command, true
+	return o.Command, true
 }
 
-// SetCommand sets field value
+// HasCommand returns a boolean if a field has been set.
+func (o *Hook) HasCommand() bool {
+	if o != nil && !IsNil(o.Command) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommand gets a reference to the given string and assigns it to the Command field.
 func (o *Hook) SetCommand(v string) {
-	o.Command = v
+	o.Command = &v
 }
 
 // GetShell returns the Shell field value if set, zero value otherwise.
@@ -234,6 +238,38 @@ func (o *Hook) SetCredentialsEnvVars(v []CredentialsEnvVariable) {
 	o.CredentialsEnvVars = v
 }
 
+// GetHookTemplateId returns the HookTemplateId field value if set, zero value otherwise.
+func (o *Hook) GetHookTemplateId() string {
+	if o == nil || IsNil(o.HookTemplateId) {
+		var ret string
+		return ret
+	}
+	return *o.HookTemplateId
+}
+
+// GetHookTemplateIdOk returns a tuple with the HookTemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetHookTemplateIdOk() (*string, bool) {
+	if o == nil || IsNil(o.HookTemplateId) {
+		return nil, false
+	}
+	return o.HookTemplateId, true
+}
+
+// HasHookTemplateId returns a boolean if a field has been set.
+func (o *Hook) HasHookTemplateId() bool {
+	if o != nil && !IsNil(o.HookTemplateId) {
+		return true
+	}
+
+	return false
+}
+
+// SetHookTemplateId gets a reference to the given string and assigns it to the HookTemplateId field.
+func (o *Hook) SetHookTemplateId(v string) {
+	o.HookTemplateId = &v
+}
+
 func (o Hook) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -247,7 +283,9 @@ func (o Hook) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	toSerialize["command"] = o.Command
+	if !IsNil(o.Command) {
+		toSerialize["command"] = o.Command
+	}
 	if !IsNil(o.Shell) {
 		toSerialize["shell"] = o.Shell
 	}
@@ -260,44 +298,10 @@ func (o Hook) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CredentialsEnvVars) {
 		toSerialize["credentials_env_vars"] = o.CredentialsEnvVars
 	}
+	if !IsNil(o.HookTemplateId) {
+		toSerialize["hook_template_id"] = o.HookTemplateId
+	}
 	return toSerialize, nil
-}
-
-func (o *Hook) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"command",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varHook := _Hook{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varHook)
-
-	if err != nil {
-		return err
-	}
-
-	*o = Hook(varHook)
-
-	return err
 }
 
 type NullableHook struct {

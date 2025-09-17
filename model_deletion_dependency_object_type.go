@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -31,6 +31,7 @@ const (
 	DELETIONDEPENDENCYOBJECTTYPE_DSOURCE DeletionDependencyObjectType = "DSOURCE"
 	DELETIONDEPENDENCYOBJECTTYPE_UNKNOWN DeletionDependencyObjectType = "UNKNOWN"
 	DELETIONDEPENDENCYOBJECTTYPE_ALLSNAPSHOTS DeletionDependencyObjectType = "ALLSNAPSHOTS"
+	DELETIONDEPENDENCYOBJECTTYPE_BOOKMARK DeletionDependencyObjectType = "BOOKMARK"
 )
 
 // All allowed values of DeletionDependencyObjectType enum
@@ -45,6 +46,7 @@ var AllowedDeletionDependencyObjectTypeEnumValues = []DeletionDependencyObjectTy
 	"DSOURCE",
 	"UNKNOWN",
 	"ALLSNAPSHOTS",
+	"BOOKMARK",
 }
 
 func (v *DeletionDependencyObjectType) UnmarshalJSON(src []byte) error {

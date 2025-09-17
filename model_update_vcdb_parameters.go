@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -33,6 +33,24 @@ type UpdateVCDBParameters struct {
 	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 	// The master encryption key id of this database.
 	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
+	// The username of the database user.
+	DbUsername *string `json:"db_username,omitempty"`
+	// The password of the database user.
+	DbPassword *string `json:"db_password,omitempty"`
+	// Whether to enable VDB restart.
+	AutoRestart *bool `json:"auto_restart,omitempty"`
+	// The environment user ID to use to connect to the target environment.
+	EnvironmentUserId *string `json:"environment_user_id,omitempty"`
+	// Database configuration parameter overrides.
+	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
+	// Environment variable to be set when the engine administers a VCDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution. Custom environment variables can only be updated while the VCDB is disabled.
+	CustomEnvVars *map[string]string `json:"custom_env_vars,omitempty"`
+	// Environment files to be sourced when the Engine administers a VCDB. This path can be followed by parameters. Paths and parameters are separated by spaces. Custom environment variables can only be updated while the VCDB is disabled.
+	CustomEnvFiles []string `json:"custom_env_files,omitempty"`
+	// Environment files to be sourced when the Engine administers an Oracle RAC VCDB. This path can be followed by parameters. Paths and parameters are separated by spaces. Custom environment variables can only be updated while the VCDB is disabled.
+	OracleRacCustomEnvFiles []OracleRacCustomEnvFile `json:"oracle_rac_custom_env_files,omitempty"`
+	// Environment variable to be set when the engine administers an Oracle RAC VCDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution. Custom environment variables can only be updated while the VCDB is disabled.
+	OracleRacCustomEnvVars []OracleRacCustomEnvVar `json:"oracle_rac_custom_env_vars,omitempty"`
 }
 
 // NewUpdateVCDBParameters instantiates a new UpdateVCDBParameters object
@@ -276,6 +294,294 @@ func (o *UpdateVCDBParameters) SetTdeKeyIdentifier(v string) {
 	o.TdeKeyIdentifier = &v
 }
 
+// GetDbUsername returns the DbUsername field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetDbUsername() string {
+	if o == nil || IsNil(o.DbUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DbUsername
+}
+
+// GetDbUsernameOk returns a tuple with the DbUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetDbUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DbUsername) {
+		return nil, false
+	}
+	return o.DbUsername, true
+}
+
+// HasDbUsername returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasDbUsername() bool {
+	if o != nil && !IsNil(o.DbUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbUsername gets a reference to the given string and assigns it to the DbUsername field.
+func (o *UpdateVCDBParameters) SetDbUsername(v string) {
+	o.DbUsername = &v
+}
+
+// GetDbPassword returns the DbPassword field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetDbPassword() string {
+	if o == nil || IsNil(o.DbPassword) {
+		var ret string
+		return ret
+	}
+	return *o.DbPassword
+}
+
+// GetDbPasswordOk returns a tuple with the DbPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetDbPasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.DbPassword) {
+		return nil, false
+	}
+	return o.DbPassword, true
+}
+
+// HasDbPassword returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasDbPassword() bool {
+	if o != nil && !IsNil(o.DbPassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbPassword gets a reference to the given string and assigns it to the DbPassword field.
+func (o *UpdateVCDBParameters) SetDbPassword(v string) {
+	o.DbPassword = &v
+}
+
+// GetAutoRestart returns the AutoRestart field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetAutoRestart() bool {
+	if o == nil || IsNil(o.AutoRestart) {
+		var ret bool
+		return ret
+	}
+	return *o.AutoRestart
+}
+
+// GetAutoRestartOk returns a tuple with the AutoRestart field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetAutoRestartOk() (*bool, bool) {
+	if o == nil || IsNil(o.AutoRestart) {
+		return nil, false
+	}
+	return o.AutoRestart, true
+}
+
+// HasAutoRestart returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasAutoRestart() bool {
+	if o != nil && !IsNil(o.AutoRestart) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoRestart gets a reference to the given bool and assigns it to the AutoRestart field.
+func (o *UpdateVCDBParameters) SetAutoRestart(v bool) {
+	o.AutoRestart = &v
+}
+
+// GetEnvironmentUserId returns the EnvironmentUserId field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetEnvironmentUserId() string {
+	if o == nil || IsNil(o.EnvironmentUserId) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserId
+}
+
+// GetEnvironmentUserIdOk returns a tuple with the EnvironmentUserId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetEnvironmentUserIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserId) {
+		return nil, false
+	}
+	return o.EnvironmentUserId, true
+}
+
+// HasEnvironmentUserId returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasEnvironmentUserId() bool {
+	if o != nil && !IsNil(o.EnvironmentUserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserId gets a reference to the given string and assigns it to the EnvironmentUserId field.
+func (o *UpdateVCDBParameters) SetEnvironmentUserId(v string) {
+	o.EnvironmentUserId = &v
+}
+
+// GetConfigParams returns the ConfigParams field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetConfigParams() map[string]interface{} {
+	if o == nil || IsNil(o.ConfigParams) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.ConfigParams
+}
+
+// GetConfigParamsOk returns a tuple with the ConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.ConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.ConfigParams, true
+}
+
+// HasConfigParams returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasConfigParams() bool {
+	if o != nil && !IsNil(o.ConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfigParams gets a reference to the given map[string]interface{} and assigns it to the ConfigParams field.
+func (o *UpdateVCDBParameters) SetConfigParams(v map[string]interface{}) {
+	o.ConfigParams = v
+}
+
+// GetCustomEnvVars returns the CustomEnvVars field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetCustomEnvVars() map[string]string {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.CustomEnvVars
+}
+
+// GetCustomEnvVarsOk returns a tuple with the CustomEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetCustomEnvVarsOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		return nil, false
+	}
+	return o.CustomEnvVars, true
+}
+
+// HasCustomEnvVars returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasCustomEnvVars() bool {
+	if o != nil && !IsNil(o.CustomEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomEnvVars gets a reference to the given map[string]string and assigns it to the CustomEnvVars field.
+func (o *UpdateVCDBParameters) SetCustomEnvVars(v map[string]string) {
+	o.CustomEnvVars = &v
+}
+
+// GetCustomEnvFiles returns the CustomEnvFiles field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetCustomEnvFiles() []string {
+	if o == nil || IsNil(o.CustomEnvFiles) {
+		var ret []string
+		return ret
+	}
+	return o.CustomEnvFiles
+}
+
+// GetCustomEnvFilesOk returns a tuple with the CustomEnvFiles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetCustomEnvFilesOk() ([]string, bool) {
+	if o == nil || IsNil(o.CustomEnvFiles) {
+		return nil, false
+	}
+	return o.CustomEnvFiles, true
+}
+
+// HasCustomEnvFiles returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasCustomEnvFiles() bool {
+	if o != nil && !IsNil(o.CustomEnvFiles) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomEnvFiles gets a reference to the given []string and assigns it to the CustomEnvFiles field.
+func (o *UpdateVCDBParameters) SetCustomEnvFiles(v []string) {
+	o.CustomEnvFiles = v
+}
+
+// GetOracleRacCustomEnvFiles returns the OracleRacCustomEnvFiles field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetOracleRacCustomEnvFiles() []OracleRacCustomEnvFile {
+	if o == nil || IsNil(o.OracleRacCustomEnvFiles) {
+		var ret []OracleRacCustomEnvFile
+		return ret
+	}
+	return o.OracleRacCustomEnvFiles
+}
+
+// GetOracleRacCustomEnvFilesOk returns a tuple with the OracleRacCustomEnvFiles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetOracleRacCustomEnvFilesOk() ([]OracleRacCustomEnvFile, bool) {
+	if o == nil || IsNil(o.OracleRacCustomEnvFiles) {
+		return nil, false
+	}
+	return o.OracleRacCustomEnvFiles, true
+}
+
+// HasOracleRacCustomEnvFiles returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasOracleRacCustomEnvFiles() bool {
+	if o != nil && !IsNil(o.OracleRacCustomEnvFiles) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleRacCustomEnvFiles gets a reference to the given []OracleRacCustomEnvFile and assigns it to the OracleRacCustomEnvFiles field.
+func (o *UpdateVCDBParameters) SetOracleRacCustomEnvFiles(v []OracleRacCustomEnvFile) {
+	o.OracleRacCustomEnvFiles = v
+}
+
+// GetOracleRacCustomEnvVars returns the OracleRacCustomEnvVars field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetOracleRacCustomEnvVars() []OracleRacCustomEnvVar {
+	if o == nil || IsNil(o.OracleRacCustomEnvVars) {
+		var ret []OracleRacCustomEnvVar
+		return ret
+	}
+	return o.OracleRacCustomEnvVars
+}
+
+// GetOracleRacCustomEnvVarsOk returns a tuple with the OracleRacCustomEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetOracleRacCustomEnvVarsOk() ([]OracleRacCustomEnvVar, bool) {
+	if o == nil || IsNil(o.OracleRacCustomEnvVars) {
+		return nil, false
+	}
+	return o.OracleRacCustomEnvVars, true
+}
+
+// HasOracleRacCustomEnvVars returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasOracleRacCustomEnvVars() bool {
+	if o != nil && !IsNil(o.OracleRacCustomEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleRacCustomEnvVars gets a reference to the given []OracleRacCustomEnvVar and assigns it to the OracleRacCustomEnvVars field.
+func (o *UpdateVCDBParameters) SetOracleRacCustomEnvVars(v []OracleRacCustomEnvVar) {
+	o.OracleRacCustomEnvVars = v
+}
+
 func (o UpdateVCDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -306,6 +612,33 @@ func (o UpdateVCDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TdeKeyIdentifier) {
 		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
+	}
+	if !IsNil(o.DbUsername) {
+		toSerialize["db_username"] = o.DbUsername
+	}
+	if !IsNil(o.DbPassword) {
+		toSerialize["db_password"] = o.DbPassword
+	}
+	if !IsNil(o.AutoRestart) {
+		toSerialize["auto_restart"] = o.AutoRestart
+	}
+	if !IsNil(o.EnvironmentUserId) {
+		toSerialize["environment_user_id"] = o.EnvironmentUserId
+	}
+	if !IsNil(o.ConfigParams) {
+		toSerialize["config_params"] = o.ConfigParams
+	}
+	if !IsNil(o.CustomEnvVars) {
+		toSerialize["custom_env_vars"] = o.CustomEnvVars
+	}
+	if !IsNil(o.CustomEnvFiles) {
+		toSerialize["custom_env_files"] = o.CustomEnvFiles
+	}
+	if !IsNil(o.OracleRacCustomEnvFiles) {
+		toSerialize["oracle_rac_custom_env_files"] = o.OracleRacCustomEnvFiles
+	}
+	if !IsNil(o.OracleRacCustomEnvVars) {
+		toSerialize["oracle_rac_custom_env_vars"] = o.OracleRacCustomEnvVars
 	}
 	return toSerialize, nil
 }

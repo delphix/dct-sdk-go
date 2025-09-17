@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"reflect"
 )
 
 
@@ -2936,7 +2937,7 @@ type ApiGetDsourcesRequest struct {
 	limit *int32
 	cursor *string
 	sort *string
-	permission *PermissionEnum
+	permission *[]PermissionEnum
 }
 
 // Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
@@ -2958,7 +2959,7 @@ func (r ApiGetDsourcesRequest) Sort(sort string) ApiGetDsourcesRequest {
 }
 
 // Restrict the objects, which are allowed.
-func (r ApiGetDsourcesRequest) Permission(permission PermissionEnum) ApiGetDsourcesRequest {
+func (r ApiGetDsourcesRequest) Permission(permission []PermissionEnum) ApiGetDsourcesRequest {
 	r.permission = &permission
 	return r
 }
@@ -3014,7 +3015,15 @@ func (a *DSourcesAPIService) GetDsourcesExecute(r ApiGetDsourcesRequest) (*ListD
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	if r.permission != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "permission", r.permission, "form", "")
+		t := *r.permission
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "permission", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "permission", t, "form", "multi")
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -4552,7 +4561,7 @@ type ApiSearchDsourcesRequest struct {
 	limit *int32
 	cursor *string
 	sort *string
-	permission *PermissionEnum
+	permission *[]PermissionEnum
 	searchBody *SearchBody
 }
 
@@ -4575,7 +4584,7 @@ func (r ApiSearchDsourcesRequest) Sort(sort string) ApiSearchDsourcesRequest {
 }
 
 // Restrict the objects, which are allowed.
-func (r ApiSearchDsourcesRequest) Permission(permission PermissionEnum) ApiSearchDsourcesRequest {
+func (r ApiSearchDsourcesRequest) Permission(permission []PermissionEnum) ApiSearchDsourcesRequest {
 	r.permission = &permission
 	return r
 }
@@ -4637,7 +4646,15 @@ func (a *DSourcesAPIService) SearchDsourcesExecute(r ApiSearchDsourcesRequest) (
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	if r.permission != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "permission", r.permission, "form", "")
+		t := *r.permission
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "permission", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "permission", t, "form", "multi")
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

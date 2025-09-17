@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -45,6 +45,14 @@ type Algorithm struct {
 	Config map[string]interface{} `json:"config,omitempty"`
 	// The date and time this algorithm was created.
 	CreateDate *time.Time `json:"create_date,omitempty"`
+	// The ID of the account who created this algorithm.
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The account name of the DCT user who created this algorithm.
+	AccountName *string `json:"account_name,omitempty"`
+	// Whether this algorithm is managed by DCT or not.
+	DctManaged *bool `json:"dct_managed,omitempty"`
+	// Whether this algorithm has invalid configuration. Config may become invalid following a DCT upgrade due to changes in the plugin. This field is only applicable to DCT managed algorithms.
+	ConfigInvalid *bool `json:"config_invalid,omitempty"`
 	// The tags of this algorithm.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -460,6 +468,134 @@ func (o *Algorithm) SetCreateDate(v time.Time) {
 	o.CreateDate = &v
 }
 
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *Algorithm) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Algorithm) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *Algorithm) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *Algorithm) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *Algorithm) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Algorithm) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *Algorithm) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *Algorithm) SetAccountName(v string) {
+	o.AccountName = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *Algorithm) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Algorithm) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *Algorithm) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *Algorithm) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
+// GetConfigInvalid returns the ConfigInvalid field value if set, zero value otherwise.
+func (o *Algorithm) GetConfigInvalid() bool {
+	if o == nil || IsNil(o.ConfigInvalid) {
+		var ret bool
+		return ret
+	}
+	return *o.ConfigInvalid
+}
+
+// GetConfigInvalidOk returns a tuple with the ConfigInvalid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Algorithm) GetConfigInvalidOk() (*bool, bool) {
+	if o == nil || IsNil(o.ConfigInvalid) {
+		return nil, false
+	}
+	return o.ConfigInvalid, true
+}
+
+// HasConfigInvalid returns a boolean if a field has been set.
+func (o *Algorithm) HasConfigInvalid() bool {
+	if o != nil && !IsNil(o.ConfigInvalid) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfigInvalid gets a reference to the given bool and assigns it to the ConfigInvalid field.
+func (o *Algorithm) SetConfigInvalid(v bool) {
+	o.ConfigInvalid = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Algorithm) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -537,6 +673,18 @@ func (o Algorithm) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CreateDate) {
 		toSerialize["create_date"] = o.CreateDate
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
+	}
+	if !IsNil(o.ConfigInvalid) {
+		toSerialize["config_invalid"] = o.ConfigInvalid
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

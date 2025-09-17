@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -44,6 +44,12 @@ type Environment struct {
 	IsCluster *bool `json:"is_cluster,omitempty"`
 	// Cluster home for RAC environment.
 	ClusterHome *string `json:"cluster_home,omitempty"`
+	// Cluster name for Oracle RAC environment.
+	ClusterName *string `json:"cluster_name,omitempty"`
+	// The Single Client Access Name of the cluster (11.2 and greater clusters only).
+	Scan *string `json:"scan,omitempty"`
+	// The default remote_listener parameter to be used for databases on the cluster.
+	RemoteListener *string `json:"remote_listener,omitempty"`
 	// True if this windows environment is a target environment.
 	IsWindowsTarget *bool `json:"is_windows_target,omitempty"`
 	// ID of the staging environment.
@@ -473,6 +479,102 @@ func (o *Environment) SetClusterHome(v string) {
 	o.ClusterHome = &v
 }
 
+// GetClusterName returns the ClusterName field value if set, zero value otherwise.
+func (o *Environment) GetClusterName() string {
+	if o == nil || IsNil(o.ClusterName) {
+		var ret string
+		return ret
+	}
+	return *o.ClusterName
+}
+
+// GetClusterNameOk returns a tuple with the ClusterName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetClusterNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ClusterName) {
+		return nil, false
+	}
+	return o.ClusterName, true
+}
+
+// HasClusterName returns a boolean if a field has been set.
+func (o *Environment) HasClusterName() bool {
+	if o != nil && !IsNil(o.ClusterName) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterName gets a reference to the given string and assigns it to the ClusterName field.
+func (o *Environment) SetClusterName(v string) {
+	o.ClusterName = &v
+}
+
+// GetScan returns the Scan field value if set, zero value otherwise.
+func (o *Environment) GetScan() string {
+	if o == nil || IsNil(o.Scan) {
+		var ret string
+		return ret
+	}
+	return *o.Scan
+}
+
+// GetScanOk returns a tuple with the Scan field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetScanOk() (*string, bool) {
+	if o == nil || IsNil(o.Scan) {
+		return nil, false
+	}
+	return o.Scan, true
+}
+
+// HasScan returns a boolean if a field has been set.
+func (o *Environment) HasScan() bool {
+	if o != nil && !IsNil(o.Scan) {
+		return true
+	}
+
+	return false
+}
+
+// SetScan gets a reference to the given string and assigns it to the Scan field.
+func (o *Environment) SetScan(v string) {
+	o.Scan = &v
+}
+
+// GetRemoteListener returns the RemoteListener field value if set, zero value otherwise.
+func (o *Environment) GetRemoteListener() string {
+	if o == nil || IsNil(o.RemoteListener) {
+		var ret string
+		return ret
+	}
+	return *o.RemoteListener
+}
+
+// GetRemoteListenerOk returns a tuple with the RemoteListener field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetRemoteListenerOk() (*string, bool) {
+	if o == nil || IsNil(o.RemoteListener) {
+		return nil, false
+	}
+	return o.RemoteListener, true
+}
+
+// HasRemoteListener returns a boolean if a field has been set.
+func (o *Environment) HasRemoteListener() bool {
+	if o != nil && !IsNil(o.RemoteListener) {
+		return true
+	}
+
+	return false
+}
+
+// SetRemoteListener gets a reference to the given string and assigns it to the RemoteListener field.
+func (o *Environment) SetRemoteListener(v string) {
+	o.RemoteListener = &v
+}
+
 // GetIsWindowsTarget returns the IsWindowsTarget field value if set, zero value otherwise.
 func (o *Environment) GetIsWindowsTarget() bool {
 	if o == nil || IsNil(o.IsWindowsTarget) {
@@ -774,6 +876,15 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ClusterHome) {
 		toSerialize["cluster_home"] = o.ClusterHome
+	}
+	if !IsNil(o.ClusterName) {
+		toSerialize["cluster_name"] = o.ClusterName
+	}
+	if !IsNil(o.Scan) {
+		toSerialize["scan"] = o.Scan
+	}
+	if !IsNil(o.RemoteListener) {
+		toSerialize["remote_listener"] = o.RemoteListener
 	}
 	if !IsNil(o.IsWindowsTarget) {
 		toSerialize["is_windows_target"] = o.IsWindowsTarget

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,7 @@ const (
 	ORACLETDEKEYSTORECONFIGTYPEENUM_FILE_OKV OracleTdeKeystoreConfigTypeEnum = "FILE|OKV"
 	ORACLETDEKEYSTORECONFIGTYPEENUM_HSM_FILE OracleTdeKeystoreConfigTypeEnum = "HSM|FILE"
 	ORACLETDEKEYSTORECONFIGTYPEENUM_FILE_HSM OracleTdeKeystoreConfigTypeEnum = "FILE|HSM"
+	ORACLETDEKEYSTORECONFIGTYPEENUM_OCI_VAULT OracleTdeKeystoreConfigTypeEnum = "OCI_VAULT"
 )
 
 // All allowed values of OracleTdeKeystoreConfigTypeEnum enum
@@ -39,6 +40,7 @@ var AllowedOracleTdeKeystoreConfigTypeEnumEnumValues = []OracleTdeKeystoreConfig
 	"FILE|OKV",
 	"HSM|FILE",
 	"FILE|HSM",
+	"OCI_VAULT",
 }
 
 func (v *OracleTdeKeystoreConfigTypeEnum) UnmarshalJSON(src []byte) error {

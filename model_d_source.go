@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -55,6 +55,8 @@ type DSource struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// A reference to the Source associated with this dSource.
 	SourceId NullableString `json:"source_id,omitempty"`
+	// A reference to the Staging Source associated with this dSource.
+	StagingSourceId NullableString `json:"staging_source_id,omitempty"`
 	// The runtime status of the dSource. 'Unknown' if all attempts to connect to the source failed.
 	Status NullableString `json:"status,omitempty"`
 	// Name of the Engine where this DSource is hosted
@@ -173,6 +175,26 @@ type DSource struct {
 	MssqlUserDomainAzureVaultSecretKey *string `json:"mssql_user_domain_azure_vault_secret_key,omitempty"`
 	// Query to find a credential in the CyberArk vault.
 	MssqlUserDomainCyberarkVaultQueryString *string `json:"mssql_user_domain_cyberark_vault_query_string,omitempty"`
+	// If true, NOLOGGING operations on this container are treated as faults and cannot be resolved manually. Otherwise, these operations are ignored.
+	DiagnoseNoLoggingFaults *bool `json:"diagnose_no_logging_faults,omitempty"`
+	// If true, pre-provisioning will be performed after every sync.
+	PreProvisioningEnabled *bool `json:"pre_provisioning_enabled,omitempty"`
+	// Boolean value indicates whether LEVEL-based incremental backups can be used on the source db.
+	BackupLevelEnabled *bool `json:"backup_level_enabled,omitempty"`
+	// Number of parallel channels to use.
+	RmanChannels *int32 `json:"rman_channels,omitempty"`
+	// Number of data files to include in each RMAN backup set.
+	FilesPerSet *int32 `json:"files_per_set,omitempty"`
+	// True if extended block checking should be used for this linked database.
+	CheckLogical *bool `json:"check_logical,omitempty"`
+	// True if SnapSync data from the source should be retrieved through an encrypted connection. Enabling this feature can decrease the performance of SnapSync from the source but has no impact on the performance of VDBs created from the retrieved data.
+	EncryptedLinkingEnabled *bool `json:"encrypted_linking_enabled,omitempty"`
+	// True if SnapSync data from the source should be compressed over the network. Enabling this feature will reduce network bandwidth consumption and may significantly improve throughput, especially over slow network.
+	CompressedLinkingEnabled *bool `json:"compressed_linking_enabled,omitempty"`
+	// Bandwidth limit (MB/s) for SnapSync and LogSync network traffic. A value of 0 means no limit.
+	BandwidthLimit *int32 `json:"bandwidth_limit,omitempty"`
+	// Total number of transport connections to use during SnapSync.
+	NumberOfConnections *int32 `json:"number_of_connections,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -884,6 +906,48 @@ func (o *DSource) SetSourceIdNil() {
 // UnsetSourceId ensures that no value is present for SourceId, not even an explicit nil
 func (o *DSource) UnsetSourceId() {
 	o.SourceId.Unset()
+}
+
+// GetStagingSourceId returns the StagingSourceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetStagingSourceId() string {
+	if o == nil || IsNil(o.StagingSourceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StagingSourceId.Get()
+}
+
+// GetStagingSourceIdOk returns a tuple with the StagingSourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetStagingSourceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StagingSourceId.Get(), o.StagingSourceId.IsSet()
+}
+
+// HasStagingSourceId returns a boolean if a field has been set.
+func (o *DSource) HasStagingSourceId() bool {
+	if o != nil && o.StagingSourceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStagingSourceId gets a reference to the given NullableString and assigns it to the StagingSourceId field.
+func (o *DSource) SetStagingSourceId(v string) {
+	o.StagingSourceId.Set(&v)
+}
+// SetStagingSourceIdNil sets the value for StagingSourceId to be an explicit nil
+func (o *DSource) SetStagingSourceIdNil() {
+	o.StagingSourceId.Set(nil)
+}
+
+// UnsetStagingSourceId ensures that no value is present for StagingSourceId, not even an explicit nil
+func (o *DSource) UnsetStagingSourceId() {
+	o.StagingSourceId.Unset()
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -2880,6 +2944,326 @@ func (o *DSource) SetMssqlUserDomainCyberarkVaultQueryString(v string) {
 	o.MssqlUserDomainCyberarkVaultQueryString = &v
 }
 
+// GetDiagnoseNoLoggingFaults returns the DiagnoseNoLoggingFaults field value if set, zero value otherwise.
+func (o *DSource) GetDiagnoseNoLoggingFaults() bool {
+	if o == nil || IsNil(o.DiagnoseNoLoggingFaults) {
+		var ret bool
+		return ret
+	}
+	return *o.DiagnoseNoLoggingFaults
+}
+
+// GetDiagnoseNoLoggingFaultsOk returns a tuple with the DiagnoseNoLoggingFaults field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDiagnoseNoLoggingFaultsOk() (*bool, bool) {
+	if o == nil || IsNil(o.DiagnoseNoLoggingFaults) {
+		return nil, false
+	}
+	return o.DiagnoseNoLoggingFaults, true
+}
+
+// HasDiagnoseNoLoggingFaults returns a boolean if a field has been set.
+func (o *DSource) HasDiagnoseNoLoggingFaults() bool {
+	if o != nil && !IsNil(o.DiagnoseNoLoggingFaults) {
+		return true
+	}
+
+	return false
+}
+
+// SetDiagnoseNoLoggingFaults gets a reference to the given bool and assigns it to the DiagnoseNoLoggingFaults field.
+func (o *DSource) SetDiagnoseNoLoggingFaults(v bool) {
+	o.DiagnoseNoLoggingFaults = &v
+}
+
+// GetPreProvisioningEnabled returns the PreProvisioningEnabled field value if set, zero value otherwise.
+func (o *DSource) GetPreProvisioningEnabled() bool {
+	if o == nil || IsNil(o.PreProvisioningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.PreProvisioningEnabled
+}
+
+// GetPreProvisioningEnabledOk returns a tuple with the PreProvisioningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPreProvisioningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.PreProvisioningEnabled) {
+		return nil, false
+	}
+	return o.PreProvisioningEnabled, true
+}
+
+// HasPreProvisioningEnabled returns a boolean if a field has been set.
+func (o *DSource) HasPreProvisioningEnabled() bool {
+	if o != nil && !IsNil(o.PreProvisioningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreProvisioningEnabled gets a reference to the given bool and assigns it to the PreProvisioningEnabled field.
+func (o *DSource) SetPreProvisioningEnabled(v bool) {
+	o.PreProvisioningEnabled = &v
+}
+
+// GetBackupLevelEnabled returns the BackupLevelEnabled field value if set, zero value otherwise.
+func (o *DSource) GetBackupLevelEnabled() bool {
+	if o == nil || IsNil(o.BackupLevelEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.BackupLevelEnabled
+}
+
+// GetBackupLevelEnabledOk returns a tuple with the BackupLevelEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetBackupLevelEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.BackupLevelEnabled) {
+		return nil, false
+	}
+	return o.BackupLevelEnabled, true
+}
+
+// HasBackupLevelEnabled returns a boolean if a field has been set.
+func (o *DSource) HasBackupLevelEnabled() bool {
+	if o != nil && !IsNil(o.BackupLevelEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupLevelEnabled gets a reference to the given bool and assigns it to the BackupLevelEnabled field.
+func (o *DSource) SetBackupLevelEnabled(v bool) {
+	o.BackupLevelEnabled = &v
+}
+
+// GetRmanChannels returns the RmanChannels field value if set, zero value otherwise.
+func (o *DSource) GetRmanChannels() int32 {
+	if o == nil || IsNil(o.RmanChannels) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanChannels
+}
+
+// GetRmanChannelsOk returns a tuple with the RmanChannels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetRmanChannelsOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanChannels) {
+		return nil, false
+	}
+	return o.RmanChannels, true
+}
+
+// HasRmanChannels returns a boolean if a field has been set.
+func (o *DSource) HasRmanChannels() bool {
+	if o != nil && !IsNil(o.RmanChannels) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanChannels gets a reference to the given int32 and assigns it to the RmanChannels field.
+func (o *DSource) SetRmanChannels(v int32) {
+	o.RmanChannels = &v
+}
+
+// GetFilesPerSet returns the FilesPerSet field value if set, zero value otherwise.
+func (o *DSource) GetFilesPerSet() int32 {
+	if o == nil || IsNil(o.FilesPerSet) {
+		var ret int32
+		return ret
+	}
+	return *o.FilesPerSet
+}
+
+// GetFilesPerSetOk returns a tuple with the FilesPerSet field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetFilesPerSetOk() (*int32, bool) {
+	if o == nil || IsNil(o.FilesPerSet) {
+		return nil, false
+	}
+	return o.FilesPerSet, true
+}
+
+// HasFilesPerSet returns a boolean if a field has been set.
+func (o *DSource) HasFilesPerSet() bool {
+	if o != nil && !IsNil(o.FilesPerSet) {
+		return true
+	}
+
+	return false
+}
+
+// SetFilesPerSet gets a reference to the given int32 and assigns it to the FilesPerSet field.
+func (o *DSource) SetFilesPerSet(v int32) {
+	o.FilesPerSet = &v
+}
+
+// GetCheckLogical returns the CheckLogical field value if set, zero value otherwise.
+func (o *DSource) GetCheckLogical() bool {
+	if o == nil || IsNil(o.CheckLogical) {
+		var ret bool
+		return ret
+	}
+	return *o.CheckLogical
+}
+
+// GetCheckLogicalOk returns a tuple with the CheckLogical field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetCheckLogicalOk() (*bool, bool) {
+	if o == nil || IsNil(o.CheckLogical) {
+		return nil, false
+	}
+	return o.CheckLogical, true
+}
+
+// HasCheckLogical returns a boolean if a field has been set.
+func (o *DSource) HasCheckLogical() bool {
+	if o != nil && !IsNil(o.CheckLogical) {
+		return true
+	}
+
+	return false
+}
+
+// SetCheckLogical gets a reference to the given bool and assigns it to the CheckLogical field.
+func (o *DSource) SetCheckLogical(v bool) {
+	o.CheckLogical = &v
+}
+
+// GetEncryptedLinkingEnabled returns the EncryptedLinkingEnabled field value if set, zero value otherwise.
+func (o *DSource) GetEncryptedLinkingEnabled() bool {
+	if o == nil || IsNil(o.EncryptedLinkingEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.EncryptedLinkingEnabled
+}
+
+// GetEncryptedLinkingEnabledOk returns a tuple with the EncryptedLinkingEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetEncryptedLinkingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.EncryptedLinkingEnabled) {
+		return nil, false
+	}
+	return o.EncryptedLinkingEnabled, true
+}
+
+// HasEncryptedLinkingEnabled returns a boolean if a field has been set.
+func (o *DSource) HasEncryptedLinkingEnabled() bool {
+	if o != nil && !IsNil(o.EncryptedLinkingEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncryptedLinkingEnabled gets a reference to the given bool and assigns it to the EncryptedLinkingEnabled field.
+func (o *DSource) SetEncryptedLinkingEnabled(v bool) {
+	o.EncryptedLinkingEnabled = &v
+}
+
+// GetCompressedLinkingEnabled returns the CompressedLinkingEnabled field value if set, zero value otherwise.
+func (o *DSource) GetCompressedLinkingEnabled() bool {
+	if o == nil || IsNil(o.CompressedLinkingEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.CompressedLinkingEnabled
+}
+
+// GetCompressedLinkingEnabledOk returns a tuple with the CompressedLinkingEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetCompressedLinkingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.CompressedLinkingEnabled) {
+		return nil, false
+	}
+	return o.CompressedLinkingEnabled, true
+}
+
+// HasCompressedLinkingEnabled returns a boolean if a field has been set.
+func (o *DSource) HasCompressedLinkingEnabled() bool {
+	if o != nil && !IsNil(o.CompressedLinkingEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompressedLinkingEnabled gets a reference to the given bool and assigns it to the CompressedLinkingEnabled field.
+func (o *DSource) SetCompressedLinkingEnabled(v bool) {
+	o.CompressedLinkingEnabled = &v
+}
+
+// GetBandwidthLimit returns the BandwidthLimit field value if set, zero value otherwise.
+func (o *DSource) GetBandwidthLimit() int32 {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		var ret int32
+		return ret
+	}
+	return *o.BandwidthLimit
+}
+
+// GetBandwidthLimitOk returns a tuple with the BandwidthLimit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetBandwidthLimitOk() (*int32, bool) {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		return nil, false
+	}
+	return o.BandwidthLimit, true
+}
+
+// HasBandwidthLimit returns a boolean if a field has been set.
+func (o *DSource) HasBandwidthLimit() bool {
+	if o != nil && !IsNil(o.BandwidthLimit) {
+		return true
+	}
+
+	return false
+}
+
+// SetBandwidthLimit gets a reference to the given int32 and assigns it to the BandwidthLimit field.
+func (o *DSource) SetBandwidthLimit(v int32) {
+	o.BandwidthLimit = &v
+}
+
+// GetNumberOfConnections returns the NumberOfConnections field value if set, zero value otherwise.
+func (o *DSource) GetNumberOfConnections() int32 {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		var ret int32
+		return ret
+	}
+	return *o.NumberOfConnections
+}
+
+// GetNumberOfConnectionsOk returns a tuple with the NumberOfConnections field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetNumberOfConnectionsOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		return nil, false
+	}
+	return o.NumberOfConnections, true
+}
+
+// HasNumberOfConnections returns a boolean if a field has been set.
+func (o *DSource) HasNumberOfConnections() bool {
+	if o != nil && !IsNil(o.NumberOfConnections) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumberOfConnections gets a reference to the given int32 and assigns it to the NumberOfConnections field.
+func (o *DSource) SetNumberOfConnections(v int32) {
+	o.NumberOfConnections = &v
+}
+
 func (o DSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -2940,6 +3324,9 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if o.SourceId.IsSet() {
 		toSerialize["source_id"] = o.SourceId.Get()
+	}
+	if o.StagingSourceId.IsSet() {
+		toSerialize["staging_source_id"] = o.StagingSourceId.Get()
 	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
@@ -3123,6 +3510,36 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
 		toSerialize["mssql_user_domain_cyberark_vault_query_string"] = o.MssqlUserDomainCyberarkVaultQueryString
+	}
+	if !IsNil(o.DiagnoseNoLoggingFaults) {
+		toSerialize["diagnose_no_logging_faults"] = o.DiagnoseNoLoggingFaults
+	}
+	if !IsNil(o.PreProvisioningEnabled) {
+		toSerialize["pre_provisioning_enabled"] = o.PreProvisioningEnabled
+	}
+	if !IsNil(o.BackupLevelEnabled) {
+		toSerialize["backup_level_enabled"] = o.BackupLevelEnabled
+	}
+	if !IsNil(o.RmanChannels) {
+		toSerialize["rman_channels"] = o.RmanChannels
+	}
+	if !IsNil(o.FilesPerSet) {
+		toSerialize["files_per_set"] = o.FilesPerSet
+	}
+	if !IsNil(o.CheckLogical) {
+		toSerialize["check_logical"] = o.CheckLogical
+	}
+	if !IsNil(o.EncryptedLinkingEnabled) {
+		toSerialize["encrypted_linking_enabled"] = o.EncryptedLinkingEnabled
+	}
+	if !IsNil(o.CompressedLinkingEnabled) {
+		toSerialize["compressed_linking_enabled"] = o.CompressedLinkingEnabled
+	}
+	if !IsNil(o.BandwidthLimit) {
+		toSerialize["bandwidth_limit"] = o.BandwidthLimit
+	}
+	if !IsNil(o.NumberOfConnections) {
+		toSerialize["number_of_connections"] = o.NumberOfConnections
 	}
 	return toSerialize, nil
 }

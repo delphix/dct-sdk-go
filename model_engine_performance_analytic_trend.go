@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -25,7 +25,7 @@ type EnginePerformanceAnalyticTrend struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// The time period by which engine performance analytics data is being aggregated, in hours.
 	AggregationPeriod *int32 `json:"aggregation_period,omitempty"`
-	Datapoint []EnginePerformanceAnalyticTrendDatapointInner `json:"datapoint,omitempty"`
+	Datapoint []EnginePerformanceAnalyticTrendDatapoint `json:"datapoint,omitempty"`
 }
 
 // NewEnginePerformanceAnalyticTrend instantiates a new EnginePerformanceAnalyticTrend object
@@ -142,9 +142,9 @@ func (o *EnginePerformanceAnalyticTrend) SetAggregationPeriod(v int32) {
 }
 
 // GetDatapoint returns the Datapoint field value if set, zero value otherwise.
-func (o *EnginePerformanceAnalyticTrend) GetDatapoint() []EnginePerformanceAnalyticTrendDatapointInner {
+func (o *EnginePerformanceAnalyticTrend) GetDatapoint() []EnginePerformanceAnalyticTrendDatapoint {
 	if o == nil || IsNil(o.Datapoint) {
-		var ret []EnginePerformanceAnalyticTrendDatapointInner
+		var ret []EnginePerformanceAnalyticTrendDatapoint
 		return ret
 	}
 	return o.Datapoint
@@ -152,7 +152,7 @@ func (o *EnginePerformanceAnalyticTrend) GetDatapoint() []EnginePerformanceAnaly
 
 // GetDatapointOk returns a tuple with the Datapoint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EnginePerformanceAnalyticTrend) GetDatapointOk() ([]EnginePerformanceAnalyticTrendDatapointInner, bool) {
+func (o *EnginePerformanceAnalyticTrend) GetDatapointOk() ([]EnginePerformanceAnalyticTrendDatapoint, bool) {
 	if o == nil || IsNil(o.Datapoint) {
 		return nil, false
 	}
@@ -168,8 +168,8 @@ func (o *EnginePerformanceAnalyticTrend) HasDatapoint() bool {
 	return false
 }
 
-// SetDatapoint gets a reference to the given []EnginePerformanceAnalyticTrendDatapointInner and assigns it to the Datapoint field.
-func (o *EnginePerformanceAnalyticTrend) SetDatapoint(v []EnginePerformanceAnalyticTrendDatapointInner) {
+// SetDatapoint gets a reference to the given []EnginePerformanceAnalyticTrendDatapoint and assigns it to the Datapoint field.
+func (o *EnginePerformanceAnalyticTrend) SetDatapoint(v []EnginePerformanceAnalyticTrendDatapoint) {
 	o.Datapoint = v
 }
 

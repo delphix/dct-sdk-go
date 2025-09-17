@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -158,6 +158,12 @@ type ApiDeleteTimeflowRequest struct {
 	ctx context.Context
 	ApiService *TimeflowsAPIService
 	timeflowId string
+	deleteTimeflowParameters *DeleteTimeflowParameters
+}
+
+func (r ApiDeleteTimeflowRequest) DeleteTimeflowParameters(deleteTimeflowParameters DeleteTimeflowParameters) ApiDeleteTimeflowRequest {
+	r.deleteTimeflowParameters = &deleteTimeflowParameters
+	return r
 }
 
 func (r ApiDeleteTimeflowRequest) Execute() (*DeleteTimeflowResponse, *http.Response, error) {
@@ -205,7 +211,7 @@ func (a *TimeflowsAPIService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) 
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -221,6 +227,8 @@ func (a *TimeflowsAPIService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.deleteTimeflowParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -54,6 +54,16 @@ type OracleAsmExportBySnapshotParameters struct {
 	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
 	// The Oracle Clusterware database name.
 	CrsDatabaseName *string `json:"crs_database_name,omitempty"`
+	// If specified, then take the exported database through recovery procedures, if necessary, to reach a consistent point.
+	RecoverDatabase *bool `json:"recover_database,omitempty"`
+	// Database file mapping rules.
+	FileMappingRules *string `json:"file_mapping_rules,omitempty"`
+	// Indicates whether to enable Change Data Capture (CDC) or not on exported database(MSSql Only).
+	EnableCdc *bool `json:"enable_cdc,omitempty"`
+	// Recovery model of the database (MSSql Only).
+	RecoveryModel *string `json:"recovery_model,omitempty"`
+	// Recovery model of the database (MSSql Only).
+	MirroringState *string `json:"mirroring_state,omitempty"`
 	// Default diskgroup for datafiles.
 	DefaultDataDiskgroup string `json:"default_data_diskgroup"`
 	// Diskgroup for archive logs. Optional as it is not required for PDB databases.
@@ -74,6 +84,14 @@ type _OracleAsmExportBySnapshotParameters OracleAsmExportBySnapshotParameters
 // will change when the set of required properties is changed
 func NewOracleAsmExportBySnapshotParameters(defaultDataDiskgroup string) *OracleAsmExportBySnapshotParameters {
 	this := OracleAsmExportBySnapshotParameters{}
+	var recoverDatabase bool = true
+	this.RecoverDatabase = &recoverDatabase
+	var enableCdc bool = false
+	this.EnableCdc = &enableCdc
+	var recoveryModel string = "FULL"
+	this.RecoveryModel = &recoveryModel
+	var mirroringState string = "NONE"
+	this.MirroringState = &mirroringState
 	this.DefaultDataDiskgroup = defaultDataDiskgroup
 	var rmanChannels int32 = 8
 	this.RmanChannels = &rmanChannels
@@ -87,6 +105,14 @@ func NewOracleAsmExportBySnapshotParameters(defaultDataDiskgroup string) *Oracle
 // but it doesn't guarantee that properties required by API are set
 func NewOracleAsmExportBySnapshotParametersWithDefaults() *OracleAsmExportBySnapshotParameters {
 	this := OracleAsmExportBySnapshotParameters{}
+	var recoverDatabase bool = true
+	this.RecoverDatabase = &recoverDatabase
+	var enableCdc bool = false
+	this.EnableCdc = &enableCdc
+	var recoveryModel string = "FULL"
+	this.RecoveryModel = &recoveryModel
+	var mirroringState string = "NONE"
+	this.MirroringState = &mirroringState
 	var rmanChannels int32 = 8
 	this.RmanChannels = &rmanChannels
 	var rmanFileSectionSizeInGb int32 = 0
@@ -639,6 +665,166 @@ func (o *OracleAsmExportBySnapshotParameters) SetCrsDatabaseName(v string) {
 	o.CrsDatabaseName = &v
 }
 
+// GetRecoverDatabase returns the RecoverDatabase field value if set, zero value otherwise.
+func (o *OracleAsmExportBySnapshotParameters) GetRecoverDatabase() bool {
+	if o == nil || IsNil(o.RecoverDatabase) {
+		var ret bool
+		return ret
+	}
+	return *o.RecoverDatabase
+}
+
+// GetRecoverDatabaseOk returns a tuple with the RecoverDatabase field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportBySnapshotParameters) GetRecoverDatabaseOk() (*bool, bool) {
+	if o == nil || IsNil(o.RecoverDatabase) {
+		return nil, false
+	}
+	return o.RecoverDatabase, true
+}
+
+// HasRecoverDatabase returns a boolean if a field has been set.
+func (o *OracleAsmExportBySnapshotParameters) HasRecoverDatabase() bool {
+	if o != nil && !IsNil(o.RecoverDatabase) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoverDatabase gets a reference to the given bool and assigns it to the RecoverDatabase field.
+func (o *OracleAsmExportBySnapshotParameters) SetRecoverDatabase(v bool) {
+	o.RecoverDatabase = &v
+}
+
+// GetFileMappingRules returns the FileMappingRules field value if set, zero value otherwise.
+func (o *OracleAsmExportBySnapshotParameters) GetFileMappingRules() string {
+	if o == nil || IsNil(o.FileMappingRules) {
+		var ret string
+		return ret
+	}
+	return *o.FileMappingRules
+}
+
+// GetFileMappingRulesOk returns a tuple with the FileMappingRules field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportBySnapshotParameters) GetFileMappingRulesOk() (*string, bool) {
+	if o == nil || IsNil(o.FileMappingRules) {
+		return nil, false
+	}
+	return o.FileMappingRules, true
+}
+
+// HasFileMappingRules returns a boolean if a field has been set.
+func (o *OracleAsmExportBySnapshotParameters) HasFileMappingRules() bool {
+	if o != nil && !IsNil(o.FileMappingRules) {
+		return true
+	}
+
+	return false
+}
+
+// SetFileMappingRules gets a reference to the given string and assigns it to the FileMappingRules field.
+func (o *OracleAsmExportBySnapshotParameters) SetFileMappingRules(v string) {
+	o.FileMappingRules = &v
+}
+
+// GetEnableCdc returns the EnableCdc field value if set, zero value otherwise.
+func (o *OracleAsmExportBySnapshotParameters) GetEnableCdc() bool {
+	if o == nil || IsNil(o.EnableCdc) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableCdc
+}
+
+// GetEnableCdcOk returns a tuple with the EnableCdc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportBySnapshotParameters) GetEnableCdcOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableCdc) {
+		return nil, false
+	}
+	return o.EnableCdc, true
+}
+
+// HasEnableCdc returns a boolean if a field has been set.
+func (o *OracleAsmExportBySnapshotParameters) HasEnableCdc() bool {
+	if o != nil && !IsNil(o.EnableCdc) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableCdc gets a reference to the given bool and assigns it to the EnableCdc field.
+func (o *OracleAsmExportBySnapshotParameters) SetEnableCdc(v bool) {
+	o.EnableCdc = &v
+}
+
+// GetRecoveryModel returns the RecoveryModel field value if set, zero value otherwise.
+func (o *OracleAsmExportBySnapshotParameters) GetRecoveryModel() string {
+	if o == nil || IsNil(o.RecoveryModel) {
+		var ret string
+		return ret
+	}
+	return *o.RecoveryModel
+}
+
+// GetRecoveryModelOk returns a tuple with the RecoveryModel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportBySnapshotParameters) GetRecoveryModelOk() (*string, bool) {
+	if o == nil || IsNil(o.RecoveryModel) {
+		return nil, false
+	}
+	return o.RecoveryModel, true
+}
+
+// HasRecoveryModel returns a boolean if a field has been set.
+func (o *OracleAsmExportBySnapshotParameters) HasRecoveryModel() bool {
+	if o != nil && !IsNil(o.RecoveryModel) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoveryModel gets a reference to the given string and assigns it to the RecoveryModel field.
+func (o *OracleAsmExportBySnapshotParameters) SetRecoveryModel(v string) {
+	o.RecoveryModel = &v
+}
+
+// GetMirroringState returns the MirroringState field value if set, zero value otherwise.
+func (o *OracleAsmExportBySnapshotParameters) GetMirroringState() string {
+	if o == nil || IsNil(o.MirroringState) {
+		var ret string
+		return ret
+	}
+	return *o.MirroringState
+}
+
+// GetMirroringStateOk returns a tuple with the MirroringState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportBySnapshotParameters) GetMirroringStateOk() (*string, bool) {
+	if o == nil || IsNil(o.MirroringState) {
+		return nil, false
+	}
+	return o.MirroringState, true
+}
+
+// HasMirroringState returns a boolean if a field has been set.
+func (o *OracleAsmExportBySnapshotParameters) HasMirroringState() bool {
+	if o != nil && !IsNil(o.MirroringState) {
+		return true
+	}
+
+	return false
+}
+
+// SetMirroringState gets a reference to the given string and assigns it to the MirroringState field.
+func (o *OracleAsmExportBySnapshotParameters) SetMirroringState(v string) {
+	o.MirroringState = &v
+}
+
 // GetDefaultDataDiskgroup returns the DefaultDataDiskgroup field value
 func (o *OracleAsmExportBySnapshotParameters) GetDefaultDataDiskgroup() string {
 	if o == nil {
@@ -851,6 +1037,21 @@ func (o OracleAsmExportBySnapshotParameters) ToMap() (map[string]interface{}, er
 	}
 	if !IsNil(o.CrsDatabaseName) {
 		toSerialize["crs_database_name"] = o.CrsDatabaseName
+	}
+	if !IsNil(o.RecoverDatabase) {
+		toSerialize["recover_database"] = o.RecoverDatabase
+	}
+	if !IsNil(o.FileMappingRules) {
+		toSerialize["file_mapping_rules"] = o.FileMappingRules
+	}
+	if !IsNil(o.EnableCdc) {
+		toSerialize["enable_cdc"] = o.EnableCdc
+	}
+	if !IsNil(o.RecoveryModel) {
+		toSerialize["recovery_model"] = o.RecoveryModel
+	}
+	if !IsNil(o.MirroringState) {
+		toSerialize["mirroring_state"] = o.MirroringState
 	}
 	toSerialize["default_data_diskgroup"] = o.DefaultDataDiskgroup
 	if !IsNil(o.RedoDiskgroup) {

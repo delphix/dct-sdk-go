@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.22.0
+// APIClient manages communication with the Delphix DCT API API v3.23.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -51,6 +51,10 @@ type APIClient struct {
 	// API Services
 
 	AccountsAPI *AccountsAPIService
+
+	AiGenerateAPI *AiGenerateAPIService
+
+	AiManagementAPI *AiManagementAPIService
 
 	AlgorithmsAPI *AlgorithmsAPIService
 
@@ -74,6 +78,8 @@ type APIClient struct {
 
 	DataClassesAPI *DataClassesAPIService
 
+	DataConnectionsAPI *DataConnectionsAPIService
+
 	DataLayoutsAPI *DataLayoutsAPIService
 
 	DatabaseTemplatesAPI *DatabaseTemplatesAPIService
@@ -89,6 +95,8 @@ type APIClient struct {
 	GroupsAPI *GroupsAPIService
 
 	HeldSpaceAPI *HeldSpaceAPIService
+
+	HookTemplatesAPI *HookTemplatesAPIService
 
 	HyperscaleInstanceAPI *HyperscaleInstanceAPIService
 
@@ -113,6 +121,8 @@ type APIClient struct {
 	MaskingJobsAPI *MaskingJobsAPIService
 
 	NamespaceAPI *NamespaceAPIService
+
+	NetworkPerformanceToolAPI *NetworkPerformanceToolAPIService
 
 	PasswordVaultsAPI *PasswordVaultsAPIService
 
@@ -172,6 +182,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AccountsAPI = (*AccountsAPIService)(&c.common)
+	c.AiGenerateAPI = (*AiGenerateAPIService)(&c.common)
+	c.AiManagementAPI = (*AiManagementAPIService)(&c.common)
 	c.AlgorithmsAPI = (*AlgorithmsAPIService)(&c.common)
 	c.AuthorizationAPI = (*AuthorizationAPIService)(&c.common)
 	c.BookmarksAPI = (*BookmarksAPIService)(&c.common)
@@ -183,6 +195,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ConnectorsAPI = (*ConnectorsAPIService)(&c.common)
 	c.DSourcesAPI = (*DSourcesAPIService)(&c.common)
 	c.DataClassesAPI = (*DataClassesAPIService)(&c.common)
+	c.DataConnectionsAPI = (*DataConnectionsAPIService)(&c.common)
 	c.DataLayoutsAPI = (*DataLayoutsAPIService)(&c.common)
 	c.DatabaseTemplatesAPI = (*DatabaseTemplatesAPIService)(&c.common)
 	c.DiscoveryExpressionsAPI = (*DiscoveryExpressionsAPIService)(&c.common)
@@ -191,6 +204,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ExecutionsAPI = (*ExecutionsAPIService)(&c.common)
 	c.GroupsAPI = (*GroupsAPIService)(&c.common)
 	c.HeldSpaceAPI = (*HeldSpaceAPIService)(&c.common)
+	c.HookTemplatesAPI = (*HookTemplatesAPIService)(&c.common)
 	c.HyperscaleInstanceAPI = (*HyperscaleInstanceAPIService)(&c.common)
 	c.HyperscaleObjectsAPI = (*HyperscaleObjectsAPIService)(&c.common)
 	c.JobCollectionExecutionsAPI = (*JobCollectionExecutionsAPIService)(&c.common)
@@ -203,6 +217,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.MaskingFilesAPI = (*MaskingFilesAPIService)(&c.common)
 	c.MaskingJobsAPI = (*MaskingJobsAPIService)(&c.common)
 	c.NamespaceAPI = (*NamespaceAPIService)(&c.common)
+	c.NetworkPerformanceToolAPI = (*NetworkPerformanceToolAPIService)(&c.common)
 	c.PasswordVaultsAPI = (*PasswordVaultsAPIService)(&c.common)
 	c.ReplicationAPI = (*ReplicationAPIService)(&c.common)
 	c.ReportingAPI = (*ReportingAPIService)(&c.common)

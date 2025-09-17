@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -55,6 +55,14 @@ type StagingSource struct {
 	RecoveryModel *string `json:"recovery_model,omitempty"`
 	// The base mount point for the NFS or iSCSI LUN mounts.
 	MountBase *string `json:"mount_base,omitempty"`
+	// The ID of the associated DataConnection.
+	DataConnectionId *string `json:"data_connection_id,omitempty"`
+	// The datafile mount point to use for the NFS mounts.
+	DatafileMountPath *string `json:"datafile_mount_path,omitempty"`
+	// The archive mount point to use for the NFS mounts.
+	ArchiveMountPath *string `json:"archive_mount_path,omitempty"`
+	// The unique name of the database.
+	DatabaseUniqueName *string `json:"database_unique_name,omitempty"`
 }
 
 // NewStagingSource instantiates a new StagingSource object
@@ -762,6 +770,134 @@ func (o *StagingSource) SetMountBase(v string) {
 	o.MountBase = &v
 }
 
+// GetDataConnectionId returns the DataConnectionId field value if set, zero value otherwise.
+func (o *StagingSource) GetDataConnectionId() string {
+	if o == nil || IsNil(o.DataConnectionId) {
+		var ret string
+		return ret
+	}
+	return *o.DataConnectionId
+}
+
+// GetDataConnectionIdOk returns a tuple with the DataConnectionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetDataConnectionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DataConnectionId) {
+		return nil, false
+	}
+	return o.DataConnectionId, true
+}
+
+// HasDataConnectionId returns a boolean if a field has been set.
+func (o *StagingSource) HasDataConnectionId() bool {
+	if o != nil && !IsNil(o.DataConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataConnectionId gets a reference to the given string and assigns it to the DataConnectionId field.
+func (o *StagingSource) SetDataConnectionId(v string) {
+	o.DataConnectionId = &v
+}
+
+// GetDatafileMountPath returns the DatafileMountPath field value if set, zero value otherwise.
+func (o *StagingSource) GetDatafileMountPath() string {
+	if o == nil || IsNil(o.DatafileMountPath) {
+		var ret string
+		return ret
+	}
+	return *o.DatafileMountPath
+}
+
+// GetDatafileMountPathOk returns a tuple with the DatafileMountPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetDatafileMountPathOk() (*string, bool) {
+	if o == nil || IsNil(o.DatafileMountPath) {
+		return nil, false
+	}
+	return o.DatafileMountPath, true
+}
+
+// HasDatafileMountPath returns a boolean if a field has been set.
+func (o *StagingSource) HasDatafileMountPath() bool {
+	if o != nil && !IsNil(o.DatafileMountPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatafileMountPath gets a reference to the given string and assigns it to the DatafileMountPath field.
+func (o *StagingSource) SetDatafileMountPath(v string) {
+	o.DatafileMountPath = &v
+}
+
+// GetArchiveMountPath returns the ArchiveMountPath field value if set, zero value otherwise.
+func (o *StagingSource) GetArchiveMountPath() string {
+	if o == nil || IsNil(o.ArchiveMountPath) {
+		var ret string
+		return ret
+	}
+	return *o.ArchiveMountPath
+}
+
+// GetArchiveMountPathOk returns a tuple with the ArchiveMountPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetArchiveMountPathOk() (*string, bool) {
+	if o == nil || IsNil(o.ArchiveMountPath) {
+		return nil, false
+	}
+	return o.ArchiveMountPath, true
+}
+
+// HasArchiveMountPath returns a boolean if a field has been set.
+func (o *StagingSource) HasArchiveMountPath() bool {
+	if o != nil && !IsNil(o.ArchiveMountPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetArchiveMountPath gets a reference to the given string and assigns it to the ArchiveMountPath field.
+func (o *StagingSource) SetArchiveMountPath(v string) {
+	o.ArchiveMountPath = &v
+}
+
+// GetDatabaseUniqueName returns the DatabaseUniqueName field value if set, zero value otherwise.
+func (o *StagingSource) GetDatabaseUniqueName() string {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUniqueName
+}
+
+// GetDatabaseUniqueNameOk returns a tuple with the DatabaseUniqueName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetDatabaseUniqueNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		return nil, false
+	}
+	return o.DatabaseUniqueName, true
+}
+
+// HasDatabaseUniqueName returns a boolean if a field has been set.
+func (o *StagingSource) HasDatabaseUniqueName() bool {
+	if o != nil && !IsNil(o.DatabaseUniqueName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUniqueName gets a reference to the given string and assigns it to the DatabaseUniqueName field.
+func (o *StagingSource) SetDatabaseUniqueName(v string) {
+	o.DatabaseUniqueName = &v
+}
+
 func (o StagingSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -828,6 +964,18 @@ func (o StagingSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MountBase) {
 		toSerialize["mount_base"] = o.MountBase
+	}
+	if !IsNil(o.DataConnectionId) {
+		toSerialize["data_connection_id"] = o.DataConnectionId
+	}
+	if !IsNil(o.DatafileMountPath) {
+		toSerialize["datafile_mount_path"] = o.DatafileMountPath
+	}
+	if !IsNil(o.ArchiveMountPath) {
+		toSerialize["archive_mount_path"] = o.ArchiveMountPath
+	}
+	if !IsNil(o.DatabaseUniqueName) {
+		toSerialize["database_unique_name"] = o.DatabaseUniqueName
 	}
 	return toSerialize, nil
 }

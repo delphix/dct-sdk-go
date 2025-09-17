@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -44,6 +44,8 @@ type DSourceSnapshotParameters struct {
 	FilesForPartialFullBackup []int64 `json:"files_for_partial_full_backup,omitempty"`
 	// The list of parameters specified by the snapshotParametersDefinition schema in the toolkit (AppData only).
 	AppdataParameters map[string]interface{} `json:"appdata_parameters,omitempty"`
+	// RMAN rate in megabytes to be used. This is the upper limit for bytes read so that  RMAN does not consume excessive disk bandwidth and degrade online performance. (Oracle only) 
+	RmanRateInMB *int32 `json:"rman_rate_in_MB,omitempty"`
 }
 
 // NewDSourceSnapshotParameters instantiates a new DSourceSnapshotParameters object
@@ -448,6 +450,38 @@ func (o *DSourceSnapshotParameters) SetAppdataParameters(v map[string]interface{
 	o.AppdataParameters = v
 }
 
+// GetRmanRateInMB returns the RmanRateInMB field value if set, zero value otherwise.
+func (o *DSourceSnapshotParameters) GetRmanRateInMB() int32 {
+	if o == nil || IsNil(o.RmanRateInMB) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanRateInMB
+}
+
+// GetRmanRateInMBOk returns a tuple with the RmanRateInMB field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSourceSnapshotParameters) GetRmanRateInMBOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanRateInMB) {
+		return nil, false
+	}
+	return o.RmanRateInMB, true
+}
+
+// HasRmanRateInMB returns a boolean if a field has been set.
+func (o *DSourceSnapshotParameters) HasRmanRateInMB() bool {
+	if o != nil && !IsNil(o.RmanRateInMB) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanRateInMB gets a reference to the given int32 and assigns it to the RmanRateInMB field.
+func (o *DSourceSnapshotParameters) SetRmanRateInMB(v int32) {
+	o.RmanRateInMB = &v
+}
+
 func (o DSourceSnapshotParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -493,6 +527,9 @@ func (o DSourceSnapshotParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if o.AppdataParameters != nil {
 		toSerialize["appdata_parameters"] = o.AppdataParameters
+	}
+	if !IsNil(o.RmanRateInMB) {
+		toSerialize["rman_rate_in_MB"] = o.RmanRateInMB
 	}
 	return toSerialize, nil
 }

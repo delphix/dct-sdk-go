@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -44,14 +44,10 @@ type EngineRegistrationParameter struct {
 	HashicorpVaultId NullableInt64 `json:"hashicorp_vault_id,omitempty"`
 	// Reference to the Hashicorp vault to use to retrieve masking engine credentials.
 	MaskingHashicorpVaultId NullableInt64 `json:"masking_hashicorp_vault_id,omitempty"`
-	// Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the engine's certificate, and set the truststore_filename property. 
+	// Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider configuring DCT with Certificate Authority certificates.. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the engine over HTTPs. Setting this value must only be done if the TLS certificate of the engine does not match the hostname, and the TLS configuration of the engine cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
-	// File name of a truststore which can be used to validate the TLS certificate of the engine. The truststore must be available at /etc/config/certs/<truststore_filename> 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.\\\\-]+$"`
-	// Password to read the truststore. 
-	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	AutoTaggingConfig *AutoTaggingConfig `json:"auto_tagging_config,omitempty"`
 	// The tags to be created for this engine.
 	Tags []Tag `json:"tags,omitempty"`
@@ -582,90 +578,6 @@ func (o *EngineRegistrationParameter) SetUnsafeSslHostnameCheck(v bool) {
 	o.UnsafeSslHostnameCheck = &v
 }
 
-// GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *EngineRegistrationParameter) GetTruststoreFilename() string {
-	if o == nil || IsNil(o.TruststoreFilename.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststoreFilename.Get()
-}
-
-// GetTruststoreFilenameOk returns a tuple with the TruststoreFilename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *EngineRegistrationParameter) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststoreFilename.Get(), o.TruststoreFilename.IsSet()
-}
-
-// HasTruststoreFilename returns a boolean if a field has been set.
-func (o *EngineRegistrationParameter) HasTruststoreFilename() bool {
-	if o != nil && o.TruststoreFilename.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststoreFilename gets a reference to the given NullableString and assigns it to the TruststoreFilename field.
-func (o *EngineRegistrationParameter) SetTruststoreFilename(v string) {
-	o.TruststoreFilename.Set(&v)
-}
-// SetTruststoreFilenameNil sets the value for TruststoreFilename to be an explicit nil
-func (o *EngineRegistrationParameter) SetTruststoreFilenameNil() {
-	o.TruststoreFilename.Set(nil)
-}
-
-// UnsetTruststoreFilename ensures that no value is present for TruststoreFilename, not even an explicit nil
-func (o *EngineRegistrationParameter) UnsetTruststoreFilename() {
-	o.TruststoreFilename.Unset()
-}
-
-// GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *EngineRegistrationParameter) GetTruststorePassword() string {
-	if o == nil || IsNil(o.TruststorePassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststorePassword.Get()
-}
-
-// GetTruststorePasswordOk returns a tuple with the TruststorePassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *EngineRegistrationParameter) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststorePassword.Get(), o.TruststorePassword.IsSet()
-}
-
-// HasTruststorePassword returns a boolean if a field has been set.
-func (o *EngineRegistrationParameter) HasTruststorePassword() bool {
-	if o != nil && o.TruststorePassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststorePassword gets a reference to the given NullableString and assigns it to the TruststorePassword field.
-func (o *EngineRegistrationParameter) SetTruststorePassword(v string) {
-	o.TruststorePassword.Set(&v)
-}
-// SetTruststorePasswordNil sets the value for TruststorePassword to be an explicit nil
-func (o *EngineRegistrationParameter) SetTruststorePasswordNil() {
-	o.TruststorePassword.Set(nil)
-}
-
-// UnsetTruststorePassword ensures that no value is present for TruststorePassword, not even an explicit nil
-func (o *EngineRegistrationParameter) UnsetTruststorePassword() {
-	o.TruststorePassword.Unset()
-}
-
 // GetAutoTaggingConfig returns the AutoTaggingConfig field value if set, zero value otherwise.
 func (o *EngineRegistrationParameter) GetAutoTaggingConfig() AutoTaggingConfig {
 	if o == nil || IsNil(o.AutoTaggingConfig) {
@@ -777,12 +689,6 @@ func (o EngineRegistrationParameter) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UnsafeSslHostnameCheck) {
 		toSerialize["unsafe_ssl_hostname_check"] = o.UnsafeSslHostnameCheck
-	}
-	if o.TruststoreFilename.IsSet() {
-		toSerialize["truststore_filename"] = o.TruststoreFilename.Get()
-	}
-	if o.TruststorePassword.IsSet() {
-		toSerialize["truststore_password"] = o.TruststorePassword.Get()
 	}
 	if !IsNil(o.AutoTaggingConfig) {
 		toSerialize["auto_tagging_config"] = o.AutoTaggingConfig

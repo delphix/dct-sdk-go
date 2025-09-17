@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &DatabaseTableMetadata{}
 // DatabaseTableMetadata An object describe a database table of a rule set with some settings.
 type DatabaseTableMetadata struct {
 	// The id of this table metadata.
-	Id *int64 `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
 	// The name of the table.
 	TableName *string `json:"table_name,omitempty"`
 	// The id of the rule set that this table metadata belongs to.
@@ -46,6 +46,8 @@ type DatabaseTableMetadata struct {
 	EngineId *string `json:"engine_id,omitempty"`
 	// The name of the engine associated with this column.
 	EngineName *string `json:"engine_name,omitempty"`
+	// Whether this data class is managed by DCT or not.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 }
 
 // NewDatabaseTableMetadata instantiates a new DatabaseTableMetadata object
@@ -66,9 +68,9 @@ func NewDatabaseTableMetadataWithDefaults() *DatabaseTableMetadata {
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *DatabaseTableMetadata) GetId() int64 {
+func (o *DatabaseTableMetadata) GetId() string {
 	if o == nil || IsNil(o.Id) {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.Id
@@ -76,7 +78,7 @@ func (o *DatabaseTableMetadata) GetId() int64 {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DatabaseTableMetadata) GetIdOk() (*int64, bool) {
+func (o *DatabaseTableMetadata) GetIdOk() (*string, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
@@ -92,8 +94,8 @@ func (o *DatabaseTableMetadata) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given int64 and assigns it to the Id field.
-func (o *DatabaseTableMetadata) SetId(v int64) {
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *DatabaseTableMetadata) SetId(v string) {
 	o.Id = &v
 }
 
@@ -513,6 +515,38 @@ func (o *DatabaseTableMetadata) SetEngineName(v string) {
 	o.EngineName = &v
 }
 
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *DatabaseTableMetadata) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatabaseTableMetadata) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *DatabaseTableMetadata) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *DatabaseTableMetadata) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
 func (o DatabaseTableMetadata) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -564,6 +598,9 @@ func (o DatabaseTableMetadata) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EngineName) {
 		toSerialize["engine_name"] = o.EngineName
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	return toSerialize, nil
 }
