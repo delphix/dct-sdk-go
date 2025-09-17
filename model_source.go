@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -45,6 +45,7 @@ type Source struct {
 	// The total size of this source database, in bytes.
 	Size NullableInt64 `json:"size,omitempty"`
 	// The JDBC connection URL for this source database.
+	// Deprecated
 	JdbcConnectionString NullableString `json:"jdbc_connection_string,omitempty"`
 	// The version of the plugin associated with this source database.
 	PluginVersion NullableString `json:"plugin_version,omitempty"`
@@ -59,7 +60,33 @@ type Source struct {
 	MssqlSourceType NullableString `json:"mssql_source_type,omitempty"`
 	// The type of this appdata source database (Appdata Only).
 	AppdataSourceType NullableString `json:"appdata_source_type,omitempty"`
+	// If this source is of PDB type (Oracle Only).
+	IsPdb NullableBool `json:"is_pdb,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// The instance name of this single instance database source.
+	InstanceName *string `json:"instance_name,omitempty"`
+	// The instance number of this single instance database source.
+	InstanceNumber *int32 `json:"instance_number,omitempty"`
+	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
+	OracleServices []OracleService `json:"oracle_services,omitempty"`
+	// The username of the database user.
+	User *string `json:"user,omitempty"`
+	// The environment user reference.
+	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
+	// The username of a database user that does not have administrative privileges.
+	NonSysUser *string `json:"non_sys_user,omitempty"`
+	// Whether this source was discovered.
+	Discovered *bool `json:"discovered,omitempty"`
+	// Whether this source should be used for linking.
+	LinkingEnabled *bool `json:"linking_enabled,omitempty"`
+	// The cdb type for this source. (Oracle only)
+	CdbType *string `json:"cdb_type,omitempty"`
+	// The ID of the associated DataConnection.
+	DataConnectionId *string `json:"data_connection_id,omitempty"`
+	// The name of this source database.
+	DatabaseName *string `json:"database_name,omitempty"`
+	// The unique name of the database.
+	DatabaseUniqueName *string `json:"database_unique_name,omitempty"`
 }
 
 // NewSource instantiates a new Source object
@@ -574,6 +601,7 @@ func (o *Source) UnsetSize() {
 }
 
 // GetJdbcConnectionString returns the JdbcConnectionString field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *Source) GetJdbcConnectionString() string {
 	if o == nil || IsNil(o.JdbcConnectionString.Get()) {
 		var ret string
@@ -585,6 +613,7 @@ func (o *Source) GetJdbcConnectionString() string {
 // GetJdbcConnectionStringOk returns a tuple with the JdbcConnectionString field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *Source) GetJdbcConnectionStringOk() (*string, bool) {
 	if o == nil {
 		return nil, false
@@ -602,6 +631,7 @@ func (o *Source) HasJdbcConnectionString() bool {
 }
 
 // SetJdbcConnectionString gets a reference to the given NullableString and assigns it to the JdbcConnectionString field.
+// Deprecated
 func (o *Source) SetJdbcConnectionString(v string) {
 	o.JdbcConnectionString.Set(&v)
 }
@@ -879,6 +909,48 @@ func (o *Source) UnsetAppdataSourceType() {
 	o.AppdataSourceType.Unset()
 }
 
+// GetIsPdb returns the IsPdb field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Source) GetIsPdb() bool {
+	if o == nil || IsNil(o.IsPdb.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsPdb.Get()
+}
+
+// GetIsPdbOk returns a tuple with the IsPdb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Source) GetIsPdbOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsPdb.Get(), o.IsPdb.IsSet()
+}
+
+// HasIsPdb returns a boolean if a field has been set.
+func (o *Source) HasIsPdb() bool {
+	if o != nil && o.IsPdb.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsPdb gets a reference to the given NullableBool and assigns it to the IsPdb field.
+func (o *Source) SetIsPdb(v bool) {
+	o.IsPdb.Set(&v)
+}
+// SetIsPdbNil sets the value for IsPdb to be an explicit nil
+func (o *Source) SetIsPdbNil() {
+	o.IsPdb.Set(nil)
+}
+
+// UnsetIsPdb ensures that no value is present for IsPdb, not even an explicit nil
+func (o *Source) UnsetIsPdb() {
+	o.IsPdb.Unset()
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Source) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -909,6 +981,422 @@ func (o *Source) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *Source) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetInstanceName returns the InstanceName field value if set, zero value otherwise.
+func (o *Source) GetInstanceName() string {
+	if o == nil || IsNil(o.InstanceName) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceName
+}
+
+// GetInstanceNameOk returns a tuple with the InstanceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetInstanceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceName) {
+		return nil, false
+	}
+	return o.InstanceName, true
+}
+
+// HasInstanceName returns a boolean if a field has been set.
+func (o *Source) HasInstanceName() bool {
+	if o != nil && !IsNil(o.InstanceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceName gets a reference to the given string and assigns it to the InstanceName field.
+func (o *Source) SetInstanceName(v string) {
+	o.InstanceName = &v
+}
+
+// GetInstanceNumber returns the InstanceNumber field value if set, zero value otherwise.
+func (o *Source) GetInstanceNumber() int32 {
+	if o == nil || IsNil(o.InstanceNumber) {
+		var ret int32
+		return ret
+	}
+	return *o.InstanceNumber
+}
+
+// GetInstanceNumberOk returns a tuple with the InstanceNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetInstanceNumberOk() (*int32, bool) {
+	if o == nil || IsNil(o.InstanceNumber) {
+		return nil, false
+	}
+	return o.InstanceNumber, true
+}
+
+// HasInstanceNumber returns a boolean if a field has been set.
+func (o *Source) HasInstanceNumber() bool {
+	if o != nil && !IsNil(o.InstanceNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceNumber gets a reference to the given int32 and assigns it to the InstanceNumber field.
+func (o *Source) SetInstanceNumber(v int32) {
+	o.InstanceNumber = &v
+}
+
+// GetInstances returns the Instances field value if set, zero value otherwise.
+func (o *Source) GetInstances() []OracleRACDatabaseInstance {
+	if o == nil || IsNil(o.Instances) {
+		var ret []OracleRACDatabaseInstance
+		return ret
+	}
+	return o.Instances
+}
+
+// GetInstancesOk returns a tuple with the Instances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetInstancesOk() ([]OracleRACDatabaseInstance, bool) {
+	if o == nil || IsNil(o.Instances) {
+		return nil, false
+	}
+	return o.Instances, true
+}
+
+// HasInstances returns a boolean if a field has been set.
+func (o *Source) HasInstances() bool {
+	if o != nil && !IsNil(o.Instances) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstances gets a reference to the given []OracleRACDatabaseInstance and assigns it to the Instances field.
+func (o *Source) SetInstances(v []OracleRACDatabaseInstance) {
+	o.Instances = v
+}
+
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *Source) GetOracleServices() []OracleService {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []OracleService
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetOracleServicesOk() ([]OracleService, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *Source) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []OracleService and assigns it to the OracleServices field.
+func (o *Source) SetOracleServices(v []OracleService) {
+	o.OracleServices = v
+}
+
+// GetUser returns the User field value if set, zero value otherwise.
+func (o *Source) GetUser() string {
+	if o == nil || IsNil(o.User) {
+		var ret string
+		return ret
+	}
+	return *o.User
+}
+
+// GetUserOk returns a tuple with the User field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetUserOk() (*string, bool) {
+	if o == nil || IsNil(o.User) {
+		return nil, false
+	}
+	return o.User, true
+}
+
+// HasUser returns a boolean if a field has been set.
+func (o *Source) HasUser() bool {
+	if o != nil && !IsNil(o.User) {
+		return true
+	}
+
+	return false
+}
+
+// SetUser gets a reference to the given string and assigns it to the User field.
+func (o *Source) SetUser(v string) {
+	o.User = &v
+}
+
+// GetEnvironmentUserRef returns the EnvironmentUserRef field value if set, zero value otherwise.
+func (o *Source) GetEnvironmentUserRef() string {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserRef
+}
+
+// GetEnvironmentUserRefOk returns a tuple with the EnvironmentUserRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetEnvironmentUserRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		return nil, false
+	}
+	return o.EnvironmentUserRef, true
+}
+
+// HasEnvironmentUserRef returns a boolean if a field has been set.
+func (o *Source) HasEnvironmentUserRef() bool {
+	if o != nil && !IsNil(o.EnvironmentUserRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserRef gets a reference to the given string and assigns it to the EnvironmentUserRef field.
+func (o *Source) SetEnvironmentUserRef(v string) {
+	o.EnvironmentUserRef = &v
+}
+
+// GetNonSysUser returns the NonSysUser field value if set, zero value otherwise.
+func (o *Source) GetNonSysUser() string {
+	if o == nil || IsNil(o.NonSysUser) {
+		var ret string
+		return ret
+	}
+	return *o.NonSysUser
+}
+
+// GetNonSysUserOk returns a tuple with the NonSysUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetNonSysUserOk() (*string, bool) {
+	if o == nil || IsNil(o.NonSysUser) {
+		return nil, false
+	}
+	return o.NonSysUser, true
+}
+
+// HasNonSysUser returns a boolean if a field has been set.
+func (o *Source) HasNonSysUser() bool {
+	if o != nil && !IsNil(o.NonSysUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetNonSysUser gets a reference to the given string and assigns it to the NonSysUser field.
+func (o *Source) SetNonSysUser(v string) {
+	o.NonSysUser = &v
+}
+
+// GetDiscovered returns the Discovered field value if set, zero value otherwise.
+func (o *Source) GetDiscovered() bool {
+	if o == nil || IsNil(o.Discovered) {
+		var ret bool
+		return ret
+	}
+	return *o.Discovered
+}
+
+// GetDiscoveredOk returns a tuple with the Discovered field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetDiscoveredOk() (*bool, bool) {
+	if o == nil || IsNil(o.Discovered) {
+		return nil, false
+	}
+	return o.Discovered, true
+}
+
+// HasDiscovered returns a boolean if a field has been set.
+func (o *Source) HasDiscovered() bool {
+	if o != nil && !IsNil(o.Discovered) {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscovered gets a reference to the given bool and assigns it to the Discovered field.
+func (o *Source) SetDiscovered(v bool) {
+	o.Discovered = &v
+}
+
+// GetLinkingEnabled returns the LinkingEnabled field value if set, zero value otherwise.
+func (o *Source) GetLinkingEnabled() bool {
+	if o == nil || IsNil(o.LinkingEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.LinkingEnabled
+}
+
+// GetLinkingEnabledOk returns a tuple with the LinkingEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetLinkingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.LinkingEnabled) {
+		return nil, false
+	}
+	return o.LinkingEnabled, true
+}
+
+// HasLinkingEnabled returns a boolean if a field has been set.
+func (o *Source) HasLinkingEnabled() bool {
+	if o != nil && !IsNil(o.LinkingEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetLinkingEnabled gets a reference to the given bool and assigns it to the LinkingEnabled field.
+func (o *Source) SetLinkingEnabled(v bool) {
+	o.LinkingEnabled = &v
+}
+
+// GetCdbType returns the CdbType field value if set, zero value otherwise.
+func (o *Source) GetCdbType() string {
+	if o == nil || IsNil(o.CdbType) {
+		var ret string
+		return ret
+	}
+	return *o.CdbType
+}
+
+// GetCdbTypeOk returns a tuple with the CdbType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetCdbTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.CdbType) {
+		return nil, false
+	}
+	return o.CdbType, true
+}
+
+// HasCdbType returns a boolean if a field has been set.
+func (o *Source) HasCdbType() bool {
+	if o != nil && !IsNil(o.CdbType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdbType gets a reference to the given string and assigns it to the CdbType field.
+func (o *Source) SetCdbType(v string) {
+	o.CdbType = &v
+}
+
+// GetDataConnectionId returns the DataConnectionId field value if set, zero value otherwise.
+func (o *Source) GetDataConnectionId() string {
+	if o == nil || IsNil(o.DataConnectionId) {
+		var ret string
+		return ret
+	}
+	return *o.DataConnectionId
+}
+
+// GetDataConnectionIdOk returns a tuple with the DataConnectionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetDataConnectionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DataConnectionId) {
+		return nil, false
+	}
+	return o.DataConnectionId, true
+}
+
+// HasDataConnectionId returns a boolean if a field has been set.
+func (o *Source) HasDataConnectionId() bool {
+	if o != nil && !IsNil(o.DataConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataConnectionId gets a reference to the given string and assigns it to the DataConnectionId field.
+func (o *Source) SetDataConnectionId(v string) {
+	o.DataConnectionId = &v
+}
+
+// GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
+func (o *Source) GetDatabaseName() string {
+	if o == nil || IsNil(o.DatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseName
+}
+
+// GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseName) {
+		return nil, false
+	}
+	return o.DatabaseName, true
+}
+
+// HasDatabaseName returns a boolean if a field has been set.
+func (o *Source) HasDatabaseName() bool {
+	if o != nil && !IsNil(o.DatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
+func (o *Source) SetDatabaseName(v string) {
+	o.DatabaseName = &v
+}
+
+// GetDatabaseUniqueName returns the DatabaseUniqueName field value if set, zero value otherwise.
+func (o *Source) GetDatabaseUniqueName() string {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUniqueName
+}
+
+// GetDatabaseUniqueNameOk returns a tuple with the DatabaseUniqueName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Source) GetDatabaseUniqueNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		return nil, false
+	}
+	return o.DatabaseUniqueName, true
+}
+
+// HasDatabaseUniqueName returns a boolean if a field has been set.
+func (o *Source) HasDatabaseUniqueName() bool {
+	if o != nil && !IsNil(o.DatabaseUniqueName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUniqueName gets a reference to the given string and assigns it to the DatabaseUniqueName field.
+func (o *Source) SetDatabaseUniqueName(v string) {
+	o.DatabaseUniqueName = &v
 }
 
 func (o Source) MarshalJSON() ([]byte, error) {
@@ -981,8 +1469,50 @@ func (o Source) ToMap() (map[string]interface{}, error) {
 	if o.AppdataSourceType.IsSet() {
 		toSerialize["appdata_source_type"] = o.AppdataSourceType.Get()
 	}
+	if o.IsPdb.IsSet() {
+		toSerialize["is_pdb"] = o.IsPdb.Get()
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.InstanceName) {
+		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.InstanceNumber) {
+		toSerialize["instance_number"] = o.InstanceNumber
+	}
+	if !IsNil(o.Instances) {
+		toSerialize["instances"] = o.Instances
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
+	}
+	if !IsNil(o.User) {
+		toSerialize["user"] = o.User
+	}
+	if !IsNil(o.EnvironmentUserRef) {
+		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
+	}
+	if !IsNil(o.NonSysUser) {
+		toSerialize["non_sys_user"] = o.NonSysUser
+	}
+	if !IsNil(o.Discovered) {
+		toSerialize["discovered"] = o.Discovered
+	}
+	if !IsNil(o.LinkingEnabled) {
+		toSerialize["linking_enabled"] = o.LinkingEnabled
+	}
+	if !IsNil(o.CdbType) {
+		toSerialize["cdb_type"] = o.CdbType
+	}
+	if !IsNil(o.DataConnectionId) {
+		toSerialize["data_connection_id"] = o.DataConnectionId
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
+	}
+	if !IsNil(o.DatabaseUniqueName) {
+		toSerialize["database_unique_name"] = o.DatabaseUniqueName
 	}
 	return toSerialize, nil
 }

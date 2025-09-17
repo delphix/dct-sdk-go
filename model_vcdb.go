@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,8 @@ type VCDB struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this vCDB.
 	Name NullableString `json:"name,omitempty"`
+	// The name of the container database in the Oracle DBMS.
+	DatabaseName *string `json:"database_name,omitempty"`
 	// The namespace id of this vCDB.
 	NamespaceId NullableString `json:"namespace_id,omitempty"`
 	// The namespace name of this vCDB.
@@ -54,6 +56,36 @@ type VCDB struct {
 	// Indicates whether the Engine should automatically restart this vcdb when target host reboot is detected.
 	VcdbRestart *bool `json:"vcdb_restart,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// Indicates whether datapatch should be invoked.
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// The list of node listeners for this VCDB.
+	NodeListeners []string `json:"node_listeners,omitempty"`
+	// The instance name of this single instance VCDB.
+	InstanceName *string `json:"instance_name,omitempty"`
+	// The instance number of this single instance VCDB.
+	InstanceNumber *int32 `json:"instance_number,omitempty"`
+	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
+	OracleServices []OracleService `json:"oracle_services,omitempty"`
+	// The repository id of this Virtual CDB.
+	RepositoryId *string `json:"repository_id,omitempty"`
+	ContainerizationState *ContainerizationStateEnum `json:"containerization_state,omitempty"`
+	// ID of the key created by Delphix, as recorded in v$encryption_keys.key_id.
+	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
+	// True if TDE keystore password is set for this container database.
+	IsTdeKeystorePasswordSet *bool `json:"is_tde_keystore_password_set,omitempty"`
+	// The unique name of the database.
+	DatabaseUniqueName *string `json:"database_unique_name,omitempty"`
+	// The user name of the database.
+	DbUsername *string `json:"db_username,omitempty"`
+	// Number of Online Redo Log Groups.
+	RedoLogGroups *int32 `json:"redo_log_groups,omitempty"`
+	// Online Redo Log size in MB.
+	RedoLogSizeInMb *int32 `json:"redo_log_size_in_mb,omitempty"`
+	// Database configuration parameter overrides.
+	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
+	CustomEnvVars []OracleCustomEnvVar `json:"custom_env_vars,omitempty"`
+	ActiveInstances []OracleActiveInstance `json:"active_instances,omitempty"`
 }
 
 // NewVCDB instantiates a new VCDB object
@@ -145,6 +177,38 @@ func (o *VCDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *VCDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
+func (o *VCDB) GetDatabaseName() string {
+	if o == nil || IsNil(o.DatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseName
+}
+
+// GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseName) {
+		return nil, false
+	}
+	return o.DatabaseName, true
+}
+
+// HasDatabaseName returns a boolean if a field has been set.
+func (o *VCDB) HasDatabaseName() bool {
+	if o != nil && !IsNil(o.DatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
+func (o *VCDB) SetDatabaseName(v string) {
+	o.DatabaseName = &v
 }
 
 // GetNamespaceId returns the NamespaceId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -727,6 +791,583 @@ func (o *VCDB) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *VCDB) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *VCDB) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *VCDB) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
+// GetNodeListeners returns the NodeListeners field value if set, zero value otherwise.
+func (o *VCDB) GetNodeListeners() []string {
+	if o == nil || IsNil(o.NodeListeners) {
+		var ret []string
+		return ret
+	}
+	return o.NodeListeners
+}
+
+// GetNodeListenersOk returns a tuple with the NodeListeners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetNodeListenersOk() ([]string, bool) {
+	if o == nil || IsNil(o.NodeListeners) {
+		return nil, false
+	}
+	return o.NodeListeners, true
+}
+
+// HasNodeListeners returns a boolean if a field has been set.
+func (o *VCDB) HasNodeListeners() bool {
+	if o != nil && !IsNil(o.NodeListeners) {
+		return true
+	}
+
+	return false
+}
+
+// SetNodeListeners gets a reference to the given []string and assigns it to the NodeListeners field.
+func (o *VCDB) SetNodeListeners(v []string) {
+	o.NodeListeners = v
+}
+
+// GetInstanceName returns the InstanceName field value if set, zero value otherwise.
+func (o *VCDB) GetInstanceName() string {
+	if o == nil || IsNil(o.InstanceName) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceName
+}
+
+// GetInstanceNameOk returns a tuple with the InstanceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetInstanceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceName) {
+		return nil, false
+	}
+	return o.InstanceName, true
+}
+
+// HasInstanceName returns a boolean if a field has been set.
+func (o *VCDB) HasInstanceName() bool {
+	if o != nil && !IsNil(o.InstanceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceName gets a reference to the given string and assigns it to the InstanceName field.
+func (o *VCDB) SetInstanceName(v string) {
+	o.InstanceName = &v
+}
+
+// GetInstanceNumber returns the InstanceNumber field value if set, zero value otherwise.
+func (o *VCDB) GetInstanceNumber() int32 {
+	if o == nil || IsNil(o.InstanceNumber) {
+		var ret int32
+		return ret
+	}
+	return *o.InstanceNumber
+}
+
+// GetInstanceNumberOk returns a tuple with the InstanceNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetInstanceNumberOk() (*int32, bool) {
+	if o == nil || IsNil(o.InstanceNumber) {
+		return nil, false
+	}
+	return o.InstanceNumber, true
+}
+
+// HasInstanceNumber returns a boolean if a field has been set.
+func (o *VCDB) HasInstanceNumber() bool {
+	if o != nil && !IsNil(o.InstanceNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceNumber gets a reference to the given int32 and assigns it to the InstanceNumber field.
+func (o *VCDB) SetInstanceNumber(v int32) {
+	o.InstanceNumber = &v
+}
+
+// GetInstances returns the Instances field value if set, zero value otherwise.
+func (o *VCDB) GetInstances() []OracleRACDatabaseInstance {
+	if o == nil || IsNil(o.Instances) {
+		var ret []OracleRACDatabaseInstance
+		return ret
+	}
+	return o.Instances
+}
+
+// GetInstancesOk returns a tuple with the Instances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetInstancesOk() ([]OracleRACDatabaseInstance, bool) {
+	if o == nil || IsNil(o.Instances) {
+		return nil, false
+	}
+	return o.Instances, true
+}
+
+// HasInstances returns a boolean if a field has been set.
+func (o *VCDB) HasInstances() bool {
+	if o != nil && !IsNil(o.Instances) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstances gets a reference to the given []OracleRACDatabaseInstance and assigns it to the Instances field.
+func (o *VCDB) SetInstances(v []OracleRACDatabaseInstance) {
+	o.Instances = v
+}
+
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *VCDB) GetOracleServices() []OracleService {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []OracleService
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetOracleServicesOk() ([]OracleService, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *VCDB) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []OracleService and assigns it to the OracleServices field.
+func (o *VCDB) SetOracleServices(v []OracleService) {
+	o.OracleServices = v
+}
+
+// GetRepositoryId returns the RepositoryId field value if set, zero value otherwise.
+func (o *VCDB) GetRepositoryId() string {
+	if o == nil || IsNil(o.RepositoryId) {
+		var ret string
+		return ret
+	}
+	return *o.RepositoryId
+}
+
+// GetRepositoryIdOk returns a tuple with the RepositoryId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetRepositoryIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RepositoryId) {
+		return nil, false
+	}
+	return o.RepositoryId, true
+}
+
+// HasRepositoryId returns a boolean if a field has been set.
+func (o *VCDB) HasRepositoryId() bool {
+	if o != nil && !IsNil(o.RepositoryId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRepositoryId gets a reference to the given string and assigns it to the RepositoryId field.
+func (o *VCDB) SetRepositoryId(v string) {
+	o.RepositoryId = &v
+}
+
+// GetContainerizationState returns the ContainerizationState field value if set, zero value otherwise.
+func (o *VCDB) GetContainerizationState() ContainerizationStateEnum {
+	if o == nil || IsNil(o.ContainerizationState) {
+		var ret ContainerizationStateEnum
+		return ret
+	}
+	return *o.ContainerizationState
+}
+
+// GetContainerizationStateOk returns a tuple with the ContainerizationState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetContainerizationStateOk() (*ContainerizationStateEnum, bool) {
+	if o == nil || IsNil(o.ContainerizationState) {
+		return nil, false
+	}
+	return o.ContainerizationState, true
+}
+
+// HasContainerizationState returns a boolean if a field has been set.
+func (o *VCDB) HasContainerizationState() bool {
+	if o != nil && !IsNil(o.ContainerizationState) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerizationState gets a reference to the given ContainerizationStateEnum and assigns it to the ContainerizationState field.
+func (o *VCDB) SetContainerizationState(v ContainerizationStateEnum) {
+	o.ContainerizationState = &v
+}
+
+// GetTdeKeyIdentifier returns the TdeKeyIdentifier field value if set, zero value otherwise.
+func (o *VCDB) GetTdeKeyIdentifier() string {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeyIdentifier
+}
+
+// GetTdeKeyIdentifierOk returns a tuple with the TdeKeyIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetTdeKeyIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		return nil, false
+	}
+	return o.TdeKeyIdentifier, true
+}
+
+// HasTdeKeyIdentifier returns a boolean if a field has been set.
+func (o *VCDB) HasTdeKeyIdentifier() bool {
+	if o != nil && !IsNil(o.TdeKeyIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeyIdentifier gets a reference to the given string and assigns it to the TdeKeyIdentifier field.
+func (o *VCDB) SetTdeKeyIdentifier(v string) {
+	o.TdeKeyIdentifier = &v
+}
+
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *VCDB) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *VCDB) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *VCDB) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
+// GetIsTdeKeystorePasswordSet returns the IsTdeKeystorePasswordSet field value if set, zero value otherwise.
+func (o *VCDB) GetIsTdeKeystorePasswordSet() bool {
+	if o == nil || IsNil(o.IsTdeKeystorePasswordSet) {
+		var ret bool
+		return ret
+	}
+	return *o.IsTdeKeystorePasswordSet
+}
+
+// GetIsTdeKeystorePasswordSetOk returns a tuple with the IsTdeKeystorePasswordSet field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetIsTdeKeystorePasswordSetOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsTdeKeystorePasswordSet) {
+		return nil, false
+	}
+	return o.IsTdeKeystorePasswordSet, true
+}
+
+// HasIsTdeKeystorePasswordSet returns a boolean if a field has been set.
+func (o *VCDB) HasIsTdeKeystorePasswordSet() bool {
+	if o != nil && !IsNil(o.IsTdeKeystorePasswordSet) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsTdeKeystorePasswordSet gets a reference to the given bool and assigns it to the IsTdeKeystorePasswordSet field.
+func (o *VCDB) SetIsTdeKeystorePasswordSet(v bool) {
+	o.IsTdeKeystorePasswordSet = &v
+}
+
+// GetDatabaseUniqueName returns the DatabaseUniqueName field value if set, zero value otherwise.
+func (o *VCDB) GetDatabaseUniqueName() string {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUniqueName
+}
+
+// GetDatabaseUniqueNameOk returns a tuple with the DatabaseUniqueName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetDatabaseUniqueNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		return nil, false
+	}
+	return o.DatabaseUniqueName, true
+}
+
+// HasDatabaseUniqueName returns a boolean if a field has been set.
+func (o *VCDB) HasDatabaseUniqueName() bool {
+	if o != nil && !IsNil(o.DatabaseUniqueName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUniqueName gets a reference to the given string and assigns it to the DatabaseUniqueName field.
+func (o *VCDB) SetDatabaseUniqueName(v string) {
+	o.DatabaseUniqueName = &v
+}
+
+// GetDbUsername returns the DbUsername field value if set, zero value otherwise.
+func (o *VCDB) GetDbUsername() string {
+	if o == nil || IsNil(o.DbUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DbUsername
+}
+
+// GetDbUsernameOk returns a tuple with the DbUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetDbUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DbUsername) {
+		return nil, false
+	}
+	return o.DbUsername, true
+}
+
+// HasDbUsername returns a boolean if a field has been set.
+func (o *VCDB) HasDbUsername() bool {
+	if o != nil && !IsNil(o.DbUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbUsername gets a reference to the given string and assigns it to the DbUsername field.
+func (o *VCDB) SetDbUsername(v string) {
+	o.DbUsername = &v
+}
+
+// GetRedoLogGroups returns the RedoLogGroups field value if set, zero value otherwise.
+func (o *VCDB) GetRedoLogGroups() int32 {
+	if o == nil || IsNil(o.RedoLogGroups) {
+		var ret int32
+		return ret
+	}
+	return *o.RedoLogGroups
+}
+
+// GetRedoLogGroupsOk returns a tuple with the RedoLogGroups field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetRedoLogGroupsOk() (*int32, bool) {
+	if o == nil || IsNil(o.RedoLogGroups) {
+		return nil, false
+	}
+	return o.RedoLogGroups, true
+}
+
+// HasRedoLogGroups returns a boolean if a field has been set.
+func (o *VCDB) HasRedoLogGroups() bool {
+	if o != nil && !IsNil(o.RedoLogGroups) {
+		return true
+	}
+
+	return false
+}
+
+// SetRedoLogGroups gets a reference to the given int32 and assigns it to the RedoLogGroups field.
+func (o *VCDB) SetRedoLogGroups(v int32) {
+	o.RedoLogGroups = &v
+}
+
+// GetRedoLogSizeInMb returns the RedoLogSizeInMb field value if set, zero value otherwise.
+func (o *VCDB) GetRedoLogSizeInMb() int32 {
+	if o == nil || IsNil(o.RedoLogSizeInMb) {
+		var ret int32
+		return ret
+	}
+	return *o.RedoLogSizeInMb
+}
+
+// GetRedoLogSizeInMbOk returns a tuple with the RedoLogSizeInMb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetRedoLogSizeInMbOk() (*int32, bool) {
+	if o == nil || IsNil(o.RedoLogSizeInMb) {
+		return nil, false
+	}
+	return o.RedoLogSizeInMb, true
+}
+
+// HasRedoLogSizeInMb returns a boolean if a field has been set.
+func (o *VCDB) HasRedoLogSizeInMb() bool {
+	if o != nil && !IsNil(o.RedoLogSizeInMb) {
+		return true
+	}
+
+	return false
+}
+
+// SetRedoLogSizeInMb gets a reference to the given int32 and assigns it to the RedoLogSizeInMb field.
+func (o *VCDB) SetRedoLogSizeInMb(v int32) {
+	o.RedoLogSizeInMb = &v
+}
+
+// GetConfigParams returns the ConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VCDB) GetConfigParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.ConfigParams
+}
+
+// GetConfigParamsOk returns a tuple with the ConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VCDB) GetConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.ConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.ConfigParams, true
+}
+
+// HasConfigParams returns a boolean if a field has been set.
+func (o *VCDB) HasConfigParams() bool {
+	if o != nil && !IsNil(o.ConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfigParams gets a reference to the given map[string]interface{} and assigns it to the ConfigParams field.
+func (o *VCDB) SetConfigParams(v map[string]interface{}) {
+	o.ConfigParams = v
+}
+
+// GetCustomEnvVars returns the CustomEnvVars field value if set, zero value otherwise.
+func (o *VCDB) GetCustomEnvVars() []OracleCustomEnvVar {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		var ret []OracleCustomEnvVar
+		return ret
+	}
+	return o.CustomEnvVars
+}
+
+// GetCustomEnvVarsOk returns a tuple with the CustomEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetCustomEnvVarsOk() ([]OracleCustomEnvVar, bool) {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		return nil, false
+	}
+	return o.CustomEnvVars, true
+}
+
+// HasCustomEnvVars returns a boolean if a field has been set.
+func (o *VCDB) HasCustomEnvVars() bool {
+	if o != nil && !IsNil(o.CustomEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomEnvVars gets a reference to the given []OracleCustomEnvVar and assigns it to the CustomEnvVars field.
+func (o *VCDB) SetCustomEnvVars(v []OracleCustomEnvVar) {
+	o.CustomEnvVars = v
+}
+
+// GetActiveInstances returns the ActiveInstances field value if set, zero value otherwise.
+func (o *VCDB) GetActiveInstances() []OracleActiveInstance {
+	if o == nil || IsNil(o.ActiveInstances) {
+		var ret []OracleActiveInstance
+		return ret
+	}
+	return o.ActiveInstances
+}
+
+// GetActiveInstancesOk returns a tuple with the ActiveInstances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetActiveInstancesOk() ([]OracleActiveInstance, bool) {
+	if o == nil || IsNil(o.ActiveInstances) {
+		return nil, false
+	}
+	return o.ActiveInstances, true
+}
+
+// HasActiveInstances returns a boolean if a field has been set.
+func (o *VCDB) HasActiveInstances() bool {
+	if o != nil && !IsNil(o.ActiveInstances) {
+		return true
+	}
+
+	return false
+}
+
+// SetActiveInstances gets a reference to the given []OracleActiveInstance and assigns it to the ActiveInstances field.
+func (o *VCDB) SetActiveInstances(v []OracleActiveInstance) {
+	o.ActiveInstances = v
+}
+
 func (o VCDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -742,6 +1383,9 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
 	}
 	if o.NamespaceId.IsSet() {
 		toSerialize["namespace_id"] = o.NamespaceId.Get()
@@ -787,6 +1431,60 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.NodeListeners) {
+		toSerialize["node_listeners"] = o.NodeListeners
+	}
+	if !IsNil(o.InstanceName) {
+		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.InstanceNumber) {
+		toSerialize["instance_number"] = o.InstanceNumber
+	}
+	if !IsNil(o.Instances) {
+		toSerialize["instances"] = o.Instances
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
+	}
+	if !IsNil(o.RepositoryId) {
+		toSerialize["repository_id"] = o.RepositoryId
+	}
+	if !IsNil(o.ContainerizationState) {
+		toSerialize["containerization_state"] = o.ContainerizationState
+	}
+	if !IsNil(o.TdeKeyIdentifier) {
+		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
+	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
+	if !IsNil(o.IsTdeKeystorePasswordSet) {
+		toSerialize["is_tde_keystore_password_set"] = o.IsTdeKeystorePasswordSet
+	}
+	if !IsNil(o.DatabaseUniqueName) {
+		toSerialize["database_unique_name"] = o.DatabaseUniqueName
+	}
+	if !IsNil(o.DbUsername) {
+		toSerialize["db_username"] = o.DbUsername
+	}
+	if !IsNil(o.RedoLogGroups) {
+		toSerialize["redo_log_groups"] = o.RedoLogGroups
+	}
+	if !IsNil(o.RedoLogSizeInMb) {
+		toSerialize["redo_log_size_in_mb"] = o.RedoLogSizeInMb
+	}
+	if o.ConfigParams != nil {
+		toSerialize["config_params"] = o.ConfigParams
+	}
+	if !IsNil(o.CustomEnvVars) {
+		toSerialize["custom_env_vars"] = o.CustomEnvVars
+	}
+	if !IsNil(o.ActiveInstances) {
+		toSerialize["active_instances"] = o.ActiveInstances
 	}
 	return toSerialize, nil
 }

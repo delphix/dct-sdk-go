@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the HyperscaleInstanceRegistrationParameter type satisfies the MappedNullable interface at compile time
@@ -22,22 +24,22 @@ var _ MappedNullable = &HyperscaleInstanceRegistrationParameter{}
 type HyperscaleInstanceRegistrationParameter struct {
 	// Name in DCT of the Hyperscale instance.
 	Name string `json:"name"`
-	// Hostname of the Hyperscale instance.
+	// Hostname of the Hyperscale instance. If the Hyperscale instance is running on a custom port (not 443), the port can be specified using the \"hostname:port\" format, for instance \"hyperscale-1.mycompany.co:1765\"
 	Hostname string `json:"hostname"`
 	// API key to connect to the Hyperscale instance.
 	ApiKey NullableString `json:"api_key"`
 	DataType HyperscaleDataTypeEnum `json:"data_type"`
-	// Allow connections to the hyperscale instance over HTTPs without validating the TLS certificate. Even though the connection to the hyperscale instance might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the hyperscale instance's certificate, and set the truststore_filename property. 
+	// Allow connections to the hyperscale instance over HTTPs without validating the TLS certificate. Even though the connection to the hyperscale instance might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider configuring DCT with Certificate Authority certificates. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the hyperscale instance over HTTPs. Setting this value must only be done if the TLS certificate of the hyperscale instance does not match the hostname, and the TLS configuration of the hyperscale instance cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
-	// File name of a truststore which can be used to validate the TLS certificate of the hyperscale instance. The truststore must be available at /etc/config/certs/<truststore_filename> 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
-	// Password to read the truststore. 
-	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	// The tags to be created for this engine.
 	Tags []Tag `json:"tags,omitempty"`
+	// Whether the account creating this Hyperscale instance must be configured as owner of it.
+	MakeCurrentAccountOwner *bool `json:"make_current_account_owner,omitempty"`
 }
+
+type _HyperscaleInstanceRegistrationParameter HyperscaleInstanceRegistrationParameter
 
 // NewHyperscaleInstanceRegistrationParameter instantiates a new HyperscaleInstanceRegistrationParameter object
 // This constructor will assign default values to properties that have it defined,
@@ -53,6 +55,8 @@ func NewHyperscaleInstanceRegistrationParameter(name string, hostname string, ap
 	this.InsecureSsl = &insecureSsl
 	var unsafeSslHostnameCheck bool = false
 	this.UnsafeSslHostnameCheck = &unsafeSslHostnameCheck
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
@@ -65,6 +69,8 @@ func NewHyperscaleInstanceRegistrationParameterWithDefaults() *HyperscaleInstanc
 	this.InsecureSsl = &insecureSsl
 	var unsafeSslHostnameCheck bool = false
 	this.UnsafeSslHostnameCheck = &unsafeSslHostnameCheck
+	var makeCurrentAccountOwner bool = true
+	this.MakeCurrentAccountOwner = &makeCurrentAccountOwner
 	return &this
 }
 
@@ -230,90 +236,6 @@ func (o *HyperscaleInstanceRegistrationParameter) SetUnsafeSslHostnameCheck(v bo
 	o.UnsafeSslHostnameCheck = &v
 }
 
-// GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *HyperscaleInstanceRegistrationParameter) GetTruststoreFilename() string {
-	if o == nil || IsNil(o.TruststoreFilename.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststoreFilename.Get()
-}
-
-// GetTruststoreFilenameOk returns a tuple with the TruststoreFilename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *HyperscaleInstanceRegistrationParameter) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststoreFilename.Get(), o.TruststoreFilename.IsSet()
-}
-
-// HasTruststoreFilename returns a boolean if a field has been set.
-func (o *HyperscaleInstanceRegistrationParameter) HasTruststoreFilename() bool {
-	if o != nil && o.TruststoreFilename.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststoreFilename gets a reference to the given NullableString and assigns it to the TruststoreFilename field.
-func (o *HyperscaleInstanceRegistrationParameter) SetTruststoreFilename(v string) {
-	o.TruststoreFilename.Set(&v)
-}
-// SetTruststoreFilenameNil sets the value for TruststoreFilename to be an explicit nil
-func (o *HyperscaleInstanceRegistrationParameter) SetTruststoreFilenameNil() {
-	o.TruststoreFilename.Set(nil)
-}
-
-// UnsetTruststoreFilename ensures that no value is present for TruststoreFilename, not even an explicit nil
-func (o *HyperscaleInstanceRegistrationParameter) UnsetTruststoreFilename() {
-	o.TruststoreFilename.Unset()
-}
-
-// GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *HyperscaleInstanceRegistrationParameter) GetTruststorePassword() string {
-	if o == nil || IsNil(o.TruststorePassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststorePassword.Get()
-}
-
-// GetTruststorePasswordOk returns a tuple with the TruststorePassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *HyperscaleInstanceRegistrationParameter) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststorePassword.Get(), o.TruststorePassword.IsSet()
-}
-
-// HasTruststorePassword returns a boolean if a field has been set.
-func (o *HyperscaleInstanceRegistrationParameter) HasTruststorePassword() bool {
-	if o != nil && o.TruststorePassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststorePassword gets a reference to the given NullableString and assigns it to the TruststorePassword field.
-func (o *HyperscaleInstanceRegistrationParameter) SetTruststorePassword(v string) {
-	o.TruststorePassword.Set(&v)
-}
-// SetTruststorePasswordNil sets the value for TruststorePassword to be an explicit nil
-func (o *HyperscaleInstanceRegistrationParameter) SetTruststorePasswordNil() {
-	o.TruststorePassword.Set(nil)
-}
-
-// UnsetTruststorePassword ensures that no value is present for TruststorePassword, not even an explicit nil
-func (o *HyperscaleInstanceRegistrationParameter) UnsetTruststorePassword() {
-	o.TruststorePassword.Unset()
-}
-
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *HyperscaleInstanceRegistrationParameter) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -346,6 +268,38 @@ func (o *HyperscaleInstanceRegistrationParameter) SetTags(v []Tag) {
 	o.Tags = v
 }
 
+// GetMakeCurrentAccountOwner returns the MakeCurrentAccountOwner field value if set, zero value otherwise.
+func (o *HyperscaleInstanceRegistrationParameter) GetMakeCurrentAccountOwner() bool {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		var ret bool
+		return ret
+	}
+	return *o.MakeCurrentAccountOwner
+}
+
+// GetMakeCurrentAccountOwnerOk returns a tuple with the MakeCurrentAccountOwner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *HyperscaleInstanceRegistrationParameter) GetMakeCurrentAccountOwnerOk() (*bool, bool) {
+	if o == nil || IsNil(o.MakeCurrentAccountOwner) {
+		return nil, false
+	}
+	return o.MakeCurrentAccountOwner, true
+}
+
+// HasMakeCurrentAccountOwner returns a boolean if a field has been set.
+func (o *HyperscaleInstanceRegistrationParameter) HasMakeCurrentAccountOwner() bool {
+	if o != nil && !IsNil(o.MakeCurrentAccountOwner) {
+		return true
+	}
+
+	return false
+}
+
+// SetMakeCurrentAccountOwner gets a reference to the given bool and assigns it to the MakeCurrentAccountOwner field.
+func (o *HyperscaleInstanceRegistrationParameter) SetMakeCurrentAccountOwner(v bool) {
+	o.MakeCurrentAccountOwner = &v
+}
+
 func (o HyperscaleInstanceRegistrationParameter) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -366,16 +320,53 @@ func (o HyperscaleInstanceRegistrationParameter) ToMap() (map[string]interface{}
 	if !IsNil(o.UnsafeSslHostnameCheck) {
 		toSerialize["unsafe_ssl_hostname_check"] = o.UnsafeSslHostnameCheck
 	}
-	if o.TruststoreFilename.IsSet() {
-		toSerialize["truststore_filename"] = o.TruststoreFilename.Get()
-	}
-	if o.TruststorePassword.IsSet() {
-		toSerialize["truststore_password"] = o.TruststorePassword.Get()
-	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
+	if !IsNil(o.MakeCurrentAccountOwner) {
+		toSerialize["make_current_account_owner"] = o.MakeCurrentAccountOwner
+	}
 	return toSerialize, nil
+}
+
+func (o *HyperscaleInstanceRegistrationParameter) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"hostname",
+		"api_key",
+		"data_type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varHyperscaleInstanceRegistrationParameter := _HyperscaleInstanceRegistrationParameter{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varHyperscaleInstanceRegistrationParameter)
+
+	if err != nil {
+		return err
+	}
+
+	*o = HyperscaleInstanceRegistrationParameter(varHyperscaleInstanceRegistrationParameter)
+
+	return err
 }
 
 type NullableHyperscaleInstanceRegistrationParameter struct {

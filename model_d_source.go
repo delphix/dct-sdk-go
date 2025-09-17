@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -49,10 +49,14 @@ type DSource struct {
 	GroupName NullableString `json:"group_name,omitempty"`
 	// A value indicating whether this dSource is enabled.
 	Enabled NullableBool `json:"enabled,omitempty"`
+	// A value indicating whether this dSource is detached.
+	IsDetached NullableBool `json:"is_detached,omitempty"`
 	// A reference to the Engine that this dSource belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
 	// A reference to the Source associated with this dSource.
 	SourceId NullableString `json:"source_id,omitempty"`
+	// A reference to the Staging Source associated with this dSource.
+	StagingSourceId NullableString `json:"staging_source_id,omitempty"`
 	// The runtime status of the dSource. 'Unknown' if all attempts to connect to the source failed.
 	Status NullableString `json:"status,omitempty"`
 	// Name of the Engine where this DSource is hosted
@@ -71,6 +75,10 @@ type DSource struct {
 	UnvirtualizedSpace *int64 `json:"unvirtualized_space,omitempty"`
 	// The number of VDBs that are dependant on this dSource. This includes all VDB descendants that have this dSource as an ancestor.
 	DependantVdbs *int32 `json:"dependant_vdbs,omitempty"`
+	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
+	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
+	// The parameters specified by the source config schema in the toolkit
+	AppdataConfigParams map[string]interface{} `json:"appdata_config_params,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 	// The ID of the parent object from which replication was done.
 	PrimaryObjectId *string `json:"primary_object_id,omitempty"`
@@ -85,8 +93,108 @@ type DSource struct {
 	SyncPolicyId *string `json:"sync_policy_id,omitempty"`
 	// The id of the retention policy associated with this dSource.
 	RetentionPolicyId *string `json:"retention_policy_id,omitempty"`
+	// The id of the replica retention policy associated with this dSource.
+	ReplicaRetentionPolicyId *string `json:"replica_retention_policy_id,omitempty"`
 	// The id of the quota policy associated with this dSource.
 	QuotaPolicyId *string `json:"quota_policy_id,omitempty"`
+	// True if LogSync is enabled for this dSource.
+	LogsyncEnabled *bool `json:"logsync_enabled,omitempty"`
+	LogsyncMode *OracleLogsyncModeTypeEnum `json:"logsync_mode,omitempty"`
+	// Interval between LogSync requests, in seconds.
+	LogsyncInterval *int32 `json:"logsync_interval,omitempty"`
+	// ZFS exported data directory path.
+	ExportedDataDirectory *string `json:"exported_data_directory,omitempty"`
+	// A reference to the Non Virtual Database Template.
+	TemplateId NullableString `json:"template_id,omitempty"`
+	// Indicates whether Delphix should automatically restart this staging database when staging host reboot is detected.
+	AllowAutoStagingRestartOnHostReboot *bool `json:"allow_auto_staging_restart_on_host_reboot,omitempty"`
+	// Indicates whether this staging database is configured as a physical standby.
+	PhysicalStandby *bool `json:"physical_standby,omitempty"`
+	// Indicates whether this staging database snapshot is validated by opening it in read-only mode.
+	ValidateByOpeningDbInReadOnlyMode *bool `json:"validate_by_opening_db_in_read_only_mode,omitempty"`
+	MssqlSyncStrategyManagedType *string `json:"mssql_sync_strategy_managed_type,omitempty"`
+	// Specifies the backup types ValidatedSync will use to synchronize the dSource with the source database.
+	ValidatedSyncMode *string `json:"validated_sync_mode,omitempty"`
+	// Shared source database backup locations.
+	SharedBackupLocations []string `json:"shared_backup_locations,omitempty"`
+	// Specify which node of an availability group to run the copy-only full backup on
+	BackupPolicy *string `json:"backup_policy,omitempty"`
+	// Specify whether the backups taken should be compressed or uncompressed.
+	CompressionEnabled *bool `json:"compression_enabled,omitempty"`
+	// The name of the staging database
+	StagingDatabaseName *string `json:"staging_database_name,omitempty"`
+	// User provided db state that is used to create staging push db
+	DbState *string `json:"db_state,omitempty"`
+	// The encryption key to use when restoring encrypted backups.
+	EncryptionKey *string `json:"encryption_key,omitempty"`
+	// The master server name of this NetBackup configuration.
+	ExternalNetbackupConfigMasterName *string `json:"external_netbackup_config_master_name,omitempty"`
+	// The source's client server name of this NetBackup configuration.
+	ExternalNetbackupConfigSourceClientName *string `json:"external_netbackup_config_source_client_name,omitempty"`
+	// NetBackup configuration parameter overrides.
+	ExternalNetbackupConfigParams map[string]interface{} `json:"external_netbackup_config_params,omitempty"`
+	// Optional config template selection for NetBackup configurations.
+	ExternalNetbackupConfigTemplates *string `json:"external_netbackup_config_templates,omitempty"`
+	// The commserve host name of this Commvault configuration.
+	ExternalCommserveHostName *string `json:"external_commserve_host_name,omitempty"`
+	// The source client name of this Commvault configuration.
+	ExternalCommvaultConfigSourceClientName *string `json:"external_commvault_config_source_client_name,omitempty"`
+	// The staging client name of this Commvault configuration.
+	ExternalCommvaultConfigStagingClientName *string `json:"external_commvault_config_staging_client_name,omitempty"`
+	// Commvault configuration parameter overrides.
+	ExternalCommvaultConfigParams map[string]interface{} `json:"external_commvault_config_params,omitempty"`
+	// Optional config template selection for Commvault configurations.
+	ExternalCommvaultConfigTemplates *string `json:"external_commvault_config_templates,omitempty"`
+	// Database user type for Database authentication.
+	MssqlUserType *string `json:"mssql_user_type,omitempty"`
+	// credential types.
+	DomainUserCredentialType *string `json:"domain_user_credential_type,omitempty"`
+	// The database user name for database user type.
+	MssqlDatabaseUsername *string `json:"mssql_database_username,omitempty"`
+	// The name or reference of the environment user for environment user type.
+	MssqlUserEnvironmentReference *string `json:"mssql_user_environment_reference,omitempty"`
+	// Domain User name for password credentials.
+	MssqlUserDomainUsername *string `json:"mssql_user_domain_username,omitempty"`
+	// Delphix display name for the vault user.
+	MssqlUserDomainVaultUsername *string `json:"mssql_user_domain_vault_username,omitempty"`
+	// The name or reference of the vault.
+	MssqlUserDomainVault *string `json:"mssql_user_domain_vault,omitempty"`
+	// Vault engine name where the credential is stored.
+	MssqlUserDomainHashicorpVaultEngine *string `json:"mssql_user_domain_hashicorp_vault_engine,omitempty"`
+	// Path in the vault engine where the credential is stored.
+	MssqlUserDomainHashicorpVaultSecretPath *string `json:"mssql_user_domain_hashicorp_vault_secret_path,omitempty"`
+	// Hashicorp vault key for the username in the key-value store.
+	MssqlUserDomainHashicorpVaultUsernameKey *string `json:"mssql_user_domain_hashicorp_vault_username_key,omitempty"`
+	// Hashicorp vault key for the password in the key-value store.
+	MssqlUserDomainHashicorpVaultSecretKey *string `json:"mssql_user_domain_hashicorp_vault_secret_key,omitempty"`
+	// Azure key vault name.
+	MssqlUserDomainAzureVaultName *string `json:"mssql_user_domain_azure_vault_name,omitempty"`
+	// Azure vault key in the key-value store.
+	MssqlUserDomainAzureVaultUsernameKey *string `json:"mssql_user_domain_azure_vault_username_key,omitempty"`
+	// Azure vault key in the key-value store.
+	MssqlUserDomainAzureVaultSecretKey *string `json:"mssql_user_domain_azure_vault_secret_key,omitempty"`
+	// Query to find a credential in the CyberArk vault.
+	MssqlUserDomainCyberarkVaultQueryString *string `json:"mssql_user_domain_cyberark_vault_query_string,omitempty"`
+	// If true, NOLOGGING operations on this container are treated as faults and cannot be resolved manually. Otherwise, these operations are ignored.
+	DiagnoseNoLoggingFaults *bool `json:"diagnose_no_logging_faults,omitempty"`
+	// If true, pre-provisioning will be performed after every sync.
+	PreProvisioningEnabled *bool `json:"pre_provisioning_enabled,omitempty"`
+	// Boolean value indicates whether LEVEL-based incremental backups can be used on the source db.
+	BackupLevelEnabled *bool `json:"backup_level_enabled,omitempty"`
+	// Number of parallel channels to use.
+	RmanChannels *int32 `json:"rman_channels,omitempty"`
+	// Number of data files to include in each RMAN backup set.
+	FilesPerSet *int32 `json:"files_per_set,omitempty"`
+	// True if extended block checking should be used for this linked database.
+	CheckLogical *bool `json:"check_logical,omitempty"`
+	// True if SnapSync data from the source should be retrieved through an encrypted connection. Enabling this feature can decrease the performance of SnapSync from the source but has no impact on the performance of VDBs created from the retrieved data.
+	EncryptedLinkingEnabled *bool `json:"encrypted_linking_enabled,omitempty"`
+	// True if SnapSync data from the source should be compressed over the network. Enabling this feature will reduce network bandwidth consumption and may significantly improve throughput, especially over slow network.
+	CompressedLinkingEnabled *bool `json:"compressed_linking_enabled,omitempty"`
+	// Bandwidth limit (MB/s) for SnapSync and LogSync network traffic. A value of 0 means no limit.
+	BandwidthLimit *int32 `json:"bandwidth_limit,omitempty"`
+	// Total number of transport connections to use during SnapSync.
+	NumberOfConnections *int32 `json:"number_of_connections,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -684,6 +792,48 @@ func (o *DSource) UnsetEnabled() {
 	o.Enabled.Unset()
 }
 
+// GetIsDetached returns the IsDetached field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetIsDetached() bool {
+	if o == nil || IsNil(o.IsDetached.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDetached.Get()
+}
+
+// GetIsDetachedOk returns a tuple with the IsDetached field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetIsDetachedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsDetached.Get(), o.IsDetached.IsSet()
+}
+
+// HasIsDetached returns a boolean if a field has been set.
+func (o *DSource) HasIsDetached() bool {
+	if o != nil && o.IsDetached.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDetached gets a reference to the given NullableBool and assigns it to the IsDetached field.
+func (o *DSource) SetIsDetached(v bool) {
+	o.IsDetached.Set(&v)
+}
+// SetIsDetachedNil sets the value for IsDetached to be an explicit nil
+func (o *DSource) SetIsDetachedNil() {
+	o.IsDetached.Set(nil)
+}
+
+// UnsetIsDetached ensures that no value is present for IsDetached, not even an explicit nil
+func (o *DSource) UnsetIsDetached() {
+	o.IsDetached.Unset()
+}
+
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
 func (o *DSource) GetEngineId() string {
 	if o == nil || IsNil(o.EngineId) {
@@ -756,6 +906,48 @@ func (o *DSource) SetSourceIdNil() {
 // UnsetSourceId ensures that no value is present for SourceId, not even an explicit nil
 func (o *DSource) UnsetSourceId() {
 	o.SourceId.Unset()
+}
+
+// GetStagingSourceId returns the StagingSourceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetStagingSourceId() string {
+	if o == nil || IsNil(o.StagingSourceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StagingSourceId.Get()
+}
+
+// GetStagingSourceIdOk returns a tuple with the StagingSourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetStagingSourceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StagingSourceId.Get(), o.StagingSourceId.IsSet()
+}
+
+// HasStagingSourceId returns a boolean if a field has been set.
+func (o *DSource) HasStagingSourceId() bool {
+	if o != nil && o.StagingSourceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStagingSourceId gets a reference to the given NullableString and assigns it to the StagingSourceId field.
+func (o *DSource) SetStagingSourceId(v string) {
+	o.StagingSourceId.Set(&v)
+}
+// SetStagingSourceIdNil sets the value for StagingSourceId to be an explicit nil
+func (o *DSource) SetStagingSourceIdNil() {
+	o.StagingSourceId.Set(nil)
+}
+
+// UnsetStagingSourceId ensures that no value is present for StagingSourceId, not even an explicit nil
+func (o *DSource) UnsetStagingSourceId() {
+	o.StagingSourceId.Unset()
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1076,6 +1268,72 @@ func (o *DSource) SetDependantVdbs(v int32) {
 	o.DependantVdbs = &v
 }
 
+// GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetAppdataSourceParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AppdataSourceParams
+}
+
+// GetAppdataSourceParamsOk returns a tuple with the AppdataSourceParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetAppdataSourceParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AppdataSourceParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.AppdataSourceParams, true
+}
+
+// HasAppdataSourceParams returns a boolean if a field has been set.
+func (o *DSource) HasAppdataSourceParams() bool {
+	if o != nil && !IsNil(o.AppdataSourceParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataSourceParams gets a reference to the given map[string]interface{} and assigns it to the AppdataSourceParams field.
+func (o *DSource) SetAppdataSourceParams(v map[string]interface{}) {
+	o.AppdataSourceParams = v
+}
+
+// GetAppdataConfigParams returns the AppdataConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetAppdataConfigParams() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AppdataConfigParams
+}
+
+// GetAppdataConfigParamsOk returns a tuple with the AppdataConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetAppdataConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AppdataConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.AppdataConfigParams, true
+}
+
+// HasAppdataConfigParams returns a boolean if a field has been set.
+func (o *DSource) HasAppdataConfigParams() bool {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppdataConfigParams gets a reference to the given map[string]interface{} and assigns it to the AppdataConfigParams field.
+func (o *DSource) SetAppdataConfigParams(v map[string]interface{}) {
+	o.AppdataConfigParams = v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *DSource) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -1332,6 +1590,38 @@ func (o *DSource) SetRetentionPolicyId(v string) {
 	o.RetentionPolicyId = &v
 }
 
+// GetReplicaRetentionPolicyId returns the ReplicaRetentionPolicyId field value if set, zero value otherwise.
+func (o *DSource) GetReplicaRetentionPolicyId() string {
+	if o == nil || IsNil(o.ReplicaRetentionPolicyId) {
+		var ret string
+		return ret
+	}
+	return *o.ReplicaRetentionPolicyId
+}
+
+// GetReplicaRetentionPolicyIdOk returns a tuple with the ReplicaRetentionPolicyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetReplicaRetentionPolicyIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ReplicaRetentionPolicyId) {
+		return nil, false
+	}
+	return o.ReplicaRetentionPolicyId, true
+}
+
+// HasReplicaRetentionPolicyId returns a boolean if a field has been set.
+func (o *DSource) HasReplicaRetentionPolicyId() bool {
+	if o != nil && !IsNil(o.ReplicaRetentionPolicyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicaRetentionPolicyId gets a reference to the given string and assigns it to the ReplicaRetentionPolicyId field.
+func (o *DSource) SetReplicaRetentionPolicyId(v string) {
+	o.ReplicaRetentionPolicyId = &v
+}
+
 // GetQuotaPolicyId returns the QuotaPolicyId field value if set, zero value otherwise.
 func (o *DSource) GetQuotaPolicyId() string {
 	if o == nil || IsNil(o.QuotaPolicyId) {
@@ -1362,6 +1652,1616 @@ func (o *DSource) HasQuotaPolicyId() bool {
 // SetQuotaPolicyId gets a reference to the given string and assigns it to the QuotaPolicyId field.
 func (o *DSource) SetQuotaPolicyId(v string) {
 	o.QuotaPolicyId = &v
+}
+
+// GetLogsyncEnabled returns the LogsyncEnabled field value if set, zero value otherwise.
+func (o *DSource) GetLogsyncEnabled() bool {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.LogsyncEnabled
+}
+
+// GetLogsyncEnabledOk returns a tuple with the LogsyncEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetLogsyncEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.LogsyncEnabled) {
+		return nil, false
+	}
+	return o.LogsyncEnabled, true
+}
+
+// HasLogsyncEnabled returns a boolean if a field has been set.
+func (o *DSource) HasLogsyncEnabled() bool {
+	if o != nil && !IsNil(o.LogsyncEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncEnabled gets a reference to the given bool and assigns it to the LogsyncEnabled field.
+func (o *DSource) SetLogsyncEnabled(v bool) {
+	o.LogsyncEnabled = &v
+}
+
+// GetLogsyncMode returns the LogsyncMode field value if set, zero value otherwise.
+func (o *DSource) GetLogsyncMode() OracleLogsyncModeTypeEnum {
+	if o == nil || IsNil(o.LogsyncMode) {
+		var ret OracleLogsyncModeTypeEnum
+		return ret
+	}
+	return *o.LogsyncMode
+}
+
+// GetLogsyncModeOk returns a tuple with the LogsyncMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetLogsyncModeOk() (*OracleLogsyncModeTypeEnum, bool) {
+	if o == nil || IsNil(o.LogsyncMode) {
+		return nil, false
+	}
+	return o.LogsyncMode, true
+}
+
+// HasLogsyncMode returns a boolean if a field has been set.
+func (o *DSource) HasLogsyncMode() bool {
+	if o != nil && !IsNil(o.LogsyncMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncMode gets a reference to the given OracleLogsyncModeTypeEnum and assigns it to the LogsyncMode field.
+func (o *DSource) SetLogsyncMode(v OracleLogsyncModeTypeEnum) {
+	o.LogsyncMode = &v
+}
+
+// GetLogsyncInterval returns the LogsyncInterval field value if set, zero value otherwise.
+func (o *DSource) GetLogsyncInterval() int32 {
+	if o == nil || IsNil(o.LogsyncInterval) {
+		var ret int32
+		return ret
+	}
+	return *o.LogsyncInterval
+}
+
+// GetLogsyncIntervalOk returns a tuple with the LogsyncInterval field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetLogsyncIntervalOk() (*int32, bool) {
+	if o == nil || IsNil(o.LogsyncInterval) {
+		return nil, false
+	}
+	return o.LogsyncInterval, true
+}
+
+// HasLogsyncInterval returns a boolean if a field has been set.
+func (o *DSource) HasLogsyncInterval() bool {
+	if o != nil && !IsNil(o.LogsyncInterval) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogsyncInterval gets a reference to the given int32 and assigns it to the LogsyncInterval field.
+func (o *DSource) SetLogsyncInterval(v int32) {
+	o.LogsyncInterval = &v
+}
+
+// GetExportedDataDirectory returns the ExportedDataDirectory field value if set, zero value otherwise.
+func (o *DSource) GetExportedDataDirectory() string {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		var ret string
+		return ret
+	}
+	return *o.ExportedDataDirectory
+}
+
+// GetExportedDataDirectoryOk returns a tuple with the ExportedDataDirectory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExportedDataDirectoryOk() (*string, bool) {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		return nil, false
+	}
+	return o.ExportedDataDirectory, true
+}
+
+// HasExportedDataDirectory returns a boolean if a field has been set.
+func (o *DSource) HasExportedDataDirectory() bool {
+	if o != nil && !IsNil(o.ExportedDataDirectory) {
+		return true
+	}
+
+	return false
+}
+
+// SetExportedDataDirectory gets a reference to the given string and assigns it to the ExportedDataDirectory field.
+func (o *DSource) SetExportedDataDirectory(v string) {
+	o.ExportedDataDirectory = &v
+}
+
+// GetTemplateId returns the TemplateId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DSource) GetTemplateId() string {
+	if o == nil || IsNil(o.TemplateId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateId.Get()
+}
+
+// GetTemplateIdOk returns a tuple with the TemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DSource) GetTemplateIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TemplateId.Get(), o.TemplateId.IsSet()
+}
+
+// HasTemplateId returns a boolean if a field has been set.
+func (o *DSource) HasTemplateId() bool {
+	if o != nil && o.TemplateId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateId gets a reference to the given NullableString and assigns it to the TemplateId field.
+func (o *DSource) SetTemplateId(v string) {
+	o.TemplateId.Set(&v)
+}
+// SetTemplateIdNil sets the value for TemplateId to be an explicit nil
+func (o *DSource) SetTemplateIdNil() {
+	o.TemplateId.Set(nil)
+}
+
+// UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
+func (o *DSource) UnsetTemplateId() {
+	o.TemplateId.Unset()
+}
+
+// GetAllowAutoStagingRestartOnHostReboot returns the AllowAutoStagingRestartOnHostReboot field value if set, zero value otherwise.
+func (o *DSource) GetAllowAutoStagingRestartOnHostReboot() bool {
+	if o == nil || IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		var ret bool
+		return ret
+	}
+	return *o.AllowAutoStagingRestartOnHostReboot
+}
+
+// GetAllowAutoStagingRestartOnHostRebootOk returns a tuple with the AllowAutoStagingRestartOnHostReboot field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetAllowAutoStagingRestartOnHostRebootOk() (*bool, bool) {
+	if o == nil || IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		return nil, false
+	}
+	return o.AllowAutoStagingRestartOnHostReboot, true
+}
+
+// HasAllowAutoStagingRestartOnHostReboot returns a boolean if a field has been set.
+func (o *DSource) HasAllowAutoStagingRestartOnHostReboot() bool {
+	if o != nil && !IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowAutoStagingRestartOnHostReboot gets a reference to the given bool and assigns it to the AllowAutoStagingRestartOnHostReboot field.
+func (o *DSource) SetAllowAutoStagingRestartOnHostReboot(v bool) {
+	o.AllowAutoStagingRestartOnHostReboot = &v
+}
+
+// GetPhysicalStandby returns the PhysicalStandby field value if set, zero value otherwise.
+func (o *DSource) GetPhysicalStandby() bool {
+	if o == nil || IsNil(o.PhysicalStandby) {
+		var ret bool
+		return ret
+	}
+	return *o.PhysicalStandby
+}
+
+// GetPhysicalStandbyOk returns a tuple with the PhysicalStandby field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPhysicalStandbyOk() (*bool, bool) {
+	if o == nil || IsNil(o.PhysicalStandby) {
+		return nil, false
+	}
+	return o.PhysicalStandby, true
+}
+
+// HasPhysicalStandby returns a boolean if a field has been set.
+func (o *DSource) HasPhysicalStandby() bool {
+	if o != nil && !IsNil(o.PhysicalStandby) {
+		return true
+	}
+
+	return false
+}
+
+// SetPhysicalStandby gets a reference to the given bool and assigns it to the PhysicalStandby field.
+func (o *DSource) SetPhysicalStandby(v bool) {
+	o.PhysicalStandby = &v
+}
+
+// GetValidateByOpeningDbInReadOnlyMode returns the ValidateByOpeningDbInReadOnlyMode field value if set, zero value otherwise.
+func (o *DSource) GetValidateByOpeningDbInReadOnlyMode() bool {
+	if o == nil || IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ValidateByOpeningDbInReadOnlyMode
+}
+
+// GetValidateByOpeningDbInReadOnlyModeOk returns a tuple with the ValidateByOpeningDbInReadOnlyMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetValidateByOpeningDbInReadOnlyModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		return nil, false
+	}
+	return o.ValidateByOpeningDbInReadOnlyMode, true
+}
+
+// HasValidateByOpeningDbInReadOnlyMode returns a boolean if a field has been set.
+func (o *DSource) HasValidateByOpeningDbInReadOnlyMode() bool {
+	if o != nil && !IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidateByOpeningDbInReadOnlyMode gets a reference to the given bool and assigns it to the ValidateByOpeningDbInReadOnlyMode field.
+func (o *DSource) SetValidateByOpeningDbInReadOnlyMode(v bool) {
+	o.ValidateByOpeningDbInReadOnlyMode = &v
+}
+
+// GetMssqlSyncStrategyManagedType returns the MssqlSyncStrategyManagedType field value if set, zero value otherwise.
+func (o *DSource) GetMssqlSyncStrategyManagedType() string {
+	if o == nil || IsNil(o.MssqlSyncStrategyManagedType) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlSyncStrategyManagedType
+}
+
+// GetMssqlSyncStrategyManagedTypeOk returns a tuple with the MssqlSyncStrategyManagedType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlSyncStrategyManagedTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlSyncStrategyManagedType) {
+		return nil, false
+	}
+	return o.MssqlSyncStrategyManagedType, true
+}
+
+// HasMssqlSyncStrategyManagedType returns a boolean if a field has been set.
+func (o *DSource) HasMssqlSyncStrategyManagedType() bool {
+	if o != nil && !IsNil(o.MssqlSyncStrategyManagedType) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlSyncStrategyManagedType gets a reference to the given string and assigns it to the MssqlSyncStrategyManagedType field.
+func (o *DSource) SetMssqlSyncStrategyManagedType(v string) {
+	o.MssqlSyncStrategyManagedType = &v
+}
+
+// GetValidatedSyncMode returns the ValidatedSyncMode field value if set, zero value otherwise.
+func (o *DSource) GetValidatedSyncMode() string {
+	if o == nil || IsNil(o.ValidatedSyncMode) {
+		var ret string
+		return ret
+	}
+	return *o.ValidatedSyncMode
+}
+
+// GetValidatedSyncModeOk returns a tuple with the ValidatedSyncMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetValidatedSyncModeOk() (*string, bool) {
+	if o == nil || IsNil(o.ValidatedSyncMode) {
+		return nil, false
+	}
+	return o.ValidatedSyncMode, true
+}
+
+// HasValidatedSyncMode returns a boolean if a field has been set.
+func (o *DSource) HasValidatedSyncMode() bool {
+	if o != nil && !IsNil(o.ValidatedSyncMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidatedSyncMode gets a reference to the given string and assigns it to the ValidatedSyncMode field.
+func (o *DSource) SetValidatedSyncMode(v string) {
+	o.ValidatedSyncMode = &v
+}
+
+// GetSharedBackupLocations returns the SharedBackupLocations field value if set, zero value otherwise.
+func (o *DSource) GetSharedBackupLocations() []string {
+	if o == nil || IsNil(o.SharedBackupLocations) {
+		var ret []string
+		return ret
+	}
+	return o.SharedBackupLocations
+}
+
+// GetSharedBackupLocationsOk returns a tuple with the SharedBackupLocations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetSharedBackupLocationsOk() ([]string, bool) {
+	if o == nil || IsNil(o.SharedBackupLocations) {
+		return nil, false
+	}
+	return o.SharedBackupLocations, true
+}
+
+// HasSharedBackupLocations returns a boolean if a field has been set.
+func (o *DSource) HasSharedBackupLocations() bool {
+	if o != nil && !IsNil(o.SharedBackupLocations) {
+		return true
+	}
+
+	return false
+}
+
+// SetSharedBackupLocations gets a reference to the given []string and assigns it to the SharedBackupLocations field.
+func (o *DSource) SetSharedBackupLocations(v []string) {
+	o.SharedBackupLocations = v
+}
+
+// GetBackupPolicy returns the BackupPolicy field value if set, zero value otherwise.
+func (o *DSource) GetBackupPolicy() string {
+	if o == nil || IsNil(o.BackupPolicy) {
+		var ret string
+		return ret
+	}
+	return *o.BackupPolicy
+}
+
+// GetBackupPolicyOk returns a tuple with the BackupPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetBackupPolicyOk() (*string, bool) {
+	if o == nil || IsNil(o.BackupPolicy) {
+		return nil, false
+	}
+	return o.BackupPolicy, true
+}
+
+// HasBackupPolicy returns a boolean if a field has been set.
+func (o *DSource) HasBackupPolicy() bool {
+	if o != nil && !IsNil(o.BackupPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupPolicy gets a reference to the given string and assigns it to the BackupPolicy field.
+func (o *DSource) SetBackupPolicy(v string) {
+	o.BackupPolicy = &v
+}
+
+// GetCompressionEnabled returns the CompressionEnabled field value if set, zero value otherwise.
+func (o *DSource) GetCompressionEnabled() bool {
+	if o == nil || IsNil(o.CompressionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.CompressionEnabled
+}
+
+// GetCompressionEnabledOk returns a tuple with the CompressionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetCompressionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.CompressionEnabled) {
+		return nil, false
+	}
+	return o.CompressionEnabled, true
+}
+
+// HasCompressionEnabled returns a boolean if a field has been set.
+func (o *DSource) HasCompressionEnabled() bool {
+	if o != nil && !IsNil(o.CompressionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompressionEnabled gets a reference to the given bool and assigns it to the CompressionEnabled field.
+func (o *DSource) SetCompressionEnabled(v bool) {
+	o.CompressionEnabled = &v
+}
+
+// GetStagingDatabaseName returns the StagingDatabaseName field value if set, zero value otherwise.
+func (o *DSource) GetStagingDatabaseName() string {
+	if o == nil || IsNil(o.StagingDatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.StagingDatabaseName
+}
+
+// GetStagingDatabaseNameOk returns a tuple with the StagingDatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetStagingDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.StagingDatabaseName) {
+		return nil, false
+	}
+	return o.StagingDatabaseName, true
+}
+
+// HasStagingDatabaseName returns a boolean if a field has been set.
+func (o *DSource) HasStagingDatabaseName() bool {
+	if o != nil && !IsNil(o.StagingDatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetStagingDatabaseName gets a reference to the given string and assigns it to the StagingDatabaseName field.
+func (o *DSource) SetStagingDatabaseName(v string) {
+	o.StagingDatabaseName = &v
+}
+
+// GetDbState returns the DbState field value if set, zero value otherwise.
+func (o *DSource) GetDbState() string {
+	if o == nil || IsNil(o.DbState) {
+		var ret string
+		return ret
+	}
+	return *o.DbState
+}
+
+// GetDbStateOk returns a tuple with the DbState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDbStateOk() (*string, bool) {
+	if o == nil || IsNil(o.DbState) {
+		return nil, false
+	}
+	return o.DbState, true
+}
+
+// HasDbState returns a boolean if a field has been set.
+func (o *DSource) HasDbState() bool {
+	if o != nil && !IsNil(o.DbState) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbState gets a reference to the given string and assigns it to the DbState field.
+func (o *DSource) SetDbState(v string) {
+	o.DbState = &v
+}
+
+// GetEncryptionKey returns the EncryptionKey field value if set, zero value otherwise.
+func (o *DSource) GetEncryptionKey() string {
+	if o == nil || IsNil(o.EncryptionKey) {
+		var ret string
+		return ret
+	}
+	return *o.EncryptionKey
+}
+
+// GetEncryptionKeyOk returns a tuple with the EncryptionKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetEncryptionKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.EncryptionKey) {
+		return nil, false
+	}
+	return o.EncryptionKey, true
+}
+
+// HasEncryptionKey returns a boolean if a field has been set.
+func (o *DSource) HasEncryptionKey() bool {
+	if o != nil && !IsNil(o.EncryptionKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncryptionKey gets a reference to the given string and assigns it to the EncryptionKey field.
+func (o *DSource) SetEncryptionKey(v string) {
+	o.EncryptionKey = &v
+}
+
+// GetExternalNetbackupConfigMasterName returns the ExternalNetbackupConfigMasterName field value if set, zero value otherwise.
+func (o *DSource) GetExternalNetbackupConfigMasterName() string {
+	if o == nil || IsNil(o.ExternalNetbackupConfigMasterName) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalNetbackupConfigMasterName
+}
+
+// GetExternalNetbackupConfigMasterNameOk returns a tuple with the ExternalNetbackupConfigMasterName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalNetbackupConfigMasterNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalNetbackupConfigMasterName) {
+		return nil, false
+	}
+	return o.ExternalNetbackupConfigMasterName, true
+}
+
+// HasExternalNetbackupConfigMasterName returns a boolean if a field has been set.
+func (o *DSource) HasExternalNetbackupConfigMasterName() bool {
+	if o != nil && !IsNil(o.ExternalNetbackupConfigMasterName) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalNetbackupConfigMasterName gets a reference to the given string and assigns it to the ExternalNetbackupConfigMasterName field.
+func (o *DSource) SetExternalNetbackupConfigMasterName(v string) {
+	o.ExternalNetbackupConfigMasterName = &v
+}
+
+// GetExternalNetbackupConfigSourceClientName returns the ExternalNetbackupConfigSourceClientName field value if set, zero value otherwise.
+func (o *DSource) GetExternalNetbackupConfigSourceClientName() string {
+	if o == nil || IsNil(o.ExternalNetbackupConfigSourceClientName) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalNetbackupConfigSourceClientName
+}
+
+// GetExternalNetbackupConfigSourceClientNameOk returns a tuple with the ExternalNetbackupConfigSourceClientName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalNetbackupConfigSourceClientNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalNetbackupConfigSourceClientName) {
+		return nil, false
+	}
+	return o.ExternalNetbackupConfigSourceClientName, true
+}
+
+// HasExternalNetbackupConfigSourceClientName returns a boolean if a field has been set.
+func (o *DSource) HasExternalNetbackupConfigSourceClientName() bool {
+	if o != nil && !IsNil(o.ExternalNetbackupConfigSourceClientName) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalNetbackupConfigSourceClientName gets a reference to the given string and assigns it to the ExternalNetbackupConfigSourceClientName field.
+func (o *DSource) SetExternalNetbackupConfigSourceClientName(v string) {
+	o.ExternalNetbackupConfigSourceClientName = &v
+}
+
+// GetExternalNetbackupConfigParams returns the ExternalNetbackupConfigParams field value if set, zero value otherwise.
+func (o *DSource) GetExternalNetbackupConfigParams() map[string]interface{} {
+	if o == nil || IsNil(o.ExternalNetbackupConfigParams) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.ExternalNetbackupConfigParams
+}
+
+// GetExternalNetbackupConfigParamsOk returns a tuple with the ExternalNetbackupConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalNetbackupConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.ExternalNetbackupConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.ExternalNetbackupConfigParams, true
+}
+
+// HasExternalNetbackupConfigParams returns a boolean if a field has been set.
+func (o *DSource) HasExternalNetbackupConfigParams() bool {
+	if o != nil && !IsNil(o.ExternalNetbackupConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalNetbackupConfigParams gets a reference to the given map[string]interface{} and assigns it to the ExternalNetbackupConfigParams field.
+func (o *DSource) SetExternalNetbackupConfigParams(v map[string]interface{}) {
+	o.ExternalNetbackupConfigParams = v
+}
+
+// GetExternalNetbackupConfigTemplates returns the ExternalNetbackupConfigTemplates field value if set, zero value otherwise.
+func (o *DSource) GetExternalNetbackupConfigTemplates() string {
+	if o == nil || IsNil(o.ExternalNetbackupConfigTemplates) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalNetbackupConfigTemplates
+}
+
+// GetExternalNetbackupConfigTemplatesOk returns a tuple with the ExternalNetbackupConfigTemplates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalNetbackupConfigTemplatesOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalNetbackupConfigTemplates) {
+		return nil, false
+	}
+	return o.ExternalNetbackupConfigTemplates, true
+}
+
+// HasExternalNetbackupConfigTemplates returns a boolean if a field has been set.
+func (o *DSource) HasExternalNetbackupConfigTemplates() bool {
+	if o != nil && !IsNil(o.ExternalNetbackupConfigTemplates) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalNetbackupConfigTemplates gets a reference to the given string and assigns it to the ExternalNetbackupConfigTemplates field.
+func (o *DSource) SetExternalNetbackupConfigTemplates(v string) {
+	o.ExternalNetbackupConfigTemplates = &v
+}
+
+// GetExternalCommserveHostName returns the ExternalCommserveHostName field value if set, zero value otherwise.
+func (o *DSource) GetExternalCommserveHostName() string {
+	if o == nil || IsNil(o.ExternalCommserveHostName) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalCommserveHostName
+}
+
+// GetExternalCommserveHostNameOk returns a tuple with the ExternalCommserveHostName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalCommserveHostNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalCommserveHostName) {
+		return nil, false
+	}
+	return o.ExternalCommserveHostName, true
+}
+
+// HasExternalCommserveHostName returns a boolean if a field has been set.
+func (o *DSource) HasExternalCommserveHostName() bool {
+	if o != nil && !IsNil(o.ExternalCommserveHostName) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalCommserveHostName gets a reference to the given string and assigns it to the ExternalCommserveHostName field.
+func (o *DSource) SetExternalCommserveHostName(v string) {
+	o.ExternalCommserveHostName = &v
+}
+
+// GetExternalCommvaultConfigSourceClientName returns the ExternalCommvaultConfigSourceClientName field value if set, zero value otherwise.
+func (o *DSource) GetExternalCommvaultConfigSourceClientName() string {
+	if o == nil || IsNil(o.ExternalCommvaultConfigSourceClientName) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalCommvaultConfigSourceClientName
+}
+
+// GetExternalCommvaultConfigSourceClientNameOk returns a tuple with the ExternalCommvaultConfigSourceClientName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalCommvaultConfigSourceClientNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalCommvaultConfigSourceClientName) {
+		return nil, false
+	}
+	return o.ExternalCommvaultConfigSourceClientName, true
+}
+
+// HasExternalCommvaultConfigSourceClientName returns a boolean if a field has been set.
+func (o *DSource) HasExternalCommvaultConfigSourceClientName() bool {
+	if o != nil && !IsNil(o.ExternalCommvaultConfigSourceClientName) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalCommvaultConfigSourceClientName gets a reference to the given string and assigns it to the ExternalCommvaultConfigSourceClientName field.
+func (o *DSource) SetExternalCommvaultConfigSourceClientName(v string) {
+	o.ExternalCommvaultConfigSourceClientName = &v
+}
+
+// GetExternalCommvaultConfigStagingClientName returns the ExternalCommvaultConfigStagingClientName field value if set, zero value otherwise.
+func (o *DSource) GetExternalCommvaultConfigStagingClientName() string {
+	if o == nil || IsNil(o.ExternalCommvaultConfigStagingClientName) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalCommvaultConfigStagingClientName
+}
+
+// GetExternalCommvaultConfigStagingClientNameOk returns a tuple with the ExternalCommvaultConfigStagingClientName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalCommvaultConfigStagingClientNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalCommvaultConfigStagingClientName) {
+		return nil, false
+	}
+	return o.ExternalCommvaultConfigStagingClientName, true
+}
+
+// HasExternalCommvaultConfigStagingClientName returns a boolean if a field has been set.
+func (o *DSource) HasExternalCommvaultConfigStagingClientName() bool {
+	if o != nil && !IsNil(o.ExternalCommvaultConfigStagingClientName) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalCommvaultConfigStagingClientName gets a reference to the given string and assigns it to the ExternalCommvaultConfigStagingClientName field.
+func (o *DSource) SetExternalCommvaultConfigStagingClientName(v string) {
+	o.ExternalCommvaultConfigStagingClientName = &v
+}
+
+// GetExternalCommvaultConfigParams returns the ExternalCommvaultConfigParams field value if set, zero value otherwise.
+func (o *DSource) GetExternalCommvaultConfigParams() map[string]interface{} {
+	if o == nil || IsNil(o.ExternalCommvaultConfigParams) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.ExternalCommvaultConfigParams
+}
+
+// GetExternalCommvaultConfigParamsOk returns a tuple with the ExternalCommvaultConfigParams field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalCommvaultConfigParamsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.ExternalCommvaultConfigParams) {
+		return map[string]interface{}{}, false
+	}
+	return o.ExternalCommvaultConfigParams, true
+}
+
+// HasExternalCommvaultConfigParams returns a boolean if a field has been set.
+func (o *DSource) HasExternalCommvaultConfigParams() bool {
+	if o != nil && !IsNil(o.ExternalCommvaultConfigParams) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalCommvaultConfigParams gets a reference to the given map[string]interface{} and assigns it to the ExternalCommvaultConfigParams field.
+func (o *DSource) SetExternalCommvaultConfigParams(v map[string]interface{}) {
+	o.ExternalCommvaultConfigParams = v
+}
+
+// GetExternalCommvaultConfigTemplates returns the ExternalCommvaultConfigTemplates field value if set, zero value otherwise.
+func (o *DSource) GetExternalCommvaultConfigTemplates() string {
+	if o == nil || IsNil(o.ExternalCommvaultConfigTemplates) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalCommvaultConfigTemplates
+}
+
+// GetExternalCommvaultConfigTemplatesOk returns a tuple with the ExternalCommvaultConfigTemplates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetExternalCommvaultConfigTemplatesOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalCommvaultConfigTemplates) {
+		return nil, false
+	}
+	return o.ExternalCommvaultConfigTemplates, true
+}
+
+// HasExternalCommvaultConfigTemplates returns a boolean if a field has been set.
+func (o *DSource) HasExternalCommvaultConfigTemplates() bool {
+	if o != nil && !IsNil(o.ExternalCommvaultConfigTemplates) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalCommvaultConfigTemplates gets a reference to the given string and assigns it to the ExternalCommvaultConfigTemplates field.
+func (o *DSource) SetExternalCommvaultConfigTemplates(v string) {
+	o.ExternalCommvaultConfigTemplates = &v
+}
+
+// GetMssqlUserType returns the MssqlUserType field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserType() string {
+	if o == nil || IsNil(o.MssqlUserType) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserType
+}
+
+// GetMssqlUserTypeOk returns a tuple with the MssqlUserType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserType) {
+		return nil, false
+	}
+	return o.MssqlUserType, true
+}
+
+// HasMssqlUserType returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserType() bool {
+	if o != nil && !IsNil(o.MssqlUserType) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserType gets a reference to the given string and assigns it to the MssqlUserType field.
+func (o *DSource) SetMssqlUserType(v string) {
+	o.MssqlUserType = &v
+}
+
+// GetDomainUserCredentialType returns the DomainUserCredentialType field value if set, zero value otherwise.
+func (o *DSource) GetDomainUserCredentialType() string {
+	if o == nil || IsNil(o.DomainUserCredentialType) {
+		var ret string
+		return ret
+	}
+	return *o.DomainUserCredentialType
+}
+
+// GetDomainUserCredentialTypeOk returns a tuple with the DomainUserCredentialType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDomainUserCredentialTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.DomainUserCredentialType) {
+		return nil, false
+	}
+	return o.DomainUserCredentialType, true
+}
+
+// HasDomainUserCredentialType returns a boolean if a field has been set.
+func (o *DSource) HasDomainUserCredentialType() bool {
+	if o != nil && !IsNil(o.DomainUserCredentialType) {
+		return true
+	}
+
+	return false
+}
+
+// SetDomainUserCredentialType gets a reference to the given string and assigns it to the DomainUserCredentialType field.
+func (o *DSource) SetDomainUserCredentialType(v string) {
+	o.DomainUserCredentialType = &v
+}
+
+// GetMssqlDatabaseUsername returns the MssqlDatabaseUsername field value if set, zero value otherwise.
+func (o *DSource) GetMssqlDatabaseUsername() string {
+	if o == nil || IsNil(o.MssqlDatabaseUsername) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlDatabaseUsername
+}
+
+// GetMssqlDatabaseUsernameOk returns a tuple with the MssqlDatabaseUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlDatabaseUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlDatabaseUsername) {
+		return nil, false
+	}
+	return o.MssqlDatabaseUsername, true
+}
+
+// HasMssqlDatabaseUsername returns a boolean if a field has been set.
+func (o *DSource) HasMssqlDatabaseUsername() bool {
+	if o != nil && !IsNil(o.MssqlDatabaseUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlDatabaseUsername gets a reference to the given string and assigns it to the MssqlDatabaseUsername field.
+func (o *DSource) SetMssqlDatabaseUsername(v string) {
+	o.MssqlDatabaseUsername = &v
+}
+
+// GetMssqlUserEnvironmentReference returns the MssqlUserEnvironmentReference field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserEnvironmentReference() string {
+	if o == nil || IsNil(o.MssqlUserEnvironmentReference) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserEnvironmentReference
+}
+
+// GetMssqlUserEnvironmentReferenceOk returns a tuple with the MssqlUserEnvironmentReference field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserEnvironmentReferenceOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserEnvironmentReference) {
+		return nil, false
+	}
+	return o.MssqlUserEnvironmentReference, true
+}
+
+// HasMssqlUserEnvironmentReference returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserEnvironmentReference() bool {
+	if o != nil && !IsNil(o.MssqlUserEnvironmentReference) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserEnvironmentReference gets a reference to the given string and assigns it to the MssqlUserEnvironmentReference field.
+func (o *DSource) SetMssqlUserEnvironmentReference(v string) {
+	o.MssqlUserEnvironmentReference = &v
+}
+
+// GetMssqlUserDomainUsername returns the MssqlUserDomainUsername field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainUsername() string {
+	if o == nil || IsNil(o.MssqlUserDomainUsername) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainUsername
+}
+
+// GetMssqlUserDomainUsernameOk returns a tuple with the MssqlUserDomainUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainUsername) {
+		return nil, false
+	}
+	return o.MssqlUserDomainUsername, true
+}
+
+// HasMssqlUserDomainUsername returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainUsername() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainUsername gets a reference to the given string and assigns it to the MssqlUserDomainUsername field.
+func (o *DSource) SetMssqlUserDomainUsername(v string) {
+	o.MssqlUserDomainUsername = &v
+}
+
+// GetMssqlUserDomainVaultUsername returns the MssqlUserDomainVaultUsername field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainVaultUsername() string {
+	if o == nil || IsNil(o.MssqlUserDomainVaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainVaultUsername
+}
+
+// GetMssqlUserDomainVaultUsernameOk returns a tuple with the MssqlUserDomainVaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainVaultUsername) {
+		return nil, false
+	}
+	return o.MssqlUserDomainVaultUsername, true
+}
+
+// HasMssqlUserDomainVaultUsername returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainVaultUsername() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainVaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainVaultUsername gets a reference to the given string and assigns it to the MssqlUserDomainVaultUsername field.
+func (o *DSource) SetMssqlUserDomainVaultUsername(v string) {
+	o.MssqlUserDomainVaultUsername = &v
+}
+
+// GetMssqlUserDomainVault returns the MssqlUserDomainVault field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainVault() string {
+	if o == nil || IsNil(o.MssqlUserDomainVault) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainVault
+}
+
+// GetMssqlUserDomainVaultOk returns a tuple with the MssqlUserDomainVault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainVaultOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainVault) {
+		return nil, false
+	}
+	return o.MssqlUserDomainVault, true
+}
+
+// HasMssqlUserDomainVault returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainVault() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainVault) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainVault gets a reference to the given string and assigns it to the MssqlUserDomainVault field.
+func (o *DSource) SetMssqlUserDomainVault(v string) {
+	o.MssqlUserDomainVault = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultEngine returns the MssqlUserDomainHashicorpVaultEngine field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultEngine() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultEngine
+}
+
+// GetMssqlUserDomainHashicorpVaultEngineOk returns a tuple with the MssqlUserDomainHashicorpVaultEngine field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultEngineOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultEngine, true
+}
+
+// HasMssqlUserDomainHashicorpVaultEngine returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultEngine() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultEngine gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultEngine field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultEngine(v string) {
+	o.MssqlUserDomainHashicorpVaultEngine = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretPath returns the MssqlUserDomainHashicorpVaultSecretPath field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretPath() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultSecretPath
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretPathOk returns a tuple with the MssqlUserDomainHashicorpVaultSecretPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretPathOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultSecretPath, true
+}
+
+// HasMssqlUserDomainHashicorpVaultSecretPath returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultSecretPath() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultSecretPath gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultSecretPath field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultSecretPath(v string) {
+	o.MssqlUserDomainHashicorpVaultSecretPath = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultUsernameKey returns the MssqlUserDomainHashicorpVaultUsernameKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultUsernameKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultUsernameKey
+}
+
+// GetMssqlUserDomainHashicorpVaultUsernameKeyOk returns a tuple with the MssqlUserDomainHashicorpVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultUsernameKey, true
+}
+
+// HasMssqlUserDomainHashicorpVaultUsernameKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultUsernameKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultUsernameKey gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultUsernameKey field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultUsernameKey(v string) {
+	o.MssqlUserDomainHashicorpVaultUsernameKey = &v
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretKey returns the MssqlUserDomainHashicorpVaultSecretKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainHashicorpVaultSecretKey
+}
+
+// GetMssqlUserDomainHashicorpVaultSecretKeyOk returns a tuple with the MssqlUserDomainHashicorpVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainHashicorpVaultSecretKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainHashicorpVaultSecretKey, true
+}
+
+// HasMssqlUserDomainHashicorpVaultSecretKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainHashicorpVaultSecretKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainHashicorpVaultSecretKey gets a reference to the given string and assigns it to the MssqlUserDomainHashicorpVaultSecretKey field.
+func (o *DSource) SetMssqlUserDomainHashicorpVaultSecretKey(v string) {
+	o.MssqlUserDomainHashicorpVaultSecretKey = &v
+}
+
+// GetMssqlUserDomainAzureVaultName returns the MssqlUserDomainAzureVaultName field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainAzureVaultName() string {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultName) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainAzureVaultName
+}
+
+// GetMssqlUserDomainAzureVaultNameOk returns a tuple with the MssqlUserDomainAzureVaultName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainAzureVaultNameOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultName) {
+		return nil, false
+	}
+	return o.MssqlUserDomainAzureVaultName, true
+}
+
+// HasMssqlUserDomainAzureVaultName returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainAzureVaultName() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainAzureVaultName) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainAzureVaultName gets a reference to the given string and assigns it to the MssqlUserDomainAzureVaultName field.
+func (o *DSource) SetMssqlUserDomainAzureVaultName(v string) {
+	o.MssqlUserDomainAzureVaultName = &v
+}
+
+// GetMssqlUserDomainAzureVaultUsernameKey returns the MssqlUserDomainAzureVaultUsernameKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainAzureVaultUsernameKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainAzureVaultUsernameKey
+}
+
+// GetMssqlUserDomainAzureVaultUsernameKeyOk returns a tuple with the MssqlUserDomainAzureVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainAzureVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainAzureVaultUsernameKey, true
+}
+
+// HasMssqlUserDomainAzureVaultUsernameKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainAzureVaultUsernameKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainAzureVaultUsernameKey gets a reference to the given string and assigns it to the MssqlUserDomainAzureVaultUsernameKey field.
+func (o *DSource) SetMssqlUserDomainAzureVaultUsernameKey(v string) {
+	o.MssqlUserDomainAzureVaultUsernameKey = &v
+}
+
+// GetMssqlUserDomainAzureVaultSecretKey returns the MssqlUserDomainAzureVaultSecretKey field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainAzureVaultSecretKey() string {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainAzureVaultSecretKey
+}
+
+// GetMssqlUserDomainAzureVaultSecretKeyOk returns a tuple with the MssqlUserDomainAzureVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainAzureVaultSecretKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		return nil, false
+	}
+	return o.MssqlUserDomainAzureVaultSecretKey, true
+}
+
+// HasMssqlUserDomainAzureVaultSecretKey returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainAzureVaultSecretKey() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainAzureVaultSecretKey gets a reference to the given string and assigns it to the MssqlUserDomainAzureVaultSecretKey field.
+func (o *DSource) SetMssqlUserDomainAzureVaultSecretKey(v string) {
+	o.MssqlUserDomainAzureVaultSecretKey = &v
+}
+
+// GetMssqlUserDomainCyberarkVaultQueryString returns the MssqlUserDomainCyberarkVaultQueryString field value if set, zero value otherwise.
+func (o *DSource) GetMssqlUserDomainCyberarkVaultQueryString() string {
+	if o == nil || IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlUserDomainCyberarkVaultQueryString
+}
+
+// GetMssqlUserDomainCyberarkVaultQueryStringOk returns a tuple with the MssqlUserDomainCyberarkVaultQueryString field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetMssqlUserDomainCyberarkVaultQueryStringOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		return nil, false
+	}
+	return o.MssqlUserDomainCyberarkVaultQueryString, true
+}
+
+// HasMssqlUserDomainCyberarkVaultQueryString returns a boolean if a field has been set.
+func (o *DSource) HasMssqlUserDomainCyberarkVaultQueryString() bool {
+	if o != nil && !IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlUserDomainCyberarkVaultQueryString gets a reference to the given string and assigns it to the MssqlUserDomainCyberarkVaultQueryString field.
+func (o *DSource) SetMssqlUserDomainCyberarkVaultQueryString(v string) {
+	o.MssqlUserDomainCyberarkVaultQueryString = &v
+}
+
+// GetDiagnoseNoLoggingFaults returns the DiagnoseNoLoggingFaults field value if set, zero value otherwise.
+func (o *DSource) GetDiagnoseNoLoggingFaults() bool {
+	if o == nil || IsNil(o.DiagnoseNoLoggingFaults) {
+		var ret bool
+		return ret
+	}
+	return *o.DiagnoseNoLoggingFaults
+}
+
+// GetDiagnoseNoLoggingFaultsOk returns a tuple with the DiagnoseNoLoggingFaults field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDiagnoseNoLoggingFaultsOk() (*bool, bool) {
+	if o == nil || IsNil(o.DiagnoseNoLoggingFaults) {
+		return nil, false
+	}
+	return o.DiagnoseNoLoggingFaults, true
+}
+
+// HasDiagnoseNoLoggingFaults returns a boolean if a field has been set.
+func (o *DSource) HasDiagnoseNoLoggingFaults() bool {
+	if o != nil && !IsNil(o.DiagnoseNoLoggingFaults) {
+		return true
+	}
+
+	return false
+}
+
+// SetDiagnoseNoLoggingFaults gets a reference to the given bool and assigns it to the DiagnoseNoLoggingFaults field.
+func (o *DSource) SetDiagnoseNoLoggingFaults(v bool) {
+	o.DiagnoseNoLoggingFaults = &v
+}
+
+// GetPreProvisioningEnabled returns the PreProvisioningEnabled field value if set, zero value otherwise.
+func (o *DSource) GetPreProvisioningEnabled() bool {
+	if o == nil || IsNil(o.PreProvisioningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.PreProvisioningEnabled
+}
+
+// GetPreProvisioningEnabledOk returns a tuple with the PreProvisioningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetPreProvisioningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.PreProvisioningEnabled) {
+		return nil, false
+	}
+	return o.PreProvisioningEnabled, true
+}
+
+// HasPreProvisioningEnabled returns a boolean if a field has been set.
+func (o *DSource) HasPreProvisioningEnabled() bool {
+	if o != nil && !IsNil(o.PreProvisioningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreProvisioningEnabled gets a reference to the given bool and assigns it to the PreProvisioningEnabled field.
+func (o *DSource) SetPreProvisioningEnabled(v bool) {
+	o.PreProvisioningEnabled = &v
+}
+
+// GetBackupLevelEnabled returns the BackupLevelEnabled field value if set, zero value otherwise.
+func (o *DSource) GetBackupLevelEnabled() bool {
+	if o == nil || IsNil(o.BackupLevelEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.BackupLevelEnabled
+}
+
+// GetBackupLevelEnabledOk returns a tuple with the BackupLevelEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetBackupLevelEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.BackupLevelEnabled) {
+		return nil, false
+	}
+	return o.BackupLevelEnabled, true
+}
+
+// HasBackupLevelEnabled returns a boolean if a field has been set.
+func (o *DSource) HasBackupLevelEnabled() bool {
+	if o != nil && !IsNil(o.BackupLevelEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupLevelEnabled gets a reference to the given bool and assigns it to the BackupLevelEnabled field.
+func (o *DSource) SetBackupLevelEnabled(v bool) {
+	o.BackupLevelEnabled = &v
+}
+
+// GetRmanChannels returns the RmanChannels field value if set, zero value otherwise.
+func (o *DSource) GetRmanChannels() int32 {
+	if o == nil || IsNil(o.RmanChannels) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanChannels
+}
+
+// GetRmanChannelsOk returns a tuple with the RmanChannels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetRmanChannelsOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanChannels) {
+		return nil, false
+	}
+	return o.RmanChannels, true
+}
+
+// HasRmanChannels returns a boolean if a field has been set.
+func (o *DSource) HasRmanChannels() bool {
+	if o != nil && !IsNil(o.RmanChannels) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanChannels gets a reference to the given int32 and assigns it to the RmanChannels field.
+func (o *DSource) SetRmanChannels(v int32) {
+	o.RmanChannels = &v
+}
+
+// GetFilesPerSet returns the FilesPerSet field value if set, zero value otherwise.
+func (o *DSource) GetFilesPerSet() int32 {
+	if o == nil || IsNil(o.FilesPerSet) {
+		var ret int32
+		return ret
+	}
+	return *o.FilesPerSet
+}
+
+// GetFilesPerSetOk returns a tuple with the FilesPerSet field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetFilesPerSetOk() (*int32, bool) {
+	if o == nil || IsNil(o.FilesPerSet) {
+		return nil, false
+	}
+	return o.FilesPerSet, true
+}
+
+// HasFilesPerSet returns a boolean if a field has been set.
+func (o *DSource) HasFilesPerSet() bool {
+	if o != nil && !IsNil(o.FilesPerSet) {
+		return true
+	}
+
+	return false
+}
+
+// SetFilesPerSet gets a reference to the given int32 and assigns it to the FilesPerSet field.
+func (o *DSource) SetFilesPerSet(v int32) {
+	o.FilesPerSet = &v
+}
+
+// GetCheckLogical returns the CheckLogical field value if set, zero value otherwise.
+func (o *DSource) GetCheckLogical() bool {
+	if o == nil || IsNil(o.CheckLogical) {
+		var ret bool
+		return ret
+	}
+	return *o.CheckLogical
+}
+
+// GetCheckLogicalOk returns a tuple with the CheckLogical field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetCheckLogicalOk() (*bool, bool) {
+	if o == nil || IsNil(o.CheckLogical) {
+		return nil, false
+	}
+	return o.CheckLogical, true
+}
+
+// HasCheckLogical returns a boolean if a field has been set.
+func (o *DSource) HasCheckLogical() bool {
+	if o != nil && !IsNil(o.CheckLogical) {
+		return true
+	}
+
+	return false
+}
+
+// SetCheckLogical gets a reference to the given bool and assigns it to the CheckLogical field.
+func (o *DSource) SetCheckLogical(v bool) {
+	o.CheckLogical = &v
+}
+
+// GetEncryptedLinkingEnabled returns the EncryptedLinkingEnabled field value if set, zero value otherwise.
+func (o *DSource) GetEncryptedLinkingEnabled() bool {
+	if o == nil || IsNil(o.EncryptedLinkingEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.EncryptedLinkingEnabled
+}
+
+// GetEncryptedLinkingEnabledOk returns a tuple with the EncryptedLinkingEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetEncryptedLinkingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.EncryptedLinkingEnabled) {
+		return nil, false
+	}
+	return o.EncryptedLinkingEnabled, true
+}
+
+// HasEncryptedLinkingEnabled returns a boolean if a field has been set.
+func (o *DSource) HasEncryptedLinkingEnabled() bool {
+	if o != nil && !IsNil(o.EncryptedLinkingEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncryptedLinkingEnabled gets a reference to the given bool and assigns it to the EncryptedLinkingEnabled field.
+func (o *DSource) SetEncryptedLinkingEnabled(v bool) {
+	o.EncryptedLinkingEnabled = &v
+}
+
+// GetCompressedLinkingEnabled returns the CompressedLinkingEnabled field value if set, zero value otherwise.
+func (o *DSource) GetCompressedLinkingEnabled() bool {
+	if o == nil || IsNil(o.CompressedLinkingEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.CompressedLinkingEnabled
+}
+
+// GetCompressedLinkingEnabledOk returns a tuple with the CompressedLinkingEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetCompressedLinkingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.CompressedLinkingEnabled) {
+		return nil, false
+	}
+	return o.CompressedLinkingEnabled, true
+}
+
+// HasCompressedLinkingEnabled returns a boolean if a field has been set.
+func (o *DSource) HasCompressedLinkingEnabled() bool {
+	if o != nil && !IsNil(o.CompressedLinkingEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompressedLinkingEnabled gets a reference to the given bool and assigns it to the CompressedLinkingEnabled field.
+func (o *DSource) SetCompressedLinkingEnabled(v bool) {
+	o.CompressedLinkingEnabled = &v
+}
+
+// GetBandwidthLimit returns the BandwidthLimit field value if set, zero value otherwise.
+func (o *DSource) GetBandwidthLimit() int32 {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		var ret int32
+		return ret
+	}
+	return *o.BandwidthLimit
+}
+
+// GetBandwidthLimitOk returns a tuple with the BandwidthLimit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetBandwidthLimitOk() (*int32, bool) {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		return nil, false
+	}
+	return o.BandwidthLimit, true
+}
+
+// HasBandwidthLimit returns a boolean if a field has been set.
+func (o *DSource) HasBandwidthLimit() bool {
+	if o != nil && !IsNil(o.BandwidthLimit) {
+		return true
+	}
+
+	return false
+}
+
+// SetBandwidthLimit gets a reference to the given int32 and assigns it to the BandwidthLimit field.
+func (o *DSource) SetBandwidthLimit(v int32) {
+	o.BandwidthLimit = &v
+}
+
+// GetNumberOfConnections returns the NumberOfConnections field value if set, zero value otherwise.
+func (o *DSource) GetNumberOfConnections() int32 {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		var ret int32
+		return ret
+	}
+	return *o.NumberOfConnections
+}
+
+// GetNumberOfConnectionsOk returns a tuple with the NumberOfConnections field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetNumberOfConnectionsOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		return nil, false
+	}
+	return o.NumberOfConnections, true
+}
+
+// HasNumberOfConnections returns a boolean if a field has been set.
+func (o *DSource) HasNumberOfConnections() bool {
+	if o != nil && !IsNil(o.NumberOfConnections) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumberOfConnections gets a reference to the given int32 and assigns it to the NumberOfConnections field.
+func (o *DSource) SetNumberOfConnections(v int32) {
+	o.NumberOfConnections = &v
 }
 
 func (o DSource) MarshalJSON() ([]byte, error) {
@@ -1416,11 +3316,17 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	if o.Enabled.IsSet() {
 		toSerialize["enabled"] = o.Enabled.Get()
 	}
+	if o.IsDetached.IsSet() {
+		toSerialize["is_detached"] = o.IsDetached.Get()
+	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
 	if o.SourceId.IsSet() {
 		toSerialize["source_id"] = o.SourceId.Get()
+	}
+	if o.StagingSourceId.IsSet() {
+		toSerialize["staging_source_id"] = o.StagingSourceId.Get()
 	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
@@ -1449,6 +3355,12 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DependantVdbs) {
 		toSerialize["dependant_vdbs"] = o.DependantVdbs
 	}
+	if o.AppdataSourceParams != nil {
+		toSerialize["appdata_source_params"] = o.AppdataSourceParams
+	}
+	if o.AppdataConfigParams != nil {
+		toSerialize["appdata_config_params"] = o.AppdataConfigParams
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
 	}
@@ -1473,8 +3385,161 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RetentionPolicyId) {
 		toSerialize["retention_policy_id"] = o.RetentionPolicyId
 	}
+	if !IsNil(o.ReplicaRetentionPolicyId) {
+		toSerialize["replica_retention_policy_id"] = o.ReplicaRetentionPolicyId
+	}
 	if !IsNil(o.QuotaPolicyId) {
 		toSerialize["quota_policy_id"] = o.QuotaPolicyId
+	}
+	if !IsNil(o.LogsyncEnabled) {
+		toSerialize["logsync_enabled"] = o.LogsyncEnabled
+	}
+	if !IsNil(o.LogsyncMode) {
+		toSerialize["logsync_mode"] = o.LogsyncMode
+	}
+	if !IsNil(o.LogsyncInterval) {
+		toSerialize["logsync_interval"] = o.LogsyncInterval
+	}
+	if !IsNil(o.ExportedDataDirectory) {
+		toSerialize["exported_data_directory"] = o.ExportedDataDirectory
+	}
+	if o.TemplateId.IsSet() {
+		toSerialize["template_id"] = o.TemplateId.Get()
+	}
+	if !IsNil(o.AllowAutoStagingRestartOnHostReboot) {
+		toSerialize["allow_auto_staging_restart_on_host_reboot"] = o.AllowAutoStagingRestartOnHostReboot
+	}
+	if !IsNil(o.PhysicalStandby) {
+		toSerialize["physical_standby"] = o.PhysicalStandby
+	}
+	if !IsNil(o.ValidateByOpeningDbInReadOnlyMode) {
+		toSerialize["validate_by_opening_db_in_read_only_mode"] = o.ValidateByOpeningDbInReadOnlyMode
+	}
+	if !IsNil(o.MssqlSyncStrategyManagedType) {
+		toSerialize["mssql_sync_strategy_managed_type"] = o.MssqlSyncStrategyManagedType
+	}
+	if !IsNil(o.ValidatedSyncMode) {
+		toSerialize["validated_sync_mode"] = o.ValidatedSyncMode
+	}
+	if !IsNil(o.SharedBackupLocations) {
+		toSerialize["shared_backup_locations"] = o.SharedBackupLocations
+	}
+	if !IsNil(o.BackupPolicy) {
+		toSerialize["backup_policy"] = o.BackupPolicy
+	}
+	if !IsNil(o.CompressionEnabled) {
+		toSerialize["compression_enabled"] = o.CompressionEnabled
+	}
+	if !IsNil(o.StagingDatabaseName) {
+		toSerialize["staging_database_name"] = o.StagingDatabaseName
+	}
+	if !IsNil(o.DbState) {
+		toSerialize["db_state"] = o.DbState
+	}
+	if !IsNil(o.EncryptionKey) {
+		toSerialize["encryption_key"] = o.EncryptionKey
+	}
+	if !IsNil(o.ExternalNetbackupConfigMasterName) {
+		toSerialize["external_netbackup_config_master_name"] = o.ExternalNetbackupConfigMasterName
+	}
+	if !IsNil(o.ExternalNetbackupConfigSourceClientName) {
+		toSerialize["external_netbackup_config_source_client_name"] = o.ExternalNetbackupConfigSourceClientName
+	}
+	if !IsNil(o.ExternalNetbackupConfigParams) {
+		toSerialize["external_netbackup_config_params"] = o.ExternalNetbackupConfigParams
+	}
+	if !IsNil(o.ExternalNetbackupConfigTemplates) {
+		toSerialize["external_netbackup_config_templates"] = o.ExternalNetbackupConfigTemplates
+	}
+	if !IsNil(o.ExternalCommserveHostName) {
+		toSerialize["external_commserve_host_name"] = o.ExternalCommserveHostName
+	}
+	if !IsNil(o.ExternalCommvaultConfigSourceClientName) {
+		toSerialize["external_commvault_config_source_client_name"] = o.ExternalCommvaultConfigSourceClientName
+	}
+	if !IsNil(o.ExternalCommvaultConfigStagingClientName) {
+		toSerialize["external_commvault_config_staging_client_name"] = o.ExternalCommvaultConfigStagingClientName
+	}
+	if !IsNil(o.ExternalCommvaultConfigParams) {
+		toSerialize["external_commvault_config_params"] = o.ExternalCommvaultConfigParams
+	}
+	if !IsNil(o.ExternalCommvaultConfigTemplates) {
+		toSerialize["external_commvault_config_templates"] = o.ExternalCommvaultConfigTemplates
+	}
+	if !IsNil(o.MssqlUserType) {
+		toSerialize["mssql_user_type"] = o.MssqlUserType
+	}
+	if !IsNil(o.DomainUserCredentialType) {
+		toSerialize["domain_user_credential_type"] = o.DomainUserCredentialType
+	}
+	if !IsNil(o.MssqlDatabaseUsername) {
+		toSerialize["mssql_database_username"] = o.MssqlDatabaseUsername
+	}
+	if !IsNil(o.MssqlUserEnvironmentReference) {
+		toSerialize["mssql_user_environment_reference"] = o.MssqlUserEnvironmentReference
+	}
+	if !IsNil(o.MssqlUserDomainUsername) {
+		toSerialize["mssql_user_domain_username"] = o.MssqlUserDomainUsername
+	}
+	if !IsNil(o.MssqlUserDomainVaultUsername) {
+		toSerialize["mssql_user_domain_vault_username"] = o.MssqlUserDomainVaultUsername
+	}
+	if !IsNil(o.MssqlUserDomainVault) {
+		toSerialize["mssql_user_domain_vault"] = o.MssqlUserDomainVault
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultEngine) {
+		toSerialize["mssql_user_domain_hashicorp_vault_engine"] = o.MssqlUserDomainHashicorpVaultEngine
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultSecretPath) {
+		toSerialize["mssql_user_domain_hashicorp_vault_secret_path"] = o.MssqlUserDomainHashicorpVaultSecretPath
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultUsernameKey) {
+		toSerialize["mssql_user_domain_hashicorp_vault_username_key"] = o.MssqlUserDomainHashicorpVaultUsernameKey
+	}
+	if !IsNil(o.MssqlUserDomainHashicorpVaultSecretKey) {
+		toSerialize["mssql_user_domain_hashicorp_vault_secret_key"] = o.MssqlUserDomainHashicorpVaultSecretKey
+	}
+	if !IsNil(o.MssqlUserDomainAzureVaultName) {
+		toSerialize["mssql_user_domain_azure_vault_name"] = o.MssqlUserDomainAzureVaultName
+	}
+	if !IsNil(o.MssqlUserDomainAzureVaultUsernameKey) {
+		toSerialize["mssql_user_domain_azure_vault_username_key"] = o.MssqlUserDomainAzureVaultUsernameKey
+	}
+	if !IsNil(o.MssqlUserDomainAzureVaultSecretKey) {
+		toSerialize["mssql_user_domain_azure_vault_secret_key"] = o.MssqlUserDomainAzureVaultSecretKey
+	}
+	if !IsNil(o.MssqlUserDomainCyberarkVaultQueryString) {
+		toSerialize["mssql_user_domain_cyberark_vault_query_string"] = o.MssqlUserDomainCyberarkVaultQueryString
+	}
+	if !IsNil(o.DiagnoseNoLoggingFaults) {
+		toSerialize["diagnose_no_logging_faults"] = o.DiagnoseNoLoggingFaults
+	}
+	if !IsNil(o.PreProvisioningEnabled) {
+		toSerialize["pre_provisioning_enabled"] = o.PreProvisioningEnabled
+	}
+	if !IsNil(o.BackupLevelEnabled) {
+		toSerialize["backup_level_enabled"] = o.BackupLevelEnabled
+	}
+	if !IsNil(o.RmanChannels) {
+		toSerialize["rman_channels"] = o.RmanChannels
+	}
+	if !IsNil(o.FilesPerSet) {
+		toSerialize["files_per_set"] = o.FilesPerSet
+	}
+	if !IsNil(o.CheckLogical) {
+		toSerialize["check_logical"] = o.CheckLogical
+	}
+	if !IsNil(o.EncryptedLinkingEnabled) {
+		toSerialize["encrypted_linking_enabled"] = o.EncryptedLinkingEnabled
+	}
+	if !IsNil(o.CompressedLinkingEnabled) {
+		toSerialize["compressed_linking_enabled"] = o.CompressedLinkingEnabled
+	}
+	if !IsNil(o.BandwidthLimit) {
+		toSerialize["bandwidth_limit"] = o.BandwidthLimit
+	}
+	if !IsNil(o.NumberOfConnections) {
+		toSerialize["number_of_connections"] = o.NumberOfConnections
 	}
 	return toSerialize, nil
 }

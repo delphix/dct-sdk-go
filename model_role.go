@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the Role type satisfies the MappedNullable interface at compile time
@@ -26,12 +28,18 @@ type Role struct {
 	Description *string `json:"description,omitempty"`
 	// The list of permissions granted by this role.
 	PermissionObjects []PermissionObject `json:"permission_objects"`
+	// If set to true, adding or removing permission is not allowed.
+	Immutable *bool `json:"immutable,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
+	// The list of profiles that influence the navigation menus shown in the UI.
+	UiProfiles []string `json:"ui_profiles,omitempty"`
 	// The Role ID.
 	Id *string `json:"id,omitempty"`
 	// System role are pre defined roles. System roles cannot be modified.
 	SystemRole *bool `json:"system_role,omitempty"`
 }
+
+type _Role Role
 
 // NewRole instantiates a new Role object
 // This constructor will assign default values to properties that have it defined,
@@ -41,6 +49,8 @@ func NewRole(name string, permissionObjects []PermissionObject) *Role {
 	this := Role{}
 	this.Name = name
 	this.PermissionObjects = permissionObjects
+	var immutable bool = false
+	this.Immutable = &immutable
 	return &this
 }
 
@@ -49,6 +59,8 @@ func NewRole(name string, permissionObjects []PermissionObject) *Role {
 // but it doesn't guarantee that properties required by API are set
 func NewRoleWithDefaults() *Role {
 	this := Role{}
+	var immutable bool = false
+	this.Immutable = &immutable
 	return &this
 }
 
@@ -132,6 +144,38 @@ func (o *Role) SetPermissionObjects(v []PermissionObject) {
 	o.PermissionObjects = v
 }
 
+// GetImmutable returns the Immutable field value if set, zero value otherwise.
+func (o *Role) GetImmutable() bool {
+	if o == nil || IsNil(o.Immutable) {
+		var ret bool
+		return ret
+	}
+	return *o.Immutable
+}
+
+// GetImmutableOk returns a tuple with the Immutable field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Role) GetImmutableOk() (*bool, bool) {
+	if o == nil || IsNil(o.Immutable) {
+		return nil, false
+	}
+	return o.Immutable, true
+}
+
+// HasImmutable returns a boolean if a field has been set.
+func (o *Role) HasImmutable() bool {
+	if o != nil && !IsNil(o.Immutable) {
+		return true
+	}
+
+	return false
+}
+
+// SetImmutable gets a reference to the given bool and assigns it to the Immutable field.
+func (o *Role) SetImmutable(v bool) {
+	o.Immutable = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Role) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -162,6 +206,38 @@ func (o *Role) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *Role) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetUiProfiles returns the UiProfiles field value if set, zero value otherwise.
+func (o *Role) GetUiProfiles() []string {
+	if o == nil || IsNil(o.UiProfiles) {
+		var ret []string
+		return ret
+	}
+	return o.UiProfiles
+}
+
+// GetUiProfilesOk returns a tuple with the UiProfiles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Role) GetUiProfilesOk() ([]string, bool) {
+	if o == nil || IsNil(o.UiProfiles) {
+		return nil, false
+	}
+	return o.UiProfiles, true
+}
+
+// HasUiProfiles returns a boolean if a field has been set.
+func (o *Role) HasUiProfiles() bool {
+	if o != nil && !IsNil(o.UiProfiles) {
+		return true
+	}
+
+	return false
+}
+
+// SetUiProfiles gets a reference to the given []string and assigns it to the UiProfiles field.
+func (o *Role) SetUiProfiles(v []string) {
+	o.UiProfiles = v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -243,8 +319,14 @@ func (o Role) ToMap() (map[string]interface{}, error) {
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["permission_objects"] = o.PermissionObjects
+	if !IsNil(o.Immutable) {
+		toSerialize["immutable"] = o.Immutable
+	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.UiProfiles) {
+		toSerialize["ui_profiles"] = o.UiProfiles
 	}
 	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
@@ -253,6 +335,44 @@ func (o Role) ToMap() (map[string]interface{}, error) {
 		toSerialize["system_role"] = o.SystemRole
 	}
 	return toSerialize, nil
+}
+
+func (o *Role) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"permission_objects",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varRole := _Role{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varRole)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Role(varRole)
+
+	return err
 }
 
 type NullableRole struct {

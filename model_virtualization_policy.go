@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,7 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the VirtualizationPolicy type satisfies the MappedNullable interface at compile time
@@ -22,15 +23,23 @@ var _ MappedNullable = &VirtualizationPolicy{}
 type VirtualizationPolicy struct {
 	Id *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
+	// Whether this virtualization policy is managed by DCT or by an individual Delphix Engine.
+	DctManaged *bool `json:"dct_managed,omitempty"`
+	// The user who created this virtualization policy.
+	CreateUser *string `json:"create_user,omitempty"`
+	// The time this virtualization policy was created.
+	CreateTimestamp *time.Time `json:"create_timestamp,omitempty"`
 	Namespace *string `json:"namespace,omitempty"`
 	// The namespace id of this virtualization policy.
 	NamespaceId *string `json:"namespace_id,omitempty"`
-	// The namespace name of this virtualization policy..
+	// The namespace name of this virtualization policy.
 	NamespaceName *string `json:"namespace_name,omitempty"`
 	// Is this a replicated object.
 	IsReplica *bool `json:"is_replica,omitempty"`
 	EngineId *string `json:"engine_id,omitempty"`
-	PolicyType *string `json:"policy_type,omitempty"`
+	// The name of the engine the policy belongs to.
+	EngineName *string `json:"engine_name,omitempty"`
+	PolicyType *PolicyType `json:"policy_type,omitempty"`
 	TimezoneId *string `json:"timezone_id,omitempty"`
 	// True if this is the default policy created when the system is setup.
 	DefaultPolicy *bool `json:"default_policy,omitempty"`
@@ -59,8 +68,15 @@ type VirtualizationPolicy struct {
 	// Day of year upon which to enforce yearly snapshot retention, expressed a month / day string (e.g., \"Jan 1\") [Retention Policy].
 	DayOfYear *string `json:"day_of_year,omitempty"`
 	Schedules []VirtualizationSchedule `json:"schedules,omitempty"`
+	ProvisionSource *ProvisionSource `json:"provision_source,omitempty"`
 	// Size of the quota, in bytes. (QUOTA_POLICY only).
 	Size NullableInt64 `json:"size,omitempty"`
+	// The tags that are applied to this VirtualizationPolicy.
+	Tags []Tag `json:"tags,omitempty"`
+	// The number of target dSources or VDBs to which this policy has been applied.
+	NumTargets *int32 `json:"num_targets,omitempty"`
+	// True if this policy is customized specifically for one object. Customized policies cannot be shared between objects.
+	Customized *bool `json:"customized,omitempty"`
 }
 
 // NewVirtualizationPolicy instantiates a new VirtualizationPolicy object
@@ -69,6 +85,10 @@ type VirtualizationPolicy struct {
 // will change when the set of required properties is changed
 func NewVirtualizationPolicy() *VirtualizationPolicy {
 	this := VirtualizationPolicy{}
+	var defaultPolicy bool = false
+	this.DefaultPolicy = &defaultPolicy
+	var customized bool = false
+	this.Customized = &customized
 	return &this
 }
 
@@ -77,6 +97,10 @@ func NewVirtualizationPolicy() *VirtualizationPolicy {
 // but it doesn't guarantee that properties required by API are set
 func NewVirtualizationPolicyWithDefaults() *VirtualizationPolicy {
 	this := VirtualizationPolicy{}
+	var defaultPolicy bool = false
+	this.DefaultPolicy = &defaultPolicy
+	var customized bool = false
+	this.Customized = &customized
 	return &this
 }
 
@@ -142,6 +166,102 @@ func (o *VirtualizationPolicy) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *VirtualizationPolicy) SetName(v string) {
 	o.Name = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *VirtualizationPolicy) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
+// GetCreateUser returns the CreateUser field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetCreateUser() string {
+	if o == nil || IsNil(o.CreateUser) {
+		var ret string
+		return ret
+	}
+	return *o.CreateUser
+}
+
+// GetCreateUserOk returns a tuple with the CreateUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetCreateUserOk() (*string, bool) {
+	if o == nil || IsNil(o.CreateUser) {
+		return nil, false
+	}
+	return o.CreateUser, true
+}
+
+// HasCreateUser returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasCreateUser() bool {
+	if o != nil && !IsNil(o.CreateUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreateUser gets a reference to the given string and assigns it to the CreateUser field.
+func (o *VirtualizationPolicy) SetCreateUser(v string) {
+	o.CreateUser = &v
+}
+
+// GetCreateTimestamp returns the CreateTimestamp field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetCreateTimestamp() time.Time {
+	if o == nil || IsNil(o.CreateTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreateTimestamp
+}
+
+// GetCreateTimestampOk returns a tuple with the CreateTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetCreateTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreateTimestamp) {
+		return nil, false
+	}
+	return o.CreateTimestamp, true
+}
+
+// HasCreateTimestamp returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasCreateTimestamp() bool {
+	if o != nil && !IsNil(o.CreateTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreateTimestamp gets a reference to the given time.Time and assigns it to the CreateTimestamp field.
+func (o *VirtualizationPolicy) SetCreateTimestamp(v time.Time) {
+	o.CreateTimestamp = &v
 }
 
 // GetNamespace returns the Namespace field value if set, zero value otherwise.
@@ -304,10 +424,42 @@ func (o *VirtualizationPolicy) SetEngineId(v string) {
 	o.EngineId = &v
 }
 
-// GetPolicyType returns the PolicyType field value if set, zero value otherwise.
-func (o *VirtualizationPolicy) GetPolicyType() string {
-	if o == nil || IsNil(o.PolicyType) {
+// GetEngineName returns the EngineName field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName) {
 		var ret string
+		return ret
+	}
+	return *o.EngineName
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineName) {
+		return nil, false
+	}
+	return o.EngineName, true
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasEngineName() bool {
+	if o != nil && !IsNil(o.EngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given string and assigns it to the EngineName field.
+func (o *VirtualizationPolicy) SetEngineName(v string) {
+	o.EngineName = &v
+}
+
+// GetPolicyType returns the PolicyType field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetPolicyType() PolicyType {
+	if o == nil || IsNil(o.PolicyType) {
+		var ret PolicyType
 		return ret
 	}
 	return *o.PolicyType
@@ -315,7 +467,7 @@ func (o *VirtualizationPolicy) GetPolicyType() string {
 
 // GetPolicyTypeOk returns a tuple with the PolicyType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *VirtualizationPolicy) GetPolicyTypeOk() (*string, bool) {
+func (o *VirtualizationPolicy) GetPolicyTypeOk() (*PolicyType, bool) {
 	if o == nil || IsNil(o.PolicyType) {
 		return nil, false
 	}
@@ -331,8 +483,8 @@ func (o *VirtualizationPolicy) HasPolicyType() bool {
 	return false
 }
 
-// SetPolicyType gets a reference to the given string and assigns it to the PolicyType field.
-func (o *VirtualizationPolicy) SetPolicyType(v string) {
+// SetPolicyType gets a reference to the given PolicyType and assigns it to the PolicyType field.
+func (o *VirtualizationPolicy) SetPolicyType(v PolicyType) {
 	o.PolicyType = &v
 }
 
@@ -816,6 +968,38 @@ func (o *VirtualizationPolicy) SetSchedules(v []VirtualizationSchedule) {
 	o.Schedules = v
 }
 
+// GetProvisionSource returns the ProvisionSource field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetProvisionSource() ProvisionSource {
+	if o == nil || IsNil(o.ProvisionSource) {
+		var ret ProvisionSource
+		return ret
+	}
+	return *o.ProvisionSource
+}
+
+// GetProvisionSourceOk returns a tuple with the ProvisionSource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetProvisionSourceOk() (*ProvisionSource, bool) {
+	if o == nil || IsNil(o.ProvisionSource) {
+		return nil, false
+	}
+	return o.ProvisionSource, true
+}
+
+// HasProvisionSource returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasProvisionSource() bool {
+	if o != nil && !IsNil(o.ProvisionSource) {
+		return true
+	}
+
+	return false
+}
+
+// SetProvisionSource gets a reference to the given ProvisionSource and assigns it to the ProvisionSource field.
+func (o *VirtualizationPolicy) SetProvisionSource(v ProvisionSource) {
+	o.ProvisionSource = &v
+}
+
 // GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VirtualizationPolicy) GetSize() int64 {
 	if o == nil || IsNil(o.Size.Get()) {
@@ -858,6 +1042,102 @@ func (o *VirtualizationPolicy) UnsetSize() {
 	o.Size.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetTags() []Tag {
+	if o == nil || IsNil(o.Tags) {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *VirtualizationPolicy) SetTags(v []Tag) {
+	o.Tags = v
+}
+
+// GetNumTargets returns the NumTargets field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetNumTargets() int32 {
+	if o == nil || IsNil(o.NumTargets) {
+		var ret int32
+		return ret
+	}
+	return *o.NumTargets
+}
+
+// GetNumTargetsOk returns a tuple with the NumTargets field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetNumTargetsOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumTargets) {
+		return nil, false
+	}
+	return o.NumTargets, true
+}
+
+// HasNumTargets returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasNumTargets() bool {
+	if o != nil && !IsNil(o.NumTargets) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumTargets gets a reference to the given int32 and assigns it to the NumTargets field.
+func (o *VirtualizationPolicy) SetNumTargets(v int32) {
+	o.NumTargets = &v
+}
+
+// GetCustomized returns the Customized field value if set, zero value otherwise.
+func (o *VirtualizationPolicy) GetCustomized() bool {
+	if o == nil || IsNil(o.Customized) {
+		var ret bool
+		return ret
+	}
+	return *o.Customized
+}
+
+// GetCustomizedOk returns a tuple with the Customized field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicy) GetCustomizedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Customized) {
+		return nil, false
+	}
+	return o.Customized, true
+}
+
+// HasCustomized returns a boolean if a field has been set.
+func (o *VirtualizationPolicy) HasCustomized() bool {
+	if o != nil && !IsNil(o.Customized) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomized gets a reference to the given bool and assigns it to the Customized field.
+func (o *VirtualizationPolicy) SetCustomized(v bool) {
+	o.Customized = &v
+}
+
 func (o VirtualizationPolicy) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -874,6 +1154,15 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
+	}
+	if !IsNil(o.CreateUser) {
+		toSerialize["create_user"] = o.CreateUser
+	}
+	if !IsNil(o.CreateTimestamp) {
+		toSerialize["create_timestamp"] = o.CreateTimestamp
+	}
 	if !IsNil(o.Namespace) {
 		toSerialize["namespace"] = o.Namespace
 	}
@@ -888,6 +1177,9 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
+	}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
 	}
 	if !IsNil(o.PolicyType) {
 		toSerialize["policy_type"] = o.PolicyType
@@ -937,8 +1229,20 @@ func (o VirtualizationPolicy) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Schedules) {
 		toSerialize["schedules"] = o.Schedules
 	}
+	if !IsNil(o.ProvisionSource) {
+		toSerialize["provision_source"] = o.ProvisionSource
+	}
 	if o.Size.IsSet() {
 		toSerialize["size"] = o.Size.Get()
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.NumTargets) {
+		toSerialize["num_targets"] = o.NumTargets
+	}
+	if !IsNil(o.Customized) {
+		toSerialize["customized"] = o.Customized
 	}
 	return toSerialize, nil
 }

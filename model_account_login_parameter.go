@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -21,19 +21,19 @@ var _ MappedNullable = &AccountLoginParameter{}
 // AccountLoginParameter struct for AccountLoginParameter
 type AccountLoginParameter struct {
 	// Username of the account that needs to login
-	Username string `json:"username"`
+	Username *string `json:"username,omitempty"`
 	// Password of the account that needs to login.
-	Password string `json:"password"`
+	Password *string `json:"password,omitempty"`
+	// API key (without 'apk ' prefix) of the account that needs to login. When api_key is set then username/password would be ignored if provided.
+	ApiKey *string `json:"api_key,omitempty"`
 }
 
 // NewAccountLoginParameter instantiates a new AccountLoginParameter object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccountLoginParameter(username string, password string) *AccountLoginParameter {
+func NewAccountLoginParameter() *AccountLoginParameter {
 	this := AccountLoginParameter{}
-	this.Username = username
-	this.Password = password
 	return &this
 }
 
@@ -45,52 +45,100 @@ func NewAccountLoginParameterWithDefaults() *AccountLoginParameter {
 	return &this
 }
 
-// GetUsername returns the Username field value
+// GetUsername returns the Username field value if set, zero value otherwise.
 func (o *AccountLoginParameter) GetUsername() string {
-	if o == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
-
-	return o.Username
+	return *o.Username
 }
 
-// GetUsernameOk returns a tuple with the Username field value
+// GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AccountLoginParameter) GetUsernameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
-	return &o.Username, true
+	return o.Username, true
 }
 
-// SetUsername sets field value
+// HasUsername returns a boolean if a field has been set.
+func (o *AccountLoginParameter) HasUsername() bool {
+	if o != nil && !IsNil(o.Username) {
+		return true
+	}
+
+	return false
+}
+
+// SetUsername gets a reference to the given string and assigns it to the Username field.
 func (o *AccountLoginParameter) SetUsername(v string) {
-	o.Username = v
+	o.Username = &v
 }
 
-// GetPassword returns the Password field value
+// GetPassword returns the Password field value if set, zero value otherwise.
 func (o *AccountLoginParameter) GetPassword() string {
-	if o == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
-
-	return o.Password
+	return *o.Password
 }
 
-// GetPasswordOk returns a tuple with the Password field value
+// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AccountLoginParameter) GetPasswordOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
-	return &o.Password, true
+	return o.Password, true
 }
 
-// SetPassword sets field value
+// HasPassword returns a boolean if a field has been set.
+func (o *AccountLoginParameter) HasPassword() bool {
+	if o != nil && !IsNil(o.Password) {
+		return true
+	}
+
+	return false
+}
+
+// SetPassword gets a reference to the given string and assigns it to the Password field.
 func (o *AccountLoginParameter) SetPassword(v string) {
-	o.Password = v
+	o.Password = &v
+}
+
+// GetApiKey returns the ApiKey field value if set, zero value otherwise.
+func (o *AccountLoginParameter) GetApiKey() string {
+	if o == nil || IsNil(o.ApiKey) {
+		var ret string
+		return ret
+	}
+	return *o.ApiKey
+}
+
+// GetApiKeyOk returns a tuple with the ApiKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountLoginParameter) GetApiKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.ApiKey) {
+		return nil, false
+	}
+	return o.ApiKey, true
+}
+
+// HasApiKey returns a boolean if a field has been set.
+func (o *AccountLoginParameter) HasApiKey() bool {
+	if o != nil && !IsNil(o.ApiKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiKey gets a reference to the given string and assigns it to the ApiKey field.
+func (o *AccountLoginParameter) SetApiKey(v string) {
+	o.ApiKey = &v
 }
 
 func (o AccountLoginParameter) MarshalJSON() ([]byte, error) {
@@ -103,8 +151,15 @@ func (o AccountLoginParameter) MarshalJSON() ([]byte, error) {
 
 func (o AccountLoginParameter) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["username"] = o.Username
-	toSerialize["password"] = o.Password
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.ApiKey) {
+		toSerialize["api_key"] = o.ApiKey
+	}
 	return toSerialize, nil
 }
 

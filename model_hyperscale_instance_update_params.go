@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -22,19 +22,15 @@ var _ MappedNullable = &HyperscaleInstanceUpdateParams{}
 type HyperscaleInstanceUpdateParams struct {
 	// Name in DCT of the Hyperscale instance.
 	Name *string `json:"name,omitempty"`
-	// Hostname of the Hyperscale instance.
+	// Hostname of the Hyperscale instance. If the Hyperscale instance is running on a custom port (not 443), the port can be specified using the \"hostname:port\" format, for instance \"hyperscale-1.mycompany.co:1765\"
 	Hostname *string `json:"hostname,omitempty"`
 	// API key to connect to the Hyperscale instance.
 	ApiKey NullableString `json:"api_key,omitempty"`
 	DataType *HyperscaleDataTypeEnum `json:"data_type,omitempty"`
-	// Allow connections to the hyperscale instance over HTTPs without validating the TLS certificate. Even though the connection to the hyperscale instance might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the hyperscale instance's certificate, and set the truststore_filename property. 
+	// Allow connections to the hyperscale instance over HTTPs without validating the TLS certificate. Even though the connection to the hyperscale instance might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider configuring DCT with Certificate Authority certificates. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the hyperscale instance over HTTPs. Setting this value must only be done if the TLS certificate of the hyperscale instance does not match the hostname, and the TLS configuration of the hyperscale instance cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
-	// File name of a truststore which can be used to validate the TLS certificate of the hyperscale instance. The truststore must be available at /etc/config/certs/<truststore_filename>. Set this property to an empty string to clear the value. 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
-	// Password to read the truststore. Set this property to an empty string to clear the value. 
-	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 }
 
 // NewHyperscaleInstanceUpdateParams instantiates a new HyperscaleInstanceUpdateParams object
@@ -256,90 +252,6 @@ func (o *HyperscaleInstanceUpdateParams) SetUnsafeSslHostnameCheck(v bool) {
 	o.UnsafeSslHostnameCheck = &v
 }
 
-// GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *HyperscaleInstanceUpdateParams) GetTruststoreFilename() string {
-	if o == nil || IsNil(o.TruststoreFilename.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststoreFilename.Get()
-}
-
-// GetTruststoreFilenameOk returns a tuple with the TruststoreFilename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *HyperscaleInstanceUpdateParams) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststoreFilename.Get(), o.TruststoreFilename.IsSet()
-}
-
-// HasTruststoreFilename returns a boolean if a field has been set.
-func (o *HyperscaleInstanceUpdateParams) HasTruststoreFilename() bool {
-	if o != nil && o.TruststoreFilename.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststoreFilename gets a reference to the given NullableString and assigns it to the TruststoreFilename field.
-func (o *HyperscaleInstanceUpdateParams) SetTruststoreFilename(v string) {
-	o.TruststoreFilename.Set(&v)
-}
-// SetTruststoreFilenameNil sets the value for TruststoreFilename to be an explicit nil
-func (o *HyperscaleInstanceUpdateParams) SetTruststoreFilenameNil() {
-	o.TruststoreFilename.Set(nil)
-}
-
-// UnsetTruststoreFilename ensures that no value is present for TruststoreFilename, not even an explicit nil
-func (o *HyperscaleInstanceUpdateParams) UnsetTruststoreFilename() {
-	o.TruststoreFilename.Unset()
-}
-
-// GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *HyperscaleInstanceUpdateParams) GetTruststorePassword() string {
-	if o == nil || IsNil(o.TruststorePassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststorePassword.Get()
-}
-
-// GetTruststorePasswordOk returns a tuple with the TruststorePassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *HyperscaleInstanceUpdateParams) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststorePassword.Get(), o.TruststorePassword.IsSet()
-}
-
-// HasTruststorePassword returns a boolean if a field has been set.
-func (o *HyperscaleInstanceUpdateParams) HasTruststorePassword() bool {
-	if o != nil && o.TruststorePassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststorePassword gets a reference to the given NullableString and assigns it to the TruststorePassword field.
-func (o *HyperscaleInstanceUpdateParams) SetTruststorePassword(v string) {
-	o.TruststorePassword.Set(&v)
-}
-// SetTruststorePasswordNil sets the value for TruststorePassword to be an explicit nil
-func (o *HyperscaleInstanceUpdateParams) SetTruststorePasswordNil() {
-	o.TruststorePassword.Set(nil)
-}
-
-// UnsetTruststorePassword ensures that no value is present for TruststorePassword, not even an explicit nil
-func (o *HyperscaleInstanceUpdateParams) UnsetTruststorePassword() {
-	o.TruststorePassword.Unset()
-}
-
 func (o HyperscaleInstanceUpdateParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -367,12 +279,6 @@ func (o HyperscaleInstanceUpdateParams) ToMap() (map[string]interface{}, error) 
 	}
 	if !IsNil(o.UnsafeSslHostnameCheck) {
 		toSerialize["unsafe_ssl_hostname_check"] = o.UnsafeSslHostnameCheck
-	}
-	if o.TruststoreFilename.IsSet() {
-		toSerialize["truststore_filename"] = o.TruststoreFilename.Get()
-	}
-	if o.TruststorePassword.IsSet() {
-		toSerialize["truststore_password"] = o.TruststorePassword.Get()
 	}
 	return toSerialize, nil
 }
