@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -21,25 +21,25 @@ var _ MappedNullable = &DiscoveryResult{}
 // DiscoveryResult The result of sensitive data discovery on a single column or field
 type DiscoveryResult struct {
 	// The DCT local id of this discovery result
-	Id *int64 `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
 	// The name of the table to which the column belongs
-	TableName *string `json:"tableName,omitempty"`
+	TableName *string `json:"table_name,omitempty"`
 	// The name of the file to which the discovery result applies
-	FileName *string `json:"fileName,omitempty"`
+	FileName *string `json:"file_name,omitempty"`
 	// The name the column to which the discovery result applies
-	ColumnName *string `json:"columnName,omitempty"`
+	ColumnName *string `json:"column_name,omitempty"`
 	// The name the field to which the discovery result applies
-	FieldName *string `json:"fieldName,omitempty"`
+	FieldName *string `json:"field_name,omitempty"`
 	// The data class selected for the column or field
-	DataClassName *string `json:"dataClassName,omitempty"`
+	DataClassName *string `json:"data_class_name,omitempty"`
 	// The name of the algorithm selected for the column or field
-	AlgorithmName *string `json:"algorithmName,omitempty"`
+	AlgorithmName *string `json:"algorithm_name,omitempty"`
 	// The data type determined for the column or field
-	DataType *string `json:"dataType,omitempty"`
+	DataType *string `json:"data_type,omitempty"`
 	// The confidence of the discovery result, ranging from -100 to 100
 	Confidence *int32 `json:"confidence,omitempty"`
 	// Whether the corresponding ruleset column or field was configured to allow the discovery process to update the masking assignment
-	IsProfilerWritable *bool `json:"isProfilerWritable,omitempty"`
+	IsProfilerWritable *bool `json:"is_profiler_writable,omitempty"`
 }
 
 // NewDiscoveryResult instantiates a new DiscoveryResult object
@@ -60,9 +60,9 @@ func NewDiscoveryResultWithDefaults() *DiscoveryResult {
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *DiscoveryResult) GetId() int64 {
+func (o *DiscoveryResult) GetId() string {
 	if o == nil || IsNil(o.Id) {
-		var ret int64
+		var ret string
 		return ret
 	}
 	return *o.Id
@@ -70,7 +70,7 @@ func (o *DiscoveryResult) GetId() int64 {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DiscoveryResult) GetIdOk() (*int64, bool) {
+func (o *DiscoveryResult) GetIdOk() (*string, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
@@ -86,8 +86,8 @@ func (o *DiscoveryResult) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given int64 and assigns it to the Id field.
-func (o *DiscoveryResult) SetId(v int64) {
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *DiscoveryResult) SetId(v string) {
 	o.Id = &v
 }
 
@@ -393,31 +393,31 @@ func (o DiscoveryResult) ToMap() (map[string]interface{}, error) {
 		toSerialize["id"] = o.Id
 	}
 	if !IsNil(o.TableName) {
-		toSerialize["tableName"] = o.TableName
+		toSerialize["table_name"] = o.TableName
 	}
 	if !IsNil(o.FileName) {
-		toSerialize["fileName"] = o.FileName
+		toSerialize["file_name"] = o.FileName
 	}
 	if !IsNil(o.ColumnName) {
-		toSerialize["columnName"] = o.ColumnName
+		toSerialize["column_name"] = o.ColumnName
 	}
 	if !IsNil(o.FieldName) {
-		toSerialize["fieldName"] = o.FieldName
+		toSerialize["field_name"] = o.FieldName
 	}
 	if !IsNil(o.DataClassName) {
-		toSerialize["dataClassName"] = o.DataClassName
+		toSerialize["data_class_name"] = o.DataClassName
 	}
 	if !IsNil(o.AlgorithmName) {
-		toSerialize["algorithmName"] = o.AlgorithmName
+		toSerialize["algorithm_name"] = o.AlgorithmName
 	}
 	if !IsNil(o.DataType) {
-		toSerialize["dataType"] = o.DataType
+		toSerialize["data_type"] = o.DataType
 	}
 	if !IsNil(o.Confidence) {
 		toSerialize["confidence"] = o.Confidence
 	}
 	if !IsNil(o.IsProfilerWritable) {
-		toSerialize["isProfilerWritable"] = o.IsProfilerWritable
+		toSerialize["is_profiler_writable"] = o.IsProfilerWritable
 	}
 	return toSerialize, nil
 }

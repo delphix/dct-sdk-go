@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,7 @@ const (
 	OBJECTTYPEENUM_ALGORITHM ObjectTypeEnum = "ALGORITHM"
 	OBJECTTYPEENUM_ACCESS_GROUP ObjectTypeEnum = "ACCESS_GROUP"
 	OBJECTTYPEENUM_ACCOUNT ObjectTypeEnum = "ACCOUNT"
+	OBJECTTYPEENUM_AI_SERVICE ObjectTypeEnum = "AI_SERVICE"
 	OBJECTTYPEENUM_ROLE ObjectTypeEnum = "ROLE"
 	OBJECTTYPEENUM_BOOKMARK ObjectTypeEnum = "BOOKMARK"
 	OBJECTTYPEENUM_CDB ObjectTypeEnum = "CDB"
@@ -66,6 +67,8 @@ const (
 	OBJECTTYPEENUM_JOB ObjectTypeEnum = "JOB"
 	OBJECTTYPEENUM_VIRTUALIZATION_POLICY_TARGET ObjectTypeEnum = "VIRTUALIZATION_POLICY_TARGET"
 	OBJECTTYPEENUM_DATA_CONNECTION ObjectTypeEnum = "DATA_CONNECTION"
+	OBJECTTYPEENUM_HOOK_TEMPLATE ObjectTypeEnum = "HOOK_TEMPLATE"
+	OBJECTTYPEENUM_JOB_ORCHESTRATOR ObjectTypeEnum = "JOB_ORCHESTRATOR"
 )
 
 // All allowed values of ObjectTypeEnum enum
@@ -73,6 +76,7 @@ var AllowedObjectTypeEnumEnumValues = []ObjectTypeEnum{
 	"ALGORITHM",
 	"ACCESS_GROUP",
 	"ACCOUNT",
+	"AI_SERVICE",
 	"ROLE",
 	"BOOKMARK",
 	"CDB",
@@ -115,6 +119,8 @@ var AllowedObjectTypeEnumEnumValues = []ObjectTypeEnum{
 	"JOB",
 	"VIRTUALIZATION_POLICY_TARGET",
 	"DATA_CONNECTION",
+	"HOOK_TEMPLATE",
+	"JOB_ORCHESTRATOR",
 }
 
 func (v *ObjectTypeEnum) UnmarshalJSON(src []byte) error {

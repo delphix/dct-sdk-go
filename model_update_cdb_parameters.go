@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -30,6 +30,8 @@ type UpdateCDBParameters struct {
 	// For a CDB using software keystore, this is the password of the software keystore used by this database. For a CDB using OKV, this is the password for the endpoint provided during the installation of the Oracle Key Vault client library (i.e., okvclient.jar) on the host where this database runs. For a CDB using HSM, this is the credential of the external key manager which is managing master encryption keys of this database.
 	TdeKeystorePassword *string `json:"tde_keystore_password,omitempty"`
 	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
+	// Path to the PKCS#11 configuration file for TDE KMS.
+	TdeKmsPkcs11ConfigPath *string `json:"tde_kms_pkcs11_config_path,omitempty"`
 }
 
 // NewUpdateCDBParameters instantiates a new UpdateCDBParameters object
@@ -241,6 +243,38 @@ func (o *UpdateCDBParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfig
 	o.TdeKeystoreConfigType = &v
 }
 
+// GetTdeKmsPkcs11ConfigPath returns the TdeKmsPkcs11ConfigPath field value if set, zero value otherwise.
+func (o *UpdateCDBParameters) GetTdeKmsPkcs11ConfigPath() string {
+	if o == nil || IsNil(o.TdeKmsPkcs11ConfigPath) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKmsPkcs11ConfigPath
+}
+
+// GetTdeKmsPkcs11ConfigPathOk returns a tuple with the TdeKmsPkcs11ConfigPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCDBParameters) GetTdeKmsPkcs11ConfigPathOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKmsPkcs11ConfigPath) {
+		return nil, false
+	}
+	return o.TdeKmsPkcs11ConfigPath, true
+}
+
+// HasTdeKmsPkcs11ConfigPath returns a boolean if a field has been set.
+func (o *UpdateCDBParameters) HasTdeKmsPkcs11ConfigPath() bool {
+	if o != nil && !IsNil(o.TdeKmsPkcs11ConfigPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKmsPkcs11ConfigPath gets a reference to the given string and assigns it to the TdeKmsPkcs11ConfigPath field.
+func (o *UpdateCDBParameters) SetTdeKmsPkcs11ConfigPath(v string) {
+	o.TdeKmsPkcs11ConfigPath = &v
+}
+
 func (o UpdateCDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -268,6 +302,9 @@ func (o UpdateCDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TdeKeystoreConfigType) {
 		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
+	}
+	if !IsNil(o.TdeKmsPkcs11ConfigPath) {
+		toSerialize["tde_kms_pkcs11_config_path"] = o.TdeKmsPkcs11ConfigPath
 	}
 	return toSerialize, nil
 }

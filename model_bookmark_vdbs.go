@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -33,6 +33,8 @@ type BookmarkVDBs struct {
 	RootParentId *string `json:"root_parent_id,omitempty"`
 	// The timeflow id of the snapshot.
 	TimeflowId *string `json:"timeflow_id,omitempty"`
+	// The bookmark timestamp of the VDB.
+	DataTimestamp *time.Time `json:"data_timestamp,omitempty"`
 }
 
 // NewBookmarkVDBs instantiates a new BookmarkVDBs object
@@ -244,6 +246,38 @@ func (o *BookmarkVDBs) SetTimeflowId(v string) {
 	o.TimeflowId = &v
 }
 
+// GetDataTimestamp returns the DataTimestamp field value if set, zero value otherwise.
+func (o *BookmarkVDBs) GetDataTimestamp() time.Time {
+	if o == nil || IsNil(o.DataTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.DataTimestamp
+}
+
+// GetDataTimestampOk returns a tuple with the DataTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookmarkVDBs) GetDataTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.DataTimestamp) {
+		return nil, false
+	}
+	return o.DataTimestamp, true
+}
+
+// HasDataTimestamp returns a boolean if a field has been set.
+func (o *BookmarkVDBs) HasDataTimestamp() bool {
+	if o != nil && !IsNil(o.DataTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataTimestamp gets a reference to the given time.Time and assigns it to the DataTimestamp field.
+func (o *BookmarkVDBs) SetDataTimestamp(v time.Time) {
+	o.DataTimestamp = &v
+}
+
 func (o BookmarkVDBs) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -271,6 +305,9 @@ func (o BookmarkVDBs) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TimeflowId) {
 		toSerialize["timeflow_id"] = o.TimeflowId
+	}
+	if !IsNil(o.DataTimestamp) {
+		toSerialize["data_timestamp"] = o.DataTimestamp
 	}
 	return toSerialize, nil
 }

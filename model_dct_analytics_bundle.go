@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -18,30 +18,30 @@ import (
 	"fmt"
 )
 
-// checks if the PhoneHomeBundle type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &PhoneHomeBundle{}
+// checks if the DctAnalyticsBundle type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DctAnalyticsBundle{}
 
-// PhoneHomeBundle A bundle containing product identification, configuration information and API telemetry records.
-type PhoneHomeBundle struct {
-	ProductInfo PhoneHomeBundleProductInfo `json:"product_info"`
+// DctAnalyticsBundle A bundle containing product identification, configuration information and API telemetry records.
+type DctAnalyticsBundle struct {
+	ProductInfo DctAnalyticsBundleProductInfo `json:"product_info"`
 	// A list of Delphix Engines registered with this instance of Data Control Tower.
-	RegisteredEngines []PhoneHomeBundleRegisteredEngine `json:"registered_engines"`
+	RegisteredEngines []DctAnalyticsBundleRegisteredEngine `json:"registered_engines"`
 	// A list of API telemetry records.\"
-	ApiTelemetry []PhoneHomeBundleApiTelemetry `json:"api_telemetry"`
+	ApiTelemetry []DctAnalyticsBundleApiTelemetry `json:"api_telemetry"`
 	// A list of dates for which telemetry data is included in this bundle.
 	Dates []string `json:"dates"`
 	// The UTC time at bundle generation (ISO 8601 format).
 	BundleGenerationTime time.Time `json:"bundle_generation_time"`
 }
 
-type _PhoneHomeBundle PhoneHomeBundle
+type _DctAnalyticsBundle DctAnalyticsBundle
 
-// NewPhoneHomeBundle instantiates a new PhoneHomeBundle object
+// NewDctAnalyticsBundle instantiates a new DctAnalyticsBundle object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPhoneHomeBundle(productInfo PhoneHomeBundleProductInfo, registeredEngines []PhoneHomeBundleRegisteredEngine, apiTelemetry []PhoneHomeBundleApiTelemetry, dates []string, bundleGenerationTime time.Time) *PhoneHomeBundle {
-	this := PhoneHomeBundle{}
+func NewDctAnalyticsBundle(productInfo DctAnalyticsBundleProductInfo, registeredEngines []DctAnalyticsBundleRegisteredEngine, apiTelemetry []DctAnalyticsBundleApiTelemetry, dates []string, bundleGenerationTime time.Time) *DctAnalyticsBundle {
+	this := DctAnalyticsBundle{}
 	this.ProductInfo = productInfo
 	this.RegisteredEngines = registeredEngines
 	this.ApiTelemetry = apiTelemetry
@@ -50,18 +50,18 @@ func NewPhoneHomeBundle(productInfo PhoneHomeBundleProductInfo, registeredEngine
 	return &this
 }
 
-// NewPhoneHomeBundleWithDefaults instantiates a new PhoneHomeBundle object
+// NewDctAnalyticsBundleWithDefaults instantiates a new DctAnalyticsBundle object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPhoneHomeBundleWithDefaults() *PhoneHomeBundle {
-	this := PhoneHomeBundle{}
+func NewDctAnalyticsBundleWithDefaults() *DctAnalyticsBundle {
+	this := DctAnalyticsBundle{}
 	return &this
 }
 
 // GetProductInfo returns the ProductInfo field value
-func (o *PhoneHomeBundle) GetProductInfo() PhoneHomeBundleProductInfo {
+func (o *DctAnalyticsBundle) GetProductInfo() DctAnalyticsBundleProductInfo {
 	if o == nil {
-		var ret PhoneHomeBundleProductInfo
+		var ret DctAnalyticsBundleProductInfo
 		return ret
 	}
 
@@ -70,7 +70,7 @@ func (o *PhoneHomeBundle) GetProductInfo() PhoneHomeBundleProductInfo {
 
 // GetProductInfoOk returns a tuple with the ProductInfo field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundle) GetProductInfoOk() (*PhoneHomeBundleProductInfo, bool) {
+func (o *DctAnalyticsBundle) GetProductInfoOk() (*DctAnalyticsBundleProductInfo, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -78,14 +78,14 @@ func (o *PhoneHomeBundle) GetProductInfoOk() (*PhoneHomeBundleProductInfo, bool)
 }
 
 // SetProductInfo sets field value
-func (o *PhoneHomeBundle) SetProductInfo(v PhoneHomeBundleProductInfo) {
+func (o *DctAnalyticsBundle) SetProductInfo(v DctAnalyticsBundleProductInfo) {
 	o.ProductInfo = v
 }
 
 // GetRegisteredEngines returns the RegisteredEngines field value
-func (o *PhoneHomeBundle) GetRegisteredEngines() []PhoneHomeBundleRegisteredEngine {
+func (o *DctAnalyticsBundle) GetRegisteredEngines() []DctAnalyticsBundleRegisteredEngine {
 	if o == nil {
-		var ret []PhoneHomeBundleRegisteredEngine
+		var ret []DctAnalyticsBundleRegisteredEngine
 		return ret
 	}
 
@@ -94,7 +94,7 @@ func (o *PhoneHomeBundle) GetRegisteredEngines() []PhoneHomeBundleRegisteredEngi
 
 // GetRegisteredEnginesOk returns a tuple with the RegisteredEngines field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundle) GetRegisteredEnginesOk() ([]PhoneHomeBundleRegisteredEngine, bool) {
+func (o *DctAnalyticsBundle) GetRegisteredEnginesOk() ([]DctAnalyticsBundleRegisteredEngine, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -102,14 +102,14 @@ func (o *PhoneHomeBundle) GetRegisteredEnginesOk() ([]PhoneHomeBundleRegisteredE
 }
 
 // SetRegisteredEngines sets field value
-func (o *PhoneHomeBundle) SetRegisteredEngines(v []PhoneHomeBundleRegisteredEngine) {
+func (o *DctAnalyticsBundle) SetRegisteredEngines(v []DctAnalyticsBundleRegisteredEngine) {
 	o.RegisteredEngines = v
 }
 
 // GetApiTelemetry returns the ApiTelemetry field value
-func (o *PhoneHomeBundle) GetApiTelemetry() []PhoneHomeBundleApiTelemetry {
+func (o *DctAnalyticsBundle) GetApiTelemetry() []DctAnalyticsBundleApiTelemetry {
 	if o == nil {
-		var ret []PhoneHomeBundleApiTelemetry
+		var ret []DctAnalyticsBundleApiTelemetry
 		return ret
 	}
 
@@ -118,7 +118,7 @@ func (o *PhoneHomeBundle) GetApiTelemetry() []PhoneHomeBundleApiTelemetry {
 
 // GetApiTelemetryOk returns a tuple with the ApiTelemetry field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundle) GetApiTelemetryOk() ([]PhoneHomeBundleApiTelemetry, bool) {
+func (o *DctAnalyticsBundle) GetApiTelemetryOk() ([]DctAnalyticsBundleApiTelemetry, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -126,12 +126,12 @@ func (o *PhoneHomeBundle) GetApiTelemetryOk() ([]PhoneHomeBundleApiTelemetry, bo
 }
 
 // SetApiTelemetry sets field value
-func (o *PhoneHomeBundle) SetApiTelemetry(v []PhoneHomeBundleApiTelemetry) {
+func (o *DctAnalyticsBundle) SetApiTelemetry(v []DctAnalyticsBundleApiTelemetry) {
 	o.ApiTelemetry = v
 }
 
 // GetDates returns the Dates field value
-func (o *PhoneHomeBundle) GetDates() []string {
+func (o *DctAnalyticsBundle) GetDates() []string {
 	if o == nil {
 		var ret []string
 		return ret
@@ -142,7 +142,7 @@ func (o *PhoneHomeBundle) GetDates() []string {
 
 // GetDatesOk returns a tuple with the Dates field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundle) GetDatesOk() ([]string, bool) {
+func (o *DctAnalyticsBundle) GetDatesOk() ([]string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -150,12 +150,12 @@ func (o *PhoneHomeBundle) GetDatesOk() ([]string, bool) {
 }
 
 // SetDates sets field value
-func (o *PhoneHomeBundle) SetDates(v []string) {
+func (o *DctAnalyticsBundle) SetDates(v []string) {
 	o.Dates = v
 }
 
 // GetBundleGenerationTime returns the BundleGenerationTime field value
-func (o *PhoneHomeBundle) GetBundleGenerationTime() time.Time {
+func (o *DctAnalyticsBundle) GetBundleGenerationTime() time.Time {
 	if o == nil {
 		var ret time.Time
 		return ret
@@ -166,7 +166,7 @@ func (o *PhoneHomeBundle) GetBundleGenerationTime() time.Time {
 
 // GetBundleGenerationTimeOk returns a tuple with the BundleGenerationTime field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundle) GetBundleGenerationTimeOk() (*time.Time, bool) {
+func (o *DctAnalyticsBundle) GetBundleGenerationTimeOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -174,11 +174,11 @@ func (o *PhoneHomeBundle) GetBundleGenerationTimeOk() (*time.Time, bool) {
 }
 
 // SetBundleGenerationTime sets field value
-func (o *PhoneHomeBundle) SetBundleGenerationTime(v time.Time) {
+func (o *DctAnalyticsBundle) SetBundleGenerationTime(v time.Time) {
 	o.BundleGenerationTime = v
 }
 
-func (o PhoneHomeBundle) MarshalJSON() ([]byte, error) {
+func (o DctAnalyticsBundle) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -186,7 +186,7 @@ func (o PhoneHomeBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o PhoneHomeBundle) ToMap() (map[string]interface{}, error) {
+func (o DctAnalyticsBundle) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["product_info"] = o.ProductInfo
 	toSerialize["registered_engines"] = o.RegisteredEngines
@@ -196,7 +196,7 @@ func (o PhoneHomeBundle) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *PhoneHomeBundle) UnmarshalJSON(data []byte) (err error) {
+func (o *DctAnalyticsBundle) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -222,53 +222,53 @@ func (o *PhoneHomeBundle) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varPhoneHomeBundle := _PhoneHomeBundle{}
+	varDctAnalyticsBundle := _DctAnalyticsBundle{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPhoneHomeBundle)
+	err = decoder.Decode(&varDctAnalyticsBundle)
 
 	if err != nil {
 		return err
 	}
 
-	*o = PhoneHomeBundle(varPhoneHomeBundle)
+	*o = DctAnalyticsBundle(varDctAnalyticsBundle)
 
 	return err
 }
 
-type NullablePhoneHomeBundle struct {
-	value *PhoneHomeBundle
+type NullableDctAnalyticsBundle struct {
+	value *DctAnalyticsBundle
 	isSet bool
 }
 
-func (v NullablePhoneHomeBundle) Get() *PhoneHomeBundle {
+func (v NullableDctAnalyticsBundle) Get() *DctAnalyticsBundle {
 	return v.value
 }
 
-func (v *NullablePhoneHomeBundle) Set(val *PhoneHomeBundle) {
+func (v *NullableDctAnalyticsBundle) Set(val *DctAnalyticsBundle) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePhoneHomeBundle) IsSet() bool {
+func (v NullableDctAnalyticsBundle) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePhoneHomeBundle) Unset() {
+func (v *NullableDctAnalyticsBundle) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePhoneHomeBundle(val *PhoneHomeBundle) *NullablePhoneHomeBundle {
-	return &NullablePhoneHomeBundle{value: val, isSet: true}
+func NewNullableDctAnalyticsBundle(val *DctAnalyticsBundle) *NullableDctAnalyticsBundle {
+	return &NullableDctAnalyticsBundle{value: val, isSet: true}
 }
 
-func (v NullablePhoneHomeBundle) MarshalJSON() ([]byte, error) {
+func (v NullableDctAnalyticsBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePhoneHomeBundle) UnmarshalJSON(src []byte) error {
+func (v *NullableDctAnalyticsBundle) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

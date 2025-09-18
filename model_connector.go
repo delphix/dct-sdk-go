@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -35,6 +35,8 @@ type Connector struct {
 	Port *int32 `json:"port,omitempty"`
 	// The username this Connector will use to connect to the database.
 	Username *string `json:"username,omitempty"`
+	// The password this Connector will use to connect to the database.
+	Password *string `json:"password,omitempty"`
 	// Whether this connector has authentication credentials set
 	AuthPresent *bool `json:"auth_present,omitempty"`
 	// The database variant, such as Oracle or MSSQL Server
@@ -69,6 +71,14 @@ type Connector struct {
 	UserDirIsRoot *bool `json:"user_dir_is_root,omitempty"`
 	// This database or file connection type associated with the connector
 	Platform *string `json:"platform,omitempty"`
+	// The ID of the associated DataConnection.
+	DataConnectionId *string `json:"data_connection_id,omitempty"`
+	// The ID of the account who created this connector.
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The account name of the DCT user who created this connector.
+	AccountName *string `json:"account_name,omitempty"`
+	// Whether this connector is managed by DCT or not.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
 
@@ -343,6 +353,38 @@ func (o *Connector) HasUsername() bool {
 // SetUsername gets a reference to the given string and assigns it to the Username field.
 func (o *Connector) SetUsername(v string) {
 	o.Username = &v
+}
+
+// GetPassword returns the Password field value if set, zero value otherwise.
+func (o *Connector) GetPassword() string {
+	if o == nil || IsNil(o.Password) {
+		var ret string
+		return ret
+	}
+	return *o.Password
+}
+
+// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetPasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.Password) {
+		return nil, false
+	}
+	return o.Password, true
+}
+
+// HasPassword returns a boolean if a field has been set.
+func (o *Connector) HasPassword() bool {
+	if o != nil && !IsNil(o.Password) {
+		return true
+	}
+
+	return false
+}
+
+// SetPassword gets a reference to the given string and assigns it to the Password field.
+func (o *Connector) SetPassword(v string) {
+	o.Password = &v
 }
 
 // GetAuthPresent returns the AuthPresent field value if set, zero value otherwise.
@@ -889,6 +931,134 @@ func (o *Connector) SetPlatform(v string) {
 	o.Platform = &v
 }
 
+// GetDataConnectionId returns the DataConnectionId field value if set, zero value otherwise.
+func (o *Connector) GetDataConnectionId() string {
+	if o == nil || IsNil(o.DataConnectionId) {
+		var ret string
+		return ret
+	}
+	return *o.DataConnectionId
+}
+
+// GetDataConnectionIdOk returns a tuple with the DataConnectionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetDataConnectionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DataConnectionId) {
+		return nil, false
+	}
+	return o.DataConnectionId, true
+}
+
+// HasDataConnectionId returns a boolean if a field has been set.
+func (o *Connector) HasDataConnectionId() bool {
+	if o != nil && !IsNil(o.DataConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataConnectionId gets a reference to the given string and assigns it to the DataConnectionId field.
+func (o *Connector) SetDataConnectionId(v string) {
+	o.DataConnectionId = &v
+}
+
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *Connector) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *Connector) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *Connector) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *Connector) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *Connector) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *Connector) SetAccountName(v string) {
+	o.AccountName = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *Connector) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Connector) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *Connector) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *Connector) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Connector) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -955,6 +1125,9 @@ func (o Connector) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Username) {
 		toSerialize["username"] = o.Username
 	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
 	if !IsNil(o.AuthPresent) {
 		toSerialize["auth_present"] = o.AuthPresent
 	}
@@ -1005,6 +1178,18 @@ func (o Connector) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Platform) {
 		toSerialize["platform"] = o.Platform
+	}
+	if !IsNil(o.DataConnectionId) {
+		toSerialize["data_connection_id"] = o.DataConnectionId
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

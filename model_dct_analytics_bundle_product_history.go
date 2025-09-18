@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.22.0
+API version: 3.23.0
 Contact: support@delphix.com
 */
 
@@ -17,40 +17,40 @@ import (
 	"fmt"
 )
 
-// checks if the PhoneHomeBundleProductHistory type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &PhoneHomeBundleProductHistory{}
+// checks if the DctAnalyticsBundleProductHistory type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DctAnalyticsBundleProductHistory{}
 
-// PhoneHomeBundleProductHistory The product history data included in the phonehome bundle's product information.
-type PhoneHomeBundleProductHistory struct {
+// DctAnalyticsBundleProductHistory The product history data included in the DCT Analytics bundle's product information.
+type DctAnalyticsBundleProductHistory struct {
 	// The product version.
 	Version string `json:"version"`
 	// The UTC time when the version was installed (ISO 8601 format)
 	InstalledOn string `json:"installed_on"`
 }
 
-type _PhoneHomeBundleProductHistory PhoneHomeBundleProductHistory
+type _DctAnalyticsBundleProductHistory DctAnalyticsBundleProductHistory
 
-// NewPhoneHomeBundleProductHistory instantiates a new PhoneHomeBundleProductHistory object
+// NewDctAnalyticsBundleProductHistory instantiates a new DctAnalyticsBundleProductHistory object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPhoneHomeBundleProductHistory(version string, installedOn string) *PhoneHomeBundleProductHistory {
-	this := PhoneHomeBundleProductHistory{}
+func NewDctAnalyticsBundleProductHistory(version string, installedOn string) *DctAnalyticsBundleProductHistory {
+	this := DctAnalyticsBundleProductHistory{}
 	this.Version = version
 	this.InstalledOn = installedOn
 	return &this
 }
 
-// NewPhoneHomeBundleProductHistoryWithDefaults instantiates a new PhoneHomeBundleProductHistory object
+// NewDctAnalyticsBundleProductHistoryWithDefaults instantiates a new DctAnalyticsBundleProductHistory object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPhoneHomeBundleProductHistoryWithDefaults() *PhoneHomeBundleProductHistory {
-	this := PhoneHomeBundleProductHistory{}
+func NewDctAnalyticsBundleProductHistoryWithDefaults() *DctAnalyticsBundleProductHistory {
+	this := DctAnalyticsBundleProductHistory{}
 	return &this
 }
 
 // GetVersion returns the Version field value
-func (o *PhoneHomeBundleProductHistory) GetVersion() string {
+func (o *DctAnalyticsBundleProductHistory) GetVersion() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -61,7 +61,7 @@ func (o *PhoneHomeBundleProductHistory) GetVersion() string {
 
 // GetVersionOk returns a tuple with the Version field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleProductHistory) GetVersionOk() (*string, bool) {
+func (o *DctAnalyticsBundleProductHistory) GetVersionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,12 +69,12 @@ func (o *PhoneHomeBundleProductHistory) GetVersionOk() (*string, bool) {
 }
 
 // SetVersion sets field value
-func (o *PhoneHomeBundleProductHistory) SetVersion(v string) {
+func (o *DctAnalyticsBundleProductHistory) SetVersion(v string) {
 	o.Version = v
 }
 
 // GetInstalledOn returns the InstalledOn field value
-func (o *PhoneHomeBundleProductHistory) GetInstalledOn() string {
+func (o *DctAnalyticsBundleProductHistory) GetInstalledOn() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -85,7 +85,7 @@ func (o *PhoneHomeBundleProductHistory) GetInstalledOn() string {
 
 // GetInstalledOnOk returns a tuple with the InstalledOn field value
 // and a boolean to check if the value has been set.
-func (o *PhoneHomeBundleProductHistory) GetInstalledOnOk() (*string, bool) {
+func (o *DctAnalyticsBundleProductHistory) GetInstalledOnOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -93,11 +93,11 @@ func (o *PhoneHomeBundleProductHistory) GetInstalledOnOk() (*string, bool) {
 }
 
 // SetInstalledOn sets field value
-func (o *PhoneHomeBundleProductHistory) SetInstalledOn(v string) {
+func (o *DctAnalyticsBundleProductHistory) SetInstalledOn(v string) {
 	o.InstalledOn = v
 }
 
-func (o PhoneHomeBundleProductHistory) MarshalJSON() ([]byte, error) {
+func (o DctAnalyticsBundleProductHistory) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -105,14 +105,14 @@ func (o PhoneHomeBundleProductHistory) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o PhoneHomeBundleProductHistory) ToMap() (map[string]interface{}, error) {
+func (o DctAnalyticsBundleProductHistory) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["version"] = o.Version
 	toSerialize["installed_on"] = o.InstalledOn
 	return toSerialize, nil
 }
 
-func (o *PhoneHomeBundleProductHistory) UnmarshalJSON(data []byte) (err error) {
+func (o *DctAnalyticsBundleProductHistory) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -135,53 +135,53 @@ func (o *PhoneHomeBundleProductHistory) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varPhoneHomeBundleProductHistory := _PhoneHomeBundleProductHistory{}
+	varDctAnalyticsBundleProductHistory := _DctAnalyticsBundleProductHistory{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPhoneHomeBundleProductHistory)
+	err = decoder.Decode(&varDctAnalyticsBundleProductHistory)
 
 	if err != nil {
 		return err
 	}
 
-	*o = PhoneHomeBundleProductHistory(varPhoneHomeBundleProductHistory)
+	*o = DctAnalyticsBundleProductHistory(varDctAnalyticsBundleProductHistory)
 
 	return err
 }
 
-type NullablePhoneHomeBundleProductHistory struct {
-	value *PhoneHomeBundleProductHistory
+type NullableDctAnalyticsBundleProductHistory struct {
+	value *DctAnalyticsBundleProductHistory
 	isSet bool
 }
 
-func (v NullablePhoneHomeBundleProductHistory) Get() *PhoneHomeBundleProductHistory {
+func (v NullableDctAnalyticsBundleProductHistory) Get() *DctAnalyticsBundleProductHistory {
 	return v.value
 }
 
-func (v *NullablePhoneHomeBundleProductHistory) Set(val *PhoneHomeBundleProductHistory) {
+func (v *NullableDctAnalyticsBundleProductHistory) Set(val *DctAnalyticsBundleProductHistory) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePhoneHomeBundleProductHistory) IsSet() bool {
+func (v NullableDctAnalyticsBundleProductHistory) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePhoneHomeBundleProductHistory) Unset() {
+func (v *NullableDctAnalyticsBundleProductHistory) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePhoneHomeBundleProductHistory(val *PhoneHomeBundleProductHistory) *NullablePhoneHomeBundleProductHistory {
-	return &NullablePhoneHomeBundleProductHistory{value: val, isSet: true}
+func NewNullableDctAnalyticsBundleProductHistory(val *DctAnalyticsBundleProductHistory) *NullableDctAnalyticsBundleProductHistory {
+	return &NullableDctAnalyticsBundleProductHistory{value: val, isSet: true}
 }
 
-func (v NullablePhoneHomeBundleProductHistory) MarshalJSON() ([]byte, error) {
+func (v NullableDctAnalyticsBundleProductHistory) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePhoneHomeBundleProductHistory) UnmarshalJSON(src []byte) error {
+func (v *NullableDctAnalyticsBundleProductHistory) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
