@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -20,23 +20,40 @@ var _ MappedNullable = &UpdateRepositoryParameters{}
 
 // UpdateRepositoryParameters struct for UpdateRepositoryParameters
 type UpdateRepositoryParameters struct {
-	// The database type of this repository.
-	DatabaseType string `json:"database_type"`
 	// Flag indicating whether the repository should be used for provisioning.
 	AllowProvisioning *bool `json:"allow_provisioning,omitempty"`
 	// Flag indicating whether this repository can be used by the Delphix Engine for internal processing.
 	IsStaging *bool `json:"is_staging,omitempty"`
 	// Version of the repository.
 	Version *string `json:"version,omitempty"`
+	// The Oracle base where database binaries are located.
+	OracleBase *string `json:"oracle_base,omitempty"`
+	// 32 or 64 bits.
+	Bits *int32 `json:"bits,omitempty"`
+	// The network port for connecting to the SAP ASE or SQL Server instance.
+	Port *int64 `json:"port,omitempty"`
+	// The username of the account the SAP ASE or SQL Server instance is running as.
+	InstanceOwner *string `json:"instance_owner,omitempty"`
+	// The SAP ASE instance home.
+	InstallationPath *string `json:"installation_path,omitempty"`
+	// Fully qualified name of the dump history file.
+	DumpHistoryFile *string `json:"dump_history_file,omitempty"`
+	// The username of the ASE instance database.
+	DatabaseUsername *string `json:"database_username,omitempty"`
+	// The credentials of the ASE instance database user.
+	DatabasePassword *string `json:"database_password,omitempty"`
+	// The Kerberos Service Principal Name (SPN) of the database.
+	ServicePrincipalName *string `json:"service_principal_name,omitempty"`
+	// The path to the isql binary to use for this SAP ASE instance.
+	IsqlPath *string `json:"isql_path,omitempty"`
 }
 
 // NewUpdateRepositoryParameters instantiates a new UpdateRepositoryParameters object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateRepositoryParameters(databaseType string) *UpdateRepositoryParameters {
+func NewUpdateRepositoryParameters() *UpdateRepositoryParameters {
 	this := UpdateRepositoryParameters{}
-	this.DatabaseType = databaseType
 	return &this
 }
 
@@ -46,30 +63,6 @@ func NewUpdateRepositoryParameters(databaseType string) *UpdateRepositoryParamet
 func NewUpdateRepositoryParametersWithDefaults() *UpdateRepositoryParameters {
 	this := UpdateRepositoryParameters{}
 	return &this
-}
-
-// GetDatabaseType returns the DatabaseType field value
-func (o *UpdateRepositoryParameters) GetDatabaseType() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.DatabaseType
-}
-
-// GetDatabaseTypeOk returns a tuple with the DatabaseType field value
-// and a boolean to check if the value has been set.
-func (o *UpdateRepositoryParameters) GetDatabaseTypeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.DatabaseType, true
-}
-
-// SetDatabaseType sets field value
-func (o *UpdateRepositoryParameters) SetDatabaseType(v string) {
-	o.DatabaseType = v
 }
 
 // GetAllowProvisioning returns the AllowProvisioning field value if set, zero value otherwise.
@@ -168,6 +161,326 @@ func (o *UpdateRepositoryParameters) SetVersion(v string) {
 	o.Version = &v
 }
 
+// GetOracleBase returns the OracleBase field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetOracleBase() string {
+	if o == nil || IsNil(o.OracleBase) {
+		var ret string
+		return ret
+	}
+	return *o.OracleBase
+}
+
+// GetOracleBaseOk returns a tuple with the OracleBase field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetOracleBaseOk() (*string, bool) {
+	if o == nil || IsNil(o.OracleBase) {
+		return nil, false
+	}
+	return o.OracleBase, true
+}
+
+// HasOracleBase returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasOracleBase() bool {
+	if o != nil && !IsNil(o.OracleBase) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleBase gets a reference to the given string and assigns it to the OracleBase field.
+func (o *UpdateRepositoryParameters) SetOracleBase(v string) {
+	o.OracleBase = &v
+}
+
+// GetBits returns the Bits field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetBits() int32 {
+	if o == nil || IsNil(o.Bits) {
+		var ret int32
+		return ret
+	}
+	return *o.Bits
+}
+
+// GetBitsOk returns a tuple with the Bits field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetBitsOk() (*int32, bool) {
+	if o == nil || IsNil(o.Bits) {
+		return nil, false
+	}
+	return o.Bits, true
+}
+
+// HasBits returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasBits() bool {
+	if o != nil && !IsNil(o.Bits) {
+		return true
+	}
+
+	return false
+}
+
+// SetBits gets a reference to the given int32 and assigns it to the Bits field.
+func (o *UpdateRepositoryParameters) SetBits(v int32) {
+	o.Bits = &v
+}
+
+// GetPort returns the Port field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetPort() int64 {
+	if o == nil || IsNil(o.Port) {
+		var ret int64
+		return ret
+	}
+	return *o.Port
+}
+
+// GetPortOk returns a tuple with the Port field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetPortOk() (*int64, bool) {
+	if o == nil || IsNil(o.Port) {
+		return nil, false
+	}
+	return o.Port, true
+}
+
+// HasPort returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasPort() bool {
+	if o != nil && !IsNil(o.Port) {
+		return true
+	}
+
+	return false
+}
+
+// SetPort gets a reference to the given int64 and assigns it to the Port field.
+func (o *UpdateRepositoryParameters) SetPort(v int64) {
+	o.Port = &v
+}
+
+// GetInstanceOwner returns the InstanceOwner field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetInstanceOwner() string {
+	if o == nil || IsNil(o.InstanceOwner) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceOwner
+}
+
+// GetInstanceOwnerOk returns a tuple with the InstanceOwner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetInstanceOwnerOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceOwner) {
+		return nil, false
+	}
+	return o.InstanceOwner, true
+}
+
+// HasInstanceOwner returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasInstanceOwner() bool {
+	if o != nil && !IsNil(o.InstanceOwner) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceOwner gets a reference to the given string and assigns it to the InstanceOwner field.
+func (o *UpdateRepositoryParameters) SetInstanceOwner(v string) {
+	o.InstanceOwner = &v
+}
+
+// GetInstallationPath returns the InstallationPath field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetInstallationPath() string {
+	if o == nil || IsNil(o.InstallationPath) {
+		var ret string
+		return ret
+	}
+	return *o.InstallationPath
+}
+
+// GetInstallationPathOk returns a tuple with the InstallationPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetInstallationPathOk() (*string, bool) {
+	if o == nil || IsNil(o.InstallationPath) {
+		return nil, false
+	}
+	return o.InstallationPath, true
+}
+
+// HasInstallationPath returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasInstallationPath() bool {
+	if o != nil && !IsNil(o.InstallationPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstallationPath gets a reference to the given string and assigns it to the InstallationPath field.
+func (o *UpdateRepositoryParameters) SetInstallationPath(v string) {
+	o.InstallationPath = &v
+}
+
+// GetDumpHistoryFile returns the DumpHistoryFile field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetDumpHistoryFile() string {
+	if o == nil || IsNil(o.DumpHistoryFile) {
+		var ret string
+		return ret
+	}
+	return *o.DumpHistoryFile
+}
+
+// GetDumpHistoryFileOk returns a tuple with the DumpHistoryFile field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetDumpHistoryFileOk() (*string, bool) {
+	if o == nil || IsNil(o.DumpHistoryFile) {
+		return nil, false
+	}
+	return o.DumpHistoryFile, true
+}
+
+// HasDumpHistoryFile returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasDumpHistoryFile() bool {
+	if o != nil && !IsNil(o.DumpHistoryFile) {
+		return true
+	}
+
+	return false
+}
+
+// SetDumpHistoryFile gets a reference to the given string and assigns it to the DumpHistoryFile field.
+func (o *UpdateRepositoryParameters) SetDumpHistoryFile(v string) {
+	o.DumpHistoryFile = &v
+}
+
+// GetDatabaseUsername returns the DatabaseUsername field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetDatabaseUsername() string {
+	if o == nil || IsNil(o.DatabaseUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUsername
+}
+
+// GetDatabaseUsernameOk returns a tuple with the DatabaseUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetDatabaseUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUsername) {
+		return nil, false
+	}
+	return o.DatabaseUsername, true
+}
+
+// HasDatabaseUsername returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasDatabaseUsername() bool {
+	if o != nil && !IsNil(o.DatabaseUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUsername gets a reference to the given string and assigns it to the DatabaseUsername field.
+func (o *UpdateRepositoryParameters) SetDatabaseUsername(v string) {
+	o.DatabaseUsername = &v
+}
+
+// GetDatabasePassword returns the DatabasePassword field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetDatabasePassword() string {
+	if o == nil || IsNil(o.DatabasePassword) {
+		var ret string
+		return ret
+	}
+	return *o.DatabasePassword
+}
+
+// GetDatabasePasswordOk returns a tuple with the DatabasePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetDatabasePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabasePassword) {
+		return nil, false
+	}
+	return o.DatabasePassword, true
+}
+
+// HasDatabasePassword returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasDatabasePassword() bool {
+	if o != nil && !IsNil(o.DatabasePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabasePassword gets a reference to the given string and assigns it to the DatabasePassword field.
+func (o *UpdateRepositoryParameters) SetDatabasePassword(v string) {
+	o.DatabasePassword = &v
+}
+
+// GetServicePrincipalName returns the ServicePrincipalName field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetServicePrincipalName() string {
+	if o == nil || IsNil(o.ServicePrincipalName) {
+		var ret string
+		return ret
+	}
+	return *o.ServicePrincipalName
+}
+
+// GetServicePrincipalNameOk returns a tuple with the ServicePrincipalName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetServicePrincipalNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ServicePrincipalName) {
+		return nil, false
+	}
+	return o.ServicePrincipalName, true
+}
+
+// HasServicePrincipalName returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasServicePrincipalName() bool {
+	if o != nil && !IsNil(o.ServicePrincipalName) {
+		return true
+	}
+
+	return false
+}
+
+// SetServicePrincipalName gets a reference to the given string and assigns it to the ServicePrincipalName field.
+func (o *UpdateRepositoryParameters) SetServicePrincipalName(v string) {
+	o.ServicePrincipalName = &v
+}
+
+// GetIsqlPath returns the IsqlPath field value if set, zero value otherwise.
+func (o *UpdateRepositoryParameters) GetIsqlPath() string {
+	if o == nil || IsNil(o.IsqlPath) {
+		var ret string
+		return ret
+	}
+	return *o.IsqlPath
+}
+
+// GetIsqlPathOk returns a tuple with the IsqlPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRepositoryParameters) GetIsqlPathOk() (*string, bool) {
+	if o == nil || IsNil(o.IsqlPath) {
+		return nil, false
+	}
+	return o.IsqlPath, true
+}
+
+// HasIsqlPath returns a boolean if a field has been set.
+func (o *UpdateRepositoryParameters) HasIsqlPath() bool {
+	if o != nil && !IsNil(o.IsqlPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsqlPath gets a reference to the given string and assigns it to the IsqlPath field.
+func (o *UpdateRepositoryParameters) SetIsqlPath(v string) {
+	o.IsqlPath = &v
+}
+
 func (o UpdateRepositoryParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -178,7 +491,6 @@ func (o UpdateRepositoryParameters) MarshalJSON() ([]byte, error) {
 
 func (o UpdateRepositoryParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["database_type"] = o.DatabaseType
 	if !IsNil(o.AllowProvisioning) {
 		toSerialize["allow_provisioning"] = o.AllowProvisioning
 	}
@@ -187,6 +499,36 @@ func (o UpdateRepositoryParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.OracleBase) {
+		toSerialize["oracle_base"] = o.OracleBase
+	}
+	if !IsNil(o.Bits) {
+		toSerialize["bits"] = o.Bits
+	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
+	if !IsNil(o.InstanceOwner) {
+		toSerialize["instance_owner"] = o.InstanceOwner
+	}
+	if !IsNil(o.InstallationPath) {
+		toSerialize["installation_path"] = o.InstallationPath
+	}
+	if !IsNil(o.DumpHistoryFile) {
+		toSerialize["dump_history_file"] = o.DumpHistoryFile
+	}
+	if !IsNil(o.DatabaseUsername) {
+		toSerialize["database_username"] = o.DatabaseUsername
+	}
+	if !IsNil(o.DatabasePassword) {
+		toSerialize["database_password"] = o.DatabasePassword
+	}
+	if !IsNil(o.ServicePrincipalName) {
+		toSerialize["service_principal_name"] = o.ServicePrincipalName
+	}
+	if !IsNil(o.IsqlPath) {
+		toSerialize["isql_path"] = o.IsqlPath
 	}
 	return toSerialize, nil
 }

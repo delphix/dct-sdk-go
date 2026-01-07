@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,8 @@ var _ MappedNullable = &UpdateVDBParameters{}
 type UpdateVDBParameters struct {
 	// The unique name of the VDB within a group.
 	Name *string `json:"name,omitempty"`
+	// The container description of this VDB.
+	Description *string `json:"description,omitempty"`
 	// The username of the database user (Oracle, ASE Only).
 	DbUsername *string `json:"db_username,omitempty"`
 	// The password of the database user (Oracle, ASE Only).
@@ -32,7 +34,7 @@ type UpdateVDBParameters struct {
 	AutoRestart *bool `json:"auto_restart,omitempty"`
 	// The environment user ID to use to connect to the target environment.
 	EnvironmentUserId *string `json:"environment_user_id,omitempty"`
-	// The ID of the target VDB Template (Oracle Only).
+	// The ID of the target VDB Template (Oracle and MSSql Only).
 	TemplateId *string `json:"template_id,omitempty"`
 	// The listener IDs for this provision operation (Oracle Only).
 	ListenerIds []string `json:"listener_ids,omitempty"`
@@ -63,6 +65,12 @@ type UpdateVDBParameters struct {
 	TargetVcdbTdeKeystorePath *string `json:"target_vcdb_tde_keystore_path,omitempty"`
 	// The password for the Transparent Data Encryption keystore associated with the CDB. (Oracle Multitenant Only)
 	CdbTdeKeystorePassword *string `json:"cdb_tde_keystore_password,omitempty"`
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore. (Oracle Multitenant Only) 
+	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
+	// The password of the parent PDB keystore. (Oracle Multitenant Only)
+	ParentPdbTdeKeystorePassword *string `json:"parent_pdb_tde_keystore_password,omitempty"`
+	// The password for the isolated mode TDE keystore of the target virtual PDB. (Oracle Multitenant Only)
+	TargetPdbTdeKeystorePassword *string `json:"target_pdb_tde_keystore_password,omitempty"`
 	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
 	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
 	// Specifies additional locations on which to mount a subdirectory of an AppData container. Can only be updated while the VDB is disabled.
@@ -73,6 +81,16 @@ type UpdateVDBParameters struct {
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	// Mount point for the VDB (AppData only), can only be updated while the VDB is disabled.
 	MountPoint *string `json:"mount_point,omitempty"`
+	// List of jdbc connection strings which are used to connect with the database.
+	OracleServices []string `json:"oracle_services,omitempty"`
+	// The instances of this RAC database.
+	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
+	// Indicates whether datapatch should be invoked.
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// Shared backup location to be used for VDB provision on AG Cluster.
+	MssqlAgBackupLocation *string `json:"mssql_ag_backup_location,omitempty"`
+	// Indicates whether to do fast operations for VDB on AG which will use a healthy secondary replica to recreate the AG or backup based operations which will use the primary replica to recreate the AG using backup and restore process.
+	MssqlAgBackupBased *bool `json:"mssql_ag_backup_based,omitempty"`
 }
 
 // NewUpdateVDBParameters instantiates a new UpdateVDBParameters object
@@ -126,6 +144,38 @@ func (o *UpdateVDBParameters) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *UpdateVDBParameters) SetName(v string) {
 	o.Name = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *UpdateVDBParameters) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetDbUsername returns the DbUsername field value if set, zero value otherwise.
@@ -800,6 +850,102 @@ func (o *UpdateVDBParameters) SetCdbTdeKeystorePassword(v string) {
 	o.CdbTdeKeystorePassword = &v
 }
 
+// GetParentPdbTdeKeystorePath returns the ParentPdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetParentPdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePath
+}
+
+// GetParentPdbTdeKeystorePathOk returns a tuple with the ParentPdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetParentPdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePath, true
+}
+
+// HasParentPdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasParentPdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePath gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePath field.
+func (o *UpdateVDBParameters) SetParentPdbTdeKeystorePath(v string) {
+	o.ParentPdbTdeKeystorePath = &v
+}
+
+// GetParentPdbTdeKeystorePassword returns the ParentPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetParentPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePassword
+}
+
+// GetParentPdbTdeKeystorePasswordOk returns a tuple with the ParentPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetParentPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePassword, true
+}
+
+// HasParentPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasParentPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePassword gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePassword field.
+func (o *UpdateVDBParameters) SetParentPdbTdeKeystorePassword(v string) {
+	o.ParentPdbTdeKeystorePassword = &v
+}
+
+// GetTargetPdbTdeKeystorePassword returns the TargetPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetTargetPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.TargetPdbTdeKeystorePassword
+}
+
+// GetTargetPdbTdeKeystorePasswordOk returns a tuple with the TargetPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetTargetPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.TargetPdbTdeKeystorePassword, true
+}
+
+// HasTargetPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasTargetPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.TargetPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetPdbTdeKeystorePassword gets a reference to the given string and assigns it to the TargetPdbTdeKeystorePassword field.
+func (o *UpdateVDBParameters) SetTargetPdbTdeKeystorePassword(v string) {
+	o.TargetPdbTdeKeystorePassword = &v
+}
+
 // GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise.
 func (o *UpdateVDBParameters) GetAppdataSourceParams() map[string]interface{} {
 	if o == nil || IsNil(o.AppdataSourceParams) {
@@ -832,9 +978,9 @@ func (o *UpdateVDBParameters) SetAppdataSourceParams(v map[string]interface{}) {
 	o.AppdataSourceParams = v
 }
 
-// GetAdditionalMountPoints returns the AdditionalMountPoints field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetAdditionalMountPoints returns the AdditionalMountPoints field value if set, zero value otherwise.
 func (o *UpdateVDBParameters) GetAdditionalMountPoints() []AdditionalMountPoint {
-	if o == nil {
+	if o == nil || IsNil(o.AdditionalMountPoints) {
 		var ret []AdditionalMountPoint
 		return ret
 	}
@@ -843,7 +989,6 @@ func (o *UpdateVDBParameters) GetAdditionalMountPoints() []AdditionalMountPoint 
 
 // GetAdditionalMountPointsOk returns a tuple with the AdditionalMountPoints field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *UpdateVDBParameters) GetAdditionalMountPointsOk() ([]AdditionalMountPoint, bool) {
 	if o == nil || IsNil(o.AdditionalMountPoints) {
 		return nil, false
@@ -853,7 +998,7 @@ func (o *UpdateVDBParameters) GetAdditionalMountPointsOk() ([]AdditionalMountPoi
 
 // HasAdditionalMountPoints returns a boolean if a field has been set.
 func (o *UpdateVDBParameters) HasAdditionalMountPoints() bool {
-	if o != nil && IsNil(o.AdditionalMountPoints) {
+	if o != nil && !IsNil(o.AdditionalMountPoints) {
 		return true
 	}
 
@@ -865,9 +1010,9 @@ func (o *UpdateVDBParameters) SetAdditionalMountPoints(v []AdditionalMountPoint)
 	o.AdditionalMountPoints = v
 }
 
-// GetAppdataConfigParams returns the AppdataConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetAppdataConfigParams returns the AppdataConfigParams field value if set, zero value otherwise.
 func (o *UpdateVDBParameters) GetAppdataConfigParams() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.AppdataConfigParams) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -876,7 +1021,6 @@ func (o *UpdateVDBParameters) GetAppdataConfigParams() map[string]interface{} {
 
 // GetAppdataConfigParamsOk returns a tuple with the AppdataConfigParams field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *UpdateVDBParameters) GetAppdataConfigParamsOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.AppdataConfigParams) {
 		return map[string]interface{}{}, false
@@ -886,7 +1030,7 @@ func (o *UpdateVDBParameters) GetAppdataConfigParamsOk() (map[string]interface{}
 
 // HasAppdataConfigParams returns a boolean if a field has been set.
 func (o *UpdateVDBParameters) HasAppdataConfigParams() bool {
-	if o != nil && IsNil(o.AppdataConfigParams) {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
 		return true
 	}
 
@@ -898,9 +1042,9 @@ func (o *UpdateVDBParameters) SetAppdataConfigParams(v map[string]interface{}) {
 	o.AppdataConfigParams = v
 }
 
-// GetConfigParams returns the ConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetConfigParams returns the ConfigParams field value if set, zero value otherwise.
 func (o *UpdateVDBParameters) GetConfigParams() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.ConfigParams) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -909,7 +1053,6 @@ func (o *UpdateVDBParameters) GetConfigParams() map[string]interface{} {
 
 // GetConfigParamsOk returns a tuple with the ConfigParams field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *UpdateVDBParameters) GetConfigParamsOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.ConfigParams) {
 		return map[string]interface{}{}, false
@@ -919,7 +1062,7 @@ func (o *UpdateVDBParameters) GetConfigParamsOk() (map[string]interface{}, bool)
 
 // HasConfigParams returns a boolean if a field has been set.
 func (o *UpdateVDBParameters) HasConfigParams() bool {
-	if o != nil && IsNil(o.ConfigParams) {
+	if o != nil && !IsNil(o.ConfigParams) {
 		return true
 	}
 
@@ -963,6 +1106,166 @@ func (o *UpdateVDBParameters) SetMountPoint(v string) {
 	o.MountPoint = &v
 }
 
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetOracleServices() []string {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []string
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetOracleServicesOk() ([]string, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []string and assigns it to the OracleServices field.
+func (o *UpdateVDBParameters) SetOracleServices(v []string) {
+	o.OracleServices = v
+}
+
+// GetInstances returns the Instances field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetInstances() []OracleRACDatabaseInstance {
+	if o == nil || IsNil(o.Instances) {
+		var ret []OracleRACDatabaseInstance
+		return ret
+	}
+	return o.Instances
+}
+
+// GetInstancesOk returns a tuple with the Instances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetInstancesOk() ([]OracleRACDatabaseInstance, bool) {
+	if o == nil || IsNil(o.Instances) {
+		return nil, false
+	}
+	return o.Instances, true
+}
+
+// HasInstances returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasInstances() bool {
+	if o != nil && !IsNil(o.Instances) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstances gets a reference to the given []OracleRACDatabaseInstance and assigns it to the Instances field.
+func (o *UpdateVDBParameters) SetInstances(v []OracleRACDatabaseInstance) {
+	o.Instances = v
+}
+
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *UpdateVDBParameters) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
+// GetMssqlAgBackupLocation returns the MssqlAgBackupLocation field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetMssqlAgBackupLocation() string {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlAgBackupLocation
+}
+
+// GetMssqlAgBackupLocationOk returns a tuple with the MssqlAgBackupLocation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetMssqlAgBackupLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		return nil, false
+	}
+	return o.MssqlAgBackupLocation, true
+}
+
+// HasMssqlAgBackupLocation returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasMssqlAgBackupLocation() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupLocation) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupLocation gets a reference to the given string and assigns it to the MssqlAgBackupLocation field.
+func (o *UpdateVDBParameters) SetMssqlAgBackupLocation(v string) {
+	o.MssqlAgBackupLocation = &v
+}
+
+// GetMssqlAgBackupBased returns the MssqlAgBackupBased field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetMssqlAgBackupBased() bool {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		var ret bool
+		return ret
+	}
+	return *o.MssqlAgBackupBased
+}
+
+// GetMssqlAgBackupBasedOk returns a tuple with the MssqlAgBackupBased field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetMssqlAgBackupBasedOk() (*bool, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		return nil, false
+	}
+	return o.MssqlAgBackupBased, true
+}
+
+// HasMssqlAgBackupBased returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasMssqlAgBackupBased() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupBased) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupBased gets a reference to the given bool and assigns it to the MssqlAgBackupBased field.
+func (o *UpdateVDBParameters) SetMssqlAgBackupBased(v bool) {
+	o.MssqlAgBackupBased = &v
+}
+
 func (o UpdateVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -975,6 +1278,9 @@ func (o UpdateVDBParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	if !IsNil(o.DbUsername) {
 		toSerialize["db_username"] = o.DbUsername
@@ -1039,20 +1345,44 @@ func (o UpdateVDBParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CdbTdeKeystorePassword) {
 		toSerialize["cdb_tde_keystore_password"] = o.CdbTdeKeystorePassword
 	}
+	if !IsNil(o.ParentPdbTdeKeystorePath) {
+		toSerialize["parent_pdb_tde_keystore_path"] = o.ParentPdbTdeKeystorePath
+	}
+	if !IsNil(o.ParentPdbTdeKeystorePassword) {
+		toSerialize["parent_pdb_tde_keystore_password"] = o.ParentPdbTdeKeystorePassword
+	}
+	if !IsNil(o.TargetPdbTdeKeystorePassword) {
+		toSerialize["target_pdb_tde_keystore_password"] = o.TargetPdbTdeKeystorePassword
+	}
 	if !IsNil(o.AppdataSourceParams) {
 		toSerialize["appdata_source_params"] = o.AppdataSourceParams
 	}
-	if o.AdditionalMountPoints != nil {
+	if !IsNil(o.AdditionalMountPoints) {
 		toSerialize["additional_mount_points"] = o.AdditionalMountPoints
 	}
-	if o.AppdataConfigParams != nil {
+	if !IsNil(o.AppdataConfigParams) {
 		toSerialize["appdata_config_params"] = o.AppdataConfigParams
 	}
-	if o.ConfigParams != nil {
+	if !IsNil(o.ConfigParams) {
 		toSerialize["config_params"] = o.ConfigParams
 	}
 	if !IsNil(o.MountPoint) {
 		toSerialize["mount_point"] = o.MountPoint
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
+	}
+	if !IsNil(o.Instances) {
+		toSerialize["instances"] = o.Instances
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.MssqlAgBackupLocation) {
+		toSerialize["mssql_ag_backup_location"] = o.MssqlAgBackupLocation
+	}
+	if !IsNil(o.MssqlAgBackupBased) {
+		toSerialize["mssql_ag_backup_based"] = o.MssqlAgBackupBased
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -32,11 +32,7 @@ type LDAPConfigParams struct {
 	Domains []Domain `json:"domains,omitempty"`
 	// True if LDAP should be used over SSL.
 	EnableSsl *bool `json:"enable_ssl,omitempty"`
-	// File name of a truststore which can be used to validate the TLS certificate of the LDAP server. The truststore must be available at /etc/config/certs/<truststore_filename>
-	TruststoreFilename *string `json:"truststore_filename,omitempty"`
-	// Password for reading trustStore file provided in 'truststore_filename' property
-	TruststorePassword *string `json:"truststore_password,omitempty"`
-	// Allow connections to the LDAP server over LDAPS without validating the TLS certificate. Even though the connection to the server might be performed over LDAPS, setting this property eliminates the protection against a man-in-the-middle attach for connections to this server. Instead, consider creating a truststore with a Certificate Authority to validate the server's certificate, and set the truststore_filename property. 
+	// Allow connections to the LDAP server over LDAPS without validating the TLS certificate. Even though the connection to the server might be performed over LDAPS, setting this property eliminates the protection against a man-in-the-middle attach for connections to this server. Instead, consider configuring DCT with Certificate Authority certificates. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the LDAP server over LDAPS. Setting this value must only be done if the TLS certificate of the server does not match the hostname, and the TLS configuration of the server cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this server. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
@@ -271,70 +267,6 @@ func (o *LDAPConfigParams) SetEnableSsl(v bool) {
 	o.EnableSsl = &v
 }
 
-// GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise.
-func (o *LDAPConfigParams) GetTruststoreFilename() string {
-	if o == nil || IsNil(o.TruststoreFilename) {
-		var ret string
-		return ret
-	}
-	return *o.TruststoreFilename
-}
-
-// GetTruststoreFilenameOk returns a tuple with the TruststoreFilename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LDAPConfigParams) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil || IsNil(o.TruststoreFilename) {
-		return nil, false
-	}
-	return o.TruststoreFilename, true
-}
-
-// HasTruststoreFilename returns a boolean if a field has been set.
-func (o *LDAPConfigParams) HasTruststoreFilename() bool {
-	if o != nil && !IsNil(o.TruststoreFilename) {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststoreFilename gets a reference to the given string and assigns it to the TruststoreFilename field.
-func (o *LDAPConfigParams) SetTruststoreFilename(v string) {
-	o.TruststoreFilename = &v
-}
-
-// GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise.
-func (o *LDAPConfigParams) GetTruststorePassword() string {
-	if o == nil || IsNil(o.TruststorePassword) {
-		var ret string
-		return ret
-	}
-	return *o.TruststorePassword
-}
-
-// GetTruststorePasswordOk returns a tuple with the TruststorePassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LDAPConfigParams) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil || IsNil(o.TruststorePassword) {
-		return nil, false
-	}
-	return o.TruststorePassword, true
-}
-
-// HasTruststorePassword returns a boolean if a field has been set.
-func (o *LDAPConfigParams) HasTruststorePassword() bool {
-	if o != nil && !IsNil(o.TruststorePassword) {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststorePassword gets a reference to the given string and assigns it to the TruststorePassword field.
-func (o *LDAPConfigParams) SetTruststorePassword(v string) {
-	o.TruststorePassword = &v
-}
-
 // GetInsecureSsl returns the InsecureSsl field value if set, zero value otherwise.
 func (o *LDAPConfigParams) GetInsecureSsl() bool {
 	if o == nil || IsNil(o.InsecureSsl) {
@@ -426,12 +358,6 @@ func (o LDAPConfigParams) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EnableSsl) {
 		toSerialize["enable_ssl"] = o.EnableSsl
-	}
-	if !IsNil(o.TruststoreFilename) {
-		toSerialize["truststore_filename"] = o.TruststoreFilename
-	}
-	if !IsNil(o.TruststorePassword) {
-		toSerialize["truststore_password"] = o.TruststorePassword
 	}
 	if !IsNil(o.InsecureSsl) {
 		toSerialize["insecure_ssl"] = o.InsecureSsl

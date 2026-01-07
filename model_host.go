@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -23,12 +23,16 @@ var _ MappedNullable = &Host{}
 type Host struct {
 	// The entity ID of this Host.
 	Id *string `json:"id,omitempty"`
+	// Delphix engine equivalent constant
+	Reference *string `json:"reference,omitempty"`
 	// The hostname or IP address of this host.
 	Hostname *string `json:"hostname,omitempty"`
 	// The name of the OS on this host.
 	OsName *string `json:"os_name,omitempty"`
 	// The version of the OS on this host.
 	OsVersion *string `json:"os_version,omitempty"`
+	// The name of the OS distribution on this host.
+	Distribution *string `json:"distribution,omitempty"`
 	// The total amount of memory on this host in bytes.
 	MemorySize *int64 `json:"memory_size,omitempty"`
 	// True if the host is up and a connection can be established from the engine.
@@ -69,12 +73,28 @@ type Host struct {
 	SshPort *int32 `json:"ssh_port,omitempty"`
 	// The path for the toolkit that resides on the host.
 	ToolkitPath *string `json:"toolkit_path,omitempty"`
+	// The port that the Windows Connector connects on.
+	ConnectorPort *int32 `json:"connector_port,omitempty"`
+	// The Windows Connector version that is installed on the provided host.
+	ConnectorVersion *string `json:"connector_version,omitempty"`
+	// The .NET Framework version used for Windows Connector Service.
+	ConnectorDotNetFrameworkVersion *string `json:"connector_dot_net_framework_version,omitempty"`
 	// The path to the root of the Oracle TDE keystores artifact directories.
 	OracleTdeKeystoresRootPath *string `json:"oracle_tde_keystores_root_path,omitempty"`
+	// The path to the Oracle Key Vault library installation on the database node.
+	OracleTdeOkvHomePath *string `json:"oracle_tde_okv_home_path,omitempty"`
 	// The platform for the host machine.
 	ProcessorType *string `json:"processor_type,omitempty"`
 	// The OS timezone.
 	Timezone *string `json:"timezone,omitempty"`
+	// The PowerShell version installed on the windows target host.
+	PowershellVersion *string `json:"powershell_version,omitempty"`
+	// The OS release.
+	Release *string `json:"release,omitempty"`
+	// Traceroute network hops from host to Delphix Engine.
+	TraceRouteInfo *string `json:"trace_route_info,omitempty"`
+	// True if Oracle TDE External key Manager password is set.
+	IsTdeExternalKeyManagerPasswordSet *bool `json:"is_tde_external_key_manager_password_set,omitempty"`
 }
 
 // NewHost instantiates a new Host object
@@ -124,6 +144,38 @@ func (o *Host) HasId() bool {
 // SetId gets a reference to the given string and assigns it to the Id field.
 func (o *Host) SetId(v string) {
 	o.Id = &v
+}
+
+// GetReference returns the Reference field value if set, zero value otherwise.
+func (o *Host) GetReference() string {
+	if o == nil || IsNil(o.Reference) {
+		var ret string
+		return ret
+	}
+	return *o.Reference
+}
+
+// GetReferenceOk returns a tuple with the Reference field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetReferenceOk() (*string, bool) {
+	if o == nil || IsNil(o.Reference) {
+		return nil, false
+	}
+	return o.Reference, true
+}
+
+// HasReference returns a boolean if a field has been set.
+func (o *Host) HasReference() bool {
+	if o != nil && !IsNil(o.Reference) {
+		return true
+	}
+
+	return false
+}
+
+// SetReference gets a reference to the given string and assigns it to the Reference field.
+func (o *Host) SetReference(v string) {
+	o.Reference = &v
 }
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
@@ -220,6 +272,38 @@ func (o *Host) HasOsVersion() bool {
 // SetOsVersion gets a reference to the given string and assigns it to the OsVersion field.
 func (o *Host) SetOsVersion(v string) {
 	o.OsVersion = &v
+}
+
+// GetDistribution returns the Distribution field value if set, zero value otherwise.
+func (o *Host) GetDistribution() string {
+	if o == nil || IsNil(o.Distribution) {
+		var ret string
+		return ret
+	}
+	return *o.Distribution
+}
+
+// GetDistributionOk returns a tuple with the Distribution field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetDistributionOk() (*string, bool) {
+	if o == nil || IsNil(o.Distribution) {
+		return nil, false
+	}
+	return o.Distribution, true
+}
+
+// HasDistribution returns a boolean if a field has been set.
+func (o *Host) HasDistribution() bool {
+	if o != nil && !IsNil(o.Distribution) {
+		return true
+	}
+
+	return false
+}
+
+// SetDistribution gets a reference to the given string and assigns it to the Distribution field.
+func (o *Host) SetDistribution(v string) {
+	o.Distribution = &v
 }
 
 // GetMemorySize returns the MemorySize field value if set, zero value otherwise.
@@ -862,6 +946,102 @@ func (o *Host) SetToolkitPath(v string) {
 	o.ToolkitPath = &v
 }
 
+// GetConnectorPort returns the ConnectorPort field value if set, zero value otherwise.
+func (o *Host) GetConnectorPort() int32 {
+	if o == nil || IsNil(o.ConnectorPort) {
+		var ret int32
+		return ret
+	}
+	return *o.ConnectorPort
+}
+
+// GetConnectorPortOk returns a tuple with the ConnectorPort field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetConnectorPortOk() (*int32, bool) {
+	if o == nil || IsNil(o.ConnectorPort) {
+		return nil, false
+	}
+	return o.ConnectorPort, true
+}
+
+// HasConnectorPort returns a boolean if a field has been set.
+func (o *Host) HasConnectorPort() bool {
+	if o != nil && !IsNil(o.ConnectorPort) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectorPort gets a reference to the given int32 and assigns it to the ConnectorPort field.
+func (o *Host) SetConnectorPort(v int32) {
+	o.ConnectorPort = &v
+}
+
+// GetConnectorVersion returns the ConnectorVersion field value if set, zero value otherwise.
+func (o *Host) GetConnectorVersion() string {
+	if o == nil || IsNil(o.ConnectorVersion) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectorVersion
+}
+
+// GetConnectorVersionOk returns a tuple with the ConnectorVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetConnectorVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.ConnectorVersion) {
+		return nil, false
+	}
+	return o.ConnectorVersion, true
+}
+
+// HasConnectorVersion returns a boolean if a field has been set.
+func (o *Host) HasConnectorVersion() bool {
+	if o != nil && !IsNil(o.ConnectorVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectorVersion gets a reference to the given string and assigns it to the ConnectorVersion field.
+func (o *Host) SetConnectorVersion(v string) {
+	o.ConnectorVersion = &v
+}
+
+// GetConnectorDotNetFrameworkVersion returns the ConnectorDotNetFrameworkVersion field value if set, zero value otherwise.
+func (o *Host) GetConnectorDotNetFrameworkVersion() string {
+	if o == nil || IsNil(o.ConnectorDotNetFrameworkVersion) {
+		var ret string
+		return ret
+	}
+	return *o.ConnectorDotNetFrameworkVersion
+}
+
+// GetConnectorDotNetFrameworkVersionOk returns a tuple with the ConnectorDotNetFrameworkVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetConnectorDotNetFrameworkVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.ConnectorDotNetFrameworkVersion) {
+		return nil, false
+	}
+	return o.ConnectorDotNetFrameworkVersion, true
+}
+
+// HasConnectorDotNetFrameworkVersion returns a boolean if a field has been set.
+func (o *Host) HasConnectorDotNetFrameworkVersion() bool {
+	if o != nil && !IsNil(o.ConnectorDotNetFrameworkVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectorDotNetFrameworkVersion gets a reference to the given string and assigns it to the ConnectorDotNetFrameworkVersion field.
+func (o *Host) SetConnectorDotNetFrameworkVersion(v string) {
+	o.ConnectorDotNetFrameworkVersion = &v
+}
+
 // GetOracleTdeKeystoresRootPath returns the OracleTdeKeystoresRootPath field value if set, zero value otherwise.
 func (o *Host) GetOracleTdeKeystoresRootPath() string {
 	if o == nil || IsNil(o.OracleTdeKeystoresRootPath) {
@@ -892,6 +1072,38 @@ func (o *Host) HasOracleTdeKeystoresRootPath() bool {
 // SetOracleTdeKeystoresRootPath gets a reference to the given string and assigns it to the OracleTdeKeystoresRootPath field.
 func (o *Host) SetOracleTdeKeystoresRootPath(v string) {
 	o.OracleTdeKeystoresRootPath = &v
+}
+
+// GetOracleTdeOkvHomePath returns the OracleTdeOkvHomePath field value if set, zero value otherwise.
+func (o *Host) GetOracleTdeOkvHomePath() string {
+	if o == nil || IsNil(o.OracleTdeOkvHomePath) {
+		var ret string
+		return ret
+	}
+	return *o.OracleTdeOkvHomePath
+}
+
+// GetOracleTdeOkvHomePathOk returns a tuple with the OracleTdeOkvHomePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetOracleTdeOkvHomePathOk() (*string, bool) {
+	if o == nil || IsNil(o.OracleTdeOkvHomePath) {
+		return nil, false
+	}
+	return o.OracleTdeOkvHomePath, true
+}
+
+// HasOracleTdeOkvHomePath returns a boolean if a field has been set.
+func (o *Host) HasOracleTdeOkvHomePath() bool {
+	if o != nil && !IsNil(o.OracleTdeOkvHomePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleTdeOkvHomePath gets a reference to the given string and assigns it to the OracleTdeOkvHomePath field.
+func (o *Host) SetOracleTdeOkvHomePath(v string) {
+	o.OracleTdeOkvHomePath = &v
 }
 
 // GetProcessorType returns the ProcessorType field value if set, zero value otherwise.
@@ -958,6 +1170,134 @@ func (o *Host) SetTimezone(v string) {
 	o.Timezone = &v
 }
 
+// GetPowershellVersion returns the PowershellVersion field value if set, zero value otherwise.
+func (o *Host) GetPowershellVersion() string {
+	if o == nil || IsNil(o.PowershellVersion) {
+		var ret string
+		return ret
+	}
+	return *o.PowershellVersion
+}
+
+// GetPowershellVersionOk returns a tuple with the PowershellVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetPowershellVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.PowershellVersion) {
+		return nil, false
+	}
+	return o.PowershellVersion, true
+}
+
+// HasPowershellVersion returns a boolean if a field has been set.
+func (o *Host) HasPowershellVersion() bool {
+	if o != nil && !IsNil(o.PowershellVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetPowershellVersion gets a reference to the given string and assigns it to the PowershellVersion field.
+func (o *Host) SetPowershellVersion(v string) {
+	o.PowershellVersion = &v
+}
+
+// GetRelease returns the Release field value if set, zero value otherwise.
+func (o *Host) GetRelease() string {
+	if o == nil || IsNil(o.Release) {
+		var ret string
+		return ret
+	}
+	return *o.Release
+}
+
+// GetReleaseOk returns a tuple with the Release field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetReleaseOk() (*string, bool) {
+	if o == nil || IsNil(o.Release) {
+		return nil, false
+	}
+	return o.Release, true
+}
+
+// HasRelease returns a boolean if a field has been set.
+func (o *Host) HasRelease() bool {
+	if o != nil && !IsNil(o.Release) {
+		return true
+	}
+
+	return false
+}
+
+// SetRelease gets a reference to the given string and assigns it to the Release field.
+func (o *Host) SetRelease(v string) {
+	o.Release = &v
+}
+
+// GetTraceRouteInfo returns the TraceRouteInfo field value if set, zero value otherwise.
+func (o *Host) GetTraceRouteInfo() string {
+	if o == nil || IsNil(o.TraceRouteInfo) {
+		var ret string
+		return ret
+	}
+	return *o.TraceRouteInfo
+}
+
+// GetTraceRouteInfoOk returns a tuple with the TraceRouteInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetTraceRouteInfoOk() (*string, bool) {
+	if o == nil || IsNil(o.TraceRouteInfo) {
+		return nil, false
+	}
+	return o.TraceRouteInfo, true
+}
+
+// HasTraceRouteInfo returns a boolean if a field has been set.
+func (o *Host) HasTraceRouteInfo() bool {
+	if o != nil && !IsNil(o.TraceRouteInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetTraceRouteInfo gets a reference to the given string and assigns it to the TraceRouteInfo field.
+func (o *Host) SetTraceRouteInfo(v string) {
+	o.TraceRouteInfo = &v
+}
+
+// GetIsTdeExternalKeyManagerPasswordSet returns the IsTdeExternalKeyManagerPasswordSet field value if set, zero value otherwise.
+func (o *Host) GetIsTdeExternalKeyManagerPasswordSet() bool {
+	if o == nil || IsNil(o.IsTdeExternalKeyManagerPasswordSet) {
+		var ret bool
+		return ret
+	}
+	return *o.IsTdeExternalKeyManagerPasswordSet
+}
+
+// GetIsTdeExternalKeyManagerPasswordSetOk returns a tuple with the IsTdeExternalKeyManagerPasswordSet field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Host) GetIsTdeExternalKeyManagerPasswordSetOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsTdeExternalKeyManagerPasswordSet) {
+		return nil, false
+	}
+	return o.IsTdeExternalKeyManagerPasswordSet, true
+}
+
+// HasIsTdeExternalKeyManagerPasswordSet returns a boolean if a field has been set.
+func (o *Host) HasIsTdeExternalKeyManagerPasswordSet() bool {
+	if o != nil && !IsNil(o.IsTdeExternalKeyManagerPasswordSet) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsTdeExternalKeyManagerPasswordSet gets a reference to the given bool and assigns it to the IsTdeExternalKeyManagerPasswordSet field.
+func (o *Host) SetIsTdeExternalKeyManagerPasswordSet(v bool) {
+	o.IsTdeExternalKeyManagerPasswordSet = &v
+}
+
 func (o Host) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -971,6 +1311,9 @@ func (o Host) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
+	if !IsNil(o.Reference) {
+		toSerialize["reference"] = o.Reference
+	}
 	if !IsNil(o.Hostname) {
 		toSerialize["hostname"] = o.Hostname
 	}
@@ -979,6 +1322,9 @@ func (o Host) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OsVersion) {
 		toSerialize["os_version"] = o.OsVersion
+	}
+	if !IsNil(o.Distribution) {
+		toSerialize["distribution"] = o.Distribution
 	}
 	if !IsNil(o.MemorySize) {
 		toSerialize["memory_size"] = o.MemorySize
@@ -1040,14 +1386,38 @@ func (o Host) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ToolkitPath) {
 		toSerialize["toolkit_path"] = o.ToolkitPath
 	}
+	if !IsNil(o.ConnectorPort) {
+		toSerialize["connector_port"] = o.ConnectorPort
+	}
+	if !IsNil(o.ConnectorVersion) {
+		toSerialize["connector_version"] = o.ConnectorVersion
+	}
+	if !IsNil(o.ConnectorDotNetFrameworkVersion) {
+		toSerialize["connector_dot_net_framework_version"] = o.ConnectorDotNetFrameworkVersion
+	}
 	if !IsNil(o.OracleTdeKeystoresRootPath) {
 		toSerialize["oracle_tde_keystores_root_path"] = o.OracleTdeKeystoresRootPath
+	}
+	if !IsNil(o.OracleTdeOkvHomePath) {
+		toSerialize["oracle_tde_okv_home_path"] = o.OracleTdeOkvHomePath
 	}
 	if !IsNil(o.ProcessorType) {
 		toSerialize["processor_type"] = o.ProcessorType
 	}
 	if !IsNil(o.Timezone) {
 		toSerialize["timezone"] = o.Timezone
+	}
+	if !IsNil(o.PowershellVersion) {
+		toSerialize["powershell_version"] = o.PowershellVersion
+	}
+	if !IsNil(o.Release) {
+		toSerialize["release"] = o.Release
+	}
+	if !IsNil(o.TraceRouteInfo) {
+		toSerialize["trace_route_info"] = o.TraceRouteInfo
+	}
+	if !IsNil(o.IsTdeExternalKeyManagerPasswordSet) {
+		toSerialize["is_tde_external_key_manager_password_set"] = o.IsTdeExternalKeyManagerPasswordSet
 	}
 	return toSerialize, nil
 }

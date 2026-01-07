@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// AuthorizationApiService AuthorizationApi service
-type AuthorizationApiService service
+// AuthorizationAPIService AuthorizationAPI service
+type AuthorizationAPIService service
 
 type ApiAddAccessGroupAccountIdsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	accessGroupAccountIdsRequest *AccessGroupAccountIdsRequest
 }
@@ -48,7 +48,7 @@ AddAccessGroupAccountIds Add account ids to an Access group
  @param accessGroupId The ID of the Access group.
  @return ApiAddAccessGroupAccountIdsRequest
 */
-func (a *AuthorizationApiService) AddAccessGroupAccountIds(ctx context.Context, accessGroupId string) ApiAddAccessGroupAccountIdsRequest {
+func (a *AuthorizationAPIService) AddAccessGroupAccountIds(ctx context.Context, accessGroupId string) ApiAddAccessGroupAccountIdsRequest {
 	return ApiAddAccessGroupAccountIdsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +58,7 @@ func (a *AuthorizationApiService) AddAccessGroupAccountIds(ctx context.Context, 
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) AddAccessGroupAccountIdsExecute(r ApiAddAccessGroupAccountIdsRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) AddAccessGroupAccountIdsExecute(r ApiAddAccessGroupAccountIdsRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +66,7 @@ func (a *AuthorizationApiService) AddAccessGroupAccountIdsExecute(r ApiAddAccess
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.AddAccessGroupAccountIds")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddAccessGroupAccountIds")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -156,7 +156,7 @@ func (a *AuthorizationApiService) AddAccessGroupAccountIdsExecute(r ApiAddAccess
 
 type ApiAddAccessGroupAccountTagsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	tagsRequest *TagsRequest
 }
@@ -178,7 +178,7 @@ AddAccessGroupAccountTags Add account tags to an Access group
  @param accessGroupId The ID of the Access group.
  @return ApiAddAccessGroupAccountTagsRequest
 */
-func (a *AuthorizationApiService) AddAccessGroupAccountTags(ctx context.Context, accessGroupId string) ApiAddAccessGroupAccountTagsRequest {
+func (a *AuthorizationAPIService) AddAccessGroupAccountTags(ctx context.Context, accessGroupId string) ApiAddAccessGroupAccountTagsRequest {
 	return ApiAddAccessGroupAccountTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -188,7 +188,7 @@ func (a *AuthorizationApiService) AddAccessGroupAccountTags(ctx context.Context,
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) AddAccessGroupAccountTagsExecute(r ApiAddAccessGroupAccountTagsRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) AddAccessGroupAccountTagsExecute(r ApiAddAccessGroupAccountTagsRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -196,7 +196,7 @@ func (a *AuthorizationApiService) AddAccessGroupAccountTagsExecute(r ApiAddAcces
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.AddAccessGroupAccountTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddAccessGroupAccountTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -286,7 +286,7 @@ func (a *AuthorizationApiService) AddAccessGroupAccountTagsExecute(r ApiAddAcces
 
 type ApiAddAccessGroupScopesRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	accessGroupScopesRequest *AccessGroupScopesRequest
 }
@@ -308,7 +308,7 @@ AddAccessGroupScopes Add scopes to an Access group
  @param accessGroupId The ID of the Access group.
  @return ApiAddAccessGroupScopesRequest
 */
-func (a *AuthorizationApiService) AddAccessGroupScopes(ctx context.Context, accessGroupId string) ApiAddAccessGroupScopesRequest {
+func (a *AuthorizationAPIService) AddAccessGroupScopes(ctx context.Context, accessGroupId string) ApiAddAccessGroupScopesRequest {
 	return ApiAddAccessGroupScopesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -318,7 +318,7 @@ func (a *AuthorizationApiService) AddAccessGroupScopes(ctx context.Context, acce
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) AddAccessGroupScopesExecute(r ApiAddAccessGroupScopesRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) AddAccessGroupScopesExecute(r ApiAddAccessGroupScopesRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -326,7 +326,7 @@ func (a *AuthorizationApiService) AddAccessGroupScopesExecute(r ApiAddAccessGrou
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.AddAccessGroupScopes")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddAccessGroupScopes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -416,7 +416,7 @@ func (a *AuthorizationApiService) AddAccessGroupScopesExecute(r ApiAddAccessGrou
 
 type ApiAddAlwaysAllowedPermissionsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 	alwaysAllowedPermissionRequest *AlwaysAllowedPermissionRequest
@@ -440,7 +440,7 @@ AddAlwaysAllowedPermissions Add always allowed permissions for given object type
  @param scopeId The ID of the Access group scope.
  @return ApiAddAlwaysAllowedPermissionsRequest
 */
-func (a *AuthorizationApiService) AddAlwaysAllowedPermissions(ctx context.Context, accessGroupId string, scopeId string) ApiAddAlwaysAllowedPermissionsRequest {
+func (a *AuthorizationAPIService) AddAlwaysAllowedPermissions(ctx context.Context, accessGroupId string, scopeId string) ApiAddAlwaysAllowedPermissionsRequest {
 	return ApiAddAlwaysAllowedPermissionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -451,7 +451,7 @@ func (a *AuthorizationApiService) AddAlwaysAllowedPermissions(ctx context.Contex
 
 // Execute executes the request
 //  @return AccessGroupScope
-func (a *AuthorizationApiService) AddAlwaysAllowedPermissionsExecute(r ApiAddAlwaysAllowedPermissionsRequest) (*AccessGroupScope, *http.Response, error) {
+func (a *AuthorizationAPIService) AddAlwaysAllowedPermissionsExecute(r ApiAddAlwaysAllowedPermissionsRequest) (*AccessGroupScope, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -459,7 +459,7 @@ func (a *AuthorizationApiService) AddAlwaysAllowedPermissionsExecute(r ApiAddAlw
 		localVarReturnValue  *AccessGroupScope
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.AddAlwaysAllowedPermissions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddAlwaysAllowedPermissions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -553,7 +553,7 @@ func (a *AuthorizationApiService) AddAlwaysAllowedPermissionsExecute(r ApiAddAlw
 
 type ApiAddObjectsToAccessGroupScopeRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 	scopedObjectsRequest *ScopedObjectsRequest
@@ -577,7 +577,7 @@ AddObjectsToAccessGroupScope Add objects to the access group scope.
  @param scopeId The ID of the Access group scope.
  @return ApiAddObjectsToAccessGroupScopeRequest
 */
-func (a *AuthorizationApiService) AddObjectsToAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiAddObjectsToAccessGroupScopeRequest {
+func (a *AuthorizationAPIService) AddObjectsToAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiAddObjectsToAccessGroupScopeRequest {
 	return ApiAddObjectsToAccessGroupScopeRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -588,7 +588,7 @@ func (a *AuthorizationApiService) AddObjectsToAccessGroupScope(ctx context.Conte
 
 // Execute executes the request
 //  @return ScopedObjectItemsResponse
-func (a *AuthorizationApiService) AddObjectsToAccessGroupScopeExecute(r ApiAddObjectsToAccessGroupScopeRequest) (*ScopedObjectItemsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) AddObjectsToAccessGroupScopeExecute(r ApiAddObjectsToAccessGroupScopeRequest) (*ScopedObjectItemsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -596,7 +596,7 @@ func (a *AuthorizationApiService) AddObjectsToAccessGroupScopeExecute(r ApiAddOb
 		localVarReturnValue  *ScopedObjectItemsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.AddObjectsToAccessGroupScope")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddObjectsToAccessGroupScope")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -690,7 +690,7 @@ func (a *AuthorizationApiService) AddObjectsToAccessGroupScopeExecute(r ApiAddOb
 
 type ApiAddRolePermissionsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 	permissionsRequest *PermissionsRequest
 }
@@ -712,7 +712,7 @@ AddRolePermissions Add permissions to a role.
  @param roleId The ID of the role.
  @return ApiAddRolePermissionsRequest
 */
-func (a *AuthorizationApiService) AddRolePermissions(ctx context.Context, roleId string) ApiAddRolePermissionsRequest {
+func (a *AuthorizationAPIService) AddRolePermissions(ctx context.Context, roleId string) ApiAddRolePermissionsRequest {
 	return ApiAddRolePermissionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -722,7 +722,7 @@ func (a *AuthorizationApiService) AddRolePermissions(ctx context.Context, roleId
 
 // Execute executes the request
 //  @return Role
-func (a *AuthorizationApiService) AddRolePermissionsExecute(r ApiAddRolePermissionsRequest) (*Role, *http.Response, error) {
+func (a *AuthorizationAPIService) AddRolePermissionsExecute(r ApiAddRolePermissionsRequest) (*Role, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -730,7 +730,7 @@ func (a *AuthorizationApiService) AddRolePermissionsExecute(r ApiAddRolePermissi
 		localVarReturnValue  *Role
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.AddRolePermissions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddRolePermissions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -818,9 +818,138 @@ func (a *AuthorizationApiService) AddRolePermissionsExecute(r ApiAddRolePermissi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiAddRoleUiProfilesRequest struct {
+	ctx context.Context
+	ApiService *AuthorizationAPIService
+	roleId string
+	uiProfilesRequest *UiProfilesRequest
+}
+
+func (r ApiAddRoleUiProfilesRequest) UiProfilesRequest(uiProfilesRequest UiProfilesRequest) ApiAddRoleUiProfilesRequest {
+	r.uiProfilesRequest = &uiProfilesRequest
+	return r
+}
+
+func (r ApiAddRoleUiProfilesRequest) Execute() (*AddUiProfilesResponse, *http.Response, error) {
+	return r.ApiService.AddRoleUiProfilesExecute(r)
+}
+
+/*
+AddRoleUiProfiles Add UI profiles to a role.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param roleId The ID of the role.
+ @return ApiAddRoleUiProfilesRequest
+*/
+func (a *AuthorizationAPIService) AddRoleUiProfiles(ctx context.Context, roleId string) ApiAddRoleUiProfilesRequest {
+	return ApiAddRoleUiProfilesRequest{
+		ApiService: a,
+		ctx: ctx,
+		roleId: roleId,
+	}
+}
+
+// Execute executes the request
+//  @return AddUiProfilesResponse
+func (a *AuthorizationAPIService) AddRoleUiProfilesExecute(r ApiAddRoleUiProfilesRequest) (*AddUiProfilesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AddUiProfilesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddRoleUiProfiles")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/roles/{roleId}/ui-profiles"
+	localVarPath = strings.Replace(localVarPath, "{"+"roleId"+"}", url.PathEscape(parameterValueToString(r.roleId, "roleId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.roleId) < 1 {
+		return localVarReturnValue, nil, reportError("roleId must have at least 1 elements")
+	}
+	if r.uiProfilesRequest == nil {
+		return localVarReturnValue, nil, reportError("uiProfilesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.uiProfilesRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiAddTagsToScopeRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 	scopeTagsRequest *ScopeTagsRequest
@@ -844,7 +973,7 @@ AddTagsToScope Add object tags to the access group scope.
  @param scopeId The ID of the Access group scope.
  @return ApiAddTagsToScopeRequest
 */
-func (a *AuthorizationApiService) AddTagsToScope(ctx context.Context, accessGroupId string, scopeId string) ApiAddTagsToScopeRequest {
+func (a *AuthorizationAPIService) AddTagsToScope(ctx context.Context, accessGroupId string, scopeId string) ApiAddTagsToScopeRequest {
 	return ApiAddTagsToScopeRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -855,7 +984,7 @@ func (a *AuthorizationApiService) AddTagsToScope(ctx context.Context, accessGrou
 
 // Execute executes the request
 //  @return ScopeTagsResponse
-func (a *AuthorizationApiService) AddTagsToScopeExecute(r ApiAddTagsToScopeRequest) (*ScopeTagsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) AddTagsToScopeExecute(r ApiAddTagsToScopeRequest) (*ScopeTagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -863,7 +992,7 @@ func (a *AuthorizationApiService) AddTagsToScopeExecute(r ApiAddTagsToScopeReque
 		localVarReturnValue  *ScopeTagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.AddTagsToScope")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.AddTagsToScope")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -957,7 +1086,7 @@ func (a *AuthorizationApiService) AddTagsToScopeExecute(r ApiAddTagsToScopeReque
 
 type ApiCreateAccessGroupRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroup *AccessGroup
 }
 
@@ -976,7 +1105,7 @@ CreateAccessGroup Create a new access group.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAccessGroupRequest
 */
-func (a *AuthorizationApiService) CreateAccessGroup(ctx context.Context) ApiCreateAccessGroupRequest {
+func (a *AuthorizationAPIService) CreateAccessGroup(ctx context.Context) ApiCreateAccessGroupRequest {
 	return ApiCreateAccessGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -985,7 +1114,7 @@ func (a *AuthorizationApiService) CreateAccessGroup(ctx context.Context) ApiCrea
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) CreateAccessGroupExecute(r ApiCreateAccessGroupRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) CreateAccessGroupExecute(r ApiCreateAccessGroupRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -993,7 +1122,7 @@ func (a *AuthorizationApiService) CreateAccessGroupExecute(r ApiCreateAccessGrou
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.CreateAccessGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CreateAccessGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1079,7 +1208,7 @@ func (a *AuthorizationApiService) CreateAccessGroupExecute(r ApiCreateAccessGrou
 
 type ApiCreateRoleRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	createRole *CreateRole
 }
 
@@ -1098,7 +1227,7 @@ CreateRole Create custom role
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateRoleRequest
 */
-func (a *AuthorizationApiService) CreateRole(ctx context.Context) ApiCreateRoleRequest {
+func (a *AuthorizationAPIService) CreateRole(ctx context.Context) ApiCreateRoleRequest {
 	return ApiCreateRoleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1107,7 +1236,7 @@ func (a *AuthorizationApiService) CreateRole(ctx context.Context) ApiCreateRoleR
 
 // Execute executes the request
 //  @return Role
-func (a *AuthorizationApiService) CreateRoleExecute(r ApiCreateRoleRequest) (*Role, *http.Response, error) {
+func (a *AuthorizationAPIService) CreateRoleExecute(r ApiCreateRoleRequest) (*Role, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1115,7 +1244,7 @@ func (a *AuthorizationApiService) CreateRoleExecute(r ApiCreateRoleRequest) (*Ro
 		localVarReturnValue  *Role
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.CreateRole")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CreateRole")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1198,7 +1327,7 @@ func (a *AuthorizationApiService) CreateRoleExecute(r ApiCreateRoleRequest) (*Ro
 
 type ApiCreateRoleTagsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 	tagsRequest *TagsRequest
 }
@@ -1220,7 +1349,7 @@ CreateRoleTags Create tags for a role.
  @param roleId The ID of the role.
  @return ApiCreateRoleTagsRequest
 */
-func (a *AuthorizationApiService) CreateRoleTags(ctx context.Context, roleId string) ApiCreateRoleTagsRequest {
+func (a *AuthorizationAPIService) CreateRoleTags(ctx context.Context, roleId string) ApiCreateRoleTagsRequest {
 	return ApiCreateRoleTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1230,7 +1359,7 @@ func (a *AuthorizationApiService) CreateRoleTags(ctx context.Context, roleId str
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *AuthorizationApiService) CreateRoleTagsExecute(r ApiCreateRoleTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) CreateRoleTagsExecute(r ApiCreateRoleTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1238,7 +1367,7 @@ func (a *AuthorizationApiService) CreateRoleTagsExecute(r ApiCreateRoleTagsReque
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.CreateRoleTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CreateRoleTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1328,7 +1457,7 @@ func (a *AuthorizationApiService) CreateRoleTagsExecute(r ApiCreateRoleTagsReque
 
 type ApiDeleteAccessGroupRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 }
 
@@ -1343,7 +1472,7 @@ DeleteAccessGroup Delete an Access group.
  @param accessGroupId The ID of the Access group.
  @return ApiDeleteAccessGroupRequest
 */
-func (a *AuthorizationApiService) DeleteAccessGroup(ctx context.Context, accessGroupId string) ApiDeleteAccessGroupRequest {
+func (a *AuthorizationAPIService) DeleteAccessGroup(ctx context.Context, accessGroupId string) ApiDeleteAccessGroupRequest {
 	return ApiDeleteAccessGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1352,14 +1481,14 @@ func (a *AuthorizationApiService) DeleteAccessGroup(ctx context.Context, accessG
 }
 
 // Execute executes the request
-func (a *AuthorizationApiService) DeleteAccessGroupExecute(r ApiDeleteAccessGroupRequest) (*http.Response, error) {
+func (a *AuthorizationAPIService) DeleteAccessGroupExecute(r ApiDeleteAccessGroupRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.DeleteAccessGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.DeleteAccessGroup")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1435,7 +1564,7 @@ func (a *AuthorizationApiService) DeleteAccessGroupExecute(r ApiDeleteAccessGrou
 
 type ApiDeleteAccessGroupScopeObjectTagsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 	deleteScopeObjectTags *DeleteScopeObjectTags
@@ -1459,7 +1588,7 @@ DeleteAccessGroupScopeObjectTags Remove tags from the access group scope.
  @param scopeId The ID of the Access group scope.
  @return ApiDeleteAccessGroupScopeObjectTagsRequest
 */
-func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectTags(ctx context.Context, accessGroupId string, scopeId string) ApiDeleteAccessGroupScopeObjectTagsRequest {
+func (a *AuthorizationAPIService) DeleteAccessGroupScopeObjectTags(ctx context.Context, accessGroupId string, scopeId string) ApiDeleteAccessGroupScopeObjectTagsRequest {
 	return ApiDeleteAccessGroupScopeObjectTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1470,7 +1599,7 @@ func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectTags(ctx context.C
 
 // Execute executes the request
 //  @return ScopeTagsResponse
-func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectTagsExecute(r ApiDeleteAccessGroupScopeObjectTagsRequest) (*ScopeTagsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) DeleteAccessGroupScopeObjectTagsExecute(r ApiDeleteAccessGroupScopeObjectTagsRequest) (*ScopeTagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1478,7 +1607,7 @@ func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectTagsExecute(r ApiD
 		localVarReturnValue  *ScopeTagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.DeleteAccessGroupScopeObjectTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.DeleteAccessGroupScopeObjectTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1569,7 +1698,7 @@ func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectTagsExecute(r ApiD
 
 type ApiDeleteAccessGroupScopeObjectsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 	deleteScopedObjectItem *DeleteScopedObjectItem
@@ -1593,7 +1722,7 @@ DeleteAccessGroupScopeObjects Remove objects from the access group scope.
  @param scopeId The ID of the Access group scope.
  @return ApiDeleteAccessGroupScopeObjectsRequest
 */
-func (a *AuthorizationApiService) DeleteAccessGroupScopeObjects(ctx context.Context, accessGroupId string, scopeId string) ApiDeleteAccessGroupScopeObjectsRequest {
+func (a *AuthorizationAPIService) DeleteAccessGroupScopeObjects(ctx context.Context, accessGroupId string, scopeId string) ApiDeleteAccessGroupScopeObjectsRequest {
 	return ApiDeleteAccessGroupScopeObjectsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1604,7 +1733,7 @@ func (a *AuthorizationApiService) DeleteAccessGroupScopeObjects(ctx context.Cont
 
 // Execute executes the request
 //  @return ScopedObjectItemsResponse
-func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectsExecute(r ApiDeleteAccessGroupScopeObjectsRequest) (*ScopedObjectItemsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) DeleteAccessGroupScopeObjectsExecute(r ApiDeleteAccessGroupScopeObjectsRequest) (*ScopedObjectItemsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1612,7 +1741,7 @@ func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectsExecute(r ApiDele
 		localVarReturnValue  *ScopedObjectItemsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.DeleteAccessGroupScopeObjects")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.DeleteAccessGroupScopeObjects")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1703,7 +1832,7 @@ func (a *AuthorizationApiService) DeleteAccessGroupScopeObjectsExecute(r ApiDele
 
 type ApiDeleteRoleRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 }
 
@@ -1718,7 +1847,7 @@ DeleteRole Delete role by ID.
  @param roleId The ID of the role.
  @return ApiDeleteRoleRequest
 */
-func (a *AuthorizationApiService) DeleteRole(ctx context.Context, roleId string) ApiDeleteRoleRequest {
+func (a *AuthorizationAPIService) DeleteRole(ctx context.Context, roleId string) ApiDeleteRoleRequest {
 	return ApiDeleteRoleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1727,14 +1856,14 @@ func (a *AuthorizationApiService) DeleteRole(ctx context.Context, roleId string)
 }
 
 // Execute executes the request
-func (a *AuthorizationApiService) DeleteRoleExecute(r ApiDeleteRoleRequest) (*http.Response, error) {
+func (a *AuthorizationAPIService) DeleteRoleExecute(r ApiDeleteRoleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.DeleteRole")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.DeleteRole")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1810,7 +1939,7 @@ func (a *AuthorizationApiService) DeleteRoleExecute(r ApiDeleteRoleRequest) (*ht
 
 type ApiDeleteRoleTagRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 	deleteTag *DeleteTag
 }
@@ -1832,7 +1961,7 @@ DeleteRoleTag Delete tags for a Role.
  @param roleId The ID of the role.
  @return ApiDeleteRoleTagRequest
 */
-func (a *AuthorizationApiService) DeleteRoleTag(ctx context.Context, roleId string) ApiDeleteRoleTagRequest {
+func (a *AuthorizationAPIService) DeleteRoleTag(ctx context.Context, roleId string) ApiDeleteRoleTagRequest {
 	return ApiDeleteRoleTagRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1841,14 +1970,14 @@ func (a *AuthorizationApiService) DeleteRoleTag(ctx context.Context, roleId stri
 }
 
 // Execute executes the request
-func (a *AuthorizationApiService) DeleteRoleTagExecute(r ApiDeleteRoleTagRequest) (*http.Response, error) {
+func (a *AuthorizationAPIService) DeleteRoleTagExecute(r ApiDeleteRoleTagRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.DeleteRoleTag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.DeleteRoleTag")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1924,9 +2053,127 @@ func (a *AuthorizationApiService) DeleteRoleTagExecute(r ApiDeleteRoleTagRequest
 	return localVarHTTPResponse, nil
 }
 
+type ApiDeleteRoleUiProfilesRequest struct {
+	ctx context.Context
+	ApiService *AuthorizationAPIService
+	roleId string
+	uiProfilesRequest *UiProfilesRequest
+}
+
+func (r ApiDeleteRoleUiProfilesRequest) UiProfilesRequest(uiProfilesRequest UiProfilesRequest) ApiDeleteRoleUiProfilesRequest {
+	r.uiProfilesRequest = &uiProfilesRequest
+	return r
+}
+
+func (r ApiDeleteRoleUiProfilesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteRoleUiProfilesExecute(r)
+}
+
+/*
+DeleteRoleUiProfiles Delete UI profiles from a Role.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param roleId The ID of the role.
+ @return ApiDeleteRoleUiProfilesRequest
+*/
+func (a *AuthorizationAPIService) DeleteRoleUiProfiles(ctx context.Context, roleId string) ApiDeleteRoleUiProfilesRequest {
+	return ApiDeleteRoleUiProfilesRequest{
+		ApiService: a,
+		ctx: ctx,
+		roleId: roleId,
+	}
+}
+
+// Execute executes the request
+func (a *AuthorizationAPIService) DeleteRoleUiProfilesExecute(r ApiDeleteRoleUiProfilesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.DeleteRoleUiProfiles")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/roles/{roleId}/ui-profiles/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"roleId"+"}", url.PathEscape(parameterValueToString(r.roleId, "roleId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.roleId) < 1 {
+		return nil, reportError("roleId must have at least 1 elements")
+	}
+	if r.uiProfilesRequest == nil {
+		return nil, reportError("uiProfilesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.uiProfilesRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiGetAccessGroupByIdRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 }
 
@@ -1941,7 +2188,7 @@ GetAccessGroupById Returns an Access group by ID.
  @param accessGroupId The ID of the Access group.
  @return ApiGetAccessGroupByIdRequest
 */
-func (a *AuthorizationApiService) GetAccessGroupById(ctx context.Context, accessGroupId string) ApiGetAccessGroupByIdRequest {
+func (a *AuthorizationAPIService) GetAccessGroupById(ctx context.Context, accessGroupId string) ApiGetAccessGroupByIdRequest {
 	return ApiGetAccessGroupByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1951,7 +2198,7 @@ func (a *AuthorizationApiService) GetAccessGroupById(ctx context.Context, access
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) GetAccessGroupByIdExecute(r ApiGetAccessGroupByIdRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) GetAccessGroupByIdExecute(r ApiGetAccessGroupByIdRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1959,7 +2206,7 @@ func (a *AuthorizationApiService) GetAccessGroupByIdExecute(r ApiGetAccessGroupB
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetAccessGroupById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetAccessGroupById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2044,7 +2291,7 @@ func (a *AuthorizationApiService) GetAccessGroupByIdExecute(r ApiGetAccessGroupB
 
 type ApiGetAccessGroupScopeRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 }
@@ -2061,7 +2308,7 @@ GetAccessGroupScope Get access group scope.
  @param scopeId The ID of the Access group scope.
  @return ApiGetAccessGroupScopeRequest
 */
-func (a *AuthorizationApiService) GetAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiGetAccessGroupScopeRequest {
+func (a *AuthorizationAPIService) GetAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiGetAccessGroupScopeRequest {
 	return ApiGetAccessGroupScopeRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2072,7 +2319,7 @@ func (a *AuthorizationApiService) GetAccessGroupScope(ctx context.Context, acces
 
 // Execute executes the request
 //  @return AccessGroupScope
-func (a *AuthorizationApiService) GetAccessGroupScopeExecute(r ApiGetAccessGroupScopeRequest) (*AccessGroupScope, *http.Response, error) {
+func (a *AuthorizationAPIService) GetAccessGroupScopeExecute(r ApiGetAccessGroupScopeRequest) (*AccessGroupScope, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2080,7 +2327,7 @@ func (a *AuthorizationApiService) GetAccessGroupScopeExecute(r ApiGetAccessGroup
 		localVarReturnValue  *AccessGroupScope
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetAccessGroupScope")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetAccessGroupScope")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2169,7 +2416,7 @@ func (a *AuthorizationApiService) GetAccessGroupScopeExecute(r ApiGetAccessGroup
 
 type ApiGetAccessGroupsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -2203,7 +2450,7 @@ GetAccessGroups List all access groups.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetAccessGroupsRequest
 */
-func (a *AuthorizationApiService) GetAccessGroups(ctx context.Context) ApiGetAccessGroupsRequest {
+func (a *AuthorizationAPIService) GetAccessGroups(ctx context.Context) ApiGetAccessGroupsRequest {
 	return ApiGetAccessGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2212,7 +2459,7 @@ func (a *AuthorizationApiService) GetAccessGroups(ctx context.Context) ApiGetAcc
 
 // Execute executes the request
 //  @return ListAccessGroupsResponse
-func (a *AuthorizationApiService) GetAccessGroupsExecute(r ApiGetAccessGroupsRequest) (*ListAccessGroupsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) GetAccessGroupsExecute(r ApiGetAccessGroupsRequest) (*ListAccessGroupsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2220,7 +2467,7 @@ func (a *AuthorizationApiService) GetAccessGroupsExecute(r ApiGetAccessGroupsReq
 		localVarReturnValue  *ListAccessGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetAccessGroups")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetAccessGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2232,13 +2479,16 @@ func (a *AuthorizationApiService) GetAccessGroupsExecute(r ApiGetAccessGroupsReq
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2310,7 +2560,7 @@ func (a *AuthorizationApiService) GetAccessGroupsExecute(r ApiGetAccessGroupsReq
 
 type ApiGetAllObjectPermissionsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 }
 
 func (r ApiGetAllObjectPermissionsRequest) Execute() (*AllObjectPermissionsResponse, *http.Response, error) {
@@ -2323,7 +2573,7 @@ GetAllObjectPermissions Returns all of the possible permissions for all of the o
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetAllObjectPermissionsRequest
 */
-func (a *AuthorizationApiService) GetAllObjectPermissions(ctx context.Context) ApiGetAllObjectPermissionsRequest {
+func (a *AuthorizationAPIService) GetAllObjectPermissions(ctx context.Context) ApiGetAllObjectPermissionsRequest {
 	return ApiGetAllObjectPermissionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2332,7 +2582,7 @@ func (a *AuthorizationApiService) GetAllObjectPermissions(ctx context.Context) A
 
 // Execute executes the request
 //  @return AllObjectPermissionsResponse
-func (a *AuthorizationApiService) GetAllObjectPermissionsExecute(r ApiGetAllObjectPermissionsRequest) (*AllObjectPermissionsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) GetAllObjectPermissionsExecute(r ApiGetAllObjectPermissionsRequest) (*AllObjectPermissionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2340,7 +2590,7 @@ func (a *AuthorizationApiService) GetAllObjectPermissionsExecute(r ApiGetAllObje
 		localVarReturnValue  *AllObjectPermissionsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetAllObjectPermissions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetAllObjectPermissions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2421,7 +2671,7 @@ func (a *AuthorizationApiService) GetAllObjectPermissionsExecute(r ApiGetAllObje
 
 type ApiGetObjectPermissionsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	objectType string
 	objectId string
 }
@@ -2438,7 +2688,7 @@ GetObjectPermissions Returns permissions for given object.
  @param objectId The ID of the DCT Object.
  @return ApiGetObjectPermissionsRequest
 */
-func (a *AuthorizationApiService) GetObjectPermissions(ctx context.Context, objectType string, objectId string) ApiGetObjectPermissionsRequest {
+func (a *AuthorizationAPIService) GetObjectPermissions(ctx context.Context, objectType string, objectId string) ApiGetObjectPermissionsRequest {
 	return ApiGetObjectPermissionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2449,7 +2699,7 @@ func (a *AuthorizationApiService) GetObjectPermissions(ctx context.Context, obje
 
 // Execute executes the request
 //  @return ObjectPermissionsResponse
-func (a *AuthorizationApiService) GetObjectPermissionsExecute(r ApiGetObjectPermissionsRequest) (*ObjectPermissionsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) GetObjectPermissionsExecute(r ApiGetObjectPermissionsRequest) (*ObjectPermissionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2457,7 +2707,7 @@ func (a *AuthorizationApiService) GetObjectPermissionsExecute(r ApiGetObjectPerm
 		localVarReturnValue  *ObjectPermissionsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetObjectPermissions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetObjectPermissions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2543,7 +2793,7 @@ func (a *AuthorizationApiService) GetObjectPermissionsExecute(r ApiGetObjectPerm
 
 type ApiGetRoleByIdRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 }
 
@@ -2558,7 +2808,7 @@ GetRoleById Returns role by ID.
  @param roleId The ID of the role.
  @return ApiGetRoleByIdRequest
 */
-func (a *AuthorizationApiService) GetRoleById(ctx context.Context, roleId string) ApiGetRoleByIdRequest {
+func (a *AuthorizationAPIService) GetRoleById(ctx context.Context, roleId string) ApiGetRoleByIdRequest {
 	return ApiGetRoleByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2568,7 +2818,7 @@ func (a *AuthorizationApiService) GetRoleById(ctx context.Context, roleId string
 
 // Execute executes the request
 //  @return Role
-func (a *AuthorizationApiService) GetRoleByIdExecute(r ApiGetRoleByIdRequest) (*Role, *http.Response, error) {
+func (a *AuthorizationAPIService) GetRoleByIdExecute(r ApiGetRoleByIdRequest) (*Role, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2576,7 +2826,7 @@ func (a *AuthorizationApiService) GetRoleByIdExecute(r ApiGetRoleByIdRequest) (*
 		localVarReturnValue  *Role
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetRoleById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetRoleById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2661,7 +2911,7 @@ func (a *AuthorizationApiService) GetRoleByIdExecute(r ApiGetRoleByIdRequest) (*
 
 type ApiGetRoleTagsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 }
 
@@ -2676,7 +2926,7 @@ GetRoleTags Get tags for a Role.
  @param roleId The ID of the role.
  @return ApiGetRoleTagsRequest
 */
-func (a *AuthorizationApiService) GetRoleTags(ctx context.Context, roleId string) ApiGetRoleTagsRequest {
+func (a *AuthorizationAPIService) GetRoleTags(ctx context.Context, roleId string) ApiGetRoleTagsRequest {
 	return ApiGetRoleTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2686,7 +2936,7 @@ func (a *AuthorizationApiService) GetRoleTags(ctx context.Context, roleId string
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *AuthorizationApiService) GetRoleTagsExecute(r ApiGetRoleTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) GetRoleTagsExecute(r ApiGetRoleTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2694,7 +2944,7 @@ func (a *AuthorizationApiService) GetRoleTagsExecute(r ApiGetRoleTagsRequest) (*
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetRoleTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetRoleTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2779,7 +3029,28 @@ func (a *AuthorizationApiService) GetRoleTagsExecute(r ApiGetRoleTagsRequest) (*
 
 type ApiGetRolesRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
+	limit *int32
+	cursor *string
+	sort *string
+}
+
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetRolesRequest) Limit(limit int32) ApiGetRolesRequest {
+	r.limit = &limit
+	return r
+}
+
+// Cursor to fetch the next or previous page of results. The value of this property must be extracted from the &#39;prev_cursor&#39; or &#39;next_cursor&#39; property of a PaginatedResponseMetadata which is contained in the response of list and search API endpoints.
+func (r ApiGetRolesRequest) Cursor(cursor string) ApiGetRolesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// The field to sort results by. A property name with a prepended &#39;-&#39; signifies descending order.
+func (r ApiGetRolesRequest) Sort(sort string) ApiGetRolesRequest {
+	r.sort = &sort
+	return r
 }
 
 func (r ApiGetRolesRequest) Execute() (*ListRolesResponse, *http.Response, error) {
@@ -2792,7 +3063,7 @@ GetRoles List all roles
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetRolesRequest
 */
-func (a *AuthorizationApiService) GetRoles(ctx context.Context) ApiGetRolesRequest {
+func (a *AuthorizationAPIService) GetRoles(ctx context.Context) ApiGetRolesRequest {
 	return ApiGetRolesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2801,7 +3072,7 @@ func (a *AuthorizationApiService) GetRoles(ctx context.Context) ApiGetRolesReque
 
 // Execute executes the request
 //  @return ListRolesResponse
-func (a *AuthorizationApiService) GetRolesExecute(r ApiGetRolesRequest) (*ListRolesResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) GetRolesExecute(r ApiGetRolesRequest) (*ListRolesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -2809,7 +3080,7 @@ func (a *AuthorizationApiService) GetRolesExecute(r ApiGetRolesRequest) (*ListRo
 		localVarReturnValue  *ListRolesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.GetRoles")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetRoles")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2820,6 +3091,18 @@ func (a *AuthorizationApiService) GetRolesExecute(r ApiGetRolesRequest) (*ListRo
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -2890,7 +3173,7 @@ func (a *AuthorizationApiService) GetRolesExecute(r ApiGetRolesRequest) (*ListRo
 
 type ApiRemoveAccessGroupAccountIdRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	accountId int64
 }
@@ -2907,7 +3190,7 @@ RemoveAccessGroupAccountId Remove the account from the access group.
  @param accountId The ID of the account.
  @return ApiRemoveAccessGroupAccountIdRequest
 */
-func (a *AuthorizationApiService) RemoveAccessGroupAccountId(ctx context.Context, accessGroupId string, accountId int64) ApiRemoveAccessGroupAccountIdRequest {
+func (a *AuthorizationAPIService) RemoveAccessGroupAccountId(ctx context.Context, accessGroupId string, accountId int64) ApiRemoveAccessGroupAccountIdRequest {
 	return ApiRemoveAccessGroupAccountIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2918,7 +3201,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupAccountId(ctx context.Context
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) RemoveAccessGroupAccountIdExecute(r ApiRemoveAccessGroupAccountIdRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) RemoveAccessGroupAccountIdExecute(r ApiRemoveAccessGroupAccountIdRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -2926,7 +3209,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupAccountIdExecute(r ApiRemoveA
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.RemoveAccessGroupAccountId")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.RemoveAccessGroupAccountId")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3012,7 +3295,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupAccountIdExecute(r ApiRemoveA
 
 type ApiRemoveAccessGroupAccountTagsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	deleteTag *DeleteTag
 }
@@ -3034,7 +3317,7 @@ RemoveAccessGroupAccountTags Remove account tags from an access group.
  @param accessGroupId The ID of the Access group.
  @return ApiRemoveAccessGroupAccountTagsRequest
 */
-func (a *AuthorizationApiService) RemoveAccessGroupAccountTags(ctx context.Context, accessGroupId string) ApiRemoveAccessGroupAccountTagsRequest {
+func (a *AuthorizationAPIService) RemoveAccessGroupAccountTags(ctx context.Context, accessGroupId string) ApiRemoveAccessGroupAccountTagsRequest {
 	return ApiRemoveAccessGroupAccountTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3044,7 +3327,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupAccountTags(ctx context.Conte
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) RemoveAccessGroupAccountTagsExecute(r ApiRemoveAccessGroupAccountTagsRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) RemoveAccessGroupAccountTagsExecute(r ApiRemoveAccessGroupAccountTagsRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3052,7 +3335,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupAccountTagsExecute(r ApiRemov
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.RemoveAccessGroupAccountTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.RemoveAccessGroupAccountTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3139,7 +3422,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupAccountTagsExecute(r ApiRemov
 
 type ApiRemoveAccessGroupScopeRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 }
@@ -3156,7 +3439,7 @@ RemoveAccessGroupScope Remove the scope from the Access group.
  @param scopeId The ID of the Access group scope.
  @return ApiRemoveAccessGroupScopeRequest
 */
-func (a *AuthorizationApiService) RemoveAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiRemoveAccessGroupScopeRequest {
+func (a *AuthorizationAPIService) RemoveAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiRemoveAccessGroupScopeRequest {
 	return ApiRemoveAccessGroupScopeRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3167,7 +3450,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupScope(ctx context.Context, ac
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) RemoveAccessGroupScopeExecute(r ApiRemoveAccessGroupScopeRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) RemoveAccessGroupScopeExecute(r ApiRemoveAccessGroupScopeRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -3175,7 +3458,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupScopeExecute(r ApiRemoveAcces
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.RemoveAccessGroupScope")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.RemoveAccessGroupScope")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3264,7 +3547,7 @@ func (a *AuthorizationApiService) RemoveAccessGroupScopeExecute(r ApiRemoveAcces
 
 type ApiRemoveAlwaysAllowedPermissionsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 	alwaysAllowedPermissionRequest *AlwaysAllowedPermissionRequest
@@ -3288,7 +3571,7 @@ RemoveAlwaysAllowedPermissions Remove always allowed permissions for given objec
  @param scopeId The ID of the Access group scope.
  @return ApiRemoveAlwaysAllowedPermissionsRequest
 */
-func (a *AuthorizationApiService) RemoveAlwaysAllowedPermissions(ctx context.Context, accessGroupId string, scopeId string) ApiRemoveAlwaysAllowedPermissionsRequest {
+func (a *AuthorizationAPIService) RemoveAlwaysAllowedPermissions(ctx context.Context, accessGroupId string, scopeId string) ApiRemoveAlwaysAllowedPermissionsRequest {
 	return ApiRemoveAlwaysAllowedPermissionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3299,7 +3582,7 @@ func (a *AuthorizationApiService) RemoveAlwaysAllowedPermissions(ctx context.Con
 
 // Execute executes the request
 //  @return AccessGroupScope
-func (a *AuthorizationApiService) RemoveAlwaysAllowedPermissionsExecute(r ApiRemoveAlwaysAllowedPermissionsRequest) (*AccessGroupScope, *http.Response, error) {
+func (a *AuthorizationAPIService) RemoveAlwaysAllowedPermissionsExecute(r ApiRemoveAlwaysAllowedPermissionsRequest) (*AccessGroupScope, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3307,7 +3590,7 @@ func (a *AuthorizationApiService) RemoveAlwaysAllowedPermissionsExecute(r ApiRem
 		localVarReturnValue  *AccessGroupScope
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.RemoveAlwaysAllowedPermissions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.RemoveAlwaysAllowedPermissions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3401,7 +3684,7 @@ func (a *AuthorizationApiService) RemoveAlwaysAllowedPermissionsExecute(r ApiRem
 
 type ApiRemoveRolePermissionsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 	permissionsRequest *PermissionsRequest
 }
@@ -3423,7 +3706,7 @@ RemoveRolePermissions Remove permissions from a role.
  @param roleId The ID of the role.
  @return ApiRemoveRolePermissionsRequest
 */
-func (a *AuthorizationApiService) RemoveRolePermissions(ctx context.Context, roleId string) ApiRemoveRolePermissionsRequest {
+func (a *AuthorizationAPIService) RemoveRolePermissions(ctx context.Context, roleId string) ApiRemoveRolePermissionsRequest {
 	return ApiRemoveRolePermissionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3433,7 +3716,7 @@ func (a *AuthorizationApiService) RemoveRolePermissions(ctx context.Context, rol
 
 // Execute executes the request
 //  @return Role
-func (a *AuthorizationApiService) RemoveRolePermissionsExecute(r ApiRemoveRolePermissionsRequest) (*Role, *http.Response, error) {
+func (a *AuthorizationAPIService) RemoveRolePermissionsExecute(r ApiRemoveRolePermissionsRequest) (*Role, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3441,7 +3724,7 @@ func (a *AuthorizationApiService) RemoveRolePermissionsExecute(r ApiRemoveRolePe
 		localVarReturnValue  *Role
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.RemoveRolePermissions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.RemoveRolePermissions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3531,7 +3814,7 @@ func (a *AuthorizationApiService) RemoveRolePermissionsExecute(r ApiRemoveRolePe
 
 type ApiSearchAccessGroupsRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -3572,7 +3855,7 @@ SearchAccessGroups Search for access groups.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchAccessGroupsRequest
 */
-func (a *AuthorizationApiService) SearchAccessGroups(ctx context.Context) ApiSearchAccessGroupsRequest {
+func (a *AuthorizationAPIService) SearchAccessGroups(ctx context.Context) ApiSearchAccessGroupsRequest {
 	return ApiSearchAccessGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3581,7 +3864,7 @@ func (a *AuthorizationApiService) SearchAccessGroups(ctx context.Context) ApiSea
 
 // Execute executes the request
 //  @return SearchAccessGroupsResponse
-func (a *AuthorizationApiService) SearchAccessGroupsExecute(r ApiSearchAccessGroupsRequest) (*SearchAccessGroupsResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) SearchAccessGroupsExecute(r ApiSearchAccessGroupsRequest) (*SearchAccessGroupsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3589,7 +3872,7 @@ func (a *AuthorizationApiService) SearchAccessGroupsExecute(r ApiSearchAccessGro
 		localVarReturnValue  *SearchAccessGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.SearchAccessGroups")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.SearchAccessGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3601,13 +3884,16 @@ func (a *AuthorizationApiService) SearchAccessGroupsExecute(r ApiSearchAccessGro
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3681,7 +3967,7 @@ func (a *AuthorizationApiService) SearchAccessGroupsExecute(r ApiSearchAccessGro
 
 type ApiSearchRolesRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -3722,7 +4008,7 @@ SearchRoles Search for roles.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchRolesRequest
 */
-func (a *AuthorizationApiService) SearchRoles(ctx context.Context) ApiSearchRolesRequest {
+func (a *AuthorizationAPIService) SearchRoles(ctx context.Context) ApiSearchRolesRequest {
 	return ApiSearchRolesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3731,7 +4017,7 @@ func (a *AuthorizationApiService) SearchRoles(ctx context.Context) ApiSearchRole
 
 // Execute executes the request
 //  @return SearchRolesResponse
-func (a *AuthorizationApiService) SearchRolesExecute(r ApiSearchRolesRequest) (*SearchRolesResponse, *http.Response, error) {
+func (a *AuthorizationAPIService) SearchRolesExecute(r ApiSearchRolesRequest) (*SearchRolesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -3739,7 +4025,7 @@ func (a *AuthorizationApiService) SearchRolesExecute(r ApiSearchRolesRequest) (*
 		localVarReturnValue  *SearchRolesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.SearchRoles")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.SearchRoles")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3751,13 +4037,16 @@ func (a *AuthorizationApiService) SearchRolesExecute(r ApiSearchRolesRequest) (*
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3831,7 +4120,7 @@ func (a *AuthorizationApiService) SearchRolesExecute(r ApiSearchRolesRequest) (*
 
 type ApiUpdateAccessGroupRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	accessGroupUpdateParameters *AccessGroupUpdateParameters
 }
@@ -3852,7 +4141,7 @@ UpdateAccessGroup Update an Access group.
  @param accessGroupId The ID of the Access group.
  @return ApiUpdateAccessGroupRequest
 */
-func (a *AuthorizationApiService) UpdateAccessGroup(ctx context.Context, accessGroupId string) ApiUpdateAccessGroupRequest {
+func (a *AuthorizationAPIService) UpdateAccessGroup(ctx context.Context, accessGroupId string) ApiUpdateAccessGroupRequest {
 	return ApiUpdateAccessGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3862,7 +4151,7 @@ func (a *AuthorizationApiService) UpdateAccessGroup(ctx context.Context, accessG
 
 // Execute executes the request
 //  @return AccessGroup
-func (a *AuthorizationApiService) UpdateAccessGroupExecute(r ApiUpdateAccessGroupRequest) (*AccessGroup, *http.Response, error) {
+func (a *AuthorizationAPIService) UpdateAccessGroupExecute(r ApiUpdateAccessGroupRequest) (*AccessGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -3870,7 +4159,7 @@ func (a *AuthorizationApiService) UpdateAccessGroupExecute(r ApiUpdateAccessGrou
 		localVarReturnValue  *AccessGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.UpdateAccessGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.UpdateAccessGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -3957,7 +4246,7 @@ func (a *AuthorizationApiService) UpdateAccessGroupExecute(r ApiUpdateAccessGrou
 
 type ApiUpdateAccessGroupScopeRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	accessGroupId string
 	scopeId string
 	updateAccessGroupScope *UpdateAccessGroupScope
@@ -3981,7 +4270,7 @@ UpdateAccessGroupScope Update access group scope.
  @param scopeId The ID of the Access group scope.
  @return ApiUpdateAccessGroupScopeRequest
 */
-func (a *AuthorizationApiService) UpdateAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiUpdateAccessGroupScopeRequest {
+func (a *AuthorizationAPIService) UpdateAccessGroupScope(ctx context.Context, accessGroupId string, scopeId string) ApiUpdateAccessGroupScopeRequest {
 	return ApiUpdateAccessGroupScopeRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -3992,7 +4281,7 @@ func (a *AuthorizationApiService) UpdateAccessGroupScope(ctx context.Context, ac
 
 // Execute executes the request
 //  @return AccessGroupScope
-func (a *AuthorizationApiService) UpdateAccessGroupScopeExecute(r ApiUpdateAccessGroupScopeRequest) (*AccessGroupScope, *http.Response, error) {
+func (a *AuthorizationAPIService) UpdateAccessGroupScopeExecute(r ApiUpdateAccessGroupScopeRequest) (*AccessGroupScope, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -4000,7 +4289,7 @@ func (a *AuthorizationApiService) UpdateAccessGroupScopeExecute(r ApiUpdateAcces
 		localVarReturnValue  *AccessGroupScope
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.UpdateAccessGroupScope")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.UpdateAccessGroupScope")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -4094,7 +4383,7 @@ func (a *AuthorizationApiService) UpdateAccessGroupScopeExecute(r ApiUpdateAcces
 
 type ApiUpdateRoleRequest struct {
 	ctx context.Context
-	ApiService *AuthorizationApiService
+	ApiService *AuthorizationAPIService
 	roleId string
 	roleUpdateParameters *RoleUpdateParameters
 }
@@ -4115,7 +4404,7 @@ UpdateRole Update a Role.
  @param roleId The ID of the role.
  @return ApiUpdateRoleRequest
 */
-func (a *AuthorizationApiService) UpdateRole(ctx context.Context, roleId string) ApiUpdateRoleRequest {
+func (a *AuthorizationAPIService) UpdateRole(ctx context.Context, roleId string) ApiUpdateRoleRequest {
 	return ApiUpdateRoleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -4125,7 +4414,7 @@ func (a *AuthorizationApiService) UpdateRole(ctx context.Context, roleId string)
 
 // Execute executes the request
 //  @return Role
-func (a *AuthorizationApiService) UpdateRoleExecute(r ApiUpdateRoleRequest) (*Role, *http.Response, error) {
+func (a *AuthorizationAPIService) UpdateRoleExecute(r ApiUpdateRoleRequest) (*Role, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -4133,7 +4422,7 @@ func (a *AuthorizationApiService) UpdateRoleExecute(r ApiUpdateRoleRequest) (*Ro
 		localVarReturnValue  *Role
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationApiService.UpdateRole")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.UpdateRole")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

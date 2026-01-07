@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -40,6 +40,24 @@ type Toolkit struct {
 	UpgradeDefinition map[string]interface{} `json:"upgrade_definition,omitempty"`
 	// The schema that defines the structure of the fields in AppDataSyncParameters.
 	SnapshotParametersDefinition map[string]interface{} `json:"snapshot_parameters_definition,omitempty"`
+	// The Delphix API version that the toolkit was built against.
+	BuildApi *string `json:"build_api,omitempty"`
+	DisplayName *string `json:"display_name,omitempty"`
+	PrettyName *string `json:"pretty_name,omitempty"`
+	Version *string `json:"version,omitempty"`
+	Namespace *string `json:"namespace,omitempty"`
+	Identifier *string `json:"identifier,omitempty"`
+	RootSquashEnabled *string `json:"root_squash_enabled,omitempty"`
+	DefaultLocale *string `json:"default_locale,omitempty"`
+	Status *string `json:"status,omitempty"`
+	Language *string `json:"language,omitempty"`
+	ExtendedStartStopHooks *string `json:"extended_start_stop_hooks,omitempty"`
+	EntryPoint *string `json:"entry_point,omitempty"`
+	LuaName *string `json:"lua_name,omitempty"`
+	MinimumLuaVersion *string `json:"minimum_lua_version,omitempty"`
+	HostTypes []string `json:"host_types,omitempty"`
+	SnapshotSchema map[string]interface{} `json:"snapshot_schema,omitempty"`
+	Resources map[string]interface{} `json:"resources,omitempty"`
 	// Tags associated to this toolkit.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -381,6 +399,550 @@ func (o *Toolkit) SetSnapshotParametersDefinition(v map[string]interface{}) {
 	o.SnapshotParametersDefinition = v
 }
 
+// GetBuildApi returns the BuildApi field value if set, zero value otherwise.
+func (o *Toolkit) GetBuildApi() string {
+	if o == nil || IsNil(o.BuildApi) {
+		var ret string
+		return ret
+	}
+	return *o.BuildApi
+}
+
+// GetBuildApiOk returns a tuple with the BuildApi field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetBuildApiOk() (*string, bool) {
+	if o == nil || IsNil(o.BuildApi) {
+		return nil, false
+	}
+	return o.BuildApi, true
+}
+
+// HasBuildApi returns a boolean if a field has been set.
+func (o *Toolkit) HasBuildApi() bool {
+	if o != nil && !IsNil(o.BuildApi) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildApi gets a reference to the given string and assigns it to the BuildApi field.
+func (o *Toolkit) SetBuildApi(v string) {
+	o.BuildApi = &v
+}
+
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
+func (o *Toolkit) GetDisplayName() string {
+	if o == nil || IsNil(o.DisplayName) {
+		var ret string
+		return ret
+	}
+	return *o.DisplayName
+}
+
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetDisplayNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DisplayName) {
+		return nil, false
+	}
+	return o.DisplayName, true
+}
+
+// HasDisplayName returns a boolean if a field has been set.
+func (o *Toolkit) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
+func (o *Toolkit) SetDisplayName(v string) {
+	o.DisplayName = &v
+}
+
+// GetPrettyName returns the PrettyName field value if set, zero value otherwise.
+func (o *Toolkit) GetPrettyName() string {
+	if o == nil || IsNil(o.PrettyName) {
+		var ret string
+		return ret
+	}
+	return *o.PrettyName
+}
+
+// GetPrettyNameOk returns a tuple with the PrettyName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetPrettyNameOk() (*string, bool) {
+	if o == nil || IsNil(o.PrettyName) {
+		return nil, false
+	}
+	return o.PrettyName, true
+}
+
+// HasPrettyName returns a boolean if a field has been set.
+func (o *Toolkit) HasPrettyName() bool {
+	if o != nil && !IsNil(o.PrettyName) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrettyName gets a reference to the given string and assigns it to the PrettyName field.
+func (o *Toolkit) SetPrettyName(v string) {
+	o.PrettyName = &v
+}
+
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *Toolkit) GetVersion() string {
+	if o == nil || IsNil(o.Version) {
+		var ret string
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *Toolkit) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given string and assigns it to the Version field.
+func (o *Toolkit) SetVersion(v string) {
+	o.Version = &v
+}
+
+// GetNamespace returns the Namespace field value if set, zero value otherwise.
+func (o *Toolkit) GetNamespace() string {
+	if o == nil || IsNil(o.Namespace) {
+		var ret string
+		return ret
+	}
+	return *o.Namespace
+}
+
+// GetNamespaceOk returns a tuple with the Namespace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetNamespaceOk() (*string, bool) {
+	if o == nil || IsNil(o.Namespace) {
+		return nil, false
+	}
+	return o.Namespace, true
+}
+
+// HasNamespace returns a boolean if a field has been set.
+func (o *Toolkit) HasNamespace() bool {
+	if o != nil && !IsNil(o.Namespace) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespace gets a reference to the given string and assigns it to the Namespace field.
+func (o *Toolkit) SetNamespace(v string) {
+	o.Namespace = &v
+}
+
+// GetIdentifier returns the Identifier field value if set, zero value otherwise.
+func (o *Toolkit) GetIdentifier() string {
+	if o == nil || IsNil(o.Identifier) {
+		var ret string
+		return ret
+	}
+	return *o.Identifier
+}
+
+// GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.Identifier) {
+		return nil, false
+	}
+	return o.Identifier, true
+}
+
+// HasIdentifier returns a boolean if a field has been set.
+func (o *Toolkit) HasIdentifier() bool {
+	if o != nil && !IsNil(o.Identifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
+func (o *Toolkit) SetIdentifier(v string) {
+	o.Identifier = &v
+}
+
+// GetRootSquashEnabled returns the RootSquashEnabled field value if set, zero value otherwise.
+func (o *Toolkit) GetRootSquashEnabled() string {
+	if o == nil || IsNil(o.RootSquashEnabled) {
+		var ret string
+		return ret
+	}
+	return *o.RootSquashEnabled
+}
+
+// GetRootSquashEnabledOk returns a tuple with the RootSquashEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetRootSquashEnabledOk() (*string, bool) {
+	if o == nil || IsNil(o.RootSquashEnabled) {
+		return nil, false
+	}
+	return o.RootSquashEnabled, true
+}
+
+// HasRootSquashEnabled returns a boolean if a field has been set.
+func (o *Toolkit) HasRootSquashEnabled() bool {
+	if o != nil && !IsNil(o.RootSquashEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetRootSquashEnabled gets a reference to the given string and assigns it to the RootSquashEnabled field.
+func (o *Toolkit) SetRootSquashEnabled(v string) {
+	o.RootSquashEnabled = &v
+}
+
+// GetDefaultLocale returns the DefaultLocale field value if set, zero value otherwise.
+func (o *Toolkit) GetDefaultLocale() string {
+	if o == nil || IsNil(o.DefaultLocale) {
+		var ret string
+		return ret
+	}
+	return *o.DefaultLocale
+}
+
+// GetDefaultLocaleOk returns a tuple with the DefaultLocale field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetDefaultLocaleOk() (*string, bool) {
+	if o == nil || IsNil(o.DefaultLocale) {
+		return nil, false
+	}
+	return o.DefaultLocale, true
+}
+
+// HasDefaultLocale returns a boolean if a field has been set.
+func (o *Toolkit) HasDefaultLocale() bool {
+	if o != nil && !IsNil(o.DefaultLocale) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultLocale gets a reference to the given string and assigns it to the DefaultLocale field.
+func (o *Toolkit) SetDefaultLocale(v string) {
+	o.DefaultLocale = &v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *Toolkit) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
+		var ret string
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *Toolkit) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *Toolkit) SetStatus(v string) {
+	o.Status = &v
+}
+
+// GetLanguage returns the Language field value if set, zero value otherwise.
+func (o *Toolkit) GetLanguage() string {
+	if o == nil || IsNil(o.Language) {
+		var ret string
+		return ret
+	}
+	return *o.Language
+}
+
+// GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetLanguageOk() (*string, bool) {
+	if o == nil || IsNil(o.Language) {
+		return nil, false
+	}
+	return o.Language, true
+}
+
+// HasLanguage returns a boolean if a field has been set.
+func (o *Toolkit) HasLanguage() bool {
+	if o != nil && !IsNil(o.Language) {
+		return true
+	}
+
+	return false
+}
+
+// SetLanguage gets a reference to the given string and assigns it to the Language field.
+func (o *Toolkit) SetLanguage(v string) {
+	o.Language = &v
+}
+
+// GetExtendedStartStopHooks returns the ExtendedStartStopHooks field value if set, zero value otherwise.
+func (o *Toolkit) GetExtendedStartStopHooks() string {
+	if o == nil || IsNil(o.ExtendedStartStopHooks) {
+		var ret string
+		return ret
+	}
+	return *o.ExtendedStartStopHooks
+}
+
+// GetExtendedStartStopHooksOk returns a tuple with the ExtendedStartStopHooks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetExtendedStartStopHooksOk() (*string, bool) {
+	if o == nil || IsNil(o.ExtendedStartStopHooks) {
+		return nil, false
+	}
+	return o.ExtendedStartStopHooks, true
+}
+
+// HasExtendedStartStopHooks returns a boolean if a field has been set.
+func (o *Toolkit) HasExtendedStartStopHooks() bool {
+	if o != nil && !IsNil(o.ExtendedStartStopHooks) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtendedStartStopHooks gets a reference to the given string and assigns it to the ExtendedStartStopHooks field.
+func (o *Toolkit) SetExtendedStartStopHooks(v string) {
+	o.ExtendedStartStopHooks = &v
+}
+
+// GetEntryPoint returns the EntryPoint field value if set, zero value otherwise.
+func (o *Toolkit) GetEntryPoint() string {
+	if o == nil || IsNil(o.EntryPoint) {
+		var ret string
+		return ret
+	}
+	return *o.EntryPoint
+}
+
+// GetEntryPointOk returns a tuple with the EntryPoint field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetEntryPointOk() (*string, bool) {
+	if o == nil || IsNil(o.EntryPoint) {
+		return nil, false
+	}
+	return o.EntryPoint, true
+}
+
+// HasEntryPoint returns a boolean if a field has been set.
+func (o *Toolkit) HasEntryPoint() bool {
+	if o != nil && !IsNil(o.EntryPoint) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntryPoint gets a reference to the given string and assigns it to the EntryPoint field.
+func (o *Toolkit) SetEntryPoint(v string) {
+	o.EntryPoint = &v
+}
+
+// GetLuaName returns the LuaName field value if set, zero value otherwise.
+func (o *Toolkit) GetLuaName() string {
+	if o == nil || IsNil(o.LuaName) {
+		var ret string
+		return ret
+	}
+	return *o.LuaName
+}
+
+// GetLuaNameOk returns a tuple with the LuaName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetLuaNameOk() (*string, bool) {
+	if o == nil || IsNil(o.LuaName) {
+		return nil, false
+	}
+	return o.LuaName, true
+}
+
+// HasLuaName returns a boolean if a field has been set.
+func (o *Toolkit) HasLuaName() bool {
+	if o != nil && !IsNil(o.LuaName) {
+		return true
+	}
+
+	return false
+}
+
+// SetLuaName gets a reference to the given string and assigns it to the LuaName field.
+func (o *Toolkit) SetLuaName(v string) {
+	o.LuaName = &v
+}
+
+// GetMinimumLuaVersion returns the MinimumLuaVersion field value if set, zero value otherwise.
+func (o *Toolkit) GetMinimumLuaVersion() string {
+	if o == nil || IsNil(o.MinimumLuaVersion) {
+		var ret string
+		return ret
+	}
+	return *o.MinimumLuaVersion
+}
+
+// GetMinimumLuaVersionOk returns a tuple with the MinimumLuaVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetMinimumLuaVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.MinimumLuaVersion) {
+		return nil, false
+	}
+	return o.MinimumLuaVersion, true
+}
+
+// HasMinimumLuaVersion returns a boolean if a field has been set.
+func (o *Toolkit) HasMinimumLuaVersion() bool {
+	if o != nil && !IsNil(o.MinimumLuaVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetMinimumLuaVersion gets a reference to the given string and assigns it to the MinimumLuaVersion field.
+func (o *Toolkit) SetMinimumLuaVersion(v string) {
+	o.MinimumLuaVersion = &v
+}
+
+// GetHostTypes returns the HostTypes field value if set, zero value otherwise.
+func (o *Toolkit) GetHostTypes() []string {
+	if o == nil || IsNil(o.HostTypes) {
+		var ret []string
+		return ret
+	}
+	return o.HostTypes
+}
+
+// GetHostTypesOk returns a tuple with the HostTypes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetHostTypesOk() ([]string, bool) {
+	if o == nil || IsNil(o.HostTypes) {
+		return nil, false
+	}
+	return o.HostTypes, true
+}
+
+// HasHostTypes returns a boolean if a field has been set.
+func (o *Toolkit) HasHostTypes() bool {
+	if o != nil && !IsNil(o.HostTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetHostTypes gets a reference to the given []string and assigns it to the HostTypes field.
+func (o *Toolkit) SetHostTypes(v []string) {
+	o.HostTypes = v
+}
+
+// GetSnapshotSchema returns the SnapshotSchema field value if set, zero value otherwise.
+func (o *Toolkit) GetSnapshotSchema() map[string]interface{} {
+	if o == nil || IsNil(o.SnapshotSchema) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.SnapshotSchema
+}
+
+// GetSnapshotSchemaOk returns a tuple with the SnapshotSchema field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetSnapshotSchemaOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.SnapshotSchema) {
+		return map[string]interface{}{}, false
+	}
+	return o.SnapshotSchema, true
+}
+
+// HasSnapshotSchema returns a boolean if a field has been set.
+func (o *Toolkit) HasSnapshotSchema() bool {
+	if o != nil && !IsNil(o.SnapshotSchema) {
+		return true
+	}
+
+	return false
+}
+
+// SetSnapshotSchema gets a reference to the given map[string]interface{} and assigns it to the SnapshotSchema field.
+func (o *Toolkit) SetSnapshotSchema(v map[string]interface{}) {
+	o.SnapshotSchema = v
+}
+
+// GetResources returns the Resources field value if set, zero value otherwise.
+func (o *Toolkit) GetResources() map[string]interface{} {
+	if o == nil || IsNil(o.Resources) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Resources
+}
+
+// GetResourcesOk returns a tuple with the Resources field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Toolkit) GetResourcesOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Resources) {
+		return map[string]interface{}{}, false
+	}
+	return o.Resources, true
+}
+
+// HasResources returns a boolean if a field has been set.
+func (o *Toolkit) HasResources() bool {
+	if o != nil && !IsNil(o.Resources) {
+		return true
+	}
+
+	return false
+}
+
+// SetResources gets a reference to the given map[string]interface{} and assigns it to the Resources field.
+func (o *Toolkit) SetResources(v map[string]interface{}) {
+	o.Resources = v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Toolkit) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -452,6 +1014,57 @@ func (o Toolkit) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SnapshotParametersDefinition) {
 		toSerialize["snapshot_parameters_definition"] = o.SnapshotParametersDefinition
+	}
+	if !IsNil(o.BuildApi) {
+		toSerialize["build_api"] = o.BuildApi
+	}
+	if !IsNil(o.DisplayName) {
+		toSerialize["display_name"] = o.DisplayName
+	}
+	if !IsNil(o.PrettyName) {
+		toSerialize["pretty_name"] = o.PrettyName
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.Namespace) {
+		toSerialize["namespace"] = o.Namespace
+	}
+	if !IsNil(o.Identifier) {
+		toSerialize["identifier"] = o.Identifier
+	}
+	if !IsNil(o.RootSquashEnabled) {
+		toSerialize["root_squash_enabled"] = o.RootSquashEnabled
+	}
+	if !IsNil(o.DefaultLocale) {
+		toSerialize["default_locale"] = o.DefaultLocale
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Language) {
+		toSerialize["language"] = o.Language
+	}
+	if !IsNil(o.ExtendedStartStopHooks) {
+		toSerialize["extended_start_stop_hooks"] = o.ExtendedStartStopHooks
+	}
+	if !IsNil(o.EntryPoint) {
+		toSerialize["entry_point"] = o.EntryPoint
+	}
+	if !IsNil(o.LuaName) {
+		toSerialize["lua_name"] = o.LuaName
+	}
+	if !IsNil(o.MinimumLuaVersion) {
+		toSerialize["minimum_lua_version"] = o.MinimumLuaVersion
+	}
+	if !IsNil(o.HostTypes) {
+		toSerialize["host_types"] = o.HostTypes
+	}
+	if !IsNil(o.SnapshotSchema) {
+		toSerialize["snapshot_schema"] = o.SnapshotSchema
+	}
+	if !IsNil(o.Resources) {
+		toSerialize["resources"] = o.Resources
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the DeleteDSourceRequest type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,11 @@ type DeleteDSourceRequest struct {
 	OracleUsername *string `json:"oracle_username,omitempty"`
 	// Password for privileged user (Oracle only).
 	OraclePassword *string `json:"oracle_password,omitempty"`
+	// Flag indicating whether to delete all dependent VDBs before deleting the dSource.
+	DeleteAllDependentVdbs *bool `json:"delete_all_dependent_vdbs,omitempty"`
 }
+
+type _DeleteDSourceRequest DeleteDSourceRequest
 
 // NewDeleteDSourceRequest instantiates a new DeleteDSourceRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -39,6 +45,8 @@ func NewDeleteDSourceRequest(dsourceId string) *DeleteDSourceRequest {
 	this.DsourceId = dsourceId
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentVdbs bool = false
+	this.DeleteAllDependentVdbs = &deleteAllDependentVdbs
 	return &this
 }
 
@@ -49,6 +57,8 @@ func NewDeleteDSourceRequestWithDefaults() *DeleteDSourceRequest {
 	this := DeleteDSourceRequest{}
 	var force bool = false
 	this.Force = &force
+	var deleteAllDependentVdbs bool = false
+	this.DeleteAllDependentVdbs = &deleteAllDependentVdbs
 	return &this
 }
 
@@ -172,6 +182,38 @@ func (o *DeleteDSourceRequest) SetOraclePassword(v string) {
 	o.OraclePassword = &v
 }
 
+// GetDeleteAllDependentVdbs returns the DeleteAllDependentVdbs field value if set, zero value otherwise.
+func (o *DeleteDSourceRequest) GetDeleteAllDependentVdbs() bool {
+	if o == nil || IsNil(o.DeleteAllDependentVdbs) {
+		var ret bool
+		return ret
+	}
+	return *o.DeleteAllDependentVdbs
+}
+
+// GetDeleteAllDependentVdbsOk returns a tuple with the DeleteAllDependentVdbs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeleteDSourceRequest) GetDeleteAllDependentVdbsOk() (*bool, bool) {
+	if o == nil || IsNil(o.DeleteAllDependentVdbs) {
+		return nil, false
+	}
+	return o.DeleteAllDependentVdbs, true
+}
+
+// HasDeleteAllDependentVdbs returns a boolean if a field has been set.
+func (o *DeleteDSourceRequest) HasDeleteAllDependentVdbs() bool {
+	if o != nil && !IsNil(o.DeleteAllDependentVdbs) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeleteAllDependentVdbs gets a reference to the given bool and assigns it to the DeleteAllDependentVdbs field.
+func (o *DeleteDSourceRequest) SetDeleteAllDependentVdbs(v bool) {
+	o.DeleteAllDependentVdbs = &v
+}
+
 func (o DeleteDSourceRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,7 +234,47 @@ func (o DeleteDSourceRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.OraclePassword) {
 		toSerialize["oracle_password"] = o.OraclePassword
 	}
+	if !IsNil(o.DeleteAllDependentVdbs) {
+		toSerialize["delete_all_dependent_vdbs"] = o.DeleteAllDependentVdbs
+	}
 	return toSerialize, nil
+}
+
+func (o *DeleteDSourceRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"dsource_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDeleteDSourceRequest := _DeleteDSourceRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDeleteDSourceRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeleteDSourceRequest(varDeleteDSourceRequest)
+
+	return err
 }
 
 type NullableDeleteDSourceRequest struct {

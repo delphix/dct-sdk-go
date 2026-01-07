@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,26 @@ var _ MappedNullable = &GlobalProperties{}
 type GlobalProperties struct {
 	// Property to define either username & password based authentication disabled or not.
 	DisableUsernamePassword *bool `json:"disable_username_password,omitempty"`
+	// Property to define the DCT Product Telemetry bundle upload cadence, in days, if Delphix services are reachable.
+	DctProductTelemetryUploadCadence *int32 `json:"dct_product_telemetry_upload_cadence,omitempty"`
+	// Property to define the maximum uncompressed bundle transfer size, in bytes, for DCT Product Telemetry.
+	DctProductTelemetryMaximumTransferSize *int32 `json:"dct_product_telemetry_maximum_transfer_size,omitempty"`
+	// Property to define the expiry time for login token, in seconds. Specify -1 to indicate never expiry of token.
+	TokenExpiryTime *int32 `json:"token_expiry_time,omitempty"`
+	// Property to define the maximum user inactivity time for login token, in seconds. Specify -1 to indicate never invalidate of token due to inactivity.
+	TokenMaximumInactivityTime *int32 `json:"token_maximum_inactivity_time,omitempty"`
+	// List of enabled features.
+	FeatureFlags []string `json:"feature_flags,omitempty"`
+	// Property to define the expiry time for API key, in seconds. Specify -1 to indicate never expiry of tapi key.
+	ApiKeyExpiryTime *int32 `json:"api_key_expiry_time,omitempty"`
+	// Restricts the IP ranges DCT will connect to when registering engines.
+	AllowedIpRanges []string `json:"allowed_ip_ranges,omitempty"`
+	// Specifies the retention interval for execution PDF reports, in days. Set to -1 to disable automatic cleanup. If set to 0, all execution PDF reports will be deleted during each cleanup run.
+	ExecutionPdfReportRetentionInterval *int32 `json:"execution_pdf_report_retention_interval,omitempty"`
+	// Specifies the retention interval for execution report data, in days. Set to -1 to disable automatic cleanup. If set to 0, all execution report data will be deleted during each cleanup run.
+	ExecutionReportDataRetentionInterval *int32 `json:"execution_report_data_retention_interval,omitempty"`
+	// Specifies the maximum percentage of disk storage that can be used by execution report data. Set to -1 to disable automatic cleanup by size. If set to 0, all execution report data and PDFs will be deleted during each cleanup run.
+	ExecutionReportDataMaxDiskUsagePercent *int32 `json:"execution_report_data_max_disk_usage_percent,omitempty"`
 }
 
 // NewGlobalProperties instantiates a new GlobalProperties object
@@ -73,6 +93,326 @@ func (o *GlobalProperties) SetDisableUsernamePassword(v bool) {
 	o.DisableUsernamePassword = &v
 }
 
+// GetDctProductTelemetryUploadCadence returns the DctProductTelemetryUploadCadence field value if set, zero value otherwise.
+func (o *GlobalProperties) GetDctProductTelemetryUploadCadence() int32 {
+	if o == nil || IsNil(o.DctProductTelemetryUploadCadence) {
+		var ret int32
+		return ret
+	}
+	return *o.DctProductTelemetryUploadCadence
+}
+
+// GetDctProductTelemetryUploadCadenceOk returns a tuple with the DctProductTelemetryUploadCadence field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetDctProductTelemetryUploadCadenceOk() (*int32, bool) {
+	if o == nil || IsNil(o.DctProductTelemetryUploadCadence) {
+		return nil, false
+	}
+	return o.DctProductTelemetryUploadCadence, true
+}
+
+// HasDctProductTelemetryUploadCadence returns a boolean if a field has been set.
+func (o *GlobalProperties) HasDctProductTelemetryUploadCadence() bool {
+	if o != nil && !IsNil(o.DctProductTelemetryUploadCadence) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctProductTelemetryUploadCadence gets a reference to the given int32 and assigns it to the DctProductTelemetryUploadCadence field.
+func (o *GlobalProperties) SetDctProductTelemetryUploadCadence(v int32) {
+	o.DctProductTelemetryUploadCadence = &v
+}
+
+// GetDctProductTelemetryMaximumTransferSize returns the DctProductTelemetryMaximumTransferSize field value if set, zero value otherwise.
+func (o *GlobalProperties) GetDctProductTelemetryMaximumTransferSize() int32 {
+	if o == nil || IsNil(o.DctProductTelemetryMaximumTransferSize) {
+		var ret int32
+		return ret
+	}
+	return *o.DctProductTelemetryMaximumTransferSize
+}
+
+// GetDctProductTelemetryMaximumTransferSizeOk returns a tuple with the DctProductTelemetryMaximumTransferSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetDctProductTelemetryMaximumTransferSizeOk() (*int32, bool) {
+	if o == nil || IsNil(o.DctProductTelemetryMaximumTransferSize) {
+		return nil, false
+	}
+	return o.DctProductTelemetryMaximumTransferSize, true
+}
+
+// HasDctProductTelemetryMaximumTransferSize returns a boolean if a field has been set.
+func (o *GlobalProperties) HasDctProductTelemetryMaximumTransferSize() bool {
+	if o != nil && !IsNil(o.DctProductTelemetryMaximumTransferSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctProductTelemetryMaximumTransferSize gets a reference to the given int32 and assigns it to the DctProductTelemetryMaximumTransferSize field.
+func (o *GlobalProperties) SetDctProductTelemetryMaximumTransferSize(v int32) {
+	o.DctProductTelemetryMaximumTransferSize = &v
+}
+
+// GetTokenExpiryTime returns the TokenExpiryTime field value if set, zero value otherwise.
+func (o *GlobalProperties) GetTokenExpiryTime() int32 {
+	if o == nil || IsNil(o.TokenExpiryTime) {
+		var ret int32
+		return ret
+	}
+	return *o.TokenExpiryTime
+}
+
+// GetTokenExpiryTimeOk returns a tuple with the TokenExpiryTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetTokenExpiryTimeOk() (*int32, bool) {
+	if o == nil || IsNil(o.TokenExpiryTime) {
+		return nil, false
+	}
+	return o.TokenExpiryTime, true
+}
+
+// HasTokenExpiryTime returns a boolean if a field has been set.
+func (o *GlobalProperties) HasTokenExpiryTime() bool {
+	if o != nil && !IsNil(o.TokenExpiryTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenExpiryTime gets a reference to the given int32 and assigns it to the TokenExpiryTime field.
+func (o *GlobalProperties) SetTokenExpiryTime(v int32) {
+	o.TokenExpiryTime = &v
+}
+
+// GetTokenMaximumInactivityTime returns the TokenMaximumInactivityTime field value if set, zero value otherwise.
+func (o *GlobalProperties) GetTokenMaximumInactivityTime() int32 {
+	if o == nil || IsNil(o.TokenMaximumInactivityTime) {
+		var ret int32
+		return ret
+	}
+	return *o.TokenMaximumInactivityTime
+}
+
+// GetTokenMaximumInactivityTimeOk returns a tuple with the TokenMaximumInactivityTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetTokenMaximumInactivityTimeOk() (*int32, bool) {
+	if o == nil || IsNil(o.TokenMaximumInactivityTime) {
+		return nil, false
+	}
+	return o.TokenMaximumInactivityTime, true
+}
+
+// HasTokenMaximumInactivityTime returns a boolean if a field has been set.
+func (o *GlobalProperties) HasTokenMaximumInactivityTime() bool {
+	if o != nil && !IsNil(o.TokenMaximumInactivityTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenMaximumInactivityTime gets a reference to the given int32 and assigns it to the TokenMaximumInactivityTime field.
+func (o *GlobalProperties) SetTokenMaximumInactivityTime(v int32) {
+	o.TokenMaximumInactivityTime = &v
+}
+
+// GetFeatureFlags returns the FeatureFlags field value if set, zero value otherwise.
+func (o *GlobalProperties) GetFeatureFlags() []string {
+	if o == nil || IsNil(o.FeatureFlags) {
+		var ret []string
+		return ret
+	}
+	return o.FeatureFlags
+}
+
+// GetFeatureFlagsOk returns a tuple with the FeatureFlags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetFeatureFlagsOk() ([]string, bool) {
+	if o == nil || IsNil(o.FeatureFlags) {
+		return nil, false
+	}
+	return o.FeatureFlags, true
+}
+
+// HasFeatureFlags returns a boolean if a field has been set.
+func (o *GlobalProperties) HasFeatureFlags() bool {
+	if o != nil && !IsNil(o.FeatureFlags) {
+		return true
+	}
+
+	return false
+}
+
+// SetFeatureFlags gets a reference to the given []string and assigns it to the FeatureFlags field.
+func (o *GlobalProperties) SetFeatureFlags(v []string) {
+	o.FeatureFlags = v
+}
+
+// GetApiKeyExpiryTime returns the ApiKeyExpiryTime field value if set, zero value otherwise.
+func (o *GlobalProperties) GetApiKeyExpiryTime() int32 {
+	if o == nil || IsNil(o.ApiKeyExpiryTime) {
+		var ret int32
+		return ret
+	}
+	return *o.ApiKeyExpiryTime
+}
+
+// GetApiKeyExpiryTimeOk returns a tuple with the ApiKeyExpiryTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetApiKeyExpiryTimeOk() (*int32, bool) {
+	if o == nil || IsNil(o.ApiKeyExpiryTime) {
+		return nil, false
+	}
+	return o.ApiKeyExpiryTime, true
+}
+
+// HasApiKeyExpiryTime returns a boolean if a field has been set.
+func (o *GlobalProperties) HasApiKeyExpiryTime() bool {
+	if o != nil && !IsNil(o.ApiKeyExpiryTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiKeyExpiryTime gets a reference to the given int32 and assigns it to the ApiKeyExpiryTime field.
+func (o *GlobalProperties) SetApiKeyExpiryTime(v int32) {
+	o.ApiKeyExpiryTime = &v
+}
+
+// GetAllowedIpRanges returns the AllowedIpRanges field value if set, zero value otherwise.
+func (o *GlobalProperties) GetAllowedIpRanges() []string {
+	if o == nil || IsNil(o.AllowedIpRanges) {
+		var ret []string
+		return ret
+	}
+	return o.AllowedIpRanges
+}
+
+// GetAllowedIpRangesOk returns a tuple with the AllowedIpRanges field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetAllowedIpRangesOk() ([]string, bool) {
+	if o == nil || IsNil(o.AllowedIpRanges) {
+		return nil, false
+	}
+	return o.AllowedIpRanges, true
+}
+
+// HasAllowedIpRanges returns a boolean if a field has been set.
+func (o *GlobalProperties) HasAllowedIpRanges() bool {
+	if o != nil && !IsNil(o.AllowedIpRanges) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedIpRanges gets a reference to the given []string and assigns it to the AllowedIpRanges field.
+func (o *GlobalProperties) SetAllowedIpRanges(v []string) {
+	o.AllowedIpRanges = v
+}
+
+// GetExecutionPdfReportRetentionInterval returns the ExecutionPdfReportRetentionInterval field value if set, zero value otherwise.
+func (o *GlobalProperties) GetExecutionPdfReportRetentionInterval() int32 {
+	if o == nil || IsNil(o.ExecutionPdfReportRetentionInterval) {
+		var ret int32
+		return ret
+	}
+	return *o.ExecutionPdfReportRetentionInterval
+}
+
+// GetExecutionPdfReportRetentionIntervalOk returns a tuple with the ExecutionPdfReportRetentionInterval field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetExecutionPdfReportRetentionIntervalOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExecutionPdfReportRetentionInterval) {
+		return nil, false
+	}
+	return o.ExecutionPdfReportRetentionInterval, true
+}
+
+// HasExecutionPdfReportRetentionInterval returns a boolean if a field has been set.
+func (o *GlobalProperties) HasExecutionPdfReportRetentionInterval() bool {
+	if o != nil && !IsNil(o.ExecutionPdfReportRetentionInterval) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionPdfReportRetentionInterval gets a reference to the given int32 and assigns it to the ExecutionPdfReportRetentionInterval field.
+func (o *GlobalProperties) SetExecutionPdfReportRetentionInterval(v int32) {
+	o.ExecutionPdfReportRetentionInterval = &v
+}
+
+// GetExecutionReportDataRetentionInterval returns the ExecutionReportDataRetentionInterval field value if set, zero value otherwise.
+func (o *GlobalProperties) GetExecutionReportDataRetentionInterval() int32 {
+	if o == nil || IsNil(o.ExecutionReportDataRetentionInterval) {
+		var ret int32
+		return ret
+	}
+	return *o.ExecutionReportDataRetentionInterval
+}
+
+// GetExecutionReportDataRetentionIntervalOk returns a tuple with the ExecutionReportDataRetentionInterval field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetExecutionReportDataRetentionIntervalOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExecutionReportDataRetentionInterval) {
+		return nil, false
+	}
+	return o.ExecutionReportDataRetentionInterval, true
+}
+
+// HasExecutionReportDataRetentionInterval returns a boolean if a field has been set.
+func (o *GlobalProperties) HasExecutionReportDataRetentionInterval() bool {
+	if o != nil && !IsNil(o.ExecutionReportDataRetentionInterval) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionReportDataRetentionInterval gets a reference to the given int32 and assigns it to the ExecutionReportDataRetentionInterval field.
+func (o *GlobalProperties) SetExecutionReportDataRetentionInterval(v int32) {
+	o.ExecutionReportDataRetentionInterval = &v
+}
+
+// GetExecutionReportDataMaxDiskUsagePercent returns the ExecutionReportDataMaxDiskUsagePercent field value if set, zero value otherwise.
+func (o *GlobalProperties) GetExecutionReportDataMaxDiskUsagePercent() int32 {
+	if o == nil || IsNil(o.ExecutionReportDataMaxDiskUsagePercent) {
+		var ret int32
+		return ret
+	}
+	return *o.ExecutionReportDataMaxDiskUsagePercent
+}
+
+// GetExecutionReportDataMaxDiskUsagePercentOk returns a tuple with the ExecutionReportDataMaxDiskUsagePercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalProperties) GetExecutionReportDataMaxDiskUsagePercentOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExecutionReportDataMaxDiskUsagePercent) {
+		return nil, false
+	}
+	return o.ExecutionReportDataMaxDiskUsagePercent, true
+}
+
+// HasExecutionReportDataMaxDiskUsagePercent returns a boolean if a field has been set.
+func (o *GlobalProperties) HasExecutionReportDataMaxDiskUsagePercent() bool {
+	if o != nil && !IsNil(o.ExecutionReportDataMaxDiskUsagePercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionReportDataMaxDiskUsagePercent gets a reference to the given int32 and assigns it to the ExecutionReportDataMaxDiskUsagePercent field.
+func (o *GlobalProperties) SetExecutionReportDataMaxDiskUsagePercent(v int32) {
+	o.ExecutionReportDataMaxDiskUsagePercent = &v
+}
+
 func (o GlobalProperties) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -85,6 +425,36 @@ func (o GlobalProperties) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.DisableUsernamePassword) {
 		toSerialize["disable_username_password"] = o.DisableUsernamePassword
+	}
+	if !IsNil(o.DctProductTelemetryUploadCadence) {
+		toSerialize["dct_product_telemetry_upload_cadence"] = o.DctProductTelemetryUploadCadence
+	}
+	if !IsNil(o.DctProductTelemetryMaximumTransferSize) {
+		toSerialize["dct_product_telemetry_maximum_transfer_size"] = o.DctProductTelemetryMaximumTransferSize
+	}
+	if !IsNil(o.TokenExpiryTime) {
+		toSerialize["token_expiry_time"] = o.TokenExpiryTime
+	}
+	if !IsNil(o.TokenMaximumInactivityTime) {
+		toSerialize["token_maximum_inactivity_time"] = o.TokenMaximumInactivityTime
+	}
+	if !IsNil(o.FeatureFlags) {
+		toSerialize["feature_flags"] = o.FeatureFlags
+	}
+	if !IsNil(o.ApiKeyExpiryTime) {
+		toSerialize["api_key_expiry_time"] = o.ApiKeyExpiryTime
+	}
+	if !IsNil(o.AllowedIpRanges) {
+		toSerialize["allowed_ip_ranges"] = o.AllowedIpRanges
+	}
+	if !IsNil(o.ExecutionPdfReportRetentionInterval) {
+		toSerialize["execution_pdf_report_retention_interval"] = o.ExecutionPdfReportRetentionInterval
+	}
+	if !IsNil(o.ExecutionReportDataRetentionInterval) {
+		toSerialize["execution_report_data_retention_interval"] = o.ExecutionReportDataRetentionInterval
+	}
+	if !IsNil(o.ExecutionReportDataMaxDiskUsagePercent) {
+		toSerialize["execution_report_data_max_disk_usage_percent"] = o.ExecutionReportDataMaxDiskUsagePercent
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -48,9 +48,9 @@ type ProvisionVDBBySnapshotParameters struct {
 	PreStop []Hook `json:"pre_stop,omitempty"`
 	// The commands to execute on the target environment after stopping a virtual source.
 	PostStop []Hook `json:"post_stop,omitempty"`
-	// The ID of the group into which the VDB will be provisioned. If unset, a group is selected randomly on the Engine.
+	// The ID of the group into which the VDB will be provisioned. This field must be explicitly set when marked as mandatory; otherwise, a group is selected randomly on the Engine.
 	TargetGroupId *string `json:"target_group_id,omitempty"`
-	// The unique name of the provisioned VDB within a group. If unset, a name is randomly generated.
+	// The unique name of the provisioned VDB within a group. This field must be explicitly set when marked as mandatory; otherwise, a name will be randomly generated.
 	Name *string `json:"name,omitempty"`
 	// The name of the database on the target environment. Defaults to the value of the name property.
 	DatabaseName *string `json:"database_name,omitempty"`
@@ -76,18 +76,18 @@ type ProvisionVDBBySnapshotParameters struct {
 	AutoSelectRepository *bool `json:"auto_select_repository,omitempty"`
 	// Indicates whether the Engine should automatically restart this virtual source when target host reboot is detected.
 	VdbRestart *bool `json:"vdb_restart,omitempty"`
-	// The ID of the target VDB Template (Oracle Only).
+	// The ID of the target VDB Template (Oracle and MSSql Only).
 	TemplateId *string `json:"template_id,omitempty"`
 	// The ID of the configuration template to apply to the auxiliary container database. This is only relevant when provisioning a Multitenant pluggable database into an existing CDB, i.e when the cdb_id property is set.(Oracle Only)
 	AuxiliaryTemplateId *string `json:"auxiliary_template_id,omitempty"`
 	// Target VDB file mapping rules (Oracle Only). Rules must be line separated (\\n or \\r) and each line must have the format \"pattern:replacement\". Lines are applied in order.
 	FileMappingRules *string `json:"file_mapping_rules,omitempty"`
 	// Target VDB SID name (Oracle Only).
-	OracleInstanceName *string `json:"oracle_instance_name,omitempty"`
+	OracleInstanceName *string `json:"oracle_instance_name,omitempty" validate:"regexp=^[a-zA-Z0-9_]+$"`
 	// Target VDB db_unique_name (Oracle Only).
-	UniqueName *string `json:"unique_name,omitempty"`
+	UniqueName *string `json:"unique_name,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\$#]+$"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the name of the provisioned vCDB (Oracle Multitenant Only).
-	VcdbName *string `json:"vcdb_name,omitempty"`
+	VcdbName *string `json:"vcdb_name,omitempty" validate:"regexp=^[a-zA-Z0-9_]+$"`
 	// When provisioning an Oracle Multitenant vCDB (when the cdb_id property is not set), the database name of the provisioned vCDB. Defaults to the value of the vcdb_name property. (Oracle Multitenant Only).
 	VcdbDatabaseName *string `json:"vcdb_database_name,omitempty"`
 	// Mount point for the VDB (Oracle, ASE, AppData).
@@ -130,6 +130,12 @@ type ProvisionVDBBySnapshotParameters struct {
 	ParentTdeKeystorePath *string `json:"parentTdeKeystorePath,omitempty"`
 	// The password of the keystore specified in parentTdeKeystorePath. (Oracle Multitenant Only)
 	ParentTdeKeystorePassword *string `json:"parent_tde_keystore_password,omitempty"`
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore. (Oracle Multitenant Only) 
+	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
+	// The password of the parent PDB keystore. (Oracle Multitenant Only)
+	ParentPdbTdeKeystorePassword *string `json:"parent_pdb_tde_keystore_password,omitempty"`
+	// The password for the isolated mode TDE keystore of the target virtual PDB. (Oracle Multitenant Only)
+	TargetPdbTdeKeystorePassword *string `json:"target_pdb_tde_keystore_password,omitempty"`
 	// Secret to be used while exporting and importing vPDB encryption keys if Transparent Data Encryption is enabled on the vPDB. (Oracle Multitenant Only)
 	TdeExportedKeyFileSecret *string `json:"tde_exported_key_file_secret,omitempty"`
 	// ID of the key created by Delphix. (Oracle Multitenant Only)
@@ -140,6 +146,7 @@ type ProvisionVDBBySnapshotParameters struct {
 	CdbTdeKeystorePassword *string `json:"cdb_tde_keystore_password,omitempty"`
 	// ID of the key created by Delphix. (Oracle Multitenant Only)
 	VcdbTdeKeyIdentifier *string `json:"vcdb_tde_key_identifier,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 	// The JSON payload conforming to the DraftV4 schema based on the type of application data being manipulated.
 	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
 	// Specifies additional locations on which to mount a subdirectory of an AppData container.
@@ -149,7 +156,7 @@ type ProvisionVDBBySnapshotParameters struct {
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	// This privileged unix username will be used to create the VDB. Leave this field blank if you do not want to use privilege elevation. The unix privileged username should begin with a letter or an underscore, followed by letters, digits, underscores, or dashes. They can end with a dollar sign (postgres only).
-	PrivilegedOsUser *string `json:"privileged_os_user,omitempty"`
+	PrivilegedOsUser *string `json:"privileged_os_user,omitempty" validate:"regexp=^$|^[a-zA-Z_][a-zA-Z0-9_\\\\-]+[$]?$"`
 	// Port number for Postgres target database (postgres only).
 	PostgresPort *int32 `json:"postgres_port,omitempty"`
 	// Custom Database-Level config settings (postgres only).
@@ -160,6 +167,14 @@ type ProvisionVDBBySnapshotParameters struct {
 	MssqlFailoverDriveLetter *string `json:"mssql_failover_drive_letter,omitempty"`
 	// The tags to be created for VDB.
 	Tags []Tag `json:"tags,omitempty"`
+	// Whether to invoke datapatch during provisioning (Oracle Only).
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// Whether the virtual database will be provisioned for a containerized environment, such as Linux containers.
+	ContainerMode *bool `json:"container_mode,omitempty"`
+	// Shared backup location to be used for VDB provision on AG Cluster.
+	MssqlAgBackupLocation *string `json:"mssql_ag_backup_location,omitempty"`
+	// Indicates whether to do fast operations for VDB on AG which will use a healthy secondary replica to recreate the AG or backup based operations which will use the primary replica to recreate the AG using backup and restore process.
+	MssqlAgBackupBased *bool `json:"mssql_ag_backup_based,omitempty"`
 	// The ID of the snapshot from which to execute the operation. If the snapshot_id is not, selects the latest snapshot.
 	SnapshotId *string `json:"snapshot_id,omitempty"`
 	// The ID of the Engine onto which to provision. If the source ID unambiguously identifies a source object, this parameter is unnecessary and ignored.
@@ -1925,6 +1940,102 @@ func (o *ProvisionVDBBySnapshotParameters) SetParentTdeKeystorePassword(v string
 	o.ParentTdeKeystorePassword = &v
 }
 
+// GetParentPdbTdeKeystorePath returns the ParentPdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePath
+}
+
+// GetParentPdbTdeKeystorePathOk returns a tuple with the ParentPdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePath, true
+}
+
+// HasParentPdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasParentPdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePath gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePath field.
+func (o *ProvisionVDBBySnapshotParameters) SetParentPdbTdeKeystorePath(v string) {
+	o.ParentPdbTdeKeystorePath = &v
+}
+
+// GetParentPdbTdeKeystorePassword returns the ParentPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePassword
+}
+
+// GetParentPdbTdeKeystorePasswordOk returns a tuple with the ParentPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetParentPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePassword, true
+}
+
+// HasParentPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasParentPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePassword gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePassword field.
+func (o *ProvisionVDBBySnapshotParameters) SetParentPdbTdeKeystorePassword(v string) {
+	o.ParentPdbTdeKeystorePassword = &v
+}
+
+// GetTargetPdbTdeKeystorePassword returns the TargetPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetTargetPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.TargetPdbTdeKeystorePassword
+}
+
+// GetTargetPdbTdeKeystorePasswordOk returns a tuple with the TargetPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetTargetPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.TargetPdbTdeKeystorePassword, true
+}
+
+// HasTargetPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasTargetPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.TargetPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetPdbTdeKeystorePassword gets a reference to the given string and assigns it to the TargetPdbTdeKeystorePassword field.
+func (o *ProvisionVDBBySnapshotParameters) SetTargetPdbTdeKeystorePassword(v string) {
+	o.TargetPdbTdeKeystorePassword = &v
+}
+
 // GetTdeExportedKeyFileSecret returns the TdeExportedKeyFileSecret field value if set, zero value otherwise.
 func (o *ProvisionVDBBySnapshotParameters) GetTdeExportedKeyFileSecret() string {
 	if o == nil || IsNil(o.TdeExportedKeyFileSecret) {
@@ -2085,6 +2196,38 @@ func (o *ProvisionVDBBySnapshotParameters) SetVcdbTdeKeyIdentifier(v string) {
 	o.VcdbTdeKeyIdentifier = &v
 }
 
+// GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		var ret OracleTdeKeystoreConfigTypeEnum
+		return ret
+	}
+	return *o.TdeKeystoreConfigType
+}
+
+// GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
+	if o == nil || IsNil(o.TdeKeystoreConfigType) {
+		return nil, false
+	}
+	return o.TdeKeystoreConfigType, true
+}
+
+// HasTdeKeystoreConfigType returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasTdeKeystoreConfigType() bool {
+	if o != nil && !IsNil(o.TdeKeystoreConfigType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *ProvisionVDBBySnapshotParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
+	o.TdeKeystoreConfigType = &v
+}
+
 // GetAppdataSourceParams returns the AppdataSourceParams field value if set, zero value otherwise.
 func (o *ProvisionVDBBySnapshotParameters) GetAppdataSourceParams() map[string]interface{} {
 	if o == nil || IsNil(o.AppdataSourceParams) {
@@ -2138,7 +2281,7 @@ func (o *ProvisionVDBBySnapshotParameters) GetAdditionalMountPointsOk() ([]Addit
 
 // HasAdditionalMountPoints returns a boolean if a field has been set.
 func (o *ProvisionVDBBySnapshotParameters) HasAdditionalMountPoints() bool {
-	if o != nil && IsNil(o.AdditionalMountPoints) {
+	if o != nil && !IsNil(o.AdditionalMountPoints) {
 		return true
 	}
 
@@ -2171,7 +2314,7 @@ func (o *ProvisionVDBBySnapshotParameters) GetAppdataConfigParamsOk() (map[strin
 
 // HasAppdataConfigParams returns a boolean if a field has been set.
 func (o *ProvisionVDBBySnapshotParameters) HasAppdataConfigParams() bool {
-	if o != nil && IsNil(o.AppdataConfigParams) {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
 		return true
 	}
 
@@ -2204,7 +2347,7 @@ func (o *ProvisionVDBBySnapshotParameters) GetConfigParamsOk() (map[string]inter
 
 // HasConfigParams returns a boolean if a field has been set.
 func (o *ProvisionVDBBySnapshotParameters) HasConfigParams() bool {
-	if o != nil && IsNil(o.ConfigParams) {
+	if o != nil && !IsNil(o.ConfigParams) {
 		return true
 	}
 
@@ -2406,6 +2549,134 @@ func (o *ProvisionVDBBySnapshotParameters) HasTags() bool {
 // SetTags gets a reference to the given []Tag and assigns it to the Tags field.
 func (o *ProvisionVDBBySnapshotParameters) SetTags(v []Tag) {
 	o.Tags = v
+}
+
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *ProvisionVDBBySnapshotParameters) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
+// GetContainerMode returns the ContainerMode field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetContainerMode() bool {
+	if o == nil || IsNil(o.ContainerMode) {
+		var ret bool
+		return ret
+	}
+	return *o.ContainerMode
+}
+
+// GetContainerModeOk returns a tuple with the ContainerMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetContainerModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ContainerMode) {
+		return nil, false
+	}
+	return o.ContainerMode, true
+}
+
+// HasContainerMode returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasContainerMode() bool {
+	if o != nil && !IsNil(o.ContainerMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerMode gets a reference to the given bool and assigns it to the ContainerMode field.
+func (o *ProvisionVDBBySnapshotParameters) SetContainerMode(v bool) {
+	o.ContainerMode = &v
+}
+
+// GetMssqlAgBackupLocation returns the MssqlAgBackupLocation field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetMssqlAgBackupLocation() string {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlAgBackupLocation
+}
+
+// GetMssqlAgBackupLocationOk returns a tuple with the MssqlAgBackupLocation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetMssqlAgBackupLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		return nil, false
+	}
+	return o.MssqlAgBackupLocation, true
+}
+
+// HasMssqlAgBackupLocation returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasMssqlAgBackupLocation() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupLocation) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupLocation gets a reference to the given string and assigns it to the MssqlAgBackupLocation field.
+func (o *ProvisionVDBBySnapshotParameters) SetMssqlAgBackupLocation(v string) {
+	o.MssqlAgBackupLocation = &v
+}
+
+// GetMssqlAgBackupBased returns the MssqlAgBackupBased field value if set, zero value otherwise.
+func (o *ProvisionVDBBySnapshotParameters) GetMssqlAgBackupBased() bool {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		var ret bool
+		return ret
+	}
+	return *o.MssqlAgBackupBased
+}
+
+// GetMssqlAgBackupBasedOk returns a tuple with the MssqlAgBackupBased field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProvisionVDBBySnapshotParameters) GetMssqlAgBackupBasedOk() (*bool, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		return nil, false
+	}
+	return o.MssqlAgBackupBased, true
+}
+
+// HasMssqlAgBackupBased returns a boolean if a field has been set.
+func (o *ProvisionVDBBySnapshotParameters) HasMssqlAgBackupBased() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupBased) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupBased gets a reference to the given bool and assigns it to the MssqlAgBackupBased field.
+func (o *ProvisionVDBBySnapshotParameters) SetMssqlAgBackupBased(v bool) {
+	o.MssqlAgBackupBased = &v
 }
 
 // GetSnapshotId returns the SnapshotId field value if set, zero value otherwise.
@@ -2708,6 +2979,15 @@ func (o ProvisionVDBBySnapshotParameters) ToMap() (map[string]interface{}, error
 	if !IsNil(o.ParentTdeKeystorePassword) {
 		toSerialize["parent_tde_keystore_password"] = o.ParentTdeKeystorePassword
 	}
+	if !IsNil(o.ParentPdbTdeKeystorePath) {
+		toSerialize["parent_pdb_tde_keystore_path"] = o.ParentPdbTdeKeystorePath
+	}
+	if !IsNil(o.ParentPdbTdeKeystorePassword) {
+		toSerialize["parent_pdb_tde_keystore_password"] = o.ParentPdbTdeKeystorePassword
+	}
+	if !IsNil(o.TargetPdbTdeKeystorePassword) {
+		toSerialize["target_pdb_tde_keystore_password"] = o.TargetPdbTdeKeystorePassword
+	}
 	if !IsNil(o.TdeExportedKeyFileSecret) {
 		toSerialize["tde_exported_key_file_secret"] = o.TdeExportedKeyFileSecret
 	}
@@ -2722,6 +3002,9 @@ func (o ProvisionVDBBySnapshotParameters) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.VcdbTdeKeyIdentifier) {
 		toSerialize["vcdb_tde_key_identifier"] = o.VcdbTdeKeyIdentifier
+	}
+	if !IsNil(o.TdeKeystoreConfigType) {
+		toSerialize["tde_keystore_config_type"] = o.TdeKeystoreConfigType
 	}
 	if !IsNil(o.AppdataSourceParams) {
 		toSerialize["appdata_source_params"] = o.AppdataSourceParams
@@ -2752,6 +3035,18 @@ func (o ProvisionVDBBySnapshotParameters) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.ContainerMode) {
+		toSerialize["container_mode"] = o.ContainerMode
+	}
+	if !IsNil(o.MssqlAgBackupLocation) {
+		toSerialize["mssql_ag_backup_location"] = o.MssqlAgBackupLocation
+	}
+	if !IsNil(o.MssqlAgBackupBased) {
+		toSerialize["mssql_ag_backup_based"] = o.MssqlAgBackupBased
 	}
 	if !IsNil(o.SnapshotId) {
 		toSerialize["snapshot_id"] = o.SnapshotId

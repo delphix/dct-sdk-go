@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -25,8 +25,12 @@ type VDB struct {
 	Id *string `json:"id,omitempty"`
 	// The database type of this VDB.
 	DatabaseType NullableString `json:"database_type,omitempty"`
-	// The container name of this VDB.
+	// The logical name of this VDB.
 	Name NullableString `json:"name,omitempty"`
+	// The container description of this VDB.
+	Description *string `json:"description,omitempty"`
+	// The name of the database on the target environment or in the database management system.
+	DatabaseName *string `json:"database_name,omitempty"`
 	// The namespace id of this VDB.
 	NamespaceId *string `json:"namespace_id,omitempty"`
 	// The namespace name of this VDB.
@@ -42,11 +46,14 @@ type VDB struct {
 	// The database version of this VDB.
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
 	// The JDBC connection URL for this VDB.
+	// Deprecated
 	JdbcConnectionString *string `json:"jdbc_connection_string,omitempty"`
 	// The total size of this VDB, in bytes.
 	Size NullableInt64 `json:"size,omitempty"`
 	// The actual space used by this VDB, in bytes.
 	StorageSize NullableInt64 `json:"storage_size,omitempty"`
+	// The disk space, in bytes, that it would take to store the VDB without Delphix.
+	UnvirtualizedSpace *int64 `json:"unvirtualized_space,omitempty"`
 	// A reference to the Engine that this VDB belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The runtime status of the VDB. 'Unknown' if all attempts to connect to the dataset failed.
@@ -69,6 +76,8 @@ type VDB struct {
 	ParentId NullableString `json:"parent_id,omitempty"`
 	// A reference to the parent dSource of this VDB.
 	ParentDsourceId NullableString `json:"parent_dsource_id,omitempty"`
+	// A reference to the root parent dataset of this VDB which could be a VDB or a dSource.
+	RootParentId NullableString `json:"root_parent_id,omitempty"`
 	// The name of the group containing this VDB.
 	GroupName NullableString `json:"group_name,omitempty"`
 	// Name of the Engine where this VDB is hosted
@@ -83,8 +92,12 @@ type VDB struct {
 	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
 	// A reference to the Database Template.
 	TemplateId NullableString `json:"template_id,omitempty"`
+	// Name of the Database Template.
+	TemplateName NullableString `json:"template_name,omitempty"`
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
+	// The environment user reference.
+	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
 	// Specifies additional locations on which to mount a subdirectory of an AppData container. Can only be updated while the VDB is disabled.
 	AdditionalMountPoints []AdditionalMountPoint `json:"additional_mount_points,omitempty"`
 	// The parameters specified by the source config schema in the toolkit
@@ -101,6 +114,10 @@ type VDB struct {
 	VdbRestart *bool `json:"vdb_restart,omitempty"`
 	// Indicates whether this VDB has an AppData database.
 	IsAppdata *bool `json:"is_appdata,omitempty"`
+	// ZFS exported data directory path.
+	ExportedDataDirectory *string `json:"exported_data_directory,omitempty"`
+	// ZFS exported data directory path of the virtual CDB container (vCDB).
+	VcdbExportedDataDirectory *string `json:"vcdb_exported_data_directory,omitempty"`
 	// The ID of the toolkit associated with this VDB.
 	ToolkitId *string `json:"toolkit_id,omitempty"`
 	// The version of the plugin associated with this VDB.
@@ -113,6 +130,60 @@ type VDB struct {
 	PrimaryEngineName *string `json:"primary_engine_name,omitempty"`
 	// The list of replicas replicated from this object.
 	Replicas []Replica `json:"replicas,omitempty"`
+	// Indicates whether datapatch should be invoked.
+	InvokeDatapatch *bool `json:"invoke_datapatch,omitempty"`
+	// True if VDB is enabled false if VDB is disabled.
+	Enabled *bool `json:"enabled,omitempty"`
+	// The list of node listeners for this VDB.
+	NodeListeners []string `json:"node_listeners,omitempty"`
+	// The instance name name of this single instance VDB.
+	InstanceName *string `json:"instance_name,omitempty"`
+	// The instance number of this single instance VDB.
+	InstanceNumber *int32 `json:"instance_number,omitempty"`
+	Instances []OracleRACDatabaseInstance `json:"instances,omitempty"`
+	OracleServices []OracleService `json:"oracle_services,omitempty"`
+	// The repository id of this VDB.
+	RepositoryId *string `json:"repository_id,omitempty"`
+	ContainerizationState *ContainerizationStateEnum `json:"containerization_state,omitempty"`
+	// Path to a copy of the parent's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots containing encrypted database files.
+	ParentTdeKeystorePath *string `json:"parent_tde_keystore_path,omitempty"`
+	// Path to the keystore of the target vCDB.
+	TargetVcdbTdeKeystorePath *string `json:"target_vcdb_tde_keystore_path,omitempty"`
+	// ID of the key created by Delphix, as recorded in v$encryption_keys.key_id.
+	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore. 
+	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
+	// Path of the virtual PDB's Oracle transparent data encryption keystore on the target host.
+	TargetPdbTdeKeystorePath *string `json:"target_pdb_tde_keystore_path,omitempty"`
+	// Recovery model of the vdb database.
+	RecoveryModel *string `json:"recovery_model,omitempty"`
+	// Whether to enable CDC on provision for MSSql.
+	CdcOnProvision *bool `json:"cdc_on_provision,omitempty"`
+	// The ID of the associated DataConnection.
+	DataConnectionId *string `json:"data_connection_id,omitempty"`
+	// Shared backup location to be used for VDB provision on AG Cluster.
+	MssqlAgBackupLocation *string `json:"mssql_ag_backup_location,omitempty"`
+	// Indicates whether to do fast operations for VDB on AG which will use a healthy secondary replica to recreate the AG or backup based operations which will use the primary replica to recreate the AG using backup and restore process.
+	MssqlAgBackupBased *bool `json:"mssql_ag_backup_based,omitempty"`
+	// Indicates the mssql replica sources constitutes in MSSQL AG virtual source.
+	MssqlAgReplicas []MssqlAgReplica `json:"mssql_ag_replicas,omitempty"`
+	// The unique name of the database.
+	DatabaseUniqueName *string `json:"database_unique_name,omitempty"`
+	// The user name of the database.
+	DbUsername *string `json:"db_username,omitempty"`
+	// Indicates whether Delphix will generate a new DBID during VDB provision or refresh.
+	NewDbId *bool `json:"new_db_id,omitempty"`
+	// Number of Online Redo Log Groups.
+	RedoLogGroups *int32 `json:"redo_log_groups,omitempty"`
+	// Online Redo Log size in MB.
+	RedoLogSizeInMb *int32 `json:"redo_log_size_in_mb,omitempty"`
+	CustomEnvVars []OracleCustomEnvVar `json:"custom_env_vars,omitempty"`
+	ActiveInstances []OracleActiveInstance `json:"active_instances,omitempty"`
+	// The NFS version that was last used to mount this source.\"
+	NfsVersion *int32 `json:"nfs_version,omitempty"`
+	NfsVersionReason *NfsVersionReasonEnum `json:"nfs_version_reason,omitempty"`
+	// Flag indicating whether the data transfer is encrypted or not.
+	NfsEncryptionEnabled *bool `json:"nfs_encryption_enabled,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -246,6 +317,70 @@ func (o *VDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *VDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *VDB) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *VDB) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *VDB) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
+func (o *VDB) GetDatabaseName() string {
+	if o == nil || IsNil(o.DatabaseName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseName
+}
+
+// GetDatabaseNameOk returns a tuple with the DatabaseName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetDatabaseNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseName) {
+		return nil, false
+	}
+	return o.DatabaseName, true
+}
+
+// HasDatabaseName returns a boolean if a field has been set.
+func (o *VDB) HasDatabaseName() bool {
+	if o != nil && !IsNil(o.DatabaseName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseName gets a reference to the given string and assigns it to the DatabaseName field.
+func (o *VDB) SetDatabaseName(v string) {
+	o.DatabaseName = &v
 }
 
 // GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
@@ -483,6 +618,7 @@ func (o *VDB) UnsetDatabaseVersion() {
 }
 
 // GetJdbcConnectionString returns the JdbcConnectionString field value if set, zero value otherwise.
+// Deprecated
 func (o *VDB) GetJdbcConnectionString() string {
 	if o == nil || IsNil(o.JdbcConnectionString) {
 		var ret string
@@ -493,6 +629,7 @@ func (o *VDB) GetJdbcConnectionString() string {
 
 // GetJdbcConnectionStringOk returns a tuple with the JdbcConnectionString field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *VDB) GetJdbcConnectionStringOk() (*string, bool) {
 	if o == nil || IsNil(o.JdbcConnectionString) {
 		return nil, false
@@ -510,6 +647,7 @@ func (o *VDB) HasJdbcConnectionString() bool {
 }
 
 // SetJdbcConnectionString gets a reference to the given string and assigns it to the JdbcConnectionString field.
+// Deprecated
 func (o *VDB) SetJdbcConnectionString(v string) {
 	o.JdbcConnectionString = &v
 }
@@ -596,6 +734,38 @@ func (o *VDB) SetStorageSizeNil() {
 // UnsetStorageSize ensures that no value is present for StorageSize, not even an explicit nil
 func (o *VDB) UnsetStorageSize() {
 	o.StorageSize.Unset()
+}
+
+// GetUnvirtualizedSpace returns the UnvirtualizedSpace field value if set, zero value otherwise.
+func (o *VDB) GetUnvirtualizedSpace() int64 {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
+		var ret int64
+		return ret
+	}
+	return *o.UnvirtualizedSpace
+}
+
+// GetUnvirtualizedSpaceOk returns a tuple with the UnvirtualizedSpace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetUnvirtualizedSpaceOk() (*int64, bool) {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
+		return nil, false
+	}
+	return o.UnvirtualizedSpace, true
+}
+
+// HasUnvirtualizedSpace returns a boolean if a field has been set.
+func (o *VDB) HasUnvirtualizedSpace() bool {
+	if o != nil && !IsNil(o.UnvirtualizedSpace) {
+		return true
+	}
+
+	return false
+}
+
+// SetUnvirtualizedSpace gets a reference to the given int64 and assigns it to the UnvirtualizedSpace field.
+func (o *VDB) SetUnvirtualizedSpace(v int64) {
+	o.UnvirtualizedSpace = &v
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -1050,6 +1220,48 @@ func (o *VDB) UnsetParentDsourceId() {
 	o.ParentDsourceId.Unset()
 }
 
+// GetRootParentId returns the RootParentId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetRootParentId() string {
+	if o == nil || IsNil(o.RootParentId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RootParentId.Get()
+}
+
+// GetRootParentIdOk returns a tuple with the RootParentId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetRootParentIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RootParentId.Get(), o.RootParentId.IsSet()
+}
+
+// HasRootParentId returns a boolean if a field has been set.
+func (o *VDB) HasRootParentId() bool {
+	if o != nil && o.RootParentId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRootParentId gets a reference to the given NullableString and assigns it to the RootParentId field.
+func (o *VDB) SetRootParentId(v string) {
+	o.RootParentId.Set(&v)
+}
+// SetRootParentIdNil sets the value for RootParentId to be an explicit nil
+func (o *VDB) SetRootParentIdNil() {
+	o.RootParentId.Set(nil)
+}
+
+// UnsetRootParentId ensures that no value is present for RootParentId, not even an explicit nil
+func (o *VDB) UnsetRootParentId() {
+	o.RootParentId.Unset()
+}
+
 // GetGroupName returns the GroupName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetGroupName() string {
 	if o == nil || IsNil(o.GroupName.Get()) {
@@ -1303,7 +1515,7 @@ func (o *VDB) GetAppdataSourceParamsOk() (map[string]interface{}, bool) {
 
 // HasAppdataSourceParams returns a boolean if a field has been set.
 func (o *VDB) HasAppdataSourceParams() bool {
-	if o != nil && IsNil(o.AppdataSourceParams) {
+	if o != nil && !IsNil(o.AppdataSourceParams) {
 		return true
 	}
 
@@ -1357,6 +1569,48 @@ func (o *VDB) UnsetTemplateId() {
 	o.TemplateId.Unset()
 }
 
+// GetTemplateName returns the TemplateName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetTemplateName() string {
+	if o == nil || IsNil(o.TemplateName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateName.Get()
+}
+
+// GetTemplateNameOk returns a tuple with the TemplateName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetTemplateNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TemplateName.Get(), o.TemplateName.IsSet()
+}
+
+// HasTemplateName returns a boolean if a field has been set.
+func (o *VDB) HasTemplateName() bool {
+	if o != nil && o.TemplateName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateName gets a reference to the given NullableString and assigns it to the TemplateName field.
+func (o *VDB) SetTemplateName(v string) {
+	o.TemplateName.Set(&v)
+}
+// SetTemplateNameNil sets the value for TemplateName to be an explicit nil
+func (o *VDB) SetTemplateNameNil() {
+	o.TemplateName.Set(nil)
+}
+
+// UnsetTemplateName ensures that no value is present for TemplateName, not even an explicit nil
+func (o *VDB) UnsetTemplateName() {
+	o.TemplateName.Unset()
+}
+
 // GetConfigParams returns the ConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetConfigParams() map[string]interface{} {
 	if o == nil {
@@ -1378,7 +1632,7 @@ func (o *VDB) GetConfigParamsOk() (map[string]interface{}, bool) {
 
 // HasConfigParams returns a boolean if a field has been set.
 func (o *VDB) HasConfigParams() bool {
-	if o != nil && IsNil(o.ConfigParams) {
+	if o != nil && !IsNil(o.ConfigParams) {
 		return true
 	}
 
@@ -1388,6 +1642,38 @@ func (o *VDB) HasConfigParams() bool {
 // SetConfigParams gets a reference to the given map[string]interface{} and assigns it to the ConfigParams field.
 func (o *VDB) SetConfigParams(v map[string]interface{}) {
 	o.ConfigParams = v
+}
+
+// GetEnvironmentUserRef returns the EnvironmentUserRef field value if set, zero value otherwise.
+func (o *VDB) GetEnvironmentUserRef() string {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserRef
+}
+
+// GetEnvironmentUserRefOk returns a tuple with the EnvironmentUserRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetEnvironmentUserRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		return nil, false
+	}
+	return o.EnvironmentUserRef, true
+}
+
+// HasEnvironmentUserRef returns a boolean if a field has been set.
+func (o *VDB) HasEnvironmentUserRef() bool {
+	if o != nil && !IsNil(o.EnvironmentUserRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserRef gets a reference to the given string and assigns it to the EnvironmentUserRef field.
+func (o *VDB) SetEnvironmentUserRef(v string) {
+	o.EnvironmentUserRef = &v
 }
 
 // GetAdditionalMountPoints returns the AdditionalMountPoints field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1411,7 +1697,7 @@ func (o *VDB) GetAdditionalMountPointsOk() ([]AdditionalMountPoint, bool) {
 
 // HasAdditionalMountPoints returns a boolean if a field has been set.
 func (o *VDB) HasAdditionalMountPoints() bool {
-	if o != nil && IsNil(o.AdditionalMountPoints) {
+	if o != nil && !IsNil(o.AdditionalMountPoints) {
 		return true
 	}
 
@@ -1444,7 +1730,7 @@ func (o *VDB) GetAppdataConfigParamsOk() (map[string]interface{}, bool) {
 
 // HasAppdataConfigParams returns a boolean if a field has been set.
 func (o *VDB) HasAppdataConfigParams() bool {
-	if o != nil && IsNil(o.AppdataConfigParams) {
+	if o != nil && !IsNil(o.AppdataConfigParams) {
 		return true
 	}
 
@@ -1658,6 +1944,70 @@ func (o *VDB) SetIsAppdata(v bool) {
 	o.IsAppdata = &v
 }
 
+// GetExportedDataDirectory returns the ExportedDataDirectory field value if set, zero value otherwise.
+func (o *VDB) GetExportedDataDirectory() string {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		var ret string
+		return ret
+	}
+	return *o.ExportedDataDirectory
+}
+
+// GetExportedDataDirectoryOk returns a tuple with the ExportedDataDirectory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetExportedDataDirectoryOk() (*string, bool) {
+	if o == nil || IsNil(o.ExportedDataDirectory) {
+		return nil, false
+	}
+	return o.ExportedDataDirectory, true
+}
+
+// HasExportedDataDirectory returns a boolean if a field has been set.
+func (o *VDB) HasExportedDataDirectory() bool {
+	if o != nil && !IsNil(o.ExportedDataDirectory) {
+		return true
+	}
+
+	return false
+}
+
+// SetExportedDataDirectory gets a reference to the given string and assigns it to the ExportedDataDirectory field.
+func (o *VDB) SetExportedDataDirectory(v string) {
+	o.ExportedDataDirectory = &v
+}
+
+// GetVcdbExportedDataDirectory returns the VcdbExportedDataDirectory field value if set, zero value otherwise.
+func (o *VDB) GetVcdbExportedDataDirectory() string {
+	if o == nil || IsNil(o.VcdbExportedDataDirectory) {
+		var ret string
+		return ret
+	}
+	return *o.VcdbExportedDataDirectory
+}
+
+// GetVcdbExportedDataDirectoryOk returns a tuple with the VcdbExportedDataDirectory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetVcdbExportedDataDirectoryOk() (*string, bool) {
+	if o == nil || IsNil(o.VcdbExportedDataDirectory) {
+		return nil, false
+	}
+	return o.VcdbExportedDataDirectory, true
+}
+
+// HasVcdbExportedDataDirectory returns a boolean if a field has been set.
+func (o *VDB) HasVcdbExportedDataDirectory() bool {
+	if o != nil && !IsNil(o.VcdbExportedDataDirectory) {
+		return true
+	}
+
+	return false
+}
+
+// SetVcdbExportedDataDirectory gets a reference to the given string and assigns it to the VcdbExportedDataDirectory field.
+func (o *VDB) SetVcdbExportedDataDirectory(v string) {
+	o.VcdbExportedDataDirectory = &v
+}
+
 // GetToolkitId returns the ToolkitId field value if set, zero value otherwise.
 func (o *VDB) GetToolkitId() string {
 	if o == nil || IsNil(o.ToolkitId) {
@@ -1860,6 +2210,966 @@ func (o *VDB) SetReplicas(v []Replica) {
 	o.Replicas = v
 }
 
+// GetInvokeDatapatch returns the InvokeDatapatch field value if set, zero value otherwise.
+func (o *VDB) GetInvokeDatapatch() bool {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		var ret bool
+		return ret
+	}
+	return *o.InvokeDatapatch
+}
+
+// GetInvokeDatapatchOk returns a tuple with the InvokeDatapatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInvokeDatapatchOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvokeDatapatch) {
+		return nil, false
+	}
+	return o.InvokeDatapatch, true
+}
+
+// HasInvokeDatapatch returns a boolean if a field has been set.
+func (o *VDB) HasInvokeDatapatch() bool {
+	if o != nil && !IsNil(o.InvokeDatapatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvokeDatapatch gets a reference to the given bool and assigns it to the InvokeDatapatch field.
+func (o *VDB) SetInvokeDatapatch(v bool) {
+	o.InvokeDatapatch = &v
+}
+
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
+func (o *VDB) GetEnabled() bool {
+	if o == nil || IsNil(o.Enabled) {
+		var ret bool
+		return ret
+	}
+	return *o.Enabled
+}
+
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.Enabled) {
+		return nil, false
+	}
+	return o.Enabled, true
+}
+
+// HasEnabled returns a boolean if a field has been set.
+func (o *VDB) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
+func (o *VDB) SetEnabled(v bool) {
+	o.Enabled = &v
+}
+
+// GetNodeListeners returns the NodeListeners field value if set, zero value otherwise.
+func (o *VDB) GetNodeListeners() []string {
+	if o == nil || IsNil(o.NodeListeners) {
+		var ret []string
+		return ret
+	}
+	return o.NodeListeners
+}
+
+// GetNodeListenersOk returns a tuple with the NodeListeners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNodeListenersOk() ([]string, bool) {
+	if o == nil || IsNil(o.NodeListeners) {
+		return nil, false
+	}
+	return o.NodeListeners, true
+}
+
+// HasNodeListeners returns a boolean if a field has been set.
+func (o *VDB) HasNodeListeners() bool {
+	if o != nil && !IsNil(o.NodeListeners) {
+		return true
+	}
+
+	return false
+}
+
+// SetNodeListeners gets a reference to the given []string and assigns it to the NodeListeners field.
+func (o *VDB) SetNodeListeners(v []string) {
+	o.NodeListeners = v
+}
+
+// GetInstanceName returns the InstanceName field value if set, zero value otherwise.
+func (o *VDB) GetInstanceName() string {
+	if o == nil || IsNil(o.InstanceName) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceName
+}
+
+// GetInstanceNameOk returns a tuple with the InstanceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInstanceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceName) {
+		return nil, false
+	}
+	return o.InstanceName, true
+}
+
+// HasInstanceName returns a boolean if a field has been set.
+func (o *VDB) HasInstanceName() bool {
+	if o != nil && !IsNil(o.InstanceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceName gets a reference to the given string and assigns it to the InstanceName field.
+func (o *VDB) SetInstanceName(v string) {
+	o.InstanceName = &v
+}
+
+// GetInstanceNumber returns the InstanceNumber field value if set, zero value otherwise.
+func (o *VDB) GetInstanceNumber() int32 {
+	if o == nil || IsNil(o.InstanceNumber) {
+		var ret int32
+		return ret
+	}
+	return *o.InstanceNumber
+}
+
+// GetInstanceNumberOk returns a tuple with the InstanceNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInstanceNumberOk() (*int32, bool) {
+	if o == nil || IsNil(o.InstanceNumber) {
+		return nil, false
+	}
+	return o.InstanceNumber, true
+}
+
+// HasInstanceNumber returns a boolean if a field has been set.
+func (o *VDB) HasInstanceNumber() bool {
+	if o != nil && !IsNil(o.InstanceNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceNumber gets a reference to the given int32 and assigns it to the InstanceNumber field.
+func (o *VDB) SetInstanceNumber(v int32) {
+	o.InstanceNumber = &v
+}
+
+// GetInstances returns the Instances field value if set, zero value otherwise.
+func (o *VDB) GetInstances() []OracleRACDatabaseInstance {
+	if o == nil || IsNil(o.Instances) {
+		var ret []OracleRACDatabaseInstance
+		return ret
+	}
+	return o.Instances
+}
+
+// GetInstancesOk returns a tuple with the Instances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetInstancesOk() ([]OracleRACDatabaseInstance, bool) {
+	if o == nil || IsNil(o.Instances) {
+		return nil, false
+	}
+	return o.Instances, true
+}
+
+// HasInstances returns a boolean if a field has been set.
+func (o *VDB) HasInstances() bool {
+	if o != nil && !IsNil(o.Instances) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstances gets a reference to the given []OracleRACDatabaseInstance and assigns it to the Instances field.
+func (o *VDB) SetInstances(v []OracleRACDatabaseInstance) {
+	o.Instances = v
+}
+
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *VDB) GetOracleServices() []OracleService {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []OracleService
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetOracleServicesOk() ([]OracleService, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *VDB) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []OracleService and assigns it to the OracleServices field.
+func (o *VDB) SetOracleServices(v []OracleService) {
+	o.OracleServices = v
+}
+
+// GetRepositoryId returns the RepositoryId field value if set, zero value otherwise.
+func (o *VDB) GetRepositoryId() string {
+	if o == nil || IsNil(o.RepositoryId) {
+		var ret string
+		return ret
+	}
+	return *o.RepositoryId
+}
+
+// GetRepositoryIdOk returns a tuple with the RepositoryId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetRepositoryIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RepositoryId) {
+		return nil, false
+	}
+	return o.RepositoryId, true
+}
+
+// HasRepositoryId returns a boolean if a field has been set.
+func (o *VDB) HasRepositoryId() bool {
+	if o != nil && !IsNil(o.RepositoryId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRepositoryId gets a reference to the given string and assigns it to the RepositoryId field.
+func (o *VDB) SetRepositoryId(v string) {
+	o.RepositoryId = &v
+}
+
+// GetContainerizationState returns the ContainerizationState field value if set, zero value otherwise.
+func (o *VDB) GetContainerizationState() ContainerizationStateEnum {
+	if o == nil || IsNil(o.ContainerizationState) {
+		var ret ContainerizationStateEnum
+		return ret
+	}
+	return *o.ContainerizationState
+}
+
+// GetContainerizationStateOk returns a tuple with the ContainerizationState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetContainerizationStateOk() (*ContainerizationStateEnum, bool) {
+	if o == nil || IsNil(o.ContainerizationState) {
+		return nil, false
+	}
+	return o.ContainerizationState, true
+}
+
+// HasContainerizationState returns a boolean if a field has been set.
+func (o *VDB) HasContainerizationState() bool {
+	if o != nil && !IsNil(o.ContainerizationState) {
+		return true
+	}
+
+	return false
+}
+
+// SetContainerizationState gets a reference to the given ContainerizationStateEnum and assigns it to the ContainerizationState field.
+func (o *VDB) SetContainerizationState(v ContainerizationStateEnum) {
+	o.ContainerizationState = &v
+}
+
+// GetParentTdeKeystorePath returns the ParentTdeKeystorePath field value if set, zero value otherwise.
+func (o *VDB) GetParentTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentTdeKeystorePath
+}
+
+// GetParentTdeKeystorePathOk returns a tuple with the ParentTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetParentTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentTdeKeystorePath, true
+}
+
+// HasParentTdeKeystorePath returns a boolean if a field has been set.
+func (o *VDB) HasParentTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentTdeKeystorePath gets a reference to the given string and assigns it to the ParentTdeKeystorePath field.
+func (o *VDB) SetParentTdeKeystorePath(v string) {
+	o.ParentTdeKeystorePath = &v
+}
+
+// GetTargetVcdbTdeKeystorePath returns the TargetVcdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *VDB) GetTargetVcdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.TargetVcdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.TargetVcdbTdeKeystorePath
+}
+
+// GetTargetVcdbTdeKeystorePathOk returns a tuple with the TargetVcdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetTargetVcdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetVcdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.TargetVcdbTdeKeystorePath, true
+}
+
+// HasTargetVcdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *VDB) HasTargetVcdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.TargetVcdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetVcdbTdeKeystorePath gets a reference to the given string and assigns it to the TargetVcdbTdeKeystorePath field.
+func (o *VDB) SetTargetVcdbTdeKeystorePath(v string) {
+	o.TargetVcdbTdeKeystorePath = &v
+}
+
+// GetTdeKeyIdentifier returns the TdeKeyIdentifier field value if set, zero value otherwise.
+func (o *VDB) GetTdeKeyIdentifier() string {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.TdeKeyIdentifier
+}
+
+// GetTdeKeyIdentifierOk returns a tuple with the TdeKeyIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetTdeKeyIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.TdeKeyIdentifier) {
+		return nil, false
+	}
+	return o.TdeKeyIdentifier, true
+}
+
+// HasTdeKeyIdentifier returns a boolean if a field has been set.
+func (o *VDB) HasTdeKeyIdentifier() bool {
+	if o != nil && !IsNil(o.TdeKeyIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetTdeKeyIdentifier gets a reference to the given string and assigns it to the TdeKeyIdentifier field.
+func (o *VDB) SetTdeKeyIdentifier(v string) {
+	o.TdeKeyIdentifier = &v
+}
+
+// GetParentPdbTdeKeystorePath returns the ParentPdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *VDB) GetParentPdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePath
+}
+
+// GetParentPdbTdeKeystorePathOk returns a tuple with the ParentPdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetParentPdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePath, true
+}
+
+// HasParentPdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *VDB) HasParentPdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePath gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePath field.
+func (o *VDB) SetParentPdbTdeKeystorePath(v string) {
+	o.ParentPdbTdeKeystorePath = &v
+}
+
+// GetTargetPdbTdeKeystorePath returns the TargetPdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *VDB) GetTargetPdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.TargetPdbTdeKeystorePath
+}
+
+// GetTargetPdbTdeKeystorePathOk returns a tuple with the TargetPdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetTargetPdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.TargetPdbTdeKeystorePath, true
+}
+
+// HasTargetPdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *VDB) HasTargetPdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.TargetPdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetPdbTdeKeystorePath gets a reference to the given string and assigns it to the TargetPdbTdeKeystorePath field.
+func (o *VDB) SetTargetPdbTdeKeystorePath(v string) {
+	o.TargetPdbTdeKeystorePath = &v
+}
+
+// GetRecoveryModel returns the RecoveryModel field value if set, zero value otherwise.
+func (o *VDB) GetRecoveryModel() string {
+	if o == nil || IsNil(o.RecoveryModel) {
+		var ret string
+		return ret
+	}
+	return *o.RecoveryModel
+}
+
+// GetRecoveryModelOk returns a tuple with the RecoveryModel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetRecoveryModelOk() (*string, bool) {
+	if o == nil || IsNil(o.RecoveryModel) {
+		return nil, false
+	}
+	return o.RecoveryModel, true
+}
+
+// HasRecoveryModel returns a boolean if a field has been set.
+func (o *VDB) HasRecoveryModel() bool {
+	if o != nil && !IsNil(o.RecoveryModel) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoveryModel gets a reference to the given string and assigns it to the RecoveryModel field.
+func (o *VDB) SetRecoveryModel(v string) {
+	o.RecoveryModel = &v
+}
+
+// GetCdcOnProvision returns the CdcOnProvision field value if set, zero value otherwise.
+func (o *VDB) GetCdcOnProvision() bool {
+	if o == nil || IsNil(o.CdcOnProvision) {
+		var ret bool
+		return ret
+	}
+	return *o.CdcOnProvision
+}
+
+// GetCdcOnProvisionOk returns a tuple with the CdcOnProvision field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetCdcOnProvisionOk() (*bool, bool) {
+	if o == nil || IsNil(o.CdcOnProvision) {
+		return nil, false
+	}
+	return o.CdcOnProvision, true
+}
+
+// HasCdcOnProvision returns a boolean if a field has been set.
+func (o *VDB) HasCdcOnProvision() bool {
+	if o != nil && !IsNil(o.CdcOnProvision) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdcOnProvision gets a reference to the given bool and assigns it to the CdcOnProvision field.
+func (o *VDB) SetCdcOnProvision(v bool) {
+	o.CdcOnProvision = &v
+}
+
+// GetDataConnectionId returns the DataConnectionId field value if set, zero value otherwise.
+func (o *VDB) GetDataConnectionId() string {
+	if o == nil || IsNil(o.DataConnectionId) {
+		var ret string
+		return ret
+	}
+	return *o.DataConnectionId
+}
+
+// GetDataConnectionIdOk returns a tuple with the DataConnectionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetDataConnectionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DataConnectionId) {
+		return nil, false
+	}
+	return o.DataConnectionId, true
+}
+
+// HasDataConnectionId returns a boolean if a field has been set.
+func (o *VDB) HasDataConnectionId() bool {
+	if o != nil && !IsNil(o.DataConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataConnectionId gets a reference to the given string and assigns it to the DataConnectionId field.
+func (o *VDB) SetDataConnectionId(v string) {
+	o.DataConnectionId = &v
+}
+
+// GetMssqlAgBackupLocation returns the MssqlAgBackupLocation field value if set, zero value otherwise.
+func (o *VDB) GetMssqlAgBackupLocation() string {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		var ret string
+		return ret
+	}
+	return *o.MssqlAgBackupLocation
+}
+
+// GetMssqlAgBackupLocationOk returns a tuple with the MssqlAgBackupLocation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetMssqlAgBackupLocationOk() (*string, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupLocation) {
+		return nil, false
+	}
+	return o.MssqlAgBackupLocation, true
+}
+
+// HasMssqlAgBackupLocation returns a boolean if a field has been set.
+func (o *VDB) HasMssqlAgBackupLocation() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupLocation) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupLocation gets a reference to the given string and assigns it to the MssqlAgBackupLocation field.
+func (o *VDB) SetMssqlAgBackupLocation(v string) {
+	o.MssqlAgBackupLocation = &v
+}
+
+// GetMssqlAgBackupBased returns the MssqlAgBackupBased field value if set, zero value otherwise.
+func (o *VDB) GetMssqlAgBackupBased() bool {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		var ret bool
+		return ret
+	}
+	return *o.MssqlAgBackupBased
+}
+
+// GetMssqlAgBackupBasedOk returns a tuple with the MssqlAgBackupBased field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetMssqlAgBackupBasedOk() (*bool, bool) {
+	if o == nil || IsNil(o.MssqlAgBackupBased) {
+		return nil, false
+	}
+	return o.MssqlAgBackupBased, true
+}
+
+// HasMssqlAgBackupBased returns a boolean if a field has been set.
+func (o *VDB) HasMssqlAgBackupBased() bool {
+	if o != nil && !IsNil(o.MssqlAgBackupBased) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgBackupBased gets a reference to the given bool and assigns it to the MssqlAgBackupBased field.
+func (o *VDB) SetMssqlAgBackupBased(v bool) {
+	o.MssqlAgBackupBased = &v
+}
+
+// GetMssqlAgReplicas returns the MssqlAgReplicas field value if set, zero value otherwise.
+func (o *VDB) GetMssqlAgReplicas() []MssqlAgReplica {
+	if o == nil || IsNil(o.MssqlAgReplicas) {
+		var ret []MssqlAgReplica
+		return ret
+	}
+	return o.MssqlAgReplicas
+}
+
+// GetMssqlAgReplicasOk returns a tuple with the MssqlAgReplicas field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetMssqlAgReplicasOk() ([]MssqlAgReplica, bool) {
+	if o == nil || IsNil(o.MssqlAgReplicas) {
+		return nil, false
+	}
+	return o.MssqlAgReplicas, true
+}
+
+// HasMssqlAgReplicas returns a boolean if a field has been set.
+func (o *VDB) HasMssqlAgReplicas() bool {
+	if o != nil && !IsNil(o.MssqlAgReplicas) {
+		return true
+	}
+
+	return false
+}
+
+// SetMssqlAgReplicas gets a reference to the given []MssqlAgReplica and assigns it to the MssqlAgReplicas field.
+func (o *VDB) SetMssqlAgReplicas(v []MssqlAgReplica) {
+	o.MssqlAgReplicas = v
+}
+
+// GetDatabaseUniqueName returns the DatabaseUniqueName field value if set, zero value otherwise.
+func (o *VDB) GetDatabaseUniqueName() string {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUniqueName
+}
+
+// GetDatabaseUniqueNameOk returns a tuple with the DatabaseUniqueName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetDatabaseUniqueNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUniqueName) {
+		return nil, false
+	}
+	return o.DatabaseUniqueName, true
+}
+
+// HasDatabaseUniqueName returns a boolean if a field has been set.
+func (o *VDB) HasDatabaseUniqueName() bool {
+	if o != nil && !IsNil(o.DatabaseUniqueName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUniqueName gets a reference to the given string and assigns it to the DatabaseUniqueName field.
+func (o *VDB) SetDatabaseUniqueName(v string) {
+	o.DatabaseUniqueName = &v
+}
+
+// GetDbUsername returns the DbUsername field value if set, zero value otherwise.
+func (o *VDB) GetDbUsername() string {
+	if o == nil || IsNil(o.DbUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DbUsername
+}
+
+// GetDbUsernameOk returns a tuple with the DbUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetDbUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DbUsername) {
+		return nil, false
+	}
+	return o.DbUsername, true
+}
+
+// HasDbUsername returns a boolean if a field has been set.
+func (o *VDB) HasDbUsername() bool {
+	if o != nil && !IsNil(o.DbUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbUsername gets a reference to the given string and assigns it to the DbUsername field.
+func (o *VDB) SetDbUsername(v string) {
+	o.DbUsername = &v
+}
+
+// GetNewDbId returns the NewDbId field value if set, zero value otherwise.
+func (o *VDB) GetNewDbId() bool {
+	if o == nil || IsNil(o.NewDbId) {
+		var ret bool
+		return ret
+	}
+	return *o.NewDbId
+}
+
+// GetNewDbIdOk returns a tuple with the NewDbId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNewDbIdOk() (*bool, bool) {
+	if o == nil || IsNil(o.NewDbId) {
+		return nil, false
+	}
+	return o.NewDbId, true
+}
+
+// HasNewDbId returns a boolean if a field has been set.
+func (o *VDB) HasNewDbId() bool {
+	if o != nil && !IsNil(o.NewDbId) {
+		return true
+	}
+
+	return false
+}
+
+// SetNewDbId gets a reference to the given bool and assigns it to the NewDbId field.
+func (o *VDB) SetNewDbId(v bool) {
+	o.NewDbId = &v
+}
+
+// GetRedoLogGroups returns the RedoLogGroups field value if set, zero value otherwise.
+func (o *VDB) GetRedoLogGroups() int32 {
+	if o == nil || IsNil(o.RedoLogGroups) {
+		var ret int32
+		return ret
+	}
+	return *o.RedoLogGroups
+}
+
+// GetRedoLogGroupsOk returns a tuple with the RedoLogGroups field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetRedoLogGroupsOk() (*int32, bool) {
+	if o == nil || IsNil(o.RedoLogGroups) {
+		return nil, false
+	}
+	return o.RedoLogGroups, true
+}
+
+// HasRedoLogGroups returns a boolean if a field has been set.
+func (o *VDB) HasRedoLogGroups() bool {
+	if o != nil && !IsNil(o.RedoLogGroups) {
+		return true
+	}
+
+	return false
+}
+
+// SetRedoLogGroups gets a reference to the given int32 and assigns it to the RedoLogGroups field.
+func (o *VDB) SetRedoLogGroups(v int32) {
+	o.RedoLogGroups = &v
+}
+
+// GetRedoLogSizeInMb returns the RedoLogSizeInMb field value if set, zero value otherwise.
+func (o *VDB) GetRedoLogSizeInMb() int32 {
+	if o == nil || IsNil(o.RedoLogSizeInMb) {
+		var ret int32
+		return ret
+	}
+	return *o.RedoLogSizeInMb
+}
+
+// GetRedoLogSizeInMbOk returns a tuple with the RedoLogSizeInMb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetRedoLogSizeInMbOk() (*int32, bool) {
+	if o == nil || IsNil(o.RedoLogSizeInMb) {
+		return nil, false
+	}
+	return o.RedoLogSizeInMb, true
+}
+
+// HasRedoLogSizeInMb returns a boolean if a field has been set.
+func (o *VDB) HasRedoLogSizeInMb() bool {
+	if o != nil && !IsNil(o.RedoLogSizeInMb) {
+		return true
+	}
+
+	return false
+}
+
+// SetRedoLogSizeInMb gets a reference to the given int32 and assigns it to the RedoLogSizeInMb field.
+func (o *VDB) SetRedoLogSizeInMb(v int32) {
+	o.RedoLogSizeInMb = &v
+}
+
+// GetCustomEnvVars returns the CustomEnvVars field value if set, zero value otherwise.
+func (o *VDB) GetCustomEnvVars() []OracleCustomEnvVar {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		var ret []OracleCustomEnvVar
+		return ret
+	}
+	return o.CustomEnvVars
+}
+
+// GetCustomEnvVarsOk returns a tuple with the CustomEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetCustomEnvVarsOk() ([]OracleCustomEnvVar, bool) {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		return nil, false
+	}
+	return o.CustomEnvVars, true
+}
+
+// HasCustomEnvVars returns a boolean if a field has been set.
+func (o *VDB) HasCustomEnvVars() bool {
+	if o != nil && !IsNil(o.CustomEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomEnvVars gets a reference to the given []OracleCustomEnvVar and assigns it to the CustomEnvVars field.
+func (o *VDB) SetCustomEnvVars(v []OracleCustomEnvVar) {
+	o.CustomEnvVars = v
+}
+
+// GetActiveInstances returns the ActiveInstances field value if set, zero value otherwise.
+func (o *VDB) GetActiveInstances() []OracleActiveInstance {
+	if o == nil || IsNil(o.ActiveInstances) {
+		var ret []OracleActiveInstance
+		return ret
+	}
+	return o.ActiveInstances
+}
+
+// GetActiveInstancesOk returns a tuple with the ActiveInstances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetActiveInstancesOk() ([]OracleActiveInstance, bool) {
+	if o == nil || IsNil(o.ActiveInstances) {
+		return nil, false
+	}
+	return o.ActiveInstances, true
+}
+
+// HasActiveInstances returns a boolean if a field has been set.
+func (o *VDB) HasActiveInstances() bool {
+	if o != nil && !IsNil(o.ActiveInstances) {
+		return true
+	}
+
+	return false
+}
+
+// SetActiveInstances gets a reference to the given []OracleActiveInstance and assigns it to the ActiveInstances field.
+func (o *VDB) SetActiveInstances(v []OracleActiveInstance) {
+	o.ActiveInstances = v
+}
+
+// GetNfsVersion returns the NfsVersion field value if set, zero value otherwise.
+func (o *VDB) GetNfsVersion() int32 {
+	if o == nil || IsNil(o.NfsVersion) {
+		var ret int32
+		return ret
+	}
+	return *o.NfsVersion
+}
+
+// GetNfsVersionOk returns a tuple with the NfsVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNfsVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.NfsVersion) {
+		return nil, false
+	}
+	return o.NfsVersion, true
+}
+
+// HasNfsVersion returns a boolean if a field has been set.
+func (o *VDB) HasNfsVersion() bool {
+	if o != nil && !IsNil(o.NfsVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersion gets a reference to the given int32 and assigns it to the NfsVersion field.
+func (o *VDB) SetNfsVersion(v int32) {
+	o.NfsVersion = &v
+}
+
+// GetNfsVersionReason returns the NfsVersionReason field value if set, zero value otherwise.
+func (o *VDB) GetNfsVersionReason() NfsVersionReasonEnum {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		var ret NfsVersionReasonEnum
+		return ret
+	}
+	return *o.NfsVersionReason
+}
+
+// GetNfsVersionReasonOk returns a tuple with the NfsVersionReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNfsVersionReasonOk() (*NfsVersionReasonEnum, bool) {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		return nil, false
+	}
+	return o.NfsVersionReason, true
+}
+
+// HasNfsVersionReason returns a boolean if a field has been set.
+func (o *VDB) HasNfsVersionReason() bool {
+	if o != nil && !IsNil(o.NfsVersionReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersionReason gets a reference to the given NfsVersionReasonEnum and assigns it to the NfsVersionReason field.
+func (o *VDB) SetNfsVersionReason(v NfsVersionReasonEnum) {
+	o.NfsVersionReason = &v
+}
+
+// GetNfsEncryptionEnabled returns the NfsEncryptionEnabled field value if set, zero value otherwise.
+func (o *VDB) GetNfsEncryptionEnabled() bool {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.NfsEncryptionEnabled
+}
+
+// GetNfsEncryptionEnabledOk returns a tuple with the NfsEncryptionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNfsEncryptionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		return nil, false
+	}
+	return o.NfsEncryptionEnabled, true
+}
+
+// HasNfsEncryptionEnabled returns a boolean if a field has been set.
+func (o *VDB) HasNfsEncryptionEnabled() bool {
+	if o != nil && !IsNil(o.NfsEncryptionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsEncryptionEnabled gets a reference to the given bool and assigns it to the NfsEncryptionEnabled field.
+func (o *VDB) SetNfsEncryptionEnabled(v bool) {
+	o.NfsEncryptionEnabled = &v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1878,6 +3188,12 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.DatabaseName) {
+		toSerialize["database_name"] = o.DatabaseName
 	}
 	if !IsNil(o.NamespaceId) {
 		toSerialize["namespace_id"] = o.NamespaceId
@@ -1908,6 +3224,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.StorageSize.IsSet() {
 		toSerialize["storage_size"] = o.StorageSize.Get()
+	}
+	if !IsNil(o.UnvirtualizedSpace) {
+		toSerialize["unvirtualized_space"] = o.UnvirtualizedSpace
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
@@ -1942,6 +3261,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if o.ParentDsourceId.IsSet() {
 		toSerialize["parent_dsource_id"] = o.ParentDsourceId.Get()
 	}
+	if o.RootParentId.IsSet() {
+		toSerialize["root_parent_id"] = o.RootParentId.Get()
+	}
 	if o.GroupName.IsSet() {
 		toSerialize["group_name"] = o.GroupName.Get()
 	}
@@ -1966,8 +3288,14 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if o.TemplateId.IsSet() {
 		toSerialize["template_id"] = o.TemplateId.Get()
 	}
+	if o.TemplateName.IsSet() {
+		toSerialize["template_name"] = o.TemplateName.Get()
+	}
 	if o.ConfigParams != nil {
 		toSerialize["config_params"] = o.ConfigParams
+	}
+	if !IsNil(o.EnvironmentUserRef) {
+		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
 	}
 	if o.AdditionalMountPoints != nil {
 		toSerialize["additional_mount_points"] = o.AdditionalMountPoints
@@ -1993,6 +3321,12 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsAppdata) {
 		toSerialize["is_appdata"] = o.IsAppdata
 	}
+	if !IsNil(o.ExportedDataDirectory) {
+		toSerialize["exported_data_directory"] = o.ExportedDataDirectory
+	}
+	if !IsNil(o.VcdbExportedDataDirectory) {
+		toSerialize["vcdb_exported_data_directory"] = o.VcdbExportedDataDirectory
+	}
 	if !IsNil(o.ToolkitId) {
 		toSerialize["toolkit_id"] = o.ToolkitId
 	}
@@ -2010,6 +3344,96 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Replicas) {
 		toSerialize["replicas"] = o.Replicas
+	}
+	if !IsNil(o.InvokeDatapatch) {
+		toSerialize["invoke_datapatch"] = o.InvokeDatapatch
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.NodeListeners) {
+		toSerialize["node_listeners"] = o.NodeListeners
+	}
+	if !IsNil(o.InstanceName) {
+		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.InstanceNumber) {
+		toSerialize["instance_number"] = o.InstanceNumber
+	}
+	if !IsNil(o.Instances) {
+		toSerialize["instances"] = o.Instances
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
+	}
+	if !IsNil(o.RepositoryId) {
+		toSerialize["repository_id"] = o.RepositoryId
+	}
+	if !IsNil(o.ContainerizationState) {
+		toSerialize["containerization_state"] = o.ContainerizationState
+	}
+	if !IsNil(o.ParentTdeKeystorePath) {
+		toSerialize["parent_tde_keystore_path"] = o.ParentTdeKeystorePath
+	}
+	if !IsNil(o.TargetVcdbTdeKeystorePath) {
+		toSerialize["target_vcdb_tde_keystore_path"] = o.TargetVcdbTdeKeystorePath
+	}
+	if !IsNil(o.TdeKeyIdentifier) {
+		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
+	}
+	if !IsNil(o.ParentPdbTdeKeystorePath) {
+		toSerialize["parent_pdb_tde_keystore_path"] = o.ParentPdbTdeKeystorePath
+	}
+	if !IsNil(o.TargetPdbTdeKeystorePath) {
+		toSerialize["target_pdb_tde_keystore_path"] = o.TargetPdbTdeKeystorePath
+	}
+	if !IsNil(o.RecoveryModel) {
+		toSerialize["recovery_model"] = o.RecoveryModel
+	}
+	if !IsNil(o.CdcOnProvision) {
+		toSerialize["cdc_on_provision"] = o.CdcOnProvision
+	}
+	if !IsNil(o.DataConnectionId) {
+		toSerialize["data_connection_id"] = o.DataConnectionId
+	}
+	if !IsNil(o.MssqlAgBackupLocation) {
+		toSerialize["mssql_ag_backup_location"] = o.MssqlAgBackupLocation
+	}
+	if !IsNil(o.MssqlAgBackupBased) {
+		toSerialize["mssql_ag_backup_based"] = o.MssqlAgBackupBased
+	}
+	if !IsNil(o.MssqlAgReplicas) {
+		toSerialize["mssql_ag_replicas"] = o.MssqlAgReplicas
+	}
+	if !IsNil(o.DatabaseUniqueName) {
+		toSerialize["database_unique_name"] = o.DatabaseUniqueName
+	}
+	if !IsNil(o.DbUsername) {
+		toSerialize["db_username"] = o.DbUsername
+	}
+	if !IsNil(o.NewDbId) {
+		toSerialize["new_db_id"] = o.NewDbId
+	}
+	if !IsNil(o.RedoLogGroups) {
+		toSerialize["redo_log_groups"] = o.RedoLogGroups
+	}
+	if !IsNil(o.RedoLogSizeInMb) {
+		toSerialize["redo_log_size_in_mb"] = o.RedoLogSizeInMb
+	}
+	if !IsNil(o.CustomEnvVars) {
+		toSerialize["custom_env_vars"] = o.CustomEnvVars
+	}
+	if !IsNil(o.ActiveInstances) {
+		toSerialize["active_instances"] = o.ActiveInstances
+	}
+	if !IsNil(o.NfsVersion) {
+		toSerialize["nfs_version"] = o.NfsVersion
+	}
+	if !IsNil(o.NfsVersionReason) {
+		toSerialize["nfs_version_reason"] = o.NfsVersionReason
+	}
+	if !IsNil(o.NfsEncryptionEnabled) {
+		toSerialize["nfs_encryption_enabled"] = o.NfsEncryptionEnabled
 	}
 	return toSerialize, nil
 }

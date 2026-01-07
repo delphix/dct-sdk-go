@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ConnectorTestResponse type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,10 @@ type ConnectorTestResponse struct {
 	Status string `json:"status"`
 	// A message describing the result of the masking connector test.
 	Message string `json:"message"`
+	Job *Job `json:"job,omitempty"`
 }
+
+type _ConnectorTestResponse ConnectorTestResponse
 
 // NewConnectorTestResponse instantiates a new ConnectorTestResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -93,6 +98,38 @@ func (o *ConnectorTestResponse) SetMessage(v string) {
 	o.Message = v
 }
 
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *ConnectorTestResponse) GetJob() Job {
+	if o == nil || IsNil(o.Job) {
+		var ret Job
+		return ret
+	}
+	return *o.Job
+}
+
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectorTestResponse) GetJobOk() (*Job, bool) {
+	if o == nil || IsNil(o.Job) {
+		return nil, false
+	}
+	return o.Job, true
+}
+
+// HasJob returns a boolean if a field has been set.
+func (o *ConnectorTestResponse) HasJob() bool {
+	if o != nil && !IsNil(o.Job) {
+		return true
+	}
+
+	return false
+}
+
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *ConnectorTestResponse) SetJob(v Job) {
+	o.Job = &v
+}
+
 func (o ConnectorTestResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -105,7 +142,48 @@ func (o ConnectorTestResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["status"] = o.Status
 	toSerialize["message"] = o.Message
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
 	return toSerialize, nil
+}
+
+func (o *ConnectorTestResponse) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"status",
+		"message",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConnectorTestResponse := _ConnectorTestResponse{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varConnectorTestResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConnectorTestResponse(varConnectorTestResponse)
+
+	return err
 }
 
 type NullableConnectorTestResponse struct {

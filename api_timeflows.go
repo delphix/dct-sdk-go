@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,12 @@ import (
 )
 
 
-// TimeflowsApiService TimeflowsApi service
-type TimeflowsApiService service
+// TimeflowsAPIService TimeflowsAPI service
+type TimeflowsAPIService service
 
 type ApiCreateTimeflowTagsRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	timeflowId string
 	tagsRequest *TagsRequest
 }
@@ -48,7 +48,7 @@ CreateTimeflowTags Create tags for a Timeflow.
  @param timeflowId The ID of the timeflow.
  @return ApiCreateTimeflowTagsRequest
 */
-func (a *TimeflowsApiService) CreateTimeflowTags(ctx context.Context, timeflowId string) ApiCreateTimeflowTagsRequest {
+func (a *TimeflowsAPIService) CreateTimeflowTags(ctx context.Context, timeflowId string) ApiCreateTimeflowTagsRequest {
 	return ApiCreateTimeflowTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +58,7 @@ func (a *TimeflowsApiService) CreateTimeflowTags(ctx context.Context, timeflowId
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *TimeflowsApiService) CreateTimeflowTagsExecute(r ApiCreateTimeflowTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *TimeflowsAPIService) CreateTimeflowTagsExecute(r ApiCreateTimeflowTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +66,7 @@ func (a *TimeflowsApiService) CreateTimeflowTagsExecute(r ApiCreateTimeflowTagsR
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.CreateTimeflowTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.CreateTimeflowTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -156,8 +156,14 @@ func (a *TimeflowsApiService) CreateTimeflowTagsExecute(r ApiCreateTimeflowTagsR
 
 type ApiDeleteTimeflowRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	timeflowId string
+	deleteTimeflowParameters *DeleteTimeflowParameters
+}
+
+func (r ApiDeleteTimeflowRequest) DeleteTimeflowParameters(deleteTimeflowParameters DeleteTimeflowParameters) ApiDeleteTimeflowRequest {
+	r.deleteTimeflowParameters = &deleteTimeflowParameters
+	return r
 }
 
 func (r ApiDeleteTimeflowRequest) Execute() (*DeleteTimeflowResponse, *http.Response, error) {
@@ -171,7 +177,7 @@ DeleteTimeflow Delete a timeflow.
  @param timeflowId The ID of the timeflow.
  @return ApiDeleteTimeflowRequest
 */
-func (a *TimeflowsApiService) DeleteTimeflow(ctx context.Context, timeflowId string) ApiDeleteTimeflowRequest {
+func (a *TimeflowsAPIService) DeleteTimeflow(ctx context.Context, timeflowId string) ApiDeleteTimeflowRequest {
 	return ApiDeleteTimeflowRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -181,7 +187,7 @@ func (a *TimeflowsApiService) DeleteTimeflow(ctx context.Context, timeflowId str
 
 // Execute executes the request
 //  @return DeleteTimeflowResponse
-func (a *TimeflowsApiService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) (*DeleteTimeflowResponse, *http.Response, error) {
+func (a *TimeflowsAPIService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) (*DeleteTimeflowResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -189,7 +195,7 @@ func (a *TimeflowsApiService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) 
 		localVarReturnValue  *DeleteTimeflowResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.DeleteTimeflow")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.DeleteTimeflow")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -205,7 +211,7 @@ func (a *TimeflowsApiService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) 
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -221,6 +227,8 @@ func (a *TimeflowsApiService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.deleteTimeflowParameters
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -274,7 +282,7 @@ func (a *TimeflowsApiService) DeleteTimeflowExecute(r ApiDeleteTimeflowRequest) 
 
 type ApiDeleteTimeflowTagsRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	timeflowId string
 	deleteTag *DeleteTag
 }
@@ -296,7 +304,7 @@ DeleteTimeflowTags Delete tags for a Timeflow.
  @param timeflowId The ID of the timeflow.
  @return ApiDeleteTimeflowTagsRequest
 */
-func (a *TimeflowsApiService) DeleteTimeflowTags(ctx context.Context, timeflowId string) ApiDeleteTimeflowTagsRequest {
+func (a *TimeflowsAPIService) DeleteTimeflowTags(ctx context.Context, timeflowId string) ApiDeleteTimeflowTagsRequest {
 	return ApiDeleteTimeflowTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -305,14 +313,14 @@ func (a *TimeflowsApiService) DeleteTimeflowTags(ctx context.Context, timeflowId
 }
 
 // Execute executes the request
-func (a *TimeflowsApiService) DeleteTimeflowTagsExecute(r ApiDeleteTimeflowTagsRequest) (*http.Response, error) {
+func (a *TimeflowsAPIService) DeleteTimeflowTagsExecute(r ApiDeleteTimeflowTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.DeleteTimeflowTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.DeleteTimeflowTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -390,7 +398,7 @@ func (a *TimeflowsApiService) DeleteTimeflowTagsExecute(r ApiDeleteTimeflowTagsR
 
 type ApiGetTimeflowByIdRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	timeflowId string
 }
 
@@ -405,7 +413,7 @@ GetTimeflowById Get a Timeflow by ID.
  @param timeflowId The ID of the timeflow.
  @return ApiGetTimeflowByIdRequest
 */
-func (a *TimeflowsApiService) GetTimeflowById(ctx context.Context, timeflowId string) ApiGetTimeflowByIdRequest {
+func (a *TimeflowsAPIService) GetTimeflowById(ctx context.Context, timeflowId string) ApiGetTimeflowByIdRequest {
 	return ApiGetTimeflowByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -415,7 +423,7 @@ func (a *TimeflowsApiService) GetTimeflowById(ctx context.Context, timeflowId st
 
 // Execute executes the request
 //  @return Timeflow
-func (a *TimeflowsApiService) GetTimeflowByIdExecute(r ApiGetTimeflowByIdRequest) (*Timeflow, *http.Response, error) {
+func (a *TimeflowsAPIService) GetTimeflowByIdExecute(r ApiGetTimeflowByIdRequest) (*Timeflow, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -423,7 +431,7 @@ func (a *TimeflowsApiService) GetTimeflowByIdExecute(r ApiGetTimeflowByIdRequest
 		localVarReturnValue  *Timeflow
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.GetTimeflowById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.GetTimeflowById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -508,8 +516,22 @@ func (a *TimeflowsApiService) GetTimeflowByIdExecute(r ApiGetTimeflowByIdRequest
 
 type ApiGetTimeflowSnapshotDayRangeRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	timeflowId string
+	timezone *string
+	timezoneOffset *int32
+}
+
+// The timezone in which the snapshot timestamps are to be interpreted. This property gets precedence over timezone_offset. If the timezone in this property is unknown to the application, the timezone_offset is used as fallback to interpret the snapshot timestamps.
+func (r ApiGetTimeflowSnapshotDayRangeRequest) Timezone(timezone string) ApiGetTimeflowSnapshotDayRangeRequest {
+	r.timezone = &timezone
+	return r
+}
+
+// The offset in seconds of timezone in which the snapshot timestamps are to be interpreted. This property is used as fallback to interpret the snapshot timestamps if timezone is not valid.
+func (r ApiGetTimeflowSnapshotDayRangeRequest) TimezoneOffset(timezoneOffset int32) ApiGetTimeflowSnapshotDayRangeRequest {
+	r.timezoneOffset = &timezoneOffset
+	return r
 }
 
 func (r ApiGetTimeflowSnapshotDayRangeRequest) Execute() (*SnapshotsDayRangesResponse, *http.Response, error) {
@@ -523,7 +545,7 @@ GetTimeflowSnapshotDayRange Returns the count of TimeFlow snapshots of the Timef
  @param timeflowId The ID of the timeflow.
  @return ApiGetTimeflowSnapshotDayRangeRequest
 */
-func (a *TimeflowsApiService) GetTimeflowSnapshotDayRange(ctx context.Context, timeflowId string) ApiGetTimeflowSnapshotDayRangeRequest {
+func (a *TimeflowsAPIService) GetTimeflowSnapshotDayRange(ctx context.Context, timeflowId string) ApiGetTimeflowSnapshotDayRangeRequest {
 	return ApiGetTimeflowSnapshotDayRangeRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -533,7 +555,7 @@ func (a *TimeflowsApiService) GetTimeflowSnapshotDayRange(ctx context.Context, t
 
 // Execute executes the request
 //  @return SnapshotsDayRangesResponse
-func (a *TimeflowsApiService) GetTimeflowSnapshotDayRangeExecute(r ApiGetTimeflowSnapshotDayRangeRequest) (*SnapshotsDayRangesResponse, *http.Response, error) {
+func (a *TimeflowsAPIService) GetTimeflowSnapshotDayRangeExecute(r ApiGetTimeflowSnapshotDayRangeRequest) (*SnapshotsDayRangesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -541,7 +563,7 @@ func (a *TimeflowsApiService) GetTimeflowSnapshotDayRangeExecute(r ApiGetTimeflo
 		localVarReturnValue  *SnapshotsDayRangesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.GetTimeflowSnapshotDayRange")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.GetTimeflowSnapshotDayRange")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -556,6 +578,12 @@ func (a *TimeflowsApiService) GetTimeflowSnapshotDayRangeExecute(r ApiGetTimeflo
 		return localVarReturnValue, nil, reportError("timeflowId must have at least 1 elements")
 	}
 
+	if r.timezone != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "timezone", r.timezone, "form", "")
+	}
+	if r.timezoneOffset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "timezone_offset", r.timezoneOffset, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -626,7 +654,7 @@ func (a *TimeflowsApiService) GetTimeflowSnapshotDayRangeExecute(r ApiGetTimeflo
 
 type ApiGetTimeflowTagsRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	timeflowId string
 }
 
@@ -641,7 +669,7 @@ GetTimeflowTags Get tags for a Timeflow.
  @param timeflowId The ID of the timeflow.
  @return ApiGetTimeflowTagsRequest
 */
-func (a *TimeflowsApiService) GetTimeflowTags(ctx context.Context, timeflowId string) ApiGetTimeflowTagsRequest {
+func (a *TimeflowsAPIService) GetTimeflowTags(ctx context.Context, timeflowId string) ApiGetTimeflowTagsRequest {
 	return ApiGetTimeflowTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -651,7 +679,7 @@ func (a *TimeflowsApiService) GetTimeflowTags(ctx context.Context, timeflowId st
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *TimeflowsApiService) GetTimeflowTagsExecute(r ApiGetTimeflowTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *TimeflowsAPIService) GetTimeflowTagsExecute(r ApiGetTimeflowTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -659,7 +687,7 @@ func (a *TimeflowsApiService) GetTimeflowTagsExecute(r ApiGetTimeflowTagsRequest
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.GetTimeflowTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.GetTimeflowTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -744,7 +772,7 @@ func (a *TimeflowsApiService) GetTimeflowTagsExecute(r ApiGetTimeflowTagsRequest
 
 type ApiGetTimeflowsRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -778,7 +806,7 @@ GetTimeflows Retrieve the list of timeflows.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetTimeflowsRequest
 */
-func (a *TimeflowsApiService) GetTimeflows(ctx context.Context) ApiGetTimeflowsRequest {
+func (a *TimeflowsAPIService) GetTimeflows(ctx context.Context) ApiGetTimeflowsRequest {
 	return ApiGetTimeflowsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -787,7 +815,7 @@ func (a *TimeflowsApiService) GetTimeflows(ctx context.Context) ApiGetTimeflowsR
 
 // Execute executes the request
 //  @return ListTimeflowsResponse
-func (a *TimeflowsApiService) GetTimeflowsExecute(r ApiGetTimeflowsRequest) (*ListTimeflowsResponse, *http.Response, error) {
+func (a *TimeflowsAPIService) GetTimeflowsExecute(r ApiGetTimeflowsRequest) (*ListTimeflowsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -795,7 +823,7 @@ func (a *TimeflowsApiService) GetTimeflowsExecute(r ApiGetTimeflowsRequest) (*Li
 		localVarReturnValue  *ListTimeflowsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.GetTimeflows")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.GetTimeflows")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -807,13 +835,16 @@ func (a *TimeflowsApiService) GetTimeflowsExecute(r ApiGetTimeflowsRequest) (*Li
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -885,7 +916,7 @@ func (a *TimeflowsApiService) GetTimeflowsExecute(r ApiGetTimeflowsRequest) (*Li
 
 type ApiSearchTimeflowsRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -926,7 +957,7 @@ SearchTimeflows Search timeflows.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchTimeflowsRequest
 */
-func (a *TimeflowsApiService) SearchTimeflows(ctx context.Context) ApiSearchTimeflowsRequest {
+func (a *TimeflowsAPIService) SearchTimeflows(ctx context.Context) ApiSearchTimeflowsRequest {
 	return ApiSearchTimeflowsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -935,7 +966,7 @@ func (a *TimeflowsApiService) SearchTimeflows(ctx context.Context) ApiSearchTime
 
 // Execute executes the request
 //  @return SearchTimeflowsResponse
-func (a *TimeflowsApiService) SearchTimeflowsExecute(r ApiSearchTimeflowsRequest) (*SearchTimeflowsResponse, *http.Response, error) {
+func (a *TimeflowsAPIService) SearchTimeflowsExecute(r ApiSearchTimeflowsRequest) (*SearchTimeflowsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -943,7 +974,7 @@ func (a *TimeflowsApiService) SearchTimeflowsExecute(r ApiSearchTimeflowsRequest
 		localVarReturnValue  *SearchTimeflowsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.SearchTimeflows")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.SearchTimeflows")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -955,13 +986,16 @@ func (a *TimeflowsApiService) SearchTimeflowsExecute(r ApiSearchTimeflowsRequest
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1033,9 +1067,139 @@ func (a *TimeflowsApiService) SearchTimeflowsExecute(r ApiSearchTimeflowsRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiTimeflowRepairRequest struct {
+	ctx context.Context
+	ApiService *TimeflowsAPIService
+	timeflowId string
+	timeflowRepairRequest *TimeflowRepairRequest
+}
+
+// Timeflow repair information.
+func (r ApiTimeflowRepairRequest) TimeflowRepairRequest(timeflowRepairRequest TimeflowRepairRequest) ApiTimeflowRepairRequest {
+	r.timeflowRepairRequest = &timeflowRepairRequest
+	return r
+}
+
+func (r ApiTimeflowRepairRequest) Execute() (*TimeflowRepairResponse, *http.Response, error) {
+	return r.ApiService.TimeflowRepairExecute(r)
+}
+
+/*
+TimeflowRepair Repair a Timeflow.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param timeflowId The ID of the timeflow.
+ @return ApiTimeflowRepairRequest
+*/
+func (a *TimeflowsAPIService) TimeflowRepair(ctx context.Context, timeflowId string) ApiTimeflowRepairRequest {
+	return ApiTimeflowRepairRequest{
+		ApiService: a,
+		ctx: ctx,
+		timeflowId: timeflowId,
+	}
+}
+
+// Execute executes the request
+//  @return TimeflowRepairResponse
+func (a *TimeflowsAPIService) TimeflowRepairExecute(r ApiTimeflowRepairRequest) (*TimeflowRepairResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TimeflowRepairResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.TimeflowRepair")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/timeflows/{timeflowId}/repair"
+	localVarPath = strings.Replace(localVarPath, "{"+"timeflowId"+"}", url.PathEscape(parameterValueToString(r.timeflowId, "timeflowId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.timeflowId) < 1 {
+		return localVarReturnValue, nil, reportError("timeflowId must have at least 1 elements")
+	}
+	if r.timeflowRepairRequest == nil {
+		return localVarReturnValue, nil, reportError("timeflowRepairRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.timeflowRepairRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateTimeflowRequest struct {
 	ctx context.Context
-	ApiService *TimeflowsApiService
+	ApiService *TimeflowsAPIService
 	timeflowId string
 	updateTimeflowParameters *UpdateTimeflowParameters
 }
@@ -1057,7 +1221,7 @@ UpdateTimeflow Update values of a timeflow.
  @param timeflowId The ID of the timeflow.
  @return ApiUpdateTimeflowRequest
 */
-func (a *TimeflowsApiService) UpdateTimeflow(ctx context.Context, timeflowId string) ApiUpdateTimeflowRequest {
+func (a *TimeflowsAPIService) UpdateTimeflow(ctx context.Context, timeflowId string) ApiUpdateTimeflowRequest {
 	return ApiUpdateTimeflowRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1067,7 +1231,7 @@ func (a *TimeflowsApiService) UpdateTimeflow(ctx context.Context, timeflowId str
 
 // Execute executes the request
 //  @return UpdateTimeflowResponse
-func (a *TimeflowsApiService) UpdateTimeflowExecute(r ApiUpdateTimeflowRequest) (*UpdateTimeflowResponse, *http.Response, error) {
+func (a *TimeflowsAPIService) UpdateTimeflowExecute(r ApiUpdateTimeflowRequest) (*UpdateTimeflowResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -1075,7 +1239,7 @@ func (a *TimeflowsApiService) UpdateTimeflowExecute(r ApiUpdateTimeflowRequest) 
 		localVarReturnValue  *UpdateTimeflowResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsApiService.UpdateTimeflow")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TimeflowsAPIService.UpdateTimeflow")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

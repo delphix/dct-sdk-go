@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -13,6 +13,8 @@ package delphix_dct_api
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CredentialsEnvVariable type satisfies the MappedNullable interface at compile time
@@ -24,6 +26,8 @@ type CredentialsEnvVariable struct {
 	BaseVarName string `json:"base_var_name"`
 	// Password to assign to the environment variables.
 	Password *string `json:"password,omitempty"`
+	// Delphix display name for the vault user.
+	VaultUsername *string `json:"vault_username,omitempty"`
 	// The name or reference of the vault to assign to the environment variables.
 	Vault *string `json:"vault,omitempty"`
 	// Vault engine name where the credential is stored.
@@ -42,7 +46,15 @@ type CredentialsEnvVariable struct {
 	AzureVaultSecretKey *string `json:"azure_vault_secret_key,omitempty"`
 	// Query to find a credential in the CyberArk vault.
 	CyberarkVaultQueryString *string `json:"cyberark_vault_query_string,omitempty"`
+	// Credential type of the credential environment variable
+	CredentialType *string `json:"credential_type,omitempty"`
+	// Element ID of the credential environment variable
+	ElementId *string `json:"element_id,omitempty"`
+	// Type of the credential environment variable
+	Type *string `json:"type,omitempty"`
 }
+
+type _CredentialsEnvVariable CredentialsEnvVariable
 
 // NewCredentialsEnvVariable instantiates a new CredentialsEnvVariable object
 // This constructor will assign default values to properties that have it defined,
@@ -116,6 +128,38 @@ func (o *CredentialsEnvVariable) HasPassword() bool {
 // SetPassword gets a reference to the given string and assigns it to the Password field.
 func (o *CredentialsEnvVariable) SetPassword(v string) {
 	o.Password = &v
+}
+
+// GetVaultUsername returns the VaultUsername field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetVaultUsername() string {
+	if o == nil || IsNil(o.VaultUsername) {
+		var ret string
+		return ret
+	}
+	return *o.VaultUsername
+}
+
+// GetVaultUsernameOk returns a tuple with the VaultUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetVaultUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.VaultUsername) {
+		return nil, false
+	}
+	return o.VaultUsername, true
+}
+
+// HasVaultUsername returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasVaultUsername() bool {
+	if o != nil && !IsNil(o.VaultUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetVaultUsername gets a reference to the given string and assigns it to the VaultUsername field.
+func (o *CredentialsEnvVariable) SetVaultUsername(v string) {
+	o.VaultUsername = &v
 }
 
 // GetVault returns the Vault field value if set, zero value otherwise.
@@ -406,6 +450,102 @@ func (o *CredentialsEnvVariable) SetCyberarkVaultQueryString(v string) {
 	o.CyberarkVaultQueryString = &v
 }
 
+// GetCredentialType returns the CredentialType field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetCredentialType() string {
+	if o == nil || IsNil(o.CredentialType) {
+		var ret string
+		return ret
+	}
+	return *o.CredentialType
+}
+
+// GetCredentialTypeOk returns a tuple with the CredentialType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetCredentialTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.CredentialType) {
+		return nil, false
+	}
+	return o.CredentialType, true
+}
+
+// HasCredentialType returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasCredentialType() bool {
+	if o != nil && !IsNil(o.CredentialType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialType gets a reference to the given string and assigns it to the CredentialType field.
+func (o *CredentialsEnvVariable) SetCredentialType(v string) {
+	o.CredentialType = &v
+}
+
+// GetElementId returns the ElementId field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetElementId() string {
+	if o == nil || IsNil(o.ElementId) {
+		var ret string
+		return ret
+	}
+	return *o.ElementId
+}
+
+// GetElementIdOk returns a tuple with the ElementId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetElementIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ElementId) {
+		return nil, false
+	}
+	return o.ElementId, true
+}
+
+// HasElementId returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasElementId() bool {
+	if o != nil && !IsNil(o.ElementId) {
+		return true
+	}
+
+	return false
+}
+
+// SetElementId gets a reference to the given string and assigns it to the ElementId field.
+func (o *CredentialsEnvVariable) SetElementId(v string) {
+	o.ElementId = &v
+}
+
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *CredentialsEnvVariable) GetType() string {
+	if o == nil || IsNil(o.Type) {
+		var ret string
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CredentialsEnvVariable) GetTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *CredentialsEnvVariable) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
+func (o *CredentialsEnvVariable) SetType(v string) {
+	o.Type = &v
+}
+
 func (o CredentialsEnvVariable) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -419,6 +559,9 @@ func (o CredentialsEnvVariable) ToMap() (map[string]interface{}, error) {
 	toSerialize["base_var_name"] = o.BaseVarName
 	if !IsNil(o.Password) {
 		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.VaultUsername) {
+		toSerialize["vault_username"] = o.VaultUsername
 	}
 	if !IsNil(o.Vault) {
 		toSerialize["vault"] = o.Vault
@@ -447,7 +590,53 @@ func (o CredentialsEnvVariable) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CyberarkVaultQueryString) {
 		toSerialize["cyberark_vault_query_string"] = o.CyberarkVaultQueryString
 	}
+	if !IsNil(o.CredentialType) {
+		toSerialize["credential_type"] = o.CredentialType
+	}
+	if !IsNil(o.ElementId) {
+		toSerialize["element_id"] = o.ElementId
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
 	return toSerialize, nil
+}
+
+func (o *CredentialsEnvVariable) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"base_var_name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCredentialsEnvVariable := _CredentialsEnvVariable{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCredentialsEnvVariable)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CredentialsEnvVariable(varCredentialsEnvVariable)
+
+	return err
 }
 
 type NullableCredentialsEnvVariable struct {

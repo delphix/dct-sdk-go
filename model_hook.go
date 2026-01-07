@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -21,19 +21,20 @@ var _ MappedNullable = &Hook{}
 // Hook struct for Hook
 type Hook struct {
 	Name *string `json:"name,omitempty"`
-	Command string `json:"command"`
+	Command *string `json:"command,omitempty"`
 	Shell *string `json:"shell,omitempty"`
 	ElementId *string `json:"element_id,omitempty"`
 	HasCredentials *bool `json:"has_credentials,omitempty"`
+	CredentialsEnvVars []CredentialsEnvVariable `json:"credentials_env_vars,omitempty"`
+	HookTemplateId *string `json:"hook_template_id,omitempty"`
 }
 
 // NewHook instantiates a new Hook object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewHook(command string) *Hook {
+func NewHook() *Hook {
 	this := Hook{}
-	this.Command = command
 	return &this
 }
 
@@ -77,28 +78,36 @@ func (o *Hook) SetName(v string) {
 	o.Name = &v
 }
 
-// GetCommand returns the Command field value
+// GetCommand returns the Command field value if set, zero value otherwise.
 func (o *Hook) GetCommand() string {
-	if o == nil {
+	if o == nil || IsNil(o.Command) {
 		var ret string
 		return ret
 	}
-
-	return o.Command
+	return *o.Command
 }
 
-// GetCommandOk returns a tuple with the Command field value
+// GetCommandOk returns a tuple with the Command field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetCommandOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Command) {
 		return nil, false
 	}
-	return &o.Command, true
+	return o.Command, true
 }
 
-// SetCommand sets field value
+// HasCommand returns a boolean if a field has been set.
+func (o *Hook) HasCommand() bool {
+	if o != nil && !IsNil(o.Command) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommand gets a reference to the given string and assigns it to the Command field.
 func (o *Hook) SetCommand(v string) {
-	o.Command = v
+	o.Command = &v
 }
 
 // GetShell returns the Shell field value if set, zero value otherwise.
@@ -197,6 +206,70 @@ func (o *Hook) SetHasCredentials(v bool) {
 	o.HasCredentials = &v
 }
 
+// GetCredentialsEnvVars returns the CredentialsEnvVars field value if set, zero value otherwise.
+func (o *Hook) GetCredentialsEnvVars() []CredentialsEnvVariable {
+	if o == nil || IsNil(o.CredentialsEnvVars) {
+		var ret []CredentialsEnvVariable
+		return ret
+	}
+	return o.CredentialsEnvVars
+}
+
+// GetCredentialsEnvVarsOk returns a tuple with the CredentialsEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetCredentialsEnvVarsOk() ([]CredentialsEnvVariable, bool) {
+	if o == nil || IsNil(o.CredentialsEnvVars) {
+		return nil, false
+	}
+	return o.CredentialsEnvVars, true
+}
+
+// HasCredentialsEnvVars returns a boolean if a field has been set.
+func (o *Hook) HasCredentialsEnvVars() bool {
+	if o != nil && !IsNil(o.CredentialsEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialsEnvVars gets a reference to the given []CredentialsEnvVariable and assigns it to the CredentialsEnvVars field.
+func (o *Hook) SetCredentialsEnvVars(v []CredentialsEnvVariable) {
+	o.CredentialsEnvVars = v
+}
+
+// GetHookTemplateId returns the HookTemplateId field value if set, zero value otherwise.
+func (o *Hook) GetHookTemplateId() string {
+	if o == nil || IsNil(o.HookTemplateId) {
+		var ret string
+		return ret
+	}
+	return *o.HookTemplateId
+}
+
+// GetHookTemplateIdOk returns a tuple with the HookTemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetHookTemplateIdOk() (*string, bool) {
+	if o == nil || IsNil(o.HookTemplateId) {
+		return nil, false
+	}
+	return o.HookTemplateId, true
+}
+
+// HasHookTemplateId returns a boolean if a field has been set.
+func (o *Hook) HasHookTemplateId() bool {
+	if o != nil && !IsNil(o.HookTemplateId) {
+		return true
+	}
+
+	return false
+}
+
+// SetHookTemplateId gets a reference to the given string and assigns it to the HookTemplateId field.
+func (o *Hook) SetHookTemplateId(v string) {
+	o.HookTemplateId = &v
+}
+
 func (o Hook) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -210,7 +283,9 @@ func (o Hook) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	toSerialize["command"] = o.Command
+	if !IsNil(o.Command) {
+		toSerialize["command"] = o.Command
+	}
 	if !IsNil(o.Shell) {
 		toSerialize["shell"] = o.Shell
 	}
@@ -219,6 +294,12 @@ func (o Hook) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.HasCredentials) {
 		toSerialize["has_credentials"] = o.HasCredentials
+	}
+	if !IsNil(o.CredentialsEnvVars) {
+		toSerialize["credentials_env_vars"] = o.CredentialsEnvVars
+	}
+	if !IsNil(o.HookTemplateId) {
+		toSerialize["hook_template_id"] = o.HookTemplateId
 	}
 	return toSerialize, nil
 }

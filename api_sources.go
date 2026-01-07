@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -21,12 +21,378 @@ import (
 )
 
 
-// SourcesApiService SourcesApi service
-type SourcesApiService service
+// SourcesAPIService SourcesAPI service
+type SourcesAPIService service
+
+type ApiCreateAppDataSourceRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	appDataSourceCreateParameters *AppDataSourceCreateParameters
+}
+
+// The parameters to create a AppData source.
+func (r ApiCreateAppDataSourceRequest) AppDataSourceCreateParameters(appDataSourceCreateParameters AppDataSourceCreateParameters) ApiCreateAppDataSourceRequest {
+	r.appDataSourceCreateParameters = &appDataSourceCreateParameters
+	return r
+}
+
+func (r ApiCreateAppDataSourceRequest) Execute() (*CreateAppDataSourceResponse, *http.Response, error) {
+	return r.ApiService.CreateAppDataSourceExecute(r)
+}
+
+/*
+CreateAppDataSource Create an AppData source.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateAppDataSourceRequest
+*/
+func (a *SourcesAPIService) CreateAppDataSource(ctx context.Context) ApiCreateAppDataSourceRequest {
+	return ApiCreateAppDataSourceRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateAppDataSourceResponse
+func (a *SourcesAPIService) CreateAppDataSourceExecute(r ApiCreateAppDataSourceRequest) (*CreateAppDataSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateAppDataSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.CreateAppDataSource")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/appdata"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.appDataSourceCreateParameters == nil {
+		return localVarReturnValue, nil, reportError("appDataSourceCreateParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.appDataSourceCreateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateAseSourceRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	aseSourceCreateParameters *AseSourceCreateParameters
+}
+
+// The parameters to create an ASE source.
+func (r ApiCreateAseSourceRequest) AseSourceCreateParameters(aseSourceCreateParameters AseSourceCreateParameters) ApiCreateAseSourceRequest {
+	r.aseSourceCreateParameters = &aseSourceCreateParameters
+	return r
+}
+
+func (r ApiCreateAseSourceRequest) Execute() (*CreateAseSourceResponse, *http.Response, error) {
+	return r.ApiService.CreateAseSourceExecute(r)
+}
+
+/*
+CreateAseSource Create an ASE source.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateAseSourceRequest
+*/
+func (a *SourcesAPIService) CreateAseSource(ctx context.Context) ApiCreateAseSourceRequest {
+	return ApiCreateAseSourceRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateAseSourceResponse
+func (a *SourcesAPIService) CreateAseSourceExecute(r ApiCreateAseSourceRequest) (*CreateAseSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateAseSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.CreateAseSource")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/ase"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.aseSourceCreateParameters == nil {
+		return localVarReturnValue, nil, reportError("aseSourceCreateParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.aseSourceCreateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateOracleSourceRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	oracleSourceCreateParameters *OracleSourceCreateParameters
+}
+
+// The parameters to create an Oracle source.
+func (r ApiCreateOracleSourceRequest) OracleSourceCreateParameters(oracleSourceCreateParameters OracleSourceCreateParameters) ApiCreateOracleSourceRequest {
+	r.oracleSourceCreateParameters = &oracleSourceCreateParameters
+	return r
+}
+
+func (r ApiCreateOracleSourceRequest) Execute() (*CreateOracleSourceResponse, *http.Response, error) {
+	return r.ApiService.CreateOracleSourceExecute(r)
+}
+
+/*
+CreateOracleSource Create an Oracle Source.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateOracleSourceRequest
+*/
+func (a *SourcesAPIService) CreateOracleSource(ctx context.Context) ApiCreateOracleSourceRequest {
+	return ApiCreateOracleSourceRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateOracleSourceResponse
+func (a *SourcesAPIService) CreateOracleSourceExecute(r ApiCreateOracleSourceRequest) (*CreateOracleSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateOracleSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.CreateOracleSource")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/oracle"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleSourceCreateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreatePostgresSourceRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	postgresSourceCreateParameters *PostgresSourceCreateParameters
 }
 
@@ -46,7 +412,7 @@ CreatePostgresSource Create a PostgreSQL source.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreatePostgresSourceRequest
 */
-func (a *SourcesApiService) CreatePostgresSource(ctx context.Context) ApiCreatePostgresSourceRequest {
+func (a *SourcesAPIService) CreatePostgresSource(ctx context.Context) ApiCreatePostgresSourceRequest {
 	return ApiCreatePostgresSourceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -55,7 +421,7 @@ func (a *SourcesApiService) CreatePostgresSource(ctx context.Context) ApiCreateP
 
 // Execute executes the request
 //  @return CreatePostgresSourceResponse
-func (a *SourcesApiService) CreatePostgresSourceExecute(r ApiCreatePostgresSourceRequest) (*CreatePostgresSourceResponse, *http.Response, error) {
+func (a *SourcesAPIService) CreatePostgresSourceExecute(r ApiCreatePostgresSourceRequest) (*CreatePostgresSourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -63,7 +429,7 @@ func (a *SourcesApiService) CreatePostgresSourceExecute(r ApiCreatePostgresSourc
 		localVarReturnValue  *CreatePostgresSourceResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.CreatePostgresSource")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.CreatePostgresSource")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -149,7 +515,7 @@ func (a *SourcesApiService) CreatePostgresSourceExecute(r ApiCreatePostgresSourc
 
 type ApiCreateSourceTagsRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	sourceId string
 	tagsRequest *TagsRequest
 }
@@ -171,7 +537,7 @@ CreateSourceTags Create tags for a Source.
  @param sourceId The ID of the Source.
  @return ApiCreateSourceTagsRequest
 */
-func (a *SourcesApiService) CreateSourceTags(ctx context.Context, sourceId string) ApiCreateSourceTagsRequest {
+func (a *SourcesAPIService) CreateSourceTags(ctx context.Context, sourceId string) ApiCreateSourceTagsRequest {
 	return ApiCreateSourceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -181,7 +547,7 @@ func (a *SourcesApiService) CreateSourceTags(ctx context.Context, sourceId strin
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *SourcesApiService) CreateSourceTagsExecute(r ApiCreateSourceTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *SourcesAPIService) CreateSourceTagsExecute(r ApiCreateSourceTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -189,7 +555,7 @@ func (a *SourcesApiService) CreateSourceTagsExecute(r ApiCreateSourceTagsRequest
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.CreateSourceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.CreateSourceTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -279,7 +645,7 @@ func (a *SourcesApiService) CreateSourceTagsExecute(r ApiCreateSourceTagsRequest
 
 type ApiDeleteSourceRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	sourceId string
 }
 
@@ -294,7 +660,7 @@ DeleteSource Delete a source by ID.
  @param sourceId The ID of the Source.
  @return ApiDeleteSourceRequest
 */
-func (a *SourcesApiService) DeleteSource(ctx context.Context, sourceId string) ApiDeleteSourceRequest {
+func (a *SourcesAPIService) DeleteSource(ctx context.Context, sourceId string) ApiDeleteSourceRequest {
 	return ApiDeleteSourceRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -304,7 +670,7 @@ func (a *SourcesApiService) DeleteSource(ctx context.Context, sourceId string) A
 
 // Execute executes the request
 //  @return DeleteSourceResponse
-func (a *SourcesApiService) DeleteSourceExecute(r ApiDeleteSourceRequest) (*DeleteSourceResponse, *http.Response, error) {
+func (a *SourcesAPIService) DeleteSourceExecute(r ApiDeleteSourceRequest) (*DeleteSourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -312,7 +678,7 @@ func (a *SourcesApiService) DeleteSourceExecute(r ApiDeleteSourceRequest) (*Dele
 		localVarReturnValue  *DeleteSourceResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.DeleteSource")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.DeleteSource")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -397,7 +763,7 @@ func (a *SourcesApiService) DeleteSourceExecute(r ApiDeleteSourceRequest) (*Dele
 
 type ApiDeleteSourceTagsRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	sourceId string
 	deleteTag *DeleteTag
 }
@@ -419,7 +785,7 @@ DeleteSourceTags Delete tags for a Source.
  @param sourceId The ID of the Source.
  @return ApiDeleteSourceTagsRequest
 */
-func (a *SourcesApiService) DeleteSourceTags(ctx context.Context, sourceId string) ApiDeleteSourceTagsRequest {
+func (a *SourcesAPIService) DeleteSourceTags(ctx context.Context, sourceId string) ApiDeleteSourceTagsRequest {
 	return ApiDeleteSourceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -428,14 +794,14 @@ func (a *SourcesApiService) DeleteSourceTags(ctx context.Context, sourceId strin
 }
 
 // Execute executes the request
-func (a *SourcesApiService) DeleteSourceTagsExecute(r ApiDeleteSourceTagsRequest) (*http.Response, error) {
+func (a *SourcesAPIService) DeleteSourceTagsExecute(r ApiDeleteSourceTagsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.DeleteSourceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.DeleteSourceTags")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -513,7 +879,7 @@ func (a *SourcesApiService) DeleteSourceTagsExecute(r ApiDeleteSourceTagsRequest
 
 type ApiGetSourceByIdRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	sourceId string
 }
 
@@ -528,7 +894,7 @@ GetSourceById Get a source by ID.
  @param sourceId The ID of the Source.
  @return ApiGetSourceByIdRequest
 */
-func (a *SourcesApiService) GetSourceById(ctx context.Context, sourceId string) ApiGetSourceByIdRequest {
+func (a *SourcesAPIService) GetSourceById(ctx context.Context, sourceId string) ApiGetSourceByIdRequest {
 	return ApiGetSourceByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -538,7 +904,7 @@ func (a *SourcesApiService) GetSourceById(ctx context.Context, sourceId string) 
 
 // Execute executes the request
 //  @return Source
-func (a *SourcesApiService) GetSourceByIdExecute(r ApiGetSourceByIdRequest) (*Source, *http.Response, error) {
+func (a *SourcesAPIService) GetSourceByIdExecute(r ApiGetSourceByIdRequest) (*Source, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -546,7 +912,7 @@ func (a *SourcesApiService) GetSourceByIdExecute(r ApiGetSourceByIdRequest) (*So
 		localVarReturnValue  *Source
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.GetSourceById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.GetSourceById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -631,7 +997,7 @@ func (a *SourcesApiService) GetSourceByIdExecute(r ApiGetSourceByIdRequest) (*So
 
 type ApiGetSourceCompatibleRepoRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	sourceId string
 }
 
@@ -646,7 +1012,7 @@ GetSourceCompatibleRepo Returns a list of repositories that match the specified 
  @param sourceId The ID of the Source.
  @return ApiGetSourceCompatibleRepoRequest
 */
-func (a *SourcesApiService) GetSourceCompatibleRepo(ctx context.Context, sourceId string) ApiGetSourceCompatibleRepoRequest {
+func (a *SourcesAPIService) GetSourceCompatibleRepo(ctx context.Context, sourceId string) ApiGetSourceCompatibleRepoRequest {
 	return ApiGetSourceCompatibleRepoRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -656,7 +1022,7 @@ func (a *SourcesApiService) GetSourceCompatibleRepo(ctx context.Context, sourceI
 
 // Execute executes the request
 //  @return StagingCompatibleEnvironmentsResponse
-func (a *SourcesApiService) GetSourceCompatibleRepoExecute(r ApiGetSourceCompatibleRepoRequest) (*StagingCompatibleEnvironmentsResponse, *http.Response, error) {
+func (a *SourcesAPIService) GetSourceCompatibleRepoExecute(r ApiGetSourceCompatibleRepoRequest) (*StagingCompatibleEnvironmentsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -664,7 +1030,7 @@ func (a *SourcesApiService) GetSourceCompatibleRepoExecute(r ApiGetSourceCompati
 		localVarReturnValue  *StagingCompatibleEnvironmentsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.GetSourceCompatibleRepo")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.GetSourceCompatibleRepo")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -749,7 +1115,7 @@ func (a *SourcesApiService) GetSourceCompatibleRepoExecute(r ApiGetSourceCompati
 
 type ApiGetSourceTagsRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	sourceId string
 }
 
@@ -764,7 +1130,7 @@ GetSourceTags Get tags for a Source.
  @param sourceId The ID of the Source.
  @return ApiGetSourceTagsRequest
 */
-func (a *SourcesApiService) GetSourceTags(ctx context.Context, sourceId string) ApiGetSourceTagsRequest {
+func (a *SourcesAPIService) GetSourceTags(ctx context.Context, sourceId string) ApiGetSourceTagsRequest {
 	return ApiGetSourceTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -774,7 +1140,7 @@ func (a *SourcesApiService) GetSourceTags(ctx context.Context, sourceId string) 
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *SourcesApiService) GetSourceTagsExecute(r ApiGetSourceTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *SourcesAPIService) GetSourceTagsExecute(r ApiGetSourceTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -782,7 +1148,7 @@ func (a *SourcesApiService) GetSourceTagsExecute(r ApiGetSourceTagsRequest) (*Ta
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.GetSourceTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.GetSourceTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -867,7 +1233,7 @@ func (a *SourcesApiService) GetSourceTagsExecute(r ApiGetSourceTagsRequest) (*Ta
 
 type ApiGetSourcesRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -901,7 +1267,7 @@ GetSources List all sources.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetSourcesRequest
 */
-func (a *SourcesApiService) GetSources(ctx context.Context) ApiGetSourcesRequest {
+func (a *SourcesAPIService) GetSources(ctx context.Context) ApiGetSourcesRequest {
 	return ApiGetSourcesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -910,7 +1276,7 @@ func (a *SourcesApiService) GetSources(ctx context.Context) ApiGetSourcesRequest
 
 // Execute executes the request
 //  @return ListSourcesResponse
-func (a *SourcesApiService) GetSourcesExecute(r ApiGetSourcesRequest) (*ListSourcesResponse, *http.Response, error) {
+func (a *SourcesAPIService) GetSourcesExecute(r ApiGetSourcesRequest) (*ListSourcesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -918,7 +1284,7 @@ func (a *SourcesApiService) GetSourcesExecute(r ApiGetSourcesRequest) (*ListSour
 		localVarReturnValue  *ListSourcesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.GetSources")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.GetSources")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -930,13 +1296,16 @@ func (a *SourcesApiService) GetSourcesExecute(r ApiGetSourcesRequest) (*ListSour
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1008,7 +1377,7 @@ func (a *SourcesApiService) GetSourcesExecute(r ApiGetSourcesRequest) (*ListSour
 
 type ApiSearchSourcesRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -1049,7 +1418,7 @@ SearchSources Search for Sources.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchSourcesRequest
 */
-func (a *SourcesApiService) SearchSources(ctx context.Context) ApiSearchSourcesRequest {
+func (a *SourcesAPIService) SearchSources(ctx context.Context) ApiSearchSourcesRequest {
 	return ApiSearchSourcesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1058,7 +1427,7 @@ func (a *SourcesApiService) SearchSources(ctx context.Context) ApiSearchSourcesR
 
 // Execute executes the request
 //  @return SearchSourcesResponse
-func (a *SourcesApiService) SearchSourcesExecute(r ApiSearchSourcesRequest) (*SearchSourcesResponse, *http.Response, error) {
+func (a *SourcesAPIService) SearchSourcesExecute(r ApiSearchSourcesRequest) (*SearchSourcesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1066,7 +1435,7 @@ func (a *SourcesApiService) SearchSourcesExecute(r ApiSearchSourcesRequest) (*Se
 		localVarReturnValue  *SearchSourcesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.SearchSources")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.SearchSources")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1078,13 +1447,16 @@ func (a *SourcesApiService) SearchSourcesExecute(r ApiSearchSourcesRequest) (*Se
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1156,9 +1528,396 @@ func (a *SourcesApiService) SearchSourcesExecute(r ApiSearchSourcesRequest) (*Se
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateAppdataSourceByIdRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	sourceId string
+	appDataSourceUpdateParameters *AppDataSourceUpdateParameters
+}
+
+// The parameters to update an AppData source.
+func (r ApiUpdateAppdataSourceByIdRequest) AppDataSourceUpdateParameters(appDataSourceUpdateParameters AppDataSourceUpdateParameters) ApiUpdateAppdataSourceByIdRequest {
+	r.appDataSourceUpdateParameters = &appDataSourceUpdateParameters
+	return r
+}
+
+func (r ApiUpdateAppdataSourceByIdRequest) Execute() (*UpdateAppDataSourceResponse, *http.Response, error) {
+	return r.ApiService.UpdateAppdataSourceByIdExecute(r)
+}
+
+/*
+UpdateAppdataSourceById Update a AppData source by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sourceId The ID of the Source.
+ @return ApiUpdateAppdataSourceByIdRequest
+*/
+func (a *SourcesAPIService) UpdateAppdataSourceById(ctx context.Context, sourceId string) ApiUpdateAppdataSourceByIdRequest {
+	return ApiUpdateAppdataSourceByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		sourceId: sourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateAppDataSourceResponse
+func (a *SourcesAPIService) UpdateAppdataSourceByIdExecute(r ApiUpdateAppdataSourceByIdRequest) (*UpdateAppDataSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateAppDataSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.UpdateAppdataSourceById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/appdata/{sourceId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"sourceId"+"}", url.PathEscape(parameterValueToString(r.sourceId, "sourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.sourceId) < 1 {
+		return localVarReturnValue, nil, reportError("sourceId must have at least 1 elements")
+	}
+	if r.appDataSourceUpdateParameters == nil {
+		return localVarReturnValue, nil, reportError("appDataSourceUpdateParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.appDataSourceUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateAseSourceByIdRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	sourceId string
+	aseSourceUpdateParameters *AseSourceUpdateParameters
+}
+
+// The parameters to update an ASE source.
+func (r ApiUpdateAseSourceByIdRequest) AseSourceUpdateParameters(aseSourceUpdateParameters AseSourceUpdateParameters) ApiUpdateAseSourceByIdRequest {
+	r.aseSourceUpdateParameters = &aseSourceUpdateParameters
+	return r
+}
+
+func (r ApiUpdateAseSourceByIdRequest) Execute() (*UpdateAseSourceResponse, *http.Response, error) {
+	return r.ApiService.UpdateAseSourceByIdExecute(r)
+}
+
+/*
+UpdateAseSourceById Update an ASE source by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sourceId The ID of the Source.
+ @return ApiUpdateAseSourceByIdRequest
+*/
+func (a *SourcesAPIService) UpdateAseSourceById(ctx context.Context, sourceId string) ApiUpdateAseSourceByIdRequest {
+	return ApiUpdateAseSourceByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		sourceId: sourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateAseSourceResponse
+func (a *SourcesAPIService) UpdateAseSourceByIdExecute(r ApiUpdateAseSourceByIdRequest) (*UpdateAseSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateAseSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.UpdateAseSourceById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/ase/{sourceId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"sourceId"+"}", url.PathEscape(parameterValueToString(r.sourceId, "sourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.sourceId) < 1 {
+		return localVarReturnValue, nil, reportError("sourceId must have at least 1 elements")
+	}
+	if r.aseSourceUpdateParameters == nil {
+		return localVarReturnValue, nil, reportError("aseSourceUpdateParameters is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.aseSourceUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateOracleSourceByIdRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	sourceId string
+	oracleSourceUpdateParameters *OracleSourceUpdateParameters
+}
+
+// The parameters to update a Oracle source
+func (r ApiUpdateOracleSourceByIdRequest) OracleSourceUpdateParameters(oracleSourceUpdateParameters OracleSourceUpdateParameters) ApiUpdateOracleSourceByIdRequest {
+	r.oracleSourceUpdateParameters = &oracleSourceUpdateParameters
+	return r
+}
+
+func (r ApiUpdateOracleSourceByIdRequest) Execute() (*UpdateOracleSourceResponse, *http.Response, error) {
+	return r.ApiService.UpdateOracleSourceByIdExecute(r)
+}
+
+/*
+UpdateOracleSourceById Update an Oracle source by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sourceId The ID of the Source.
+ @return ApiUpdateOracleSourceByIdRequest
+*/
+func (a *SourcesAPIService) UpdateOracleSourceById(ctx context.Context, sourceId string) ApiUpdateOracleSourceByIdRequest {
+	return ApiUpdateOracleSourceByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		sourceId: sourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateOracleSourceResponse
+func (a *SourcesAPIService) UpdateOracleSourceByIdExecute(r ApiUpdateOracleSourceByIdRequest) (*UpdateOracleSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateOracleSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.UpdateOracleSourceById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/oracle/{sourceId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"sourceId"+"}", url.PathEscape(parameterValueToString(r.sourceId, "sourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.sourceId) < 1 {
+		return localVarReturnValue, nil, reportError("sourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleSourceUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdatePostgresSourceByIdRequest struct {
 	ctx context.Context
-	ApiService *SourcesApiService
+	ApiService *SourcesAPIService
 	sourceId string
 	postgresSourceUpdateParameters *PostgresSourceUpdateParameters
 }
@@ -1180,7 +1939,7 @@ UpdatePostgresSourceById Update a PostgreSQL source by ID.
  @param sourceId The ID of the Source.
  @return ApiUpdatePostgresSourceByIdRequest
 */
-func (a *SourcesApiService) UpdatePostgresSourceById(ctx context.Context, sourceId string) ApiUpdatePostgresSourceByIdRequest {
+func (a *SourcesAPIService) UpdatePostgresSourceById(ctx context.Context, sourceId string) ApiUpdatePostgresSourceByIdRequest {
 	return ApiUpdatePostgresSourceByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1190,7 +1949,7 @@ func (a *SourcesApiService) UpdatePostgresSourceById(ctx context.Context, source
 
 // Execute executes the request
 //  @return UpdatePostgresSourceResponse
-func (a *SourcesApiService) UpdatePostgresSourceByIdExecute(r ApiUpdatePostgresSourceByIdRequest) (*UpdatePostgresSourceResponse, *http.Response, error) {
+func (a *SourcesAPIService) UpdatePostgresSourceByIdExecute(r ApiUpdatePostgresSourceByIdRequest) (*UpdatePostgresSourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
@@ -1198,7 +1957,7 @@ func (a *SourcesApiService) UpdatePostgresSourceByIdExecute(r ApiUpdatePostgresS
 		localVarReturnValue  *UpdatePostgresSourceResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesApiService.UpdatePostgresSourceById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.UpdatePostgresSourceById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1232,6 +1991,263 @@ func (a *SourcesApiService) UpdatePostgresSourceByIdExecute(r ApiUpdatePostgresS
 	}
 	// body params
 	localVarPostBody = r.postgresSourceUpdateParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateSourceByIdRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	sourceId string
+	updateSourceParameters *UpdateSourceParameters
+}
+
+// The parameters to update a Source.
+func (r ApiUpdateSourceByIdRequest) UpdateSourceParameters(updateSourceParameters UpdateSourceParameters) ApiUpdateSourceByIdRequest {
+	r.updateSourceParameters = &updateSourceParameters
+	return r
+}
+
+func (r ApiUpdateSourceByIdRequest) Execute() (*UpdateSourceResponse, *http.Response, error) {
+	return r.ApiService.UpdateSourceByIdExecute(r)
+}
+
+/*
+UpdateSourceById Update a Source.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sourceId The ID of the Source.
+ @return ApiUpdateSourceByIdRequest
+
+Deprecated
+*/
+func (a *SourcesAPIService) UpdateSourceById(ctx context.Context, sourceId string) ApiUpdateSourceByIdRequest {
+	return ApiUpdateSourceByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		sourceId: sourceId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateSourceResponse
+// Deprecated
+func (a *SourcesAPIService) UpdateSourceByIdExecute(r ApiUpdateSourceByIdRequest) (*UpdateSourceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateSourceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.UpdateSourceById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/{sourceId}/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"sourceId"+"}", url.PathEscape(parameterValueToString(r.sourceId, "sourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.sourceId) < 1 {
+		return localVarReturnValue, nil, reportError("sourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateSourceParameters
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiVerifySourceJdbcConnectionStringRequest struct {
+	ctx context.Context
+	ApiService *SourcesAPIService
+	sourceId string
+	oracleVerifyJdbcConnectionStringParams *OracleVerifyJdbcConnectionStringParams
+}
+
+// The parameters to verify oracle jdbc connection string.
+func (r ApiVerifySourceJdbcConnectionStringRequest) OracleVerifyJdbcConnectionStringParams(oracleVerifyJdbcConnectionStringParams OracleVerifyJdbcConnectionStringParams) ApiVerifySourceJdbcConnectionStringRequest {
+	r.oracleVerifyJdbcConnectionStringParams = &oracleVerifyJdbcConnectionStringParams
+	return r
+}
+
+func (r ApiVerifySourceJdbcConnectionStringRequest) Execute() (*ConnectivityCheckResponse, *http.Response, error) {
+	return r.ApiService.VerifySourceJdbcConnectionStringExecute(r)
+}
+
+/*
+VerifySourceJdbcConnectionString Verify JDBC connection string for a source.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sourceId The ID of the Source.
+ @return ApiVerifySourceJdbcConnectionStringRequest
+*/
+func (a *SourcesAPIService) VerifySourceJdbcConnectionString(ctx context.Context, sourceId string) ApiVerifySourceJdbcConnectionStringRequest {
+	return ApiVerifySourceJdbcConnectionStringRequest{
+		ApiService: a,
+		ctx: ctx,
+		sourceId: sourceId,
+	}
+}
+
+// Execute executes the request
+//  @return ConnectivityCheckResponse
+func (a *SourcesAPIService) VerifySourceJdbcConnectionStringExecute(r ApiVerifySourceJdbcConnectionStringRequest) (*ConnectivityCheckResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConnectivityCheckResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SourcesAPIService.VerifySourceJdbcConnectionString")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/sources/{sourceId}/jdbc-check"
+	localVarPath = strings.Replace(localVarPath, "{"+"sourceId"+"}", url.PathEscape(parameterValueToString(r.sourceId, "sourceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.sourceId) < 1 {
+		return localVarReturnValue, nil, reportError("sourceId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.oracleVerifyJdbcConnectionStringParams
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

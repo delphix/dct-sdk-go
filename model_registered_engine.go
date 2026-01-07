@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -42,14 +42,10 @@ type RegisteredEngine struct {
 	DataStorageCapacity NullableInt64 `json:"data_storage_capacity,omitempty"`
 	// The amount of storage used by engine objects and system metadata, in bytes.
 	DataStorageUsed NullableInt64 `json:"data_storage_used,omitempty"`
-	// Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider creating a truststore with a Certificate Authority to validate the engine's certificate, and set the truststore_filename property. 
+	// Allow connections to the engine over HTTPs without validating the TLS certificate. Even though the connection to the engine might be performed over HTTPs, setting this property eliminates the protection against a man-in-the-middle attach for connections to this engine. Instead, consider configuring DCT with Certificate Authority certificates. 
 	InsecureSsl *bool `json:"insecure_ssl,omitempty"`
 	// Ignore validation of the name associated to the TLS certificate when connecting to the engine over HTTPs. Setting this value must only be done if the TLS certificate of the engine does not match the hostname, and the TLS configuration of the engine cannot be fixed. Setting this property reduces the protection against a man-in-the-middle attack for connections to this engine. This is ignored if insecure_ssl is set. 
 	UnsafeSslHostnameCheck *bool `json:"unsafe_ssl_hostname_check,omitempty"`
-	// File name of a truststore which can be used to validate the TLS certificate of the engine. The truststore must be available at /etc/config/certs/<truststore_filename> 
-	TruststoreFilename NullableString `json:"truststore_filename,omitempty"`
-	// Password to read the truststore. 
-	TruststorePassword NullableString `json:"truststore_password,omitempty"`
 	// the status of the engine 
 	Status NullableString `json:"status,omitempty"`
 	// The status of the connection to the engine. Deprecated; use \"engine_connection_status\" instead.
@@ -97,9 +93,15 @@ type RegisteredEngine struct {
 	// List of Hyperscale Instances that this engine is connected to.
 	HyperscaleInstanceIds []string `json:"hyperscale_instance_ids,omitempty"`
 	// File name of a truststore which can be used to validate the TLS certificate of the engine as expected by associated hyperscale instances. 
-	HyperscaleTruststoreFilename NullableString `json:"hyperscale_truststore_filename,omitempty"`
+	HyperscaleTruststoreFilename NullableString `json:"hyperscale_truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.]+$"`
 	// Password to read the truststore as expected by associated hyperscale instances. 
 	HyperscaleTruststorePassword NullableString `json:"hyperscale_truststore_password,omitempty"`
+	// true if the engine is using an object store (like AWS S3) to store data | false if the engine is using block storage to store its data | null if the engine is not initialized (unlikely) or the engine API version does not provide that information 
+	UsingObjectStorage NullableBool `json:"using_object_storage,omitempty"`
+	// true if the engine is using an object store (like AWS S3) to store data | false if the engine is using block storage to store its data | null if the engine is not initialized (unlikely) or the engine API version does not provide that information 
+	UsingContinuousVault NullableBool `json:"using_continuous_vault,omitempty"`
+	// The infrastructure or environment where the engine is deployed or built, including cloud provider and instance type.
+	Platform *string `json:"platform,omitempty"`
 }
 
 // NewRegisteredEngine instantiates a new RegisteredEngine object
@@ -605,90 +607,6 @@ func (o *RegisteredEngine) SetUnsafeSslHostnameCheck(v bool) {
 	o.UnsafeSslHostnameCheck = &v
 }
 
-// GetTruststoreFilename returns the TruststoreFilename field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RegisteredEngine) GetTruststoreFilename() string {
-	if o == nil || IsNil(o.TruststoreFilename.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststoreFilename.Get()
-}
-
-// GetTruststoreFilenameOk returns a tuple with the TruststoreFilename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RegisteredEngine) GetTruststoreFilenameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststoreFilename.Get(), o.TruststoreFilename.IsSet()
-}
-
-// HasTruststoreFilename returns a boolean if a field has been set.
-func (o *RegisteredEngine) HasTruststoreFilename() bool {
-	if o != nil && o.TruststoreFilename.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststoreFilename gets a reference to the given NullableString and assigns it to the TruststoreFilename field.
-func (o *RegisteredEngine) SetTruststoreFilename(v string) {
-	o.TruststoreFilename.Set(&v)
-}
-// SetTruststoreFilenameNil sets the value for TruststoreFilename to be an explicit nil
-func (o *RegisteredEngine) SetTruststoreFilenameNil() {
-	o.TruststoreFilename.Set(nil)
-}
-
-// UnsetTruststoreFilename ensures that no value is present for TruststoreFilename, not even an explicit nil
-func (o *RegisteredEngine) UnsetTruststoreFilename() {
-	o.TruststoreFilename.Unset()
-}
-
-// GetTruststorePassword returns the TruststorePassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RegisteredEngine) GetTruststorePassword() string {
-	if o == nil || IsNil(o.TruststorePassword.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.TruststorePassword.Get()
-}
-
-// GetTruststorePasswordOk returns a tuple with the TruststorePassword field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RegisteredEngine) GetTruststorePasswordOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TruststorePassword.Get(), o.TruststorePassword.IsSet()
-}
-
-// HasTruststorePassword returns a boolean if a field has been set.
-func (o *RegisteredEngine) HasTruststorePassword() bool {
-	if o != nil && o.TruststorePassword.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTruststorePassword gets a reference to the given NullableString and assigns it to the TruststorePassword field.
-func (o *RegisteredEngine) SetTruststorePassword(v string) {
-	o.TruststorePassword.Set(&v)
-}
-// SetTruststorePasswordNil sets the value for TruststorePassword to be an explicit nil
-func (o *RegisteredEngine) SetTruststorePasswordNil() {
-	o.TruststorePassword.Set(nil)
-}
-
-// UnsetTruststorePassword ensures that no value is present for TruststorePassword, not even an explicit nil
-func (o *RegisteredEngine) UnsetTruststorePassword() {
-	o.TruststorePassword.Unset()
-}
-
 // GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RegisteredEngine) GetStatus() string {
 	if o == nil || IsNil(o.Status.Get()) {
@@ -1074,7 +992,7 @@ func (o *RegisteredEngine) GetHashicorpVaultUsernameCommandArgsOk() ([]string, b
 
 // HasHashicorpVaultUsernameCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultUsernameCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultUsernameCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultUsernameCommandArgs) {
 		return true
 	}
 
@@ -1107,7 +1025,7 @@ func (o *RegisteredEngine) GetHashicorpVaultMaskingUsernameCommandArgsOk() ([]st
 
 // HasHashicorpVaultMaskingUsernameCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultMaskingUsernameCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultMaskingUsernameCommandArgs) {
 		return true
 	}
 
@@ -1140,7 +1058,7 @@ func (o *RegisteredEngine) GetHashicorpVaultPasswordCommandArgsOk() ([]string, b
 
 // HasHashicorpVaultPasswordCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultPasswordCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultPasswordCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultPasswordCommandArgs) {
 		return true
 	}
 
@@ -1173,7 +1091,7 @@ func (o *RegisteredEngine) GetHashicorpVaultMaskingPasswordCommandArgsOk() ([]st
 
 // HasHashicorpVaultMaskingPasswordCommandArgs returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHashicorpVaultMaskingPasswordCommandArgs() bool {
-	if o != nil && IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
+	if o != nil && !IsNil(o.HashicorpVaultMaskingPasswordCommandArgs) {
 		return true
 	}
 
@@ -1532,7 +1450,7 @@ func (o *RegisteredEngine) GetHyperscaleInstanceIdsOk() ([]string, bool) {
 
 // HasHyperscaleInstanceIds returns a boolean if a field has been set.
 func (o *RegisteredEngine) HasHyperscaleInstanceIds() bool {
-	if o != nil && IsNil(o.HyperscaleInstanceIds) {
+	if o != nil && !IsNil(o.HyperscaleInstanceIds) {
 		return true
 	}
 
@@ -1628,6 +1546,122 @@ func (o *RegisteredEngine) UnsetHyperscaleTruststorePassword() {
 	o.HyperscaleTruststorePassword.Unset()
 }
 
+// GetUsingObjectStorage returns the UsingObjectStorage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetUsingObjectStorage() bool {
+	if o == nil || IsNil(o.UsingObjectStorage.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.UsingObjectStorage.Get()
+}
+
+// GetUsingObjectStorageOk returns a tuple with the UsingObjectStorage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetUsingObjectStorageOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UsingObjectStorage.Get(), o.UsingObjectStorage.IsSet()
+}
+
+// HasUsingObjectStorage returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasUsingObjectStorage() bool {
+	if o != nil && o.UsingObjectStorage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUsingObjectStorage gets a reference to the given NullableBool and assigns it to the UsingObjectStorage field.
+func (o *RegisteredEngine) SetUsingObjectStorage(v bool) {
+	o.UsingObjectStorage.Set(&v)
+}
+// SetUsingObjectStorageNil sets the value for UsingObjectStorage to be an explicit nil
+func (o *RegisteredEngine) SetUsingObjectStorageNil() {
+	o.UsingObjectStorage.Set(nil)
+}
+
+// UnsetUsingObjectStorage ensures that no value is present for UsingObjectStorage, not even an explicit nil
+func (o *RegisteredEngine) UnsetUsingObjectStorage() {
+	o.UsingObjectStorage.Unset()
+}
+
+// GetUsingContinuousVault returns the UsingContinuousVault field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetUsingContinuousVault() bool {
+	if o == nil || IsNil(o.UsingContinuousVault.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.UsingContinuousVault.Get()
+}
+
+// GetUsingContinuousVaultOk returns a tuple with the UsingContinuousVault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetUsingContinuousVaultOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UsingContinuousVault.Get(), o.UsingContinuousVault.IsSet()
+}
+
+// HasUsingContinuousVault returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasUsingContinuousVault() bool {
+	if o != nil && o.UsingContinuousVault.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUsingContinuousVault gets a reference to the given NullableBool and assigns it to the UsingContinuousVault field.
+func (o *RegisteredEngine) SetUsingContinuousVault(v bool) {
+	o.UsingContinuousVault.Set(&v)
+}
+// SetUsingContinuousVaultNil sets the value for UsingContinuousVault to be an explicit nil
+func (o *RegisteredEngine) SetUsingContinuousVaultNil() {
+	o.UsingContinuousVault.Set(nil)
+}
+
+// UnsetUsingContinuousVault ensures that no value is present for UsingContinuousVault, not even an explicit nil
+func (o *RegisteredEngine) UnsetUsingContinuousVault() {
+	o.UsingContinuousVault.Unset()
+}
+
+// GetPlatform returns the Platform field value if set, zero value otherwise.
+func (o *RegisteredEngine) GetPlatform() string {
+	if o == nil || IsNil(o.Platform) {
+		var ret string
+		return ret
+	}
+	return *o.Platform
+}
+
+// GetPlatformOk returns a tuple with the Platform field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RegisteredEngine) GetPlatformOk() (*string, bool) {
+	if o == nil || IsNil(o.Platform) {
+		return nil, false
+	}
+	return o.Platform, true
+}
+
+// HasPlatform returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasPlatform() bool {
+	if o != nil && !IsNil(o.Platform) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlatform gets a reference to the given string and assigns it to the Platform field.
+func (o *RegisteredEngine) SetPlatform(v string) {
+	o.Platform = &v
+}
+
 func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1638,7 +1672,9 @@ func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 
 func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	// skip: id is readOnly
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if o.Uuid.IsSet() {
 		toSerialize["uuid"] = o.Uuid.Get()
 	}
@@ -1675,23 +1711,21 @@ func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UnsafeSslHostnameCheck) {
 		toSerialize["unsafe_ssl_hostname_check"] = o.UnsafeSslHostnameCheck
 	}
-	if o.TruststoreFilename.IsSet() {
-		toSerialize["truststore_filename"] = o.TruststoreFilename.Get()
-	}
-	if o.TruststorePassword.IsSet() {
-		toSerialize["truststore_password"] = o.TruststorePassword.Get()
-	}
 	if o.Status.IsSet() {
 		toSerialize["status"] = o.Status.Get()
 	}
 	if o.ConnectionStatus.IsSet() {
 		toSerialize["connection_status"] = o.ConnectionStatus.Get()
 	}
-	// skip: engine_connection_status is readOnly
+	if !IsNil(o.EngineConnectionStatus) {
+		toSerialize["engine_connection_status"] = o.EngineConnectionStatus
+	}
 	if o.ConnectionStatusDetails.IsSet() {
 		toSerialize["connection_status_details"] = o.ConnectionStatusDetails.Get()
 	}
-	// skip: engine_connection_status_details is readOnly
+	if !IsNil(o.EngineConnectionStatusDetails) {
+		toSerialize["engine_connection_status_details"] = o.EngineConnectionStatusDetails
+	}
 	if o.Username.IsSet() {
 		toSerialize["username"] = o.Username.Get()
 	}
@@ -1748,6 +1782,15 @@ func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	}
 	if o.HyperscaleTruststorePassword.IsSet() {
 		toSerialize["hyperscale_truststore_password"] = o.HyperscaleTruststorePassword.Get()
+	}
+	if o.UsingObjectStorage.IsSet() {
+		toSerialize["using_object_storage"] = o.UsingObjectStorage.Get()
+	}
+	if o.UsingContinuousVault.IsSet() {
+		toSerialize["using_continuous_vault"] = o.UsingContinuousVault.Get()
+	}
+	if !IsNil(o.Platform) {
+		toSerialize["platform"] = o.Platform
 	}
 	return toSerialize, nil
 }

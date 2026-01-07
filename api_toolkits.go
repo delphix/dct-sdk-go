@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.9.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -18,15 +18,16 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"os"
 )
 
 
-// ToolkitsApiService ToolkitsApi service
-type ToolkitsApiService service
+// ToolkitsAPIService ToolkitsAPI service
+type ToolkitsAPIService service
 
 type ApiCreateToolkitTagsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	toolkitId string
 	tagsRequest *TagsRequest
 }
@@ -48,7 +49,7 @@ CreateToolkitTags Create tags for a toolkit.
  @param toolkitId The ID of the toolkit.
  @return ApiCreateToolkitTagsRequest
 */
-func (a *ToolkitsApiService) CreateToolkitTags(ctx context.Context, toolkitId string) ApiCreateToolkitTagsRequest {
+func (a *ToolkitsAPIService) CreateToolkitTags(ctx context.Context, toolkitId string) ApiCreateToolkitTagsRequest {
 	return ApiCreateToolkitTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -58,7 +59,7 @@ func (a *ToolkitsApiService) CreateToolkitTags(ctx context.Context, toolkitId st
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ToolkitsApiService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -66,7 +67,7 @@ func (a *ToolkitsApiService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequ
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.CreateToolkitTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.CreateToolkitTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -154,32 +155,25 @@ func (a *ToolkitsApiService) CreateToolkitTagsExecute(r ApiCreateToolkitTagsRequ
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDeleteToolkitTagsRequest struct {
+type ApiDeleteToolkitByIdRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	toolkitId string
-	deleteTag *DeleteTag
 }
 
-// The parameters to delete tags
-func (r ApiDeleteToolkitTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteToolkitTagsRequest {
-	r.deleteTag = &deleteTag
-	return r
-}
-
-func (r ApiDeleteToolkitTagsRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteToolkitTagsExecute(r)
+func (r ApiDeleteToolkitByIdRequest) Execute() (*ToolkitDeleteJobResponse, *http.Response, error) {
+	return r.ApiService.DeleteToolkitByIdExecute(r)
 }
 
 /*
-DeleteToolkitTags Delete tags for a Toolkit.
+DeleteToolkitById Delete a Toolkit by ID.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param toolkitId The ID of the toolkit.
- @return ApiDeleteToolkitTagsRequest
+ @return ApiDeleteToolkitByIdRequest
 */
-func (a *ToolkitsApiService) DeleteToolkitTags(ctx context.Context, toolkitId string) ApiDeleteToolkitTagsRequest {
-	return ApiDeleteToolkitTagsRequest{
+func (a *ToolkitsAPIService) DeleteToolkitById(ctx context.Context, toolkitId string) ApiDeleteToolkitByIdRequest {
+	return ApiDeleteToolkitByIdRequest{
 		ApiService: a,
 		ctx: ctx,
 		toolkitId: toolkitId,
@@ -187,125 +181,16 @@ func (a *ToolkitsApiService) DeleteToolkitTags(ctx context.Context, toolkitId st
 }
 
 // Execute executes the request
-func (a *ToolkitsApiService) DeleteToolkitTagsExecute(r ApiDeleteToolkitTagsRequest) (*http.Response, error) {
+//  @return ToolkitDeleteJobResponse
+func (a *ToolkitsAPIService) DeleteToolkitByIdExecute(r ApiDeleteToolkitByIdRequest) (*ToolkitDeleteJobResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
+		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ToolkitDeleteJobResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.DeleteToolkitTags")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/toolkits/{toolkitId}/tags/delete"
-	localVarPath = strings.Replace(localVarPath, "{"+"toolkitId"+"}", url.PathEscape(parameterValueToString(r.toolkitId, "toolkitId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if strlen(r.toolkitId) < 1 {
-		return nil, reportError("toolkitId must have at least 1 elements")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.deleteTag
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiGetToolkitByIdRequest struct {
-	ctx context.Context
-	ApiService *ToolkitsApiService
-	toolkitId string
-}
-
-func (r ApiGetToolkitByIdRequest) Execute() (*Toolkit, *http.Response, error) {
-	return r.ApiService.GetToolkitByIdExecute(r)
-}
-
-/*
-GetToolkitById Get Toolkit by ID.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param toolkitId The ID of the toolkit.
- @return ApiGetToolkitByIdRequest
-*/
-func (a *ToolkitsApiService) GetToolkitById(ctx context.Context, toolkitId string) ApiGetToolkitByIdRequest {
-	return ApiGetToolkitByIdRequest{
-		ApiService: a,
-		ctx: ctx,
-		toolkitId: toolkitId,
-	}
-}
-
-// Execute executes the request
-//  @return Toolkit
-func (a *ToolkitsApiService) GetToolkitByIdExecute(r ApiGetToolkitByIdRequest) (*Toolkit, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Toolkit
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.GetToolkitById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.DeleteToolkitById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -388,9 +273,354 @@ func (a *ToolkitsApiService) GetToolkitByIdExecute(r ApiGetToolkitByIdRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiDeleteToolkitTagsRequest struct {
+	ctx context.Context
+	ApiService *ToolkitsAPIService
+	toolkitId string
+	deleteTag *DeleteTag
+}
+
+// The parameters to delete tags
+func (r ApiDeleteToolkitTagsRequest) DeleteTag(deleteTag DeleteTag) ApiDeleteToolkitTagsRequest {
+	r.deleteTag = &deleteTag
+	return r
+}
+
+func (r ApiDeleteToolkitTagsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteToolkitTagsExecute(r)
+}
+
+/*
+DeleteToolkitTags Delete tags for a Toolkit.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param toolkitId The ID of the toolkit.
+ @return ApiDeleteToolkitTagsRequest
+*/
+func (a *ToolkitsAPIService) DeleteToolkitTags(ctx context.Context, toolkitId string) ApiDeleteToolkitTagsRequest {
+	return ApiDeleteToolkitTagsRequest{
+		ApiService: a,
+		ctx: ctx,
+		toolkitId: toolkitId,
+	}
+}
+
+// Execute executes the request
+func (a *ToolkitsAPIService) DeleteToolkitTagsExecute(r ApiDeleteToolkitTagsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.DeleteToolkitTags")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/toolkits/{toolkitId}/tags/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"toolkitId"+"}", url.PathEscape(parameterValueToString(r.toolkitId, "toolkitId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.toolkitId) < 1 {
+		return nil, reportError("toolkitId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.deleteTag
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetToolkitByIdRequest struct {
+	ctx context.Context
+	ApiService *ToolkitsAPIService
+	toolkitId string
+}
+
+func (r ApiGetToolkitByIdRequest) Execute() (*Toolkit, *http.Response, error) {
+	return r.ApiService.GetToolkitByIdExecute(r)
+}
+
+/*
+GetToolkitById Get Toolkit by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param toolkitId The ID of the toolkit.
+ @return ApiGetToolkitByIdRequest
+*/
+func (a *ToolkitsAPIService) GetToolkitById(ctx context.Context, toolkitId string) ApiGetToolkitByIdRequest {
+	return ApiGetToolkitByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		toolkitId: toolkitId,
+	}
+}
+
+// Execute executes the request
+//  @return Toolkit
+func (a *ToolkitsAPIService) GetToolkitByIdExecute(r ApiGetToolkitByIdRequest) (*Toolkit, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Toolkit
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.GetToolkitById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/toolkits/{toolkitId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"toolkitId"+"}", url.PathEscape(parameterValueToString(r.toolkitId, "toolkitId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.toolkitId) < 1 {
+		return localVarReturnValue, nil, reportError("toolkitId must have at least 1 elements")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetToolkitSchemaDefinitionsRequest struct {
+	ctx context.Context
+	ApiService *ToolkitsAPIService
+}
+
+func (r ApiGetToolkitSchemaDefinitionsRequest) Execute() (*ToolkitSchemaDefinitions, *http.Response, error) {
+	return r.ApiService.GetToolkitSchemaDefinitionsExecute(r)
+}
+
+/*
+GetToolkitSchemaDefinitions Get toolkit schema definitions.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetToolkitSchemaDefinitionsRequest
+*/
+func (a *ToolkitsAPIService) GetToolkitSchemaDefinitions(ctx context.Context) ApiGetToolkitSchemaDefinitionsRequest {
+	return ApiGetToolkitSchemaDefinitionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ToolkitSchemaDefinitions
+func (a *ToolkitsAPIService) GetToolkitSchemaDefinitionsExecute(r ApiGetToolkitSchemaDefinitionsRequest) (*ToolkitSchemaDefinitions, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ToolkitSchemaDefinitions
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.GetToolkitSchemaDefinitions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/toolkits/schema_definitions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetToolkitTagsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	toolkitId string
 }
 
@@ -405,7 +635,7 @@ GetToolkitTags Get tags for a Toolkit.
  @param toolkitId The ID of the toolkit.
  @return ApiGetToolkitTagsRequest
 */
-func (a *ToolkitsApiService) GetToolkitTags(ctx context.Context, toolkitId string) ApiGetToolkitTagsRequest {
+func (a *ToolkitsAPIService) GetToolkitTags(ctx context.Context, toolkitId string) ApiGetToolkitTagsRequest {
 	return ApiGetToolkitTagsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -415,7 +645,7 @@ func (a *ToolkitsApiService) GetToolkitTags(ctx context.Context, toolkitId strin
 
 // Execute executes the request
 //  @return TagsResponse
-func (a *ToolkitsApiService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (*TagsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -423,7 +653,7 @@ func (a *ToolkitsApiService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (
 		localVarReturnValue  *TagsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.GetToolkitTags")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.GetToolkitTags")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -508,7 +738,7 @@ func (a *ToolkitsApiService) GetToolkitTagsExecute(r ApiGetToolkitTagsRequest) (
 
 type ApiGetToolkitsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -542,7 +772,7 @@ GetToolkits List all toolkits.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetToolkitsRequest
 */
-func (a *ToolkitsApiService) GetToolkits(ctx context.Context) ApiGetToolkitsRequest {
+func (a *ToolkitsAPIService) GetToolkits(ctx context.Context) ApiGetToolkitsRequest {
 	return ApiGetToolkitsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -551,7 +781,7 @@ func (a *ToolkitsApiService) GetToolkits(ctx context.Context) ApiGetToolkitsRequ
 
 // Execute executes the request
 //  @return ListToolkitResponse
-func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListToolkitResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListToolkitResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -559,7 +789,7 @@ func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListT
 		localVarReturnValue  *ListToolkitResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.GetToolkits")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.GetToolkits")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -571,13 +801,16 @@ func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListT
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -649,7 +882,7 @@ func (a *ToolkitsApiService) GetToolkitsExecute(r ApiGetToolkitsRequest) (*ListT
 
 type ApiSearchToolkitsRequest struct {
 	ctx context.Context
-	ApiService *ToolkitsApiService
+	ApiService *ToolkitsAPIService
 	limit *int32
 	cursor *string
 	sort *string
@@ -690,7 +923,7 @@ SearchToolkits Search for toolkits.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchToolkitsRequest
 */
-func (a *ToolkitsApiService) SearchToolkits(ctx context.Context) ApiSearchToolkitsRequest {
+func (a *ToolkitsAPIService) SearchToolkits(ctx context.Context) ApiSearchToolkitsRequest {
 	return ApiSearchToolkitsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -699,7 +932,7 @@ func (a *ToolkitsApiService) SearchToolkits(ctx context.Context) ApiSearchToolki
 
 // Execute executes the request
 //  @return SearchToolkitResponse
-func (a *ToolkitsApiService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (*SearchToolkitResponse, *http.Response, error) {
+func (a *ToolkitsAPIService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (*SearchToolkitResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -707,7 +940,7 @@ func (a *ToolkitsApiService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (
 		localVarReturnValue  *SearchToolkitResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsApiService.SearchToolkits")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.SearchToolkits")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -719,13 +952,16 @@ func (a *ToolkitsApiService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.limit = &defaultValue
 	}
 	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -746,6 +982,153 @@ func (a *ToolkitsApiService) SearchToolkitsExecute(r ApiSearchToolkitsRequest) (
 	}
 	// body params
 	localVarPostBody = r.searchBody
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUploadToolkitRequest struct {
+	ctx context.Context
+	ApiService *ToolkitsAPIService
+	file *os.File
+	engineId *string
+}
+
+// The toolkit file to upload.
+func (r ApiUploadToolkitRequest) File(file *os.File) ApiUploadToolkitRequest {
+	r.file = file
+	return r
+}
+
+// ID or name of the registered engine to which toolkit needs to be uploaded.
+func (r ApiUploadToolkitRequest) EngineId(engineId string) ApiUploadToolkitRequest {
+	r.engineId = &engineId
+	return r
+}
+
+func (r ApiUploadToolkitRequest) Execute() (*ToolkitUploadJobResponse, *http.Response, error) {
+	return r.ApiService.UploadToolkitExecute(r)
+}
+
+/*
+UploadToolkit Upload toolkit to engines.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUploadToolkitRequest
+*/
+func (a *ToolkitsAPIService) UploadToolkit(ctx context.Context) ApiUploadToolkitRequest {
+	return ApiUploadToolkitRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ToolkitUploadJobResponse
+func (a *ToolkitsAPIService) UploadToolkitExecute(r ApiUploadToolkitRequest) (*ToolkitUploadJobResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ToolkitUploadJobResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ToolkitsAPIService.UploadToolkit")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/toolkits/upload"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.file == nil {
+		return localVarReturnValue, nil, reportError("file is required and must be specified")
+	}
+	if r.engineId == nil {
+		return localVarReturnValue, nil, reportError("engineId is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	var fileLocalVarFormFileName string
+	var fileLocalVarFileName     string
+	var fileLocalVarFileBytes    []byte
+
+	fileLocalVarFormFileName = "file"
+	fileLocalVarFile := r.file
+
+	if fileLocalVarFile != nil {
+		fbs, _ := io.ReadAll(fileLocalVarFile)
+
+		fileLocalVarFileBytes = fbs
+		fileLocalVarFileName = fileLocalVarFile.Name()
+		fileLocalVarFile.Close()
+		formFiles = append(formFiles, formFile{fileBytes: fileLocalVarFileBytes, fileName: fileLocalVarFileName, formFileName: fileLocalVarFormFileName})
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "engine_id", r.engineId, "", "")
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
