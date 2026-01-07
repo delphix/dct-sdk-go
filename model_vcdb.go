@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -25,6 +25,8 @@ type VCDB struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this vCDB.
 	Name NullableString `json:"name,omitempty"`
+	// The container description of this virtual CDB.
+	Description *string `json:"description,omitempty"`
 	// The name of the container database in the Oracle DBMS.
 	DatabaseName *string `json:"database_name,omitempty"`
 	// The namespace id of this vCDB.
@@ -86,6 +88,17 @@ type VCDB struct {
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	CustomEnvVars []OracleCustomEnvVar `json:"custom_env_vars,omitempty"`
 	ActiveInstances []OracleActiveInstance `json:"active_instances,omitempty"`
+	// The NFS version that was last used to mount this source.\"
+	NfsVersion *int32 `json:"nfs_version,omitempty"`
+	NfsVersionReason *NfsVersionReasonEnum `json:"nfs_version_reason,omitempty"`
+	// Flag indicating whether the data transfer is encrypted or not.
+	NfsEncryptionEnabled *bool `json:"nfs_encryption_enabled,omitempty"`
+	// The environment user reference.
+	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
+	// The database template ID for this Virtual CDB.
+	DbTemplateId NullableString `json:"db_template_id,omitempty"`
+	// Name of the Database Template.
+	DbTemplateName NullableString `json:"db_template_name,omitempty"`
 }
 
 // NewVCDB instantiates a new VCDB object
@@ -177,6 +190,38 @@ func (o *VCDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *VCDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *VCDB) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *VCDB) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *VCDB) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
@@ -1368,6 +1413,218 @@ func (o *VCDB) SetActiveInstances(v []OracleActiveInstance) {
 	o.ActiveInstances = v
 }
 
+// GetNfsVersion returns the NfsVersion field value if set, zero value otherwise.
+func (o *VCDB) GetNfsVersion() int32 {
+	if o == nil || IsNil(o.NfsVersion) {
+		var ret int32
+		return ret
+	}
+	return *o.NfsVersion
+}
+
+// GetNfsVersionOk returns a tuple with the NfsVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetNfsVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.NfsVersion) {
+		return nil, false
+	}
+	return o.NfsVersion, true
+}
+
+// HasNfsVersion returns a boolean if a field has been set.
+func (o *VCDB) HasNfsVersion() bool {
+	if o != nil && !IsNil(o.NfsVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersion gets a reference to the given int32 and assigns it to the NfsVersion field.
+func (o *VCDB) SetNfsVersion(v int32) {
+	o.NfsVersion = &v
+}
+
+// GetNfsVersionReason returns the NfsVersionReason field value if set, zero value otherwise.
+func (o *VCDB) GetNfsVersionReason() NfsVersionReasonEnum {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		var ret NfsVersionReasonEnum
+		return ret
+	}
+	return *o.NfsVersionReason
+}
+
+// GetNfsVersionReasonOk returns a tuple with the NfsVersionReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetNfsVersionReasonOk() (*NfsVersionReasonEnum, bool) {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		return nil, false
+	}
+	return o.NfsVersionReason, true
+}
+
+// HasNfsVersionReason returns a boolean if a field has been set.
+func (o *VCDB) HasNfsVersionReason() bool {
+	if o != nil && !IsNil(o.NfsVersionReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersionReason gets a reference to the given NfsVersionReasonEnum and assigns it to the NfsVersionReason field.
+func (o *VCDB) SetNfsVersionReason(v NfsVersionReasonEnum) {
+	o.NfsVersionReason = &v
+}
+
+// GetNfsEncryptionEnabled returns the NfsEncryptionEnabled field value if set, zero value otherwise.
+func (o *VCDB) GetNfsEncryptionEnabled() bool {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.NfsEncryptionEnabled
+}
+
+// GetNfsEncryptionEnabledOk returns a tuple with the NfsEncryptionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetNfsEncryptionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		return nil, false
+	}
+	return o.NfsEncryptionEnabled, true
+}
+
+// HasNfsEncryptionEnabled returns a boolean if a field has been set.
+func (o *VCDB) HasNfsEncryptionEnabled() bool {
+	if o != nil && !IsNil(o.NfsEncryptionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsEncryptionEnabled gets a reference to the given bool and assigns it to the NfsEncryptionEnabled field.
+func (o *VCDB) SetNfsEncryptionEnabled(v bool) {
+	o.NfsEncryptionEnabled = &v
+}
+
+// GetEnvironmentUserRef returns the EnvironmentUserRef field value if set, zero value otherwise.
+func (o *VCDB) GetEnvironmentUserRef() string {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserRef
+}
+
+// GetEnvironmentUserRefOk returns a tuple with the EnvironmentUserRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VCDB) GetEnvironmentUserRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		return nil, false
+	}
+	return o.EnvironmentUserRef, true
+}
+
+// HasEnvironmentUserRef returns a boolean if a field has been set.
+func (o *VCDB) HasEnvironmentUserRef() bool {
+	if o != nil && !IsNil(o.EnvironmentUserRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserRef gets a reference to the given string and assigns it to the EnvironmentUserRef field.
+func (o *VCDB) SetEnvironmentUserRef(v string) {
+	o.EnvironmentUserRef = &v
+}
+
+// GetDbTemplateId returns the DbTemplateId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VCDB) GetDbTemplateId() string {
+	if o == nil || IsNil(o.DbTemplateId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DbTemplateId.Get()
+}
+
+// GetDbTemplateIdOk returns a tuple with the DbTemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VCDB) GetDbTemplateIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DbTemplateId.Get(), o.DbTemplateId.IsSet()
+}
+
+// HasDbTemplateId returns a boolean if a field has been set.
+func (o *VCDB) HasDbTemplateId() bool {
+	if o != nil && o.DbTemplateId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDbTemplateId gets a reference to the given NullableString and assigns it to the DbTemplateId field.
+func (o *VCDB) SetDbTemplateId(v string) {
+	o.DbTemplateId.Set(&v)
+}
+// SetDbTemplateIdNil sets the value for DbTemplateId to be an explicit nil
+func (o *VCDB) SetDbTemplateIdNil() {
+	o.DbTemplateId.Set(nil)
+}
+
+// UnsetDbTemplateId ensures that no value is present for DbTemplateId, not even an explicit nil
+func (o *VCDB) UnsetDbTemplateId() {
+	o.DbTemplateId.Unset()
+}
+
+// GetDbTemplateName returns the DbTemplateName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VCDB) GetDbTemplateName() string {
+	if o == nil || IsNil(o.DbTemplateName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DbTemplateName.Get()
+}
+
+// GetDbTemplateNameOk returns a tuple with the DbTemplateName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VCDB) GetDbTemplateNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DbTemplateName.Get(), o.DbTemplateName.IsSet()
+}
+
+// HasDbTemplateName returns a boolean if a field has been set.
+func (o *VCDB) HasDbTemplateName() bool {
+	if o != nil && o.DbTemplateName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDbTemplateName gets a reference to the given NullableString and assigns it to the DbTemplateName field.
+func (o *VCDB) SetDbTemplateName(v string) {
+	o.DbTemplateName.Set(&v)
+}
+// SetDbTemplateNameNil sets the value for DbTemplateName to be an explicit nil
+func (o *VCDB) SetDbTemplateNameNil() {
+	o.DbTemplateName.Set(nil)
+}
+
+// UnsetDbTemplateName ensures that no value is present for DbTemplateName, not even an explicit nil
+func (o *VCDB) UnsetDbTemplateName() {
+	o.DbTemplateName.Unset()
+}
+
 func (o VCDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1383,6 +1640,9 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	if !IsNil(o.DatabaseName) {
 		toSerialize["database_name"] = o.DatabaseName
@@ -1485,6 +1745,24 @@ func (o VCDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ActiveInstances) {
 		toSerialize["active_instances"] = o.ActiveInstances
+	}
+	if !IsNil(o.NfsVersion) {
+		toSerialize["nfs_version"] = o.NfsVersion
+	}
+	if !IsNil(o.NfsVersionReason) {
+		toSerialize["nfs_version_reason"] = o.NfsVersionReason
+	}
+	if !IsNil(o.NfsEncryptionEnabled) {
+		toSerialize["nfs_encryption_enabled"] = o.NfsEncryptionEnabled
+	}
+	if !IsNil(o.EnvironmentUserRef) {
+		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
+	}
+	if o.DbTemplateId.IsSet() {
+		toSerialize["db_template_id"] = o.DbTemplateId.Get()
+	}
+	if o.DbTemplateName.IsSet() {
+		toSerialize["db_template_name"] = o.DbTemplateName.Get()
 	}
 	return toSerialize, nil
 }

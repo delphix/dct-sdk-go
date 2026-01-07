@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -22,6 +22,8 @@ var _ MappedNullable = &UpdateVDBParameters{}
 type UpdateVDBParameters struct {
 	// The unique name of the VDB within a group.
 	Name *string `json:"name,omitempty"`
+	// The container description of this VDB.
+	Description *string `json:"description,omitempty"`
 	// The username of the database user (Oracle, ASE Only).
 	DbUsername *string `json:"db_username,omitempty"`
 	// The password of the database user (Oracle, ASE Only).
@@ -63,7 +65,7 @@ type UpdateVDBParameters struct {
 	TargetVcdbTdeKeystorePath *string `json:"target_vcdb_tde_keystore_path,omitempty"`
 	// The password for the Transparent Data Encryption keystore associated with the CDB. (Oracle Multitenant Only)
 	CdbTdeKeystorePassword *string `json:"cdb_tde_keystore_password,omitempty"`
-	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host.  Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore.  (Oracle Multitenant Only) 
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore. (Oracle Multitenant Only) 
 	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
 	// The password of the parent PDB keystore. (Oracle Multitenant Only)
 	ParentPdbTdeKeystorePassword *string `json:"parent_pdb_tde_keystore_password,omitempty"`
@@ -142,6 +144,38 @@ func (o *UpdateVDBParameters) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *UpdateVDBParameters) SetName(v string) {
 	o.Name = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *UpdateVDBParameters) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVDBParameters) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *UpdateVDBParameters) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *UpdateVDBParameters) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetDbUsername returns the DbUsername field value if set, zero value otherwise.
@@ -1244,6 +1278,9 @@ func (o UpdateVDBParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	if !IsNil(o.DbUsername) {
 		toSerialize["db_username"] = o.DbUsername

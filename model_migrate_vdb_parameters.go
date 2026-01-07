@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,10 @@ type MigrateVDBParameters struct {
 	RepositoryId *string `json:"repository_id,omitempty"`
 	// Id of the container database.
 	CdbId *string `json:"cdb_id,omitempty"`
+	// The cluster node ids, name or addresses for this migrate operation (Oracle RAC Only).
+	ClusterNodeIds []string `json:"cluster_node_ids,omitempty"`
+	// The cluster node instances details for this migrate operation(Oracle RAC Only).This property is mutually exclusive with cluster_node_ids.
+	ClusterNodeInstances []ClusterNodeInstance `json:"cluster_node_instances,omitempty"`
 }
 
 // NewMigrateVDBParameters instantiates a new MigrateVDBParameters object
@@ -175,6 +179,70 @@ func (o *MigrateVDBParameters) SetCdbId(v string) {
 	o.CdbId = &v
 }
 
+// GetClusterNodeIds returns the ClusterNodeIds field value if set, zero value otherwise.
+func (o *MigrateVDBParameters) GetClusterNodeIds() []string {
+	if o == nil || IsNil(o.ClusterNodeIds) {
+		var ret []string
+		return ret
+	}
+	return o.ClusterNodeIds
+}
+
+// GetClusterNodeIdsOk returns a tuple with the ClusterNodeIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MigrateVDBParameters) GetClusterNodeIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.ClusterNodeIds) {
+		return nil, false
+	}
+	return o.ClusterNodeIds, true
+}
+
+// HasClusterNodeIds returns a boolean if a field has been set.
+func (o *MigrateVDBParameters) HasClusterNodeIds() bool {
+	if o != nil && !IsNil(o.ClusterNodeIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterNodeIds gets a reference to the given []string and assigns it to the ClusterNodeIds field.
+func (o *MigrateVDBParameters) SetClusterNodeIds(v []string) {
+	o.ClusterNodeIds = v
+}
+
+// GetClusterNodeInstances returns the ClusterNodeInstances field value if set, zero value otherwise.
+func (o *MigrateVDBParameters) GetClusterNodeInstances() []ClusterNodeInstance {
+	if o == nil || IsNil(o.ClusterNodeInstances) {
+		var ret []ClusterNodeInstance
+		return ret
+	}
+	return o.ClusterNodeInstances
+}
+
+// GetClusterNodeInstancesOk returns a tuple with the ClusterNodeInstances field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MigrateVDBParameters) GetClusterNodeInstancesOk() ([]ClusterNodeInstance, bool) {
+	if o == nil || IsNil(o.ClusterNodeInstances) {
+		return nil, false
+	}
+	return o.ClusterNodeInstances, true
+}
+
+// HasClusterNodeInstances returns a boolean if a field has been set.
+func (o *MigrateVDBParameters) HasClusterNodeInstances() bool {
+	if o != nil && !IsNil(o.ClusterNodeInstances) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterNodeInstances gets a reference to the given []ClusterNodeInstance and assigns it to the ClusterNodeInstances field.
+func (o *MigrateVDBParameters) SetClusterNodeInstances(v []ClusterNodeInstance) {
+	o.ClusterNodeInstances = v
+}
+
 func (o MigrateVDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -196,6 +264,12 @@ func (o MigrateVDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CdbId) {
 		toSerialize["cdb_id"] = o.CdbId
+	}
+	if !IsNil(o.ClusterNodeIds) {
+		toSerialize["cluster_node_ids"] = o.ClusterNodeIds
+	}
+	if !IsNil(o.ClusterNodeInstances) {
+		toSerialize["cluster_node_instances"] = o.ClusterNodeInstances
 	}
 	return toSerialize, nil
 }

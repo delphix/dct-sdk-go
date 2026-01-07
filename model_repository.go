@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -78,6 +78,14 @@ type Repository struct {
 	Discovered *bool `json:"discovered,omitempty"`
 	// The list of listeners belonging to this repository.
 	MssqlListeners []MSSQLClusterListener `json:"mssql_listeners,omitempty"`
+	// The username of the ASE instance database.
+	DatabaseUsername *string `json:"database_username,omitempty"`
+	// The Kerberos Service Principal Name (SPN) of the database.
+	ServicePrincipalName *string `json:"service_principal_name,omitempty"`
+	// The path to the isql binary to use for this SAP ASE instance.
+	IsqlPath *string `json:"isql_path,omitempty"`
+	// True if SAP ASE instance is TLS/SSL enabled.
+	AseTlsEnabled *bool `json:"ase_tls_enabled,omitempty"`
 }
 
 // NewRepository instantiates a new Repository object
@@ -1025,6 +1033,134 @@ func (o *Repository) SetMssqlListeners(v []MSSQLClusterListener) {
 	o.MssqlListeners = v
 }
 
+// GetDatabaseUsername returns the DatabaseUsername field value if set, zero value otherwise.
+func (o *Repository) GetDatabaseUsername() string {
+	if o == nil || IsNil(o.DatabaseUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUsername
+}
+
+// GetDatabaseUsernameOk returns a tuple with the DatabaseUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetDatabaseUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUsername) {
+		return nil, false
+	}
+	return o.DatabaseUsername, true
+}
+
+// HasDatabaseUsername returns a boolean if a field has been set.
+func (o *Repository) HasDatabaseUsername() bool {
+	if o != nil && !IsNil(o.DatabaseUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUsername gets a reference to the given string and assigns it to the DatabaseUsername field.
+func (o *Repository) SetDatabaseUsername(v string) {
+	o.DatabaseUsername = &v
+}
+
+// GetServicePrincipalName returns the ServicePrincipalName field value if set, zero value otherwise.
+func (o *Repository) GetServicePrincipalName() string {
+	if o == nil || IsNil(o.ServicePrincipalName) {
+		var ret string
+		return ret
+	}
+	return *o.ServicePrincipalName
+}
+
+// GetServicePrincipalNameOk returns a tuple with the ServicePrincipalName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetServicePrincipalNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ServicePrincipalName) {
+		return nil, false
+	}
+	return o.ServicePrincipalName, true
+}
+
+// HasServicePrincipalName returns a boolean if a field has been set.
+func (o *Repository) HasServicePrincipalName() bool {
+	if o != nil && !IsNil(o.ServicePrincipalName) {
+		return true
+	}
+
+	return false
+}
+
+// SetServicePrincipalName gets a reference to the given string and assigns it to the ServicePrincipalName field.
+func (o *Repository) SetServicePrincipalName(v string) {
+	o.ServicePrincipalName = &v
+}
+
+// GetIsqlPath returns the IsqlPath field value if set, zero value otherwise.
+func (o *Repository) GetIsqlPath() string {
+	if o == nil || IsNil(o.IsqlPath) {
+		var ret string
+		return ret
+	}
+	return *o.IsqlPath
+}
+
+// GetIsqlPathOk returns a tuple with the IsqlPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetIsqlPathOk() (*string, bool) {
+	if o == nil || IsNil(o.IsqlPath) {
+		return nil, false
+	}
+	return o.IsqlPath, true
+}
+
+// HasIsqlPath returns a boolean if a field has been set.
+func (o *Repository) HasIsqlPath() bool {
+	if o != nil && !IsNil(o.IsqlPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsqlPath gets a reference to the given string and assigns it to the IsqlPath field.
+func (o *Repository) SetIsqlPath(v string) {
+	o.IsqlPath = &v
+}
+
+// GetAseTlsEnabled returns the AseTlsEnabled field value if set, zero value otherwise.
+func (o *Repository) GetAseTlsEnabled() bool {
+	if o == nil || IsNil(o.AseTlsEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.AseTlsEnabled
+}
+
+// GetAseTlsEnabledOk returns a tuple with the AseTlsEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Repository) GetAseTlsEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.AseTlsEnabled) {
+		return nil, false
+	}
+	return o.AseTlsEnabled, true
+}
+
+// HasAseTlsEnabled returns a boolean if a field has been set.
+func (o *Repository) HasAseTlsEnabled() bool {
+	if o != nil && !IsNil(o.AseTlsEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseTlsEnabled gets a reference to the given bool and assigns it to the AseTlsEnabled field.
+func (o *Repository) SetAseTlsEnabled(v bool) {
+	o.AseTlsEnabled = &v
+}
+
 func (o Repository) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1121,6 +1257,18 @@ func (o Repository) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MssqlListeners) {
 		toSerialize["mssql_listeners"] = o.MssqlListeners
+	}
+	if !IsNil(o.DatabaseUsername) {
+		toSerialize["database_username"] = o.DatabaseUsername
+	}
+	if !IsNil(o.ServicePrincipalName) {
+		toSerialize["service_principal_name"] = o.ServicePrincipalName
+	}
+	if !IsNil(o.IsqlPath) {
+		toSerialize["isql_path"] = o.IsqlPath
+	}
+	if !IsNil(o.AseTlsEnabled) {
+		toSerialize["ase_tls_enabled"] = o.AseTlsEnabled
 	}
 	return toSerialize, nil
 }

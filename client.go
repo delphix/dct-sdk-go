@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Delphix DCT API API v3.23.0
+// APIClient manages communication with the Delphix DCT API API v3.25.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -92,6 +92,8 @@ type APIClient struct {
 
 	ExecutionsAPI *ExecutionsAPIService
 
+	FileMappingAPI *FileMappingAPIService
+
 	GroupsAPI *GroupsAPIService
 
 	HeldSpaceAPI *HeldSpaceAPIService
@@ -124,6 +126,14 @@ type APIClient struct {
 
 	NetworkPerformanceToolAPI *NetworkPerformanceToolAPIService
 
+	PaaSDatabasesAPI *PaaSDatabasesAPIService
+
+	PaaSEnvironmentsAPI *PaaSEnvironmentsAPIService
+
+	PaaSPluginsAPI *PaaSPluginsAPIService
+
+	PaaSSnapshotsAPI *PaaSSnapshotsAPIService
+
 	PasswordVaultsAPI *PasswordVaultsAPIService
 
 	ReplicationAPI *ReplicationAPIService
@@ -137,6 +147,8 @@ type APIClient struct {
 	SnapshotsAPI *SnapshotsAPIService
 
 	SourcesAPI *SourcesAPIService
+
+	StagingCdbsAPI *StagingCdbsAPIService
 
 	StagingSourcesAPI *StagingSourcesAPIService
 
@@ -202,6 +214,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DiscoveryPoliciesAPI = (*DiscoveryPoliciesAPIService)(&c.common)
 	c.EnvironmentsAPI = (*EnvironmentsAPIService)(&c.common)
 	c.ExecutionsAPI = (*ExecutionsAPIService)(&c.common)
+	c.FileMappingAPI = (*FileMappingAPIService)(&c.common)
 	c.GroupsAPI = (*GroupsAPIService)(&c.common)
 	c.HeldSpaceAPI = (*HeldSpaceAPIService)(&c.common)
 	c.HookTemplatesAPI = (*HookTemplatesAPIService)(&c.common)
@@ -218,6 +231,10 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.MaskingJobsAPI = (*MaskingJobsAPIService)(&c.common)
 	c.NamespaceAPI = (*NamespaceAPIService)(&c.common)
 	c.NetworkPerformanceToolAPI = (*NetworkPerformanceToolAPIService)(&c.common)
+	c.PaaSDatabasesAPI = (*PaaSDatabasesAPIService)(&c.common)
+	c.PaaSEnvironmentsAPI = (*PaaSEnvironmentsAPIService)(&c.common)
+	c.PaaSPluginsAPI = (*PaaSPluginsAPIService)(&c.common)
+	c.PaaSSnapshotsAPI = (*PaaSSnapshotsAPIService)(&c.common)
 	c.PasswordVaultsAPI = (*PasswordVaultsAPIService)(&c.common)
 	c.ReplicationAPI = (*ReplicationAPIService)(&c.common)
 	c.ReportingAPI = (*ReportingAPIService)(&c.common)
@@ -225,6 +242,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SamlLoginAPI = (*SamlLoginAPIService)(&c.common)
 	c.SnapshotsAPI = (*SnapshotsAPIService)(&c.common)
 	c.SourcesAPI = (*SourcesAPIService)(&c.common)
+	c.StagingCdbsAPI = (*StagingCdbsAPIService)(&c.common)
 	c.StagingSourcesAPI = (*StagingSourcesAPIService)(&c.common)
 	c.StorageUsageAPI = (*StorageUsageAPIService)(&c.common)
 	c.TagsAPI = (*TagsAPIService)(&c.common)

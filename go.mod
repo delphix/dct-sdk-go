@@ -1,7 +1,6 @@
-module github.com/delphix/dct-sdk-go/v25
+module github.com/delphix/dct-sdk-go
 
-go 1.25
-// uncomment this to test after generation
-// replace local/dct-sdk-go => .
+go 1.22.5
+replace local/dct-sdk-go => .
 
-// require local/dct-sdk-go v0.0.0-00010101000000-000000000000git 
+require local/dct-sdk-go v1.0.0

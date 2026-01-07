@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -85,8 +85,7 @@ type OracleStagingPushDSourceLinkSourceParameters struct {
 	StagingContainerDatabaseReference *string `json:"staging_container_database_reference,omitempty"`
 	// Operations to perform after syncing a created dSource and before running the LogSync.
 	OpsPreLogSync []SourceOperation `json:"ops_pre_log_sync,omitempty"`
-	// The type of TDE keystore configuration to use for the staging database.
-	TdeKeystoreConfigType *string `json:"tde_keystore_config_type,omitempty"`
+	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 	// The template ID of the target Oracle Staging Push dSource.
 	TemplateId *string `json:"template_id,omitempty"`
 }
@@ -1087,9 +1086,9 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) SetOpsPreLogSync(v []Sour
 }
 
 // GetTdeKeystoreConfigType returns the TdeKeystoreConfigType field value if set, zero value otherwise.
-func (o *OracleStagingPushDSourceLinkSourceParameters) GetTdeKeystoreConfigType() string {
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetTdeKeystoreConfigType() OracleTdeKeystoreConfigTypeEnum {
 	if o == nil || IsNil(o.TdeKeystoreConfigType) {
-		var ret string
+		var ret OracleTdeKeystoreConfigTypeEnum
 		return ret
 	}
 	return *o.TdeKeystoreConfigType
@@ -1097,7 +1096,7 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) GetTdeKeystoreConfigType(
 
 // GetTdeKeystoreConfigTypeOk returns a tuple with the TdeKeystoreConfigType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OracleStagingPushDSourceLinkSourceParameters) GetTdeKeystoreConfigTypeOk() (*string, bool) {
+func (o *OracleStagingPushDSourceLinkSourceParameters) GetTdeKeystoreConfigTypeOk() (*OracleTdeKeystoreConfigTypeEnum, bool) {
 	if o == nil || IsNil(o.TdeKeystoreConfigType) {
 		return nil, false
 	}
@@ -1113,8 +1112,8 @@ func (o *OracleStagingPushDSourceLinkSourceParameters) HasTdeKeystoreConfigType(
 	return false
 }
 
-// SetTdeKeystoreConfigType gets a reference to the given string and assigns it to the TdeKeystoreConfigType field.
-func (o *OracleStagingPushDSourceLinkSourceParameters) SetTdeKeystoreConfigType(v string) {
+// SetTdeKeystoreConfigType gets a reference to the given OracleTdeKeystoreConfigTypeEnum and assigns it to the TdeKeystoreConfigType field.
+func (o *OracleStagingPushDSourceLinkSourceParameters) SetTdeKeystoreConfigType(v OracleTdeKeystoreConfigTypeEnum) {
 	o.TdeKeystoreConfigType = &v
 }
 

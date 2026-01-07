@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -35,12 +35,6 @@ type MaskingFileUpload struct {
 	CreatedDate *time.Time `json:"created_date,omitempty"`
 	// A reference to this file.
 	FileReferenceId *string `json:"file_reference_id,omitempty"`
-	// file uuid of the corresponding file on the source masking engine.
-	EngineFileUuid *string `json:"engine_file_uuid,omitempty"`
-	// The name of the origin engine that this file belongs to.
-	EngineName *string `json:"engine_name,omitempty"`
-	// The id of the origin engine that this file belongs to.
-	EngineId *string `json:"engine_id,omitempty"`
 	// Tags of this file.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -286,102 +280,6 @@ func (o *MaskingFileUpload) SetFileReferenceId(v string) {
 	o.FileReferenceId = &v
 }
 
-// GetEngineFileUuid returns the EngineFileUuid field value if set, zero value otherwise.
-func (o *MaskingFileUpload) GetEngineFileUuid() string {
-	if o == nil || IsNil(o.EngineFileUuid) {
-		var ret string
-		return ret
-	}
-	return *o.EngineFileUuid
-}
-
-// GetEngineFileUuidOk returns a tuple with the EngineFileUuid field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MaskingFileUpload) GetEngineFileUuidOk() (*string, bool) {
-	if o == nil || IsNil(o.EngineFileUuid) {
-		return nil, false
-	}
-	return o.EngineFileUuid, true
-}
-
-// HasEngineFileUuid returns a boolean if a field has been set.
-func (o *MaskingFileUpload) HasEngineFileUuid() bool {
-	if o != nil && !IsNil(o.EngineFileUuid) {
-		return true
-	}
-
-	return false
-}
-
-// SetEngineFileUuid gets a reference to the given string and assigns it to the EngineFileUuid field.
-func (o *MaskingFileUpload) SetEngineFileUuid(v string) {
-	o.EngineFileUuid = &v
-}
-
-// GetEngineName returns the EngineName field value if set, zero value otherwise.
-func (o *MaskingFileUpload) GetEngineName() string {
-	if o == nil || IsNil(o.EngineName) {
-		var ret string
-		return ret
-	}
-	return *o.EngineName
-}
-
-// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MaskingFileUpload) GetEngineNameOk() (*string, bool) {
-	if o == nil || IsNil(o.EngineName) {
-		return nil, false
-	}
-	return o.EngineName, true
-}
-
-// HasEngineName returns a boolean if a field has been set.
-func (o *MaskingFileUpload) HasEngineName() bool {
-	if o != nil && !IsNil(o.EngineName) {
-		return true
-	}
-
-	return false
-}
-
-// SetEngineName gets a reference to the given string and assigns it to the EngineName field.
-func (o *MaskingFileUpload) SetEngineName(v string) {
-	o.EngineName = &v
-}
-
-// GetEngineId returns the EngineId field value if set, zero value otherwise.
-func (o *MaskingFileUpload) GetEngineId() string {
-	if o == nil || IsNil(o.EngineId) {
-		var ret string
-		return ret
-	}
-	return *o.EngineId
-}
-
-// GetEngineIdOk returns a tuple with the EngineId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MaskingFileUpload) GetEngineIdOk() (*string, bool) {
-	if o == nil || IsNil(o.EngineId) {
-		return nil, false
-	}
-	return o.EngineId, true
-}
-
-// HasEngineId returns a boolean if a field has been set.
-func (o *MaskingFileUpload) HasEngineId() bool {
-	if o != nil && !IsNil(o.EngineId) {
-		return true
-	}
-
-	return false
-}
-
-// SetEngineId gets a reference to the given string and assigns it to the EngineId field.
-func (o *MaskingFileUpload) SetEngineId(v string) {
-	o.EngineId = &v
-}
-
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *MaskingFileUpload) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -444,15 +342,6 @@ func (o MaskingFileUpload) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.FileReferenceId) {
 		toSerialize["file_reference_id"] = o.FileReferenceId
-	}
-	if !IsNil(o.EngineFileUuid) {
-		toSerialize["engine_file_uuid"] = o.EngineFileUuid
-	}
-	if !IsNil(o.EngineName) {
-		toSerialize["engine_name"] = o.EngineName
-	}
-	if !IsNil(o.EngineId) {
-		toSerialize["engine_id"] = o.EngineId
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

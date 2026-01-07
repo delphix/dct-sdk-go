@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -22,8 +22,6 @@ var _ MappedNullable = &OracleAttachDSourceParameters{}
 
 // OracleAttachDSourceParameters struct for OracleAttachDSourceParameters
 type OracleAttachDSourceParameters struct {
-	// Id of the source to attach.
-	SourceId string `json:"source_id"`
 	// Boolean value indicates whether LEVEL-based incremental backups can be used on the source database.
 	BackupLevelEnabled *bool `json:"backup_level_enabled,omitempty"`
 	// Bandwidth limit (MB/s) for SnapSync and LogSync network traffic. A value of 0 means no limit.
@@ -56,6 +54,8 @@ type OracleAttachDSourceParameters struct {
 	OracleFallbackCredentials *string `json:"oracle_fallback_credentials,omitempty"`
 	// Number of parallel channels to use.
 	RmanChannels *int32 `json:"rman_channels,omitempty"`
+	// Id of the source to attach.
+	SourceId string `json:"source_id"`
 }
 
 type _OracleAttachDSourceParameters OracleAttachDSourceParameters
@@ -86,6 +86,7 @@ func NewOracleAttachDSourceParameters(sourceId string) *OracleAttachDSourceParam
 	this.NumberOfConnections = &numberOfConnections
 	var rmanChannels int32 = 2
 	this.RmanChannels = &rmanChannels
+	this.SourceId = sourceId
 	return &this
 }
 
@@ -115,30 +116,6 @@ func NewOracleAttachDSourceParametersWithDefaults() *OracleAttachDSourceParamete
 	var rmanChannels int32 = 2
 	this.RmanChannels = &rmanChannels
 	return &this
-}
-
-// GetSourceId returns the SourceId field value
-func (o *OracleAttachDSourceParameters) GetSourceId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.SourceId
-}
-
-// GetSourceIdOk returns a tuple with the SourceId field value
-// and a boolean to check if the value has been set.
-func (o *OracleAttachDSourceParameters) GetSourceIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.SourceId, true
-}
-
-// SetSourceId sets field value
-func (o *OracleAttachDSourceParameters) SetSourceId(v string) {
-	o.SourceId = v
 }
 
 // GetBackupLevelEnabled returns the BackupLevelEnabled field value if set, zero value otherwise.
@@ -653,6 +630,30 @@ func (o *OracleAttachDSourceParameters) SetRmanChannels(v int32) {
 	o.RmanChannels = &v
 }
 
+// GetSourceId returns the SourceId field value
+func (o *OracleAttachDSourceParameters) GetSourceId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.SourceId
+}
+
+// GetSourceIdOk returns a tuple with the SourceId field value
+// and a boolean to check if the value has been set.
+func (o *OracleAttachDSourceParameters) GetSourceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.SourceId, true
+}
+
+// SetSourceId sets field value
+func (o *OracleAttachDSourceParameters) SetSourceId(v string) {
+	o.SourceId = v
+}
+
 func (o OracleAttachDSourceParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -663,7 +664,6 @@ func (o OracleAttachDSourceParameters) MarshalJSON() ([]byte, error) {
 
 func (o OracleAttachDSourceParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["source_id"] = o.SourceId
 	if !IsNil(o.BackupLevelEnabled) {
 		toSerialize["backup_level_enabled"] = o.BackupLevelEnabled
 	}
@@ -712,6 +712,7 @@ func (o OracleAttachDSourceParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RmanChannels) {
 		toSerialize["rman_channels"] = o.RmanChannels
 	}
+	toSerialize["source_id"] = o.SourceId
 	return toSerialize, nil
 }
 

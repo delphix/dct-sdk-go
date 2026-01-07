@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,7 @@ type DataClassAlgorithmInfo struct {
 	Id *string `json:"id,omitempty"`
 	// The algorithm name.
 	Name *string `json:"name,omitempty"`
+	MaskingType *MaskingTypeEnum `json:"masking_type,omitempty"`
 }
 
 // NewDataClassAlgorithmInfo instantiates a new DataClassAlgorithmInfo object
@@ -107,6 +108,38 @@ func (o *DataClassAlgorithmInfo) SetName(v string) {
 	o.Name = &v
 }
 
+// GetMaskingType returns the MaskingType field value if set, zero value otherwise.
+func (o *DataClassAlgorithmInfo) GetMaskingType() MaskingTypeEnum {
+	if o == nil || IsNil(o.MaskingType) {
+		var ret MaskingTypeEnum
+		return ret
+	}
+	return *o.MaskingType
+}
+
+// GetMaskingTypeOk returns a tuple with the MaskingType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataClassAlgorithmInfo) GetMaskingTypeOk() (*MaskingTypeEnum, bool) {
+	if o == nil || IsNil(o.MaskingType) {
+		return nil, false
+	}
+	return o.MaskingType, true
+}
+
+// HasMaskingType returns a boolean if a field has been set.
+func (o *DataClassAlgorithmInfo) HasMaskingType() bool {
+	if o != nil && !IsNil(o.MaskingType) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaskingType gets a reference to the given MaskingTypeEnum and assigns it to the MaskingType field.
+func (o *DataClassAlgorithmInfo) SetMaskingType(v MaskingTypeEnum) {
+	o.MaskingType = &v
+}
+
 func (o DataClassAlgorithmInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +155,9 @@ func (o DataClassAlgorithmInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.MaskingType) {
+		toSerialize["masking_type"] = o.MaskingType
 	}
 	return toSerialize, nil
 }

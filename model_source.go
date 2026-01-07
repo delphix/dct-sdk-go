@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -36,6 +36,8 @@ type Source struct {
 	DatabaseVersion NullableString `json:"database_version,omitempty"`
 	// A reference to the Environment that hosts this source database.
 	EnvironmentId NullableString `json:"environment_id,omitempty"`
+	// name of environment that hosts this source database.
+	EnvironmentName NullableString `json:"environment_name,omitempty"`
 	// A universal ID that uniquely identifies this source database.
 	DataUuid NullableString `json:"data_uuid,omitempty"`
 	// The IP address of the source's host.
@@ -430,6 +432,48 @@ func (o *Source) SetEnvironmentIdNil() {
 // UnsetEnvironmentId ensures that no value is present for EnvironmentId, not even an explicit nil
 func (o *Source) UnsetEnvironmentId() {
 	o.EnvironmentId.Unset()
+}
+
+// GetEnvironmentName returns the EnvironmentName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Source) GetEnvironmentName() string {
+	if o == nil || IsNil(o.EnvironmentName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentName.Get()
+}
+
+// GetEnvironmentNameOk returns a tuple with the EnvironmentName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Source) GetEnvironmentNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EnvironmentName.Get(), o.EnvironmentName.IsSet()
+}
+
+// HasEnvironmentName returns a boolean if a field has been set.
+func (o *Source) HasEnvironmentName() bool {
+	if o != nil && o.EnvironmentName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentName gets a reference to the given NullableString and assigns it to the EnvironmentName field.
+func (o *Source) SetEnvironmentName(v string) {
+	o.EnvironmentName.Set(&v)
+}
+// SetEnvironmentNameNil sets the value for EnvironmentName to be an explicit nil
+func (o *Source) SetEnvironmentNameNil() {
+	o.EnvironmentName.Set(nil)
+}
+
+// UnsetEnvironmentName ensures that no value is present for EnvironmentName, not even an explicit nil
+func (o *Source) UnsetEnvironmentName() {
+	o.EnvironmentName.Unset()
 }
 
 // GetDataUuid returns the DataUuid field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1432,6 +1476,9 @@ func (o Source) ToMap() (map[string]interface{}, error) {
 	}
 	if o.EnvironmentId.IsSet() {
 		toSerialize["environment_id"] = o.EnvironmentId.Get()
+	}
+	if o.EnvironmentName.IsSet() {
+		toSerialize["environment_name"] = o.EnvironmentName.Get()
 	}
 	if o.DataUuid.IsSet() {
 		toSerialize["data_uuid"] = o.DataUuid.Get()

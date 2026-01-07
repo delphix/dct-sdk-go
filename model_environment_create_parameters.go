@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -82,6 +82,10 @@ type EnvironmentCreateParameters struct {
 	AseDbUsername *string `json:"ase_db_username,omitempty"`
 	// password of the SAP ASE database.
 	AseDbPassword *string `json:"ase_db_password,omitempty"`
+	// True if you want to discover the SAP ASE instances configured with TLS/SSL.
+	AseEnableTls *bool `json:"ase_enable_tls,omitempty"`
+	// Only valid for SAP ASE. Setting it to true will skip the server certificate validation during the SSL handshake. Only set it if you do not want to add the required certificate into the Delphix Engine truststore but still want to use the TLS/SSL-enabled database connection. This is not recommended for a production environment as it is less secure.
+	AseSkipServerCertificateValidation *bool `json:"ase_skip_server_certificate_validation,omitempty"`
 	// The name or reference of the vault from which to read the ASE database credentials.
 	AseDbVault *string `json:"ase_db_vault,omitempty"`
 	// Vault engine name where the credential is stored.
@@ -1092,6 +1096,70 @@ func (o *EnvironmentCreateParameters) SetAseDbPassword(v string) {
 	o.AseDbPassword = &v
 }
 
+// GetAseEnableTls returns the AseEnableTls field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseEnableTls() bool {
+	if o == nil || IsNil(o.AseEnableTls) {
+		var ret bool
+		return ret
+	}
+	return *o.AseEnableTls
+}
+
+// GetAseEnableTlsOk returns a tuple with the AseEnableTls field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseEnableTlsOk() (*bool, bool) {
+	if o == nil || IsNil(o.AseEnableTls) {
+		return nil, false
+	}
+	return o.AseEnableTls, true
+}
+
+// HasAseEnableTls returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseEnableTls() bool {
+	if o != nil && !IsNil(o.AseEnableTls) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseEnableTls gets a reference to the given bool and assigns it to the AseEnableTls field.
+func (o *EnvironmentCreateParameters) SetAseEnableTls(v bool) {
+	o.AseEnableTls = &v
+}
+
+// GetAseSkipServerCertificateValidation returns the AseSkipServerCertificateValidation field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseSkipServerCertificateValidation() bool {
+	if o == nil || IsNil(o.AseSkipServerCertificateValidation) {
+		var ret bool
+		return ret
+	}
+	return *o.AseSkipServerCertificateValidation
+}
+
+// GetAseSkipServerCertificateValidationOk returns a tuple with the AseSkipServerCertificateValidation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseSkipServerCertificateValidationOk() (*bool, bool) {
+	if o == nil || IsNil(o.AseSkipServerCertificateValidation) {
+		return nil, false
+	}
+	return o.AseSkipServerCertificateValidation, true
+}
+
+// HasAseSkipServerCertificateValidation returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseSkipServerCertificateValidation() bool {
+	if o != nil && !IsNil(o.AseSkipServerCertificateValidation) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseSkipServerCertificateValidation gets a reference to the given bool and assigns it to the AseSkipServerCertificateValidation field.
+func (o *EnvironmentCreateParameters) SetAseSkipServerCertificateValidation(v bool) {
+	o.AseSkipServerCertificateValidation = &v
+}
+
 // GetAseDbVault returns the AseDbVault field value if set, zero value otherwise.
 func (o *EnvironmentCreateParameters) GetAseDbVault() string {
 	if o == nil || IsNil(o.AseDbVault) {
@@ -1793,6 +1861,12 @@ func (o EnvironmentCreateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AseDbPassword) {
 		toSerialize["ase_db_password"] = o.AseDbPassword
+	}
+	if !IsNil(o.AseEnableTls) {
+		toSerialize["ase_enable_tls"] = o.AseEnableTls
+	}
+	if !IsNil(o.AseSkipServerCertificateValidation) {
+		toSerialize["ase_skip_server_certificate_validation"] = o.AseSkipServerCertificateValidation
 	}
 	if !IsNil(o.AseDbVault) {
 		toSerialize["ase_db_vault"] = o.AseDbVault

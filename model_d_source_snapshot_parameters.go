@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -44,7 +44,7 @@ type DSourceSnapshotParameters struct {
 	FilesForPartialFullBackup []int64 `json:"files_for_partial_full_backup,omitempty"`
 	// The list of parameters specified by the snapshotParametersDefinition schema in the toolkit (AppData only).
 	AppdataParameters map[string]interface{} `json:"appdata_parameters,omitempty"`
-	// RMAN rate in megabytes to be used. This is the upper limit for bytes read so that  RMAN does not consume excessive disk bandwidth and degrade online performance. (Oracle only) 
+	// RMAN rate in megabytes to be used. This is the upper limit for bytes read so that RMAN does not consume excessive disk bandwidth and degrade online performance. (Oracle only) 
 	RmanRateInMB *int32 `json:"rman_rate_in_MB,omitempty"`
 }
 

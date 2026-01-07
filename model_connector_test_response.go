@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,7 @@ type ConnectorTestResponse struct {
 	Status string `json:"status"`
 	// A message describing the result of the masking connector test.
 	Message string `json:"message"`
+	Job *Job `json:"job,omitempty"`
 }
 
 type _ConnectorTestResponse ConnectorTestResponse
@@ -97,6 +98,38 @@ func (o *ConnectorTestResponse) SetMessage(v string) {
 	o.Message = v
 }
 
+// GetJob returns the Job field value if set, zero value otherwise.
+func (o *ConnectorTestResponse) GetJob() Job {
+	if o == nil || IsNil(o.Job) {
+		var ret Job
+		return ret
+	}
+	return *o.Job
+}
+
+// GetJobOk returns a tuple with the Job field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectorTestResponse) GetJobOk() (*Job, bool) {
+	if o == nil || IsNil(o.Job) {
+		return nil, false
+	}
+	return o.Job, true
+}
+
+// HasJob returns a boolean if a field has been set.
+func (o *ConnectorTestResponse) HasJob() bool {
+	if o != nil && !IsNil(o.Job) {
+		return true
+	}
+
+	return false
+}
+
+// SetJob gets a reference to the given Job and assigns it to the Job field.
+func (o *ConnectorTestResponse) SetJob(v Job) {
+	o.Job = &v
+}
+
 func (o ConnectorTestResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -109,6 +142,9 @@ func (o ConnectorTestResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["status"] = o.Status
 	toSerialize["message"] = o.Message
+	if !IsNil(o.Job) {
+		toSerialize["job"] = o.Job
+	}
 	return toSerialize, nil
 }
 

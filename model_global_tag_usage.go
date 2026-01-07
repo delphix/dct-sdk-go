@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ var _ MappedNullable = &GlobalTagUsage{}
 
 // GlobalTagUsage An instance of applying a tag to a specific object.
 type GlobalTagUsage struct {
+	// Unique ID for this GlobalTagUsage.
+	Id *string `json:"id,omitempty"`
 	ObjectType *ObjectTypeEnum `json:"object_type,omitempty"`
 	// ID of the object this tag applies to.
 	ObjectId *string `json:"object_id,omitempty"`
@@ -46,6 +48,38 @@ func NewGlobalTagUsage() *GlobalTagUsage {
 func NewGlobalTagUsageWithDefaults() *GlobalTagUsage {
 	this := GlobalTagUsage{}
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *GlobalTagUsage) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalTagUsage) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *GlobalTagUsage) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *GlobalTagUsage) SetId(v string) {
+	o.Id = &v
 }
 
 // GetObjectType returns the ObjectType field value if set, zero value otherwise.
@@ -248,6 +282,9 @@ func (o GlobalTagUsage) MarshalJSON() ([]byte, error) {
 
 func (o GlobalTagUsage) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.ObjectType) {
 		toSerialize["object_type"] = o.ObjectType
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -74,7 +74,7 @@ type OracleDSourceLinkSourceParameters struct {
 	ForceFullBackup *bool `json:"force_full_backup,omitempty"`
 	// True if two SnapSyncs should be performed in immediate succession to reduce the number of logs required to provision the snapshot. This may significantly reduce the time necessary to provision from a snapshot.
 	DoubleSync *bool `json:"double_sync,omitempty"`
-	// RMAN rate in megabytes to be used. This is the upper limit for bytes read so that  RMAN does not consume excessive disk bandwidth and degrade online performance. (Oracle only) 
+	// RMAN rate in megabytes to be used. This is the upper limit for bytes read so that RMAN does not consume excessive disk bandwidth and degrade online performance. (Oracle only) 
 	RmanRateInMB *int32 `json:"rman_rate_in_MB,omitempty"`
 	// Skip check that tests if there is enough space available to store the database in the Delphix Engine. The Delphix Engine estimates how much space a database will occupy after compression and prevents SnapSync if insufficient space is available. This safeguard can be overridden using this option. This may be useful when linking highly compressible databases.
 	SkipSpaceCheck *bool `json:"skip_space_check,omitempty"`

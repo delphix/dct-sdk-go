@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -44,6 +44,8 @@ type DataConnection struct {
 	CustomDriverName *string `json:"custom_driver_name,omitempty"`
 	// The path to the FILE data on the remote host.
 	Path *string `json:"path,omitempty"`
+	// The size of the data connection in bytes. This is equivalent of the disk space, in bytes, that it would take to store the dSource and its descendant VDBs without Delphix, counting each of their timeflows as separate copy of the parent source data.
+	Size *int64 `json:"size,omitempty"`
 }
 
 // NewDataConnection instantiates a new DataConnection object
@@ -447,6 +449,38 @@ func (o *DataConnection) SetPath(v string) {
 	o.Path = &v
 }
 
+// GetSize returns the Size field value if set, zero value otherwise.
+func (o *DataConnection) GetSize() int64 {
+	if o == nil || IsNil(o.Size) {
+		var ret int64
+		return ret
+	}
+	return *o.Size
+}
+
+// GetSizeOk returns a tuple with the Size field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataConnection) GetSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.Size) {
+		return nil, false
+	}
+	return o.Size, true
+}
+
+// HasSize returns a boolean if a field has been set.
+func (o *DataConnection) HasSize() bool {
+	if o != nil && !IsNil(o.Size) {
+		return true
+	}
+
+	return false
+}
+
+// SetSize gets a reference to the given int64 and assigns it to the Size field.
+func (o *DataConnection) SetSize(v int64) {
+	o.Size = &v
+}
+
 func (o DataConnection) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -492,6 +526,9 @@ func (o DataConnection) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Path) {
 		toSerialize["path"] = o.Path
+	}
+	if !IsNil(o.Size) {
+		toSerialize["size"] = o.Size
 	}
 	return toSerialize, nil
 }

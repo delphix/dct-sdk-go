@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -132,7 +132,7 @@ type ProvisionEmptyVDBParameters struct {
 	ParentTdeKeystorePath *string `json:"parentTdeKeystorePath,omitempty"`
 	// The password of the keystore specified in parentTdeKeystorePath. (Oracle Multitenant Only)
 	ParentTdeKeystorePassword *string `json:"parent_tde_keystore_password,omitempty"`
-	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host.  Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore.  (Oracle Multitenant Only) 
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore. (Oracle Multitenant Only) 
 	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
 	// The password of the parent PDB keystore. (Oracle Multitenant Only)
 	ParentPdbTdeKeystorePassword *string `json:"parent_pdb_tde_keystore_password,omitempty"`

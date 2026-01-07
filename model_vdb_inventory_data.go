@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -21,6 +21,8 @@ var _ MappedNullable = &VDBInventoryData{}
 
 // VDBInventoryData struct for VDBInventoryData
 type VDBInventoryData struct {
+	// The VDB id.
+	VdbId *string `json:"vdb_id,omitempty"`
 	// The name of the engine the VDB belongs to.
 	EngineName *string `json:"engine_name,omitempty"`
 	// The name of the VDB.
@@ -66,6 +68,38 @@ func NewVDBInventoryData() *VDBInventoryData {
 func NewVDBInventoryDataWithDefaults() *VDBInventoryData {
 	this := VDBInventoryData{}
 	return &this
+}
+
+// GetVdbId returns the VdbId field value if set, zero value otherwise.
+func (o *VDBInventoryData) GetVdbId() string {
+	if o == nil || IsNil(o.VdbId) {
+		var ret string
+		return ret
+	}
+	return *o.VdbId
+}
+
+// GetVdbIdOk returns a tuple with the VdbId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDBInventoryData) GetVdbIdOk() (*string, bool) {
+	if o == nil || IsNil(o.VdbId) {
+		return nil, false
+	}
+	return o.VdbId, true
+}
+
+// HasVdbId returns a boolean if a field has been set.
+func (o *VDBInventoryData) HasVdbId() bool {
+	if o != nil && !IsNil(o.VdbId) {
+		return true
+	}
+
+	return false
+}
+
+// SetVdbId gets a reference to the given string and assigns it to the VdbId field.
+func (o *VDBInventoryData) SetVdbId(v string) {
+	o.VdbId = &v
 }
 
 // GetEngineName returns the EngineName field value if set, zero value otherwise.
@@ -526,6 +560,9 @@ func (o VDBInventoryData) MarshalJSON() ([]byte, error) {
 
 func (o VDBInventoryData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.VdbId) {
+		toSerialize["vdb_id"] = o.VdbId
+	}
 	if !IsNil(o.EngineName) {
 		toSerialize["engine_name"] = o.EngineName
 	}

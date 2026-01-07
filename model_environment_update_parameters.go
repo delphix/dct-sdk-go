@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,12 +28,18 @@ type EnvironmentUpdateParameters struct {
 	ClusterAddress *string `json:"cluster_address,omitempty"`
 	// Absolute path to cluster home directory. This parameter is for UNIX cluster environments.
 	ClusterHome *string `json:"cluster_home,omitempty"`
+	// A reference of the cluster user.
+	ClusterUser *string `json:"cluster_user,omitempty"`
 	Scan *string `json:"scan,omitempty"`
 	RemoteListener *string `json:"remote_listener,omitempty"`
 	// username of the SAP ASE database.
 	AseDbUsername *string `json:"ase_db_username,omitempty"`
 	// password of the SAP ASE database.
 	AseDbPassword *string `json:"ase_db_password,omitempty"`
+	// True if you want to discover the SAP ASE instances configured with TLS/SSL.
+	AseEnableTls *bool `json:"ase_enable_tls,omitempty"`
+	// Setting it to true will skip the server certificate validation during the SSL handshake. Only set it if you do not want to add the required certificate into the Delphix Engine truststore but still want to use the TLS/SSL-enabled database connection. This is not recommended for a production environment as it is less secure.
+	AseSkipServerCertificateValidation *bool `json:"ase_skip_server_certificate_validation,omitempty"`
 	// The name or reference of the vault from which to read the ASE database credentials.
 	AseDbVault *string `json:"ase_db_vault,omitempty"`
 	// Delphix display name for the vault user
@@ -207,6 +213,38 @@ func (o *EnvironmentUpdateParameters) SetClusterHome(v string) {
 	o.ClusterHome = &v
 }
 
+// GetClusterUser returns the ClusterUser field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetClusterUser() string {
+	if o == nil || IsNil(o.ClusterUser) {
+		var ret string
+		return ret
+	}
+	return *o.ClusterUser
+}
+
+// GetClusterUserOk returns a tuple with the ClusterUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetClusterUserOk() (*string, bool) {
+	if o == nil || IsNil(o.ClusterUser) {
+		return nil, false
+	}
+	return o.ClusterUser, true
+}
+
+// HasClusterUser returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasClusterUser() bool {
+	if o != nil && !IsNil(o.ClusterUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterUser gets a reference to the given string and assigns it to the ClusterUser field.
+func (o *EnvironmentUpdateParameters) SetClusterUser(v string) {
+	o.ClusterUser = &v
+}
+
 // GetScan returns the Scan field value if set, zero value otherwise.
 func (o *EnvironmentUpdateParameters) GetScan() string {
 	if o == nil || IsNil(o.Scan) {
@@ -333,6 +371,70 @@ func (o *EnvironmentUpdateParameters) HasAseDbPassword() bool {
 // SetAseDbPassword gets a reference to the given string and assigns it to the AseDbPassword field.
 func (o *EnvironmentUpdateParameters) SetAseDbPassword(v string) {
 	o.AseDbPassword = &v
+}
+
+// GetAseEnableTls returns the AseEnableTls field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseEnableTls() bool {
+	if o == nil || IsNil(o.AseEnableTls) {
+		var ret bool
+		return ret
+	}
+	return *o.AseEnableTls
+}
+
+// GetAseEnableTlsOk returns a tuple with the AseEnableTls field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseEnableTlsOk() (*bool, bool) {
+	if o == nil || IsNil(o.AseEnableTls) {
+		return nil, false
+	}
+	return o.AseEnableTls, true
+}
+
+// HasAseEnableTls returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseEnableTls() bool {
+	if o != nil && !IsNil(o.AseEnableTls) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseEnableTls gets a reference to the given bool and assigns it to the AseEnableTls field.
+func (o *EnvironmentUpdateParameters) SetAseEnableTls(v bool) {
+	o.AseEnableTls = &v
+}
+
+// GetAseSkipServerCertificateValidation returns the AseSkipServerCertificateValidation field value if set, zero value otherwise.
+func (o *EnvironmentUpdateParameters) GetAseSkipServerCertificateValidation() bool {
+	if o == nil || IsNil(o.AseSkipServerCertificateValidation) {
+		var ret bool
+		return ret
+	}
+	return *o.AseSkipServerCertificateValidation
+}
+
+// GetAseSkipServerCertificateValidationOk returns a tuple with the AseSkipServerCertificateValidation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentUpdateParameters) GetAseSkipServerCertificateValidationOk() (*bool, bool) {
+	if o == nil || IsNil(o.AseSkipServerCertificateValidation) {
+		return nil, false
+	}
+	return o.AseSkipServerCertificateValidation, true
+}
+
+// HasAseSkipServerCertificateValidation returns a boolean if a field has been set.
+func (o *EnvironmentUpdateParameters) HasAseSkipServerCertificateValidation() bool {
+	if o != nil && !IsNil(o.AseSkipServerCertificateValidation) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseSkipServerCertificateValidation gets a reference to the given bool and assigns it to the AseSkipServerCertificateValidation field.
+func (o *EnvironmentUpdateParameters) SetAseSkipServerCertificateValidation(v bool) {
+	o.AseSkipServerCertificateValidation = &v
 }
 
 // GetAseDbVault returns the AseDbVault field value if set, zero value otherwise.
@@ -773,6 +875,9 @@ func (o EnvironmentUpdateParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ClusterHome) {
 		toSerialize["cluster_home"] = o.ClusterHome
 	}
+	if !IsNil(o.ClusterUser) {
+		toSerialize["cluster_user"] = o.ClusterUser
+	}
 	if !IsNil(o.Scan) {
 		toSerialize["scan"] = o.Scan
 	}
@@ -784,6 +889,12 @@ func (o EnvironmentUpdateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AseDbPassword) {
 		toSerialize["ase_db_password"] = o.AseDbPassword
+	}
+	if !IsNil(o.AseEnableTls) {
+		toSerialize["ase_enable_tls"] = o.AseEnableTls
+	}
+	if !IsNil(o.AseSkipServerCertificateValidation) {
+		toSerialize["ase_skip_server_certificate_validation"] = o.AseSkipServerCertificateValidation
 	}
 	if !IsNil(o.AseDbVault) {
 		toSerialize["ase_db_vault"] = o.AseDbVault

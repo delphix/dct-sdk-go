@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,8 @@ type MaskingExecutionMetrics struct {
 	MaskingJobType *string `json:"masking_job_type,omitempty"`
 	// The type of data being masked by this Job. If the Masking Job is masking a database this is the type of the database, otherwise \"FILE\" or \"MAINFRAME_DATASET\".
 	ConnectorType *string `json:"connector_type,omitempty"`
+	// Whether or not this execution is managed by DCT.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 	// Name of the ruleset for the Masking job.
 	RulesetName *string `json:"ruleset_name,omitempty"`
 	// The number of rows masked. This is not applicable for JSON file type.
@@ -193,6 +195,38 @@ func (o *MaskingExecutionMetrics) HasConnectorType() bool {
 // SetConnectorType gets a reference to the given string and assigns it to the ConnectorType field.
 func (o *MaskingExecutionMetrics) SetConnectorType(v string) {
 	o.ConnectorType = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *MaskingExecutionMetrics) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MaskingExecutionMetrics) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *MaskingExecutionMetrics) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *MaskingExecutionMetrics) SetDctManaged(v bool) {
+	o.DctManaged = &v
 }
 
 // GetRulesetName returns the RulesetName field value if set, zero value otherwise.
@@ -536,6 +570,9 @@ func (o MaskingExecutionMetrics) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConnectorType) {
 		toSerialize["connector_type"] = o.ConnectorType
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	if !IsNil(o.RulesetName) {
 		toSerialize["ruleset_name"] = o.RulesetName

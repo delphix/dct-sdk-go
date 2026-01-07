@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -22,8 +22,6 @@ var _ MappedNullable = &OracleAttachCdbParameters{}
 
 // OracleAttachCdbParameters struct for OracleAttachCdbParameters
 type OracleAttachCdbParameters struct {
-	// Id of the dsource to attach.
-	DsourceId string `json:"dsource_id"`
 	// Boolean value indicates whether LEVEL-based incremental backups can be used on the source database.
 	BackupLevelEnabled *bool `json:"backup_level_enabled,omitempty"`
 	// Bandwidth limit (MB/s) for SnapSync and LogSync network traffic. A value of 0 means no limit.
@@ -56,6 +54,8 @@ type OracleAttachCdbParameters struct {
 	OracleFallbackCredentials *string `json:"oracle_fallback_credentials,omitempty"`
 	// Number of parallel channels to use.
 	RmanChannels *int32 `json:"rman_channels,omitempty"`
+	// Id of the dsource to attach.
+	DsourceId string `json:"dsource_id"`
 }
 
 type _OracleAttachCdbParameters OracleAttachCdbParameters
@@ -86,6 +86,7 @@ func NewOracleAttachCdbParameters(dsourceId string) *OracleAttachCdbParameters {
 	this.NumberOfConnections = &numberOfConnections
 	var rmanChannels int32 = 2
 	this.RmanChannels = &rmanChannels
+	this.DsourceId = dsourceId
 	return &this
 }
 
@@ -115,30 +116,6 @@ func NewOracleAttachCdbParametersWithDefaults() *OracleAttachCdbParameters {
 	var rmanChannels int32 = 2
 	this.RmanChannels = &rmanChannels
 	return &this
-}
-
-// GetDsourceId returns the DsourceId field value
-func (o *OracleAttachCdbParameters) GetDsourceId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.DsourceId
-}
-
-// GetDsourceIdOk returns a tuple with the DsourceId field value
-// and a boolean to check if the value has been set.
-func (o *OracleAttachCdbParameters) GetDsourceIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.DsourceId, true
-}
-
-// SetDsourceId sets field value
-func (o *OracleAttachCdbParameters) SetDsourceId(v string) {
-	o.DsourceId = v
 }
 
 // GetBackupLevelEnabled returns the BackupLevelEnabled field value if set, zero value otherwise.
@@ -653,6 +630,30 @@ func (o *OracleAttachCdbParameters) SetRmanChannels(v int32) {
 	o.RmanChannels = &v
 }
 
+// GetDsourceId returns the DsourceId field value
+func (o *OracleAttachCdbParameters) GetDsourceId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.DsourceId
+}
+
+// GetDsourceIdOk returns a tuple with the DsourceId field value
+// and a boolean to check if the value has been set.
+func (o *OracleAttachCdbParameters) GetDsourceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DsourceId, true
+}
+
+// SetDsourceId sets field value
+func (o *OracleAttachCdbParameters) SetDsourceId(v string) {
+	o.DsourceId = v
+}
+
 func (o OracleAttachCdbParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -663,7 +664,6 @@ func (o OracleAttachCdbParameters) MarshalJSON() ([]byte, error) {
 
 func (o OracleAttachCdbParameters) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["dsource_id"] = o.DsourceId
 	if !IsNil(o.BackupLevelEnabled) {
 		toSerialize["backup_level_enabled"] = o.BackupLevelEnabled
 	}
@@ -712,6 +712,7 @@ func (o OracleAttachCdbParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RmanChannels) {
 		toSerialize["rman_channels"] = o.RmanChannels
 	}
+	toSerialize["dsource_id"] = o.DsourceId
 	return toSerialize, nil
 }
 

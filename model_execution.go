@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,10 +28,16 @@ type Execution struct {
 	HyperscaleInstanceId *string `json:"hyperscale_instance_id,omitempty"`
 	// The name of the engine where this execution ran.
 	EngineName *string `json:"engine_name,omitempty"`
+	// The ID of the job orchestrator that is associated with this execution.
+	JobOrchestratorId *string `json:"job_orchestrator_id,omitempty"`
+	// The name of the job orchestrator that is associated with this execution.
+	JobOrchestratorName *string `json:"job_orchestrator_name,omitempty"`
 	// The ID of the masking job that is being executed.
 	MaskingJobId *string `json:"masking_job_id,omitempty"`
 	// The name of the masking job that is being executed.
 	MaskingJobName *string `json:"masking_job_name,omitempty"`
+	// Indicates whether this execution is for a DCT-managed masking job.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 	// The ID of the source connector. This field is only used for multi-tenant jobs that are also on-the-fly.
 	SourceConnectorId *string `json:"source_connector_id,omitempty"`
 	// The ID of the target connector. This field is only used for multi-tenant jobs.
@@ -221,6 +227,70 @@ func (o *Execution) SetEngineName(v string) {
 	o.EngineName = &v
 }
 
+// GetJobOrchestratorId returns the JobOrchestratorId field value if set, zero value otherwise.
+func (o *Execution) GetJobOrchestratorId() string {
+	if o == nil || IsNil(o.JobOrchestratorId) {
+		var ret string
+		return ret
+	}
+	return *o.JobOrchestratorId
+}
+
+// GetJobOrchestratorIdOk returns a tuple with the JobOrchestratorId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetJobOrchestratorIdOk() (*string, bool) {
+	if o == nil || IsNil(o.JobOrchestratorId) {
+		return nil, false
+	}
+	return o.JobOrchestratorId, true
+}
+
+// HasJobOrchestratorId returns a boolean if a field has been set.
+func (o *Execution) HasJobOrchestratorId() bool {
+	if o != nil && !IsNil(o.JobOrchestratorId) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobOrchestratorId gets a reference to the given string and assigns it to the JobOrchestratorId field.
+func (o *Execution) SetJobOrchestratorId(v string) {
+	o.JobOrchestratorId = &v
+}
+
+// GetJobOrchestratorName returns the JobOrchestratorName field value if set, zero value otherwise.
+func (o *Execution) GetJobOrchestratorName() string {
+	if o == nil || IsNil(o.JobOrchestratorName) {
+		var ret string
+		return ret
+	}
+	return *o.JobOrchestratorName
+}
+
+// GetJobOrchestratorNameOk returns a tuple with the JobOrchestratorName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetJobOrchestratorNameOk() (*string, bool) {
+	if o == nil || IsNil(o.JobOrchestratorName) {
+		return nil, false
+	}
+	return o.JobOrchestratorName, true
+}
+
+// HasJobOrchestratorName returns a boolean if a field has been set.
+func (o *Execution) HasJobOrchestratorName() bool {
+	if o != nil && !IsNil(o.JobOrchestratorName) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobOrchestratorName gets a reference to the given string and assigns it to the JobOrchestratorName field.
+func (o *Execution) SetJobOrchestratorName(v string) {
+	o.JobOrchestratorName = &v
+}
+
 // GetMaskingJobId returns the MaskingJobId field value if set, zero value otherwise.
 func (o *Execution) GetMaskingJobId() string {
 	if o == nil || IsNil(o.MaskingJobId) {
@@ -283,6 +353,38 @@ func (o *Execution) HasMaskingJobName() bool {
 // SetMaskingJobName gets a reference to the given string and assigns it to the MaskingJobName field.
 func (o *Execution) SetMaskingJobName(v string) {
 	o.MaskingJobName = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *Execution) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Execution) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *Execution) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *Execution) SetDctManaged(v bool) {
+	o.DctManaged = &v
 }
 
 // GetSourceConnectorId returns the SourceConnectorId field value if set, zero value otherwise.
@@ -1011,11 +1113,20 @@ func (o Execution) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EngineName) {
 		toSerialize["engine_name"] = o.EngineName
 	}
+	if !IsNil(o.JobOrchestratorId) {
+		toSerialize["job_orchestrator_id"] = o.JobOrchestratorId
+	}
+	if !IsNil(o.JobOrchestratorName) {
+		toSerialize["job_orchestrator_name"] = o.JobOrchestratorName
+	}
 	if !IsNil(o.MaskingJobId) {
 		toSerialize["masking_job_id"] = o.MaskingJobId
 	}
 	if !IsNil(o.MaskingJobName) {
 		toSerialize["masking_job_name"] = o.MaskingJobName
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	if !IsNil(o.SourceConnectorId) {
 		toSerialize["source_connector_id"] = o.SourceConnectorId

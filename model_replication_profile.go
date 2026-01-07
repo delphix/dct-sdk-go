@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -35,6 +35,8 @@ type ReplicationProfile struct {
 	TargetHost *string `json:"target_host,omitempty"`
 	// Target TCP port number for the Delphix Session Protocol.
 	TargetPort *int32 `json:"target_port,omitempty"`
+	// The NFS share path for the replication target. This param is specific to offline replication.
+	NfsShare *string `json:"nfs_share,omitempty"`
 	// The ReplicationProfile type.
 	// Deprecated
 	Type *string `json:"type,omitempty"`
@@ -79,6 +81,12 @@ type ReplicationProfile struct {
 	ReplicateEntireEngine *bool `json:"replicate_entire_engine,omitempty"`
 	// The data-layouts that are replicated by this ReplicationProfile.
 	DataLayoutIds []string `json:"data_layout_ids,omitempty"`
+	// The timestamp of the last successful offline send operation. This field is specific to offline replication send profiles.
+	LastSendTimestamp *time.Time `json:"last_send_timestamp,omitempty"`
+	// The ID of the last offline serialization point sent. This field is specific to offline replication send profiles.
+	LastOfflineSerializationPointId *int32 `json:"last_offline_serialization_point_id,omitempty"`
+	// The relative path of the directory containing the most recently sent data. This field is specific to offline replication send profiles.
+	LastOfflineReceiveDataDir *string `json:"last_offline_receive_data_dir,omitempty"`
 }
 
 // NewReplicationProfile instantiates a new ReplicationProfile object
@@ -344,6 +352,38 @@ func (o *ReplicationProfile) HasTargetPort() bool {
 // SetTargetPort gets a reference to the given int32 and assigns it to the TargetPort field.
 func (o *ReplicationProfile) SetTargetPort(v int32) {
 	o.TargetPort = &v
+}
+
+// GetNfsShare returns the NfsShare field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetNfsShare() string {
+	if o == nil || IsNil(o.NfsShare) {
+		var ret string
+		return ret
+	}
+	return *o.NfsShare
+}
+
+// GetNfsShareOk returns a tuple with the NfsShare field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetNfsShareOk() (*string, bool) {
+	if o == nil || IsNil(o.NfsShare) {
+		return nil, false
+	}
+	return o.NfsShare, true
+}
+
+// HasNfsShare returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasNfsShare() bool {
+	if o != nil && !IsNil(o.NfsShare) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsShare gets a reference to the given string and assigns it to the NfsShare field.
+func (o *ReplicationProfile) SetNfsShare(v string) {
+	o.NfsShare = &v
 }
 
 // GetType returns the Type field value if set, zero value otherwise.
@@ -1024,6 +1064,102 @@ func (o *ReplicationProfile) SetDataLayoutIds(v []string) {
 	o.DataLayoutIds = v
 }
 
+// GetLastSendTimestamp returns the LastSendTimestamp field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetLastSendTimestamp() time.Time {
+	if o == nil || IsNil(o.LastSendTimestamp) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastSendTimestamp
+}
+
+// GetLastSendTimestampOk returns a tuple with the LastSendTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetLastSendTimestampOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastSendTimestamp) {
+		return nil, false
+	}
+	return o.LastSendTimestamp, true
+}
+
+// HasLastSendTimestamp returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasLastSendTimestamp() bool {
+	if o != nil && !IsNil(o.LastSendTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastSendTimestamp gets a reference to the given time.Time and assigns it to the LastSendTimestamp field.
+func (o *ReplicationProfile) SetLastSendTimestamp(v time.Time) {
+	o.LastSendTimestamp = &v
+}
+
+// GetLastOfflineSerializationPointId returns the LastOfflineSerializationPointId field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetLastOfflineSerializationPointId() int32 {
+	if o == nil || IsNil(o.LastOfflineSerializationPointId) {
+		var ret int32
+		return ret
+	}
+	return *o.LastOfflineSerializationPointId
+}
+
+// GetLastOfflineSerializationPointIdOk returns a tuple with the LastOfflineSerializationPointId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetLastOfflineSerializationPointIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.LastOfflineSerializationPointId) {
+		return nil, false
+	}
+	return o.LastOfflineSerializationPointId, true
+}
+
+// HasLastOfflineSerializationPointId returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasLastOfflineSerializationPointId() bool {
+	if o != nil && !IsNil(o.LastOfflineSerializationPointId) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastOfflineSerializationPointId gets a reference to the given int32 and assigns it to the LastOfflineSerializationPointId field.
+func (o *ReplicationProfile) SetLastOfflineSerializationPointId(v int32) {
+	o.LastOfflineSerializationPointId = &v
+}
+
+// GetLastOfflineReceiveDataDir returns the LastOfflineReceiveDataDir field value if set, zero value otherwise.
+func (o *ReplicationProfile) GetLastOfflineReceiveDataDir() string {
+	if o == nil || IsNil(o.LastOfflineReceiveDataDir) {
+		var ret string
+		return ret
+	}
+	return *o.LastOfflineReceiveDataDir
+}
+
+// GetLastOfflineReceiveDataDirOk returns a tuple with the LastOfflineReceiveDataDir field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationProfile) GetLastOfflineReceiveDataDirOk() (*string, bool) {
+	if o == nil || IsNil(o.LastOfflineReceiveDataDir) {
+		return nil, false
+	}
+	return o.LastOfflineReceiveDataDir, true
+}
+
+// HasLastOfflineReceiveDataDir returns a boolean if a field has been set.
+func (o *ReplicationProfile) HasLastOfflineReceiveDataDir() bool {
+	if o != nil && !IsNil(o.LastOfflineReceiveDataDir) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastOfflineReceiveDataDir gets a reference to the given string and assigns it to the LastOfflineReceiveDataDir field.
+func (o *ReplicationProfile) SetLastOfflineReceiveDataDir(v string) {
+	o.LastOfflineReceiveDataDir = &v
+}
+
 func (o ReplicationProfile) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1054,6 +1190,9 @@ func (o ReplicationProfile) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TargetPort) {
 		toSerialize["target_port"] = o.TargetPort
+	}
+	if !IsNil(o.NfsShare) {
+		toSerialize["nfs_share"] = o.NfsShare
 	}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
@@ -1117,6 +1256,15 @@ func (o ReplicationProfile) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DataLayoutIds) {
 		toSerialize["data_layout_ids"] = o.DataLayoutIds
+	}
+	if !IsNil(o.LastSendTimestamp) {
+		toSerialize["last_send_timestamp"] = o.LastSendTimestamp
+	}
+	if !IsNil(o.LastOfflineSerializationPointId) {
+		toSerialize["last_offline_serialization_point_id"] = o.LastOfflineSerializationPointId
+	}
+	if !IsNil(o.LastOfflineReceiveDataDir) {
+		toSerialize["last_offline_receive_data_dir"] = o.LastOfflineReceiveDataDir
 	}
 	return toSerialize, nil
 }

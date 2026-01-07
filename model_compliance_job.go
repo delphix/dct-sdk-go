@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -33,6 +33,10 @@ type ComplianceJob struct {
 	ConnectorType *string `json:"connector_type,omitempty"`
 	// Whether this is an on-the-fly masking job (Standard Job only).
 	IsOnTheFlyMasking *bool `json:"is_on_the_fly_masking,omitempty"`
+	// If true, this job must be executed using a connector that is different from the underlying connector associated with its ruleset.
+	IsMultiTenant *bool `json:"is_multi_tenant,omitempty"`
+	PreScript *ComplianceJobScript `json:"pre_script,omitempty"`
+	PostScript *ComplianceJobScript `json:"post_script,omitempty"`
 	// The date this ComplianceJob was created (Standard Job only).
 	CreationDate *time.Time `json:"creation_date,omitempty"`
 	// The date this ComplianceJob was last executed to completion.
@@ -44,7 +48,7 @@ type ComplianceJob struct {
 	LastExecutionStartTime *time.Time `json:"last_execution_start_time,omitempty"`
 	// The run time of the most recent execution of this compliance job in ms.
 	LastExecutionRunTime *int64 `json:"last_execution_run_time,omitempty"`
-	// The id of the OTF source connector for this job
+	// The ID of the OTF source connector for this job
 	OnTheFlySourceConnectorId NullableString `json:"on_the_fly_source_connector_id,omitempty"`
 	// The name of the OTF source connector for this job
 	OnTheFlySourceConnectorName NullableString `json:"on_the_fly_source_connector_name,omitempty"`
@@ -62,13 +66,13 @@ type ComplianceJob struct {
 	DatasetId *string `json:"dataset_id,omitempty"`
 	// Defines whether execution data will be stored after execution is complete (Hyperscale Job only).
 	RetainExecutionData *string `json:"retain_execution_data,omitempty"`
-	// The maximum amount of memory, in MB, that the compliance job can consume during execution.
+	// The maximum amount of memory, in MB, that the compliance job can consume during execution. A value of 0 uses the default max memory set in application settings.
 	MaxMemory *int32 `json:"max_memory,omitempty"`
 	// The minimum amount of memory, in MB, that the compliance job can consume during execution.
 	MinMemory *int32 `json:"min_memory,omitempty"`
 	// The granularity with which the system provides updates on the progress of the compliance job. For instance, a feedback size of 50000 results in log updates whenever 50000 rows are processed during the masking phase.
 	FeedbackSize *int32 `json:"feedback_size,omitempty"`
-	// This value constrains the total number of rows that may enter the job for each masking stream.
+	// This value constrains the total number of rows that may enter the job for each masking stream. A value of 0 means unlimited. A value of -1 selects the default value. The default value for this setting varies by job type. The minimum explicit value allowed is 20.
 	StreamRowLimit *int32 `json:"stream_row_limit,omitempty"`
 	// This field controls the amount of parallelism that the masking job uses to extract out the data to be masked.
 	NumInputStreams *int32 `json:"num_input_streams,omitempty"`
@@ -111,6 +115,10 @@ type ComplianceJob struct {
 	Tags []Tag `json:"tags,omitempty"`
 	JobOrchestratorId *string `json:"job_orchestrator_id,omitempty"`
 	JobOrchestratorName *string `json:"job_orchestrator_name,omitempty"`
+	// Determines whether the ruleset assignments for the previous profiling execution need to be cleared before this job gets executed.
+	ResetProfilingAssignments *bool `json:"reset_profiling_assignments,omitempty"`
+	// When enabled, assigns a default algorithm if multiple classifiers match across different data classes above the threshold.
+	MultipleProfilerCheck *bool `json:"multiple_profiler_check,omitempty"`
 }
 
 // NewComplianceJob instantiates a new ComplianceJob object
@@ -119,6 +127,16 @@ type ComplianceJob struct {
 // will change when the set of required properties is changed
 func NewComplianceJob() *ComplianceJob {
 	this := ComplianceJob{}
+	var maxMemory int32 = 0
+	this.MaxMemory = &maxMemory
+	var numInputStreams int32 = 1
+	this.NumInputStreams = &numInputStreams
+	var failImmediately bool = false
+	this.FailImmediately = &failImmediately
+	var batchUpdate bool = true
+	this.BatchUpdate = &batchUpdate
+	var numOutputThreadsPerStream int32 = 1
+	this.NumOutputThreadsPerStream = &numOutputThreadsPerStream
 	return &this
 }
 
@@ -127,6 +145,16 @@ func NewComplianceJob() *ComplianceJob {
 // but it doesn't guarantee that properties required by API are set
 func NewComplianceJobWithDefaults() *ComplianceJob {
 	this := ComplianceJob{}
+	var maxMemory int32 = 0
+	this.MaxMemory = &maxMemory
+	var numInputStreams int32 = 1
+	this.NumInputStreams = &numInputStreams
+	var failImmediately bool = false
+	this.FailImmediately = &failImmediately
+	var batchUpdate bool = true
+	this.BatchUpdate = &batchUpdate
+	var numOutputThreadsPerStream int32 = 1
+	this.NumOutputThreadsPerStream = &numOutputThreadsPerStream
 	return &this
 }
 
@@ -320,6 +348,102 @@ func (o *ComplianceJob) HasIsOnTheFlyMasking() bool {
 // SetIsOnTheFlyMasking gets a reference to the given bool and assigns it to the IsOnTheFlyMasking field.
 func (o *ComplianceJob) SetIsOnTheFlyMasking(v bool) {
 	o.IsOnTheFlyMasking = &v
+}
+
+// GetIsMultiTenant returns the IsMultiTenant field value if set, zero value otherwise.
+func (o *ComplianceJob) GetIsMultiTenant() bool {
+	if o == nil || IsNil(o.IsMultiTenant) {
+		var ret bool
+		return ret
+	}
+	return *o.IsMultiTenant
+}
+
+// GetIsMultiTenantOk returns a tuple with the IsMultiTenant field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetIsMultiTenantOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsMultiTenant) {
+		return nil, false
+	}
+	return o.IsMultiTenant, true
+}
+
+// HasIsMultiTenant returns a boolean if a field has been set.
+func (o *ComplianceJob) HasIsMultiTenant() bool {
+	if o != nil && !IsNil(o.IsMultiTenant) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsMultiTenant gets a reference to the given bool and assigns it to the IsMultiTenant field.
+func (o *ComplianceJob) SetIsMultiTenant(v bool) {
+	o.IsMultiTenant = &v
+}
+
+// GetPreScript returns the PreScript field value if set, zero value otherwise.
+func (o *ComplianceJob) GetPreScript() ComplianceJobScript {
+	if o == nil || IsNil(o.PreScript) {
+		var ret ComplianceJobScript
+		return ret
+	}
+	return *o.PreScript
+}
+
+// GetPreScriptOk returns a tuple with the PreScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetPreScriptOk() (*ComplianceJobScript, bool) {
+	if o == nil || IsNil(o.PreScript) {
+		return nil, false
+	}
+	return o.PreScript, true
+}
+
+// HasPreScript returns a boolean if a field has been set.
+func (o *ComplianceJob) HasPreScript() bool {
+	if o != nil && !IsNil(o.PreScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreScript gets a reference to the given ComplianceJobScript and assigns it to the PreScript field.
+func (o *ComplianceJob) SetPreScript(v ComplianceJobScript) {
+	o.PreScript = &v
+}
+
+// GetPostScript returns the PostScript field value if set, zero value otherwise.
+func (o *ComplianceJob) GetPostScript() ComplianceJobScript {
+	if o == nil || IsNil(o.PostScript) {
+		var ret ComplianceJobScript
+		return ret
+	}
+	return *o.PostScript
+}
+
+// GetPostScriptOk returns a tuple with the PostScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetPostScriptOk() (*ComplianceJobScript, bool) {
+	if o == nil || IsNil(o.PostScript) {
+		return nil, false
+	}
+	return o.PostScript, true
+}
+
+// HasPostScript returns a boolean if a field has been set.
+func (o *ComplianceJob) HasPostScript() bool {
+	if o != nil && !IsNil(o.PostScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostScript gets a reference to the given ComplianceJobScript and assigns it to the PostScript field.
+func (o *ComplianceJob) SetPostScript(v ComplianceJobScript) {
+	o.PostScript = &v
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
@@ -1684,6 +1808,70 @@ func (o *ComplianceJob) SetJobOrchestratorName(v string) {
 	o.JobOrchestratorName = &v
 }
 
+// GetResetProfilingAssignments returns the ResetProfilingAssignments field value if set, zero value otherwise.
+func (o *ComplianceJob) GetResetProfilingAssignments() bool {
+	if o == nil || IsNil(o.ResetProfilingAssignments) {
+		var ret bool
+		return ret
+	}
+	return *o.ResetProfilingAssignments
+}
+
+// GetResetProfilingAssignmentsOk returns a tuple with the ResetProfilingAssignments field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetResetProfilingAssignmentsOk() (*bool, bool) {
+	if o == nil || IsNil(o.ResetProfilingAssignments) {
+		return nil, false
+	}
+	return o.ResetProfilingAssignments, true
+}
+
+// HasResetProfilingAssignments returns a boolean if a field has been set.
+func (o *ComplianceJob) HasResetProfilingAssignments() bool {
+	if o != nil && !IsNil(o.ResetProfilingAssignments) {
+		return true
+	}
+
+	return false
+}
+
+// SetResetProfilingAssignments gets a reference to the given bool and assigns it to the ResetProfilingAssignments field.
+func (o *ComplianceJob) SetResetProfilingAssignments(v bool) {
+	o.ResetProfilingAssignments = &v
+}
+
+// GetMultipleProfilerCheck returns the MultipleProfilerCheck field value if set, zero value otherwise.
+func (o *ComplianceJob) GetMultipleProfilerCheck() bool {
+	if o == nil || IsNil(o.MultipleProfilerCheck) {
+		var ret bool
+		return ret
+	}
+	return *o.MultipleProfilerCheck
+}
+
+// GetMultipleProfilerCheckOk returns a tuple with the MultipleProfilerCheck field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceJob) GetMultipleProfilerCheckOk() (*bool, bool) {
+	if o == nil || IsNil(o.MultipleProfilerCheck) {
+		return nil, false
+	}
+	return o.MultipleProfilerCheck, true
+}
+
+// HasMultipleProfilerCheck returns a boolean if a field has been set.
+func (o *ComplianceJob) HasMultipleProfilerCheck() bool {
+	if o != nil && !IsNil(o.MultipleProfilerCheck) {
+		return true
+	}
+
+	return false
+}
+
+// SetMultipleProfilerCheck gets a reference to the given bool and assigns it to the MultipleProfilerCheck field.
+func (o *ComplianceJob) SetMultipleProfilerCheck(v bool) {
+	o.MultipleProfilerCheck = &v
+}
+
 func (o ComplianceJob) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1711,6 +1899,15 @@ func (o ComplianceJob) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsOnTheFlyMasking) {
 		toSerialize["is_on_the_fly_masking"] = o.IsOnTheFlyMasking
+	}
+	if !IsNil(o.IsMultiTenant) {
+		toSerialize["is_multi_tenant"] = o.IsMultiTenant
+	}
+	if !IsNil(o.PreScript) {
+		toSerialize["pre_script"] = o.PreScript
+	}
+	if !IsNil(o.PostScript) {
+		toSerialize["post_script"] = o.PostScript
 	}
 	if !IsNil(o.CreationDate) {
 		toSerialize["creation_date"] = o.CreationDate
@@ -1834,6 +2031,12 @@ func (o ComplianceJob) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.JobOrchestratorName) {
 		toSerialize["job_orchestrator_name"] = o.JobOrchestratorName
+	}
+	if !IsNil(o.ResetProfilingAssignments) {
+		toSerialize["reset_profiling_assignments"] = o.ResetProfilingAssignments
+	}
+	if !IsNil(o.MultipleProfilerCheck) {
+		toSerialize["multiple_profiler_check"] = o.MultipleProfilerCheck
 	}
 	return toSerialize, nil
 }

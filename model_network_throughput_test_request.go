@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -52,6 +52,8 @@ func NewNetworkThroughputTestRequest(engineId string, hostId string) *NetworkThr
 	this.HostId = hostId
 	var direction string = "TRANSMIT"
 	this.Direction = &direction
+	var numConnections int32 = 0
+	this.NumConnections = &numConnections
 	var duration int32 = 30
 	this.Duration = &duration
 	var blockSize int32 = 16384
@@ -68,6 +70,8 @@ func NewNetworkThroughputTestRequestWithDefaults() *NetworkThroughputTestRequest
 	this := NetworkThroughputTestRequest{}
 	var direction string = "TRANSMIT"
 	this.Direction = &direction
+	var numConnections int32 = 0
+	this.NumConnections = &numConnections
 	var duration int32 = 30
 	this.Duration = &duration
 	var blockSize int32 = 16384

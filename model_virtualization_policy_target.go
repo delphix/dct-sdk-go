@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ var _ MappedNullable = &VirtualizationPolicyTarget{}
 
 // VirtualizationPolicyTarget struct for VirtualizationPolicyTarget
 type VirtualizationPolicyTarget struct {
+	// A unique ID for this VirtualizationPolicyTarget.
+	Id *string `json:"id,omitempty"`
 	// The DCT ID of the policy.
 	PolicyId *string `json:"policy_id,omitempty"`
 	// The DCT ID of the target the policy is applied to.
@@ -47,6 +49,38 @@ func NewVirtualizationPolicyTarget() *VirtualizationPolicyTarget {
 func NewVirtualizationPolicyTargetWithDefaults() *VirtualizationPolicyTarget {
 	this := VirtualizationPolicyTarget{}
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *VirtualizationPolicyTarget) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualizationPolicyTarget) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *VirtualizationPolicyTarget) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *VirtualizationPolicyTarget) SetId(v string) {
+	o.Id = &v
 }
 
 // GetPolicyId returns the PolicyId field value if set, zero value otherwise.
@@ -251,6 +285,9 @@ func (o VirtualizationPolicyTarget) MarshalJSON() ([]byte, error) {
 
 func (o VirtualizationPolicyTarget) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.PolicyId) {
 		toSerialize["policy_id"] = o.PolicyId
 	}

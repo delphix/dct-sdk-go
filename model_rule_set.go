@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -58,6 +58,12 @@ type RuleSet struct {
 	Tags []Tag `json:"tags,omitempty"`
 	JobOrchestratorId *string `json:"job_orchestrator_id,omitempty"`
 	JobOrchestratorName *string `json:"job_orchestrator_name,omitempty"`
+	// The status of the last attempted rule set refresh.
+	LastAttemptedRefreshStatus *string `json:"last_attempted_refresh_status,omitempty"`
+	// The date and time of the last attempted rule set refresh.
+	LastAttemptedRefreshTime *time.Time `json:"last_attempted_refresh_time,omitempty"`
+	// The date and time of the last successful rule set refresh.
+	LastRefreshTime *time.Time `json:"last_refresh_time,omitempty"`
 }
 
 // NewRuleSet instantiates a new RuleSet object
@@ -807,6 +813,102 @@ func (o *RuleSet) SetJobOrchestratorName(v string) {
 	o.JobOrchestratorName = &v
 }
 
+// GetLastAttemptedRefreshStatus returns the LastAttemptedRefreshStatus field value if set, zero value otherwise.
+func (o *RuleSet) GetLastAttemptedRefreshStatus() string {
+	if o == nil || IsNil(o.LastAttemptedRefreshStatus) {
+		var ret string
+		return ret
+	}
+	return *o.LastAttemptedRefreshStatus
+}
+
+// GetLastAttemptedRefreshStatusOk returns a tuple with the LastAttemptedRefreshStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetLastAttemptedRefreshStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.LastAttemptedRefreshStatus) {
+		return nil, false
+	}
+	return o.LastAttemptedRefreshStatus, true
+}
+
+// HasLastAttemptedRefreshStatus returns a boolean if a field has been set.
+func (o *RuleSet) HasLastAttemptedRefreshStatus() bool {
+	if o != nil && !IsNil(o.LastAttemptedRefreshStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastAttemptedRefreshStatus gets a reference to the given string and assigns it to the LastAttemptedRefreshStatus field.
+func (o *RuleSet) SetLastAttemptedRefreshStatus(v string) {
+	o.LastAttemptedRefreshStatus = &v
+}
+
+// GetLastAttemptedRefreshTime returns the LastAttemptedRefreshTime field value if set, zero value otherwise.
+func (o *RuleSet) GetLastAttemptedRefreshTime() time.Time {
+	if o == nil || IsNil(o.LastAttemptedRefreshTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastAttemptedRefreshTime
+}
+
+// GetLastAttemptedRefreshTimeOk returns a tuple with the LastAttemptedRefreshTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetLastAttemptedRefreshTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastAttemptedRefreshTime) {
+		return nil, false
+	}
+	return o.LastAttemptedRefreshTime, true
+}
+
+// HasLastAttemptedRefreshTime returns a boolean if a field has been set.
+func (o *RuleSet) HasLastAttemptedRefreshTime() bool {
+	if o != nil && !IsNil(o.LastAttemptedRefreshTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastAttemptedRefreshTime gets a reference to the given time.Time and assigns it to the LastAttemptedRefreshTime field.
+func (o *RuleSet) SetLastAttemptedRefreshTime(v time.Time) {
+	o.LastAttemptedRefreshTime = &v
+}
+
+// GetLastRefreshTime returns the LastRefreshTime field value if set, zero value otherwise.
+func (o *RuleSet) GetLastRefreshTime() time.Time {
+	if o == nil || IsNil(o.LastRefreshTime) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastRefreshTime
+}
+
+// GetLastRefreshTimeOk returns a tuple with the LastRefreshTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RuleSet) GetLastRefreshTimeOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.LastRefreshTime) {
+		return nil, false
+	}
+	return o.LastRefreshTime, true
+}
+
+// HasLastRefreshTime returns a boolean if a field has been set.
+func (o *RuleSet) HasLastRefreshTime() bool {
+	if o != nil && !IsNil(o.LastRefreshTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastRefreshTime gets a reference to the given time.Time and assigns it to the LastRefreshTime field.
+func (o *RuleSet) SetLastRefreshTime(v time.Time) {
+	o.LastRefreshTime = &v
+}
+
 func (o RuleSet) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -876,6 +978,15 @@ func (o RuleSet) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.JobOrchestratorName) {
 		toSerialize["job_orchestrator_name"] = o.JobOrchestratorName
+	}
+	if !IsNil(o.LastAttemptedRefreshStatus) {
+		toSerialize["last_attempted_refresh_status"] = o.LastAttemptedRefreshStatus
+	}
+	if !IsNil(o.LastAttemptedRefreshTime) {
+		toSerialize["last_attempted_refresh_time"] = o.LastAttemptedRefreshTime
+	}
+	if !IsNil(o.LastRefreshTime) {
+		toSerialize["last_refresh_time"] = o.LastRefreshTime
 	}
 	return toSerialize, nil
 }

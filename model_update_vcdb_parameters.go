@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -51,6 +51,10 @@ type UpdateVCDBParameters struct {
 	OracleRacCustomEnvFiles []OracleRacCustomEnvFile `json:"oracle_rac_custom_env_files,omitempty"`
 	// Environment variable to be set when the engine administers an Oracle RAC VCDB. See the Engine documentation for the list of allowed/denied environment variables and rules about substitution. Custom environment variables can only be updated while the VCDB is disabled.
 	OracleRacCustomEnvVars []OracleRacCustomEnvVar `json:"oracle_rac_custom_env_vars,omitempty"`
+	// The container description of this virtual CDB.
+	Description *string `json:"description,omitempty"`
+	// The ID of the target Virtual CDB Template.
+	DbTemplateId *string `json:"db_template_id,omitempty"`
 }
 
 // NewUpdateVCDBParameters instantiates a new UpdateVCDBParameters object
@@ -582,6 +586,70 @@ func (o *UpdateVCDBParameters) SetOracleRacCustomEnvVars(v []OracleRacCustomEnvV
 	o.OracleRacCustomEnvVars = v
 }
 
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *UpdateVCDBParameters) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetDbTemplateId returns the DbTemplateId field value if set, zero value otherwise.
+func (o *UpdateVCDBParameters) GetDbTemplateId() string {
+	if o == nil || IsNil(o.DbTemplateId) {
+		var ret string
+		return ret
+	}
+	return *o.DbTemplateId
+}
+
+// GetDbTemplateIdOk returns a tuple with the DbTemplateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateVCDBParameters) GetDbTemplateIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DbTemplateId) {
+		return nil, false
+	}
+	return o.DbTemplateId, true
+}
+
+// HasDbTemplateId returns a boolean if a field has been set.
+func (o *UpdateVCDBParameters) HasDbTemplateId() bool {
+	if o != nil && !IsNil(o.DbTemplateId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbTemplateId gets a reference to the given string and assigns it to the DbTemplateId field.
+func (o *UpdateVCDBParameters) SetDbTemplateId(v string) {
+	o.DbTemplateId = &v
+}
+
 func (o UpdateVCDBParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -639,6 +707,12 @@ func (o UpdateVCDBParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OracleRacCustomEnvVars) {
 		toSerialize["oracle_rac_custom_env_vars"] = o.OracleRacCustomEnvVars
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.DbTemplateId) {
+		toSerialize["db_template_id"] = o.DbTemplateId
 	}
 	return toSerialize, nil
 }

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -69,6 +69,8 @@ func NewNetworkDSPTestRequest(engineId string) *NetworkDSPTestRequest {
 	this.EngineId = engineId
 	var direction string = "TRANSMIT"
 	this.Direction = &direction
+	var numConnections int32 = 0
+	this.NumConnections = &numConnections
 	var duration int32 = 30
 	this.Duration = &duration
 	var destinationType string = "REMOTE_HOST"
@@ -97,6 +99,8 @@ func NewNetworkDSPTestRequestWithDefaults() *NetworkDSPTestRequest {
 	this := NetworkDSPTestRequest{}
 	var direction string = "TRANSMIT"
 	this.Direction = &direction
+	var numConnections int32 = 0
+	this.NumConnections = &numConnections
 	var duration int32 = 30
 	this.Duration = &duration
 	var destinationType string = "REMOTE_HOST"

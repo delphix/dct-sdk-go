@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -24,12 +24,14 @@ type UpdateReplicationProfileParameters struct {
 	Name *string `json:"name,omitempty"`
 	// The ReplicationProfile description.
 	Description *string `json:"description,omitempty"`
-	// The ID of the replication target engine.
+	// The ID of the replication target engine. This field is specific to network replication.
 	TargetEngineId *string `json:"target_engine_id,omitempty"`
-	// Hostname of the replication target engine. If none is provided and the target_engine_id is set, the hostname for the engine referenced by target_engine_id will be used.
+	// Hostname of the replication target engine. If none is provided and the target_engine_id is set, the hostname for the engine referenced by target_engine_id will be used. This field is specific to network replication.
 	TargetHost *string `json:"target_host,omitempty"`
-	// Target TCP port number for the Delphix Session Protocol.
+	// Target TCP port number for the Delphix Session Protocol. This field is specific to network replication.
 	TargetPort *int32 `json:"target_port,omitempty"`
+	// The NFS share path for the replication target. This field is specific to offline replication.
+	NfsShare *string `json:"nfs_share,omitempty"`
 	// The ReplicationProfile mode.
 	ReplicationMode *string `json:"replication_mode,omitempty"`
 	// Replication schedule in the form of a quartz-formatted string.
@@ -48,15 +50,15 @@ type UpdateReplicationProfileParameters struct {
 	EnableTagReplication *bool `json:"enable_tag_replication,omitempty"`
 	// Whether to replicate the entire engine. This is mutually exclusive with the vdb_ids, dsource_ids, cdb_ids, vcdb_ids, and group_ids properties.
 	ReplicateEntireEngine *bool `json:"replicate_entire_engine,omitempty"`
-	// Bandwidth limit (MB/s) for replication network traffic. A value of 0 means no limit.
+	// Bandwidth limit (MB/s) for replication network traffic. A value of 0 means no limit. This field is specific to network replication.
 	BandwidthLimit *int32 `json:"bandwidth_limit,omitempty"`
-	// Total number of transport connections to use.
+	// Total number of transport connections to use. This field is specific to network replication.
 	NumberOfConnections *int32 `json:"number_of_connections,omitempty"`
-	// Encrypt replication network traffic.
+	// Encrypt replication network traffic. This field is specific to network replication.
 	Encrypted *bool `json:"encrypted,omitempty"`
 	// Indication whether the replication spec schedule is enabled or not.
 	AutomaticReplication *bool `json:"automatic_replication,omitempty"`
-	// Connect to the replication target host via the system-wide SOCKS proxy.
+	// Connect to the replication target host via the system-wide SOCKS proxy. This field is specific to network replication.
 	UseSystemSocksSetting *bool `json:"use_system_socks_setting,omitempty"`
 }
 
@@ -235,6 +237,38 @@ func (o *UpdateReplicationProfileParameters) HasTargetPort() bool {
 // SetTargetPort gets a reference to the given int32 and assigns it to the TargetPort field.
 func (o *UpdateReplicationProfileParameters) SetTargetPort(v int32) {
 	o.TargetPort = &v
+}
+
+// GetNfsShare returns the NfsShare field value if set, zero value otherwise.
+func (o *UpdateReplicationProfileParameters) GetNfsShare() string {
+	if o == nil || IsNil(o.NfsShare) {
+		var ret string
+		return ret
+	}
+	return *o.NfsShare
+}
+
+// GetNfsShareOk returns a tuple with the NfsShare field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateReplicationProfileParameters) GetNfsShareOk() (*string, bool) {
+	if o == nil || IsNil(o.NfsShare) {
+		return nil, false
+	}
+	return o.NfsShare, true
+}
+
+// HasNfsShare returns a boolean if a field has been set.
+func (o *UpdateReplicationProfileParameters) HasNfsShare() bool {
+	if o != nil && !IsNil(o.NfsShare) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsShare gets a reference to the given string and assigns it to the NfsShare field.
+func (o *UpdateReplicationProfileParameters) SetNfsShare(v string) {
+	o.NfsShare = &v
 }
 
 // GetReplicationMode returns the ReplicationMode field value if set, zero value otherwise.
@@ -709,6 +743,9 @@ func (o UpdateReplicationProfileParameters) ToMap() (map[string]interface{}, err
 	}
 	if !IsNil(o.TargetPort) {
 		toSerialize["target_port"] = o.TargetPort
+	}
+	if !IsNil(o.NfsShare) {
+		toSerialize["nfs_share"] = o.NfsShare
 	}
 	if !IsNil(o.ReplicationMode) {
 		toSerialize["replication_mode"] = o.ReplicationMode

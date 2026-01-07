@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,12 +28,16 @@ type CreateReplicationProfileParameters struct {
 	ReplicationMode string `json:"replication_mode"`
 	// The ID of the engine that the ReplicationProfile belongs to.
 	EngineId string `json:"engine_id"`
-	// The ID of the replication target engine.
-	TargetEngineId string `json:"target_engine_id"`
-	// Hostname of the replication target engine. If none is provided, the hostname for the engine referenced by target_engine_id will be used.
+	// The ID of the replication target engine. This field is specific to network replication.
+	TargetEngineId *string `json:"target_engine_id,omitempty"`
+	// Hostname of the replication target engine. If none is provided, the hostname for the engine referenced by target_engine_id will be used. This field is specific to network replication.
 	TargetHost *string `json:"target_host,omitempty"`
-	// Target TCP port number for the Delphix Session Protocol.
+	// Target TCP port number for the Delphix Session Protocol. This field is specific to network replication.
 	TargetPort *int32 `json:"target_port,omitempty"`
+	// The NFS share path for the replication target. This field is specific to offline replication.
+	NfsShare *string `json:"nfs_share,omitempty"`
+	// The unique tag identifier for the offline send profile. This field is specific to offline replication receive profiles.
+	OfflineSendProfileTag *string `json:"offline_send_profile_tag,omitempty"`
 	// The ReplicationProfile description.
 	Description *string `json:"description,omitempty"`
 	// Replication schedule in the form of a quartz-formatted string.
@@ -42,15 +46,15 @@ type CreateReplicationProfileParameters struct {
 	Tags []Tag `json:"tags,omitempty"`
 	// Indicates whether tag replication from primary object to replica object is enabled or disabled for this ReplicationProfile.
 	EnableTagReplication *bool `json:"enable_tag_replication,omitempty"`
-	// Bandwidth limit (MB/s) for replication network traffic. A value of 0 means no limit.
+	// Bandwidth limit (MB/s) for replication network traffic. A value of 0 means no limit. This field is specific to network replication.
 	BandwidthLimit *int32 `json:"bandwidth_limit,omitempty"`
-	// Total number of transport connections to use.
+	// Total number of transport connections to use. This field is specific to network replication.
 	NumberOfConnections *int32 `json:"number_of_connections,omitempty"`
-	// Encrypt replication network traffic.
+	// Encrypt replication network traffic. This field is specific to network replication.
 	Encrypted *bool `json:"encrypted,omitempty"`
 	// Indication whether the replication spec schedule is enabled or not.
 	AutomaticReplication *bool `json:"automatic_replication,omitempty"`
-	// Connect to the replication target host via the system-wide SOCKS proxy.
+	// Connect to the replication target host via the system-wide SOCKS proxy. This field is specific to network replication.
 	UseSystemSocksSetting *bool `json:"use_system_socks_setting,omitempty"`
 	// The VDBs that are replicated by this ReplicationProfile.
 	VdbIds []string `json:"vdb_ids,omitempty"`
@@ -72,11 +76,10 @@ type _CreateReplicationProfileParameters CreateReplicationProfileParameters
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateReplicationProfileParameters(replicationMode string, engineId string, targetEngineId string) *CreateReplicationProfileParameters {
+func NewCreateReplicationProfileParameters(replicationMode string, engineId string) *CreateReplicationProfileParameters {
 	this := CreateReplicationProfileParameters{}
 	this.ReplicationMode = replicationMode
 	this.EngineId = engineId
-	this.TargetEngineId = targetEngineId
 	var targetPort int32 = 8415
 	this.TargetPort = &targetPort
 	var bandwidthLimit int32 = 0
@@ -192,28 +195,36 @@ func (o *CreateReplicationProfileParameters) SetEngineId(v string) {
 	o.EngineId = v
 }
 
-// GetTargetEngineId returns the TargetEngineId field value
+// GetTargetEngineId returns the TargetEngineId field value if set, zero value otherwise.
 func (o *CreateReplicationProfileParameters) GetTargetEngineId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TargetEngineId) {
 		var ret string
 		return ret
 	}
-
-	return o.TargetEngineId
+	return *o.TargetEngineId
 }
 
-// GetTargetEngineIdOk returns a tuple with the TargetEngineId field value
+// GetTargetEngineIdOk returns a tuple with the TargetEngineId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateReplicationProfileParameters) GetTargetEngineIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TargetEngineId) {
 		return nil, false
 	}
-	return &o.TargetEngineId, true
+	return o.TargetEngineId, true
 }
 
-// SetTargetEngineId sets field value
+// HasTargetEngineId returns a boolean if a field has been set.
+func (o *CreateReplicationProfileParameters) HasTargetEngineId() bool {
+	if o != nil && !IsNil(o.TargetEngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetEngineId gets a reference to the given string and assigns it to the TargetEngineId field.
 func (o *CreateReplicationProfileParameters) SetTargetEngineId(v string) {
-	o.TargetEngineId = v
+	o.TargetEngineId = &v
 }
 
 // GetTargetHost returns the TargetHost field value if set, zero value otherwise.
@@ -278,6 +289,70 @@ func (o *CreateReplicationProfileParameters) HasTargetPort() bool {
 // SetTargetPort gets a reference to the given int32 and assigns it to the TargetPort field.
 func (o *CreateReplicationProfileParameters) SetTargetPort(v int32) {
 	o.TargetPort = &v
+}
+
+// GetNfsShare returns the NfsShare field value if set, zero value otherwise.
+func (o *CreateReplicationProfileParameters) GetNfsShare() string {
+	if o == nil || IsNil(o.NfsShare) {
+		var ret string
+		return ret
+	}
+	return *o.NfsShare
+}
+
+// GetNfsShareOk returns a tuple with the NfsShare field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateReplicationProfileParameters) GetNfsShareOk() (*string, bool) {
+	if o == nil || IsNil(o.NfsShare) {
+		return nil, false
+	}
+	return o.NfsShare, true
+}
+
+// HasNfsShare returns a boolean if a field has been set.
+func (o *CreateReplicationProfileParameters) HasNfsShare() bool {
+	if o != nil && !IsNil(o.NfsShare) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsShare gets a reference to the given string and assigns it to the NfsShare field.
+func (o *CreateReplicationProfileParameters) SetNfsShare(v string) {
+	o.NfsShare = &v
+}
+
+// GetOfflineSendProfileTag returns the OfflineSendProfileTag field value if set, zero value otherwise.
+func (o *CreateReplicationProfileParameters) GetOfflineSendProfileTag() string {
+	if o == nil || IsNil(o.OfflineSendProfileTag) {
+		var ret string
+		return ret
+	}
+	return *o.OfflineSendProfileTag
+}
+
+// GetOfflineSendProfileTagOk returns a tuple with the OfflineSendProfileTag field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateReplicationProfileParameters) GetOfflineSendProfileTagOk() (*string, bool) {
+	if o == nil || IsNil(o.OfflineSendProfileTag) {
+		return nil, false
+	}
+	return o.OfflineSendProfileTag, true
+}
+
+// HasOfflineSendProfileTag returns a boolean if a field has been set.
+func (o *CreateReplicationProfileParameters) HasOfflineSendProfileTag() bool {
+	if o != nil && !IsNil(o.OfflineSendProfileTag) {
+		return true
+	}
+
+	return false
+}
+
+// SetOfflineSendProfileTag gets a reference to the given string and assigns it to the OfflineSendProfileTag field.
+func (o *CreateReplicationProfileParameters) SetOfflineSendProfileTag(v string) {
+	o.OfflineSendProfileTag = &v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -775,12 +850,20 @@ func (o CreateReplicationProfileParameters) ToMap() (map[string]interface{}, err
 	}
 	toSerialize["replication_mode"] = o.ReplicationMode
 	toSerialize["engine_id"] = o.EngineId
-	toSerialize["target_engine_id"] = o.TargetEngineId
+	if !IsNil(o.TargetEngineId) {
+		toSerialize["target_engine_id"] = o.TargetEngineId
+	}
 	if !IsNil(o.TargetHost) {
 		toSerialize["target_host"] = o.TargetHost
 	}
 	if !IsNil(o.TargetPort) {
 		toSerialize["target_port"] = o.TargetPort
+	}
+	if !IsNil(o.NfsShare) {
+		toSerialize["nfs_share"] = o.NfsShare
+	}
+	if !IsNil(o.OfflineSendProfileTag) {
+		toSerialize["offline_send_profile_tag"] = o.OfflineSendProfileTag
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
@@ -837,7 +920,6 @@ func (o *CreateReplicationProfileParameters) UnmarshalJSON(data []byte) (err err
 	requiredProperties := []string{
 		"replication_mode",
 		"engine_id",
-		"target_engine_id",
 	}
 
 	allProperties := make(map[string]interface{})

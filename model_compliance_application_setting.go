@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,8 @@ type ComplianceApplicationSetting struct {
 	Name *string `json:"name,omitempty"`
 	// The value of the application setting.
 	Value *string `json:"value,omitempty"`
+	// The type of the value of the application setting.
+	ValueType *string `json:"value_type,omitempty"`
 }
 
 // NewComplianceApplicationSetting instantiates a new ComplianceApplicationSetting object
@@ -175,6 +177,38 @@ func (o *ComplianceApplicationSetting) SetValue(v string) {
 	o.Value = &v
 }
 
+// GetValueType returns the ValueType field value if set, zero value otherwise.
+func (o *ComplianceApplicationSetting) GetValueType() string {
+	if o == nil || IsNil(o.ValueType) {
+		var ret string
+		return ret
+	}
+	return *o.ValueType
+}
+
+// GetValueTypeOk returns a tuple with the ValueType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ComplianceApplicationSetting) GetValueTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.ValueType) {
+		return nil, false
+	}
+	return o.ValueType, true
+}
+
+// HasValueType returns a boolean if a field has been set.
+func (o *ComplianceApplicationSetting) HasValueType() bool {
+	if o != nil && !IsNil(o.ValueType) {
+		return true
+	}
+
+	return false
+}
+
+// SetValueType gets a reference to the given string and assigns it to the ValueType field.
+func (o *ComplianceApplicationSetting) SetValueType(v string) {
+	o.ValueType = &v
+}
+
 func (o ComplianceApplicationSetting) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -196,6 +230,9 @@ func (o ComplianceApplicationSetting) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
+	}
+	if !IsNil(o.ValueType) {
+		toSerialize["value_type"] = o.ValueType
 	}
 	return toSerialize, nil
 }

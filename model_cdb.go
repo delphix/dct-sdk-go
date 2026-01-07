@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -24,6 +24,10 @@ type CDB struct {
 	Id *string `json:"id,omitempty"`
 	// The name of this CDB.
 	Name NullableString `json:"name,omitempty"`
+	// The container description of this Linked CDB.
+	Description *string `json:"description,omitempty"`
+	// If true, NOLOGGING operations on this container are treated as faults and cannot be resolved manually. Otherwise, these operations are ignored.
+	DiagnoseNoLoggingFaults *bool `json:"diagnose_no_logging_faults,omitempty"`
 	// The namespace id of this CDB.
 	NamespaceId *string `json:"namespace_id,omitempty"`
 	// The namespace name of this CDB.
@@ -36,6 +40,22 @@ type CDB struct {
 	EnvironmentId NullableString `json:"environment_id,omitempty"`
 	// The total size of the data files used by this CDB, in bytes.
 	Size NullableInt64 `json:"size,omitempty"`
+	// Number of parallel channels to use.
+	RmanChannels *int32 `json:"rman_channels,omitempty"`
+	// Number of data files to include in each RMAN backup set.
+	FilesPerSet *int32 `json:"files_per_set,omitempty"`
+	// True if SnapSync data from the source should be retrieved through an encrypted connection. Enabling this feature can decrease the performance of SnapSync from the source but has no impact on the performance of VDBs created from the retrieved data.
+	EncryptedLinkingEnabled *bool `json:"encrypted_linking_enabled,omitempty"`
+	// True if SnapSync data from the source should be compressed over the network. Enabling this feature will reduce network bandwidth consumption and may significantly improve throughput, especially over slow network.
+	CompressedLinkingEnabled *bool `json:"compressed_linking_enabled,omitempty"`
+	// Bandwidth limit (MB/s) for SnapSync and LogSync network traffic. A value of 0 means no limit.
+	BandwidthLimit *int32 `json:"bandwidth_limit,omitempty"`
+	// Total number of transport connections to use during SnapSync.
+	NumberOfConnections *int32 `json:"number_of_connections,omitempty"`
+	// Boolean value indicates whether LEVEL-based incremental backups can be used on the source db.
+	BackupLevelEnabled *bool `json:"backup_level_enabled,omitempty"`
+	// True if extended block checking should be used for this linked database.
+	CheckLogical *bool `json:"check_logical,omitempty"`
 	// The JDBC connection URL for this CDB.
 	// Deprecated
 	JdbcConnectionString NullableString `json:"jdbc_connection_string,omitempty"`
@@ -72,6 +92,12 @@ type CDB struct {
 	TdeKmsPkcs11ConfigPath *string `json:"tde_kms_pkcs11_config_path,omitempty"`
 	// True if TDE keystore password is set for this container database.
 	IsTdeKeystorePasswordSet *bool `json:"is_tde_keystore_password_set,omitempty"`
+	// The environment user reference.
+	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
+	// The name of the database user.
+	DbUsername *string `json:"db_username,omitempty"`
+	// The username of a database user that does not have administrative privileges.
+	NonSysUsername *string `json:"non_sys_username,omitempty"`
 }
 
 // NewCDB instantiates a new CDB object
@@ -163,6 +189,70 @@ func (o *CDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *CDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *CDB) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *CDB) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *CDB) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetDiagnoseNoLoggingFaults returns the DiagnoseNoLoggingFaults field value if set, zero value otherwise.
+func (o *CDB) GetDiagnoseNoLoggingFaults() bool {
+	if o == nil || IsNil(o.DiagnoseNoLoggingFaults) {
+		var ret bool
+		return ret
+	}
+	return *o.DiagnoseNoLoggingFaults
+}
+
+// GetDiagnoseNoLoggingFaultsOk returns a tuple with the DiagnoseNoLoggingFaults field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetDiagnoseNoLoggingFaultsOk() (*bool, bool) {
+	if o == nil || IsNil(o.DiagnoseNoLoggingFaults) {
+		return nil, false
+	}
+	return o.DiagnoseNoLoggingFaults, true
+}
+
+// HasDiagnoseNoLoggingFaults returns a boolean if a field has been set.
+func (o *CDB) HasDiagnoseNoLoggingFaults() bool {
+	if o != nil && !IsNil(o.DiagnoseNoLoggingFaults) {
+		return true
+	}
+
+	return false
+}
+
+// SetDiagnoseNoLoggingFaults gets a reference to the given bool and assigns it to the DiagnoseNoLoggingFaults field.
+func (o *CDB) SetDiagnoseNoLoggingFaults(v bool) {
+	o.DiagnoseNoLoggingFaults = &v
 }
 
 // GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
@@ -385,6 +475,262 @@ func (o *CDB) SetSizeNil() {
 // UnsetSize ensures that no value is present for Size, not even an explicit nil
 func (o *CDB) UnsetSize() {
 	o.Size.Unset()
+}
+
+// GetRmanChannels returns the RmanChannels field value if set, zero value otherwise.
+func (o *CDB) GetRmanChannels() int32 {
+	if o == nil || IsNil(o.RmanChannels) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanChannels
+}
+
+// GetRmanChannelsOk returns a tuple with the RmanChannels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetRmanChannelsOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanChannels) {
+		return nil, false
+	}
+	return o.RmanChannels, true
+}
+
+// HasRmanChannels returns a boolean if a field has been set.
+func (o *CDB) HasRmanChannels() bool {
+	if o != nil && !IsNil(o.RmanChannels) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanChannels gets a reference to the given int32 and assigns it to the RmanChannels field.
+func (o *CDB) SetRmanChannels(v int32) {
+	o.RmanChannels = &v
+}
+
+// GetFilesPerSet returns the FilesPerSet field value if set, zero value otherwise.
+func (o *CDB) GetFilesPerSet() int32 {
+	if o == nil || IsNil(o.FilesPerSet) {
+		var ret int32
+		return ret
+	}
+	return *o.FilesPerSet
+}
+
+// GetFilesPerSetOk returns a tuple with the FilesPerSet field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetFilesPerSetOk() (*int32, bool) {
+	if o == nil || IsNil(o.FilesPerSet) {
+		return nil, false
+	}
+	return o.FilesPerSet, true
+}
+
+// HasFilesPerSet returns a boolean if a field has been set.
+func (o *CDB) HasFilesPerSet() bool {
+	if o != nil && !IsNil(o.FilesPerSet) {
+		return true
+	}
+
+	return false
+}
+
+// SetFilesPerSet gets a reference to the given int32 and assigns it to the FilesPerSet field.
+func (o *CDB) SetFilesPerSet(v int32) {
+	o.FilesPerSet = &v
+}
+
+// GetEncryptedLinkingEnabled returns the EncryptedLinkingEnabled field value if set, zero value otherwise.
+func (o *CDB) GetEncryptedLinkingEnabled() bool {
+	if o == nil || IsNil(o.EncryptedLinkingEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.EncryptedLinkingEnabled
+}
+
+// GetEncryptedLinkingEnabledOk returns a tuple with the EncryptedLinkingEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetEncryptedLinkingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.EncryptedLinkingEnabled) {
+		return nil, false
+	}
+	return o.EncryptedLinkingEnabled, true
+}
+
+// HasEncryptedLinkingEnabled returns a boolean if a field has been set.
+func (o *CDB) HasEncryptedLinkingEnabled() bool {
+	if o != nil && !IsNil(o.EncryptedLinkingEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncryptedLinkingEnabled gets a reference to the given bool and assigns it to the EncryptedLinkingEnabled field.
+func (o *CDB) SetEncryptedLinkingEnabled(v bool) {
+	o.EncryptedLinkingEnabled = &v
+}
+
+// GetCompressedLinkingEnabled returns the CompressedLinkingEnabled field value if set, zero value otherwise.
+func (o *CDB) GetCompressedLinkingEnabled() bool {
+	if o == nil || IsNil(o.CompressedLinkingEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.CompressedLinkingEnabled
+}
+
+// GetCompressedLinkingEnabledOk returns a tuple with the CompressedLinkingEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetCompressedLinkingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.CompressedLinkingEnabled) {
+		return nil, false
+	}
+	return o.CompressedLinkingEnabled, true
+}
+
+// HasCompressedLinkingEnabled returns a boolean if a field has been set.
+func (o *CDB) HasCompressedLinkingEnabled() bool {
+	if o != nil && !IsNil(o.CompressedLinkingEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompressedLinkingEnabled gets a reference to the given bool and assigns it to the CompressedLinkingEnabled field.
+func (o *CDB) SetCompressedLinkingEnabled(v bool) {
+	o.CompressedLinkingEnabled = &v
+}
+
+// GetBandwidthLimit returns the BandwidthLimit field value if set, zero value otherwise.
+func (o *CDB) GetBandwidthLimit() int32 {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		var ret int32
+		return ret
+	}
+	return *o.BandwidthLimit
+}
+
+// GetBandwidthLimitOk returns a tuple with the BandwidthLimit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetBandwidthLimitOk() (*int32, bool) {
+	if o == nil || IsNil(o.BandwidthLimit) {
+		return nil, false
+	}
+	return o.BandwidthLimit, true
+}
+
+// HasBandwidthLimit returns a boolean if a field has been set.
+func (o *CDB) HasBandwidthLimit() bool {
+	if o != nil && !IsNil(o.BandwidthLimit) {
+		return true
+	}
+
+	return false
+}
+
+// SetBandwidthLimit gets a reference to the given int32 and assigns it to the BandwidthLimit field.
+func (o *CDB) SetBandwidthLimit(v int32) {
+	o.BandwidthLimit = &v
+}
+
+// GetNumberOfConnections returns the NumberOfConnections field value if set, zero value otherwise.
+func (o *CDB) GetNumberOfConnections() int32 {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		var ret int32
+		return ret
+	}
+	return *o.NumberOfConnections
+}
+
+// GetNumberOfConnectionsOk returns a tuple with the NumberOfConnections field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetNumberOfConnectionsOk() (*int32, bool) {
+	if o == nil || IsNil(o.NumberOfConnections) {
+		return nil, false
+	}
+	return o.NumberOfConnections, true
+}
+
+// HasNumberOfConnections returns a boolean if a field has been set.
+func (o *CDB) HasNumberOfConnections() bool {
+	if o != nil && !IsNil(o.NumberOfConnections) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumberOfConnections gets a reference to the given int32 and assigns it to the NumberOfConnections field.
+func (o *CDB) SetNumberOfConnections(v int32) {
+	o.NumberOfConnections = &v
+}
+
+// GetBackupLevelEnabled returns the BackupLevelEnabled field value if set, zero value otherwise.
+func (o *CDB) GetBackupLevelEnabled() bool {
+	if o == nil || IsNil(o.BackupLevelEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.BackupLevelEnabled
+}
+
+// GetBackupLevelEnabledOk returns a tuple with the BackupLevelEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetBackupLevelEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.BackupLevelEnabled) {
+		return nil, false
+	}
+	return o.BackupLevelEnabled, true
+}
+
+// HasBackupLevelEnabled returns a boolean if a field has been set.
+func (o *CDB) HasBackupLevelEnabled() bool {
+	if o != nil && !IsNil(o.BackupLevelEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupLevelEnabled gets a reference to the given bool and assigns it to the BackupLevelEnabled field.
+func (o *CDB) SetBackupLevelEnabled(v bool) {
+	o.BackupLevelEnabled = &v
+}
+
+// GetCheckLogical returns the CheckLogical field value if set, zero value otherwise.
+func (o *CDB) GetCheckLogical() bool {
+	if o == nil || IsNil(o.CheckLogical) {
+		var ret bool
+		return ret
+	}
+	return *o.CheckLogical
+}
+
+// GetCheckLogicalOk returns a tuple with the CheckLogical field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetCheckLogicalOk() (*bool, bool) {
+	if o == nil || IsNil(o.CheckLogical) {
+		return nil, false
+	}
+	return o.CheckLogical, true
+}
+
+// HasCheckLogical returns a boolean if a field has been set.
+func (o *CDB) HasCheckLogical() bool {
+	if o != nil && !IsNil(o.CheckLogical) {
+		return true
+	}
+
+	return false
+}
+
+// SetCheckLogical gets a reference to the given bool and assigns it to the CheckLogical field.
+func (o *CDB) SetCheckLogical(v bool) {
+	o.CheckLogical = &v
 }
 
 // GetJdbcConnectionString returns the JdbcConnectionString field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1060,6 +1406,102 @@ func (o *CDB) SetIsTdeKeystorePasswordSet(v bool) {
 	o.IsTdeKeystorePasswordSet = &v
 }
 
+// GetEnvironmentUserRef returns the EnvironmentUserRef field value if set, zero value otherwise.
+func (o *CDB) GetEnvironmentUserRef() string {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		var ret string
+		return ret
+	}
+	return *o.EnvironmentUserRef
+}
+
+// GetEnvironmentUserRefOk returns a tuple with the EnvironmentUserRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetEnvironmentUserRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvironmentUserRef) {
+		return nil, false
+	}
+	return o.EnvironmentUserRef, true
+}
+
+// HasEnvironmentUserRef returns a boolean if a field has been set.
+func (o *CDB) HasEnvironmentUserRef() bool {
+	if o != nil && !IsNil(o.EnvironmentUserRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvironmentUserRef gets a reference to the given string and assigns it to the EnvironmentUserRef field.
+func (o *CDB) SetEnvironmentUserRef(v string) {
+	o.EnvironmentUserRef = &v
+}
+
+// GetDbUsername returns the DbUsername field value if set, zero value otherwise.
+func (o *CDB) GetDbUsername() string {
+	if o == nil || IsNil(o.DbUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DbUsername
+}
+
+// GetDbUsernameOk returns a tuple with the DbUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetDbUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DbUsername) {
+		return nil, false
+	}
+	return o.DbUsername, true
+}
+
+// HasDbUsername returns a boolean if a field has been set.
+func (o *CDB) HasDbUsername() bool {
+	if o != nil && !IsNil(o.DbUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDbUsername gets a reference to the given string and assigns it to the DbUsername field.
+func (o *CDB) SetDbUsername(v string) {
+	o.DbUsername = &v
+}
+
+// GetNonSysUsername returns the NonSysUsername field value if set, zero value otherwise.
+func (o *CDB) GetNonSysUsername() string {
+	if o == nil || IsNil(o.NonSysUsername) {
+		var ret string
+		return ret
+	}
+	return *o.NonSysUsername
+}
+
+// GetNonSysUsernameOk returns a tuple with the NonSysUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CDB) GetNonSysUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.NonSysUsername) {
+		return nil, false
+	}
+	return o.NonSysUsername, true
+}
+
+// HasNonSysUsername returns a boolean if a field has been set.
+func (o *CDB) HasNonSysUsername() bool {
+	if o != nil && !IsNil(o.NonSysUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetNonSysUsername gets a reference to the given string and assigns it to the NonSysUsername field.
+func (o *CDB) SetNonSysUsername(v string) {
+	o.NonSysUsername = &v
+}
+
 func (o CDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1075,6 +1517,12 @@ func (o CDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.DiagnoseNoLoggingFaults) {
+		toSerialize["diagnose_no_logging_faults"] = o.DiagnoseNoLoggingFaults
 	}
 	if !IsNil(o.NamespaceId) {
 		toSerialize["namespace_id"] = o.NamespaceId
@@ -1093,6 +1541,30 @@ func (o CDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Size.IsSet() {
 		toSerialize["size"] = o.Size.Get()
+	}
+	if !IsNil(o.RmanChannels) {
+		toSerialize["rman_channels"] = o.RmanChannels
+	}
+	if !IsNil(o.FilesPerSet) {
+		toSerialize["files_per_set"] = o.FilesPerSet
+	}
+	if !IsNil(o.EncryptedLinkingEnabled) {
+		toSerialize["encrypted_linking_enabled"] = o.EncryptedLinkingEnabled
+	}
+	if !IsNil(o.CompressedLinkingEnabled) {
+		toSerialize["compressed_linking_enabled"] = o.CompressedLinkingEnabled
+	}
+	if !IsNil(o.BandwidthLimit) {
+		toSerialize["bandwidth_limit"] = o.BandwidthLimit
+	}
+	if !IsNil(o.NumberOfConnections) {
+		toSerialize["number_of_connections"] = o.NumberOfConnections
+	}
+	if !IsNil(o.BackupLevelEnabled) {
+		toSerialize["backup_level_enabled"] = o.BackupLevelEnabled
+	}
+	if !IsNil(o.CheckLogical) {
+		toSerialize["check_logical"] = o.CheckLogical
 	}
 	if o.JdbcConnectionString.IsSet() {
 		toSerialize["jdbc_connection_string"] = o.JdbcConnectionString.Get()
@@ -1153,6 +1625,15 @@ func (o CDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsTdeKeystorePasswordSet) {
 		toSerialize["is_tde_keystore_password_set"] = o.IsTdeKeystorePasswordSet
+	}
+	if !IsNil(o.EnvironmentUserRef) {
+		toSerialize["environment_user_ref"] = o.EnvironmentUserRef
+	}
+	if !IsNil(o.DbUsername) {
+		toSerialize["db_username"] = o.DbUsername
+	}
+	if !IsNil(o.NonSysUsername) {
+		toSerialize["non_sys_username"] = o.NonSysUsername
 	}
 	return toSerialize, nil
 }

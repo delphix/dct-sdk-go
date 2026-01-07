@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ var _ MappedNullable = &GlobalTagPermissions{}
 
 // GlobalTagPermissions An instance of using a tag to scope an access group.
 type GlobalTagPermissions struct {
+	// Unique ID for this GlobalTagPermissions.
+	Id *string `json:"id,omitempty"`
 	// Name of the access group with a scope that includes this tag.
 	AccessGroupName *string `json:"access_group_name,omitempty"`
 	// ID of the access group with a scope that includes this tag.
@@ -50,6 +52,38 @@ func NewGlobalTagPermissions() *GlobalTagPermissions {
 func NewGlobalTagPermissionsWithDefaults() *GlobalTagPermissions {
 	this := GlobalTagPermissions{}
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *GlobalTagPermissions) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalTagPermissions) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *GlobalTagPermissions) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *GlobalTagPermissions) SetId(v string) {
+	o.Id = &v
 }
 
 // GetAccessGroupName returns the AccessGroupName field value if set, zero value otherwise.
@@ -286,6 +320,9 @@ func (o GlobalTagPermissions) MarshalJSON() ([]byte, error) {
 
 func (o GlobalTagPermissions) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.AccessGroupName) {
 		toSerialize["access_group_name"] = o.AccessGroupName
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -26,6 +26,12 @@ type DiscoveryPolicy struct {
 	Name *string `json:"name,omitempty"`
 	// A description of this discovery policy.
 	Description NullableString `json:"description,omitempty"`
+	// Whether or not this discovery policy is managed by DCT.
+	DctManaged *bool `json:"dct_managed,omitempty"`
+	// The ID of the account who created this discovery policy.
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The account name of the DCT user who created this discovery policy.
+	AccountName *string `json:"account_name,omitempty"`
 	// The method used to discover sensitive data.
 	DiscoveryMethod *string `json:"discovery_method,omitempty"`
 	// The confidence threshold that must be met or exceeded to make an assignment. This is an integer from 1-100.
@@ -159,6 +165,102 @@ func (o *DiscoveryPolicy) SetDescriptionNil() {
 // UnsetDescription ensures that no value is present for Description, not even an explicit nil
 func (o *DiscoveryPolicy) UnsetDescription() {
 	o.Description.Unset()
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *DiscoveryPolicy) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DiscoveryPolicy) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *DiscoveryPolicy) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *DiscoveryPolicy) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *DiscoveryPolicy) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DiscoveryPolicy) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *DiscoveryPolicy) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *DiscoveryPolicy) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *DiscoveryPolicy) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DiscoveryPolicy) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *DiscoveryPolicy) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *DiscoveryPolicy) SetAccountName(v string) {
+	o.AccountName = &v
 }
 
 // GetDiscoveryMethod returns the DiscoveryMethod field value if set, zero value otherwise.
@@ -359,6 +461,15 @@ func (o DiscoveryPolicy) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
 	}
 	if !IsNil(o.DiscoveryMethod) {
 		toSerialize["discovery_method"] = o.DiscoveryMethod

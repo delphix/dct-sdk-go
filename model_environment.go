@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -34,6 +34,8 @@ type Environment struct {
 	Namespace NullableString `json:"namespace,omitempty"`
 	// A reference to the Engine that this Environment connection is associated with.
 	EngineId *string `json:"engine_id,omitempty"`
+	// A reference to the Engine that this Environment connection is associated with.
+	EngineName *string `json:"engine_name,omitempty"`
 	// True if this environment is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
 	// Flag indicating whether the data transfer is encrypted or not.
@@ -46,6 +48,8 @@ type Environment struct {
 	ClusterHome *string `json:"cluster_home,omitempty"`
 	// Cluster name for Oracle RAC environment.
 	ClusterName *string `json:"cluster_name,omitempty"`
+	// Cluster user for Oracle RAC environment.
+	ClusterUser *string `json:"cluster_user,omitempty"`
 	// The Single Client Access Name of the cluster (11.2 and greater clusters only).
 	Scan *string `json:"scan,omitempty"`
 	// The default remote_listener parameter to be used for databases on the cluster.
@@ -66,6 +70,12 @@ type Environment struct {
 	OsType *string `json:"os_type,omitempty"`
 	// Environment users associated with this environment.
 	EnvUsers []EnvironmentUser `json:"env_users,omitempty"`
+	// The username of the SAP ASE database user.
+	AseDbUserName *string `json:"ase_db_user_name,omitempty"`
+	// True if SAP ASE environment configured with TLS/SSL to discover the SAP ASE instances.
+	AseEnableTls *bool `json:"ase_enable_tls,omitempty"`
+	// If True, ASE database connection will skip the server certificate validation during the TLS/SSL handshake.
+	AseSkipServerCertificateValidation *bool `json:"ase_skip_server_certificate_validation,omitempty"`
 }
 
 // NewEnvironment instantiates a new Environment object
@@ -319,6 +329,38 @@ func (o *Environment) SetEngineId(v string) {
 	o.EngineId = &v
 }
 
+// GetEngineName returns the EngineName field value if set, zero value otherwise.
+func (o *Environment) GetEngineName() string {
+	if o == nil || IsNil(o.EngineName) {
+		var ret string
+		return ret
+	}
+	return *o.EngineName
+}
+
+// GetEngineNameOk returns a tuple with the EngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.EngineName) {
+		return nil, false
+	}
+	return o.EngineName, true
+}
+
+// HasEngineName returns a boolean if a field has been set.
+func (o *Environment) HasEngineName() bool {
+	if o != nil && !IsNil(o.EngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetEngineName gets a reference to the given string and assigns it to the EngineName field.
+func (o *Environment) SetEngineName(v string) {
+	o.EngineName = &v
+}
+
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *Environment) GetEnabled() bool {
 	if o == nil || IsNil(o.Enabled) {
@@ -509,6 +551,38 @@ func (o *Environment) HasClusterName() bool {
 // SetClusterName gets a reference to the given string and assigns it to the ClusterName field.
 func (o *Environment) SetClusterName(v string) {
 	o.ClusterName = &v
+}
+
+// GetClusterUser returns the ClusterUser field value if set, zero value otherwise.
+func (o *Environment) GetClusterUser() string {
+	if o == nil || IsNil(o.ClusterUser) {
+		var ret string
+		return ret
+	}
+	return *o.ClusterUser
+}
+
+// GetClusterUserOk returns a tuple with the ClusterUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetClusterUserOk() (*string, bool) {
+	if o == nil || IsNil(o.ClusterUser) {
+		return nil, false
+	}
+	return o.ClusterUser, true
+}
+
+// HasClusterUser returns a boolean if a field has been set.
+func (o *Environment) HasClusterUser() bool {
+	if o != nil && !IsNil(o.ClusterUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetClusterUser gets a reference to the given string and assigns it to the ClusterUser field.
+func (o *Environment) SetClusterUser(v string) {
+	o.ClusterUser = &v
 }
 
 // GetScan returns the Scan field value if set, zero value otherwise.
@@ -831,6 +905,102 @@ func (o *Environment) SetEnvUsers(v []EnvironmentUser) {
 	o.EnvUsers = v
 }
 
+// GetAseDbUserName returns the AseDbUserName field value if set, zero value otherwise.
+func (o *Environment) GetAseDbUserName() string {
+	if o == nil || IsNil(o.AseDbUserName) {
+		var ret string
+		return ret
+	}
+	return *o.AseDbUserName
+}
+
+// GetAseDbUserNameOk returns a tuple with the AseDbUserName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetAseDbUserNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AseDbUserName) {
+		return nil, false
+	}
+	return o.AseDbUserName, true
+}
+
+// HasAseDbUserName returns a boolean if a field has been set.
+func (o *Environment) HasAseDbUserName() bool {
+	if o != nil && !IsNil(o.AseDbUserName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbUserName gets a reference to the given string and assigns it to the AseDbUserName field.
+func (o *Environment) SetAseDbUserName(v string) {
+	o.AseDbUserName = &v
+}
+
+// GetAseEnableTls returns the AseEnableTls field value if set, zero value otherwise.
+func (o *Environment) GetAseEnableTls() bool {
+	if o == nil || IsNil(o.AseEnableTls) {
+		var ret bool
+		return ret
+	}
+	return *o.AseEnableTls
+}
+
+// GetAseEnableTlsOk returns a tuple with the AseEnableTls field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetAseEnableTlsOk() (*bool, bool) {
+	if o == nil || IsNil(o.AseEnableTls) {
+		return nil, false
+	}
+	return o.AseEnableTls, true
+}
+
+// HasAseEnableTls returns a boolean if a field has been set.
+func (o *Environment) HasAseEnableTls() bool {
+	if o != nil && !IsNil(o.AseEnableTls) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseEnableTls gets a reference to the given bool and assigns it to the AseEnableTls field.
+func (o *Environment) SetAseEnableTls(v bool) {
+	o.AseEnableTls = &v
+}
+
+// GetAseSkipServerCertificateValidation returns the AseSkipServerCertificateValidation field value if set, zero value otherwise.
+func (o *Environment) GetAseSkipServerCertificateValidation() bool {
+	if o == nil || IsNil(o.AseSkipServerCertificateValidation) {
+		var ret bool
+		return ret
+	}
+	return *o.AseSkipServerCertificateValidation
+}
+
+// GetAseSkipServerCertificateValidationOk returns a tuple with the AseSkipServerCertificateValidation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Environment) GetAseSkipServerCertificateValidationOk() (*bool, bool) {
+	if o == nil || IsNil(o.AseSkipServerCertificateValidation) {
+		return nil, false
+	}
+	return o.AseSkipServerCertificateValidation, true
+}
+
+// HasAseSkipServerCertificateValidation returns a boolean if a field has been set.
+func (o *Environment) HasAseSkipServerCertificateValidation() bool {
+	if o != nil && !IsNil(o.AseSkipServerCertificateValidation) {
+		return true
+	}
+
+	return false
+}
+
+// SetAseSkipServerCertificateValidation gets a reference to the given bool and assigns it to the AseSkipServerCertificateValidation field.
+func (o *Environment) SetAseSkipServerCertificateValidation(v bool) {
+	o.AseSkipServerCertificateValidation = &v
+}
+
 func (o Environment) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -862,6 +1032,9 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
 	}
+	if !IsNil(o.EngineName) {
+		toSerialize["engine_name"] = o.EngineName
+	}
 	if !IsNil(o.Enabled) {
 		toSerialize["enabled"] = o.Enabled
 	}
@@ -879,6 +1052,9 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ClusterName) {
 		toSerialize["cluster_name"] = o.ClusterName
+	}
+	if !IsNil(o.ClusterUser) {
+		toSerialize["cluster_user"] = o.ClusterUser
 	}
 	if !IsNil(o.Scan) {
 		toSerialize["scan"] = o.Scan
@@ -909,6 +1085,15 @@ func (o Environment) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EnvUsers) {
 		toSerialize["env_users"] = o.EnvUsers
+	}
+	if !IsNil(o.AseDbUserName) {
+		toSerialize["ase_db_user_name"] = o.AseDbUserName
+	}
+	if !IsNil(o.AseEnableTls) {
+		toSerialize["ase_enable_tls"] = o.AseEnableTls
+	}
+	if !IsNil(o.AseSkipServerCertificateValidation) {
+		toSerialize["ase_skip_server_certificate_validation"] = o.AseSkipServerCertificateValidation
 	}
 	return toSerialize, nil
 }

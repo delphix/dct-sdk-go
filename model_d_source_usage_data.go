@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ var _ MappedNullable = &DSourceUsageData{}
 
 // DSourceUsageData struct for DSourceUsageData
 type DSourceUsageData struct {
+	// The dSource id.
+	DsourceId *string `json:"dsource_id,omitempty"`
 	// The name of the engine the dSource belongs to.
 	EngineName *string `json:"engine_name,omitempty"`
 	// The name of the dSource
@@ -47,6 +49,38 @@ func NewDSourceUsageData() *DSourceUsageData {
 func NewDSourceUsageDataWithDefaults() *DSourceUsageData {
 	this := DSourceUsageData{}
 	return &this
+}
+
+// GetDsourceId returns the DsourceId field value if set, zero value otherwise.
+func (o *DSourceUsageData) GetDsourceId() string {
+	if o == nil || IsNil(o.DsourceId) {
+		var ret string
+		return ret
+	}
+	return *o.DsourceId
+}
+
+// GetDsourceIdOk returns a tuple with the DsourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSourceUsageData) GetDsourceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DsourceId) {
+		return nil, false
+	}
+	return o.DsourceId, true
+}
+
+// HasDsourceId returns a boolean if a field has been set.
+func (o *DSourceUsageData) HasDsourceId() bool {
+	if o != nil && !IsNil(o.DsourceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDsourceId gets a reference to the given string and assigns it to the DsourceId field.
+func (o *DSourceUsageData) SetDsourceId(v string) {
+	o.DsourceId = &v
 }
 
 // GetEngineName returns the EngineName field value if set, zero value otherwise.
@@ -219,6 +253,9 @@ func (o DSourceUsageData) MarshalJSON() ([]byte, error) {
 
 func (o DSourceUsageData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DsourceId) {
+		toSerialize["dsource_id"] = o.DsourceId
+	}
 	if !IsNil(o.EngineName) {
 		toSerialize["engine_name"] = o.EngineName
 	}

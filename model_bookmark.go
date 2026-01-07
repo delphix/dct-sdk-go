@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -66,6 +66,20 @@ type Bookmark struct {
 	SsBookmarkErrors []string `json:"ss_bookmark_errors,omitempty"`
 	// Type of the bookmark, either PUBLIC or PRIVATE.
 	BookmarkType *string `json:"bookmark_type,omitempty"`
+	// The namespace id of this bookmark.
+	NamespaceId *string `json:"namespace_id,omitempty"`
+	// The namespace name of this bookmark.
+	NamespaceName *string `json:"namespace_name,omitempty"`
+	// Is this a replicated bookmark.
+	IsReplica *bool `json:"is_replica,omitempty"`
+	// Id of the parent bookmark from which this bookmark was replicated.
+	PrimaryObjectId *string `json:"primary_object_id,omitempty"`
+	// The ID of the parent engine from which replication was done.
+	PrimaryEngineId *string `json:"primary_engine_id,omitempty"`
+	// The name of the parent engine from which replication was done.
+	PrimaryEngineName *string `json:"primary_engine_name,omitempty"`
+	// The list of replicas replicated from this object.
+	Replicas []Replica `json:"replicas,omitempty"`
 	// The tags to be created for this Bookmark.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -808,6 +822,230 @@ func (o *Bookmark) SetBookmarkType(v string) {
 	o.BookmarkType = &v
 }
 
+// GetNamespaceId returns the NamespaceId field value if set, zero value otherwise.
+func (o *Bookmark) GetNamespaceId() string {
+	if o == nil || IsNil(o.NamespaceId) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceId
+}
+
+// GetNamespaceIdOk returns a tuple with the NamespaceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetNamespaceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceId) {
+		return nil, false
+	}
+	return o.NamespaceId, true
+}
+
+// HasNamespaceId returns a boolean if a field has been set.
+func (o *Bookmark) HasNamespaceId() bool {
+	if o != nil && !IsNil(o.NamespaceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceId gets a reference to the given string and assigns it to the NamespaceId field.
+func (o *Bookmark) SetNamespaceId(v string) {
+	o.NamespaceId = &v
+}
+
+// GetNamespaceName returns the NamespaceName field value if set, zero value otherwise.
+func (o *Bookmark) GetNamespaceName() string {
+	if o == nil || IsNil(o.NamespaceName) {
+		var ret string
+		return ret
+	}
+	return *o.NamespaceName
+}
+
+// GetNamespaceNameOk returns a tuple with the NamespaceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetNamespaceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.NamespaceName) {
+		return nil, false
+	}
+	return o.NamespaceName, true
+}
+
+// HasNamespaceName returns a boolean if a field has been set.
+func (o *Bookmark) HasNamespaceName() bool {
+	if o != nil && !IsNil(o.NamespaceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespaceName gets a reference to the given string and assigns it to the NamespaceName field.
+func (o *Bookmark) SetNamespaceName(v string) {
+	o.NamespaceName = &v
+}
+
+// GetIsReplica returns the IsReplica field value if set, zero value otherwise.
+func (o *Bookmark) GetIsReplica() bool {
+	if o == nil || IsNil(o.IsReplica) {
+		var ret bool
+		return ret
+	}
+	return *o.IsReplica
+}
+
+// GetIsReplicaOk returns a tuple with the IsReplica field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetIsReplicaOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsReplica) {
+		return nil, false
+	}
+	return o.IsReplica, true
+}
+
+// HasIsReplica returns a boolean if a field has been set.
+func (o *Bookmark) HasIsReplica() bool {
+	if o != nil && !IsNil(o.IsReplica) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsReplica gets a reference to the given bool and assigns it to the IsReplica field.
+func (o *Bookmark) SetIsReplica(v bool) {
+	o.IsReplica = &v
+}
+
+// GetPrimaryObjectId returns the PrimaryObjectId field value if set, zero value otherwise.
+func (o *Bookmark) GetPrimaryObjectId() string {
+	if o == nil || IsNil(o.PrimaryObjectId) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryObjectId
+}
+
+// GetPrimaryObjectIdOk returns a tuple with the PrimaryObjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetPrimaryObjectIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryObjectId) {
+		return nil, false
+	}
+	return o.PrimaryObjectId, true
+}
+
+// HasPrimaryObjectId returns a boolean if a field has been set.
+func (o *Bookmark) HasPrimaryObjectId() bool {
+	if o != nil && !IsNil(o.PrimaryObjectId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryObjectId gets a reference to the given string and assigns it to the PrimaryObjectId field.
+func (o *Bookmark) SetPrimaryObjectId(v string) {
+	o.PrimaryObjectId = &v
+}
+
+// GetPrimaryEngineId returns the PrimaryEngineId field value if set, zero value otherwise.
+func (o *Bookmark) GetPrimaryEngineId() string {
+	if o == nil || IsNil(o.PrimaryEngineId) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEngineId
+}
+
+// GetPrimaryEngineIdOk returns a tuple with the PrimaryEngineId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetPrimaryEngineIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryEngineId) {
+		return nil, false
+	}
+	return o.PrimaryEngineId, true
+}
+
+// HasPrimaryEngineId returns a boolean if a field has been set.
+func (o *Bookmark) HasPrimaryEngineId() bool {
+	if o != nil && !IsNil(o.PrimaryEngineId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEngineId gets a reference to the given string and assigns it to the PrimaryEngineId field.
+func (o *Bookmark) SetPrimaryEngineId(v string) {
+	o.PrimaryEngineId = &v
+}
+
+// GetPrimaryEngineName returns the PrimaryEngineName field value if set, zero value otherwise.
+func (o *Bookmark) GetPrimaryEngineName() string {
+	if o == nil || IsNil(o.PrimaryEngineName) {
+		var ret string
+		return ret
+	}
+	return *o.PrimaryEngineName
+}
+
+// GetPrimaryEngineNameOk returns a tuple with the PrimaryEngineName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetPrimaryEngineNameOk() (*string, bool) {
+	if o == nil || IsNil(o.PrimaryEngineName) {
+		return nil, false
+	}
+	return o.PrimaryEngineName, true
+}
+
+// HasPrimaryEngineName returns a boolean if a field has been set.
+func (o *Bookmark) HasPrimaryEngineName() bool {
+	if o != nil && !IsNil(o.PrimaryEngineName) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryEngineName gets a reference to the given string and assigns it to the PrimaryEngineName field.
+func (o *Bookmark) SetPrimaryEngineName(v string) {
+	o.PrimaryEngineName = &v
+}
+
+// GetReplicas returns the Replicas field value if set, zero value otherwise.
+func (o *Bookmark) GetReplicas() []Replica {
+	if o == nil || IsNil(o.Replicas) {
+		var ret []Replica
+		return ret
+	}
+	return o.Replicas
+}
+
+// GetReplicasOk returns a tuple with the Replicas field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Bookmark) GetReplicasOk() ([]Replica, bool) {
+	if o == nil || IsNil(o.Replicas) {
+		return nil, false
+	}
+	return o.Replicas, true
+}
+
+// HasReplicas returns a boolean if a field has been set.
+func (o *Bookmark) HasReplicas() bool {
+	if o != nil && !IsNil(o.Replicas) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicas gets a reference to the given []Replica and assigns it to the Replicas field.
+func (o *Bookmark) SetReplicas(v []Replica) {
+	o.Replicas = v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Bookmark) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -915,6 +1153,27 @@ func (o Bookmark) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BookmarkType) {
 		toSerialize["bookmark_type"] = o.BookmarkType
+	}
+	if !IsNil(o.NamespaceId) {
+		toSerialize["namespace_id"] = o.NamespaceId
+	}
+	if !IsNil(o.NamespaceName) {
+		toSerialize["namespace_name"] = o.NamespaceName
+	}
+	if !IsNil(o.IsReplica) {
+		toSerialize["is_replica"] = o.IsReplica
+	}
+	if !IsNil(o.PrimaryObjectId) {
+		toSerialize["primary_object_id"] = o.PrimaryObjectId
+	}
+	if !IsNil(o.PrimaryEngineId) {
+		toSerialize["primary_engine_id"] = o.PrimaryEngineId
+	}
+	if !IsNil(o.PrimaryEngineName) {
+		toSerialize["primary_engine_name"] = o.PrimaryEngineName
+	}
+	if !IsNil(o.Replicas) {
+		toSerialize["replicas"] = o.Replicas
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

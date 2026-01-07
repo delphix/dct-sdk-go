@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -63,6 +63,16 @@ type StagingSource struct {
 	ArchiveMountPath *string `json:"archive_mount_path,omitempty"`
 	// The unique name of the database.
 	DatabaseUniqueName *string `json:"database_unique_name,omitempty"`
+	// The instance name of this staging database.
+	InstanceName *string `json:"instance_name,omitempty"`
+	// The total size of this Staging database, in bytes.
+	Size *int64 `json:"size,omitempty"`
+	CustomEnvVars []OracleCustomEnvVar `json:"custom_env_vars,omitempty"`
+	// The NFS version that was last used to mount this source.\"
+	NfsVersion *int32 `json:"nfs_version,omitempty"`
+	NfsVersionReason *NfsVersionReasonEnum `json:"nfs_version_reason,omitempty"`
+	// Flag indicating whether the data transfer is encrypted or not.
+	NfsEncryptionEnabled *bool `json:"nfs_encryption_enabled,omitempty"`
 }
 
 // NewStagingSource instantiates a new StagingSource object
@@ -898,6 +908,198 @@ func (o *StagingSource) SetDatabaseUniqueName(v string) {
 	o.DatabaseUniqueName = &v
 }
 
+// GetInstanceName returns the InstanceName field value if set, zero value otherwise.
+func (o *StagingSource) GetInstanceName() string {
+	if o == nil || IsNil(o.InstanceName) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceName
+}
+
+// GetInstanceNameOk returns a tuple with the InstanceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetInstanceNameOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceName) {
+		return nil, false
+	}
+	return o.InstanceName, true
+}
+
+// HasInstanceName returns a boolean if a field has been set.
+func (o *StagingSource) HasInstanceName() bool {
+	if o != nil && !IsNil(o.InstanceName) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceName gets a reference to the given string and assigns it to the InstanceName field.
+func (o *StagingSource) SetInstanceName(v string) {
+	o.InstanceName = &v
+}
+
+// GetSize returns the Size field value if set, zero value otherwise.
+func (o *StagingSource) GetSize() int64 {
+	if o == nil || IsNil(o.Size) {
+		var ret int64
+		return ret
+	}
+	return *o.Size
+}
+
+// GetSizeOk returns a tuple with the Size field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetSizeOk() (*int64, bool) {
+	if o == nil || IsNil(o.Size) {
+		return nil, false
+	}
+	return o.Size, true
+}
+
+// HasSize returns a boolean if a field has been set.
+func (o *StagingSource) HasSize() bool {
+	if o != nil && !IsNil(o.Size) {
+		return true
+	}
+
+	return false
+}
+
+// SetSize gets a reference to the given int64 and assigns it to the Size field.
+func (o *StagingSource) SetSize(v int64) {
+	o.Size = &v
+}
+
+// GetCustomEnvVars returns the CustomEnvVars field value if set, zero value otherwise.
+func (o *StagingSource) GetCustomEnvVars() []OracleCustomEnvVar {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		var ret []OracleCustomEnvVar
+		return ret
+	}
+	return o.CustomEnvVars
+}
+
+// GetCustomEnvVarsOk returns a tuple with the CustomEnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetCustomEnvVarsOk() ([]OracleCustomEnvVar, bool) {
+	if o == nil || IsNil(o.CustomEnvVars) {
+		return nil, false
+	}
+	return o.CustomEnvVars, true
+}
+
+// HasCustomEnvVars returns a boolean if a field has been set.
+func (o *StagingSource) HasCustomEnvVars() bool {
+	if o != nil && !IsNil(o.CustomEnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomEnvVars gets a reference to the given []OracleCustomEnvVar and assigns it to the CustomEnvVars field.
+func (o *StagingSource) SetCustomEnvVars(v []OracleCustomEnvVar) {
+	o.CustomEnvVars = v
+}
+
+// GetNfsVersion returns the NfsVersion field value if set, zero value otherwise.
+func (o *StagingSource) GetNfsVersion() int32 {
+	if o == nil || IsNil(o.NfsVersion) {
+		var ret int32
+		return ret
+	}
+	return *o.NfsVersion
+}
+
+// GetNfsVersionOk returns a tuple with the NfsVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetNfsVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.NfsVersion) {
+		return nil, false
+	}
+	return o.NfsVersion, true
+}
+
+// HasNfsVersion returns a boolean if a field has been set.
+func (o *StagingSource) HasNfsVersion() bool {
+	if o != nil && !IsNil(o.NfsVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersion gets a reference to the given int32 and assigns it to the NfsVersion field.
+func (o *StagingSource) SetNfsVersion(v int32) {
+	o.NfsVersion = &v
+}
+
+// GetNfsVersionReason returns the NfsVersionReason field value if set, zero value otherwise.
+func (o *StagingSource) GetNfsVersionReason() NfsVersionReasonEnum {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		var ret NfsVersionReasonEnum
+		return ret
+	}
+	return *o.NfsVersionReason
+}
+
+// GetNfsVersionReasonOk returns a tuple with the NfsVersionReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetNfsVersionReasonOk() (*NfsVersionReasonEnum, bool) {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		return nil, false
+	}
+	return o.NfsVersionReason, true
+}
+
+// HasNfsVersionReason returns a boolean if a field has been set.
+func (o *StagingSource) HasNfsVersionReason() bool {
+	if o != nil && !IsNil(o.NfsVersionReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersionReason gets a reference to the given NfsVersionReasonEnum and assigns it to the NfsVersionReason field.
+func (o *StagingSource) SetNfsVersionReason(v NfsVersionReasonEnum) {
+	o.NfsVersionReason = &v
+}
+
+// GetNfsEncryptionEnabled returns the NfsEncryptionEnabled field value if set, zero value otherwise.
+func (o *StagingSource) GetNfsEncryptionEnabled() bool {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.NfsEncryptionEnabled
+}
+
+// GetNfsEncryptionEnabledOk returns a tuple with the NfsEncryptionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StagingSource) GetNfsEncryptionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		return nil, false
+	}
+	return o.NfsEncryptionEnabled, true
+}
+
+// HasNfsEncryptionEnabled returns a boolean if a field has been set.
+func (o *StagingSource) HasNfsEncryptionEnabled() bool {
+	if o != nil && !IsNil(o.NfsEncryptionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsEncryptionEnabled gets a reference to the given bool and assigns it to the NfsEncryptionEnabled field.
+func (o *StagingSource) SetNfsEncryptionEnabled(v bool) {
+	o.NfsEncryptionEnabled = &v
+}
+
 func (o StagingSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -976,6 +1178,24 @@ func (o StagingSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DatabaseUniqueName) {
 		toSerialize["database_unique_name"] = o.DatabaseUniqueName
+	}
+	if !IsNil(o.InstanceName) {
+		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.Size) {
+		toSerialize["size"] = o.Size
+	}
+	if !IsNil(o.CustomEnvVars) {
+		toSerialize["custom_env_vars"] = o.CustomEnvVars
+	}
+	if !IsNil(o.NfsVersion) {
+		toSerialize["nfs_version"] = o.NfsVersion
+	}
+	if !IsNil(o.NfsVersionReason) {
+		toSerialize["nfs_version_reason"] = o.NfsVersionReason
+	}
+	if !IsNil(o.NfsEncryptionEnabled) {
+		toSerialize["nfs_encryption_enabled"] = o.NfsEncryptionEnabled
 	}
 	return toSerialize, nil
 }

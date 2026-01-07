@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -79,6 +79,9 @@ func (a *VirtualizationPoliciesAPIService) ApplyVirtualizationPolicyByIdOrNameEx
 	localVarFormParams := url.Values{}
 	if strlen(r.policyId) < 1 {
 		return localVarReturnValue, nil, reportError("policyId must have at least 1 elements")
+	}
+	if r.policyTargetObject == nil {
+		return localVarReturnValue, nil, reportError("policyTargetObject is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1494,6 +1497,9 @@ func (a *VirtualizationPoliciesAPIService) UnapplyVirtualizationPolicyByIdOrName
 	localVarFormParams := url.Values{}
 	if strlen(r.policyId) < 1 {
 		return localVarReturnValue, nil, reportError("policyId must have at least 1 elements")
+	}
+	if r.policyTargetObject == nil {
+		return localVarReturnValue, nil, reportError("policyTargetObject is required and must be specified")
 	}
 
 	// to determine the Content-Type header

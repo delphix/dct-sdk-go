@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -53,6 +53,8 @@ type Algorithm struct {
 	DctManaged *bool `json:"dct_managed,omitempty"`
 	// Whether this algorithm has invalid configuration. Config may become invalid following a DCT upgrade due to changes in the plugin. This field is only applicable to DCT managed algorithms.
 	ConfigInvalid *bool `json:"config_invalid,omitempty"`
+	// Whether this algorithm is defined in the plugin.
+	IsDefaultInstance *bool `json:"is_default_instance,omitempty"`
 	// The tags of this algorithm.
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -596,6 +598,38 @@ func (o *Algorithm) SetConfigInvalid(v bool) {
 	o.ConfigInvalid = &v
 }
 
+// GetIsDefaultInstance returns the IsDefaultInstance field value if set, zero value otherwise.
+func (o *Algorithm) GetIsDefaultInstance() bool {
+	if o == nil || IsNil(o.IsDefaultInstance) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDefaultInstance
+}
+
+// GetIsDefaultInstanceOk returns a tuple with the IsDefaultInstance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Algorithm) GetIsDefaultInstanceOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsDefaultInstance) {
+		return nil, false
+	}
+	return o.IsDefaultInstance, true
+}
+
+// HasIsDefaultInstance returns a boolean if a field has been set.
+func (o *Algorithm) HasIsDefaultInstance() bool {
+	if o != nil && !IsNil(o.IsDefaultInstance) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDefaultInstance gets a reference to the given bool and assigns it to the IsDefaultInstance field.
+func (o *Algorithm) SetIsDefaultInstance(v bool) {
+	o.IsDefaultInstance = &v
+}
+
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Algorithm) GetTags() []Tag {
 	if o == nil || IsNil(o.Tags) {
@@ -685,6 +719,9 @@ func (o Algorithm) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConfigInvalid) {
 		toSerialize["config_invalid"] = o.ConfigInvalid
+	}
+	if !IsNil(o.IsDefaultInstance) {
+		toSerialize["is_default_instance"] = o.IsDefaultInstance
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags

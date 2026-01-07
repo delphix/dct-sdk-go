@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -96,6 +96,12 @@ type RegisteredEngine struct {
 	HyperscaleTruststoreFilename NullableString `json:"hyperscale_truststore_filename,omitempty" validate:"regexp=^[a-zA-Z0-9_\\\\.]+$"`
 	// Password to read the truststore as expected by associated hyperscale instances. 
 	HyperscaleTruststorePassword NullableString `json:"hyperscale_truststore_password,omitempty"`
+	// true if the engine is using an object store (like AWS S3) to store data | false if the engine is using block storage to store its data | null if the engine is not initialized (unlikely) or the engine API version does not provide that information 
+	UsingObjectStorage NullableBool `json:"using_object_storage,omitempty"`
+	// true if the engine is using an object store (like AWS S3) to store data | false if the engine is using block storage to store its data | null if the engine is not initialized (unlikely) or the engine API version does not provide that information 
+	UsingContinuousVault NullableBool `json:"using_continuous_vault,omitempty"`
+	// The infrastructure or environment where the engine is deployed or built, including cloud provider and instance type.
+	Platform *string `json:"platform,omitempty"`
 }
 
 // NewRegisteredEngine instantiates a new RegisteredEngine object
@@ -1540,6 +1546,122 @@ func (o *RegisteredEngine) UnsetHyperscaleTruststorePassword() {
 	o.HyperscaleTruststorePassword.Unset()
 }
 
+// GetUsingObjectStorage returns the UsingObjectStorage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetUsingObjectStorage() bool {
+	if o == nil || IsNil(o.UsingObjectStorage.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.UsingObjectStorage.Get()
+}
+
+// GetUsingObjectStorageOk returns a tuple with the UsingObjectStorage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetUsingObjectStorageOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UsingObjectStorage.Get(), o.UsingObjectStorage.IsSet()
+}
+
+// HasUsingObjectStorage returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasUsingObjectStorage() bool {
+	if o != nil && o.UsingObjectStorage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUsingObjectStorage gets a reference to the given NullableBool and assigns it to the UsingObjectStorage field.
+func (o *RegisteredEngine) SetUsingObjectStorage(v bool) {
+	o.UsingObjectStorage.Set(&v)
+}
+// SetUsingObjectStorageNil sets the value for UsingObjectStorage to be an explicit nil
+func (o *RegisteredEngine) SetUsingObjectStorageNil() {
+	o.UsingObjectStorage.Set(nil)
+}
+
+// UnsetUsingObjectStorage ensures that no value is present for UsingObjectStorage, not even an explicit nil
+func (o *RegisteredEngine) UnsetUsingObjectStorage() {
+	o.UsingObjectStorage.Unset()
+}
+
+// GetUsingContinuousVault returns the UsingContinuousVault field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RegisteredEngine) GetUsingContinuousVault() bool {
+	if o == nil || IsNil(o.UsingContinuousVault.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.UsingContinuousVault.Get()
+}
+
+// GetUsingContinuousVaultOk returns a tuple with the UsingContinuousVault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RegisteredEngine) GetUsingContinuousVaultOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UsingContinuousVault.Get(), o.UsingContinuousVault.IsSet()
+}
+
+// HasUsingContinuousVault returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasUsingContinuousVault() bool {
+	if o != nil && o.UsingContinuousVault.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUsingContinuousVault gets a reference to the given NullableBool and assigns it to the UsingContinuousVault field.
+func (o *RegisteredEngine) SetUsingContinuousVault(v bool) {
+	o.UsingContinuousVault.Set(&v)
+}
+// SetUsingContinuousVaultNil sets the value for UsingContinuousVault to be an explicit nil
+func (o *RegisteredEngine) SetUsingContinuousVaultNil() {
+	o.UsingContinuousVault.Set(nil)
+}
+
+// UnsetUsingContinuousVault ensures that no value is present for UsingContinuousVault, not even an explicit nil
+func (o *RegisteredEngine) UnsetUsingContinuousVault() {
+	o.UsingContinuousVault.Unset()
+}
+
+// GetPlatform returns the Platform field value if set, zero value otherwise.
+func (o *RegisteredEngine) GetPlatform() string {
+	if o == nil || IsNil(o.Platform) {
+		var ret string
+		return ret
+	}
+	return *o.Platform
+}
+
+// GetPlatformOk returns a tuple with the Platform field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RegisteredEngine) GetPlatformOk() (*string, bool) {
+	if o == nil || IsNil(o.Platform) {
+		return nil, false
+	}
+	return o.Platform, true
+}
+
+// HasPlatform returns a boolean if a field has been set.
+func (o *RegisteredEngine) HasPlatform() bool {
+	if o != nil && !IsNil(o.Platform) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlatform gets a reference to the given string and assigns it to the Platform field.
+func (o *RegisteredEngine) SetPlatform(v string) {
+	o.Platform = &v
+}
+
 func (o RegisteredEngine) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1660,6 +1782,15 @@ func (o RegisteredEngine) ToMap() (map[string]interface{}, error) {
 	}
 	if o.HyperscaleTruststorePassword.IsSet() {
 		toSerialize["hyperscale_truststore_password"] = o.HyperscaleTruststorePassword.Get()
+	}
+	if o.UsingObjectStorage.IsSet() {
+		toSerialize["using_object_storage"] = o.UsingObjectStorage.Get()
+	}
+	if o.UsingContinuousVault.IsSet() {
+		toSerialize["using_continuous_vault"] = o.UsingContinuousVault.Get()
+	}
+	if !IsNil(o.Platform) {
+		toSerialize["platform"] = o.Platform
 	}
 	return toSerialize, nil
 }

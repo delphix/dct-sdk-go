@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,12 @@ type Classifier struct {
 	Framework *string `json:"framework,omitempty"`
 	// A description of this classifier.
 	Description NullableString `json:"description,omitempty"`
+	// Whether or not this classifier is managed by DCT.
+	DctManaged *bool `json:"dct_managed,omitempty"`
+	// The ID of the account who created this classifier.
+	AccountId *int64 `json:"account_id,omitempty"`
+	// The account name of the DCT user who created this classifier.
+	AccountName *string `json:"account_name,omitempty"`
 	// The id of the data class associated with this classifier.
 	DataClassId *string `json:"data_class_id,omitempty"`
 	// The name of the data class associated with this classifier.
@@ -195,6 +201,102 @@ func (o *Classifier) SetDescriptionNil() {
 // UnsetDescription ensures that no value is present for Description, not even an explicit nil
 func (o *Classifier) UnsetDescription() {
 	o.Description.Unset()
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *Classifier) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Classifier) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *Classifier) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *Classifier) SetDctManaged(v bool) {
+	o.DctManaged = &v
+}
+
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *Classifier) GetAccountId() int64 {
+	if o == nil || IsNil(o.AccountId) {
+		var ret int64
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Classifier) GetAccountIdOk() (*int64, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *Classifier) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given int64 and assigns it to the AccountId field.
+func (o *Classifier) SetAccountId(v int64) {
+	o.AccountId = &v
+}
+
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
+func (o *Classifier) GetAccountName() string {
+	if o == nil || IsNil(o.AccountName) {
+		var ret string
+		return ret
+	}
+	return *o.AccountName
+}
+
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Classifier) GetAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountName) {
+		return nil, false
+	}
+	return o.AccountName, true
+}
+
+// HasAccountName returns a boolean if a field has been set.
+func (o *Classifier) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
+func (o *Classifier) SetAccountName(v string) {
+	o.AccountName = &v
 }
 
 // GetDataClassId returns the DataClassId field value if set, zero value otherwise.
@@ -430,6 +532,15 @@ func (o Classifier) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
+	}
+	if !IsNil(o.AccountName) {
+		toSerialize["account_name"] = o.AccountName
 	}
 	if !IsNil(o.DataClassId) {
 		toSerialize["data_class_id"] = o.DataClassId

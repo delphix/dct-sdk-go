@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -20,6 +20,8 @@ var _ MappedNullable = &Consumer{}
 
 // Consumer Consumer object.
 type Consumer struct {
+	// Unique ID for this Consumer.
+	Id *string `json:"id,omitempty"`
 	// ID of the parent object.
 	ParentId *string `json:"parent_id,omitempty"`
 	// The name of the parent object.
@@ -43,6 +45,38 @@ func NewConsumer() *Consumer {
 func NewConsumerWithDefaults() *Consumer {
 	this := Consumer{}
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *Consumer) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Consumer) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *Consumer) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *Consumer) SetId(v string) {
+	o.Id = &v
 }
 
 // GetParentId returns the ParentId field value if set, zero value otherwise.
@@ -151,6 +185,9 @@ func (o Consumer) MarshalJSON() ([]byte, error) {
 
 func (o Consumer) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.ParentId) {
 		toSerialize["parent_id"] = o.ParentId
 	}

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -27,6 +27,8 @@ type DSource struct {
 	DatabaseType NullableString `json:"database_type,omitempty"`
 	// The container name of this dSource.
 	Name NullableString `json:"name,omitempty"`
+	// The container description of this dSource.
+	Description *string `json:"description,omitempty"`
 	// The namespace id of this dSource.
 	NamespaceId NullableString `json:"namespace_id,omitempty"`
 	// The namespace name of this dSource.
@@ -195,6 +197,8 @@ type DSource struct {
 	BandwidthLimit *int32 `json:"bandwidth_limit,omitempty"`
 	// Total number of transport connections to use during SnapSync.
 	NumberOfConnections *int32 `json:"number_of_connections,omitempty"`
+	// The ID of the associated DataConnection.
+	DataConnectionId *string `json:"data_connection_id,omitempty"`
 }
 
 // NewDSource instantiates a new DSource object
@@ -328,6 +332,38 @@ func (o *DSource) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *DSource) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *DSource) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *DSource) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *DSource) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetNamespaceId returns the NamespaceId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -3264,6 +3300,38 @@ func (o *DSource) SetNumberOfConnections(v int32) {
 	o.NumberOfConnections = &v
 }
 
+// GetDataConnectionId returns the DataConnectionId field value if set, zero value otherwise.
+func (o *DSource) GetDataConnectionId() string {
+	if o == nil || IsNil(o.DataConnectionId) {
+		var ret string
+		return ret
+	}
+	return *o.DataConnectionId
+}
+
+// GetDataConnectionIdOk returns a tuple with the DataConnectionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DSource) GetDataConnectionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DataConnectionId) {
+		return nil, false
+	}
+	return o.DataConnectionId, true
+}
+
+// HasDataConnectionId returns a boolean if a field has been set.
+func (o *DSource) HasDataConnectionId() bool {
+	if o != nil && !IsNil(o.DataConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataConnectionId gets a reference to the given string and assigns it to the DataConnectionId field.
+func (o *DSource) SetDataConnectionId(v string) {
+	o.DataConnectionId = &v
+}
+
 func (o DSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -3282,6 +3350,9 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	if o.NamespaceId.IsSet() {
 		toSerialize["namespace_id"] = o.NamespaceId.Get()
@@ -3540,6 +3611,9 @@ func (o DSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NumberOfConnections) {
 		toSerialize["number_of_connections"] = o.NumberOfConnections
+	}
+	if !IsNil(o.DataConnectionId) {
+		toSerialize["data_connection_id"] = o.DataConnectionId
 	}
 	return toSerialize, nil
 }

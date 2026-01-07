@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -25,9 +25,11 @@ type LicenseInfo struct {
 	VirtualizationEngineCount NullableInt32 `json:"virtualization_engine_count,omitempty"`
 	// The number of masking engines counting against the limit. Masking engines added to a Hyperscale Instance's pool do not count against the limit.
 	MaskingEngineCount NullableInt32 `json:"masking_engine_count,omitempty"`
-	// The maximum number of registered virtualization engines allowed for the current license tier.
+	// Deprecated. Virtualization engine count limits have been removed. This field will be removed in a future version.
+	// Deprecated
 	VirtualizationEngineCountLimit NullableInt32 `json:"virtualization_engine_count_limit,omitempty"`
-	// The maximum number of registered masking engines allowed for the current license tier. Masking engines added to a Hyperscale Instance's pool do not count against the limit.
+	// Deprecated. Masking engine count limits have been removed. This field will be removed in a future version.
+	// Deprecated
 	MaskingEngineCountLimit NullableInt32 `json:"masking_engine_count_limit,omitempty"`
 }
 
@@ -165,6 +167,7 @@ func (o *LicenseInfo) UnsetMaskingEngineCount() {
 }
 
 // GetVirtualizationEngineCountLimit returns the VirtualizationEngineCountLimit field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *LicenseInfo) GetVirtualizationEngineCountLimit() int32 {
 	if o == nil || IsNil(o.VirtualizationEngineCountLimit.Get()) {
 		var ret int32
@@ -176,6 +179,7 @@ func (o *LicenseInfo) GetVirtualizationEngineCountLimit() int32 {
 // GetVirtualizationEngineCountLimitOk returns a tuple with the VirtualizationEngineCountLimit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *LicenseInfo) GetVirtualizationEngineCountLimitOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -193,6 +197,7 @@ func (o *LicenseInfo) HasVirtualizationEngineCountLimit() bool {
 }
 
 // SetVirtualizationEngineCountLimit gets a reference to the given NullableInt32 and assigns it to the VirtualizationEngineCountLimit field.
+// Deprecated
 func (o *LicenseInfo) SetVirtualizationEngineCountLimit(v int32) {
 	o.VirtualizationEngineCountLimit.Set(&v)
 }
@@ -207,6 +212,7 @@ func (o *LicenseInfo) UnsetVirtualizationEngineCountLimit() {
 }
 
 // GetMaskingEngineCountLimit returns the MaskingEngineCountLimit field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *LicenseInfo) GetMaskingEngineCountLimit() int32 {
 	if o == nil || IsNil(o.MaskingEngineCountLimit.Get()) {
 		var ret int32
@@ -218,6 +224,7 @@ func (o *LicenseInfo) GetMaskingEngineCountLimit() int32 {
 // GetMaskingEngineCountLimitOk returns a tuple with the MaskingEngineCountLimit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *LicenseInfo) GetMaskingEngineCountLimitOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
@@ -235,6 +242,7 @@ func (o *LicenseInfo) HasMaskingEngineCountLimit() bool {
 }
 
 // SetMaskingEngineCountLimit gets a reference to the given NullableInt32 and assigns it to the MaskingEngineCountLimit field.
+// Deprecated
 func (o *LicenseInfo) SetMaskingEngineCountLimit(v int32) {
 	o.MaskingEngineCountLimit.Set(&v)
 }

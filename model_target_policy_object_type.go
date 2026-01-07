@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -28,6 +28,7 @@ const (
 	TARGETPOLICYOBJECTTYPE_DATASET_GROUP TargetPolicyObjectType = "DATASET_GROUP"
 	TARGETPOLICYOBJECTTYPE_REPLICATION_PROFILE TargetPolicyObjectType = "REPLICATION_PROFILE"
 	TARGETPOLICYOBJECTTYPE_NAMESPACE TargetPolicyObjectType = "NAMESPACE"
+	TARGETPOLICYOBJECTTYPE_STAGING_CDB TargetPolicyObjectType = "STAGING_CDB"
 )
 
 // All allowed values of TargetPolicyObjectType enum
@@ -39,6 +40,7 @@ var AllowedTargetPolicyObjectTypeEnumValues = []TargetPolicyObjectType{
 	"DATASET_GROUP",
 	"REPLICATION_PROFILE",
 	"NAMESPACE",
+	"STAGING_CDB",
 }
 
 func (v *TargetPolicyObjectType) UnmarshalJSON(src []byte) error {

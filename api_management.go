@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -989,30 +989,30 @@ func (a *ManagementAPIService) GetComplianceApplicationSettingsExecute(r ApiGetC
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetDctAnalyticsEventsRequest struct {
+type ApiGetDctProductTelemetryEventsRequest struct {
 	ctx context.Context
 	ApiService *ManagementAPIService
 	limit *int32
 }
 
 // The maximum number of items to return.
-func (r ApiGetDctAnalyticsEventsRequest) Limit(limit int32) ApiGetDctAnalyticsEventsRequest {
+func (r ApiGetDctProductTelemetryEventsRequest) Limit(limit int32) ApiGetDctProductTelemetryEventsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiGetDctAnalyticsEventsRequest) Execute() ([]BundleUploadEvent, *http.Response, error) {
-	return r.ApiService.GetDctAnalyticsEventsExecute(r)
+func (r ApiGetDctProductTelemetryEventsRequest) Execute() ([]BundleUploadEvent, *http.Response, error) {
+	return r.ApiService.GetDctProductTelemetryEventsExecute(r)
 }
 
 /*
-GetDctAnalyticsEvents Returns previous DCT Analytics bundle upload events
+GetDctProductTelemetryEvents Returns previous DCT Product Telemetry bundle upload events
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDctAnalyticsEventsRequest
+ @return ApiGetDctProductTelemetryEventsRequest
 */
-func (a *ManagementAPIService) GetDctAnalyticsEvents(ctx context.Context) ApiGetDctAnalyticsEventsRequest {
-	return ApiGetDctAnalyticsEventsRequest{
+func (a *ManagementAPIService) GetDctProductTelemetryEvents(ctx context.Context) ApiGetDctProductTelemetryEventsRequest {
+	return ApiGetDctProductTelemetryEventsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -1020,7 +1020,7 @@ func (a *ManagementAPIService) GetDctAnalyticsEvents(ctx context.Context) ApiGet
 
 // Execute executes the request
 //  @return []BundleUploadEvent
-func (a *ManagementAPIService) GetDctAnalyticsEventsExecute(r ApiGetDctAnalyticsEventsRequest) ([]BundleUploadEvent, *http.Response, error) {
+func (a *ManagementAPIService) GetDctProductTelemetryEventsExecute(r ApiGetDctProductTelemetryEventsRequest) ([]BundleUploadEvent, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1028,12 +1028,12 @@ func (a *ManagementAPIService) GetDctAnalyticsEventsExecute(r ApiGetDctAnalytics
 		localVarReturnValue  []BundleUploadEvent
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetDctAnalyticsEvents")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.GetDctProductTelemetryEvents")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/management/dct-analytics/events"
+	localVarPath := localBasePath + "/management/dct-product-telemetry/events"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3780,42 +3780,42 @@ func (a *ManagementAPIService) SearchHashicorpVaultsExecute(r ApiSearchHashicorp
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiTriggerDctAnalyticsBundleUploadRequest struct {
+type ApiTriggerDctProductTelemetryBundleUploadRequest struct {
 	ctx context.Context
 	ApiService *ManagementAPIService
 }
 
-func (r ApiTriggerDctAnalyticsBundleUploadRequest) Execute() (*http.Response, error) {
-	return r.ApiService.TriggerDctAnalyticsBundleUploadExecute(r)
+func (r ApiTriggerDctProductTelemetryBundleUploadRequest) Execute() (*http.Response, error) {
+	return r.ApiService.TriggerDctProductTelemetryBundleUploadExecute(r)
 }
 
 /*
-TriggerDctAnalyticsBundleUpload Triggers a DCT Analytics upload job immediately.
+TriggerDctProductTelemetryBundleUpload Triggers a DCT Product Telemetry upload job immediately.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTriggerDctAnalyticsBundleUploadRequest
+ @return ApiTriggerDctProductTelemetryBundleUploadRequest
 */
-func (a *ManagementAPIService) TriggerDctAnalyticsBundleUpload(ctx context.Context) ApiTriggerDctAnalyticsBundleUploadRequest {
-	return ApiTriggerDctAnalyticsBundleUploadRequest{
+func (a *ManagementAPIService) TriggerDctProductTelemetryBundleUpload(ctx context.Context) ApiTriggerDctProductTelemetryBundleUploadRequest {
+	return ApiTriggerDctProductTelemetryBundleUploadRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *ManagementAPIService) TriggerDctAnalyticsBundleUploadExecute(r ApiTriggerDctAnalyticsBundleUploadRequest) (*http.Response, error) {
+func (a *ManagementAPIService) TriggerDctProductTelemetryBundleUploadExecute(r ApiTriggerDctProductTelemetryBundleUploadRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.TriggerDctAnalyticsBundleUpload")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.TriggerDctProductTelemetryBundleUpload")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/management/dct-analytics/upload"
+	localVarPath := localBasePath + "/management/dct-product-telemetry/upload"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3993,6 +3993,106 @@ func (a *ManagementAPIService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUnregisterProductRequest struct {
+	ctx context.Context
+	ApiService *ManagementAPIService
+}
+
+func (r ApiUnregisterProductRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UnregisterProductExecute(r)
+}
+
+/*
+UnregisterProduct Unregister this DCT instance from DCS.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUnregisterProductRequest
+*/
+func (a *ManagementAPIService) UnregisterProduct(ctx context.Context) ApiUnregisterProductRequest {
+	return ApiUnregisterProductRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *ManagementAPIService) UnregisterProductExecute(r ApiUnregisterProductRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementAPIService.UnregisterProduct")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/management/product-registration-offline"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
 }
 
 type ApiUpdateApiClassificationRequest struct {

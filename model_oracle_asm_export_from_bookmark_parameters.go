@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -31,6 +31,7 @@ type OracleAsmExportFromBookmarkParameters struct {
 	// The environment user reference.
 	EnvironmentUserRef *string `json:"environment_user_ref,omitempty"`
 	// The password for the Transparent Data Encryption keystore associated with this database.
+	// Deprecated
 	TdeKeystorePassword *string `json:"tde_keystore_password,omitempty"`
 	TdeKeystoreConfigType *OracleTdeKeystoreConfigTypeEnum `json:"tde_keystore_config_type,omitempty"`
 	// SID of the exported database
@@ -50,8 +51,14 @@ type OracleAsmExportFromBookmarkParameters struct {
 	ParentTdeKeystorePassword *string `json:"parent_tde_keystore_password,omitempty"`
 	// Secret to be used while exporting and importing vPDB encryption keys.
 	TdeExportedKeyfileSecret *string `json:"tde_exported_keyfile_secret,omitempty"`
-	// Virtual database master encryption key id, as recorded in v$encryption_keys.key_id.
+	// PDB database master encryption key id, as recorded in v$encryption_keys.key_id.
 	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host. Required to export of PDB containing encrypted database files with isolated mode keystore.(Oracle Multitenant Only) 
+	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
+	// The password of the parent PDB keystore. (Oracle Multitenant Only)
+	ParentPdbTdeKeystorePassword *string `json:"parent_pdb_tde_keystore_password,omitempty"`
+	// The password for the isolated mode TDE keystore of the target PDB. (Oracle Multitenant Only)
+	TargetPdbTdeKeystorePassword *string `json:"target_pdb_tde_keystore_password,omitempty"`
 	// The Oracle Clusterware database name.
 	CrsDatabaseName *string `json:"crs_database_name,omitempty"`
 	// If specified, then take the exported database through recovery procedures, if necessary, to reach a consistent point.
@@ -64,6 +71,16 @@ type OracleAsmExportFromBookmarkParameters struct {
 	RecoveryModel *string `json:"recovery_model,omitempty"`
 	// Recovery model of the database (MSSql Only).
 	MirroringState *string `json:"mirroring_state,omitempty"`
+	// Whether to enable incremental V2P (Virtual to Physical) export. When enabled, the export will be configured for incremental backups.
+	IsIncrementalV2p *bool `json:"is_incremental_v2p,omitempty"`
+	// The frequency with which the incremental backup will be taken in minutes.
+	BackupFrequencyMinutes *int32 `json:"backup_frequency_minutes,omitempty"`
+	// Number of data streams to connect to the database for incremental backup.
+	RmanChannelsForIncrementalBackup *int32 `json:"rman_channels_for_incremental_backup,omitempty"`
+	// Number of data files to include in each RMAN backup set for incremental backup.
+	RmanFilesPerSetForIncrementalBackup *int32 `json:"rman_files_per_set_for_incremental_backup,omitempty"`
+	// Number of GigaBytes in which RMAN will break large files to back them up in parallel for incremental backup.
+	RmanFileSectionSizeInGbForIncrementalBackup *int32 `json:"rman_file_section_size_in_gb_for_incremental_backup,omitempty"`
 	// Default diskgroup for datafiles.
 	DefaultDataDiskgroup string `json:"default_data_diskgroup"`
 	// Diskgroup for archive logs. Optional as it is not required for PDB databases.
@@ -92,6 +109,14 @@ func NewOracleAsmExportFromBookmarkParameters(defaultDataDiskgroup string, bookm
 	this.RecoveryModel = &recoveryModel
 	var mirroringState string = "NONE"
 	this.MirroringState = &mirroringState
+	var backupFrequencyMinutes int32 = 30
+	this.BackupFrequencyMinutes = &backupFrequencyMinutes
+	var rmanChannelsForIncrementalBackup int32 = 8
+	this.RmanChannelsForIncrementalBackup = &rmanChannelsForIncrementalBackup
+	var rmanFilesPerSetForIncrementalBackup int32 = 5
+	this.RmanFilesPerSetForIncrementalBackup = &rmanFilesPerSetForIncrementalBackup
+	var rmanFileSectionSizeInGbForIncrementalBackup int32 = 0
+	this.RmanFileSectionSizeInGbForIncrementalBackup = &rmanFileSectionSizeInGbForIncrementalBackup
 	this.DefaultDataDiskgroup = defaultDataDiskgroup
 	var rmanChannels int32 = 8
 	this.RmanChannels = &rmanChannels
@@ -114,6 +139,14 @@ func NewOracleAsmExportFromBookmarkParametersWithDefaults() *OracleAsmExportFrom
 	this.RecoveryModel = &recoveryModel
 	var mirroringState string = "NONE"
 	this.MirroringState = &mirroringState
+	var backupFrequencyMinutes int32 = 30
+	this.BackupFrequencyMinutes = &backupFrequencyMinutes
+	var rmanChannelsForIncrementalBackup int32 = 8
+	this.RmanChannelsForIncrementalBackup = &rmanChannelsForIncrementalBackup
+	var rmanFilesPerSetForIncrementalBackup int32 = 5
+	this.RmanFilesPerSetForIncrementalBackup = &rmanFilesPerSetForIncrementalBackup
+	var rmanFileSectionSizeInGbForIncrementalBackup int32 = 0
+	this.RmanFileSectionSizeInGbForIncrementalBackup = &rmanFileSectionSizeInGbForIncrementalBackup
 	var rmanChannels int32 = 8
 	this.RmanChannels = &rmanChannels
 	var rmanFileSectionSizeInGb int32 = 0
@@ -250,6 +283,7 @@ func (o *OracleAsmExportFromBookmarkParameters) SetEnvironmentUserRef(v string) 
 }
 
 // GetTdeKeystorePassword returns the TdeKeystorePassword field value if set, zero value otherwise.
+// Deprecated
 func (o *OracleAsmExportFromBookmarkParameters) GetTdeKeystorePassword() string {
 	if o == nil || IsNil(o.TdeKeystorePassword) {
 		var ret string
@@ -260,6 +294,7 @@ func (o *OracleAsmExportFromBookmarkParameters) GetTdeKeystorePassword() string 
 
 // GetTdeKeystorePasswordOk returns a tuple with the TdeKeystorePassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *OracleAsmExportFromBookmarkParameters) GetTdeKeystorePasswordOk() (*string, bool) {
 	if o == nil || IsNil(o.TdeKeystorePassword) {
 		return nil, false
@@ -277,6 +312,7 @@ func (o *OracleAsmExportFromBookmarkParameters) HasTdeKeystorePassword() bool {
 }
 
 // SetTdeKeystorePassword gets a reference to the given string and assigns it to the TdeKeystorePassword field.
+// Deprecated
 func (o *OracleAsmExportFromBookmarkParameters) SetTdeKeystorePassword(v string) {
 	o.TdeKeystorePassword = &v
 }
@@ -634,6 +670,102 @@ func (o *OracleAsmExportFromBookmarkParameters) SetTdeKeyIdentifier(v string) {
 	o.TdeKeyIdentifier = &v
 }
 
+// GetParentPdbTdeKeystorePath returns the ParentPdbTdeKeystorePath field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetParentPdbTdeKeystorePath() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePath
+}
+
+// GetParentPdbTdeKeystorePathOk returns a tuple with the ParentPdbTdeKeystorePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetParentPdbTdeKeystorePathOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePath) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePath, true
+}
+
+// HasParentPdbTdeKeystorePath returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasParentPdbTdeKeystorePath() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePath gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePath field.
+func (o *OracleAsmExportFromBookmarkParameters) SetParentPdbTdeKeystorePath(v string) {
+	o.ParentPdbTdeKeystorePath = &v
+}
+
+// GetParentPdbTdeKeystorePassword returns the ParentPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetParentPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.ParentPdbTdeKeystorePassword
+}
+
+// GetParentPdbTdeKeystorePasswordOk returns a tuple with the ParentPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetParentPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.ParentPdbTdeKeystorePassword, true
+}
+
+// HasParentPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasParentPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.ParentPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentPdbTdeKeystorePassword gets a reference to the given string and assigns it to the ParentPdbTdeKeystorePassword field.
+func (o *OracleAsmExportFromBookmarkParameters) SetParentPdbTdeKeystorePassword(v string) {
+	o.ParentPdbTdeKeystorePassword = &v
+}
+
+// GetTargetPdbTdeKeystorePassword returns the TargetPdbTdeKeystorePassword field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetTargetPdbTdeKeystorePassword() string {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		var ret string
+		return ret
+	}
+	return *o.TargetPdbTdeKeystorePassword
+}
+
+// GetTargetPdbTdeKeystorePasswordOk returns a tuple with the TargetPdbTdeKeystorePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetTargetPdbTdeKeystorePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.TargetPdbTdeKeystorePassword) {
+		return nil, false
+	}
+	return o.TargetPdbTdeKeystorePassword, true
+}
+
+// HasTargetPdbTdeKeystorePassword returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasTargetPdbTdeKeystorePassword() bool {
+	if o != nil && !IsNil(o.TargetPdbTdeKeystorePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetPdbTdeKeystorePassword gets a reference to the given string and assigns it to the TargetPdbTdeKeystorePassword field.
+func (o *OracleAsmExportFromBookmarkParameters) SetTargetPdbTdeKeystorePassword(v string) {
+	o.TargetPdbTdeKeystorePassword = &v
+}
+
 // GetCrsDatabaseName returns the CrsDatabaseName field value if set, zero value otherwise.
 func (o *OracleAsmExportFromBookmarkParameters) GetCrsDatabaseName() string {
 	if o == nil || IsNil(o.CrsDatabaseName) {
@@ -824,6 +956,166 @@ func (o *OracleAsmExportFromBookmarkParameters) HasMirroringState() bool {
 // SetMirroringState gets a reference to the given string and assigns it to the MirroringState field.
 func (o *OracleAsmExportFromBookmarkParameters) SetMirroringState(v string) {
 	o.MirroringState = &v
+}
+
+// GetIsIncrementalV2p returns the IsIncrementalV2p field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetIsIncrementalV2p() bool {
+	if o == nil || IsNil(o.IsIncrementalV2p) {
+		var ret bool
+		return ret
+	}
+	return *o.IsIncrementalV2p
+}
+
+// GetIsIncrementalV2pOk returns a tuple with the IsIncrementalV2p field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetIsIncrementalV2pOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsIncrementalV2p) {
+		return nil, false
+	}
+	return o.IsIncrementalV2p, true
+}
+
+// HasIsIncrementalV2p returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasIsIncrementalV2p() bool {
+	if o != nil && !IsNil(o.IsIncrementalV2p) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsIncrementalV2p gets a reference to the given bool and assigns it to the IsIncrementalV2p field.
+func (o *OracleAsmExportFromBookmarkParameters) SetIsIncrementalV2p(v bool) {
+	o.IsIncrementalV2p = &v
+}
+
+// GetBackupFrequencyMinutes returns the BackupFrequencyMinutes field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetBackupFrequencyMinutes() int32 {
+	if o == nil || IsNil(o.BackupFrequencyMinutes) {
+		var ret int32
+		return ret
+	}
+	return *o.BackupFrequencyMinutes
+}
+
+// GetBackupFrequencyMinutesOk returns a tuple with the BackupFrequencyMinutes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetBackupFrequencyMinutesOk() (*int32, bool) {
+	if o == nil || IsNil(o.BackupFrequencyMinutes) {
+		return nil, false
+	}
+	return o.BackupFrequencyMinutes, true
+}
+
+// HasBackupFrequencyMinutes returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasBackupFrequencyMinutes() bool {
+	if o != nil && !IsNil(o.BackupFrequencyMinutes) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackupFrequencyMinutes gets a reference to the given int32 and assigns it to the BackupFrequencyMinutes field.
+func (o *OracleAsmExportFromBookmarkParameters) SetBackupFrequencyMinutes(v int32) {
+	o.BackupFrequencyMinutes = &v
+}
+
+// GetRmanChannelsForIncrementalBackup returns the RmanChannelsForIncrementalBackup field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetRmanChannelsForIncrementalBackup() int32 {
+	if o == nil || IsNil(o.RmanChannelsForIncrementalBackup) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanChannelsForIncrementalBackup
+}
+
+// GetRmanChannelsForIncrementalBackupOk returns a tuple with the RmanChannelsForIncrementalBackup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetRmanChannelsForIncrementalBackupOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanChannelsForIncrementalBackup) {
+		return nil, false
+	}
+	return o.RmanChannelsForIncrementalBackup, true
+}
+
+// HasRmanChannelsForIncrementalBackup returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasRmanChannelsForIncrementalBackup() bool {
+	if o != nil && !IsNil(o.RmanChannelsForIncrementalBackup) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanChannelsForIncrementalBackup gets a reference to the given int32 and assigns it to the RmanChannelsForIncrementalBackup field.
+func (o *OracleAsmExportFromBookmarkParameters) SetRmanChannelsForIncrementalBackup(v int32) {
+	o.RmanChannelsForIncrementalBackup = &v
+}
+
+// GetRmanFilesPerSetForIncrementalBackup returns the RmanFilesPerSetForIncrementalBackup field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetRmanFilesPerSetForIncrementalBackup() int32 {
+	if o == nil || IsNil(o.RmanFilesPerSetForIncrementalBackup) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanFilesPerSetForIncrementalBackup
+}
+
+// GetRmanFilesPerSetForIncrementalBackupOk returns a tuple with the RmanFilesPerSetForIncrementalBackup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetRmanFilesPerSetForIncrementalBackupOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanFilesPerSetForIncrementalBackup) {
+		return nil, false
+	}
+	return o.RmanFilesPerSetForIncrementalBackup, true
+}
+
+// HasRmanFilesPerSetForIncrementalBackup returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasRmanFilesPerSetForIncrementalBackup() bool {
+	if o != nil && !IsNil(o.RmanFilesPerSetForIncrementalBackup) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanFilesPerSetForIncrementalBackup gets a reference to the given int32 and assigns it to the RmanFilesPerSetForIncrementalBackup field.
+func (o *OracleAsmExportFromBookmarkParameters) SetRmanFilesPerSetForIncrementalBackup(v int32) {
+	o.RmanFilesPerSetForIncrementalBackup = &v
+}
+
+// GetRmanFileSectionSizeInGbForIncrementalBackup returns the RmanFileSectionSizeInGbForIncrementalBackup field value if set, zero value otherwise.
+func (o *OracleAsmExportFromBookmarkParameters) GetRmanFileSectionSizeInGbForIncrementalBackup() int32 {
+	if o == nil || IsNil(o.RmanFileSectionSizeInGbForIncrementalBackup) {
+		var ret int32
+		return ret
+	}
+	return *o.RmanFileSectionSizeInGbForIncrementalBackup
+}
+
+// GetRmanFileSectionSizeInGbForIncrementalBackupOk returns a tuple with the RmanFileSectionSizeInGbForIncrementalBackup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleAsmExportFromBookmarkParameters) GetRmanFileSectionSizeInGbForIncrementalBackupOk() (*int32, bool) {
+	if o == nil || IsNil(o.RmanFileSectionSizeInGbForIncrementalBackup) {
+		return nil, false
+	}
+	return o.RmanFileSectionSizeInGbForIncrementalBackup, true
+}
+
+// HasRmanFileSectionSizeInGbForIncrementalBackup returns a boolean if a field has been set.
+func (o *OracleAsmExportFromBookmarkParameters) HasRmanFileSectionSizeInGbForIncrementalBackup() bool {
+	if o != nil && !IsNil(o.RmanFileSectionSizeInGbForIncrementalBackup) {
+		return true
+	}
+
+	return false
+}
+
+// SetRmanFileSectionSizeInGbForIncrementalBackup gets a reference to the given int32 and assigns it to the RmanFileSectionSizeInGbForIncrementalBackup field.
+func (o *OracleAsmExportFromBookmarkParameters) SetRmanFileSectionSizeInGbForIncrementalBackup(v int32) {
+	o.RmanFileSectionSizeInGbForIncrementalBackup = &v
 }
 
 // GetDefaultDataDiskgroup returns the DefaultDataDiskgroup field value
@@ -1028,6 +1320,15 @@ func (o OracleAsmExportFromBookmarkParameters) ToMap() (map[string]interface{}, 
 	if !IsNil(o.TdeKeyIdentifier) {
 		toSerialize["tde_key_identifier"] = o.TdeKeyIdentifier
 	}
+	if !IsNil(o.ParentPdbTdeKeystorePath) {
+		toSerialize["parent_pdb_tde_keystore_path"] = o.ParentPdbTdeKeystorePath
+	}
+	if !IsNil(o.ParentPdbTdeKeystorePassword) {
+		toSerialize["parent_pdb_tde_keystore_password"] = o.ParentPdbTdeKeystorePassword
+	}
+	if !IsNil(o.TargetPdbTdeKeystorePassword) {
+		toSerialize["target_pdb_tde_keystore_password"] = o.TargetPdbTdeKeystorePassword
+	}
 	if !IsNil(o.CrsDatabaseName) {
 		toSerialize["crs_database_name"] = o.CrsDatabaseName
 	}
@@ -1045,6 +1346,21 @@ func (o OracleAsmExportFromBookmarkParameters) ToMap() (map[string]interface{}, 
 	}
 	if !IsNil(o.MirroringState) {
 		toSerialize["mirroring_state"] = o.MirroringState
+	}
+	if !IsNil(o.IsIncrementalV2p) {
+		toSerialize["is_incremental_v2p"] = o.IsIncrementalV2p
+	}
+	if !IsNil(o.BackupFrequencyMinutes) {
+		toSerialize["backup_frequency_minutes"] = o.BackupFrequencyMinutes
+	}
+	if !IsNil(o.RmanChannelsForIncrementalBackup) {
+		toSerialize["rman_channels_for_incremental_backup"] = o.RmanChannelsForIncrementalBackup
+	}
+	if !IsNil(o.RmanFilesPerSetForIncrementalBackup) {
+		toSerialize["rman_files_per_set_for_incremental_backup"] = o.RmanFilesPerSetForIncrementalBackup
+	}
+	if !IsNil(o.RmanFileSectionSizeInGbForIncrementalBackup) {
+		toSerialize["rman_file_section_size_in_gb_for_incremental_backup"] = o.RmanFileSectionSizeInGbForIncrementalBackup
 	}
 	toSerialize["default_data_diskgroup"] = o.DefaultDataDiskgroup
 	if !IsNil(o.RedoDiskgroup) {

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -22,10 +22,16 @@ var _ MappedNullable = &UpdateOracleDsourceParameters{}
 type UpdateOracleDsourceParameters struct {
 	// The unique name of the dSource within a group.
 	Name *string `json:"name,omitempty"`
+	// The description of the dSource.
+	Description *string `json:"description,omitempty"`
 	// The username of the database user.
 	DbUsername *string `json:"db_username,omitempty"`
 	// The password of the database user.
 	DbPassword *string `json:"db_password,omitempty"`
+	// Non-SYS database user to access this database. Only required for username-password auth (Single tenant only).
+	NonSysUsername *string `json:"non_sys_username,omitempty"`
+	// Password for non sys user authentication (Single tenant only).
+	NonSysPassword *string `json:"non_sys_password,omitempty"`
 	// Whether db_username and db_password must be validated, if present, against the dSource. This must be set to false when credentials validation is not possible, for instance if the dSource is known to be disabled.
 	ValidateDbCredentials *bool `json:"validate_db_credentials,omitempty"`
 	// The environment user ID to use to connect to the target environment.
@@ -74,6 +80,8 @@ type UpdateOracleDsourceParameters struct {
 	LogsyncMode *OracleLogsyncModeTypeEnum `json:"logsync_mode,omitempty"`
 	// Interval between LogSync requests, in seconds.
 	LogsyncInterval *int32 `json:"logsync_interval,omitempty"`
+	// The repository Id where staging database will be created.
+	Repository *string `json:"repository,omitempty"`
 }
 
 // NewUpdateOracleDsourceParameters instantiates a new UpdateOracleDsourceParameters object
@@ -127,6 +135,38 @@ func (o *UpdateOracleDsourceParameters) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *UpdateOracleDsourceParameters) SetName(v string) {
 	o.Name = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *UpdateOracleDsourceParameters) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetDbUsername returns the DbUsername field value if set, zero value otherwise.
@@ -191,6 +231,70 @@ func (o *UpdateOracleDsourceParameters) HasDbPassword() bool {
 // SetDbPassword gets a reference to the given string and assigns it to the DbPassword field.
 func (o *UpdateOracleDsourceParameters) SetDbPassword(v string) {
 	o.DbPassword = &v
+}
+
+// GetNonSysUsername returns the NonSysUsername field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetNonSysUsername() string {
+	if o == nil || IsNil(o.NonSysUsername) {
+		var ret string
+		return ret
+	}
+	return *o.NonSysUsername
+}
+
+// GetNonSysUsernameOk returns a tuple with the NonSysUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetNonSysUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.NonSysUsername) {
+		return nil, false
+	}
+	return o.NonSysUsername, true
+}
+
+// HasNonSysUsername returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasNonSysUsername() bool {
+	if o != nil && !IsNil(o.NonSysUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetNonSysUsername gets a reference to the given string and assigns it to the NonSysUsername field.
+func (o *UpdateOracleDsourceParameters) SetNonSysUsername(v string) {
+	o.NonSysUsername = &v
+}
+
+// GetNonSysPassword returns the NonSysPassword field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetNonSysPassword() string {
+	if o == nil || IsNil(o.NonSysPassword) {
+		var ret string
+		return ret
+	}
+	return *o.NonSysPassword
+}
+
+// GetNonSysPasswordOk returns a tuple with the NonSysPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetNonSysPasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.NonSysPassword) {
+		return nil, false
+	}
+	return o.NonSysPassword, true
+}
+
+// HasNonSysPassword returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasNonSysPassword() bool {
+	if o != nil && !IsNil(o.NonSysPassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetNonSysPassword gets a reference to the given string and assigns it to the NonSysPassword field.
+func (o *UpdateOracleDsourceParameters) SetNonSysPassword(v string) {
+	o.NonSysPassword = &v
 }
 
 // GetValidateDbCredentials returns the ValidateDbCredentials field value if set, zero value otherwise.
@@ -994,6 +1098,38 @@ func (o *UpdateOracleDsourceParameters) SetLogsyncInterval(v int32) {
 	o.LogsyncInterval = &v
 }
 
+// GetRepository returns the Repository field value if set, zero value otherwise.
+func (o *UpdateOracleDsourceParameters) GetRepository() string {
+	if o == nil || IsNil(o.Repository) {
+		var ret string
+		return ret
+	}
+	return *o.Repository
+}
+
+// GetRepositoryOk returns a tuple with the Repository field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOracleDsourceParameters) GetRepositoryOk() (*string, bool) {
+	if o == nil || IsNil(o.Repository) {
+		return nil, false
+	}
+	return o.Repository, true
+}
+
+// HasRepository returns a boolean if a field has been set.
+func (o *UpdateOracleDsourceParameters) HasRepository() bool {
+	if o != nil && !IsNil(o.Repository) {
+		return true
+	}
+
+	return false
+}
+
+// SetRepository gets a reference to the given string and assigns it to the Repository field.
+func (o *UpdateOracleDsourceParameters) SetRepository(v string) {
+	o.Repository = &v
+}
+
 func (o UpdateOracleDsourceParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1007,11 +1143,20 @@ func (o UpdateOracleDsourceParameters) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
 	if !IsNil(o.DbUsername) {
 		toSerialize["db_username"] = o.DbUsername
 	}
 	if !IsNil(o.DbPassword) {
 		toSerialize["db_password"] = o.DbPassword
+	}
+	if !IsNil(o.NonSysUsername) {
+		toSerialize["non_sys_username"] = o.NonSysUsername
+	}
+	if !IsNil(o.NonSysPassword) {
+		toSerialize["non_sys_password"] = o.NonSysPassword
 	}
 	if !IsNil(o.ValidateDbCredentials) {
 		toSerialize["validate_db_credentials"] = o.ValidateDbCredentials
@@ -1087,6 +1232,9 @@ func (o UpdateOracleDsourceParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.LogsyncInterval) {
 		toSerialize["logsync_interval"] = o.LogsyncInterval
+	}
+	if !IsNil(o.Repository) {
+		toSerialize["repository"] = o.Repository
 	}
 	return toSerialize, nil
 }

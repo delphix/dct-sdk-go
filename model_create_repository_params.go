@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -48,6 +48,18 @@ type CreateRepositoryParams struct {
 	InstanceOwner *string `json:"instance_owner,omitempty"`
 	// The name of the SQL Server instance.
 	InstanceName *string `json:"instance_name,omitempty"`
+	// The SAP ASE instance home.
+	InstallationPath *string `json:"installation_path,omitempty"`
+	// Fully qualified name of the dump history file.
+	DumpHistoryFile *string `json:"dump_history_file,omitempty"`
+	// The username of the ASE instance database.
+	DatabaseUsername *string `json:"database_username,omitempty"`
+	// The credentials of the ASE instance database user.
+	DatabasePassword *string `json:"database_password,omitempty"`
+	// The Kerberos Service Principal Name (SPN) of the database.
+	ServicePrincipalName *string `json:"service_principal_name,omitempty"`
+	// The path to the isql binary to use for this SAP ASE instance.
+	IsqlPath *string `json:"isql_path,omitempty"`
 }
 
 type _CreateRepositoryParams CreateRepositoryParams
@@ -486,6 +498,198 @@ func (o *CreateRepositoryParams) SetInstanceName(v string) {
 	o.InstanceName = &v
 }
 
+// GetInstallationPath returns the InstallationPath field value if set, zero value otherwise.
+func (o *CreateRepositoryParams) GetInstallationPath() string {
+	if o == nil || IsNil(o.InstallationPath) {
+		var ret string
+		return ret
+	}
+	return *o.InstallationPath
+}
+
+// GetInstallationPathOk returns a tuple with the InstallationPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateRepositoryParams) GetInstallationPathOk() (*string, bool) {
+	if o == nil || IsNil(o.InstallationPath) {
+		return nil, false
+	}
+	return o.InstallationPath, true
+}
+
+// HasInstallationPath returns a boolean if a field has been set.
+func (o *CreateRepositoryParams) HasInstallationPath() bool {
+	if o != nil && !IsNil(o.InstallationPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstallationPath gets a reference to the given string and assigns it to the InstallationPath field.
+func (o *CreateRepositoryParams) SetInstallationPath(v string) {
+	o.InstallationPath = &v
+}
+
+// GetDumpHistoryFile returns the DumpHistoryFile field value if set, zero value otherwise.
+func (o *CreateRepositoryParams) GetDumpHistoryFile() string {
+	if o == nil || IsNil(o.DumpHistoryFile) {
+		var ret string
+		return ret
+	}
+	return *o.DumpHistoryFile
+}
+
+// GetDumpHistoryFileOk returns a tuple with the DumpHistoryFile field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateRepositoryParams) GetDumpHistoryFileOk() (*string, bool) {
+	if o == nil || IsNil(o.DumpHistoryFile) {
+		return nil, false
+	}
+	return o.DumpHistoryFile, true
+}
+
+// HasDumpHistoryFile returns a boolean if a field has been set.
+func (o *CreateRepositoryParams) HasDumpHistoryFile() bool {
+	if o != nil && !IsNil(o.DumpHistoryFile) {
+		return true
+	}
+
+	return false
+}
+
+// SetDumpHistoryFile gets a reference to the given string and assigns it to the DumpHistoryFile field.
+func (o *CreateRepositoryParams) SetDumpHistoryFile(v string) {
+	o.DumpHistoryFile = &v
+}
+
+// GetDatabaseUsername returns the DatabaseUsername field value if set, zero value otherwise.
+func (o *CreateRepositoryParams) GetDatabaseUsername() string {
+	if o == nil || IsNil(o.DatabaseUsername) {
+		var ret string
+		return ret
+	}
+	return *o.DatabaseUsername
+}
+
+// GetDatabaseUsernameOk returns a tuple with the DatabaseUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateRepositoryParams) GetDatabaseUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabaseUsername) {
+		return nil, false
+	}
+	return o.DatabaseUsername, true
+}
+
+// HasDatabaseUsername returns a boolean if a field has been set.
+func (o *CreateRepositoryParams) HasDatabaseUsername() bool {
+	if o != nil && !IsNil(o.DatabaseUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseUsername gets a reference to the given string and assigns it to the DatabaseUsername field.
+func (o *CreateRepositoryParams) SetDatabaseUsername(v string) {
+	o.DatabaseUsername = &v
+}
+
+// GetDatabasePassword returns the DatabasePassword field value if set, zero value otherwise.
+func (o *CreateRepositoryParams) GetDatabasePassword() string {
+	if o == nil || IsNil(o.DatabasePassword) {
+		var ret string
+		return ret
+	}
+	return *o.DatabasePassword
+}
+
+// GetDatabasePasswordOk returns a tuple with the DatabasePassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateRepositoryParams) GetDatabasePasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.DatabasePassword) {
+		return nil, false
+	}
+	return o.DatabasePassword, true
+}
+
+// HasDatabasePassword returns a boolean if a field has been set.
+func (o *CreateRepositoryParams) HasDatabasePassword() bool {
+	if o != nil && !IsNil(o.DatabasePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabasePassword gets a reference to the given string and assigns it to the DatabasePassword field.
+func (o *CreateRepositoryParams) SetDatabasePassword(v string) {
+	o.DatabasePassword = &v
+}
+
+// GetServicePrincipalName returns the ServicePrincipalName field value if set, zero value otherwise.
+func (o *CreateRepositoryParams) GetServicePrincipalName() string {
+	if o == nil || IsNil(o.ServicePrincipalName) {
+		var ret string
+		return ret
+	}
+	return *o.ServicePrincipalName
+}
+
+// GetServicePrincipalNameOk returns a tuple with the ServicePrincipalName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateRepositoryParams) GetServicePrincipalNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ServicePrincipalName) {
+		return nil, false
+	}
+	return o.ServicePrincipalName, true
+}
+
+// HasServicePrincipalName returns a boolean if a field has been set.
+func (o *CreateRepositoryParams) HasServicePrincipalName() bool {
+	if o != nil && !IsNil(o.ServicePrincipalName) {
+		return true
+	}
+
+	return false
+}
+
+// SetServicePrincipalName gets a reference to the given string and assigns it to the ServicePrincipalName field.
+func (o *CreateRepositoryParams) SetServicePrincipalName(v string) {
+	o.ServicePrincipalName = &v
+}
+
+// GetIsqlPath returns the IsqlPath field value if set, zero value otherwise.
+func (o *CreateRepositoryParams) GetIsqlPath() string {
+	if o == nil || IsNil(o.IsqlPath) {
+		var ret string
+		return ret
+	}
+	return *o.IsqlPath
+}
+
+// GetIsqlPathOk returns a tuple with the IsqlPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateRepositoryParams) GetIsqlPathOk() (*string, bool) {
+	if o == nil || IsNil(o.IsqlPath) {
+		return nil, false
+	}
+	return o.IsqlPath, true
+}
+
+// HasIsqlPath returns a boolean if a field has been set.
+func (o *CreateRepositoryParams) HasIsqlPath() bool {
+	if o != nil && !IsNil(o.IsqlPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsqlPath gets a reference to the given string and assigns it to the IsqlPath field.
+func (o *CreateRepositoryParams) SetIsqlPath(v string) {
+	o.IsqlPath = &v
+}
+
 func (o CreateRepositoryParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -532,6 +736,24 @@ func (o CreateRepositoryParams) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.InstanceName) {
 		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.InstallationPath) {
+		toSerialize["installation_path"] = o.InstallationPath
+	}
+	if !IsNil(o.DumpHistoryFile) {
+		toSerialize["dump_history_file"] = o.DumpHistoryFile
+	}
+	if !IsNil(o.DatabaseUsername) {
+		toSerialize["database_username"] = o.DatabaseUsername
+	}
+	if !IsNil(o.DatabasePassword) {
+		toSerialize["database_password"] = o.DatabasePassword
+	}
+	if !IsNil(o.ServicePrincipalName) {
+		toSerialize["service_principal_name"] = o.ServicePrincipalName
+	}
+	if !IsNil(o.IsqlPath) {
+		toSerialize["isql_path"] = o.IsqlPath
 	}
 	return toSerialize, nil
 }

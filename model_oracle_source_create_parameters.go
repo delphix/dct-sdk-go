@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -37,6 +37,8 @@ type OracleSourceCreateParameters struct {
 	UniqueName *string `json:"unique_name,omitempty"`
 	// The instance name of this single instance database.
 	InstanceName *string `json:"instance_name,omitempty"`
+	// List of jdbc connection strings which are used to connect with the database.
+	OracleServices []string `json:"oracle_services,omitempty"`
 }
 
 type _OracleSourceCreateParameters OracleSourceCreateParameters
@@ -300,6 +302,38 @@ func (o *OracleSourceCreateParameters) SetInstanceName(v string) {
 	o.InstanceName = &v
 }
 
+// GetOracleServices returns the OracleServices field value if set, zero value otherwise.
+func (o *OracleSourceCreateParameters) GetOracleServices() []string {
+	if o == nil || IsNil(o.OracleServices) {
+		var ret []string
+		return ret
+	}
+	return o.OracleServices
+}
+
+// GetOracleServicesOk returns a tuple with the OracleServices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OracleSourceCreateParameters) GetOracleServicesOk() ([]string, bool) {
+	if o == nil || IsNil(o.OracleServices) {
+		return nil, false
+	}
+	return o.OracleServices, true
+}
+
+// HasOracleServices returns a boolean if a field has been set.
+func (o *OracleSourceCreateParameters) HasOracleServices() bool {
+	if o != nil && !IsNil(o.OracleServices) {
+		return true
+	}
+
+	return false
+}
+
+// SetOracleServices gets a reference to the given []string and assigns it to the OracleServices field.
+func (o *OracleSourceCreateParameters) SetOracleServices(v []string) {
+	o.OracleServices = v
+}
+
 func (o OracleSourceCreateParameters) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -329,6 +363,9 @@ func (o OracleSourceCreateParameters) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.InstanceName) {
 		toSerialize["instance_name"] = o.InstanceName
+	}
+	if !IsNil(o.OracleServices) {
+		toSerialize["oracle_services"] = o.OracleServices
 	}
 	return toSerialize, nil
 }

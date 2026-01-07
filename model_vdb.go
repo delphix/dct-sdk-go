@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -27,6 +27,8 @@ type VDB struct {
 	DatabaseType NullableString `json:"database_type,omitempty"`
 	// The logical name of this VDB.
 	Name NullableString `json:"name,omitempty"`
+	// The container description of this VDB.
+	Description *string `json:"description,omitempty"`
 	// The name of the database on the target environment or in the database management system.
 	DatabaseName *string `json:"database_name,omitempty"`
 	// The namespace id of this VDB.
@@ -50,6 +52,8 @@ type VDB struct {
 	Size NullableInt64 `json:"size,omitempty"`
 	// The actual space used by this VDB, in bytes.
 	StorageSize NullableInt64 `json:"storage_size,omitempty"`
+	// The disk space, in bytes, that it would take to store the VDB without Delphix.
+	UnvirtualizedSpace *int64 `json:"unvirtualized_space,omitempty"`
 	// A reference to the Engine that this VDB belongs to.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The runtime status of the VDB. 'Unknown' if all attempts to connect to the dataset failed.
@@ -88,6 +92,8 @@ type VDB struct {
 	AppdataSourceParams map[string]interface{} `json:"appdata_source_params,omitempty"`
 	// A reference to the Database Template.
 	TemplateId NullableString `json:"template_id,omitempty"`
+	// Name of the Database Template.
+	TemplateName NullableString `json:"template_name,omitempty"`
 	// Database configuration parameter overrides.
 	ConfigParams map[string]interface{} `json:"config_params,omitempty"`
 	// The environment user reference.
@@ -145,7 +151,7 @@ type VDB struct {
 	TargetVcdbTdeKeystorePath *string `json:"target_vcdb_tde_keystore_path,omitempty"`
 	// ID of the key created by Delphix, as recorded in v$encryption_keys.key_id.
 	TdeKeyIdentifier *string `json:"tde_key_identifier,omitempty"`
-	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host.  Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore. 
+	// Path to a copy of the parent PDB's Oracle transparent data encryption keystore on the target host. Required to provision from snapshots of PDB containing encrypted database files with isolated mode keystore. 
 	ParentPdbTdeKeystorePath *string `json:"parent_pdb_tde_keystore_path,omitempty"`
 	// Path of the virtual PDB's Oracle transparent data encryption keystore on the target host.
 	TargetPdbTdeKeystorePath *string `json:"target_pdb_tde_keystore_path,omitempty"`
@@ -173,6 +179,11 @@ type VDB struct {
 	RedoLogSizeInMb *int32 `json:"redo_log_size_in_mb,omitempty"`
 	CustomEnvVars []OracleCustomEnvVar `json:"custom_env_vars,omitempty"`
 	ActiveInstances []OracleActiveInstance `json:"active_instances,omitempty"`
+	// The NFS version that was last used to mount this source.\"
+	NfsVersion *int32 `json:"nfs_version,omitempty"`
+	NfsVersionReason *NfsVersionReasonEnum `json:"nfs_version_reason,omitempty"`
+	// Flag indicating whether the data transfer is encrypted or not.
+	NfsEncryptionEnabled *bool `json:"nfs_encryption_enabled,omitempty"`
 }
 
 // NewVDB instantiates a new VDB object
@@ -306,6 +317,38 @@ func (o *VDB) SetNameNil() {
 // UnsetName ensures that no value is present for Name, not even an explicit nil
 func (o *VDB) UnsetName() {
 	o.Name.Unset()
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *VDB) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *VDB) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *VDB) SetDescription(v string) {
+	o.Description = &v
 }
 
 // GetDatabaseName returns the DatabaseName field value if set, zero value otherwise.
@@ -691,6 +734,38 @@ func (o *VDB) SetStorageSizeNil() {
 // UnsetStorageSize ensures that no value is present for StorageSize, not even an explicit nil
 func (o *VDB) UnsetStorageSize() {
 	o.StorageSize.Unset()
+}
+
+// GetUnvirtualizedSpace returns the UnvirtualizedSpace field value if set, zero value otherwise.
+func (o *VDB) GetUnvirtualizedSpace() int64 {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
+		var ret int64
+		return ret
+	}
+	return *o.UnvirtualizedSpace
+}
+
+// GetUnvirtualizedSpaceOk returns a tuple with the UnvirtualizedSpace field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetUnvirtualizedSpaceOk() (*int64, bool) {
+	if o == nil || IsNil(o.UnvirtualizedSpace) {
+		return nil, false
+	}
+	return o.UnvirtualizedSpace, true
+}
+
+// HasUnvirtualizedSpace returns a boolean if a field has been set.
+func (o *VDB) HasUnvirtualizedSpace() bool {
+	if o != nil && !IsNil(o.UnvirtualizedSpace) {
+		return true
+	}
+
+	return false
+}
+
+// SetUnvirtualizedSpace gets a reference to the given int64 and assigns it to the UnvirtualizedSpace field.
+func (o *VDB) SetUnvirtualizedSpace(v int64) {
+	o.UnvirtualizedSpace = &v
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -1492,6 +1567,48 @@ func (o *VDB) SetTemplateIdNil() {
 // UnsetTemplateId ensures that no value is present for TemplateId, not even an explicit nil
 func (o *VDB) UnsetTemplateId() {
 	o.TemplateId.Unset()
+}
+
+// GetTemplateName returns the TemplateName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VDB) GetTemplateName() string {
+	if o == nil || IsNil(o.TemplateName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateName.Get()
+}
+
+// GetTemplateNameOk returns a tuple with the TemplateName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VDB) GetTemplateNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TemplateName.Get(), o.TemplateName.IsSet()
+}
+
+// HasTemplateName returns a boolean if a field has been set.
+func (o *VDB) HasTemplateName() bool {
+	if o != nil && o.TemplateName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateName gets a reference to the given NullableString and assigns it to the TemplateName field.
+func (o *VDB) SetTemplateName(v string) {
+	o.TemplateName.Set(&v)
+}
+// SetTemplateNameNil sets the value for TemplateName to be an explicit nil
+func (o *VDB) SetTemplateNameNil() {
+	o.TemplateName.Set(nil)
+}
+
+// UnsetTemplateName ensures that no value is present for TemplateName, not even an explicit nil
+func (o *VDB) UnsetTemplateName() {
+	o.TemplateName.Unset()
 }
 
 // GetConfigParams returns the ConfigParams field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -2957,6 +3074,102 @@ func (o *VDB) SetActiveInstances(v []OracleActiveInstance) {
 	o.ActiveInstances = v
 }
 
+// GetNfsVersion returns the NfsVersion field value if set, zero value otherwise.
+func (o *VDB) GetNfsVersion() int32 {
+	if o == nil || IsNil(o.NfsVersion) {
+		var ret int32
+		return ret
+	}
+	return *o.NfsVersion
+}
+
+// GetNfsVersionOk returns a tuple with the NfsVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNfsVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.NfsVersion) {
+		return nil, false
+	}
+	return o.NfsVersion, true
+}
+
+// HasNfsVersion returns a boolean if a field has been set.
+func (o *VDB) HasNfsVersion() bool {
+	if o != nil && !IsNil(o.NfsVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersion gets a reference to the given int32 and assigns it to the NfsVersion field.
+func (o *VDB) SetNfsVersion(v int32) {
+	o.NfsVersion = &v
+}
+
+// GetNfsVersionReason returns the NfsVersionReason field value if set, zero value otherwise.
+func (o *VDB) GetNfsVersionReason() NfsVersionReasonEnum {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		var ret NfsVersionReasonEnum
+		return ret
+	}
+	return *o.NfsVersionReason
+}
+
+// GetNfsVersionReasonOk returns a tuple with the NfsVersionReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNfsVersionReasonOk() (*NfsVersionReasonEnum, bool) {
+	if o == nil || IsNil(o.NfsVersionReason) {
+		return nil, false
+	}
+	return o.NfsVersionReason, true
+}
+
+// HasNfsVersionReason returns a boolean if a field has been set.
+func (o *VDB) HasNfsVersionReason() bool {
+	if o != nil && !IsNil(o.NfsVersionReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsVersionReason gets a reference to the given NfsVersionReasonEnum and assigns it to the NfsVersionReason field.
+func (o *VDB) SetNfsVersionReason(v NfsVersionReasonEnum) {
+	o.NfsVersionReason = &v
+}
+
+// GetNfsEncryptionEnabled returns the NfsEncryptionEnabled field value if set, zero value otherwise.
+func (o *VDB) GetNfsEncryptionEnabled() bool {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.NfsEncryptionEnabled
+}
+
+// GetNfsEncryptionEnabledOk returns a tuple with the NfsEncryptionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetNfsEncryptionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.NfsEncryptionEnabled) {
+		return nil, false
+	}
+	return o.NfsEncryptionEnabled, true
+}
+
+// HasNfsEncryptionEnabled returns a boolean if a field has been set.
+func (o *VDB) HasNfsEncryptionEnabled() bool {
+	if o != nil && !IsNil(o.NfsEncryptionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetNfsEncryptionEnabled gets a reference to the given bool and assigns it to the NfsEncryptionEnabled field.
+func (o *VDB) SetNfsEncryptionEnabled(v bool) {
+	o.NfsEncryptionEnabled = &v
+}
+
 func (o VDB) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -2975,6 +3188,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	if !IsNil(o.DatabaseName) {
 		toSerialize["database_name"] = o.DatabaseName
@@ -3008,6 +3224,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.StorageSize.IsSet() {
 		toSerialize["storage_size"] = o.StorageSize.Get()
+	}
+	if !IsNil(o.UnvirtualizedSpace) {
+		toSerialize["unvirtualized_space"] = o.UnvirtualizedSpace
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
@@ -3068,6 +3287,9 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if o.TemplateId.IsSet() {
 		toSerialize["template_id"] = o.TemplateId.Get()
+	}
+	if o.TemplateName.IsSet() {
+		toSerialize["template_name"] = o.TemplateName.Get()
 	}
 	if o.ConfigParams != nil {
 		toSerialize["config_params"] = o.ConfigParams
@@ -3203,6 +3425,15 @@ func (o VDB) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ActiveInstances) {
 		toSerialize["active_instances"] = o.ActiveInstances
+	}
+	if !IsNil(o.NfsVersion) {
+		toSerialize["nfs_version"] = o.NfsVersion
+	}
+	if !IsNil(o.NfsVersionReason) {
+		toSerialize["nfs_version_reason"] = o.NfsVersionReason
+	}
+	if !IsNil(o.NfsEncryptionEnabled) {
+		toSerialize["nfs_encryption_enabled"] = o.NfsEncryptionEnabled
 	}
 	return toSerialize, nil
 }

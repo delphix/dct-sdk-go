@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -40,6 +40,12 @@ type DatabaseColumnMetadata struct {
 	AlgorithmId *string `json:"algorithm_id,omitempty"`
 	// The name of the algorithm associated with this column.
 	AlgorithmName *string `json:"algorithm_name,omitempty"`
+	// The id of the algorithm field that is associated with this algorithm.
+	AlgorithmFieldId *string `json:"algorithm_field_id,omitempty"`
+	// The name of the algorithm field that is associated with this column.
+	AlgorithmFieldName *string `json:"algorithm_field_name,omitempty"`
+	// The group number of algorithm to identify a set of columns associated with one instance of algorithm.
+	AlgorithmGroupNo *int32 `json:"algorithm_group_no,omitempty"`
 	// The id of the data class associated with this column.
 	DataClassId *string `json:"data_class_id,omitempty"`
 	// The name of the data class associated with this column.
@@ -401,6 +407,102 @@ func (o *DatabaseColumnMetadata) HasAlgorithmName() bool {
 // SetAlgorithmName gets a reference to the given string and assigns it to the AlgorithmName field.
 func (o *DatabaseColumnMetadata) SetAlgorithmName(v string) {
 	o.AlgorithmName = &v
+}
+
+// GetAlgorithmFieldId returns the AlgorithmFieldId field value if set, zero value otherwise.
+func (o *DatabaseColumnMetadata) GetAlgorithmFieldId() string {
+	if o == nil || IsNil(o.AlgorithmFieldId) {
+		var ret string
+		return ret
+	}
+	return *o.AlgorithmFieldId
+}
+
+// GetAlgorithmFieldIdOk returns a tuple with the AlgorithmFieldId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatabaseColumnMetadata) GetAlgorithmFieldIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AlgorithmFieldId) {
+		return nil, false
+	}
+	return o.AlgorithmFieldId, true
+}
+
+// HasAlgorithmFieldId returns a boolean if a field has been set.
+func (o *DatabaseColumnMetadata) HasAlgorithmFieldId() bool {
+	if o != nil && !IsNil(o.AlgorithmFieldId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlgorithmFieldId gets a reference to the given string and assigns it to the AlgorithmFieldId field.
+func (o *DatabaseColumnMetadata) SetAlgorithmFieldId(v string) {
+	o.AlgorithmFieldId = &v
+}
+
+// GetAlgorithmFieldName returns the AlgorithmFieldName field value if set, zero value otherwise.
+func (o *DatabaseColumnMetadata) GetAlgorithmFieldName() string {
+	if o == nil || IsNil(o.AlgorithmFieldName) {
+		var ret string
+		return ret
+	}
+	return *o.AlgorithmFieldName
+}
+
+// GetAlgorithmFieldNameOk returns a tuple with the AlgorithmFieldName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatabaseColumnMetadata) GetAlgorithmFieldNameOk() (*string, bool) {
+	if o == nil || IsNil(o.AlgorithmFieldName) {
+		return nil, false
+	}
+	return o.AlgorithmFieldName, true
+}
+
+// HasAlgorithmFieldName returns a boolean if a field has been set.
+func (o *DatabaseColumnMetadata) HasAlgorithmFieldName() bool {
+	if o != nil && !IsNil(o.AlgorithmFieldName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlgorithmFieldName gets a reference to the given string and assigns it to the AlgorithmFieldName field.
+func (o *DatabaseColumnMetadata) SetAlgorithmFieldName(v string) {
+	o.AlgorithmFieldName = &v
+}
+
+// GetAlgorithmGroupNo returns the AlgorithmGroupNo field value if set, zero value otherwise.
+func (o *DatabaseColumnMetadata) GetAlgorithmGroupNo() int32 {
+	if o == nil || IsNil(o.AlgorithmGroupNo) {
+		var ret int32
+		return ret
+	}
+	return *o.AlgorithmGroupNo
+}
+
+// GetAlgorithmGroupNoOk returns a tuple with the AlgorithmGroupNo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatabaseColumnMetadata) GetAlgorithmGroupNoOk() (*int32, bool) {
+	if o == nil || IsNil(o.AlgorithmGroupNo) {
+		return nil, false
+	}
+	return o.AlgorithmGroupNo, true
+}
+
+// HasAlgorithmGroupNo returns a boolean if a field has been set.
+func (o *DatabaseColumnMetadata) HasAlgorithmGroupNo() bool {
+	if o != nil && !IsNil(o.AlgorithmGroupNo) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlgorithmGroupNo gets a reference to the given int32 and assigns it to the AlgorithmGroupNo field.
+func (o *DatabaseColumnMetadata) SetAlgorithmGroupNo(v int32) {
+	o.AlgorithmGroupNo = &v
 }
 
 // GetDataClassId returns the DataClassId field value if set, zero value otherwise.
@@ -826,6 +928,15 @@ func (o DatabaseColumnMetadata) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AlgorithmName) {
 		toSerialize["algorithm_name"] = o.AlgorithmName
+	}
+	if !IsNil(o.AlgorithmFieldId) {
+		toSerialize["algorithm_field_id"] = o.AlgorithmFieldId
+	}
+	if !IsNil(o.AlgorithmFieldName) {
+		toSerialize["algorithm_field_name"] = o.AlgorithmFieldName
+	}
+	if !IsNil(o.AlgorithmGroupNo) {
+		toSerialize["algorithm_group_no"] = o.AlgorithmGroupNo
 	}
 	if !IsNil(o.DataClassId) {
 		toSerialize["data_class_id"] = o.DataClassId

@@ -3,7 +3,7 @@ Delphix DCT API
 
 Delphix DCT API
 
-API version: 3.23.0
+API version: 3.25.0
 Contact: support@delphix.com
 */
 
@@ -33,6 +33,8 @@ type DataRiskData struct {
 	LastProfiledDate *time.Time `json:"last_profiled_date,omitempty"`
 	// Date this connector last had a masking job run.
 	LastMaskedDate *time.Time `json:"last_masked_date,omitempty"`
+	// Whether or not this connector is managed by DCT.
+	DctManaged *bool `json:"dct_managed,omitempty"`
 	// The entity ID of the masking engine.
 	EngineId *string `json:"engine_id,omitempty"`
 	// The name of the masking engine.
@@ -272,6 +274,38 @@ func (o *DataRiskData) HasLastMaskedDate() bool {
 // SetLastMaskedDate gets a reference to the given time.Time and assigns it to the LastMaskedDate field.
 func (o *DataRiskData) SetLastMaskedDate(v time.Time) {
 	o.LastMaskedDate = &v
+}
+
+// GetDctManaged returns the DctManaged field value if set, zero value otherwise.
+func (o *DataRiskData) GetDctManaged() bool {
+	if o == nil || IsNil(o.DctManaged) {
+		var ret bool
+		return ret
+	}
+	return *o.DctManaged
+}
+
+// GetDctManagedOk returns a tuple with the DctManaged field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DataRiskData) GetDctManagedOk() (*bool, bool) {
+	if o == nil || IsNil(o.DctManaged) {
+		return nil, false
+	}
+	return o.DctManaged, true
+}
+
+// HasDctManaged returns a boolean if a field has been set.
+func (o *DataRiskData) HasDctManaged() bool {
+	if o != nil && !IsNil(o.DctManaged) {
+		return true
+	}
+
+	return false
+}
+
+// SetDctManaged gets a reference to the given bool and assigns it to the DctManaged field.
+func (o *DataRiskData) SetDctManaged(v bool) {
+	o.DctManaged = &v
 }
 
 // GetEngineId returns the EngineId field value if set, zero value otherwise.
@@ -781,6 +815,9 @@ func (o DataRiskData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.LastMaskedDate) {
 		toSerialize["last_masked_date"] = o.LastMaskedDate
+	}
+	if !IsNil(o.DctManaged) {
+		toSerialize["dct_managed"] = o.DctManaged
 	}
 	if !IsNil(o.EngineId) {
 		toSerialize["engine_id"] = o.EngineId
